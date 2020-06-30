@@ -22,6 +22,8 @@ namespace Stars.Router
 
         public bool CanGetResource => true;
 
+        public ResourceType ResourceType => ResourceType.Unknown;
+
         public async Task<IResource> GetResource()
         {
             return await request.GetResponseAsync().ContinueWith(wr => new WebResource(wr.Result));

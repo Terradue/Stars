@@ -19,6 +19,8 @@ namespace Stars.Router
 
         public bool CanGetResource => false;
 
+        public ResourceType ResourceType => ResourceType.Unknown;
+
         public Task<IResource> GetResource()
         {
             throw new NotSupportedException();

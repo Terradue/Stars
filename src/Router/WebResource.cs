@@ -23,6 +23,31 @@ namespace Stars.Router
 
         public Uri Uri => webResponse.ResponseUri;
 
+        public ResourceType ResourceType => ResourceType.Unknown;
+
+        public string Filename
+        {
+            get
+            {
+                string fileName = string.Empty;
+                try
+                {
+                    string contentDispositionStr = webResponse.Headers["content-disposition"];
+                    if (!string.IsNullOrEmpty(contentDispositionStr))
+                    {
+                        ContentDisposition contentDisposition = new ContentDisposition(contentDispositionStr);
+                        fileName = contentDisposition.FileName;
+                    }
+                }
+                catch {
+                    fileName = Path.GetFileName(Uri.ToString());
+                }
+                return fileName;
+            }
+        }
+
+        public string Id => Filename.CleanIdentifier();
+
         public string ReadAsString()
         {
             responseStream.Position = 0;
@@ -44,6 +69,12 @@ namespace Stars.Router
             ms.Position = 0;
             inputStream.Close();
             return ms;
+        }
+
+        public Stream GetAsStream()
+        {
+            responseStream.Position = 0;
+            return responseStream;
         }
     }
 }

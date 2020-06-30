@@ -81,6 +81,34 @@ namespace Stars
             );
             #endregion list-command
 
+            #region copy-command
+            _app.Command("copy",
+                (copy) =>
+                {
+                    var outputOption = copy.Option("-o|--output_dir", "Output Directory",
+                                                    CommandOptionType.SingleValue);
+
+                    var inputOption = copy.Option<string>("-i|--input", "Input reference to resource",
+                                        CommandOptionType.MultipleValue)
+                                        .IsRequired();
+
+                    var recursivityOption = copy.Option<int>("-r|--recursivity", "Resource recursivity depth routing",
+                                        CommandOptionType.SingleValue);
+
+                    copy.Description = "Copy the Assets from the input reference";
+
+                    copy.HelpOption("-? | -h | --help");
+
+                    copy.OnExecuteAsync(async cancellationToken =>
+                    {
+                        var copyOperation = _serviceProvider.GetService<CopyOperation>();
+                        await copyOperation.ExecuteAsync(copy);
+                    });
+
+                }
+            );
+            #endregion copy-command
+
             // rest of CLI implementions
             _app.HelpOption("-h|--help|-?");
 
@@ -96,7 +124,7 @@ namespace Stars
             // Add the command line services
             collection.AddSingleton<CommandLineApplication>(_app);
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
-            collection.AddSingleton<IReporter, StacConsoleReporter>();
+            collection.AddSingleton<IReporter, StarsConsoleReporter>();
             // Add the Resource grabber
             collection.AddSingleton<ResourceGrabber, ResourceGrabber>();
             // Add the Routers Manager

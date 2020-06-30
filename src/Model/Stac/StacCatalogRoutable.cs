@@ -6,20 +6,42 @@ using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Collection;
+using Stars.Router;
 
-namespace Stars.Router
+namespace Stars.Model.Stac
 {
     internal class StacCatalogRoutable : StacRoutable, IRoutable
     {
         public StacCatalogRoutable(IStacCatalog stacCatalog) : base(stacCatalog)
         {
-            if ( stacCatalog is StacCollection )
+            if (stacCatalog is StacCollection)
                 contentType.Parameters.Add("profile", "stac-collection");
             else
                 contentType.Parameters.Add("profile", "stac-catalog");
         }
 
         public IStacCatalog StacCatalog => stacObject as IStacCatalog;
+
+        public override ResourceType ResourceType
+        {
+            get
+            {
+                if (stacObject is StacCollection)
+                    return ResourceType.Collection;
+                else
+                    return ResourceType.Catalog;
+            }
+        }
+
+        public override string Filename {
+            get
+            {
+                if (stacObject is StacCollection)
+                    return stacObject.Id.CleanIdentifier() + ".collection.json";
+                else
+                    return "catalog.json";
+            }
+        }
 
         public override IEnumerable<IRoute> GetRoutes()
         {

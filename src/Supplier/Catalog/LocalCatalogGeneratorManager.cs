@@ -1,18 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Stars.Router
+namespace Stars.Supplier.Catalog
 {
-    internal class ResourceRoutersManager
+    public class LocalCatalogGeneratorManager
     {
-        private IEnumerable<IResourceRouter> _routers;
+        private IEnumerable<ILocalCatalogGenerator> _generators;
 
-        public ResourceRoutersManager(IEnumerable<IResourceRouter> routers)
+        public LocalCatalogGeneratorManager(IEnumerable<ILocalCatalogGenerator> generators)
         {
-            this._routers = routers;
+            this._generators = generators;
         }
 
         internal static IEnumerable<Type> LoadRoutersPlugins(string[] pluginPaths)
@@ -28,17 +27,16 @@ namespace Stars.Router
         {
             foreach (Type type in assembly.GetTypes())
             {
-                if (type.GetInterface(typeof(IResourceRouter).FullName) != null)
+                if (type.GetInterface(typeof(ILocalCatalogGenerator).FullName) != null)
                 {
                     yield return type;
                 }
             }
         }
 
-        internal IResourceRouter GetRouterForResource(IResource resource)
+        internal ILocalCatalogGenerator GetLocalCatalogGenerator(string format)
         {
-            return _routers.FirstOrDefault(r => r.CanRoute(resource));
+            return _generators.FirstOrDefault(r => r.Id == format);
         }
-
     }
 }

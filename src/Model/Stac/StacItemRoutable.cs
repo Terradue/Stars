@@ -3,8 +3,9 @@ using Stac.Item;
 using System.Linq;
 using Newtonsoft.Json;
 using Stac;
+using Stars.Router;
 
-namespace Stars.Router
+namespace Stars.Model.Stac
 {
     internal class StacItemRoutable : StacRoutable, IRoutable
     {
@@ -14,6 +15,10 @@ namespace Stars.Router
         }
 
         public IStacItem StacItem => stacObject as IStacItem;
+
+        public override ResourceType ResourceType => ResourceType.Item;
+
+        public override string Filename => stacObject.Id.CleanIdentifier() + ".item.json";
 
         public override IEnumerable<IRoute> GetRoutes()
         {

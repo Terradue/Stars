@@ -4,8 +4,9 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
+using Stars.Router;
 
-namespace Stars.Router
+namespace Stars.Model.Stac
 {
     internal class StacAssetRoute : IRoute
     {
@@ -31,6 +32,8 @@ namespace Stars.Router
         }
 
         public bool CanGetResource => false;
+
+        public ResourceType ResourceType => ResourceType.Asset;
 
         public Task<IResource> GetResource()
         {

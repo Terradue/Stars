@@ -31,13 +31,39 @@
             "stopAtEntry": false
         },
         {
-            "name": "List test",
+            "name": "List STAC CBERS4/MUX/027/069",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
             "args": ["-v", "list", "--input", "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json", "-r", "4"],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "List OpenSearch Sentinel2",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
+            "args": ["-v", "list", "--input", "https://catalog.terradue.com/sentinel2/search?uid=S2A_MSIL1C_20190119T074231_N0207_R092_T39TVH_20190119T091330", "-r", "4"],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Copy STAC CBERS4/MUX/027/069",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
+            "args": ["-v", "copy", "--input", "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json", "-r", "4", "-o", "/tmp/stars"],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",

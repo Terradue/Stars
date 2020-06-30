@@ -1,18 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Stac;
 using Stac.Catalog;
 using Stac.Item;
+using Stars.Router;
 
-namespace Stars.Router
+namespace Stars.Model.Stac
 {
     public class StacRouter : IResourceRouter
     {
+        
         public StacRouter()
         {
         }

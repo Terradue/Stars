@@ -34,9 +34,11 @@ namespace Stars.Operations
 
         internal async Task PrintRoute(IRoute route, int recursivity, string prefix)
         {
+            console.ForegroundColor = GetColorFromType(route.ResourceType);
             if (!route.CanGetResource || recursivity == 0)
             {
                 await console.Out.WriteLineAsync(String.Format("{0,-100} {1,50}", prefix + route.Uri, route.ContentType));
+                
                 return;
             }
 
@@ -51,6 +53,7 @@ namespace Stars.Operations
                 if (router == null)
                 {
                     await console.Out.WriteLineAsync(String.Format("{0,-100} {1,50}", prefix + resource.Uri, resource.ContentType));
+                    
                     return;
                 }
                 routableResource = router.Route(resource);
@@ -59,8 +62,10 @@ namespace Stars.Operations
             {
                 routableResource = (IRoutable)resource;
             }
+            console.ForegroundColor = GetColorFromType(routableResource.ResourceType);
 
             await console.Out.WriteLineAsync(String.Format("{0,-100} {1,50}", prefix + routableResource.Uri, routableResource.ContentType));
+            await console.Out.WriteLineAsync(String.Format("{0,-100}",  prefix.Replace('─', ' ').Replace('└', ' ') + routableResource.Label));
 
             if (recursivity == 0)
             {
@@ -80,6 +85,21 @@ namespace Stars.Operations
                     newPrefix += '│';
                 await PrintRoute(subroutes.ElementAt(i), recursivity - 1, newPrefix + new string('─', 2));
             }
+        }
+
+        private ConsoleColor GetColorFromType(ResourceType resourceType)
+        {
+            switch (resourceType){
+                case ResourceType.Catalog:
+                    return ConsoleColor.Blue;
+                case ResourceType.Collection:
+                    return ConsoleColor.Green;
+                case ResourceType.Item:
+                    return ConsoleColor.Yellow;
+                case ResourceType.Asset:
+                    return ConsoleColor.Red;
+            }
+            return ConsoleColor.White;
         }
     }
 }
