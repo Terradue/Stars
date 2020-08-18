@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -6,6 +7,7 @@ using Stac;
 using Stac.Catalog;
 using Stac.Item;
 using Stars.Router;
+using Stars.Supplier.Asset;
 using Stars.Supplier.Catalog;
 
 namespace Stars.Model.Stac
@@ -19,12 +21,12 @@ namespace Stars.Model.Stac
 
         public string Id => "stac";
 
-        public IResource LocalizeResource(IResource resource)
+         public IResource LocalizeResource(IResource resource, IEnumerable<IResource> children, IEnumerable<IAsset> assets)
         {
             switch (resource.ResourceType)
             {
                 case ResourceType.Catalog:
-                    return GenerateCatalog(resource);
+                    return GenerateCatalog(resource, children);
                 case ResourceType.Collection:
                     return GenerateCollection(resource);
                 case ResourceType.Item:
@@ -44,14 +46,17 @@ namespace Stars.Model.Stac
             throw new NotImplementedException();
         }
 
-        private IResource GenerateCatalog(IResource resource)
+        private IResource GenerateCatalog(IResource resource, IEnumerable<IResource> children)
         {
-            IStacCatalog stacObject = (IStacCatalog)resource.ReadAsStacObject();
+            IStacCatalog stacObject = null;
+            if ( resource is IStacResource )
+                stacObject = ((IStacResource)resource).ReadAsStacObject();
             if ( stacObject != null ){
                 foreach ( var link in stacObject.Links ){
-                    link.Uri
+                    // link.Uri
                 }
             }
+            return null;
         }
     }
 }

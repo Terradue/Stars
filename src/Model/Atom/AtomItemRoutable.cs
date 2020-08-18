@@ -5,12 +5,14 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Xml;
+using Stac;
 using Stars.Router;
+using Stars.Supplier.Asset;
 using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Model.Atom
 {
-    internal class AtomItemRoutable : IResource, IRoutable
+    internal class AtomItemRoutable : IResource, IRoutable, IAssetsContainer
     {
         private SyndicationItem item;
 
@@ -35,9 +37,7 @@ namespace Stars.Model.Atom
 
         public IEnumerable<IRoute> GetRoutes()
         {
-            return item.Links
-                .Where(link => new string[] { "enclosure", "icon" }.Contains(link.RelationshipType))
-                .Select(link => new AtomLinkRoute(link, item));
+            return new List<IRoute>();
         }
 
         public string ReadAsString()
@@ -55,6 +55,23 @@ namespace Stars.Model.Atom
             sw.Flush();
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
+        }
+
+        public IStacObject ReadAsStacObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IResource> GotoResource()
+        {
+            return Task.FromResult((IResource)this);
+        }
+
+        public IEnumerable<IAsset> GetAssets()
+        {
+            return item.Links
+                .Where(link => new string[] { "enclosure", "icon" }.Contains(link.RelationshipType))
+                .Select(link => new AtomLinkAsset(link, item));
         }
     }
 }

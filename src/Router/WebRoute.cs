@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -9,24 +10,33 @@ namespace Stars.Router
 {
     internal class WebRoute : IRoute
     {
-        private WebRequest request;
+        private readonly WebRequest request;
 
-        public WebRoute(WebRequest request)
+        internal WebRoute(WebRequest request)
         {
             this.request = request;
+        }
+
+        public static WebRoute Create(Uri uri)
+        {
+            WebRequest request = WebRequest.Create(uri);
+            return new WebRoute(request);
+        }
+
+        public async Task<IResource> GotoResource()
+        {
+            return await request.GetResponseAsync().ContinueWith(wr => new WebResource(wr.Result));
         }
 
         public Uri Uri => request.RequestUri;
 
         public ContentType ContentType => null;
 
-        public bool CanGetResource => true;
+        public bool CanRead => true;
 
         public ResourceType ResourceType => ResourceType.Unknown;
 
-        public async Task<IResource> GetResource()
-        {
-            return await request.GetResponseAsync().ContinueWith(wr => new WebResource(wr.Result));
-        }
+        public WebRequest Request { get => request; }
+
     }
 }

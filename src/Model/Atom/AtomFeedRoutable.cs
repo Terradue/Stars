@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using System.Xml;
 using Newtonsoft.Json;
 using Stac;
@@ -55,6 +56,16 @@ namespace Stars.Model.Atom
             sw.Flush();
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
+        }
+
+        public IStacObject ReadAsStacObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IResource> GotoResource()
+        {
+            return Task.FromResult((IResource)this);
         }
     }
 }

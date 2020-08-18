@@ -20,5 +20,10 @@ namespace Stars
                 return String.Empty;
             }
         }
+
+        internal static string Truncate(this string value, int maxChars)
+        {
+            return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "...";
+        }
     }
 }

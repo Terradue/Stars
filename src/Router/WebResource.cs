@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Stac;
 
 namespace Stars.Router
 {
@@ -75,6 +76,11 @@ namespace Stars.Router
         {
             responseStream.Position = 0;
             return responseStream;
+        }
+
+        public Task<IResource> GotoResource()
+        {
+            return Task.FromResult((IResource)this);
         }
     }
 }

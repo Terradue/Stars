@@ -22,11 +22,11 @@ namespace Stars.Model.Atom
 
         public ContentType ContentType => new ContentType("application/atom+xml");
 
-        public bool CanGetResource => true;
+        public bool CanRead => true;
 
         public ResourceType ResourceType => ResourceType.Item;
 
-        public Task<IResource> GetResource()
+        public Task<IResource> GotoResource()
         {
             return Task<IResource>.FromResult((IResource)new AtomItemRoutable(item));
         }

@@ -4,6 +4,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Stars.Operations;
 using Stars.Router;
+using Stars.Supplier.Catalog;
 
 namespace Stars
 {
@@ -40,15 +41,18 @@ namespace Stars
             foreach (Type router in ResourceRoutersManager.LoadRoutersPlugins(_pluginAssemblies))
             {
                 collection.AddTransient(router);
-                collection.AddTransient<IResourceRouter>(serviceProvider => (IResourceRouter)serviceProvider.GetService(router));
+                collection.AddTransient<IRouter>(serviceProvider => (IRouter)serviceProvider.GetService(router));
+            }
+
+            foreach (Type localCatGen in LocalCatalogGeneratorManager.LoadCatalogGeneratorPlugins(_pluginAssemblies))
+            {
+                collection.AddTransient(localCatGen);
+                collection.AddTransient<ILocalCatalogGenerator>(serviceProvider => (ILocalCatalogGenerator)serviceProvider.GetService(localCatGen));
             }
         }
 
         private static void ConfigureCommandLineApp()
         {
-            // var inputFileOption = _app.Option<string>("-i|--input", "Input reference to resource",
-            //                                             CommandOptionType.MultipleValue)
-            //                                             .IsRequired();
 
             _verboseOption = _app.Option("-v|--verbose", "Display operation details",
                                             CommandOptionType.NoValue);
@@ -67,6 +71,9 @@ namespace Stars
                     var recursivityOption = list.Option<int>("-r|--recursivity", "Resource recursivity depth routing",
                                         CommandOptionType.SingleValue);
 
+                    var listAssetOption = list.Option("-sa|--skip-assets", "Do not list assets",
+                                        CommandOptionType.NoValue);
+
                     list.Description = "List the Assets from the input reference";
 
                     list.HelpOption("-? | -h | --help");
@@ -74,7 +81,7 @@ namespace Stars
                     list.OnExecuteAsync(async cancellationToken =>
                     {
                         var listOperation = _serviceProvider.GetService<ListOperation>();
-                        await listOperation.ExecuteAsync(inputOption.Values, recursivityOption.HasValue() ? recursivityOption.ParsedValue : 0);
+                        await listOperation.ExecuteAsync();
                     });
 
                 }
@@ -102,7 +109,7 @@ namespace Stars
                     copy.OnExecuteAsync(async cancellationToken =>
                     {
                         var copyOperation = _serviceProvider.GetService<CopyOperation>();
-                        await copyOperation.ExecuteAsync(copy);
+                        await copyOperation.ExecuteAsync();
                     });
 
                 }
@@ -125,13 +132,13 @@ namespace Stars
             collection.AddSingleton<CommandLineApplication>(_app);
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
             collection.AddSingleton<IReporter, StarsConsoleReporter>();
-            // Add the Resource grabber
-            collection.AddSingleton<ResourceGrabber, ResourceGrabber>();
             // Add the Routers Manager
             collection.AddSingleton<ResourceRoutersManager, ResourceRoutersManager>();
+            collection.AddSingleton<LocalCatalogGeneratorManager, LocalCatalogGeneratorManager>();
 
             // Add the operations
             collection.AddTransient<ListOperation, ListOperation>();
+            collection.AddTransient<CopyOperation, CopyOperation>();
 
             // Build the service provider
             _serviceProvider = collection.BuildServiceProvider();

@@ -34,7 +34,7 @@ namespace Stars.Model.Atom
             }
         }
 
-        public bool CanGetResource => false;
+        public bool CanRead => false;
 
         public ResourceType ResourceType {
             get {
@@ -48,9 +48,17 @@ namespace Stars.Model.Atom
             }
         }
 
-        public Task<IResource> GetResource()
+        public Task<IResource> GotoResource()
         {
-            return Task.FromResult((IResource)null);
+            switch (link.RelationshipType)
+            {
+                case "self":
+                    return Task<IResource>.FromResult((IResource)new AtomItemRoutable(item));
+                case "enclosure":
+                case "icon":
+                default:
+                    return WebRoute.Create(link.Uri).GotoResource();
+            }
         }
     }
 }

@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 
 namespace Stars.Router
 {
-    public interface IResourceRouter
+    public interface IRouter
     {
+        string Label { get; }
+
         bool CanRoute(IResource resource);
 
-        IRoutable Route(IResource resource);
+        Task<IRoutable> Go(IResource resource);
     }
 }

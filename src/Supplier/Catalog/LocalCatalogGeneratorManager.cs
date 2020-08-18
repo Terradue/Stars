@@ -14,7 +14,7 @@ namespace Stars.Supplier.Catalog
             this._generators = generators;
         }
 
-        internal static IEnumerable<Type> LoadRoutersPlugins(string[] pluginPaths)
+        internal static IEnumerable<Type> LoadCatalogGeneratorPlugins(string[] pluginPaths)
         {
             return pluginPaths.SelectMany(pluginPath =>
             {

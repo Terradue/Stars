@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
 using Stac.Item;
@@ -9,12 +10,12 @@ using Stars.Router;
 
 namespace Stars.Model.Stac
 {
-    internal abstract class StacRoutable : IRoutable
+    internal abstract class StacResource : IResource
     {
         protected IStacObject stacObject;
         protected ContentType contentType;
 
-        public StacRoutable(IStacObject stacObject)
+        public StacResource(IStacObject stacObject)
         {
             this.stacObject = stacObject;
             this.contentType = new ContentType("application/json");
@@ -32,17 +33,15 @@ namespace Stars.Model.Stac
 
         public abstract string Filename { get; }
 
-        public abstract IEnumerable<IRoute> GetRoutes();
-
         public abstract string ReadAsString();
 
-        internal static IRoutable Create(IStacObject stacObject)
+        internal static StacResource Create(IStacObject stacObject)
         {
             if (stacObject is IStacCatalog)
-                return new StacCatalogRoutable(stacObject as IStacCatalog);
+                return new StacCatalogResource(stacObject as IStacCatalog);
 
             if (stacObject is IStacItem)
-                return new StacItemRoutable(stacObject as IStacItem);
+                return new StacItemResource(stacObject as IStacItem);
 
             return null;
         }
@@ -50,6 +49,16 @@ namespace Stars.Model.Stac
         public Stream GetAsStream()
         {
             throw new NotImplementedException();
+        }
+
+        public IStacObject ReadAsStacObject()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IResource> GotoResource()
+        {
+            return Task.FromResult((IResource)this);
         }
     }
 }

@@ -1,9 +1,9 @@
 {
-   // Use IntelliSense to find out which attributes exist for C# debugging
-   // Use hover for the description of the existing attributes
-   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-   "version": "0.2.0",
-   "configurations": [
+    // Use IntelliSense to find out which attributes exist for C# debugging
+    // Use hover for the description of the existing attributes
+    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
+    "version": "0.2.0",
+    "configurations": [
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
@@ -24,7 +24,29 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
-            "args": ["-h"],
+            "args": [
+                "-h"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "List STAC CBERS4/MUX/027",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
+            "args": [
+                "-v",
+                "list",
+                "--input",
+                "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/catalog.json",
+                "-r",
+                "4"
+            ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
@@ -37,7 +59,14 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
-            "args": ["-v", "list", "--input", "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json", "-r", "4"],
+            "args": [
+                "-v",
+                "list",
+                "--input",
+                "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json",
+                "-r",
+                "4"
+            ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
@@ -50,7 +79,58 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
-            "args": ["-v", "list", "--input", "https://catalog.terradue.com/sentinel2/search?uid=S2A_MSIL1C_20190119T074231_N0207_R092_T39TVH_20190119T091330", "-r", "4"],
+            "args": [
+                "-v",
+                "list",
+                "--input",
+                "https://catalog.terradue.com/sentinel2/search?uid=S2A_MSIL1C_20190119T074231_N0207_R092_T39TVH_20190119T091330",
+                "-r",
+                "4"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "List OpenSearch Sentinel3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
+            "args": [
+                "-v",
+                "list",
+                "--input",
+                "https://formentera.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200624T090133_20200624T090433_20200624T105644_0180_040_221_2700_LN2_O_NR_004",
+                "--input",
+                "https://formentera.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
+                "--input",
+                "https://formentera.terradue.com/sentinel3/search?format=atom&start=2020-03-06&bbox=-5.801%2C14.009%2C-3.076%2C16.215&pt=SL_2_LST___&od=DESCENDING",
+                "-r",
+                "4"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "List OpenSearch Sentinel3 [R2]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
+            "args": [
+                "-v",
+                "list",
+                "--input",
+                "https://formentera.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
+                "-r",
+                "2"
+            ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
@@ -63,7 +143,16 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
-            "args": ["-v", "copy", "--input", "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json", "-r", "4", "-o", "/tmp/stars"],
+            "args": [
+                "-v",
+                "copy",
+                "--input",
+                "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json",
+                "-r",
+                "4",
+                "-o",
+                "/tmp/stars"
+            ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",

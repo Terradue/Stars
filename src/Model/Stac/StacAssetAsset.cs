@@ -1,19 +1,21 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
 using Stars.Router;
+using Stars.Supplier.Asset;
 
 namespace Stars.Model.Stac
 {
-    internal class StacAssetRoute : IRoute
+    internal class StacAssetAsset : IAsset
     {
         private StacAsset asset;
         private readonly IStacObject stacObject;
 
-        public StacAssetRoute(StacAsset asset, IStacObject stacObject)
+        public StacAssetAsset(StacAsset asset, IStacObject stacObject)
         {
             this.asset = asset;
             this.stacObject = stacObject;
@@ -31,13 +33,18 @@ namespace Stars.Model.Stac
             }
         }
 
-        public bool CanGetResource => false;
+        public long ContentLength => 0;
 
-        public ResourceType ResourceType => ResourceType.Asset;
-
-        public Task<IResource> GetResource()
+        public string Label
         {
-            return Task<IResource>.FromResult((IResource)null);
+            get
+            {
+                string label = "";
+                if (asset.Roles != null && asset.Roles.Count() > 0)
+                    label += string.Format("[{0}] ", string.Join(",", asset.Roles));
+                label += string.IsNullOrEmpty(asset.Title) ? Path.GetFileName(asset.Uri.AbsolutePath) : asset.Title;
+                return label;
+            }
         }
     }
 }

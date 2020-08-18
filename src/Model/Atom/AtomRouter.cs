@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,40 +11,39 @@ using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Model.Atom
 {
-    public class AtomRouter : IResourceRouter
+    [RouterPriority(10)]
+    public class AtomRouter : IRouter
     {
 
         public AtomRouter()
         {
         }
 
+        public string Label => "Atom";
+
         public bool CanRoute(IResource resource)
         {
-            if (resource.ContentType.MediaType == "application/atom+xml" || Path.GetExtension(resource.Uri.LocalPath) == ".xml"
-                || Path.GetExtension(resource.Uri.LocalPath) == ".atom")
+            if (resource.ContentType.MediaType == "application/atom+xml")
             {
-                try
+               try
                 {
                     Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
                     feedFormatter.ReadFrom(XmlReader.Create(resource.GetAsStream()));
                     return true;
                 }
-                catch
-                {
-                }
+                catch {}
             }
             return false;
         }
 
-        public IRoutable Route(IResource resource)
+        public async Task<IRoutable> Go(IResource resource)
         {
-            if (resource.ContentType.MediaType == "application/atom+xml" || Path.GetExtension(resource.Uri.LocalPath) == ".xml"
-                || Path.GetExtension(resource.Uri.LocalPath) == ".atom")
+            if (resource.ContentType.MediaType == "application/atom+xml" )
             {
                 try
                 {
                     Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                    feedFormatter.ReadFrom(XmlReader.Create(resource.GetAsStream()));
+                    await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(resource.GetAsStream())));
                     return new AtomFeedRoutable(feedFormatter.Feed);
                 }
                 catch (Exception)

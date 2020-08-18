@@ -32,7 +32,7 @@ namespace Stars.Model.Stac
             }
         }
 
-        public bool CanGetResource
+        public bool CanRead
         {
             get
             {
@@ -66,20 +66,19 @@ namespace Stars.Model.Stac
             }
         }
 
-
-        public async Task<IResource> GetResource()
+        public async Task<IResource> GotoResource()
         {
             switch (link.RelationshipType)
             {
                 case "self":
-                    return StacRoutable.Create(stacParentObject) as IResource;
+                    return StacResource.Create(stacParentObject) as IResource;
                 case "root":
                 case "parent":
                     throw new NotImplementedException();
                 case "child":
-                    return StacRoutable.Create(await (StacCatalog.LoadStacLink(link)));
+                    return StacResource.Create(await (StacCatalog.LoadStacLink(link)));
                 case "item":
-                    return StacRoutable.Create(await (StacItem.LoadStacLink(link)));
+                    return StacResource.Create(await (StacItem.LoadStacLink(link)));
                 default:
                     return null;
             }

@@ -10,9 +10,9 @@ using Stars.Router;
 
 namespace Stars.Model.Stac
 {
-    internal class StacCatalogRoutable : StacRoutable, IRoutable
+    internal class StacCatalogResource : StacResource, IRoutable
     {
-        public StacCatalogRoutable(IStacCatalog stacCatalog) : base(stacCatalog)
+        public StacCatalogResource(IStacCatalog stacCatalog) : base(stacCatalog)
         {
             if (stacCatalog is StacCollection)
                 contentType.Parameters.Add("profile", "stac-collection");
@@ -43,7 +43,7 @@ namespace Stars.Model.Stac
             }
         }
 
-        public override IEnumerable<IRoute> GetRoutes()
+        public IEnumerable<IRoute> GetRoutes()
         {
             return StacCatalog.GetChildrenLinks().Select(link => new StacLinkRoute(link, StacCatalog)).Concat(
                     StacCatalog.GetItemLinks().Select(link => new StacLinkRoute(link, StacCatalog))

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
@@ -8,53 +9,42 @@ using Stars.Router;
 
 namespace Stars.Model.Stac
 {
-    public class StacRouter : IResourceRouter
+    [RouterPriority(1)]
+    public class StacRouter : IRouter
     {
-        
+
         public StacRouter()
         {
         }
 
+        public string Label => "Stac";
+
         public bool CanRoute(IResource resource)
         {
-            if (resource.ContentType.MediaType == "application/json" || Path.GetExtension(resource.Uri.LocalPath) == ".json")
+            if (resource.ContentType.MediaType == "application/json" || Path.GetExtension(resource.Uri.ToString()) == ".json")
             {
-                try
+               try
                 {
-                    StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri);
+                    new StacCatalogResource(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
                     return true;
                 }
-                catch (Exception)
-                {
-                    try
-                    {
-                        StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri);
-                        return true;
-                    }
-                    catch{}
-                }
+                catch { }
             }
             return false;
         }
 
-        public IRoutable Route(IResource resource)
+        public async Task<IRoutable> Go(IResource resource)
         {
-            if (resource.ContentType.MediaType == "application/json" || Path.GetExtension(resource.Uri.LocalPath) == ".json")
+            if (resource.ContentType.MediaType == "application/json" || Path.GetExtension(resource.Uri.ToString()) == ".json")
             {
                 try
                 {
-                    return new StacCatalogRoutable(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
+                    return new StacCatalogResource(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
                 }
-                catch (Exception)
-                {
-                    try
-                    {
-                        return new StacItemRoutable(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
-                    }
-                    catch{}
+                catch {
                 }
             }
-            return null;
+            throw new NotSupportedException(resource.ContentType.ToString());
         }
 
     }

@@ -4,12 +4,13 @@ using System.Linq;
 using Newtonsoft.Json;
 using Stac;
 using Stars.Router;
+using Stars.Supplier.Asset;
 
 namespace Stars.Model.Stac
 {
-    internal class StacItemRoutable : StacRoutable, IRoutable
+    internal class StacItemResource : StacResource, IAssetsContainer
     {
-        public StacItemRoutable(IStacItem stacItem) : base(stacItem)
+        public StacItemResource(IStacItem stacItem) : base(stacItem)
         {
             contentType.Parameters.Add("profile", "stac-item");
         }
@@ -20,9 +21,9 @@ namespace Stars.Model.Stac
 
         public override string Filename => stacObject.Id.CleanIdentifier() + ".item.json";
 
-        public override IEnumerable<IRoute> GetRoutes()
+        public IEnumerable<IAsset> GetAssets()
         {
-            return StacItem.Assets.Select(asset => new StacAssetRoute(asset.Value, StacItem)).Cast<IRoute>();
+            return StacItem.Assets.Select(asset => new StacAssetAsset(asset.Value, StacItem)).Cast<IAsset>();
         }
 
         public override string ReadAsString()
