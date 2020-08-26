@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Stac;
 using Stars.Router;
-using Stars.Supplier.Asset;
+using Stars.Supply.Asset;
 using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Model.Atom
@@ -34,6 +35,8 @@ namespace Stars.Model.Atom
         public string Id => item.Id.CleanIdentifier();
 
         public string Filename => Id + ".item.xml";
+
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
 
         public IEnumerable<IRoute> GetRoutes()
         {

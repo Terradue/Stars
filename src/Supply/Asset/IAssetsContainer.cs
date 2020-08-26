@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Stars.Supplier.Asset
+namespace Stars.Supply.Asset
 {
     internal interface IAssetsContainer
     {

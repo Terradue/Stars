@@ -10,7 +10,6 @@ namespace Stars.Router
     {
         string Label { get; }
         string Id { get; }
-        string Filename { get; }
         string ReadAsString();
         Stream GetAsStream();
 

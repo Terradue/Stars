@@ -14,10 +14,10 @@ namespace Stars.Model.Stac
         private StacLink link;
         private readonly IStacObject stacParentObject;
 
-        public StacLinkRoute(StacLink link, IStacObject stacObject)
+        public StacLinkRoute(StacLink link, IStacObject stacParentObject)
         {
             this.link = link;
-            this.stacParentObject = stacObject;
+            this.stacParentObject = stacParentObject;
         }
 
         public Uri Uri => link.Uri;
@@ -65,6 +65,8 @@ namespace Stars.Model.Stac
                 return ResourceType.Unknown;
             }
         }
+
+        public ulong ContentLength => link.Length;
 
         public async Task<IResource> GotoResource()
         {

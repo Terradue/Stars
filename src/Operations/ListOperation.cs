@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Stars.Router;
-using Stars.Supplier.Asset;
+using Stars.Supply.Asset;
 
 namespace Stars.Operations
 {
@@ -39,7 +39,6 @@ namespace Stars.Operations
 
         internal async Task PrintRoute(IRoute route, int recursivity, string prefix, IRouter prevRouter)
         {
-            console.ForegroundColor = GetColorFromType(route.ResourceType);
             // Stop here if there is no route
             if (route == null) return;
 
@@ -82,8 +81,6 @@ namespace Stars.Operations
                 await console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
                 return;
             }
-
-
 
             IRoutable routableResource = null;
             IRouter router = null;

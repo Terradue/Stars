@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Newtonsoft.Json;
@@ -36,6 +37,8 @@ namespace Stars.Model.Atom
         public string Id => feed.Id.CleanIdentifier();
 
         public string Filename => "atomfeed.xml";
+
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
 
         public IEnumerable<IRoute> GetRoutes()
         {

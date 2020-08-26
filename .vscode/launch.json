@@ -150,7 +150,33 @@
                 "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json",
                 "-r",
                 "4",
-                "-o",
+                "--output",
+                "/tmp/stars"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Copy OpenSearch Sentinel3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Stars.dll",
+            "args": [
+                "-v",
+                "copy",
+                "--input",
+                "https://formentera.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200624T090133_20200624T090433_20200624T105644_0180_040_221_2700_LN2_O_NR_004",
+                "--input",
+                "https://formentera.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
+                "--input",
+                "https://formentera.terradue.com/sentinel3/search?format=atom&start=2020-03-06&bbox=-5.801%2C14.009%2C-3.076%2C16.215&pt=SL_2_LST___&od=DESCENDING",
+                "-r",
+                "4",
+                "--output",
                 "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",

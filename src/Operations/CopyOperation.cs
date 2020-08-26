@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.DependencyInjection;
 using Stars.Router;
-using Stars.Supplier.Asset;
-using Stars.Supplier.Catalog;
+using Stars.Supply;
+using Stars.Supply.Asset;
+using Stars.Supply.Destination;
 
 namespace Stars.Operations
 {
@@ -16,107 +18,168 @@ namespace Stars.Operations
         private readonly IConsole console;
         private readonly IReporter reporter;
         private readonly ResourceRoutersManager routersManager;
-        private readonly LocalCatalogGeneratorManager catGenManager;
+        private readonly SupplierManager suppliersManager;
+        private readonly DestinationManager destinationManager;
+        private readonly CarrierManager carriersManager;
         private readonly CommandLineApplication copy;
 
-        public CopyOperation(IConsole console, IReporter reporter, ResourceRoutersManager routersManager, LocalCatalogGeneratorManager catGenManager, CommandLineApplication app)
+        public CopyOperation(IServiceProvider serviceProvider)
         {
-            this.console = console;
-            this.reporter = reporter;
-            this.routersManager = routersManager;
-            this.catGenManager = catGenManager;
-            this.copy = app.Commands.FirstOrDefault(c => c.Name == "list");
+            this.console = serviceProvider.GetService<IConsole>();
+            this.reporter = serviceProvider.GetService<IReporter>();
+            this.routersManager = serviceProvider.GetService<ResourceRoutersManager>();
+            this.suppliersManager = serviceProvider.GetService<SupplierManager>();
+            this.destinationManager = serviceProvider.GetService<DestinationManager>();
+            this.carriersManager = serviceProvider.GetService<CarrierManager>();
+            var app = serviceProvider.GetService<CommandLineApplication>();
+            this.copy = app.Commands.FirstOrDefault(c => c.Name == "copy");
         }
 
         public async Task ExecuteAsync()
         {
             var inputs = copy.GetOptions().Where(o => o.ShortName == "i").SelectMany(o => o.Values);
+            var output = copy.GetOptions().FirstOrDefault(o => o.ShortName == "o");
+            CommandOption<int> recursivityOption = (CommandOption<int>)copy.GetOptions().FirstOrDefault(o => o.ShortName == "r");
+
+            IDestination destination = await destinationManager.CreateDestination(output.Value());
+            if (destination == null)
+            {
+                throw new OperationCanceledException("No valid destination found for " + output);
+            }
 
             foreach (var input in inputs)
             {
                 IRoute initRoute = WebRoute.Create(new Uri(input));
-                await Copy(initRoute, 1, new DirectoryInfo("/tmp/stars"));
+                await Copy(initRoute, recursivityOption.HasValue() ? recursivityOption.ParsedValue : 1, destination, null);
             }
         }
 
-        internal async Task Copy(IRoute route, int recursivity, DirectoryInfo outputDirectory)
+        internal async Task Copy(IRoute route, int recursivity, IDestination destination, IRouter prevRouter)
         {
-            // Stop here
-            if (recursivity == 0) return;
+            // Stop here if there is no route
+            if (route == null) return;
 
-            // Let's see if there is a router for the route
-            //IRouter router = routersManager.GetRouter(route);
-            IResource resource = await route.GotoResource();
+            IResource resource = null;
+            Exception exception = null;
 
-            // No resource -> Stop!
-            if (resource == null) return;
-
-            IRoutable routableResource = null;
-            // If resource is not routable
-            if (!(resource is IRoutable))
+            // if recursivity threshold is not reached
+            if (recursivity > 0)
             {
-                IRouter router = routersManager.GetRouter(resource);
-                // if (router == null && resource.)
-                // {
-                //     await console.Out.WriteLineAsync(String.Format("{0,-100} {1,50}", (prefix + resource.Uri).Truncate(99), resource.ContentType));
-                //     return;
-                // }
-                // await PrintRoute(await router.Go(resource), recursivity, prefix);
+                // let's keep going -> follow the route to the resource
+                try
+                {
+                    resource = await route.GotoResource();
+                    if (resource == null)
+                        throw new NullReferenceException("Null");
+                }
+                catch (AggregateException ae)
+                {
+                    exception = ae.InnerException;
+                }
+                catch (Exception e)
+                {
+                    exception = e;
+                }
+            }
+            else
+            {
+                exception = new Exception("Max Depth");
+            }
+
+            // Print warning route info + exception if resource cannot be reached
+            if (exception != null)
+            {
+                reporter.Warn(String.Format("[{0}] {1} ({2}): {3}", prevRouter.Label, route.Uri, route.ContentType, exception.Message));
                 return;
             }
 
-            // Ok a resource. Let's copy it
-            await CopyResource(resource, outputDirectory);
+            IRoutable routableResource = null;
+            IRouter router = null;
+            // If resource is not routable (there is no more native routes fom that resource)
+            if (!(resource is IRoutable))
+            {
+                // Print the information about the resource
 
-            // No more routes -> Stop
-            if (!(resource is IRoutable)) return;
+                // Ask the router manager if there is another router available for this resource
+                router = routersManager.GetRouter(resource);
+                // Definitively no more routes, print the resource info and return
+                if (router == null)
+                {
+                    await CopyResource(resource, destination);
+                    return;
+                }
+                // New route!
+                routableResource = await router.Go(resource);
+            }
+            else
+            {
+                // If the resource is natively routable
+                routableResource = (IRoutable)resource;
+                router = prevRouter;
+            }
 
-            routableResource = (IRoutable)resource;
+            // Print info about the routable resource
+            // await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (prefix + routableResource.Uri).Truncate(99), routableResource.ContentType));
+            await CopyResource(routableResource, destination);
 
+            // Let's get sub routes
             IEnumerable<IRoute> subroutes = routableResource.GetRoutes();
-            foreach (IRoute subroute in subroutes)
+            for (int i = 0; i < subroutes.Count(); i++)
             {
-                await Copy(subroute, recursivity - 1, new DirectoryInfo(Path.Combine(outputDirectory.FullName, routableResource.Id)));
-            }
-        }
-
-        private async Task CopyResource(IResource resource, DirectoryInfo outputDirectory)
-        {
-            // Create Directory if it does not exist
-            if (!outputDirectory.Exists) outputDirectory.Create();
-
-            // Copy the resource prefixed
-            using (FileStream fileStream = File.Create(Path.Combine(outputDirectory.FullName, resource.Filename)))
-            {
-                await resource.GetAsStream().CopyToAsync(fileStream);
+                var subroute = subroutes.ElementAt(i);
+                await Copy(subroute, recursivity - 1, destination.RelativePath(route, subroute), router);
             }
 
         }
 
-        private async Task CopyLocalCatalogResource(IResource resource, IEnumerable<IResource> children, IEnumerable<IAsset> assets, DirectoryInfo outputDirectory)
+        private async Task<IRoute> CopyResource(IResource resource, IDestination destination)
         {
+            reporter.Verbose(String.Format("{0} -> {1}", resource.Uri, destination.Uri));
+            // List all possible resource supply
+            IEnumerable<(ISupplier, IResource)> possible_supplies = await ListResourceSupplier(resource, destination);
 
-            // 1. Generate the local catalog or collection
-            IResource localResource = GenerateLocalCatalog(resource, children, assets);
+            // Ask for quotation to all carriers
+            IEnumerable<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = carriersManager.QuoteDelivery(possible_supplies, destination);
 
-            // 3. Copy it in the folder
-            using (FileStream fileStream = File.Create(Path.Combine(outputDirectory.FullName, resource.Filename)))
+            // TEMP debug quotation mechanism
+            int i = 1;
+            foreach (var supply_quotation in resourceSupplyQuotations)
             {
-                await localResource.GetAsStream().CopyToAsync(fileStream);
+                reporter.Verbose(string.Format("Supplier #{0} {1} : {2} routes", i, supply_quotation.Item1.Id, supply_quotation.Item2.DeliveryQuotes.Count));
+
+                foreach (var route in supply_quotation.Item2.DeliveryQuotes)
+                {
+                    reporter.Verbose(string.Format("  Route {0} : {1} carriers", route.Key.Uri.ToString(), route.Value.Count()));
+                    int j = 1;
+                    foreach (var delivery in route.Value)
+                    {
+                        reporter.Verbose(string.Format("    Delivery #{0} by carrier {1} to {3} : {2}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString()));
+                        j++;
+                    }
+                }
+
+                i++;
             }
+            return null;
+
         }
 
-        private IResource GenerateLocalCatalog(IResource resource, IEnumerable<IResource> children, IEnumerable<IAsset> assets)
+        private async Task<IEnumerable<(ISupplier, IResource)>> ListResourceSupplier(IResource resource, IDestination destination)
         {
-            // TODO Get the type of the local catalog from the application arguments
-            // Using STAC by default
+            IEnumerable<ISupplier> possible_suppliers = suppliersManager.GetSuppliers(resource);
 
-            ILocalCatalogGenerator catGen = catGenManager.GetLocalCatalogGenerator("stac");
+            List<(ISupplier, IResource)> possible_deliveries = new List<(ISupplier, IResource)>();
 
-            IResource localResource = catGen.LocalizeResource(resource, children, assets);
+            foreach (var supplier in possible_suppliers)
+            {
+                IEnumerable<IResource> possible_resources = await supplier.LocalizeResource(resource);
+                foreach (var possible_resource in possible_resources)
+                {
+                    possible_deliveries.Add((supplier, possible_resource));
+                }
+            }
 
-            return localResource;
-
+            return possible_deliveries;
         }
     }
 }

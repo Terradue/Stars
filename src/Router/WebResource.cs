@@ -49,6 +49,8 @@ namespace Stars.Router
 
         public string Id => Filename.CleanIdentifier();
 
+        public ulong ContentLength => Convert.ToUInt64(webResponse.ContentLength);
+
         public string ReadAsString()
         {
             responseStream.Position = 0;

@@ -48,6 +48,8 @@ namespace Stars.Model.Atom
             }
         }
 
+        public ulong ContentLength => Convert.ToUInt64(link.Length);
+
         public Task<IResource> GotoResource()
         {
             switch (link.RelationshipType)

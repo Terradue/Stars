@@ -11,16 +11,18 @@ namespace Stars.Router
     internal class WebRoute : IRoute
     {
         private readonly WebRequest request;
+        private readonly ulong contentLength;
 
-        internal WebRoute(WebRequest request)
+        internal WebRoute(WebRequest request, ulong contentLength = 0)
         {
             this.request = request;
+            this.contentLength = contentLength;
         }
 
-        public static WebRoute Create(Uri uri)
+        public static WebRoute Create(Uri uri, ulong contentLength = 0)
         {
             WebRequest request = WebRequest.Create(uri);
-            return new WebRoute(request);
+            return new WebRoute(request, contentLength);
         }
 
         public async Task<IResource> GotoResource()
@@ -38,5 +40,6 @@ namespace Stars.Router
 
         public WebRequest Request { get => request; }
 
+        public ulong ContentLength => contentLength;
     }
 }

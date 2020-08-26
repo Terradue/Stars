@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Stars.Operations;
 using Stars.Router;
-using Stars.Supplier.Catalog;
+using Stars.Supply;
+using Stars.Supply.Destination;
 
 namespace Stars
 {
@@ -12,6 +14,8 @@ namespace Stars
     {
         private static IServiceProvider _serviceProvider;
         private static CommandLineApplication<Program> _app;
+
+        public static IConfigurationRoot Configuration { get; set; }
 
         private static string[] _pluginAssemblies = new string[]
         {
@@ -38,16 +42,33 @@ namespace Stars
 
         private static void AddPlugins(ServiceCollection collection)
         {
-            foreach (Type router in ResourceRoutersManager.LoadRoutersPlugins(_pluginAssemblies))
+            foreach (Type router in ResourceRoutersManager.LoadManagedPlugins(_pluginAssemblies))
             {
                 collection.AddTransient(router);
                 collection.AddTransient<IRouter>(serviceProvider => (IRouter)serviceProvider.GetService(router));
             }
 
-            foreach (Type localCatGen in LocalCatalogGeneratorManager.LoadCatalogGeneratorPlugins(_pluginAssemblies))
+            foreach (Type supplier in SupplierManager.LoadManagedPlugins(_pluginAssemblies))
             {
-                collection.AddTransient(localCatGen);
-                collection.AddTransient<ILocalCatalogGenerator>(serviceProvider => (ILocalCatalogGenerator)serviceProvider.GetService(localCatGen));
+                collection.AddTransient(supplier);
+                collection.AddTransient<ISupplier>(serviceProvider => (ISupplier)serviceProvider.GetService(supplier));
+            }
+
+            foreach (Type destinationGuide in DestinationManager.LoadManagedPlugins(_pluginAssemblies))
+            {
+                collection.AddTransient(destinationGuide);
+                collection.AddTransient<IDestinationGuide>(serviceProvider => (IDestinationGuide)serviceProvider.GetService(destinationGuide));
+            }
+
+            foreach (Type carrierType in CarrierManager.LoadManagedPlugins(_pluginAssemblies))
+            {
+                collection.AddTransient(carrierType);
+                collection.AddTransient<ICarrier>(serviceProvider =>
+                {
+                    var carrier = (ICarrier)serviceProvider.GetService(carrierType);
+                    carrier.Configure(Configuration.GetSection("Carriers").GetSection(carrier.Id));
+                    return carrier;
+                });
             }
         }
 
@@ -76,8 +97,6 @@ namespace Stars
 
                     list.Description = "List the Assets from the input reference";
 
-                    list.HelpOption("-? | -h | --help");
-
                     list.OnExecuteAsync(async cancellationToken =>
                     {
                         var listOperation = _serviceProvider.GetService<ListOperation>();
@@ -92,8 +111,9 @@ namespace Stars
             _app.Command("copy",
                 (copy) =>
                 {
-                    var outputOption = copy.Option("-o|--output_dir", "Output Directory",
-                                                    CommandOptionType.SingleValue);
+                    var outputOption = copy.Option<string>("-o|--output", "Output destination (folder, remote URI...)",
+                                                    CommandOptionType.SingleValue)
+                                                    .IsRequired();
 
                     var inputOption = copy.Option<string>("-i|--input", "Input reference to resource",
                                         CommandOptionType.MultipleValue)
@@ -102,9 +122,11 @@ namespace Stars
                     var recursivityOption = copy.Option<int>("-r|--recursivity", "Resource recursivity depth routing",
                                         CommandOptionType.SingleValue);
 
-                    copy.Description = "Copy the Assets from the input reference";
+                    var skipAssetOption = copy.Option("-sa|--skip-assets", "Do not list assets",
+                                        CommandOptionType.NoValue);
 
-                    copy.HelpOption("-? | -h | --help");
+                    copy.Description = "Copy the Assets from the input reference to the output destination";
+
 
                     copy.OnExecuteAsync(async cancellationToken =>
                     {
@@ -116,14 +138,33 @@ namespace Stars
             );
             #endregion copy-command
 
-            // rest of CLI implementions
-            _app.HelpOption("-h|--help|-?");
 
         }
 
         private static void RegisterServices()
         {
+            var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
+            //Determines the working environment as IHostingEnvironment is unavailable in a console app
+            var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) ||
+                                devEnvironmentVariable.ToLower() == "development";
+
             var collection = new ServiceCollection();
+
+            // Add Configuration
+            var builder = new ConfigurationBuilder();
+            // tell the builder to look for the appsettings.json file
+            builder.AddYamlFile("appsettings.yml", optional: true)
+                    .AddNewtonsoftJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            //only add secrets in development
+            if (isDevelopment)
+            {
+                builder.AddUserSecrets<Program>();
+            }
+
+            Configuration = builder.Build();
+
+            collection.AddSingleton<IConfiguration>(Configuration);
 
             // Load Plugins
             AddPlugins(collection);
@@ -132,9 +173,11 @@ namespace Stars
             collection.AddSingleton<CommandLineApplication>(_app);
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
             collection.AddSingleton<IReporter, StarsConsoleReporter>();
-            // Add the Routers Manager
+            // Add the Managers
             collection.AddSingleton<ResourceRoutersManager, ResourceRoutersManager>();
-            collection.AddSingleton<LocalCatalogGeneratorManager, LocalCatalogGeneratorManager>();
+            collection.AddSingleton<SupplierManager, SupplierManager>();
+            collection.AddSingleton<DestinationManager, DestinationManager>();
+            collection.AddSingleton<CarrierManager, CarrierManager>();
 
             // Add the operations
             collection.AddTransient<ListOperation, ListOperation>();

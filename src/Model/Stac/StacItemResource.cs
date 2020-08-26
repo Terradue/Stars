@@ -4,7 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Stac;
 using Stars.Router;
-using Stars.Supplier.Asset;
+using Stars.Supply.Asset;
 
 namespace Stars.Model.Stac
 {
@@ -18,8 +18,6 @@ namespace Stars.Model.Stac
         public IStacItem StacItem => stacObject as IStacItem;
 
         public override ResourceType ResourceType => ResourceType.Item;
-
-        public override string Filename => stacObject.Id.CleanIdentifier() + ".item.json";
 
         public IEnumerable<IAsset> GetAssets()
         {

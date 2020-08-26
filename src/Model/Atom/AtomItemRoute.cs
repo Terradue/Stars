@@ -26,6 +26,8 @@ namespace Stars.Model.Atom
 
         public ResourceType ResourceType => ResourceType.Item;
 
+        public ulong ContentLength => 0;
+
         public Task<IResource> GotoResource()
         {
             return Task<IResource>.FromResult((IResource)new AtomItemRoutable(item));

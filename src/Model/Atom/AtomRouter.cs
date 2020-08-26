@@ -11,7 +11,7 @@ using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Model.Atom
 {
-    [RouterPriority(10)]
+    [PluginPriority(10)]
     public class AtomRouter : IRouter
     {
 

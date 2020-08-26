@@ -9,7 +9,7 @@ using Stars.Router;
 
 namespace Stars.Model.Stac
 {
-    [RouterPriority(1)]
+    [PluginPriority(1)]
     public class StacRouter : IRouter
     {
 

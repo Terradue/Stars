@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
 using Stars.Router;
-using Stars.Supplier.Asset;
+using Stars.Supply.Asset;
 
 namespace Stars.Model.Stac
 {
@@ -45,6 +45,15 @@ namespace Stars.Model.Stac
                 label += string.IsNullOrEmpty(asset.Title) ? Path.GetFileName(asset.Uri.AbsolutePath) : asset.Title;
                 return label;
             }
+        }
+
+        public ResourceType ResourceType => ResourceType.Asset;
+
+        ulong IRoute.ContentLength => asset.ContentLength;
+
+        public async Task<IResource> GotoResource()
+        {
+            return await WebRoute.Create(Uri).GotoResource();
         }
     }
 }

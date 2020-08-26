@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stars.Router;
-using Stars.Supplier.Asset;
+using Stars.Supply.Asset;
 using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Model.Atom
@@ -36,8 +36,15 @@ namespace Stars.Model.Atom
             }
         }
 
-        public long ContentLength => link.Length;
+        public ulong ContentLength => Convert.ToUInt64(link.Length);
 
         public string Label => string.Format("[{0}] {1}", string.Join(",", link.RelationshipType), string.IsNullOrEmpty(link.Title) ? Path.GetFileName(link.Uri.AbsolutePath) : link.Title);
+
+        public ResourceType ResourceType => ResourceType.Asset;
+
+        public async Task<IResource> GotoResource()
+        {
+            return await WebRoute.Create(Uri).GotoResource();
+        }
     }
 }

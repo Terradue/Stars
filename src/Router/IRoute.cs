@@ -10,6 +10,8 @@ namespace Stars.Router
         Uri Uri { get; }
         ContentType ContentType { get; }
         ResourceType ResourceType { get; }
+        ulong ContentLength { get; }
+
         Task<IResource> GotoResource();
     }
 }

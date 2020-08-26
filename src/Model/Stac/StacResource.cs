@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Item;
@@ -31,7 +33,8 @@ namespace Stars.Model.Stac
 
         public string Id => stacObject.Id.CleanIdentifier();
 
-        public abstract string Filename { get; }
+        public virtual ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(JsonConvert.SerializeObject(stacObject)).Length);
+
 
         public abstract string ReadAsString();
 

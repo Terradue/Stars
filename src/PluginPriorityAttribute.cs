@@ -1,12 +1,12 @@
 using System;
 
-namespace Stars.Router
+namespace Stars
 {
-    internal class RouterPriorityAttribute : Attribute
+    internal class PluginPriorityAttribute : Attribute
     {
         private int v;
 
-        public RouterPriorityAttribute(int v)
+        public PluginPriorityAttribute(int v)
         {
             this.v = v;
         }
