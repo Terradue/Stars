@@ -20,7 +20,6 @@ namespace Stars.Operations
         private readonly ResourceRoutersManager routersManager;
         private readonly SupplierManager suppliersManager;
         private readonly DestinationManager destinationManager;
-        private readonly CarrierManager carriersManager;
         private readonly CommandLineApplication copy;
 
         public CopyOperation(IServiceProvider serviceProvider)
@@ -30,7 +29,6 @@ namespace Stars.Operations
             this.routersManager = serviceProvider.GetService<ResourceRoutersManager>();
             this.suppliersManager = serviceProvider.GetService<SupplierManager>();
             this.destinationManager = serviceProvider.GetService<DestinationManager>();
-            this.carriersManager = serviceProvider.GetService<CarrierManager>();
             var app = serviceProvider.GetService<CommandLineApplication>();
             this.copy = app.Commands.FirstOrDefault(c => c.Name == "copy");
         }
@@ -139,15 +137,17 @@ namespace Stars.Operations
             IEnumerable<(ISupplier, IResource)> possible_supplies = await ListResourceSupplier(resource, destination);
 
             // Ask for quotation to all carriers
-            IEnumerable<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = carriersManager.QuoteDelivery(possible_supplies, destination);
+            //            
 
             // TEMP debug quotation mechanism
             int i = 1;
-            foreach (var supply_quotation in resourceSupplyQuotations)
+            foreach (var supply in possible_supplies)
             {
-                reporter.Verbose(string.Format("Supplier #{0} {1} : {2} routes", i, supply_quotation.Item1.Id, supply_quotation.Item2.DeliveryQuotes.Count));
+                DeliveryQuotation supply_quotation = supply.Item1.QuoteDelivery(supply.Item2, destination);
 
-                foreach (var route in supply_quotation.Item2.DeliveryQuotes)
+                reporter.Verbose(string.Format("Supplier #{0} {1} Quotation for {2} routes", i, supply.Item1.Id, supply_quotation.DeliveryQuotes.Count));
+
+                foreach (var route in supply_quotation.DeliveryQuotes)
                 {
                     reporter.Verbose(string.Format("  Route {0} : {1} carriers", route.Key.Uri.ToString(), route.Value.Count()));
                     int j = 1;
@@ -159,6 +159,7 @@ namespace Stars.Operations
                 }
 
                 i++;
+
             }
             return null;
 

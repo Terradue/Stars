@@ -14,6 +14,6 @@ namespace Stars.Supply
 
         // TODO add assets filters
         Task<IEnumerable<IResource>> LocalizeResource(IResource resource);
-
+        DeliveryQuotation QuoteDelivery(IResource resource, IDestination destination);
     }
 }

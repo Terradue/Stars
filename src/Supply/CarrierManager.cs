@@ -51,33 +51,33 @@ namespace Stars.Supply
                 {
                     var qDelivery = carrier.QuoteDelivery(route, supplier, destination);
                     if (qDelivery == null) continue;
-                     quotes.Add(qDelivery);
+                    quotes.Add(qDelivery);
                 }
                 catch (Exception e)
                 {
                     reporter.Warn(string.Format("Cannot quote delivery for {0} with carrier {1}: {2}", route.Uri, carrier.Id, e.Message));
                 }
-               
+
             }
             return quotes.OrderBy(q => q.Cost);
         }
 
-        internal IEnumerable<(ISupplier, DeliveryQuotation)> QuoteDelivery(IEnumerable<(ISupplier, IResource)> supplies, IDestination destination)
+        /// <summary>
+        /// Make a set of quotation for each supplier
+        /// </summary>
+        /// <returns></returns>
+        public DeliveryQuotation QuoteDeliveryFromCarriers((ISupplier, IResource) supply, IDestination destination)
         {
             List<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = new List<(ISupplier, DeliveryQuotation)>();
 
-            foreach (var supply in supplies)
-            {
-                Dictionary<IRoute, IOrderedEnumerable<Delivery>> supplierQuotation = new Dictionary<IRoute, IOrderedEnumerable<Delivery>>();
-                if (supply.Item2 is IAssetsContainer)
-                    supplierQuotation = GetAssetsDeliveryQuotations(supply.Item1, supply.Item2 as IAssetsContainer, destination);
+            Dictionary<IRoute, IOrderedEnumerable<Delivery>> supplierQuotation = new Dictionary<IRoute, IOrderedEnumerable<Delivery>>();
+            if (supply.Item2 is IAssetsContainer)
+                supplierQuotation = GetAssetsDeliveryQuotations(supply.Item1, supply.Item2 as IAssetsContainer, destination);
 
-                var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supply.Item1, supply.Item2, destination);
-                supplierQuotation.Add(supply.Item2, resourceDeliveryQuotations);
+            var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supply.Item1, supply.Item2, destination);
+            supplierQuotation.Add(supply.Item2, resourceDeliveryQuotations);
 
-                resourceSupplyQuotations.Add((supply.Item1, new DeliveryQuotation(supplierQuotation)));
-            }
-            return resourceSupplyQuotations.OrderByDescending(rsq => rsq.Item2.DeliveryQuotes.Select(dq => dq.Value.Count()));
+            return new DeliveryQuotation(supplierQuotation);
         }
     }
 }

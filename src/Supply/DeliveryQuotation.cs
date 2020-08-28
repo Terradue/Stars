@@ -7,7 +7,7 @@ using Stars.Supply.Destination;
 
 namespace Stars.Supply
 {
-    internal class DeliveryQuotation
+    public class DeliveryQuotation
     {
         private IDictionary<IRoute, IOrderedEnumerable<Delivery>> deliveryRoutes;
 
