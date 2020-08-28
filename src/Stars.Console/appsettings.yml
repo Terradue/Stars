@@ -1,0 +1,7 @@
+carriers:
+  web_download:
+    network_credentials:
+      sci_hub:
+        uri_prefix: https://scihub.copernicus.eu
+        username: test
+        password: secret
