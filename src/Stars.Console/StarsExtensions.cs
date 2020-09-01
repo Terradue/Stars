@@ -7,6 +7,8 @@ namespace Stars
     {
         internal static string CleanIdentifier(this string strIn)
         {
+            if (string.IsNullOrEmpty(strIn))
+                return null;
             // Replace invalid characters with empty strings.
             try
             {

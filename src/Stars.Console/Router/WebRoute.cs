@@ -26,7 +26,7 @@ namespace Stars.Router
             return new WebRoute(request, contentLength);
         }
 
-        public async Task<IResource> GotoResource()
+        public async Task<INode> GoToNode()
         {
             return await request.GetResponseAsync().ContinueWith(wr => new WebResource(wr.Result));
         }

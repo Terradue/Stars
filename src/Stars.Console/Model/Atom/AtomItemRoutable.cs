@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 using System.Xml;
 using Stac;
 using Stars.Interface.Router;
+using Stars.Interface.Supply;
+using Stars.Interface.Supply.Asset;
 using Stars.Router;
 using Stars.Supply.Asset;
 using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Model.Atom
 {
-    internal class AtomItemRoutable : IResource, IRoutable, IAssetsContainer
+    internal class AtomItemRoutable : INode, IRoutable, IAssetsContainer
     {
         private SyndicationItem item;
+        private readonly ISupplier supplier;
 
         public AtomItemRoutable(SyndicationItem item)
         {
@@ -39,6 +42,8 @@ namespace Stars.Model.Atom
 
         public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
 
+        public bool IsCatalog => false;
+
         public IEnumerable<IRoute> GetRoutes()
         {
             return new List<IRoute>();
@@ -46,11 +51,11 @@ namespace Stars.Model.Atom
 
         public string ReadAsString()
         {
-            StreamReader sr = new StreamReader(GetAsStream());
+            StreamReader sr = new StreamReader(GetStream());
             return sr.ReadToEnd();
         }
 
-        public Stream GetAsStream()
+        public Stream GetStream()
         {
             MemoryStream ms = new MemoryStream();
             var sw = XmlWriter.Create(ms);
@@ -61,14 +66,9 @@ namespace Stars.Model.Atom
             return ms;
         }
 
-        public IStacObject ReadAsStacObject()
+        public Task<INode> GoToNode()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IResource> GotoResource()
-        {
-            return Task.FromResult((IResource)this);
+            return Task.FromResult((INode)this);
         }
 
         public IEnumerable<IAsset> GetAssets()

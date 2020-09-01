@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Stars.Supply.Asset
+namespace Stars.Interface.Supply.Asset
 {
-    internal interface IAssetsContainer
+    public interface IAssetsContainer
     {
         IEnumerable<IAsset> GetAssets();
     }

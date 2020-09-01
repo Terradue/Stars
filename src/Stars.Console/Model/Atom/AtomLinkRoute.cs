@@ -51,16 +51,16 @@ namespace Stars.Model.Atom
 
         public ulong ContentLength => Convert.ToUInt64(link.Length);
 
-        public Task<IResource> GotoResource()
+        public Task<INode> GoToNode()
         {
             switch (link.RelationshipType)
             {
                 case "self":
-                    return Task<IResource>.FromResult((IResource)new AtomItemRoutable(item));
+                    return Task<INode>.FromResult((INode)new AtomItemRoutable(item));
                 case "enclosure":
                 case "icon":
                 default:
-                    return WebRoute.Create(link.Uri).GotoResource();
+                    return WebRoute.Create(link.Uri).GoToNode();
             }
         }
     }

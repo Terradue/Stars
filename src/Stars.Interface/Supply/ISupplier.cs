@@ -9,10 +9,8 @@ namespace Stars.Interface.Supply
     {
         string Id { get; }
 
-        bool CanSupply(IResource resource);
-
         // TODO add assets filters
-        Task<IEnumerable<IResource>> LocalizeResource(IResource resource);
-        IDeliveryQuotation QuoteDelivery(IResource resource, IDestination destination);
+        Task<INode> SearchFor(INode resource);
+        IDeliveryQuotation QuoteDelivery(INode resource, IDestination destination);
     }
 }

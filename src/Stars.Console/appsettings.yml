@@ -1,7 +1,15 @@
-carriers:
-  web_download:
-    network_credentials:
-      sci_hub:
-        uri_prefix: https://scihub.copernicus.eu
-        username: test
-        password: secret
+Suppliers:
+  Onda:
+    Type: Terradue.Data.Suppliers.DataHubSourceSupplier, Terradue.Data.Suppliers
+    Parameters: [""]
+    ServiceUrl: "https://catalogue.onda-dias.eu/dias-catalogue"
+    Credentials:
+      Username: test
+      Password: secret
+Carriers:
+  WebDownload:
+    NetworkCredentials:
+      SciHub:
+        UriPrefix: https://scihub.copernicus.eu
+        Username: test
+        Password: secret

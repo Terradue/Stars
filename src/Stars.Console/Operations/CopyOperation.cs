@@ -60,7 +60,7 @@ namespace Stars.Operations
             // Stop here if there is no route
             if (route == null) return;
 
-            IResource resource = null;
+            INode resource = null;
             Exception exception = null;
 
             // if recursivity threshold is not reached
@@ -69,7 +69,7 @@ namespace Stars.Operations
                 // let's keep going -> follow the route to the resource
                 try
                 {
-                    resource = await route.GotoResource();
+                    resource = await route.GoToNode();
                     if (resource == null)
                         throw new NullReferenceException("Null");
                 }
@@ -90,7 +90,7 @@ namespace Stars.Operations
             // Print warning route info + exception if resource cannot be reached
             if (exception != null)
             {
-                reporter.Warn(String.Format("[{0}] {1} ({2}): {3}", prevRouter.Label, route.Uri, route.ContentType, exception.Message));
+                reporter.Warn(String.Format("[{0}] {1} ({2}): {3}", prevRouter == null ? "none" : prevRouter.Label, route.Uri, route.ContentType, exception.Message));
                 return;
             }
 
@@ -133,30 +133,42 @@ namespace Stars.Operations
 
         }
 
-        private async Task<IRoute> CopyResource(IResource resource, IDestination destination)
+        private async Task<IRoute> CopyResource(INode resource, IDestination destination)
         {
             reporter.Verbose(String.Format("{0} -> {1}", resource.Uri, destination.Uri));
             // List all possible resource supply
-            IEnumerable<(ISupplier, IResource)> possible_supplies = await ListResourceSupplier(resource, destination);
+            Dictionary<ISupplier, INode> possible_supplies = new Dictionary<ISupplier, INode>();
 
-            // Ask for quotation to all carriers
-            //            
+
+            // 1. Get the resource native supplier 
+            var native_supplier = suppliersManager.GetDefaultSupplier();
+            if (native_supplier != null)
+                possible_supplies.Add(native_supplier, resource);
+
+            if (!resource.IsCatalog)
+            {
+                foreach (var supply in await SearchForOtherSuppliers(resource))
+                {
+                    if (!possible_supplies.ContainsKey(supply.Key))
+                        possible_supplies.Add(supply.Key, supply.Value);
+                }
+            }
 
             // TEMP debug quotation mechanism
             int i = 1;
             foreach (var supply in possible_supplies)
             {
-                IDeliveryQuotation supply_quotation = supply.Item1.QuoteDelivery(supply.Item2, destination);
+                IDeliveryQuotation supply_quotation = supply.Key.QuoteDelivery(supply.Value, destination);
 
-                reporter.Verbose(string.Format("Supplier #{0} {1} Quotation for {2} routes", i, supply.Item1.Id, supply_quotation.DeliveryQuotes.Count));
+                reporter.Output(string.Format("Supplier #{0} {1} Quotation for {2} routes", i, supply.Key.Id, supply_quotation.DeliveryQuotes.Count));
 
                 foreach (var route in supply_quotation.DeliveryQuotes)
                 {
-                    reporter.Verbose(string.Format("  Route {0} : {1} carriers", route.Key.Uri.ToString(), route.Value.Count()));
+                    reporter.Output(string.Format("  Route {0} : {1} carriers", route.Key.Uri.ToString(), route.Value.Count()));
                     int j = 1;
                     foreach (var delivery in route.Value)
                     {
-                        reporter.Verbose(string.Format("    Delivery #{0} by carrier {1} to {3} : {2}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString()));
+                        reporter.Output(string.Format("    Delivery #{0} by carrier {1} to {3} : {2}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString()));
                         j++;
                     }
                 }
@@ -168,22 +180,9 @@ namespace Stars.Operations
 
         }
 
-        private async Task<IEnumerable<(ISupplier, IResource)>> ListResourceSupplier(IResource resource, IDestination destination)
+        private async Task<IDictionary<ISupplier, INode>> SearchForOtherSuppliers(INode resource)
         {
-            IEnumerable<ISupplier> possible_suppliers = suppliersManager.GetSuppliers(resource);
-
-            List<(ISupplier, IResource)> possible_deliveries = new List<(ISupplier, IResource)>();
-
-            foreach (var supplier in possible_suppliers)
-            {
-                IEnumerable<IResource> possible_resources = await supplier.LocalizeResource(resource);
-                foreach (var possible_resource in possible_resources)
-                {
-                    possible_deliveries.Add((supplier, possible_resource));
-                }
-            }
-
-            return possible_deliveries;
+            return await suppliersManager.GetSuppliers(resource);
         }
     }
 }

@@ -20,21 +20,29 @@ namespace Stars.Model.Stac
 
         public string Label => "Stac";
 
-        public bool CanRoute(IResource resource)
+        public bool CanRoute(INode resource)
         {
             if (resource.ContentType.MediaType == "application/json" || Path.GetExtension(resource.Uri.ToString()) == ".json")
             {
-               try
+                try
                 {
                     new StacCatalogResource(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
                     return true;
                 }
-                catch { }
+                catch
+                {
+                    try
+                    {
+                        new StacItemResource(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
+                        return true;
+                    }
+                    catch { }
+                }
             }
             return false;
         }
 
-        public async Task<IRoutable> Go(IResource resource)
+        public async Task<IRoutable> Go(INode resource)
         {
             if (resource.ContentType.MediaType == "application/json" || Path.GetExtension(resource.Uri.ToString()) == ".json")
             {
@@ -42,7 +50,13 @@ namespace Stars.Model.Stac
                 {
                     return new StacCatalogResource(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
                 }
-                catch {
+                catch
+                {
+                    try
+                    {
+                        return new StacItemResource(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(resource.ReadAsString()), resource.Uri));
+                    }
+                    catch { }
                 }
             }
             throw new NotSupportedException(resource.ContentType.ToString());

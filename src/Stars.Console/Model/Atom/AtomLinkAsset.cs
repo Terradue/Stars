@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stars.Interface.Router;
+using Stars.Interface.Supply.Asset;
 using Stars.Router;
 using Stars.Supply.Asset;
 using Terradue.ServiceModel.Syndication;
@@ -43,9 +44,9 @@ namespace Stars.Model.Atom
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public async Task<IResource> GotoResource()
+        public async Task<INode> GoToNode()
         {
-            return await WebRoute.Create(Uri).GotoResource();
+            return await WebRoute.Create(Uri).GoToNode();
         }
     }
 }

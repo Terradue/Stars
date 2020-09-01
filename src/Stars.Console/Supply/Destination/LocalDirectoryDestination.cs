@@ -7,7 +7,7 @@ using Stars.Router;
 
 namespace Stars.Supply.Destination
 {
-    internal class LocalDirectoryDestination : IDestination
+    public class LocalDirectoryDestination : IDestination
     {
         private readonly DirectoryInfo directory;
 

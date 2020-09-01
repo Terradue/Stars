@@ -8,12 +8,14 @@ using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Item;
+using Stars.Interface.Model;
 using Stars.Interface.Router;
+using Stars.Interface.Supply;
 using Stars.Router;
 
 namespace Stars.Model.Stac
 {
-    internal abstract class StacResource : IResource
+    internal abstract class StacResource : IStacNode, INode
     {
         protected IStacObject stacObject;
         protected ContentType contentType;
@@ -36,6 +38,7 @@ namespace Stars.Model.Stac
 
         public virtual ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(JsonConvert.SerializeObject(stacObject)).Length);
 
+        public bool IsCatalog => (stacObject is IStacCatalog);
 
         public abstract string ReadAsString();
 
@@ -50,19 +53,19 @@ namespace Stars.Model.Stac
             return null;
         }
 
-        public Stream GetAsStream()
+        public Stream GetStream()
         {
             throw new NotImplementedException();
         }
 
-        public IStacObject ReadAsStacObject()
+        public Task<INode> GoToNode()
         {
-            throw new NotImplementedException();
+            return Task.FromResult((INode)this);
         }
 
-        public Task<IResource> GotoResource()
+        public IStacObject GetStacObject()
         {
-            return Task.FromResult((IResource)this);
+            return stacObject;
         }
     }
 }

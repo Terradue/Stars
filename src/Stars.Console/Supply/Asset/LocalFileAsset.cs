@@ -7,7 +7,7 @@ namespace Stars.Supply.Asset
 {
     internal class LocalFileAsset
     {
-        internal static Task<IResource> Create(LocalFileSystemRoute localFileSystemRoute)
+        internal static Task<INode> Create(LocalFileSystemRoute localFileSystemRoute)
         {
             throw new NotImplementedException();
         }

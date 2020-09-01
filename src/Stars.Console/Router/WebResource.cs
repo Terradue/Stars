@@ -5,10 +5,11 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 using Stars.Interface.Router;
+using Stars.Interface.Supply;
 
 namespace Stars.Router
 {
-    internal class WebResource : IResource
+    internal class WebResource : INode
     {
         private WebResponse webResponse;
         private Stream responseStream;
@@ -52,6 +53,8 @@ namespace Stars.Router
 
         public ulong ContentLength => Convert.ToUInt64(webResponse.ContentLength);
 
+        public bool IsCatalog => false;
+
         public string ReadAsString()
         {
             responseStream.Position = 0;
@@ -75,15 +78,15 @@ namespace Stars.Router
             return ms;
         }
 
-        public Stream GetAsStream()
+        public Stream GetStream()
         {
             responseStream.Position = 0;
             return responseStream;
         }
 
-        public Task<IResource> GotoResource()
+        public Task<INode> GoToNode()
         {
-            return Task.FromResult((IResource)this);
+            return Task.FromResult((INode)this);
         }
     }
 }

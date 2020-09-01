@@ -14,7 +14,7 @@ namespace Stars.Router
         {
         }
 
-        internal IRouter GetRouter(IResource resource)
+        internal IRouter GetRouter(INode resource)
         {
             return _items.FirstOrDefault(r => r.CanRoute(resource));
         }

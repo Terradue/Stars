@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Stars.Interface.Router;
+using Stars.Interface.Supply.Asset;
 using Stars.Router;
 using Stars.Supply.Asset;
 
@@ -43,7 +44,7 @@ namespace Stars.Operations
             // Stop here if there is no route
             if (route == null) return;
 
-            IResource resource = null;
+            INode resource = null;
             Exception exception = null;
 
             // if recursivity threshold is not reached
@@ -52,7 +53,7 @@ namespace Stars.Operations
                 // let's keep going -> follow the route to the resource
                 try
                 {
-                    resource = await route.GotoResource();
+                    resource = await route.GoToNode();
                     if (resource == null)
                         throw new NullReferenceException("Null");
                 }
@@ -133,10 +134,10 @@ namespace Stars.Operations
                     newPrefix += '│';
                 await PrintRoute(subroutes.ElementAt(i), recursivity - 1, newPrefix + new string('─', 2), router);
             }
-            PrintAssets(resource, router, prefix);
+            PrintAssets(routableResource, router, prefix);
         }
 
-        private async void PrintAssets(IResource resource, IRouter router, string prefix)
+        private async void PrintAssets(INode resource, IRouter router, string prefix)
         {
             // List assets
             if (!list.GetOptions().FirstOrDefault(o => o.ShortName == "sa").HasValue()

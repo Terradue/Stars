@@ -8,7 +8,7 @@ using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
 using Stars.Router;
-using Stars.Supply.Asset;
+using Stars.Interface.Supply.Asset;
 using Stars.Supply.Destination;
 
 namespace Stars.Supply
@@ -69,7 +69,7 @@ namespace Stars.Supply
         /// Make a set of quotation for each supplier
         /// </summary>
         /// <returns></returns>
-        public IDeliveryQuotation QuoteDeliveryFromCarriers((ISupplier, IResource) supply, IDestination destination)
+        public IDeliveryQuotation QuoteDeliveryFromCarriers((ISupplier, INode) supply, IDestination destination)
         {
             List<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = new List<(ISupplier, DeliveryQuotation)>();
 

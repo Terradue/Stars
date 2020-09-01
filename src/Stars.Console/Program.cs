@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Stars.Interface.Router;
+using Stars.Interface.Router.Translator;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
+using Stars.Model.Atom;
+using Stars.Model.Stac;
 using Stars.Operations;
 using Stars.Router;
 using Stars.Supply;
@@ -30,11 +34,15 @@ namespace Stars
         {
             _app = new CommandLineApplication<Program>();
 
-            // Register the DI services
-            RegisterServices();
-
             // init new CLI app
             ConfigureCommandLineApp();
+
+            _app.OnParsingComplete(pr =>
+            {
+                // Register the DI services
+                RegisterServices();
+            }
+            );
 
             int ret = _app.Execute(args);
 
@@ -43,36 +51,61 @@ namespace Stars
             return ret;
         }
 
-        private static void AddPlugins(ServiceCollection collection)
+        private static void LoadBase(ServiceCollection collection)
         {
-            foreach (Type router in ResourceRoutersManager.LoadManagedPlugins(_pluginAssemblies))
+            // Stac Router
+            collection.AddTransient<IRouter, StacRouter>();
+            // Atom Router
+            collection.AddTransient<IRouter, AtomRouter>();
+
+            // Generic Supplier
+            collection.AddTransient<ISupplier, GenericSupplier>();
+
+            // Local Filesystem destination
+            collection.AddTransient<IDestinationGuide, LocalFileSystemDestinationGuide>();
+
+            // Web Download Carrier
+            collection.AddTransient<ICarrier, WebDownloadCarrier>();
+        }
+
+
+        private static void LoadPlugins(ServiceCollection collection)
+        {
+
+
+
+            // foreach (Type router in ResourceRoutersManager.LoadManagedPlugins(Configuration.GetSection("Routers")))
+            // {
+            //     collection.AddTransient(router);
+            //     collection.AddTransient<IRouter>(serviceProvider => (IRouter)serviceProvider.GetService(router));
+            // }
+
+            foreach (ISupplier supplier in SupplierManager.LoadManagedPlugins(Configuration.GetSection("Suppliers"), _serviceProvider))
             {
-                collection.AddTransient(router);
-                collection.AddTransient<IRouter>(serviceProvider => (IRouter)serviceProvider.GetService(router));
+                collection.AddSingleton<ISupplier>(supplier);
             }
 
-            foreach (Type supplier in SupplierManager.LoadManagedPlugins(_pluginAssemblies))
+            foreach(ITranslator translator in TranslatorManager.LoadManagedPlugins(Configuration.GetSection("Suppliers"), _serviceProvider))
             {
-                collection.AddTransient(supplier);
-                collection.AddTransient<ISupplier>(serviceProvider => (ISupplier)serviceProvider.GetService(supplier));
+                collection.AddSingleton<ITranslator>(translator);
             }
 
-            foreach (Type destinationGuide in DestinationManager.LoadManagedPlugins(_pluginAssemblies))
-            {
-                collection.AddTransient(destinationGuide);
-                collection.AddTransient<IDestinationGuide>(serviceProvider => (IDestinationGuide)serviceProvider.GetService(destinationGuide));
-            }
+            // foreach (Type destinationGuide in DestinationManager.LoadManagedPlugins(_pluginAssemblies))
+            // {
+            //     collection.AddTransient(destinationGuide);
+            //     collection.AddTransient<IDestinationGuide>(serviceProvider => (IDestinationGuide)serviceProvider.GetService(destinationGuide));
+            // }
 
-            foreach (Type carrierType in CarrierManager.LoadManagedPlugins(_pluginAssemblies))
-            {
-                collection.AddTransient(carrierType);
-                collection.AddTransient<ICarrier>(serviceProvider =>
-                {
-                    var carrier = (ICarrier)serviceProvider.GetService(carrierType);
-                    carrier.Configure(Configuration.GetSection("Carriers").GetSection(carrier.Id));
-                    return carrier;
-                });
-            }
+            // foreach (Type carrierType in CarrierManager.LoadManagedPlugins(_pluginAssemblies))
+            // {
+            //     collection.AddTransient(carrierType);
+            //     collection.AddTransient<ICarrier>(serviceProvider =>
+            //     {
+            //         var carrier = (ICarrier)serviceProvider.GetService(carrierType);
+            //         carrier.Configure(Configuration.GetSection("Carriers").GetSection(carrier.Id));
+            //         return carrier;
+            //     });
+            // }
         }
 
         private static void ConfigureCommandLineApp()
@@ -142,6 +175,7 @@ namespace Stars
             #endregion copy-command
 
 
+
         }
 
         private static void RegisterServices()
@@ -169,13 +203,20 @@ namespace Stars
 
             collection.AddSingleton<IConfiguration>(Configuration);
 
-            // Load Plugins
-            AddPlugins(collection);
-
             // Add the command line services
             collection.AddSingleton<CommandLineApplication>(_app);
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
             collection.AddSingleton<IReporter, StarsConsoleReporter>();
+            collection.AddSingleton<ILogger, StarsConsoleReporter>();
+
+            // Load Base Routers, Supplier, Destination and Carriers
+            LoadBase(collection);
+
+            _serviceProvider = collection.BuildServiceProvider();
+
+            // Load Plugins
+            LoadPlugins(collection);
+
             // Add the Managers
             collection.AddSingleton<ResourceRoutersManager, ResourceRoutersManager>();
             collection.AddSingleton<SupplierManager, SupplierManager>();

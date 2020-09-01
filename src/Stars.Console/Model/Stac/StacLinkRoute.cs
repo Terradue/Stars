@@ -69,12 +69,12 @@ namespace Stars.Model.Stac
 
         public ulong ContentLength => link.Length;
 
-        public async Task<IResource> GotoResource()
+        public async Task<INode> GoToNode()
         {
             switch (link.RelationshipType)
             {
                 case "self":
-                    return StacResource.Create(stacParentObject) as IResource;
+                    return StacResource.Create(stacParentObject) as INode;
                 case "root":
                 case "parent":
                     throw new NotImplementedException();

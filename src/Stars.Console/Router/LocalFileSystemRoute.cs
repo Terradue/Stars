@@ -31,7 +31,7 @@ namespace Stars.Router
 
         public ulong ContentLength => contentLength;
 
-        public Task<IResource> GotoResource()
+        public Task<INode> GoToNode()
         {
             return LocalFileAsset.Create(this);
         }

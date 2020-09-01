@@ -5,17 +5,18 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Logging;
 using Stars.Interface.Supply.Destination;
 
 namespace Stars.Supply.Destination
 {
     public class LocalFileSystemDestinationGuide : IDestinationGuide
     {
-        private readonly IReporter reporter;
+        private readonly ILogger logger;
 
-        public LocalFileSystemDestinationGuide(IReporter reporter)
+        public LocalFileSystemDestinationGuide(ILogger logger)
         {
-            this.reporter = reporter;
+            this.logger = logger;
         }
 
         public string Id => "LocalFS";
@@ -27,7 +28,7 @@ namespace Stars.Supply.Destination
                 return (fa & FileAttributes.Directory) == FileAttributes.Directory;
             }
             catch (Exception e) {
-                reporter.Warn(e.Message);
+                logger.LogWarning(e.Message);
                 return false;
             }
         }

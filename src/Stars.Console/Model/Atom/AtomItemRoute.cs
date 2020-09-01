@@ -28,9 +28,9 @@ namespace Stars.Model.Atom
 
         public ulong ContentLength => 0;
 
-        public Task<IResource> GotoResource()
+        public Task<INode> GoToNode()
         {
-            return Task<IResource>.FromResult((IResource)new AtomItemRoutable(item));
+            return Task<INode>.FromResult((INode)new AtomItemRoutable(item));
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
 using Stars.Interface.Router;
+using Stars.Interface.Supply.Asset;
 using Stars.Router;
 using Stars.Supply.Asset;
 
@@ -50,9 +51,9 @@ namespace Stars.Model.Stac
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public async Task<IResource> GotoResource()
+        public async Task<INode> GoToNode()
         {
-            return await WebRoute.Create(Uri).GotoResource();
+            return await WebRoute.Create(Uri).GoToNode();
         }
     }
 }

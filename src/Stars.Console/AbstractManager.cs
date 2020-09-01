@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Configuration;
 
 namespace Stars
 {
@@ -14,32 +16,61 @@ namespace Stars
             this._items = items;
         }
 
-        internal static IEnumerable<Type> LoadManagedPlugins(string[] pluginPaths)
+        public static IEnumerable<T> LoadManagedPlugins(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {
-            return pluginPaths.SelectMany(pluginPath =>
+            IReporter reporter = (IReporter)serviceProvider.GetService(typeof(IReporter));
+            SortedList<int, T> plugins = new SortedList<int, T>();
+            foreach (var section in configurationSection.GetChildren())
             {
-                Assembly pluginAssembly = Assembly.Load(pluginPath);
-                return CreateItems(pluginAssembly);
-            });
-        }
-
-        internal static IEnumerable<Type> CreateItems(Assembly assembly)
-        {
-            SortedList<int, Type> types = new SortedList<int, Type>();
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (type.GetInterface(typeof(T).FullName) != null)
+                if (string.IsNullOrEmpty(section["type"]))
+                    continue;
+                try
                 {
+                    Type type = GetType(section["type"]);
                     int prio = 50;
                     PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
                     if (prioAttr != null)
                     {
                         prio = prioAttr.Priority;
                     }
-                    types.Add(prio, type);
+                    if (!string.IsNullOrEmpty(section["priority"]))
+                        prio = int.Parse(section["priority"]);
+                    T item = CreateItem(type, section, serviceProvider);
+                    if (item != null)
+                        plugins.Add(prio, item);
+                }
+                catch (Exception e)
+                {
+                    reporter.Warn(string.Format("Impossible to load {0} : {1}", section.Key, e.Message));
                 }
             }
-            return types.Values;
+            return plugins.Values;
+        }
+
+        public static T CreateItem(Type type, IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
+
+            if (type.GetInterface(typeof(T).FullName) == null)
+                return default(T);
+
+            MethodInfo createMethod = type.GetMethod("Create", BindingFlags.Public | BindingFlags.Static);
+
+            return (T)createMethod.Invoke(null, new object[2] { configurationSection, serviceProvider });
+
+
+        }
+
+        public static Type GetType(string typeName)
+        {
+            var type = Type.GetType(typeName);
+            if (type != null) return type;
+            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                type = a.GetType(typeName);
+                if (type != null)
+                    return type;
+            }
+            return null;
         }
     }
 }

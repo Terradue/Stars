@@ -7,8 +7,8 @@ namespace Stars.Interface.Router
     {
         string Label { get; }
 
-        bool CanRoute(IResource resource);
+        bool CanRoute(INode resource);
 
-        Task<IRoutable> Go(IResource resource);
+        Task<IRoutable> Go(INode resource);
     }
 }

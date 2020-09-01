@@ -7,7 +7,9 @@ using Newtonsoft.Json.Linq;
 using Stac.Catalog;
 using Stac.Item;
 using Stars.Interface.Router;
+using Stars.Interface.Supply;
 using Stars.Router;
+using Stars.Supply;
 using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Model.Atom
@@ -22,14 +24,14 @@ namespace Stars.Model.Atom
 
         public string Label => "Atom";
 
-        public bool CanRoute(IResource resource)
+        public bool CanRoute(INode resource)
         {
             if (resource.ContentType.MediaType == "application/atom+xml")
             {
                try
                 {
                     Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                    feedFormatter.ReadFrom(XmlReader.Create(resource.GetAsStream()));
+                    feedFormatter.ReadFrom(XmlReader.Create(resource.GetStream()));
                     return true;
                 }
                 catch {}
@@ -37,14 +39,14 @@ namespace Stars.Model.Atom
             return false;
         }
 
-        public async Task<IRoutable> Go(IResource resource)
+        public async Task<IRoutable> Go(INode resource)
         {
             if (resource.ContentType.MediaType == "application/atom+xml" )
             {
                 try
                 {
                     Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                    await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(resource.GetAsStream())));
+                    await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(resource.GetStream())));
                     return new AtomFeedRoutable(feedFormatter.Feed);
                 }
                 catch (Exception)

@@ -11,6 +11,7 @@ using Stac;
 using Stac.Catalog;
 using Stac.Collection;
 using Stars.Interface.Router;
+using Stars.Interface.Supply;
 using Stars.Router;
 using Terradue.ServiceModel.Syndication;
 
@@ -41,6 +42,8 @@ namespace Stars.Model.Atom
 
         public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
 
+        public bool IsCatalog => true;
+
         public IEnumerable<IRoute> GetRoutes()
         {
             return feed.Items.Select(item => new AtomItemRoute(item, feed));
@@ -48,11 +51,11 @@ namespace Stars.Model.Atom
 
        public string ReadAsString()
         {
-            StreamReader sr = new StreamReader(GetAsStream());
+            StreamReader sr = new StreamReader(GetStream());
             return sr.ReadToEnd();
         }
 
-        public Stream GetAsStream() {
+        public Stream GetStream() {
             MemoryStream ms = new MemoryStream();
             var sw = XmlWriter.Create(ms);
             Atom10FeedFormatter atomFormatter = new Atom10FeedFormatter(feed);
@@ -67,9 +70,9 @@ namespace Stars.Model.Atom
             throw new NotImplementedException();
         }
 
-        public Task<IResource> GotoResource()
+        public Task<INode> GoToNode()
         {
-            return Task.FromResult((IResource)this);
+            return Task.FromResult((INode)this);
         }
     }
 }

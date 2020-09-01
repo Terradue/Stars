@@ -1,9 +1,8 @@
 using System;
 using System.Net.Mime;
 using Stars.Interface.Router;
-using Stars.Router;
 
-namespace Stars.Supply.Asset
+namespace Stars.Interface.Supply.Asset
 {
     public interface IAsset : IRoute
     {
