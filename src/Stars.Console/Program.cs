@@ -18,6 +18,8 @@ using Stars.Service.Supply;
 using Stars.Service.Supply.Destination;
 using Stars.Service.Router.Translator;
 using Stars.Interface;
+using System.ComponentModel.DataAnnotations;
+using McMaster.Extensions.CommandLineUtils.Conventions;
 
 namespace Stars
 {
@@ -25,12 +27,10 @@ namespace Stars
     [HelpOption]
     [Subcommand(
         typeof(ListOperation)
-        // typeof(CopyCommand)
+    // typeof(CopyCommand)
     )]
-    class Program
+    public class Program
     {
-
-        private readonly IStarsService _starService;
 
         public static IConfigurationRoot Configuration { get; set; }
 
@@ -45,27 +45,37 @@ namespace Stars
 
             var serviceProvider = RegisterServices(app);
 
-            ConfigureCommandLineApp(app, serviceProvider);
-
             app.Conventions
                 .UseDefaultConventions()
                 .UseConstructorInjection(serviceProvider);
 
-            int ret = await app.ExecuteAsync(args);
+            try
+            {
+                return await app.ExecuteAsync(args);
+            }
+            catch (CommandParsingException cpe)
+            {
+                return PrintErrorAndUsage(cpe.Command, cpe.Message);
+            }
+            finally
+            {
+                DisposeServices(serviceProvider);
+            }
 
-            DisposeServices(serviceProvider);
 
-            return ret;
         }
 
-        public Program(IStarsService starService)
+        private static int PrintErrorAndUsage(CommandLineApplication command, string message)
         {
-            _starService = starService;
+            PhysicalConsole.Singleton.Error.WriteLineAsync("Parsing Error: " + message);
+            command.ShowHelp();
+            return 2;
         }
 
-        private async void OnExecuteAsync()
+        private async void OnExecuteAsync(CommandLineApplication app)
         {
-            await _starService.InvokeAsync();
+            await PhysicalConsole.Singleton.Error.WriteLineAsync("Specify a subcommand");
+            app.ShowHelp();
         }
 
         private static void LoadBase(ServiceCollection collection)
@@ -93,83 +103,28 @@ namespace Stars
 
         private static void LoadPlugins(ServiceCollection collection)
         {
-
-            // foreach (Type router in ResourceRoutersManager.LoadManagedPlugins(Configuration.GetSection("Routers")))
-            // {
-            //     collection.AddTransient(router);
-            //     collection.AddTransient<IRouter>(serviceProvider => (IRouter)serviceProvider.GetService(router));
-            // }
+            RoutersManager.RegisterConfiguredPlugins(Configuration.GetSection("Routers"), collection, _logger);
 
             SupplierManager.RegisterConfiguredPlugins(Configuration.GetSection("Suppliers"), collection, _logger);
 
             TranslatorManager.RegisterConfiguredPlugins(Configuration.GetSection("Translators"), collection, _logger);
 
-            // foreach (Type destinationGuide in DestinationManager.LoadManagedPlugins(_pluginAssemblies))
-            // {
-            //     collection.AddTransient(destinationGuide);
-            //     collection.AddTransient<IDestinationGuide>(serviceProvider => (IDestinationGuide)serviceProvider.GetService(destinationGuide));
-            // }
+            DestinationManager.RegisterConfiguredPlugins(Configuration.GetSection("Destinations"), collection, _logger);
 
-            // foreach (Type carrierType in CarrierManager.LoadManagedPlugins(_pluginAssemblies))
-            // {
-            //     collection.AddTransient(carrierType);
-            //     collection.AddTransient<ICarrier>(serviceProvider =>
-            //     {
-            //         var carrier = (ICarrier)serviceProvider.GetService(carrierType);
-            //         carrier.Configure(Configuration.GetSection("Carriers").GetSection(carrier.Id));
-            //         return carrier;
-            //     });
-            // }
+            CarrierManager.RegisterConfiguredPlugins(Configuration.GetSection("Carriers"), collection, _logger);
         }
 
-        private static void ConfigureCommandLineApp(CommandLineApplication app, IServiceProvider serviceProvider)
+
+        public static int OnValidationError(CommandLineApplication command, ValidationResult ve)
         {
-
-            // #region copy-command
-            // app.Command("copy",
-            //     (copy) =>
-            //     {
-            //         var outputOption = copy.Option<string>("-o|--output", "Output destination (folder, remote URI...)",
-            //                                         CommandOptionType.SingleValue)
-            //                                         .IsRequired();
-
-            //         var inputOption = copy.Option<string>("-i|--input", "Input reference to resource",
-            //                             CommandOptionType.MultipleValue)
-            //                             .IsRequired();
-
-            //         var recursivityOption = copy.Option<int>("-r|--recursivity", "Resource recursivity depth routing",
-            //                             CommandOptionType.SingleValue);
-
-            //         var skipAssetOption = copy.Option("-sa|--skip-assets", "Do not list assets",
-            //                             CommandOptionType.NoValue);
-
-            //         copy.Description = "Copy the Assets from the input reference to the output destination";
-
-
-            //         copy.OnExecuteAsync(async cancellationToken =>
-            //         {
-            //             var copyOperation = serviceProvider.GetService<CopyOperation>();
-            //             await copyOperation.ExecuteAsync();
-            //         });
-
-            //     }
-            // );
-            // #endregion copy-command
-
-
-            app.OnValidationError(ve =>
-                {
-                    PhysicalConsole.Singleton.Error.WriteLine(ve.ErrorMessage);
-                    app.ShowHelp();
-                    return 1;
-                }
-            );
-
+            PhysicalConsole.Singleton.Error.WriteLine(ve.ErrorMessage);
+            command.ShowHelp();
+            return 1;
         }
 
         private static IServiceProvider RegisterServices(CommandLineApplication app)
         {
-            
+
             _logger = new StarsConsoleReporter(PhysicalConsole.Singleton);
 
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
@@ -197,7 +152,6 @@ namespace Stars
 
             // Add the command line services
             collection.AddSingleton<CommandLineApplication>(app);
-            collection.AddSingleton<IStarsService, StarsCommandLineTool>();
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
             collection.AddSingleton<ILogger>(_logger);
 

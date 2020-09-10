@@ -8,6 +8,7 @@ using Stars.Interface.Router;
 using Stars.Interface.Supply.Asset;
 using Stars.Service.Router;
 using Stars.Service;
+using System.ComponentModel.DataAnnotations;
 
 namespace Stars.Operations
 {
@@ -66,6 +67,13 @@ namespace Stars.Operations
             else
                 newPrefix += "│─";
             return Task.FromResult<object>(new ListOperationState(newPrefix, operationState.Depth + 1));
+        }
+
+        public static int OnValidationError(CommandLineApplication command, ValidationResult ve)
+        {
+            PhysicalConsole.Singleton.Error.WriteLine(ve.ErrorMessage);
+            command.ShowHelp();
+            return 1;
         }
 
         private async Task<object> PrintLeafNode(INode node, IRouter router, object state)
