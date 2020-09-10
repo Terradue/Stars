@@ -1,147 +1,118 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Logging;
 using Stars.Interface.Router;
 using Stars.Interface.Supply.Asset;
-using Stars.Router;
-using Stars.Supply.Asset;
+using Stars.Service.Router;
+using Stars.Service;
 
 namespace Stars.Operations
 {
+    [Command(Name = "list", Description = "List the routing from the input reference")]
     internal class ListOperation : IOperation
     {
-        private readonly IConsole console;
-        private readonly IReporter reporter;
-        private readonly ResourceRoutersManager routersManager;
-        private readonly CommandLineApplication list;
+        [Argument(0)]
+        public string[] Inputs { get => inputs; set => inputs = value; }
 
-        public ListOperation(IConsole console, IReporter reporter, ResourceRoutersManager routersManager, CommandLineApplication app)
+        [Option("-r|--recursivity", "Resource recursivity depth routing", CommandOptionType.SingleValue)]
+        public int Recursivity { get => recursivity; set => recursivity = value; }
+
+        [Option("-sa|--skip-assets", "Do not list assets", CommandOptionType.NoValue)]
+        public bool SkippAssets { get; set; }
+
+        private readonly IConsole console;
+        private readonly ILogger logger;
+        private readonly RoutingTask routingTask;
+        private int recursivity = 1;
+        private string[] inputs = new string[0];
+
+        public ListOperation(IConsole console, ILogger logger, RoutingTask routingTask)
         {
             this.console = console;
-            this.reporter = reporter;
-            this.routersManager = routersManager;
-            this.list = app.Commands.FirstOrDefault(c => c.Name == "list");
+            this.logger = logger;
+            this.routingTask = routingTask;
+            
         }
 
-        public async Task ExecuteAsync()
+        private void InitRoutingTask()
         {
-            var inputs = list.GetOptions().Where(o => o.ShortName == "i").SelectMany(o => o.Values);
-            CommandOption<int> recursivityOption = (CommandOption<int>)list.GetOptions().FirstOrDefault(o => o.ShortName == "r");
-
-
-            foreach (var input in inputs)
+            routingTask.Parameters = new RoutingTaskParameters()
             {
-                IRoute initRoute = WebRoute.Create(new Uri(input));
-                await PrintRoute(initRoute, recursivityOption.HasValue() ? recursivityOption.ParsedValue : 1, "", null);
-            }
+                Recursivity = Recursivity,
+                SkipAssets = SkippAssets
+            };
+            routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
+            routingTask.OnBranchingNode((node, router, state) => PrintBranchingNode(node, router, state));
+            routingTask.OnLeafNode((node, router, state) => PrintLeafNode(node, router, state));
+            routingTask.OnBranching((route, siblings, state) => PrepareNewRoute(route, siblings, state));
         }
 
-        internal async Task PrintRoute(IRoute route, int recursivity, string prefix, IRouter prevRouter)
+        private Task<object> PrepareNewRoute(IRoute route, IList<IRoute> siblings, object state)
         {
-            // Stop here if there is no route
-            if (route == null) return;
+            if (state == null) return Task.FromResult<object>(new ListOperationState("", 1));
 
-            INode resource = null;
-            Exception exception = null;
+            ListOperationState operationState = state as ListOperationState;
+            if (operationState.Depth == 0) return Task.FromResult<object>(state);
 
-            // if recursivity threshold is not reached
-            if (recursivity > 0)
+            string newPrefix = operationState.Prefix.Replace('─', ' ').Replace('└', ' ');
+            int i = siblings.IndexOf(route);
+            if (i == siblings.Count() - 1)
             {
-                // let's keep going -> follow the route to the resource
-                try
-                {
-                    resource = await route.GoToNode();
-                    if (resource == null)
-                        throw new NullReferenceException("Null");
-                }
-                catch (AggregateException ae)
-                {
-                    exception = ae.InnerException;
-                }
-                catch (Exception e)
-                {
-                    exception = e;
-                }
+                newPrefix += "└─";
             }
             else
-            {
-                exception = new Exception("Max Depth");
-            }
+                newPrefix += "│─";
+            return Task.FromResult<object>(new ListOperationState(newPrefix, operationState.Depth + 1));
+        }
 
-            // Print the route info if resource cannot be reached
-            if (exception != null)
-            {
-                string resourcePrefix1 = prefix;
-                if (prevRouter != null)
-                    resourcePrefix1 = string.Format("[{0}] {1}", prevRouter.Label, prefix);
-                console.ForegroundColor = GetColorFromType(route.ResourceType);
-                await console.Out.WriteAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + route.Uri).Truncate(99), route.ContentType));
-                console.ForegroundColor = ConsoleColor.Red;
-                await console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
-                return;
-            }
+        private async Task<object> PrintLeafNode(INode node, IRouter router, object state)
+        {
+            ListOperationState operationState = state as ListOperationState;
+            string resourcePrefix1 = operationState.Prefix;
+            await PrintAssets(node, router, operationState.Prefix);
+            return state;
+        }
 
-            IRoutable routableResource = null;
-            IRouter router = null;
-            // If resource is not routable (there is no more native routes fom that resource)
-            if (!(resource is IRoutable))
-            {
-                console.ForegroundColor = GetColorFromType(resource.ResourceType);
-                // Print the information about the resource
-                string resourcePrefix1 = prefix;
-                if (prevRouter != null)
-                    resourcePrefix1 = string.Format("[{0}] {1}", prevRouter.Label, prefix);
-                await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + resource.Label).Truncate(99), resource.ContentType));
-                // Ask the router manager if there is another router available for this resource
-                router = routersManager.GetRouter(resource);
-                // Definitively no more routes, print the resource info and return
-                if (router == null)
-                {
-                    PrintAssets(resource, prevRouter, prefix);
-                    return;
-                }
-                // New route!
-                routableResource = await router.Go(resource);
-            }
-            else
-            {
-                // If the resource is natively routable
-                routableResource = (IRoutable)resource;
-                router = prevRouter;
-            }
-            console.ForegroundColor = GetColorFromType(routableResource.ResourceType);
-
-            // Print info about the routable resource
-            // await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (prefix + routableResource.Uri).Truncate(99), routableResource.ContentType));
-            string resourcePrefix = prefix;
+        private async Task<object> PrintBranchingNode(INode node, IRouter router, object state)
+        {
+            console.ForegroundColor = GetColorFromType(node.ResourceType);
+            // Print the information about the resource
+            ListOperationState operationState = state as ListOperationState;
+            string resourcePrefix1 = operationState.Prefix;
             if (router != null)
-                resourcePrefix = string.Format("[{0}] {1}", router.Label, prefix);
-            await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix + routableResource.Label).Truncate(99), routableResource.ContentType));
+                resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
+            await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
+            await PrintAssets(node, router, operationState.Prefix);
 
-            // Let's get sub routes
-            IEnumerable<IRoute> subroutes = routableResource.GetRoutes();
-            for (int i = 0; i < subroutes.Count(); i++)
-            {
-                string newPrefix = prefix.Replace('─', ' ').Replace('└', ' ');
-                if (i == subroutes.Count() - 1)
-                {
-                    newPrefix += '└';
-                }
-                else
-                    newPrefix += '│';
-                await PrintRoute(subroutes.ElementAt(i), recursivity - 1, newPrefix + new string('─', 2), router);
-            }
-            PrintAssets(routableResource, router, prefix);
+            return state;
         }
 
-        private async void PrintAssets(INode resource, IRouter router, string prefix)
+        private async Task<object> PrintRouteInfo(IRoute route, IRouter router, Exception exception, object state)
+        {
+            ListOperationState operationState = state as ListOperationState;
+            string resourcePrefix1 = operationState.Prefix;
+            if (router != null)
+                resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
+            console.ForegroundColor = GetColorFromType(route.ResourceType);
+            await console.Out.WriteAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + route.Uri).Truncate(99), route.ContentType));
+            console.ForegroundColor = ConsoleColor.Red;
+            await console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
+            return state;
+        }
+
+        public async Task OnExecuteAsync()
+        {
+            InitRoutingTask();
+            await routingTask.ExecuteAsync(Inputs);
+        }
+
+        private async Task PrintAssets(INode resource, IRouter router, string prefix)
         {
             // List assets
-            if (!list.GetOptions().FirstOrDefault(o => o.ShortName == "sa").HasValue()
-              && resource is IAssetsContainer)
+            if (!SkippAssets && resource is IAssetsContainer)
             {
                 IEnumerable<IAsset> assets = ((IAssetsContainer)resource).GetAssets();
                 for (int i = 0; i < assets.Count(); i++)
@@ -155,7 +126,7 @@ namespace Stars.Operations
                         newPrefix += '│';
 
                     console.ForegroundColor = ConsoleColor.DarkCyan;
-                    var assetPrefix = newPrefix + new string('─', 2);
+                    var assetPrefix = newPrefix + new string('─', 1);
                     if (router != null)
                         assetPrefix = string.Format("[{0}] {1}", router.Label, assetPrefix);
                     var asset = assets.ElementAt(i);

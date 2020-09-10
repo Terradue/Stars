@@ -7,10 +7,10 @@ using Stars.Interface.Supply;
 
 namespace Stars.Interface.Router
 {
-    public interface INode : IRoute
+    public interface IStreamable : IRoute
     {
-        string Label { get; }
-        string Id { get; }
-        bool IsCatalog { get; }
+        Task<Stream> GetStreamAsync();
+        string ReadAsString();
+        ContentDisposition ContentDisposition { get; }
     }
 }

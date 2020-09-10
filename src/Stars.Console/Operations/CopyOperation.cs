@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
+using Stars.Interface.Model;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
-using Stars.Router;
-using Stars.Supply;
-using Stars.Supply.Asset;
-using Stars.Supply.Destination;
+using Stars.Service.Router;
+using Stars.Service.Supply;
+using Stars.Service.Supply.Asset;
+using Stars.Service.Supply.Destination;
 
 namespace Stars.Operations
 {
@@ -23,15 +24,17 @@ namespace Stars.Operations
         private readonly ResourceRoutersManager routersManager;
         private readonly SupplierManager suppliersManager;
         private readonly DestinationManager destinationManager;
+        private readonly TranslatorManager translatorManager;
         private readonly CommandLineApplication copy;
 
         public CopyOperation(IServiceProvider serviceProvider)
         {
             this.console = serviceProvider.GetService<IConsole>();
             this.reporter = serviceProvider.GetService<IReporter>();
-            this.routersManager = serviceProvider.GetService<ResourceRoutersManager>();
+            this.routersManager = serviceProvider.GetService<RoutersManager>();
             this.suppliersManager = serviceProvider.GetService<SupplierManager>();
             this.destinationManager = serviceProvider.GetService<DestinationManager>();
+            this.translatorManager = serviceProvider.GetService<TranslatorManager>();
             var app = serviceProvider.GetService<CommandLineApplication>();
             this.copy = app.Commands.FirstOrDefault(c => c.Name == "copy");
         }
@@ -110,7 +113,7 @@ namespace Stars.Operations
                     return;
                 }
                 // New route!
-                routableResource = await router.Go(resource);
+                routableResource = await router.Route(resource);
             }
             else
             {
@@ -133,24 +136,36 @@ namespace Stars.Operations
 
         }
 
-        private async Task<IRoute> CopyResource(INode resource, IDestination destination)
+        private async Task<IRoute> CopyResource(INode node, IDestination destination)
         {
-            reporter.Verbose(String.Format("{0} -> {1}", resource.Uri, destination.Uri));
+            reporter.Verbose(String.Format("{0} -> {1}", node.Uri, destination.Uri));
             // List all possible resource supply
             Dictionary<ISupplier, INode> possible_supplies = new Dictionary<ISupplier, INode>();
-
+            var native_supplier = suppliersManager.GetDefaultSupplier();
 
             // 1. Get the resource native supplier 
-            var native_supplier = suppliersManager.GetDefaultSupplier();
             if (native_supplier != null)
-                possible_supplies.Add(native_supplier, resource);
+                possible_supplies.Add(native_supplier, node);
 
-            if (!resource.IsCatalog)
+
+            // 2. Search for other suppliers
+            if (!node.IsCatalog)
             {
-                foreach (var supply in await SearchForOtherSuppliers(resource))
+                // First, translate to stac
+                var translations = await translatorManager.Translate(node);
+                // Let's find suppliers
+                foreach (var stacNode in translations.Values)
                 {
-                    if (!possible_supplies.ContainsKey(supply.Key))
-                        possible_supplies.Add(supply.Key, supply.Value);
+                    foreach (var supply in await SearchForOtherSuppliers(stacNode))
+                    {
+                        // When a new supplier is found
+                        if (!possible_supplies.ContainsKey(supply.Key))
+                        {
+                            possible_supplies.Add(supply.Key, supply.Value);
+                        }
+                    }
+                    if (possible_supplies.Count > 0)
+                        break;
                 }
             }
 
@@ -159,6 +174,15 @@ namespace Stars.Operations
             foreach (var supply in possible_supplies)
             {
                 IDeliveryQuotation supply_quotation = supply.Key.QuoteDelivery(supply.Value, destination);
+                if (supply_quotation == null)
+                {
+                    supply_quotation = native_supplier.QuoteDelivery(supply.Value, destination);
+                    if (supply_quotation == null)
+                    {
+                        reporter.Output(string.Format("Supplier #{0} {1} no delivery possible", i, supply.Key.Id));
+                        continue;
+                    }
+                }
 
                 reporter.Output(string.Format("Supplier #{0} {1} Quotation for {2} routes", i, supply.Key.Id, supply_quotation.DeliveryQuotes.Count));
 
@@ -180,7 +204,7 @@ namespace Stars.Operations
 
         }
 
-        private async Task<IDictionary<ISupplier, INode>> SearchForOtherSuppliers(INode resource)
+        private async Task<IDictionary<ISupplier, INode>> SearchForOtherSuppliers(IStacNode resource)
         {
             return await suppliersManager.GetSuppliers(resource);
         }

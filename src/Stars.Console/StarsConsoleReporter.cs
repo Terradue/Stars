@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
 using McMaster.Extensions.CommandLineUtils;
+using McMaster.Extensions.CommandLineUtils.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace Stars
 {
     internal class StarsConsoleReporter : ConsoleReporter, ILogger
     {
-        public StarsConsoleReporter(IConsole console, CommandLineApplication app) : base(console, Program.Verbose, false)
+        public StarsConsoleReporter(IConsole console) : base(console)
         {
-
         }
 
         public IDisposable BeginScope<TState>(TState state)

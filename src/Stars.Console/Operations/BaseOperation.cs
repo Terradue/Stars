@@ -9,11 +9,5 @@ namespace Stars.Operations
         {
         }
 
-        internal void GetInput(List<string> inputs)
-        {
-            foreach(var input in inputs){
-                
-            }
-        }
     }
 }

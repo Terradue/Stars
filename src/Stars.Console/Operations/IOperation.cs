@@ -4,6 +4,6 @@ namespace Stars.Operations
 {
     internal interface IOperation
     {
-        Task ExecuteAsync();
+        Task OnExecuteAsync();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,47 +10,62 @@ using Stars.Interface.Router;
 using Stars.Interface.Router.Translator;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
-using Stars.Model.Atom;
-using Stars.Model.Stac;
+using Stars.Service.Model.Atom;
+using Stars.Service.Model.Stac;
 using Stars.Operations;
-using Stars.Router;
-using Stars.Supply;
-using Stars.Supply.Destination;
+using Stars.Service.Router;
+using Stars.Service.Supply;
+using Stars.Service.Supply.Destination;
+using Stars.Service.Router.Translator;
+using Stars.Interface;
 
 namespace Stars
 {
+    [Command(Name = "Stars", Description = "Spatio Temporal Asset Router & Supplier")]
+    [HelpOption]
+    [Subcommand(
+        typeof(ListOperation)
+        // typeof(CopyCommand)
+    )]
     class Program
     {
-        private static IServiceProvider _serviceProvider;
-        private static CommandLineApplication<Program> _app;
+
+        private readonly IStarsService _starService;
 
         public static IConfigurationRoot Configuration { get; set; }
 
-        private static string[] _pluginAssemblies = new string[]
+        private static ILogger _logger;
+
+        [Option]
+        public bool Verbose { get; set; }
+
+        static async Task<int> Main(string[] args)
         {
-            "Stars"
-        };
-        private static CommandOption _verboseOption;
+            CommandLineApplication<Program> app = new CommandLineApplication<Program>();
 
-        static int Main(string[] args)
-        {
-            _app = new CommandLineApplication<Program>();
+            var serviceProvider = RegisterServices(app);
 
-            // init new CLI app
-            ConfigureCommandLineApp();
+            ConfigureCommandLineApp(app, serviceProvider);
 
-            _app.OnParsingComplete(pr =>
-            {
-                // Register the DI services
-                RegisterServices();
-            }
-            );
+            app.Conventions
+                .UseDefaultConventions()
+                .UseConstructorInjection(serviceProvider);
 
-            int ret = _app.Execute(args);
+            int ret = await app.ExecuteAsync(args);
 
-            DisposeServices();
+            DisposeServices(serviceProvider);
 
             return ret;
+        }
+
+        public Program(IStarsService starService)
+        {
+            _starService = starService;
+        }
+
+        private async void OnExecuteAsync()
+        {
+            await _starService.InvokeAsync();
         }
 
         private static void LoadBase(ServiceCollection collection)
@@ -59,20 +76,23 @@ namespace Stars
             collection.AddTransient<IRouter, AtomRouter>();
 
             // Generic Supplier
-            collection.AddTransient<ISupplier, GenericSupplier>();
+            collection.AddTransient<ISupplier, NativeSupplier>();
 
             // Local Filesystem destination
             collection.AddTransient<IDestinationGuide, LocalFileSystemDestinationGuide>();
 
             // Web Download Carrier
             collection.AddTransient<ICarrier, WebDownloadCarrier>();
+            // Streaming Carrier
+            collection.AddTransient<ICarrier, StreamingCarrier>();
+
+            // Routing Task
+            collection.AddTransient<RoutingTask, RoutingTask>();
         }
 
 
         private static void LoadPlugins(ServiceCollection collection)
         {
-
-
 
             // foreach (Type router in ResourceRoutersManager.LoadManagedPlugins(Configuration.GetSection("Routers")))
             // {
@@ -80,15 +100,9 @@ namespace Stars
             //     collection.AddTransient<IRouter>(serviceProvider => (IRouter)serviceProvider.GetService(router));
             // }
 
-            foreach (ISupplier supplier in SupplierManager.LoadManagedPlugins(Configuration.GetSection("Suppliers"), _serviceProvider))
-            {
-                collection.AddSingleton<ISupplier>(supplier);
-            }
+            SupplierManager.RegisterConfiguredPlugins(Configuration.GetSection("Suppliers"), collection, _logger);
 
-            foreach(ITranslator translator in TranslatorManager.LoadManagedPlugins(Configuration.GetSection("Suppliers"), _serviceProvider))
-            {
-                collection.AddSingleton<ITranslator>(translator);
-            }
+            TranslatorManager.RegisterConfiguredPlugins(Configuration.GetSection("Translators"), collection, _logger);
 
             // foreach (Type destinationGuide in DestinationManager.LoadManagedPlugins(_pluginAssemblies))
             // {
@@ -108,78 +122,56 @@ namespace Stars
             // }
         }
 
-        private static void ConfigureCommandLineApp()
+        private static void ConfigureCommandLineApp(CommandLineApplication app, IServiceProvider serviceProvider)
         {
 
-            _verboseOption = _app.Option("-v|--verbose", "Display operation details",
-                                            CommandOptionType.NoValue);
+            // #region copy-command
+            // app.Command("copy",
+            //     (copy) =>
+            //     {
+            //         var outputOption = copy.Option<string>("-o|--output", "Output destination (folder, remote URI...)",
+            //                                         CommandOptionType.SingleValue)
+            //                                         .IsRequired();
 
-            #region list-command
-            _app.Command("list",
-                (list) =>
+            //         var inputOption = copy.Option<string>("-i|--input", "Input reference to resource",
+            //                             CommandOptionType.MultipleValue)
+            //                             .IsRequired();
+
+            //         var recursivityOption = copy.Option<int>("-r|--recursivity", "Resource recursivity depth routing",
+            //                             CommandOptionType.SingleValue);
+
+            //         var skipAssetOption = copy.Option("-sa|--skip-assets", "Do not list assets",
+            //                             CommandOptionType.NoValue);
+
+            //         copy.Description = "Copy the Assets from the input reference to the output destination";
+
+
+            //         copy.OnExecuteAsync(async cancellationToken =>
+            //         {
+            //             var copyOperation = serviceProvider.GetService<CopyOperation>();
+            //             await copyOperation.ExecuteAsync();
+            //         });
+
+            //     }
+            // );
+            // #endregion copy-command
+
+
+            app.OnValidationError(ve =>
                 {
-                    var outputOption = list.Option("-o|--output", "Output File",
-                                                    CommandOptionType.SingleValue);
-
-                    var inputOption = list.Option<string>("-i|--input", "Input reference to resource",
-                                        CommandOptionType.MultipleValue)
-                                        .IsRequired();
-
-                    var recursivityOption = list.Option<int>("-r|--recursivity", "Resource recursivity depth routing",
-                                        CommandOptionType.SingleValue);
-
-                    var listAssetOption = list.Option("-sa|--skip-assets", "Do not list assets",
-                                        CommandOptionType.NoValue);
-
-                    list.Description = "List the Assets from the input reference";
-
-                    list.OnExecuteAsync(async cancellationToken =>
-                    {
-                        var listOperation = _serviceProvider.GetService<ListOperation>();
-                        await listOperation.ExecuteAsync();
-                    });
-
+                    PhysicalConsole.Singleton.Error.WriteLine(ve.ErrorMessage);
+                    app.ShowHelp();
+                    return 1;
                 }
             );
-            #endregion list-command
-
-            #region copy-command
-            _app.Command("copy",
-                (copy) =>
-                {
-                    var outputOption = copy.Option<string>("-o|--output", "Output destination (folder, remote URI...)",
-                                                    CommandOptionType.SingleValue)
-                                                    .IsRequired();
-
-                    var inputOption = copy.Option<string>("-i|--input", "Input reference to resource",
-                                        CommandOptionType.MultipleValue)
-                                        .IsRequired();
-
-                    var recursivityOption = copy.Option<int>("-r|--recursivity", "Resource recursivity depth routing",
-                                        CommandOptionType.SingleValue);
-
-                    var skipAssetOption = copy.Option("-sa|--skip-assets", "Do not list assets",
-                                        CommandOptionType.NoValue);
-
-                    copy.Description = "Copy the Assets from the input reference to the output destination";
-
-
-                    copy.OnExecuteAsync(async cancellationToken =>
-                    {
-                        var copyOperation = _serviceProvider.GetService<CopyOperation>();
-                        await copyOperation.ExecuteAsync();
-                    });
-
-                }
-            );
-            #endregion copy-command
-
-
 
         }
 
-        private static void RegisterServices()
+        private static IServiceProvider RegisterServices(CommandLineApplication app)
         {
+            
+            _logger = new StarsConsoleReporter(PhysicalConsole.Singleton);
+
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
             //Determines the working environment as IHostingEnvironment is unavailable in a console app
             var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) ||
@@ -204,58 +196,47 @@ namespace Stars
             collection.AddSingleton<IConfiguration>(Configuration);
 
             // Add the command line services
-            collection.AddSingleton<CommandLineApplication>(_app);
+            collection.AddSingleton<CommandLineApplication>(app);
+            collection.AddSingleton<IStarsService, StarsCommandLineTool>();
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
-            collection.AddSingleton<IReporter, StarsConsoleReporter>();
-            collection.AddSingleton<ILogger, StarsConsoleReporter>();
+            collection.AddSingleton<ILogger>(_logger);
 
             // Load Base Routers, Supplier, Destination and Carriers
             LoadBase(collection);
-
-            _serviceProvider = collection.BuildServiceProvider();
 
             // Load Plugins
             LoadPlugins(collection);
 
             // Add the Managers
-            collection.AddSingleton<ResourceRoutersManager, ResourceRoutersManager>();
+            collection.AddSingleton<RoutersManager, RoutersManager>();
             collection.AddSingleton<SupplierManager, SupplierManager>();
             collection.AddSingleton<DestinationManager, DestinationManager>();
             collection.AddSingleton<CarrierManager, CarrierManager>();
+            collection.AddSingleton<TranslatorManager, TranslatorManager>();
 
             // Add the operations
             collection.AddTransient<ListOperation, ListOperation>();
-            collection.AddTransient<CopyOperation, CopyOperation>();
+            // collection.AddTransient<CopyOperation, CopyOperation>();
 
             // Build the service provider
-            _serviceProvider = collection.BuildServiceProvider();
+            var serviceProvider = collection.BuildServiceProvider();
 
-            _app.Conventions
-                .UseDefaultConventions()
-                .UseConstructorInjection(_serviceProvider);
+            return serviceProvider;
 
         }
 
-        private static void DisposeServices()
+        private static void DisposeServices(IServiceProvider serviceProvider)
         {
-            if (_serviceProvider == null)
+            if (serviceProvider == null)
             {
                 return;
             }
 
-            if (_serviceProvider is IDisposable)
+            if (serviceProvider is IDisposable)
             {
-                ((IDisposable)_serviceProvider).Dispose();
+                ((IDisposable)serviceProvider).Dispose();
             }
 
-        }
-
-        public static bool Verbose
-        {
-            get
-            {
-                return _verboseOption != null && _verboseOption.HasValue();
-            }
         }
     }
 }
