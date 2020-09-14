@@ -41,14 +41,17 @@ namespace Stars.Service.Supply
         {
             LocalDirectoryDestination directory = (LocalDirectoryDestination)destination;
             LocalFileSystemRoute localRoute = LocalFileSystemRoute.Create(route, destination);
-            await StreamToFile(await (route as IStreamable).GetStreamAsync(), localRoute);
+            using (var stream = await (route as IStreamable).GetStreamAsync())
+            {
+                await StreamToFile(stream, localRoute);
+            }
             return localRoute;
         }
 
-        private async Task StreamToFile(Stream stream, LocalFileSystemRoute localRoute)
+        private Task StreamToFile(Stream stream, LocalFileSystemRoute localRoute)
         {
             FileInfo file = new FileInfo(localRoute.Uri.AbsolutePath);
-            await stream.CopyToAsync(file.Create());
+            return stream.CopyToAsync(file.Create());
         }
 
         public IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination)

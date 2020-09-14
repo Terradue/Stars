@@ -45,7 +45,8 @@ namespace Stars.Service.Supply
             {
                 logger.LogDebug("Searching at {0} supplier for {1}", suppliers.Current.Id, node.Id);
                 var supplierNode = await AskForSupply(node, suppliers.Current);
-                if ( supplierNode == null ){
+                if (supplierNode == null)
+                {
                     logger.LogDebug("[{0}]  -->  no supply possible", suppliers.Current.Id);
                     continue;
                 }
@@ -60,26 +61,65 @@ namespace Stars.Service.Supply
 
                 logger.LogDebug("[{0}] Delivery quotation for {1} routes", suppliers.Current.Id, deliveryQuotation.DeliveryQuotes.Count);
 
-                nodeAtDestination = OrderDelivery(deliveryQuotation);
+                if (!CheckDelivery(deliveryQuotation))
+                {
+                    continue;
+                }
+
+                var deliveryForm = await OrderDelivery(deliveryQuotation);
 
             }
 
             return nodeAtDestination;
         }
 
-        private IStacNode OrderDelivery(IDeliveryQuotation deliveryQuotation)
+        private bool CheckDelivery(IDeliveryQuotation deliveryQuotation)
         {
             foreach (var item in deliveryQuotation.DeliveryQuotes)
             {
-                logger.LogDebug("  Route {0} : {1} carriers", item.Key.Uri.ToString(), item.Value.Count());
+                if (item.Value.Count() == 0)
+                {
+                    logger.LogDebug("Missing carrier for route {0}. Skipping supplier.", item.Key.Uri);
+                    return false;
+                }
                 int j = 1;
+                logger.LogDebug("Route {0} : {1} carriers", item.Key.Uri.ToString(), item.Value.Count());
                 foreach (var delivery in item.Value)
                 {
-                    logger.LogDebug("    Delivery #{0} by carrier {1} to {2} : {3}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString());
+                    logger.LogDebug("Delivery #{0} by carrier {1} to {2} : {3}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString());
                     j++;
                 }
             }
-            return null;
+            return true;
+        }
+
+        private async Task<DeliveryForm> OrderDelivery(IDeliveryQuotation deliveryQuotation)
+        {
+            List<IRoute> deliveredRoutes = new List<IRoute>();
+            foreach (var item in deliveryQuotation.DeliveryQuotes)
+            {
+                logger.LogDebug("Trying to copy Route {0}...", item.Key.Uri.ToString());
+                int j = 1;
+                foreach (var delivery in item.Value)
+                {
+                    try
+                    {
+                        IRoute delivered = await delivery.Carrier.Deliver(delivery.Route, delivery.Supplier, delivery.Destination);
+                        if (delivered != null)
+                        {
+                            deliveredRoutes.Add(delivered);
+                            break;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError("Error copying {0} to {1} : {2}", delivery.Route.Uri, delivery.Destination.Uri, e.Message);
+                    }
+
+                    j++;
+                }
+            }
+            return new DeliveryForm(deliveredRoutes);
         }
 
         private IDeliveryQuotation QuoteDelivery(ISupplier supplier, INode supplierNode, IDestination destination)
