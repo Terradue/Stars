@@ -136,7 +136,7 @@
             "args": [
                 "-v",
                 "list",
-                "https://formentera.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
+                "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
                 "-r",
                 "2"
             ],
@@ -245,7 +245,7 @@
                 "https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1B_IW_SLC__1SDV_20180209T182240_20180209T182307_009550_011325_45C5",
                 "-r",
                 "4",
-                "--output",
+                "--output_dir",
                 "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",

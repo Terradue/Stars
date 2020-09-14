@@ -15,7 +15,7 @@ namespace Stars.Service.Supply.Destination
         {
         }
 
-        internal async Task<IDestination> CreateDestination(string output)
+        public async Task<IDestination> CreateDestination(string output)
         {
             var dg = Plugins.FirstOrDefault(r => r.CanGuide(output));
             if ( dg == null )

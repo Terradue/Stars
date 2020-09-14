@@ -28,7 +28,7 @@ namespace Stars.Service.Router
             foreach (var input in inputs)
             {
                 IRoute initRoute = WebRoute.Create(new Uri(input));
-                object state = await onBranchingFunction.Invoke(initRoute, null, null);
+                object state = await onBranchingFunction.Invoke(null, initRoute, null, null);
                 await Route(initRoute, Parameters.Recursivity, null, state);
             }
         }
@@ -107,7 +107,7 @@ namespace Stars.Service.Router
             for (int i = 0; i < subroutes.Count(); i++)
             {
                 var newRoute = subroutes.ElementAt(i);
-                var newState = await onBranchingFunction.Invoke(newRoute, subroutes, state);
+                var newState = await onBranchingFunction.Invoke(route, newRoute, subroutes, state);
                 await Route(newRoute, recursivity - 1, router, newState);
             }
             state = await afterBranchingFunction.Invoke(routableNode, router, state);
@@ -145,8 +145,8 @@ namespace Stars.Service.Router
             this.onRoutingToNodeExceptionFunction = onRoutingToNodeException;
         }
 
-        private Func<IRoute, IList<IRoute>, object, Task<object>> onBranchingFunction = (route, siblings, state) => { return Task.FromResult<object>(state); };
-        public void OnBranching(Func<IRoute, IList<IRoute>, object, Task<object>> onBranchingFunction)
+        private Func<IRoute, IRoute, IList<IRoute>, object, Task<object>> onBranchingFunction = (parentRoute, route, siblings, state) => { return Task.FromResult<object>(state); };
+        public void OnBranching(Func<IRoute, IRoute, IList<IRoute>, object, Task<object>> onBranchingFunction)
         {
             this.onBranchingFunction = onBranchingFunction;
         }

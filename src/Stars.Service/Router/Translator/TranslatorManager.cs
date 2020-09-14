@@ -14,16 +14,16 @@ namespace Stars.Service.Router.Translator
         {
         }
 
-        internal async Task<IDictionary<ITranslator, IStacNode>> Translate(INode node)
+        public async Task<IStacNode> Translate(INode node)
         {
             Dictionary<ITranslator, IStacNode> translations = new Dictionary<ITranslator, IStacNode>();
             foreach (var translator in Plugins)
             {
                 IStacNode translation = await translator.Translate(node);
                 if(translation != null)
-                    translations.Add(translator, translation);
+                    return translation;
             }
-            return translations;
+            return null;
         }
     }
 }

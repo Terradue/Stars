@@ -50,6 +50,7 @@ namespace Stars.Service.Supply
         public bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination)
         {
             if (!(destination is LocalDirectoryDestination)) return false;
+            if (route is IStreamable) return false;
 
             try
             {
@@ -105,7 +106,7 @@ namespace Stars.Service.Supply
 
         private IRoute FindLocalDestination(IRoute route)
         {
-            string filename = Path.GetFileName(route.Uri.ToString());
+            string filename = route.Uri == null ? "unknown" : Path.GetFileName(route.Uri.ToString());
             ContentType contentType = route.ContentType;
             ResourceType resourceType = route.ResourceType;
             ulong contentLength = route.ContentLength;

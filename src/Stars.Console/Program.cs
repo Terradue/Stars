@@ -26,18 +26,18 @@ namespace Stars
     [Command(Name = "Stars", Description = "Spatio Temporal Asset Router & Supplier")]
     [HelpOption]
     [Subcommand(
-        typeof(ListOperation)
-    // typeof(CopyCommand)
+        typeof(ListOperation),
+        typeof(CopyOperation)
     )]
     public class Program
     {
 
         public static IConfigurationRoot Configuration { get; set; }
 
-        private static ILogger _logger;
+        public static StarsConsoleReporter _logger;
 
         [Option]
-        public bool Verbose { get; set; }
+        public static bool Verbose { get; set; }
 
         static async Task<int> Main(string[] args)
         {
@@ -98,6 +98,8 @@ namespace Stars
 
             // Routing Task
             collection.AddTransient<RoutingTask, RoutingTask>();
+            // Supplying Task
+            collection.AddTransient<SupplyingTask, SupplyingTask>();
         }
 
 
@@ -125,7 +127,7 @@ namespace Stars
         private static IServiceProvider RegisterServices(CommandLineApplication app)
         {
 
-            _logger = new StarsConsoleReporter(PhysicalConsole.Singleton);
+            _logger = new StarsConsoleReporter(PhysicalConsole.Singleton, false);
 
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
             //Determines the working environment as IHostingEnvironment is unavailable in a console app

@@ -36,9 +36,9 @@ namespace Stars.Service.Model.Atom
 
         public ResourceType ResourceType => ResourceType.Catalog;
 
-        public string Id => feed.Id.CleanIdentifier();
+        public string Id => string.IsNullOrEmpty(feed.Id)? "feed" : feed.Id.CleanIdentifier();
 
-        public string Filename => Id + ".atomfeed.xml";
+        public string Filename => Id + ".atom.xml";
 
         public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
 
@@ -48,7 +48,7 @@ namespace Stars.Service.Model.Atom
 
         public IList<IRoute> GetRoutes()
         {
-            return (IList<IRoute>)feed.Items.Select(item => new AtomItemRoute(item, feed)).ToList();
+            return feed.Items.Select(item => new AtomItemRoute(item, feed)).Cast<IRoute>().ToList();
         }
 
         public string ReadAsString()

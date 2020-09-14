@@ -48,10 +48,10 @@ namespace Stars.Operations
             routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
             routingTask.OnBranchingNode((node, router, state) => PrintBranchingNode(node, router, state));
             routingTask.OnLeafNode((node, router, state) => PrintLeafNode(node, router, state));
-            routingTask.OnBranching((route, siblings, state) => PrepareNewRoute(route, siblings, state));
+            routingTask.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
         }
 
-        private Task<object> PrepareNewRoute(IRoute route, IList<IRoute> siblings, object state)
+        private Task<object> PrepareNewRoute(IRoute parentRoute, IRoute route, IList<IRoute> siblings, object state)
         {
             if (state == null) return Task.FromResult<object>(new ListOperationState("", 1));
 

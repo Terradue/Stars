@@ -11,7 +11,7 @@ namespace Stars.Interface.Supply
         string Id { get; }
 
         // TODO add assets filters
-        Task<INode> SearchFor(IStacNode resource);
+        Task<INode> SearchFor(INode resource);
         IDeliveryQuotation QuoteDelivery(INode resource, IDestination destination);
     }
 }

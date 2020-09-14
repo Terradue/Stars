@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Stars
 {
-    internal class StarsConsoleReporter : ConsoleReporter, ILogger
+    public class StarsConsoleReporter : ConsoleReporter, ILogger
     {
-        public StarsConsoleReporter(IConsole console) : base(console)
+        public StarsConsoleReporter(IConsole console, bool verbose) : base(console, verbose, false)
         {
         }
 

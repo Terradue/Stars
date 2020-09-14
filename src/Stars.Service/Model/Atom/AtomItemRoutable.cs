@@ -38,7 +38,7 @@ namespace Stars.Service.Model.Atom
 
         public string Id => item.Id.CleanIdentifier();
 
-        public string Filename => Id + ".item.xml";
+        public string Filename => Id + ".atom.xml";
 
         public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
 

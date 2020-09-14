@@ -17,21 +17,19 @@ namespace Stars.Service.Supply
         {
         }
 
-        internal async Task<IDictionary<ISupplier, INode>> GetSuppliers(IStacNode stacNode)
+        public IEnumerable<ISupplier> GetSuppliers(SupplierFilters supplierFilters = null)
         {
-            Dictionary<ISupplier, INode> newResources = new Dictionary<ISupplier, INode>();
-            foreach (var supplier in Plugins)
-            {
-                var newResource = await supplier.SearchFor(stacNode);
-                if(newResource != null)
-                    newResources.Add(supplier, newResource);
-            }
-            return newResources;
+            if (supplierFilters == null) return Plugins;
+            var suppliers = Plugins.Where(supplier => supplierFilters.IncludeIds.IsNullOrEmpty() ? true : supplierFilters.IncludeIds.Contains(supplier.Id))
+                            .Where(supplier => supplierFilters.ExcludeIds.IsNullOrEmpty() ? true : !supplierFilters.IncludeIds.Contains(supplier.Id)).ToList();
+            suppliers.Insert(0, GetDefaultSupplier());
+            return suppliers;
         }
 
-        internal ISupplier GetDefaultSupplier()
+        public ISupplier GetDefaultSupplier()
         {
             return Plugins.FirstOrDefault(i => i.Id == "Native");
         }
+
     }
 }

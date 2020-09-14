@@ -34,6 +34,9 @@ namespace Stars.Service.Supply.Destination
 
         public Task<IDestination> Guide(string destination)
         {
+            FileAttributes fa = File.GetAttributes(destination.Replace("file://", "").TrimEnd('/'));
+            if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
+                throw new InvalidOperationException(string.Format("{0} is not a directory", destination));
             return Task.FromResult((IDestination)LocalDirectoryDestination.Create(destination));
         }
     }

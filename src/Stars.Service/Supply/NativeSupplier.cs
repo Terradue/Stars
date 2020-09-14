@@ -30,9 +30,9 @@ namespace Stars.Service.Supply
 
         public string Id => "Native";
 
-        public Task<INode> SearchFor(IStacNode resource)
+        public Task<INode> SearchFor(INode resource)
         {
-            return Task.FromResult<INode>(null);
+            return Task.FromResult<INode>(resource);
         }
 
         public IDeliveryQuotation QuoteDelivery(INode resource, IDestination destination)

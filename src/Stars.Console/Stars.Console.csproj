@@ -28,6 +28,5 @@
     <ProjectReference Include="..\Stars.Service\Stars.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Operations/CopyOperation.cs" />
   </ItemGroup>
 </Project>
