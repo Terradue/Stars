@@ -11,15 +11,23 @@ namespace Stars.Service.Supply
 {
     public class DeliveryQuotation : IDeliveryQuotation
     {
-        private IDictionary<IRoute, IOrderedEnumerable<IDelivery>> deliveryRoutes;
+        private readonly ISupplier supplier;
+        private readonly (IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes;
+        private IDictionary<IRoute, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
 
-        public DeliveryQuotation(IDictionary<IRoute, IOrderedEnumerable<IDelivery>> assetsQuote)
+        public DeliveryQuotation(ISupplier supplier, (IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes, IDictionary<IRoute, IOrderedEnumerable<IDelivery>> assetsQuotes)
         {
-            this.deliveryRoutes = assetsQuote;
+            this.supplier = supplier;
+            this.nodeQuotes = nodeQuotes;
+            this.assetsDeliveryQuotes = assetsQuotes;
         }
 
-        public IEnumerable<ICarrier> Carriers => deliveryRoutes.SelectMany(q => q.Value.Select(q1 => q1.Carrier).Distinct()).Distinct();
+        public IEnumerable<ICarrier> Carriers => assetsDeliveryQuotes.SelectMany(q => q.Value.Select(q1 => q1.Carrier).Distinct()).Distinct();
 
-        public IDictionary<IRoute, IOrderedEnumerable<IDelivery>> DeliveryQuotes => deliveryRoutes;
+        public IDictionary<IRoute, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes => assetsDeliveryQuotes;
+
+        public (IRoute, IOrderedEnumerable<IDelivery>) NodeDeliveryQuotes => nodeQuotes;
+
+        public ISupplier Supplier => supplier;
     }
 }

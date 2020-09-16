@@ -73,18 +73,16 @@ namespace Stars.Service.Supply
         {
             List<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = new List<(ISupplier, DeliveryQuotation)>();
 
-            Dictionary<IRoute, IOrderedEnumerable<IDelivery>> supplierQuotation = new Dictionary<IRoute, IOrderedEnumerable<IDelivery>>();
+            Dictionary<IRoute, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotation = new Dictionary<IRoute, IOrderedEnumerable<IDelivery>>();
             if (supply.Item2 is IAssetsContainer)
-                supplierQuotation = GetAssetsDeliveryQuotations(supply.Item1, supply.Item2 as IAssetsContainer, destination);
+            {
+                assetsDeliveryQuotation = GetAssetsDeliveryQuotations(supply.Item1, supply.Item2 as IAssetsContainer, destination);
+            }
 
             var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supply.Item1, supply.Item2, destination);
-            if ( resourceDeliveryQuotations.Count() > 0 )
-                supplierQuotation.Add(supply.Item2, resourceDeliveryQuotations);
 
-            if ( supplierQuotation.Count > 0 )
-                return new DeliveryQuotation(supplierQuotation);
+            return new DeliveryQuotation(supply.Item1, (supply.Item2,resourceDeliveryQuotations), assetsDeliveryQuotation);
 
-            return null;
         }
     }
 }

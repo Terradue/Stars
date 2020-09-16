@@ -3,7 +3,7 @@ using Stars.Interface.Router;
 
 namespace Stars.Service.Supply
 {
-    internal class DeliveryForm
+    public class DeliveryForm
     {
         private List<IRoute> deliveredRoutes;
 

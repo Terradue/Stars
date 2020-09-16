@@ -34,14 +34,14 @@ namespace Stars.Service.Supply
             Parameters = new SupplyTaskParameters();
         }
 
-        public async Task<IStacNode> ExecuteAsync(INode node, IDestination destination)
+        public async Task<DeliveryForm> ExecuteAsync(INode node, IDestination destination)
         {
             logger.LogDebug("{0} -> {1}", node.Uri, destination.Uri);
             var suppliers = InitSuppliersEnumerator();
 
-            IStacNode nodeAtDestination = null;
+            DeliveryForm deliveryForm = null;
 
-            while (nodeAtDestination == null && suppliers.MoveNext())
+            while (deliveryForm == null && suppliers.MoveNext())
             {
                 logger.LogDebug("Searching at {0} supplier for {1}", suppliers.Current.Id, node.Id);
                 var supplierNode = await AskForSupply(node, suppliers.Current);
@@ -59,34 +59,56 @@ namespace Stars.Service.Supply
                     continue;
                 }
 
-                logger.LogDebug("[{0}] Delivery quotation for {1} routes", suppliers.Current.Id, deliveryQuotation.DeliveryQuotes.Count);
+                logger.LogDebug("[{0}] Delivery quotation for {1} assets", suppliers.Current.Id, deliveryQuotation.AssetsDeliveryQuotes.Count);
 
                 if (!CheckDelivery(deliveryQuotation))
                 {
                     continue;
                 }
 
-                var deliveryForm = await Deliver(deliveryQuotation);
+                deliveryForm = await Deliver(deliveryQuotation);
+
+
 
             }
 
-            return nodeAtDestination;
+            return deliveryForm;
         }
 
         private bool CheckDelivery(IDeliveryQuotation deliveryQuotation)
         {
-            foreach (var item in deliveryQuotation.DeliveryQuotes)
+            if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() == 0)
+                logger.LogWarning("[{0}]N[{1}] No Carrier", deliveryQuotation.Supplier.Id, deliveryQuotation.NodeDeliveryQuotes.Item1.Uri);
+            else
+            {
+                logger.LogDebug("[{0}]N[{1}] {2} carriers", deliveryQuotation.Supplier.Id,
+                     deliveryQuotation.NodeDeliveryQuotes.Item1.Uri, deliveryQuotation.NodeDeliveryQuotes.Item2.Count());
+                int j = 1;
+                foreach (var delivery in deliveryQuotation.NodeDeliveryQuotes.Item2)
+                {
+                    logger.LogDebug("[{0}]N[{1}]#{2}[{3}] to {4} : {5}$", deliveryQuotation.Supplier.Id,
+                        deliveryQuotation.NodeDeliveryQuotes.Item1.Uri, j,
+                        delivery.Carrier.Id, delivery.Destination.Uri.ToString(), delivery.Cost);
+                    j++;
+                }
+                j++;
+            }
+            foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
                 if (item.Value.Count() == 0)
                 {
-                    logger.LogDebug("Missing carrier for route {0}. Skipping supplier.", item.Key.Uri);
+                    logger.LogDebug("[{0}]A[{1}] No carrier. Skipping supplier.", deliveryQuotation.Supplier.Id,
+                        item.Key.Uri);
                     return false;
                 }
+
+                logger.LogDebug("[{0}]A[{1}] : {2} carriers", deliveryQuotation.Supplier.Id,
+                        item.Key.Uri, item.Value.Count());
                 int j = 1;
-                logger.LogDebug("Route {0} : {1} carriers", item.Key.Uri.ToString(), item.Value.Count());
                 foreach (var delivery in item.Value)
                 {
-                    logger.LogDebug("Delivery #{0} by carrier {1} to {3} : {2}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString());
+                    logger.LogDebug("[{0}]A[{1}]#{2}[{3}] to {4} : {5}$", deliveryQuotation.Supplier.Id,
+                        item.Key.Uri, j, delivery.Carrier.Id, delivery.Destination.Uri.ToString(), delivery.Cost);
                     j++;
                 }
             }
@@ -96,32 +118,44 @@ namespace Stars.Service.Supply
         private async Task<DeliveryForm> Deliver(IDeliveryQuotation deliveryQuotation)
         {
             List<IRoute> deliveredRoutes = new List<IRoute>();
-            foreach (var item in deliveryQuotation.DeliveryQuotes)
+            if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() > 0)
             {
-                logger.LogInformation("Supplying Route {0}...", item.Key.Uri.ToString());
-                int j = 1;
-                foreach (var delivery in item.Value)
-                {
-                    try
-                    {
-                        IRoute delivered = await delivery.Carrier.Deliver(delivery);
-                        if (delivered != null)
-                        {
-                            logger.LogInformation("Supply complete to {0}", delivered.Uri);
-                            deliveredRoutes.Add(delivered);
-                            break;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogError("Error supplying {0} to {1} : {2}", delivery.Route.Uri, delivery.Destination.Uri, e.Message);
-                        logger.LogDebug(e.StackTrace);
-                    }
+                var route = await Deliver(deliveryQuotation.NodeDeliveryQuotes.Item1, deliveryQuotation.NodeDeliveryQuotes.Item2);
+                if (route == null) return null;
+                deliveredRoutes.Add(route);
+            }
 
-                    j++;
-                }
+            foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
+            {
+                var route = await Deliver(item.Key, item.Value);
+                if (route == null) return null;
+                deliveredRoutes.Add(route);
+                break;
             }
             return new DeliveryForm(deliveredRoutes);
+        }
+
+        private async Task<IRoute> Deliver(IRoute route, IOrderedEnumerable<IDelivery> deliveries)
+        {
+            logger.LogInformation("Delivering {0} {1}...", route.ResourceType, route.Uri);
+            foreach (var delivery in deliveries)
+            {
+                try
+                {
+                    IRoute delivered = await delivery.Carrier.Deliver(delivery);
+                    if (delivered != null)
+                    {
+                        logger.LogInformation("Delivery complete to {0}", delivered.Uri);
+                        return delivered;
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogError("Error supplying {0} to {1} : {2}", delivery.Route.Uri, delivery.Destination.Uri, e.Message);
+                    logger.LogDebug(e.StackTrace);
+                }
+            }
+return null;
         }
 
         private IDeliveryQuotation QuoteDelivery(ISupplier supplier, INode supplierNode, IDestination destination)
@@ -138,6 +172,6 @@ namespace Stars.Service.Supply
         {
             return suppliersManager.GetSuppliers(Parameters.SupplierFilters).GetEnumerator();
         }
-
     }
+
 }

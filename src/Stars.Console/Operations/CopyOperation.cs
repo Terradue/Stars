@@ -87,7 +87,7 @@ namespace Stars.Operations
 
             supplyTask.Parameters = new SupplyTaskParameters();
 
-            await supplyTask.ExecuteAsync(node, operationState.Destination);
+            DeliveryForm deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
 
             return state;
         }
