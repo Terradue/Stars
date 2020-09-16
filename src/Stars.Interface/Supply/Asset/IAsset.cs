@@ -8,5 +8,7 @@ namespace Stars.Interface.Supply.Asset
     {
         string Label { get; }
 
+        
+
     }
 }

@@ -37,21 +37,24 @@ namespace Stars.Service.Supply
             return true;
         }
 
-        public async Task<IRoute> Deliver(IRoute route, ISupplier supplier, IDestination destination)
+        public async Task<IRoute> Deliver(IDelivery delivery)
         {
-            LocalDirectoryDestination directory = (LocalDirectoryDestination)destination;
-            LocalFileSystemRoute localRoute = LocalFileSystemRoute.Create(route, destination);
-            using (var stream = await (route as IStreamable).GetStreamAsync())
+            LocalDirectoryDestination directory = (LocalDirectoryDestination)delivery.Destination;
+            LocalFileSystemRoute localRoute = LocalFileSystemRoute.Create(delivery.Route, delivery.Destination);
+            using (var stream = await (delivery.Route as IStreamable).GetStreamAsync())
             {
                 await StreamToFile(stream, localRoute);
             }
             return localRoute;
         }
 
-        private Task StreamToFile(Stream stream, LocalFileSystemRoute localRoute)
+        private async Task StreamToFile(Stream stream, LocalFileSystemRoute localRoute)
         {
             FileInfo file = new FileInfo(localRoute.Uri.AbsolutePath);
-            return stream.CopyToAsync(file.Create());
+            using ( FileStream fileStream = file.Create()){
+                await stream.CopyToAsync(fileStream);
+                await fileStream.FlushAsync();
+            }
         }
 
         public IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination)

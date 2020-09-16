@@ -41,7 +41,7 @@ namespace Stars.Service.Supply
             return routesQuotes;
         }
 
-        private IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(ISupplier supplier, IRoute route, IDestination destination)
+        public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(ISupplier supplier, IRoute route, IDestination destination)
         {
             List<IDelivery> quotes = new List<IDelivery>();
             foreach (var carrier in Plugins)

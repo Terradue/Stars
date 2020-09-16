@@ -14,7 +14,7 @@ namespace Stars.Interface.Supply
 
         bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination);
 
-        Task<IRoute> Deliver (IRoute route, ISupplier supplier, IDestination destination);
+        Task<IRoute> Deliver (IDelivery delivery);
         
         IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination);
 

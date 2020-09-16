@@ -9,11 +9,12 @@ using Stars.Interface.Supply.Asset;
 using Stars.Service.Router;
 using Stars.Service;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Stars.Operations
 {
     [Command(Name = "list", Description = "List the routing from the input reference")]
-    internal class ListOperation : IOperation
+    internal class ListOperation : BaseOperation
     {
         [Argument(0)]
         public string[] Inputs { get => inputs; set => inputs = value; }
@@ -111,7 +112,7 @@ namespace Stars.Operations
             return state;
         }
 
-        public async Task OnExecuteAsync()
+        protected override async Task ExecuteAsync()
         {
             InitRoutingTask();
             await routingTask.ExecuteAsync(Inputs);
@@ -157,6 +158,11 @@ namespace Stars.Operations
                     return ConsoleColor.DarkCyan;
             }
             return ConsoleColor.White;
+        }
+
+
+        protected override void RegisterOperationServices(ServiceCollection collection)
+        {
         }
     }
 }

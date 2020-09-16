@@ -51,8 +51,6 @@ namespace Stars.Service.Model.Stac
             }
         }
 
-        public abstract string ReadAsString();
-
         internal static StacResource Create(IStacObject stacObject)
         {
             if (stacObject is IStacCatalog)

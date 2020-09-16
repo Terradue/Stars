@@ -1,5 +1,7 @@
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
+using Stars.Interface.Router;
 
 namespace Stars.Service
 {
@@ -34,6 +36,12 @@ namespace Stars.Service
         public static bool IsNullOrEmpty(this Array array)
         {
             return (array == null || array.Length == 0);
+        }
+
+        public static string ReadAsString(this IStreamable streamable)
+        {
+            StreamReader sr = new StreamReader(streamable.GetStreamAsync().Result);
+            return sr.ReadToEnd();
         }
     }
 }

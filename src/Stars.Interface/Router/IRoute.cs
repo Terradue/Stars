@@ -11,6 +11,8 @@ namespace Stars.Interface.Router
         ContentType ContentType { get; }
         ResourceType ResourceType { get; }
         ulong ContentLength { get; }
+
+        
         
 
         Task<INode> GoToNode();

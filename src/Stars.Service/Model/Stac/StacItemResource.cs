@@ -31,9 +31,5 @@ namespace Stars.Service.Model.Stac
             return new List<IRoute>();
         }
 
-        public override string ReadAsString()
-        {
-            return JsonConvert.SerializeObject(StacItem);
-        }
     }
 }

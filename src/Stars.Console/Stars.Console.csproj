@@ -7,25 +7,25 @@
     <NoWarn>NU1603</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="appsettings.yml" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    <None Include="appsettings.yml" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
-    <PackageReference Include="NetEscapades.Configuration.Yaml" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.8" />
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8"/>
+    <PackageReference Include="NetEscapades.Configuration.Yaml" Version="2.0.1"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="3.1.8"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.8"/>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.8"/>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.8"/>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.8"/>
+    <PackageReference Include="ShellProgressBar" Version="5.0.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" />
-    <ProjectReference Include="..\Stars.Interface\Stars.Interface.csproj" />
-    <ProjectReference Include="..\..\..\..\sugar\Terradue.Data\Stac\Terradue.Data.Stac.csproj">
-      </ProjectReference>
-    <ProjectReference Include="..\Stars.Service\Stars.Service.csproj" />
+    <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj"/>
+    <ProjectReference Include="..\Stars.Interface\Stars.Interface.csproj"/>
+    <ProjectReference Include="..\..\..\..\sugar\Terradue.Data\Stac\Terradue.Data.Stac.csproj"/>
+    <ProjectReference Include="..\Stars.Service\Stars.Service.csproj"/>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

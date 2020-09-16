@@ -40,7 +40,7 @@ namespace Stars.Service.Model.Atom
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(this.ReadAsString()).Length);
 
         public bool IsCatalog => true;
 
@@ -49,12 +49,6 @@ namespace Stars.Service.Model.Atom
         public IList<IRoute> GetRoutes()
         {
             return feed.Items.Select(item => new AtomItemRoute(item, feed)).Cast<IRoute>().ToList();
-        }
-
-        public string ReadAsString()
-        {
-            StreamReader sr = new StreamReader(GetStreamAsync().Result);
-            return sr.ReadToEnd();
         }
 
         public async Task<Stream> GetStreamAsync()

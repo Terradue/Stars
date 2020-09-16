@@ -54,12 +54,6 @@ namespace Stars.Service.Router
 
         public bool IsCatalog => false;
 
-        public string ReadAsString()
-        {
-            responseStream.Position = 0;
-            return new StreamReader(responseStream).ReadToEnd();
-        }
-
         private static Stream CopyAndClose(Stream inputStream)
         {
             const int readSize = 256;

@@ -20,7 +20,7 @@ using Stars.Service.Supply.Destination;
 namespace Stars.Operations
 {
     [Command(Name = "copy", Description = "Copy the tree of resources and assets by routing from the input reference")]
-    internal class CopyOperation : IOperation
+    internal class CopyOperation : BaseOperation
     {
         [Argument(0)]
         public string[] Inputs { get => inputs; set => inputs = value; }
@@ -34,22 +34,19 @@ namespace Stars.Operations
         [Option("-o|--output_dir", "Output Directory", CommandOptionType.SingleValue)]
         public string OutputDirectory { get; set; }
 
-        private readonly IConsole console;
-        private readonly ILogger logger;
-        private readonly RoutingTask routingTask;
-        private readonly DestinationManager destinationManager;
-        private readonly IServiceProvider serviceProvider;
+        [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
+        public bool AllowOrdering { get; set; }
+
+    
+        private RoutingTask routingTask;
+        private DestinationManager destinationManager;
 
         private string[] inputs = new string[0];
         private int recursivity = 1;
 
-        public CopyOperation(IServiceProvider serviceProvider)
+        public CopyOperation()
         {
-            this.console = serviceProvider.GetService<IConsole>();
-            this.logger = serviceProvider.GetService<ILogger>();
-            this.routingTask = serviceProvider.GetService<RoutingTask>();
-            this.destinationManager = serviceProvider.GetService<DestinationManager>();
-            this.serviceProvider = serviceProvider;
+
         }
         private void InitRoutingTask()
         {
@@ -86,7 +83,7 @@ namespace Stars.Operations
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            SupplyingTask supplyTask = serviceProvider.GetService<SupplyingTask>();
+            SupplyingTask supplyTask = ServiceProvider.GetService<SupplyingTask>();
 
             supplyTask.Parameters = new SupplyTaskParameters();
 
@@ -96,17 +93,18 @@ namespace Stars.Operations
         }
 
 
-        public async Task OnExecuteAsync()
+        protected override async Task ExecuteAsync()
         {
+            this.routingTask = ServiceProvider.GetService<RoutingTask>();
+            this.destinationManager = ServiceProvider.GetService<DestinationManager>();
             InitRoutingTask();
             await routingTask.ExecuteAsync(Inputs);
         }
 
-        public ValidationResult OnValidate()
+        protected override void RegisterOperationServices(ServiceCollection collection)
         {
-            Program._logger.IsVerbose = Program.Verbose;
-            return ValidationResult.Success;
+            if (AllowOrdering)
+                collection.AddTransient<ICarrier, OrderingCarrier>();
         }
-
     }
 }

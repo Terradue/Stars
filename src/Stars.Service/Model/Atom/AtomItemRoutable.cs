@@ -13,6 +13,7 @@ using Stars.Interface.Supply.Asset;
 using Stars.Service.Router;
 using Stars.Service.Supply.Asset;
 using Terradue.ServiceModel.Syndication;
+using Stars.Service;
 
 namespace Stars.Service.Model.Atom
 {
@@ -40,7 +41,7 @@ namespace Stars.Service.Model.Atom
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(this.ReadAsString()).Length);
 
         public bool IsCatalog => false;
 
@@ -51,11 +52,7 @@ namespace Stars.Service.Model.Atom
             return new List<IRoute>();
         }
 
-        public string ReadAsString()
-        {
-            StreamReader sr = new StreamReader(GetStreamAsync().Result);
-            return sr.ReadToEnd();
-        }
+
 
         public async Task<Stream> GetStreamAsync()
         {

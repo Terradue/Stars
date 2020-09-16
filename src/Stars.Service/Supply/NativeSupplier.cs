@@ -39,5 +39,10 @@ namespace Stars.Service.Supply
         {
             return carriersManager.QuoteDeliveryFromCarriers((this, resource), destination);
         }
+
+        public Task<IOrder> Order(IOrderable orderableRoute)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

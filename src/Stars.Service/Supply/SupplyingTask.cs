@@ -66,7 +66,7 @@ namespace Stars.Service.Supply
                     continue;
                 }
 
-                var deliveryForm = await OrderDelivery(deliveryQuotation);
+                var deliveryForm = await Deliver(deliveryQuotation);
 
             }
 
@@ -86,34 +86,36 @@ namespace Stars.Service.Supply
                 logger.LogDebug("Route {0} : {1} carriers", item.Key.Uri.ToString(), item.Value.Count());
                 foreach (var delivery in item.Value)
                 {
-                    logger.LogDebug("Delivery #{0} by carrier {1} to {2} : {3}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString());
+                    logger.LogDebug("Delivery #{0} by carrier {1} to {3} : {2}$", j, delivery.Carrier.Id, delivery.Cost, delivery.Destination.Uri.ToString());
                     j++;
                 }
             }
             return true;
         }
 
-        private async Task<DeliveryForm> OrderDelivery(IDeliveryQuotation deliveryQuotation)
+        private async Task<DeliveryForm> Deliver(IDeliveryQuotation deliveryQuotation)
         {
             List<IRoute> deliveredRoutes = new List<IRoute>();
             foreach (var item in deliveryQuotation.DeliveryQuotes)
             {
-                logger.LogDebug("Trying to copy Route {0}...", item.Key.Uri.ToString());
+                logger.LogInformation("Supplying Route {0}...", item.Key.Uri.ToString());
                 int j = 1;
                 foreach (var delivery in item.Value)
                 {
                     try
                     {
-                        IRoute delivered = await delivery.Carrier.Deliver(delivery.Route, delivery.Supplier, delivery.Destination);
+                        IRoute delivered = await delivery.Carrier.Deliver(delivery);
                         if (delivered != null)
                         {
+                            logger.LogInformation("Supply complete to {0}", delivered.Uri);
                             deliveredRoutes.Add(delivered);
                             break;
                         }
                     }
                     catch (Exception e)
                     {
-                        logger.LogError("Error copying {0} to {1} : {2}", delivery.Route.Uri, delivery.Destination.Uri, e.Message);
+                        logger.LogError("Error supplying {0} to {1} : {2}", delivery.Route.Uri, delivery.Destination.Uri, e.Message);
+                        logger.LogDebug(e.StackTrace);
                     }
 
                     j++;

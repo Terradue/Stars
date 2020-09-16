@@ -13,5 +13,6 @@ namespace Stars.Interface.Supply
         // TODO add assets filters
         Task<INode> SearchFor(INode resource);
         IDeliveryQuotation QuoteDelivery(INode resource, IDestination destination);
+        Task<IOrder> Order(IOrderable orderableRoute);
     }
 }

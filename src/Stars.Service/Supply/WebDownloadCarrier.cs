@@ -70,11 +70,11 @@ namespace Stars.Service.Supply
             return request;
         }
 
-        public async Task<IRoute> Deliver(IRoute route, ISupplier supplier, IDestination destination)
+        public async Task<IRoute> Deliver(IDelivery delivery)
         {
-            LocalDirectoryDestination directory = (LocalDirectoryDestination)destination;
-            var wr = CreateWebRequest(route.Uri);
-            LocalFileSystemRoute localRoute = LocalFileSystemRoute.Create(route, destination);
+            LocalDirectoryDestination directory = (LocalDirectoryDestination)delivery.Destination;
+            var wr = CreateWebRequest(delivery.Route.Uri);
+            LocalFileSystemRoute localRoute = LocalFileSystemRoute.Create(delivery.Route, delivery.Destination);
             await DownloadFile(wr.GetResponseAsync(), localRoute);
             return localRoute;
         }
