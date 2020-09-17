@@ -12,9 +12,9 @@ using Stars.Service.Router;
 
 namespace Stars.Service.Model.Stac
 {
-    internal class StacCatalogResource : StacResource, IRoutable
+    public class StacCatalogNode : StacNode, IRoutable
     {
-        public StacCatalogResource(IStacCatalog stacCatalog) : base(stacCatalog)
+        public StacCatalogNode(IStacCatalog stacCatalog) : base(stacCatalog)
         {
             if (stacCatalog is StacCollection)
                 contentType.Parameters.Add("profile", "stac-collection");

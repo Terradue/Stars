@@ -4,15 +4,14 @@ using System.Linq;
 using Newtonsoft.Json;
 using Stac;
 using Stars.Service.Router;
-using Stars.Service.Supply.Asset;
 using Stars.Interface.Router;
 using Stars.Interface.Supply.Asset;
 
 namespace Stars.Service.Model.Stac
 {
-    internal class StacItemResource : StacResource, IAssetsContainer, IRoutable
+    public class StacItemNode : StacNode, IAssetsContainer, IRoutable
     {
-        public StacItemResource(IStacItem stacItem) : base(stacItem)
+        public StacItemNode(IStacItem stacItem) : base(stacItem)
         {
             contentType.Parameters.Add("profile", "stac-item");
         }

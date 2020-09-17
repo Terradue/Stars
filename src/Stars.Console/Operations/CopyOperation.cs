@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Stars.Interface.Model;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
+using Stars.Service.Catalog;
+using Stars.Service.Model.Stac;
 using Stars.Service.Router;
 using Stars.Service.Supply;
-using Stars.Service.Supply.Asset;
 using Stars.Service.Supply.Destination;
 
 namespace Stars.Operations
@@ -37,9 +37,10 @@ namespace Stars.Operations
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
         public bool AllowOrdering { get; set; }
 
-    
+
         private RoutingTask routingTask;
         private DestinationManager destinationManager;
+        private CarrierManager carrierManager;
 
         private string[] inputs = new string[0];
         private int recursivity = 1;
@@ -59,6 +60,31 @@ namespace Stars.Operations
             routingTask.OnBranchingNode((node, router, state) => CopyNode(node, router, state));
             routingTask.OnLeafNode((node, router, state) => CopyNode(node, router, state));
             routingTask.OnBranching(async (parentRoute, route, siblings, state) => await PrepareNewRoute(parentRoute, route, siblings, state));
+            routingTask.OnAfterBranching(async (parentRoute, router, parentState, subStates) => await LinkNodes(parentRoute, router, parentState, subStates));
+        }
+
+        private async Task<object> LinkNodes(IRoutable parentRoute, IRouter router, object state, IEnumerable<object> subStates)
+        {
+            CopyOperationState operationState = state as CopyOperationState;
+
+            CatalogingTask catalogingTask = ServiceProvider.GetService<CatalogingTask>();
+
+            StacNode stacNode = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute));
+
+            var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(null, stacNode, operationState.Destination);
+
+            IRoute stacRoute = null;
+
+            foreach (var delivery in stacDeliveries)
+            {
+                stacRoute = await delivery.Carrier.Deliver(delivery);
+                if (stacRoute != null) break;
+            }
+
+            operationState.LastRoute = stacRoute;
+
+            return operationState;
+
         }
 
         private async Task<object> PrepareNewRoute(IRoute parentRoute, IRoute newRoute, IList<IRoute> siblings, object state)
@@ -89,7 +115,9 @@ namespace Stars.Operations
 
             DeliveryForm deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
 
-            return state;
+            operationState.LastRoute = deliveryForm.NodeDeliveredRoute;
+
+            return operationState;
         }
 
 
@@ -97,6 +125,7 @@ namespace Stars.Operations
         {
             this.routingTask = ServiceProvider.GetService<RoutingTask>();
             this.destinationManager = ServiceProvider.GetService<DestinationManager>();
+            this.carrierManager = ServiceProvider.GetService<CarrierManager>();
             InitRoutingTask();
             await routingTask.ExecuteAsync(Inputs);
         }

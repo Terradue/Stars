@@ -33,10 +33,10 @@ namespace Stars.Service.Router
             }
         }
 
-        internal async Task Route(IRoute route, int recursivity, IRouter prevRouter, object state)
+        internal async Task<object> Route(IRoute route, int recursivity, IRouter prevRouter, object state)
         {
             // Stop here if there is no route
-            if (route == null) return;
+            if (route == null) return state;
 
             INode node = null;
             Exception exception = null;
@@ -68,8 +68,7 @@ namespace Stars.Service.Router
             // Print the route info if node cannot be reached
             if (exception != null)
             {
-                state = await onRoutingToNodeExceptionFunction.Invoke(route, prevRouter, exception, state);
-                return;
+                return await onRoutingToNodeExceptionFunction.Invoke(route, prevRouter, exception, state);
             }
 
             IRoutable routableNode = null;
@@ -82,8 +81,7 @@ namespace Stars.Service.Router
                 // Definitively no more routes
                 if (router == null)
                 {
-                    state = await onLeafNodeFunction.Invoke(node, prevRouter, state);
-                    return;
+                    return await onLeafNodeFunction.Invoke(node, prevRouter, state);
                 }
                 else
                 {
@@ -104,18 +102,20 @@ namespace Stars.Service.Router
 
             // Let's get sub routes
             IList<IRoute> subroutes = routableNode.GetRoutes();
+            List<object> substates = new List<object>();
             for (int i = 0; i < subroutes.Count(); i++)
             {
                 var newRoute = subroutes.ElementAt(i);
                 var newState = await onBranchingFunction.Invoke(route, newRoute, subroutes, state);
-                await Route(newRoute, recursivity - 1, router, newState);
+                var substate = await Route(newRoute, recursivity - 1, router, newState);
+                substates.Add(substate);
             }
-            state = await afterBranchingFunction.Invoke(routableNode, router, state);
+            return await afterBranchingFunction.Invoke(routableNode, router, state, substates);
         }
 
 
-        private Func<IRoutable, IRouter, object, Task<object>> afterBranchingFunction = (node, router, state) => { return Task.FromResult<object>(state); };
-        public void OnAfterBranching(Func<IRoutable, IRouter, object, Task<object>> afterBranchingFunction)
+        private Func<IRoutable, IRouter, object, IEnumerable<object>, Task<object>> afterBranchingFunction = (node, router, state, substates) => { return Task.FromResult<object>(state); };
+        public void OnAfterBranching(Func<IRoutable, IRouter, object, IEnumerable<object>, Task<object>> afterBranchingFunction)
         {
             this.afterBranchingFunction = afterBranchingFunction;
         }

@@ -9,12 +9,12 @@ using Stars.Interface.Supply;
 
 namespace Stars.Service.Router
 {
-    internal class WebResource : INode, IStreamable
+    internal class WebNode : INode, IStreamable
     {
         private WebResponse webResponse;
         private Stream responseStream;
 
-        public WebResource(WebResponse webResponse)
+        public WebNode(WebResponse webResponse)
         {
             this.webResponse = webResponse;
             responseStream = CopyAndClose(webResponse.GetResponseStream());

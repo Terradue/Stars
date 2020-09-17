@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
+using Stars.Service.Catalog;
 using Stars.Service.Model.Atom;
 using Stars.Service.Model.Stac;
 using Stars.Service.Router;
@@ -82,6 +83,8 @@ namespace Stars.Operations
             collection.AddTransient<RoutingTask, RoutingTask>();
             // Supplying Task
             collection.AddTransient<SupplyingTask, SupplyingTask>();
+            // Cataloging Task
+            collection.AddTransient<CatalogingTask, CatalogingTask>();
         }
 
 

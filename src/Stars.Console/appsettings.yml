@@ -8,7 +8,7 @@ Suppliers:
       Password: secret
 Translators:
   Onda:
-    Type: Terradue.Data.Stac.Translators.AtomGeoTimeTranslator, Terradue.Data.Stac
+    Type: Terradue.Data.Stac.Translators.AtomToStacTranslator, Terradue.Data.Stac
     Parameters: [""]
 Carriers:
   WebDownload:

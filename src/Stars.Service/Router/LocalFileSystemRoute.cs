@@ -3,7 +3,6 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stars.Interface.Router;
 using Stars.Interface.Supply.Destination;
-using Stars.Service.Supply.Asset;
 using Stars.Service.Supply.Destination;
 
 namespace Stars.Service.Router
@@ -31,9 +30,9 @@ namespace Stars.Service.Router
 
         public ulong ContentLength => contentLength;
 
-        public Task<INode> GoToNode()
+        public async Task<INode> GoToNode()
         {
-            return LocalFileAsset.Create(this);
+            return await WebRoute.Create(Uri).GoToNode();
         }
 
         internal static LocalFileSystemRoute Create(IRoute route, IDestination destination)

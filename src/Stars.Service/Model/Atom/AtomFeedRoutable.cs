@@ -17,7 +17,7 @@ using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Service.Model.Atom
 {
-    internal class AtomFeedRoutable : IRoutable, IStreamable
+    public class AtomFeedRoutable : IRoutable, IStreamable
     {
         private readonly SyndicationFeed feed;
 

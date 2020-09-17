@@ -5,11 +5,19 @@ namespace Stars.Service.Supply
 {
     public class DeliveryForm
     {
-        private List<IRoute> deliveredRoutes;
+        private readonly IRoute nodeDeliveredRoute;
+        private readonly IEnumerable<IRoute> assetsDeliveredRoutes;
 
-        public DeliveryForm(List<IRoute> deliveredRoutes)
+        public DeliveryForm(IRoute nodeDeliveredRoute, IEnumerable<IRoute> assetsDeliveredRoutes)
         {
-            this.deliveredRoutes = deliveredRoutes;
+            this.nodeDeliveredRoute = nodeDeliveredRoute;
+            this.assetsDeliveredRoutes = assetsDeliveredRoutes;
         }
+
+        public IRoute NodeDeliveredRoute => nodeDeliveredRoute;
+
+        public IEnumerable<IRoute> AssetsDeliveredRoutes => assetsDeliveredRoutes;
+
+        public INode SupplierNode { get; internal set; }
     }
 }

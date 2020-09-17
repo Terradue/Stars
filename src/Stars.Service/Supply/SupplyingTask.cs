@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Stars.Interface;
-using Stars.Interface.Model;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
 using Stars.Service.Router;
 using Stars.Service.Router.Translator;
 using Stars.Service.Supply;
-using Stars.Service.Supply.Asset;
 using Stars.Service.Supply.Destination;
 
 namespace Stars.Service.Supply
@@ -22,9 +20,9 @@ namespace Stars.Service.Supply
     public class SupplyingTask : IStarsTask
     {
         public SupplyTaskParameters Parameters { get; set; }
-        private readonly ILogger logger;
-        private readonly SupplierManager suppliersManager;
-        private readonly TranslatorManager translatorManager;
+        protected readonly ILogger logger;
+        protected readonly SupplierManager suppliersManager;
+        protected readonly TranslatorManager translatorManager;
 
         public SupplyingTask(ILogger logger, SupplierManager suppliersManager, TranslatorManager translatorManager)
         {
@@ -67,12 +65,17 @@ namespace Stars.Service.Supply
                 }
 
                 deliveryForm = await Deliver(deliveryQuotation);
+                if ( deliveryForm == null ){
+                    logger.LogDebug("[{0}] Delivery failed. Skipping supplier", suppliers.Current.Id);
+                }
 
+                deliveryForm.SupplierNode = supplierNode;
 
+                return deliveryForm;
 
             }
 
-            return deliveryForm;
+            return null;
         }
 
         private bool CheckDelivery(IDeliveryQuotation deliveryQuotation)
@@ -117,22 +120,22 @@ namespace Stars.Service.Supply
 
         private async Task<DeliveryForm> Deliver(IDeliveryQuotation deliveryQuotation)
         {
-            List<IRoute> deliveredRoutes = new List<IRoute>();
+            IRoute nodeDeliveredRoute = null;
             if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() > 0)
             {
                 var route = await Deliver(deliveryQuotation.NodeDeliveryQuotes.Item1, deliveryQuotation.NodeDeliveryQuotes.Item2);
                 if (route == null) return null;
-                deliveredRoutes.Add(route);
+                nodeDeliveredRoute = route;
             }
-
+            List<IRoute> assetsDeliveredRoutes = new List<IRoute>();
             foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
                 var route = await Deliver(item.Key, item.Value);
                 if (route == null) return null;
-                deliveredRoutes.Add(route);
+                assetsDeliveredRoutes.Add(route);
                 break;
             }
-            return new DeliveryForm(deliveredRoutes);
+            return new DeliveryForm(nodeDeliveredRoute, assetsDeliveredRoutes);
         }
 
         private async Task<IRoute> Deliver(IRoute route, IOrderedEnumerable<IDelivery> deliveries)
@@ -155,7 +158,7 @@ namespace Stars.Service.Supply
                     logger.LogDebug(e.StackTrace);
                 }
             }
-return null;
+            return null;
         }
 
         private IDeliveryQuotation QuoteDelivery(ISupplier supplier, INode supplierNode, IDestination destination)

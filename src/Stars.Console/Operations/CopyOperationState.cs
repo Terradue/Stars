@@ -1,3 +1,4 @@
+using Stars.Interface.Router;
 using Stars.Interface.Supply.Destination;
 
 namespace Stars.Operations
@@ -12,5 +13,6 @@ namespace Stars.Operations
 
         public int Depth { get; internal set; }
         public IDestination Destination { get; internal set; }
+        public IRoute LastRoute { get; internal set; }
     }
 }

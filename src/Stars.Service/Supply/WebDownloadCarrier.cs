@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Stars.Service.Router;
 using System.Net.Http;
-using Stars.Service.Supply.Asset;
 using Stars.Service.Supply.Destination;
 using Stars.Interface.Supply;
 using Stars.Interface.Router;

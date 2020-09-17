@@ -11,13 +11,12 @@ using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Asset;
 using Stars.Service.Router;
-using Stars.Service.Supply.Asset;
 using Terradue.ServiceModel.Syndication;
 using Stars.Service;
 
 namespace Stars.Service.Model.Atom
 {
-    internal class AtomItemRoutable : INode, IRoutable, IAssetsContainer, IStreamable
+    public class AtomItemRoutable : INode, IRoutable, IAssetsContainer, IStreamable
     {
         private SyndicationItem item;
         private readonly ISupplier supplier;
@@ -51,8 +50,6 @@ namespace Stars.Service.Model.Atom
         {
             return new List<IRoute>();
         }
-
-
 
         public async Task<Stream> GetStreamAsync()
         {

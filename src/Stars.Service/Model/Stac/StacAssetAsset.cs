@@ -8,7 +8,6 @@ using Stac.Catalog;
 using Stars.Interface.Router;
 using Stars.Interface.Supply.Asset;
 using Stars.Service.Router;
-using Stars.Service.Supply.Asset;
 
 namespace Stars.Service.Model.Stac
 {

@@ -74,14 +74,14 @@ namespace Stars.Service.Model.Stac
             switch (link.RelationshipType)
             {
                 case "self":
-                    return StacResource.Create(stacParentObject) as INode;
+                    return StacNode.Create(stacParentObject) as INode;
                 case "root":
                 case "parent":
                     throw new NotImplementedException();
                 case "child":
-                    return StacResource.Create(await (StacCatalog.LoadStacLink(link)));
+                    return StacNode.Create(await (StacCatalog.LoadStacLink(link)));
                 case "item":
-                    return StacResource.Create(await (StacItem.LoadStacLink(link)));
+                    return StacNode.Create(await (StacItem.LoadStacLink(link)));
                 default:
                     return null;
             }

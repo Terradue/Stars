@@ -29,7 +29,7 @@ namespace Stars.Service.Router
 
         public async Task<INode> GoToNode()
         {
-            return await request.GetResponseAsync().ContinueWith(wr => new WebResource(wr.Result));
+            return await request.GetResponseAsync().ContinueWith(wr => new WebNode(wr.Result));
         }
 
         public Uri Uri => request.RequestUri;

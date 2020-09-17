@@ -27,36 +27,29 @@ namespace Stars.Service.Model.Atom
         public bool CanRoute(INode node)
         {
             if (!(node is IStreamable)) return false;
-            if (node.ContentType.MediaType == "application/atom+xml")
+            try
             {
-                try
-                {
-                    Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                    feedFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result));
-                    return true;
-                }
-                catch { }
+                Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
+                feedFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result));
+                return true;
             }
+            catch { }
             return false;
         }
 
         public async Task<IRoutable> Route(INode node)
         {
             if (!(node is IStreamable)) return null;
-            if (node.ContentType.MediaType == "application/atom+xml")
+            try
             {
-                try
-                {
-                    Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                    await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
-                    return new AtomFeedRoutable(feedFormatter.Feed);
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
+                Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
+                await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
+                return new AtomFeedRoutable(feedFormatter.Feed);
             }
-            return null;
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
     }

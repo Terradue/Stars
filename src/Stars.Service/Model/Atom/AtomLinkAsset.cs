@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Stars.Interface.Router;
 using Stars.Interface.Supply.Asset;
 using Stars.Service.Router;
-using Stars.Service.Supply.Asset;
 using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Service.Model.Atom

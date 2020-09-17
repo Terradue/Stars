@@ -8,19 +8,18 @@ using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Item;
-using Stars.Interface.Model;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Service.Router;
 
 namespace Stars.Service.Model.Stac
 {
-    internal abstract class StacResource : IRoutable, IStacNode, INode, IStreamable
+    public abstract class StacNode : IRoutable, INode, IStreamable
     {
         protected IStacObject stacObject;
         protected ContentType contentType;
 
-        public StacResource(IStacObject stacObject)
+        public StacNode(IStacObject stacObject)
         {
             this.stacObject = stacObject;
             this.contentType = new ContentType("application/json");
@@ -51,13 +50,13 @@ namespace Stars.Service.Model.Stac
             }
         }
 
-        internal static StacResource Create(IStacObject stacObject)
+        internal static StacNode Create(IStacObject stacObject)
         {
             if (stacObject is IStacCatalog)
-                return new StacCatalogResource(stacObject as IStacCatalog);
+                return new StacCatalogNode(stacObject as IStacCatalog);
 
             if (stacObject is IStacItem)
-                return new StacItemResource(stacObject as IStacItem);
+                return new StacItemNode(stacObject as IStacItem);
 
             return null;
         }
@@ -68,16 +67,25 @@ namespace Stars.Service.Model.Stac
             return Task.FromResult((INode)this);
         }
 
-        public Task<IStacObject> GetStacObject()
+        public IStacObject GetStacObject()
         {
-            return Task.FromResult(stacObject);
+            return stacObject;
         }
 
         public abstract IList<IRoute> GetRoutes();
 
-        public Task<Stream> GetStreamAsync()
+        public async Task<Stream> GetStreamAsync()
         {
-            throw new NotImplementedException();
+            MemoryStream ms = new MemoryStream();
+            return await Task<Stream>.Run(() =>
+            {
+                var sw = new StreamWriter(ms);
+                JsonSerializer.Create().Serialize(sw, stacObject);
+                sw.Flush();
+                ms.Seek(0, SeekOrigin.Begin);
+                return ms as Stream;
+            });
+
         }
     }
 }

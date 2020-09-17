@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
 using Stac.Item;
-using Stars.Interface.Model;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;

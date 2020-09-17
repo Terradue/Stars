@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Stars.Interface.Model;
 using Stars.Interface.Router;
 using Stars.Interface.Router.Translator;
 
@@ -14,16 +13,16 @@ namespace Stars.Service.Router.Translator
         {
         }
 
-        public async Task<IStacNode> Translate(INode node)
+        public async Task<T> Translate<T>(INode node) where T : INode
         {
-            Dictionary<ITranslator, IStacNode> translations = new Dictionary<ITranslator, IStacNode>();
+            Dictionary<ITranslator, T> translations = new Dictionary<ITranslator, T>();
             foreach (var translator in Plugins)
             {
-                IStacNode translation = await translator.Translate(node);
+                T translation = await translator.Translate<T>(node);
                 if(translation != null)
                     return translation;
             }
-            return null;
+            return default(T);
         }
     }
 }
