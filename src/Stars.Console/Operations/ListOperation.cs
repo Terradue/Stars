@@ -123,7 +123,7 @@ namespace Stars.Operations
             // List assets
             if (!SkippAssets && resource is IAssetsContainer)
             {
-                IEnumerable<IAsset> assets = ((IAssetsContainer)resource).GetAssets();
+                IDictionary<string, IAsset> assets = ((IAssetsContainer)resource).GetAssets();
                 for (int i = 0; i < assets.Count(); i++)
                 {
                     string newPrefix = prefix.Replace('─', ' ').Replace('└', ' ');
@@ -138,7 +138,7 @@ namespace Stars.Operations
                     var assetPrefix = newPrefix + new string('─', 1);
                     if (router != null)
                         assetPrefix = string.Format("[{0}] {1}", router.Label, assetPrefix);
-                    var asset = assets.ElementAt(i);
+                    var asset = assets.ElementAt(i).Value;
                     await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + asset.Label).Truncate(99), asset.ContentType));
                 }
             }

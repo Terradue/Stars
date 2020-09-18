@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -51,6 +52,8 @@ namespace Stars.Service.Model.Stac
         public ResourceType ResourceType => ResourceType.Asset;
 
         public string Filename => Path.GetFileName(Uri.ToString());
+
+        public IEnumerable<string> Roles => asset.Roles;
 
         public async Task<INode> GoToNode()
         {

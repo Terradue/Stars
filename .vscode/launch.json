@@ -198,7 +198,7 @@
                 "https://cbers-stac-0-7.s3.amazonaws.com/CBERS4/MUX/027/069/catalog.json",
                 "-r",
                 "4",
-                "--output",
+                "--output-dir",
                 "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
@@ -221,7 +221,7 @@
                 "https://formentera.terradue.com/sentinel3/search?format=atom&start=2020-03-06&bbox=-5.801%2C14.009%2C-3.076%2C16.215&pt=SL_2_LST___&od=DESCENDING",
                 "-r",
                 "4",
-                "--output",
+                "--output-dir",
                 "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
@@ -245,7 +245,7 @@
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SR_2_LAN____20190404T224853_20190404T233910_20190430T202207_3016_024_015______LN3_O_NT_003",
                 "-r",
                 "4",
-                "--output_dir",
+                "--output-dir",
                 "/tmp/stars",
                 "--allow-ordering"
             ],

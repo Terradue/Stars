@@ -7,7 +7,8 @@ namespace Stars.Interface.Supply.Destination
     {
         Uri Uri { get; }
 
-        IDestination RelativePath(IRoute route, IRoute subroute);
+        Uri RelativeUri(IRoute to);
+        IDestination RelativeDestination(IRoute from, IRoute to);
         IDestination To(IRoute route);
     }
 }

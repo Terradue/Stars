@@ -24,7 +24,7 @@ namespace Stars.Service.Supply.Destination
             return new LocalDirectoryDestination(dir);
         }
 
-        public IDestination RelativePath(IRoute route, IRoute subroute)
+        public IDestination RelativeDestination(IRoute route, IRoute subroute)
         {
             string relPath = "";
             if (subroute.Uri.IsAbsoluteUri)
@@ -50,6 +50,11 @@ namespace Stars.Service.Supply.Destination
             var newDirPath = Path.Join(directory.FullName, relPath);
             DirectoryInfo dir = new DirectoryInfo(newDirPath);
             return new LocalDirectoryDestination(dir);
+        }
+
+        public Uri RelativeUri(IRoute to)
+        {
+            return Uri.MakeRelativeUri(to.Uri);
         }
 
         public IDestination To(IRoute route)

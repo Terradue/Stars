@@ -4,6 +4,6 @@ namespace Stars.Interface.Supply.Asset
 {
     public interface IAssetsContainer
     {
-        IEnumerable<IAsset> GetAssets();
+        IDictionary<string, IAsset> GetAssets();
     }
 }

@@ -20,9 +20,9 @@ namespace Stars.Service.Model.Stac
 
         public override ResourceType ResourceType => ResourceType.Item;
 
-        public IEnumerable<IAsset> GetAssets()
+        public IDictionary<string, IAsset> GetAssets()
         {
-            return StacItem.Assets.Select(asset => new StacAssetAsset(asset.Value, StacItem)).Cast<IAsset>();
+            return StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, StacItem));
         }
 
         public override IList<IRoute> GetRoutes()

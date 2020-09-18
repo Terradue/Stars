@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using Terradue.ServiceModel.Syndication;
 
 namespace Stars.Service.Model.Atom
 {
-    internal class AtomLinkAsset : IAsset
+    public class AtomLinkAsset : IAsset
     {
         private SyndicationLink link;
         private SyndicationItem item;
@@ -44,6 +45,8 @@ namespace Stars.Service.Model.Atom
         public ResourceType ResourceType => ResourceType.Asset;
 
         public string Filename => Path.GetFileName(Uri.ToString());
+
+        public IEnumerable<string> Roles => new string[] { link.RelationshipType };
 
         public async Task<INode> GoToNode()
         {

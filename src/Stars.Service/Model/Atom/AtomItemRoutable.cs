@@ -70,11 +70,21 @@ namespace Stars.Service.Model.Atom
             return Task.FromResult((INode)this);
         }
 
-        public IEnumerable<IAsset> GetAssets()
+        public IDictionary<string, IAsset> GetAssets()
         {
-            return item.Links
-                .Where(link => new string[] { "enclosure", "icon" }.Contains(link.RelationshipType))
-                .Select(link => new AtomLinkAsset(link, item));
+            Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
+            foreach (var link in item.Links.Where(link => new string[] { "enclosure", "icon" }.Contains(link.RelationshipType)))
+            {
+                string key = link.RelationshipType;
+                int i = 1;
+                while ( assets.ContainsKey(key )){
+                    key = link.RelationshipType + i;
+                    i++;
+                }
+                assets.Add(key, new AtomLinkAsset(link, item));
+            }
+
+            return assets;
         }
     }
 }

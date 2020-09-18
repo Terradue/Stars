@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Stars.Interface.Router;
+using Stars.Interface.Supply.Asset;
 
 namespace Stars.Interface.Supply
 {
@@ -10,7 +11,7 @@ namespace Stars.Interface.Supply
 
         (IRoute, IOrderedEnumerable<IDelivery>) NodeDeliveryQuotes { get; }
 
-        IDictionary<IRoute, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes { get; }
+        IDictionary<string, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes { get; }
         
         ISupplier Supplier { get; }
     }

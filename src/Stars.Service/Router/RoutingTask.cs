@@ -96,12 +96,18 @@ namespace Stars.Service.Router
                 router = prevRouter;
             }
 
+            // Let's get sub routes
+            IList<IRoute> subroutes = routableNode.GetRoutes();
+
+            // I any, otherwise consider it a leaf node
+            if (subroutes.Count() == 0)
+                return await onLeafNodeFunction.Invoke(node, prevRouter, state);
+
             state = await onBranchingNodeFunction.Invoke(routableNode, router, state);
 
             state = await beforeBranchingFunction.Invoke(routableNode, router, state);
 
-            // Let's get sub routes
-            IList<IRoute> subroutes = routableNode.GetRoutes();
+
             List<object> substates = new List<object>();
             for (int i = 0; i < subroutes.Count(); i++)
             {

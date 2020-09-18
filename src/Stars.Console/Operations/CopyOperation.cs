@@ -31,7 +31,7 @@ namespace Stars.Operations
         [Option("-sa|--skip-assets", "Do not list assets", CommandOptionType.NoValue)]
         public bool SkippAssets { get; set; }
 
-        [Option("-o|--output_dir", "Output Directory", CommandOptionType.SingleValue)]
+        [Option("-o|--output-dir", "Output Directory", CommandOptionType.SingleValue)]
         public string OutputDirectory { get; set; }
 
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
@@ -58,28 +58,28 @@ namespace Stars.Operations
             };
             // routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
             routingTask.OnBranchingNode((node, router, state) => CopyNode(node, router, state));
-            routingTask.OnLeafNode((node, router, state) => CopyNode(node, router, state));
+            routingTask.OnLeafNode((node, router, state) => CopyLeafNode(node, router, state));
             routingTask.OnBranching(async (parentRoute, route, siblings, state) => await PrepareNewRoute(parentRoute, route, siblings, state));
-            routingTask.OnAfterBranching(async (parentRoute, router, parentState, subStates) => await LinkNodes(parentRoute, router, parentState, subStates));
+            routingTask.OnAfterBranching(async (parentRoute, router, parentState, subStates) => await Stacify(parentRoute, router, parentState, subStates));
         }
 
-        private async Task<object> LinkNodes(IRoutable parentRoute, IRouter router, object state, IEnumerable<object> subStates)
+        private async Task<object> CopyLeafNode(INode node, IRouter router, object state)
+        {
+            var newState = await CopyNode(node, router, state);
+
+            CopyOperationState operationState = newState as CopyOperationState;
+
+            return await Stacify(operationState.LastRoute, router, newState, new object[0]);
+        }
+
+
+        private async Task<object> Stacify(IRoute parentRoute, IRouter router, object state, IEnumerable<object> subStates)
         {
             CopyOperationState operationState = state as CopyOperationState;
 
             CatalogingTask catalogingTask = ServiceProvider.GetService<CatalogingTask>();
 
-            StacNode stacNode = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute));
-
-            var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(null, stacNode, operationState.Destination);
-
-            IRoute stacRoute = null;
-
-            foreach (var delivery in stacDeliveries)
-            {
-                stacRoute = await delivery.Carrier.Deliver(delivery);
-                if (stacRoute != null) break;
-            }
+            IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Assets, operationState.Destination);
 
             operationState.LastRoute = stacRoute;
 
@@ -100,7 +100,7 @@ namespace Stars.Operations
             CopyOperationState operationState = state as CopyOperationState;
             if (operationState.Depth == 0) return state;
 
-            var newDestination = operationState.Destination.RelativePath(parentRoute, newRoute);
+            var newDestination = operationState.Destination.RelativeDestination(parentRoute, newRoute);
 
             return new CopyOperationState(operationState.Depth + 1, newDestination);
         }
@@ -116,6 +116,7 @@ namespace Stars.Operations
             DeliveryForm deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
 
             operationState.LastRoute = deliveryForm.NodeDeliveredRoute;
+            operationState.Assets = deliveryForm.AssetsDeliveredRoutes;
 
             return operationState;
         }

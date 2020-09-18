@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
+using Stars.Interface.Supply.Asset;
 using Stars.Service.Router;
 using Stars.Service.Supply.Destination;
 
@@ -13,9 +14,9 @@ namespace Stars.Service.Supply
     {
         private readonly ISupplier supplier;
         private readonly (IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes;
-        private IDictionary<IRoute, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
+        private IDictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
 
-        public DeliveryQuotation(ISupplier supplier, (IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes, IDictionary<IRoute, IOrderedEnumerable<IDelivery>> assetsQuotes)
+        public DeliveryQuotation(ISupplier supplier, (IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes, IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes)
         {
             this.supplier = supplier;
             this.nodeQuotes = nodeQuotes;
@@ -24,7 +25,7 @@ namespace Stars.Service.Supply
 
         public IEnumerable<ICarrier> Carriers => assetsDeliveryQuotes.SelectMany(q => q.Value.Select(q1 => q1.Carrier).Distinct()).Distinct();
 
-        public IDictionary<IRoute, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes => assetsDeliveryQuotes;
+        public IDictionary<string, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes => assetsDeliveryQuotes;
 
         public (IRoute, IOrderedEnumerable<IDelivery>) NodeDeliveryQuotes => nodeQuotes;
 

@@ -34,6 +34,13 @@ namespace Stars.Service.Model.Atom
                 return true;
             }
             catch { }
+            try
+            {
+                Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
+                itemFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result));
+                return true;
+            }
+            catch { }
             return false;
         }
 
@@ -48,7 +55,16 @@ namespace Stars.Service.Model.Atom
             }
             catch (Exception)
             {
-                return null;
+                try
+                {
+                    Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
+                    await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
+                    return new AtomItemRoutable(itemFormatter.Item);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
         }
 

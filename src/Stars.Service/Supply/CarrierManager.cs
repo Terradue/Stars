@@ -29,16 +29,16 @@ namespace Stars.Service.Supply
             return Plugins.Where(r => r.CanDeliver(route, supplier, destination));
         }
 
-        private Dictionary<IRoute, IOrderedEnumerable<IDelivery>> GetAssetsDeliveryQuotations(ISupplier supplier, IAssetsContainer assetsContainer, IDestination destination)
+        private Dictionary<string, IOrderedEnumerable<IDelivery>> GetAssetsDeliveryQuotations(ISupplier supplier, IAssetsContainer assetsContainer, IDestination destination)
         {
-            Dictionary<IRoute, IOrderedEnumerable<IDelivery>> routesQuotes = new Dictionary<IRoute, IOrderedEnumerable<IDelivery>>();
+            Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
 
-            foreach (var route in assetsContainer.GetAssets())
+            foreach (var asset in assetsContainer.GetAssets())
             {
-                var assetsDeliveryQuotations = GetSingleDeliveryQuotations(supplier, route, destination);
-                routesQuotes.Add(route, assetsDeliveryQuotations);
+                var assetsDeliveryQuotations = GetSingleDeliveryQuotations(supplier, asset.Value, destination);
+                assetsQuotes.Add(asset.Key, assetsDeliveryQuotations);
             }
-            return routesQuotes;
+            return assetsQuotes;
         }
 
         public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(ISupplier supplier, IRoute route, IDestination destination)
@@ -73,7 +73,7 @@ namespace Stars.Service.Supply
         {
             List<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = new List<(ISupplier, DeliveryQuotation)>();
 
-            Dictionary<IRoute, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotation = new Dictionary<IRoute, IOrderedEnumerable<IDelivery>>();
+            Dictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotation = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
             if (supply.Item2 is IAssetsContainer)
             {
                 assetsDeliveryQuotation = GetAssetsDeliveryQuotations(supply.Item1, supply.Item2 as IAssetsContainer, destination);

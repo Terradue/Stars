@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Stars.Interface;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
+using Stars.Interface.Supply.Asset;
 using Stars.Interface.Supply.Destination;
 using Stars.Service.Router;
 using Stars.Service.Router.Translator;
@@ -101,17 +102,17 @@ namespace Stars.Service.Supply
                 if (item.Value.Count() == 0)
                 {
                     logger.LogDebug("[{0}]A[{1}] No carrier. Skipping supplier.", deliveryQuotation.Supplier.Id,
-                        item.Key.Uri);
+                        item.Key);
                     return false;
                 }
 
                 logger.LogDebug("[{0}]A[{1}] : {2} carriers", deliveryQuotation.Supplier.Id,
-                        item.Key.Uri, item.Value.Count());
+                        item.Key, item.Value.Count());
                 int j = 1;
                 foreach (var delivery in item.Value)
                 {
                     logger.LogDebug("[{0}]A[{1}]#{2}[{3}] to {4} : {5}$", deliveryQuotation.Supplier.Id,
-                        item.Key.Uri, j, delivery.Carrier.Id, delivery.Destination.Uri.ToString(), delivery.Cost);
+                        item.Key, j, delivery.Carrier.Id, delivery.Destination.Uri.ToString(), delivery.Cost);
                     j++;
                 }
             }
@@ -123,26 +124,34 @@ namespace Stars.Service.Supply
             IRoute nodeDeliveredRoute = null;
             if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() > 0)
             {
-                var route = await Deliver(deliveryQuotation.NodeDeliveryQuotes.Item1, deliveryQuotation.NodeDeliveryQuotes.Item2);
+                var route = await Deliver(deliveryQuotation.NodeDeliveryQuotes.Item1.Uri.ToString(), deliveryQuotation.NodeDeliveryQuotes.Item2);
                 if (route == null) return null;
                 nodeDeliveredRoute = route;
             }
-            List<IRoute> assetsDeliveredRoutes = new List<IRoute>();
+            Dictionary<string, IAsset> assetsDeliveredRoutes = new Dictionary<string, IAsset>();
             foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
+                if ( item.Value.Count() == 0)   break;
                 var route = await Deliver(item.Key, item.Value);
                 if (route == null) return null;
-                assetsDeliveredRoutes.Add(route);
+                IAsset asset = MakeAsset(route, (IAsset)item.Value.First().Route);
+                assetsDeliveredRoutes.Add(item.Key, asset);
                 break;
             }
             return new DeliveryForm(nodeDeliveredRoute, assetsDeliveredRoutes);
         }
 
-        private async Task<IRoute> Deliver(IRoute route, IOrderedEnumerable<IDelivery> deliveries)
+        private IAsset MakeAsset(IRoute route, IAsset asset)
         {
-            logger.LogInformation("Delivering {0} {1}...", route.ResourceType, route.Uri);
+            return new GenericAsset(route, asset.Label, asset.Roles);
+        }
+
+        private async Task<IRoute> Deliver(string key, IOrderedEnumerable<IDelivery> deliveries)
+        {
+            logger.LogInformation("Delivery for {0}", key);
             foreach (var delivery in deliveries)
             {
+                logger.LogInformation("Delivering {0}[{1}] ({2})...", key, delivery.Route.ResourceType, delivery.Route.Uri);
                 try
                 {
                     IRoute delivered = await delivery.Carrier.Deliver(delivery);

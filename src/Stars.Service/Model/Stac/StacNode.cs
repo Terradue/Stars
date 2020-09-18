@@ -67,10 +67,7 @@ namespace Stars.Service.Model.Stac
             return Task.FromResult((INode)this);
         }
 
-        public IStacObject GetStacObject()
-        {
-            return stacObject;
-        }
+        public IStacObject StacObject => stacObject;
 
         public abstract IList<IRoute> GetRoutes();
 
