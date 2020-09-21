@@ -25,15 +25,7 @@ namespace Stars.Service.Model.Stac
 
         public Uri Uri => asset.Uri;
 
-        public ContentType ContentType
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(asset.MediaType))
-                    return null;
-                return new ContentType(asset.MediaType);
-            }
-        }
+        public ContentType ContentType => asset.MediaType;
 
         public ulong ContentLength => asset.ContentLength;
 
@@ -58,6 +50,11 @@ namespace Stars.Service.Model.Stac
         public async Task<INode> GoToNode()
         {
             return await WebRoute.Create(Uri).GoToNode();
+        }
+
+        public IStreamable GetStreamable()
+        {
+            return WebRoute.Create(Uri);
         }
     }
 }

@@ -27,11 +27,11 @@ namespace Stars.Operations
 
         private readonly IConsole console;
         private readonly ILogger logger;
-        private readonly RoutingTask routingTask;
+        private readonly RoutingService routingTask;
         private int recursivity = 1;
         private string[] inputs = new string[0];
 
-        public ListOperation(IConsole console, ILogger logger, RoutingTask routingTask)
+        public ListOperation(IConsole console, ILogger logger, RoutingService routingTask)
         {
             this.console = console;
             this.logger = logger;

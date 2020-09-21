@@ -11,7 +11,7 @@ using Stars.Service.Router;
 using Stars.Interface.Supply.Asset;
 using Stars.Service.Supply.Destination;
 
-namespace Stars.Service.Supply
+namespace Stars.Service.Supply.Carrier
 {
     public class CarrierManager : AbstractManager<ICarrier>
     {
@@ -29,7 +29,7 @@ namespace Stars.Service.Supply
             return Plugins.Where(r => r.CanDeliver(route, supplier, destination));
         }
 
-        private Dictionary<string, IOrderedEnumerable<IDelivery>> GetAssetsDeliveryQuotations(ISupplier supplier, IAssetsContainer assetsContainer, IDestination destination)
+        public Dictionary<string, IOrderedEnumerable<IDelivery>> GetAssetsDeliveryQuotations(ISupplier supplier, IAssetsContainer assetsContainer, IDestination destination)
         {
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
 
@@ -81,7 +81,7 @@ namespace Stars.Service.Supply
 
             var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supply.Item1, supply.Item2, destination);
 
-            return new DeliveryQuotation(supply.Item1, (supply.Item2,resourceDeliveryQuotations), assetsDeliveryQuotation);
+            return new DeliveryQuotation(supply.Item1, (supply.Item2,resourceDeliveryQuotations), assetsDeliveryQuotation, destination);
 
         }
     }

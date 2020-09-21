@@ -12,6 +12,7 @@ using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
 using Stars.Service.Router;
 using Stars.Service.Supply;
+using Stars.Service.Supply.Carrier;
 using Stars.Service.Supply.Destination;
 using Terradue.ServiceModel.Syndication;
 

@@ -48,6 +48,11 @@ namespace Stars.Service.Model.Atom
 
         public IEnumerable<string> Roles => new string[] { link.RelationshipType };
 
+        public IStreamable GetStreamable()
+        {
+            return WebRoute.Create(Uri);
+        }
+
         public async Task<INode> GoToNode()
         {
             return await WebRoute.Create(Uri).GoToNode();

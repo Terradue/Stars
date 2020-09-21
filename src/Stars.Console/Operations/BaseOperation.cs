@@ -9,13 +9,16 @@ using Microsoft.Extensions.Logging;
 using Stars.Interface.Router;
 using Stars.Interface.Supply;
 using Stars.Interface.Supply.Destination;
+using Stars.Service;
 using Stars.Service.Catalog;
 using Stars.Service.Model.Atom;
 using Stars.Service.Model.Stac;
 using Stars.Service.Router;
 using Stars.Service.Router.Translator;
 using Stars.Service.Supply;
+using Stars.Service.Supply.Carrier;
 using Stars.Service.Supply.Destination;
+using Stars.Service.Supply.Receipt;
 
 namespace Stars.Operations
 {
@@ -61,7 +64,7 @@ namespace Stars.Operations
 
         protected abstract Task ExecuteAsync();
 
-        private void LoadBase(ServiceCollection collection)
+        private void LoadBase(ServiceCollection collection, IConfigurationRoot configuration)
         {
             // Stac Router
             collection.AddTransient<IRouter, StacRouter>();
@@ -74,17 +77,22 @@ namespace Stars.Operations
             // Local Filesystem destination
             collection.AddTransient<IDestinationGuide, LocalFileSystemDestinationGuide>();
 
+            // Carrier Options
+            collection.Configure<GlobalOptions>(configuration.GetSection("Global"));
             // Web Download Carrier
-            collection.AddTransient<ICarrier, WebDownloadCarrier>();
+            collection.AddTransient<ICarrier, LocalWebDownloadCarrier>();
             // Streaming Carrier
-            collection.AddTransient<ICarrier, StreamingCarrier>();
+            collection.AddTransient<ICarrier, LocalStreamingCarrier>();
 
             // Routing Task
-            collection.AddTransient<RoutingTask, RoutingTask>();
+            collection.AddTransient<RoutingService, RoutingService>();
             // Supplying Task
-            collection.AddTransient<SupplyingTask, SupplyingTask>();
+            collection.AddTransient<SupplyService, SupplyService>();
             // Cataloging Task
-            collection.AddTransient<CatalogingTask, CatalogingTask>();
+            collection.AddTransient<CatalogingService, CatalogingService>();
+
+             // Carrier Options
+            collection.Configure<CredentialsOptions>(configuration.GetSection("Credentials"));
         }
 
 
@@ -99,6 +107,8 @@ namespace Stars.Operations
             DestinationManager.RegisterConfiguredPlugins(configuration.GetSection("Destinations"), collection, logger);
 
             CarrierManager.RegisterConfiguredPlugins(configuration.GetSection("Carriers"), collection, logger);
+
+            ReceiptManager.RegisterConfiguredPlugins(configuration.GetSection("Receipt"), collection, logger);
         }
 
         private ServiceCollection RegisterServices()
@@ -134,7 +144,7 @@ namespace Stars.Operations
             collection.AddSingleton<ILogger>(logger);
 
             // Load Base Routers, Supplier, Destination and Carriers
-            LoadBase(collection);
+            LoadBase(collection, Configuration);
 
             // Load Plugins
             LoadPlugins(collection, Configuration);
@@ -145,6 +155,7 @@ namespace Stars.Operations
             collection.AddSingleton<DestinationManager, DestinationManager>();
             collection.AddSingleton<CarrierManager, CarrierManager>();
             collection.AddSingleton<TranslatorManager, TranslatorManager>();
+            collection.AddSingleton<ReceiptManager, ReceiptManager>();
 
             // Registers services specific to operation
             RegisterOperationServices(collection);

@@ -9,7 +9,7 @@ using Stars.Service.Router;
 
 namespace Stars.Service.Router
 {
-    public class WebRoute : IRoute
+    public class WebRoute : IRoute, IStreamable
     {
         private readonly WebRequest request;
         private readonly ulong contentLength;
@@ -22,14 +22,25 @@ namespace Stars.Service.Router
 
         public static WebRoute Create(Uri uri, ulong contentLength = 0)
         {
-            WebRequest request = WebRequest.Create(uri);
-            request.Headers.Set("User-Agent", "Stars/0.0.1");
+            WebRequest request = CreateWebRequest(uri);
             return new WebRoute(request, contentLength);
+        }
+
+        private static WebRequest CreateWebRequest(Uri uri)
+        {
+            var request = WebRequest.Create(uri);
+            request.Headers.Set("User-Agent", "Stars/0.0.1");
+            return request;
         }
 
         public async Task<INode> GoToNode()
         {
             return await request.GetResponseAsync().ContinueWith(wr => new WebNode(wr.Result));
+        }
+
+        public async Task<Stream> GetStreamAsync()
+        {
+            return (await request.GetResponseAsync()).GetResponseStream();
         }
 
         public Uri Uri => request.RequestUri;
@@ -43,5 +54,7 @@ namespace Stars.Service.Router
         public WebRequest Request { get => request; }
 
         public ulong ContentLength => contentLength;
+
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(request.RequestUri.ToString()) };
     }
 }

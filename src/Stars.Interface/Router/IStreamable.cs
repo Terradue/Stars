@@ -10,6 +10,7 @@ namespace Stars.Interface.Router
     public interface IStreamable : IRoute
     {
         Task<Stream> GetStreamAsync();
+        
         ContentDisposition ContentDisposition { get; }
     }
 }

@@ -10,10 +10,11 @@ Translators:
   Onda:
     Type: Terradue.Data.Stac.Translators.AtomToStacTranslator, Terradue.Data.Stac
     Parameters: [""]
-Carriers:
-  WebDownload:
-    NetworkCredentials:
-      SciHub:
-        UriPrefix: https://scihub.copernicus.eu
-        Username: test
-        Password: secret
+Global:
+  ForceOverwrite: false
+Credentials:
+  SciHub:
+    Type: HTTP-BASIC
+    UriPrefix: https://scihub.copernicus.eu
+    Username: test
+    Password: secret

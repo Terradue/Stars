@@ -43,6 +43,8 @@ namespace Stars.Service.Supply
         [JsonProperty]
         public string OrderId => orderId;
 
+        public ISupplier Supplier { get => supplier; set => supplier = value; }
+
         public async Task<Stream> GetStreamAsync()
         {
             return await Task<Stream>.Run(() =>

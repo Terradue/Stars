@@ -36,5 +36,10 @@ namespace Stars.Service.Supply
         {
             return await route.GoToNode();
         }
+
+        public IStreamable GetStreamable()
+        {
+            return route as IStreamable;
+        }
     }
 }

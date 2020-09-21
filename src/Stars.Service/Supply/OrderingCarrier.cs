@@ -12,6 +12,7 @@ using Stars.Service.Supply.Destination;
 using Stars.Interface.Supply;
 using Stars.Interface.Router;
 using Stars.Interface.Supply.Destination;
+using Stars.Service.Supply.Carrier;
 
 namespace Stars.Service.Supply
 {
@@ -45,8 +46,7 @@ namespace Stars.Service.Supply
         {
             OrderedDelivery orderedDelivery = delivery as OrderedDelivery;
             IOrder order = await orderedDelivery.Supplier.Order(orderedDelivery.OrderableRoute);
-            SimpleDelivery orderVoucherDelivery = new SimpleDelivery(orderedDelivery.OrderVoucherCarrier, order, orderedDelivery.Supplier, orderedDelivery.Destination, orderedDelivery.Cost);
-            return await orderedDelivery.OrderVoucherCarrier.Deliver(orderVoucherDelivery);
+            return await orderedDelivery.VoucherDelivery.Carrier.Deliver(orderedDelivery.VoucherDelivery);
         }
 
         public IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination)
@@ -55,17 +55,15 @@ namespace Stars.Service.Supply
 
             IOrderable orderableRoute = route as IOrderable;
 
-            var orderVoucher = CreateOrderVoucher(route, supplier, orderableRoute.Id);
+            OrderVoucher orderVoucher = CreateOrderVoucher(route, supplier, orderableRoute.Id);
 
+            // Find a carrier for the voucher
             var deliveryQuotes = carrierManager.GetSingleDeliveryQuotations(supplier, orderVoucher, destination);
-
             if ( deliveryQuotes == null ) return null;
+            var voucherDelivery = deliveryQuotes.FirstOrDefault();
+            if ( voucherDelivery == null ) return null;
 
-            var delivery = deliveryQuotes.FirstOrDefault();
-
-            if ( delivery == null ) return null;
-
-            return new OrderedDelivery(this, delivery.Carrier, route, supplier, delivery.Destination, delivery.Cost + 10000);
+            return new OrderedDelivery(this, voucherDelivery, orderVoucher, voucherDelivery.Cost + 10000);
         }
 
     }

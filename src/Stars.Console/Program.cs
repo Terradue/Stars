@@ -54,8 +54,6 @@ namespace Stars
             {
                 return PrintErrorAndUsage(cpe.Command, cpe.Message);
             }
-
-
         }
 
         public static int PrintErrorAndUsage(CommandLineApplication command, string message)

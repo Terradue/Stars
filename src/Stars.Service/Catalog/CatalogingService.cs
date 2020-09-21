@@ -18,11 +18,12 @@ using Stars.Service.Model.Stac;
 using Stars.Service.Router;
 using Stars.Service.Router.Translator;
 using Stars.Service.Supply;
+using Stars.Service.Supply.Carrier;
 using Stars.Service.Supply.Destination;
 
 namespace Stars.Service.Catalog
 {
-    public class CatalogingTask : IStarsTask
+    public class CatalogingService : IStarsService
     {
         public CatalogTaskParameters Parameters { get; set; }
         private readonly ILogger logger;
@@ -30,7 +31,7 @@ namespace Stars.Service.Catalog
         private readonly RoutersManager routersManager;
         private readonly CarrierManager carrierManager;
 
-        public CatalogingTask(ILogger logger, TranslatorManager translatorManager, RoutersManager routersManager, CarrierManager carrierManager)
+        public CatalogingService(ILogger logger, TranslatorManager translatorManager, RoutersManager routersManager, CarrierManager carrierManager)
         {
             this.logger = logger;
             this.translatorManager = translatorManager;
@@ -87,12 +88,12 @@ namespace Stars.Service.Catalog
             if (stacCatalog == null) return;
 
             stacCatalog.Links.Clear();
-            stacCatalog.Links.Add(StacLink.CreateSelfLink(delivery.Destination.Uri));
+            stacCatalog.Links.Add(StacLink.CreateSelfLink(delivery.TargetUri));
 
             foreach (var childRoute in childrenRoutes)
             {
                 INode childNode = await childRoute.GoToNode();
-                var relativeUri = delivery.Destination.RelativeUri(childNode);
+                var relativeUri = delivery.TargetUri.MakeRelativeUri(childNode.Uri);
                 logger.LogDebug("Link to {0}", relativeUri.ToString());
                 switch (childRoute.ResourceType)
                 {
@@ -115,12 +116,12 @@ namespace Stars.Service.Catalog
             if (stacItem == null) return;
 
             stacItem.Links.Clear();
-            stacItem.Links.Add(StacLink.CreateSelfLink(delivery.Destination.Uri));
+            stacItem.Links.Add(StacLink.CreateSelfLink(delivery.TargetUri));
 
             foreach (var assetKey in assets.Keys)
             {
                 IAsset asset = assets[assetKey];
-                var relativeUri = delivery.Destination.RelativeUri(asset);
+                var relativeUri = delivery.TargetUri.MakeRelativeUri(asset.Uri);
                 logger.LogDebug("Asset [{0}] {1}", assetKey, relativeUri.ToString());
                 stacItem.Assets.Add(assetKey, CreateAsset(asset, relativeUri, stacItem));
             }
@@ -128,7 +129,7 @@ namespace Stars.Service.Catalog
 
         private StacAsset CreateAsset(IAsset asset, Uri relativeUri, IStacObject stacObject)
         {
-            return new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType.ToString(), asset.ContentLength);
+            return new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType, asset.ContentLength);
         }
     }
 }

@@ -249,7 +249,7 @@
                 "/tmp/stars",
                 "--allow-ordering"
             ],
-            "cwd": "${workspaceFolder}/src",
+           "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -257,6 +257,32 @@
                 "moduleLoad": false
             }
         },
+        {
+            "name": "Copy OpenSearch single Kompsat3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.0/Stars.dll",
+            "args": [
+                "-v",
+                "copy",
+                "https://catalog.terradue.com/cos2/search?format=atom&uid=750-KARI-KOMPSAT3A-urn_ogc_def_EOP_KARI_KOMPSAT3_K3A_20200508102646_28267_00027320_L1G_Aux_xml",
+                "-r",
+                "4",
+                "--output-dir",
+                "/tmp/stars",
+                "--allow-ordering"
+            ],
+           "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+            
         {
             "name": ".NET Core Attach",
             "type": "coreclr",

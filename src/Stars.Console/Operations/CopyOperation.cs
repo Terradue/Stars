@@ -15,7 +15,9 @@ using Stars.Service.Catalog;
 using Stars.Service.Model.Stac;
 using Stars.Service.Router;
 using Stars.Service.Supply;
+using Stars.Service.Supply.Carrier;
 using Stars.Service.Supply.Destination;
+using Stars.Service.Supply.Receipt;
 
 namespace Stars.Operations
 {
@@ -37,11 +39,14 @@ namespace Stars.Operations
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
         public bool AllowOrdering { get; set; }
 
+        [Option("-xa|--extract-archive", "Extract archive files (default to true)", CommandOptionType.NoValue)]
+        public bool ExtractArchives { get; set; } = true;
 
-        private RoutingTask routingTask;
+
+        private RoutingService routingTask;
         private DestinationManager destinationManager;
         private CarrierManager carrierManager;
-
+        private ReceiptManager receiptManager;
         private string[] inputs = new string[0];
         private int recursivity = 1;
 
@@ -77,7 +82,7 @@ namespace Stars.Operations
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            CatalogingTask catalogingTask = ServiceProvider.GetService<CatalogingTask>();
+            CatalogingService catalogingTask = ServiceProvider.GetService<CatalogingService>();
 
             IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Assets, operationState.Destination);
 
@@ -100,7 +105,7 @@ namespace Stars.Operations
             CopyOperationState operationState = state as CopyOperationState;
             if (operationState.Depth == 0) return state;
 
-            var newDestination = operationState.Destination.RelativeDestination(parentRoute, newRoute);
+            var newDestination = operationState.Destination.RelativeTo(parentRoute, newRoute);
 
             return new CopyOperationState(operationState.Depth + 1, newDestination);
         }
@@ -109,24 +114,37 @@ namespace Stars.Operations
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            SupplyingTask supplyTask = ServiceProvider.GetService<SupplyingTask>();
+            SupplyService supplyTask = ServiceProvider.GetService<SupplyService>();
 
             supplyTask.Parameters = new SupplyTaskParameters();
 
-            DeliveryForm deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
+            NodeInventory deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
 
-            operationState.LastRoute = deliveryForm.NodeDeliveredRoute;
-            operationState.Assets = deliveryForm.AssetsDeliveredRoutes;
+            deliveryForm = await PostDelivery(deliveryForm);
+
+            operationState.LastRoute = deliveryForm.Node;
+            operationState.Assets = deliveryForm.Assets;
 
             return operationState;
         }
 
+        private async Task<NodeInventory> PostDelivery(NodeInventory deliveryForm)
+        {
+            NodeInventory nodeInventory = deliveryForm;
+            foreach (var receiver in receiptManager.Plugins)
+            {
+                if (!receiver.CanReceive(deliveryForm)) continue;
+                nodeInventory = await receiver.Receive(nodeInventory);
+            }
+            return nodeInventory;
+        }
 
         protected override async Task ExecuteAsync()
         {
-            this.routingTask = ServiceProvider.GetService<RoutingTask>();
+            this.routingTask = ServiceProvider.GetService<RoutingService>();
             this.destinationManager = ServiceProvider.GetService<DestinationManager>();
             this.carrierManager = ServiceProvider.GetService<CarrierManager>();
+            this.receiptManager = ServiceProvider.GetService<ReceiptManager>();
             InitRoutingTask();
             await routingTask.ExecuteAsync(Inputs);
         }
@@ -135,6 +153,8 @@ namespace Stars.Operations
         {
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
+            if (ExtractArchives)
+                collection.AddTransient<IReceiptAction, ExtractArchiveAction>();
         }
     }
 }

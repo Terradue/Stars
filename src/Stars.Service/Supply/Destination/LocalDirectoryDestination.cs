@@ -24,7 +24,12 @@ namespace Stars.Service.Supply.Destination
             return new LocalDirectoryDestination(dir);
         }
 
-        public IDestination RelativeDestination(IRoute route, IRoute subroute)
+        public void Create()
+        {
+            directory.Create();
+        }
+
+        public IDestination RelativeTo(IRoute route, IRoute subroute)
         {
             string relPath = "";
             if (subroute.Uri.IsAbsoluteUri)
@@ -52,11 +57,6 @@ namespace Stars.Service.Supply.Destination
             return new LocalDirectoryDestination(dir);
         }
 
-        public Uri RelativeUri(IRoute to)
-        {
-            return Uri.MakeRelativeUri(to.Uri);
-        }
-
         public IDestination To(IRoute route)
         {
             string relPath = "";
@@ -79,7 +79,14 @@ namespace Stars.Service.Supply.Destination
                     relPath = Path.GetDirectoryName(relUri.ToString());
             }
             else
-                relPath = route.Uri.ToString();
+                relPath = Path.GetDirectoryName(route.Uri.ToString());
+            var newDirPath = Path.Join(directory.FullName, relPath);
+            DirectoryInfo dir = new DirectoryInfo(newDirPath);
+            return new LocalDirectoryDestination(dir);
+        }
+
+        public IDestination To(string relPath)
+        {
             var newDirPath = Path.Join(directory.FullName, relPath);
             DirectoryInfo dir = new DirectoryInfo(newDirPath);
             return new LocalDirectoryDestination(dir);

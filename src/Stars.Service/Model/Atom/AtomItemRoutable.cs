@@ -36,7 +36,7 @@ namespace Stars.Service.Model.Atom
 
         public ResourceType ResourceType => ResourceType.Item;
 
-        public string Id => item.Id.CleanIdentifier();
+        public string Id => Identifier ?? item.Id.CleanIdentifier();
 
         public string Filename => Id + ".atom.xml";
 
@@ -68,6 +68,13 @@ namespace Stars.Service.Model.Atom
         public Task<INode> GoToNode()
         {
             return Task.FromResult((INode)this);
+        }
+
+        public string Identifier {
+            get {
+                var identifier = item.ElementExtensions.ReadElementExtensions<string>("identifier", "http://purl.org/dc/elements/1.1/");
+                return identifier.Count == 0 ? null : identifier[0];
+            }
         }
 
         public IDictionary<string, IAsset> GetAssets()

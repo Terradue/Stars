@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stars.Interface.Router;
@@ -7,22 +8,22 @@ using Stars.Service.Supply.Destination;
 
 namespace Stars.Service.Router
 {
-    public class LocalFileSystemRoute : IRoute
+    public class LocalFileSystemRoute : IRoute, IStreamable
     {
-        private Uri uri;
+        private string filePath;
         private ContentType contentType;
         private ResourceType resourceType;
         private readonly ulong contentLength;
 
-        public LocalFileSystemRoute(Uri uri, ContentType contentType, ResourceType resourceType, ulong contentLength)
+        public LocalFileSystemRoute(string filePath, ContentType contentType, ResourceType resourceType, ulong contentLength)
         {
-            this.uri = uri;
+            this.filePath = filePath;
             this.contentType = contentType;
             this.resourceType = resourceType;
             this.contentLength = contentLength;
         }
 
-        public Uri Uri => uri;
+        public Uri Uri => new Uri(filePath);
 
         public ContentType ContentType => contentType;
 
@@ -30,14 +31,26 @@ namespace Stars.Service.Router
 
         public ulong ContentLength => contentLength;
 
+        public FileInfo File => new FileInfo(Uri.AbsolutePath);
+
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(filePath) };
+
         public async Task<INode> GoToNode()
         {
             return await WebRoute.Create(Uri).GoToNode();
         }
 
-        internal static LocalFileSystemRoute Create(IRoute route, IDestination destination)
+
+        public async Task<Stream> GetStreamAsync()
         {
-            return new LocalFileSystemRoute(destination.Uri, route.ContentType, route.ResourceType, route.ContentLength);
+            try
+            {
+                return await WebRoute.Create(Uri).GetStreamAsync();
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

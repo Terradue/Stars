@@ -18,14 +18,14 @@ using Stars.Service.Supply.Destination;
 
 namespace Stars.Service.Supply
 {
-    public class SupplyingTask : IStarsTask
+    public class SupplyService : IStarsService
     {
         public SupplyTaskParameters Parameters { get; set; }
         protected readonly ILogger logger;
         protected readonly SupplierManager suppliersManager;
         protected readonly TranslatorManager translatorManager;
 
-        public SupplyingTask(ILogger logger, SupplierManager suppliersManager, TranslatorManager translatorManager)
+        public SupplyService(ILogger logger, SupplierManager suppliersManager, TranslatorManager translatorManager)
         {
             this.logger = logger;
             this.suppliersManager = suppliersManager;
@@ -33,12 +33,12 @@ namespace Stars.Service.Supply
             Parameters = new SupplyTaskParameters();
         }
 
-        public async Task<DeliveryForm> ExecuteAsync(INode node, IDestination destination)
+        public async Task<NodeInventory> ExecuteAsync(INode node, IDestination destination)
         {
             logger.LogDebug("{0} -> {1}", node.Uri, destination.Uri);
             var suppliers = InitSuppliersEnumerator();
 
-            DeliveryForm deliveryForm = null;
+            NodeInventory deliveryForm = null;
 
             while (deliveryForm == null && suppliers.MoveNext())
             {
@@ -92,7 +92,7 @@ namespace Stars.Service.Supply
                 {
                     logger.LogDebug("[{0}]N[{1}]#{2}[{3}] to {4} : {5}$", deliveryQuotation.Supplier.Id,
                         deliveryQuotation.NodeDeliveryQuotes.Item1.Uri, j,
-                        delivery.Carrier.Id, delivery.Destination.Uri.ToString(), delivery.Cost);
+                        delivery.Carrier.Id, delivery.TargetUri.ToString(), delivery.Cost);
                     j++;
                 }
                 j++;
@@ -112,14 +112,14 @@ namespace Stars.Service.Supply
                 foreach (var delivery in item.Value)
                 {
                     logger.LogDebug("[{0}]A[{1}]#{2}[{3}] to {4} : {5}$", deliveryQuotation.Supplier.Id,
-                        item.Key, j, delivery.Carrier.Id, delivery.Destination.Uri.ToString(), delivery.Cost);
+                        item.Key, j, delivery.Carrier.Id, delivery.TargetUri.ToString(), delivery.Cost);
                     j++;
                 }
             }
             return true;
         }
 
-        private async Task<DeliveryForm> Deliver(IDeliveryQuotation deliveryQuotation)
+        private async Task<NodeInventory> Deliver(IDeliveryQuotation deliveryQuotation)
         {
             IRoute nodeDeliveredRoute = null;
             if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() > 0)
@@ -131,14 +131,13 @@ namespace Stars.Service.Supply
             Dictionary<string, IAsset> assetsDeliveredRoutes = new Dictionary<string, IAsset>();
             foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
-                if ( item.Value.Count() == 0)   break;
+                if ( item.Value.Count() == 0)  continue;
                 var route = await Deliver(item.Key, item.Value);
                 if (route == null) return null;
                 IAsset asset = MakeAsset(route, (IAsset)item.Value.First().Route);
                 assetsDeliveredRoutes.Add(item.Key, asset);
-                break;
             }
-            return new DeliveryForm(nodeDeliveredRoute, assetsDeliveredRoutes);
+            return new NodeInventory(nodeDeliveredRoute, assetsDeliveredRoutes, deliveryQuotation.Destination);
         }
 
         private IAsset MakeAsset(IRoute route, IAsset asset)
@@ -163,7 +162,7 @@ namespace Stars.Service.Supply
                 }
                 catch (Exception e)
                 {
-                    logger.LogError("Error supplying {0} to {1} : {2}", delivery.Route.Uri, delivery.Destination.Uri, e.Message);
+                    logger.LogError("Error supplying {0} to {1} : {2}", delivery.Route.Uri, delivery.TargetUri, e.Message);
                     logger.LogDebug(e.StackTrace);
                 }
             }

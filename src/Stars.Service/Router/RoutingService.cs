@@ -10,13 +10,13 @@ using Stars.Interface.Supply.Asset;
 
 namespace Stars.Service.Router
 {
-    public class RoutingTask : IStarsTask
+    public class RoutingService : IStarsService
     {
         public RoutingTaskParameters Parameters { get; set; }
         private readonly ILogger logger;
         private readonly RoutersManager routersManager;
 
-        public RoutingTask(ILogger logger, RoutersManager routersManager)
+        public RoutingService(ILogger logger, RoutersManager routersManager)
         {
             this.Parameters = new RoutingTaskParameters();
             this.logger = logger;
