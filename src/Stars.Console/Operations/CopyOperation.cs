@@ -133,7 +133,7 @@ namespace Stars.Operations
             NodeInventory nodeInventory = deliveryForm;
             foreach (var receiver in receiptManager.Plugins)
             {
-                if (!receiver.CanReceive(deliveryForm)) continue;
+                if (!receiver.CanReceive(nodeInventory)) continue;
                 nodeInventory = await receiver.Receive(nodeInventory);
             }
             return nodeInventory;

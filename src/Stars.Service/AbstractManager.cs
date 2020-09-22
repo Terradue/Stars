@@ -41,9 +41,9 @@ namespace Stars.Service
                     if (!string.IsNullOrEmpty(section["priority"]))
                         prio = int.Parse(section["priority"]);
                     collection.AddTransient(typeof(T), serviceProvider => CreateItem(type, section, prio, serviceProvider));
-                    if (pluginsPriority.ContainsKey(typeof(T)))
-                        pluginsPriority.Remove(typeof(T));
-                    pluginsPriority.Add(typeof(T), prio);
+                    if (pluginsPriority.ContainsKey(type))
+                        pluginsPriority.Remove(type);
+                    pluginsPriority.Add(type, prio);
                 }
                 catch (Exception e)
                 {
@@ -59,7 +59,7 @@ namespace Stars.Service
                 List<(int, T)> sortedList = new List<(int, T)>();
                 foreach (var plugin in serviceProvider.GetServices<T>())
                 {
-                    int prio = pluginsPriority.ContainsKey(typeof(T)) ? pluginsPriority[typeof(T)] : 50;
+                    int prio = pluginsPriority.ContainsKey(plugin.GetType()) ? pluginsPriority[plugin.GetType()] : 50;
                     sortedList.Add((prio, plugin));
                 }
                 sortedList.Sort((a, b) => (a.Item1.CompareTo(b.Item1)));

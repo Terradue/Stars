@@ -2,7 +2,7 @@ using System;
 
 namespace Stars.Service
 {
-    internal class PluginPriorityAttribute : Attribute
+    public class PluginPriorityAttribute : Attribute
     {
         private int v;
 

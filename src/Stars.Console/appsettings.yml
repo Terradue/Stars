@@ -10,6 +10,9 @@ Translators:
   Onda:
     Type: Terradue.Data.Stac.Translators.AtomToStacTranslator, Terradue.Data.Stac
     Parameters: [""]
+Receivers:
+  Kompsat3:
+    Type: Terradue.Data.Stac.Model.Metadata.Kompsat3.Kompsat3MetadataExtraction, Terradue.Data.Stac
 Global:
   ForceOverwrite: false
 Credentials:

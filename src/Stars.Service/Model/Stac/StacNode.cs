@@ -19,7 +19,7 @@ namespace Stars.Service.Model.Stac
         protected IStacObject stacObject;
         protected ContentType contentType;
 
-        public StacNode(IStacObject stacObject)
+        protected StacNode(IStacObject stacObject)
         {
             this.stacObject = stacObject;
             this.contentType = new ContentType("application/json");

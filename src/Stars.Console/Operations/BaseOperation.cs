@@ -108,7 +108,7 @@ namespace Stars.Operations
 
             CarrierManager.RegisterConfiguredPlugins(configuration.GetSection("Carriers"), collection, logger);
 
-            ReceiptManager.RegisterConfiguredPlugins(configuration.GetSection("Receipt"), collection, logger);
+            ReceiptManager.RegisterConfiguredPlugins(configuration.GetSection("Receivers"), collection, logger);
         }
 
         private ServiceCollection RegisterServices()

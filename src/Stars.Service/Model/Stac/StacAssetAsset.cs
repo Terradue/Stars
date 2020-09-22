@@ -12,7 +12,7 @@ using Stars.Service.Router;
 
 namespace Stars.Service.Model.Stac
 {
-    internal class StacAssetAsset : IAsset
+    public class StacAssetAsset : IAsset
     {
         private StacAsset asset;
         private readonly IStacObject stacObject;

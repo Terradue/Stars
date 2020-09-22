@@ -43,19 +43,22 @@ namespace Stars.Service.Catalog
         public async Task<IRoute> ExecuteAsync(IRoute parentRoute, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDestination destination)
         {
             INode parentNode = await parentRoute.GoToNode();
-            if (parentNode is StacNode) return parentNode as StacNode;
-            StacNode stacNode = await translatorManager.Translate<StacNode>(parentNode);
+            StacNode stacNode = parentNode as StacNode;
             if (stacNode == null)
             {
-                logger.LogDebug("Impossible to translate node as STAC. Trying other routers.");
-
-                foreach (var router in routersManager.Plugins)
+                stacNode = await translatorManager.Translate<StacNode>(parentNode);
+                if (stacNode == null)
                 {
-                    if (!router.CanRoute(parentNode)) continue;
-                    var routableNode = await router.Route(parentNode);
-                    if (routableNode == null) continue;
-                    stacNode = await translatorManager.Translate<StacNode>(routableNode);
-                    if (stacNode != null) break;
+                    logger.LogDebug("Impossible to translate node as STAC. Trying other routers.");
+
+                    foreach (var router in routersManager.Plugins)
+                    {
+                        if (!router.CanRoute(parentNode)) continue;
+                        var routableNode = await router.Route(parentNode);
+                        if (routableNode == null) continue;
+                        stacNode = await translatorManager.Translate<StacNode>(routableNode);
+                        if (stacNode != null) break;
+                    }
                 }
             }
 
