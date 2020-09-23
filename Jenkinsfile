@@ -13,6 +13,7 @@ pipeline {
           } 
       }
       steps {
+        echo "${env.VERSION}"
         echo "Build .NET application"
         sh "dotnet restore src/"
         sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
@@ -116,7 +117,7 @@ def readDescriptor (){
 def getVersionFromCsProj (csProjFilePath){
   def file = readFile(csProjFilePath) 
   def xml = new XmlSlurper().parseText(file)
-  return xml.Project.PropertyGroup.Version
+  return xml.Project.PropertyGroup
 }
 
 
