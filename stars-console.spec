@@ -35,8 +35,8 @@ rm -f %{buildroot}/stars
 
 
 %files
-/usr/lib/opensearch-client/*
-/usr/bin/opensearch-client
+/usr/lib/stars/*
+/usr/bin/stars
 
 
 %changelog

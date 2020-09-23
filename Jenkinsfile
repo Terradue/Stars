@@ -13,7 +13,6 @@ pipeline {
           } 
       }
       steps {
-        echo "${env.VERSION_N}"
         echo "Build .NET application"
         sh "dotnet restore src/"
         sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
