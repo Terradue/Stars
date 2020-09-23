@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Stars.Interface.Router
+namespace Terradue.Stars.Interface.Router
 {
     public interface IRouter
     {

@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
-namespace Stars.Interface.Router
+namespace Terradue.Stars.Interface.Router
 {
     public interface IRoute
     {

@@ -1,4 +1,4 @@
-namespace Stars.Interface.Router
+namespace Terradue.Stars.Interface.Router
 {
     public enum ResourceType
     {

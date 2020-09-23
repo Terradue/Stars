@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
-using Stars.Interface.Router;
+using Terradue.Stars.Interface.Router;
 
-namespace Stars.Service
+namespace Terradue.Stars.Service
 {
     public static class StarsExtensions
     {

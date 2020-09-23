@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mime;
 using Stac;
-using Stars.Interface.Router;
+using Terradue.Stars.Interface.Router;
 
-namespace Stars.Interface.Supply.Asset
+namespace Terradue.Stars.Interface.Supply.Asset
 {
     public interface IAsset : IRoute
     {

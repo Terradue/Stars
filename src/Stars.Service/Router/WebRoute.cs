@@ -4,10 +4,10 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Stars.Interface.Router;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Service.Router;
 
-namespace Stars.Service.Router
+namespace Terradue.Stars.Service.Router
 {
     public class WebRoute : IRoute, IStreamable
     {

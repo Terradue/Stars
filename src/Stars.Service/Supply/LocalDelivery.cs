@@ -1,11 +1,11 @@
 using System;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Router;
-using Stars.Service.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Supply.Destination;
 
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     public class LocalDelivery : IDelivery
     {

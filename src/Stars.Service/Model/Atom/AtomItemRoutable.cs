@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Stac;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Asset;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Service.Router;
 using Terradue.ServiceModel.Syndication;
-using Stars.Service;
+using Terradue.Stars.Service;
 
-namespace Stars.Service.Model.Atom
+namespace Terradue.Stars.Service.Model.Atom
 {
     public class AtomItemRoutable : INode, IRoutable, IAssetsContainer, IStreamable
     {

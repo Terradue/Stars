@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
 
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     internal class GenericAsset : IAsset
     {

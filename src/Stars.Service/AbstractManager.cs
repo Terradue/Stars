@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Stars.Service
+namespace Terradue.Stars.Service
 {
     public abstract class AbstractManager<T>
     {

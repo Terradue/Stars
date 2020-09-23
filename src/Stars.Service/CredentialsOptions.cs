@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.Extensions.Configuration;
 
-namespace Stars.Service
+namespace Terradue.Stars.Service
 {
     public class CredentialsOptions : Dictionary<string, object> 
     {

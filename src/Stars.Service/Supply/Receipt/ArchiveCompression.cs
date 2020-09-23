@@ -1,4 +1,4 @@
-namespace Stars.Service.Supply.Receipt
+namespace Terradue.Stars.Service.Supply.Receipt
 {
     public enum ArchiveCompression
     {

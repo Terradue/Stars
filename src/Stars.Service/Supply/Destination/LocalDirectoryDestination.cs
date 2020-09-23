@@ -1,11 +1,11 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Router;
 
-namespace Stars.Service.Supply.Destination
+namespace Terradue.Stars.Service.Supply.Destination
 {
     public class LocalDirectoryDestination : IDestination
     {

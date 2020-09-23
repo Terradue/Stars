@@ -7,7 +7,7 @@ using McMaster.Extensions.CommandLineUtils.Abstractions;
 using Microsoft.Extensions.Logging;
 using ShellProgressBar;
 
-namespace Stars
+namespace Terradue.Stars
 {
     public class StarsConsoleReporter : ConsoleReporter, ILogger
     {

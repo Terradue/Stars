@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Catalog;
-using Stars.Service.Model.Stac;
-using Stars.Service.Router;
-using Stars.Service.Supply;
-using Stars.Service.Supply.Carrier;
-using Stars.Service.Supply.Destination;
-using Stars.Service.Supply.Receipt;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Catalog;
+using Terradue.Stars.Service.Model.Stac;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Supply;
+using Terradue.Stars.Service.Supply.Carrier;
+using Terradue.Stars.Service.Supply.Destination;
+using Terradue.Stars.Service.Supply.Receipt;
 
-namespace Stars.Operations
+namespace Terradue.Stars.Operations
 {
     [Command(Name = "copy", Description = "Copy the tree of resources and assets by routing from the input reference")]
     internal class CopyOperation : BaseOperation

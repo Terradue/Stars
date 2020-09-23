@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
 using Stac.Item;
-using Stars.Interface.Router;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Service.Router;
 
-namespace Stars.Service.Model.Stac
+namespace Terradue.Stars.Service.Model.Stac
 {
     internal class StacLinkRoute : IRoute
     {

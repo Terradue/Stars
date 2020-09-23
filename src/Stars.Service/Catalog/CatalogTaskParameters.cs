@@ -1,4 +1,4 @@
-namespace Stars.Service.Catalog
+namespace Terradue.Stars.Service.Catalog
 {
     public class CatalogTaskParameters
     {

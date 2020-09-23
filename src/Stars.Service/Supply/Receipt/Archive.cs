@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
 
-namespace Stars.Service.Supply.Receipt
+namespace Terradue.Stars.Service.Supply.Receipt
 {
     public abstract class Archive : IAssetsContainer
     {

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
-using Stars.Service.Router;
-using Stars.Service;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Stars.Operations
+namespace Terradue.Stars.Operations
 {
     [Command(Name = "list", Description = "List the routing from the input reference")]
     internal class ListOperation : BaseOperation

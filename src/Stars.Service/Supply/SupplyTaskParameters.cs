@@ -1,4 +1,4 @@
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     public class SupplyTaskParameters
     {

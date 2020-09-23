@@ -2,10 +2,10 @@ using System;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
+using Terradue.Stars.Interface.Router;
 using Terradue.ServiceModel.Syndication;
 
-namespace Stars.Service.Model.Atom
+namespace Terradue.Stars.Service.Model.Atom
 {
     internal class AtomItemRoute : IRoute
     {

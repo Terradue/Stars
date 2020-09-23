@@ -22,10 +22,8 @@
     <PackageReference Include="ShellProgressBar" Version="5.0.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj"/>
-    <ProjectReference Include="..\Stars.Interface\Stars.Interface.csproj"/>
-    <ProjectReference Include="..\..\..\..\sugar\Terradue.Data\Stac\Terradue.Data.Stac.csproj"/>
-    <ProjectReference Include="..\Stars.Service\Stars.Service.csproj"/>
+    <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj"/>
+    <ProjectReference Include="..\Stars.Service\Terradue.Stars.Service.csproj"/>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

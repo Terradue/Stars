@@ -1,7 +1,7 @@
 using System;
-using Stars.Interface.Router;
+using Terradue.Stars.Interface.Router;
 
-namespace Stars.Interface.Supply.Destination
+namespace Terradue.Stars.Interface.Supply.Destination
 {
     public interface IDestination
     {

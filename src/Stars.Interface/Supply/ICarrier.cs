@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Destination;
 
-namespace Stars.Interface.Supply
+namespace Terradue.Stars.Interface.Supply
 {
     public interface ICarrier
     {

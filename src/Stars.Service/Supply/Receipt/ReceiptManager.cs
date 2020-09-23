@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Stars.Service.Supply.Receipt
+namespace Terradue.Stars.Service.Supply.Receipt
 {
     public class ReceiptManager : AbstractManager<IReceiptAction>
     {

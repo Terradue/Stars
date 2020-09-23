@@ -1,9 +1,9 @@
 using System;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Destination;
 
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     internal class OrderedDelivery : IDelivery
     {

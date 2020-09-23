@@ -6,11 +6,11 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Service.Router;
 
-namespace Stars.Service.Model.Stac
+namespace Terradue.Stars.Service.Model.Stac
 {
     public class StacAssetAsset : IAsset
     {

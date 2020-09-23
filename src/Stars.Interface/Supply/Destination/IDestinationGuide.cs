@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Stars.Interface.Supply.Destination
+namespace Terradue.Stars.Interface.Supply.Destination
 {
     public interface IDestinationGuide
     {

@@ -10,12 +10,12 @@ using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Collection;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Service.Router;
 using Terradue.ServiceModel.Syndication;
 
-namespace Stars.Service.Model.Atom
+namespace Terradue.Stars.Service.Model.Atom
 {
     public class AtomFeedRoutable : IRoutable, IStreamable
     {

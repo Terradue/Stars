@@ -5,10 +5,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
 using Stac.Item;
-using Stars.Interface.Router;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Service.Router;
 
-namespace Stars.Service.Model.Stac
+namespace Terradue.Stars.Service.Model.Stac
 {
     [PluginPriority(1)]
     public class StacRouter : IRouter

@@ -2,10 +2,10 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Interface.Router.Translator;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Router.Translator;
 
-namespace Stars.Service.Router.Translator
+namespace Terradue.Stars.Service.Router.Translator
 {
     public class TranslatorManager : AbstractManager<ITranslator>
     {

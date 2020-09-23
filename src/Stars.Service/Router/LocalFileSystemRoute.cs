@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Supply.Destination;
 
-namespace Stars.Service.Router
+namespace Terradue.Stars.Service.Router
 {
     public class LocalFileSystemRoute : IRoute, IStreamable
     {

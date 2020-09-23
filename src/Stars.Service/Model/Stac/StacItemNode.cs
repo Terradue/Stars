@@ -3,11 +3,11 @@ using Stac.Item;
 using System.Linq;
 using Newtonsoft.Json;
 using Stac;
-using Stars.Service.Router;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
 
-namespace Stars.Service.Model.Stac
+namespace Terradue.Stars.Service.Model.Stac
 {
     public class StacItemNode : StacNode, IAssetsContainer, IRoutable
     {

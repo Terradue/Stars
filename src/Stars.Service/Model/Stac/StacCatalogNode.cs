@@ -7,10 +7,10 @@ using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Collection;
-using Stars.Interface.Router;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Service.Router;
 
-namespace Stars.Service.Model.Stac
+namespace Terradue.Stars.Service.Model.Stac
 {
     public class StacCatalogNode : StacNode, IRoutable
     {

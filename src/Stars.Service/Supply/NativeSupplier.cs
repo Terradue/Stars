@@ -7,16 +7,16 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
 using Stac.Item;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Router;
-using Stars.Service.Supply;
-using Stars.Service.Supply.Carrier;
-using Stars.Service.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Supply;
+using Terradue.Stars.Service.Supply.Carrier;
+using Terradue.Stars.Service.Supply.Destination;
 using Terradue.ServiceModel.Syndication;
 
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     [PluginPriority(10)]
     public class NativeSupplier : ISupplier

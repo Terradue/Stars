@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
-using Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Supply.Destination;
 
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     public class NodeInventory
     {

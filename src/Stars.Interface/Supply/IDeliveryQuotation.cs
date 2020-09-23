@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
-using Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Supply.Destination;
 
-namespace Stars.Interface.Supply
+namespace Terradue.Stars.Interface.Supply
 {
     public interface IDeliveryQuotation
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Stars.Interface;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
 
-namespace Stars.Service.Router
+namespace Terradue.Stars.Service.Router
 {
     public class RoutingService : IStarsService
     {

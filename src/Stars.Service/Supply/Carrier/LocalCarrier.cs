@@ -6,15 +6,15 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using Stars.Service.Router;
+using Terradue.Stars.Service.Router;
 using System.Net.Http;
-using Stars.Service.Supply.Destination;
-using Stars.Interface.Supply;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Supply.Destination;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Destination;
 using Microsoft.Extensions.Options;
 
-namespace Stars.Service.Supply.Carrier
+namespace Terradue.Stars.Service.Supply.Carrier
 {
     public abstract class LocalCarrier : ICarrier
     {

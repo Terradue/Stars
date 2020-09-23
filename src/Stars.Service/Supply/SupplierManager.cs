@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Service.Router;
 
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     public class SupplierManager : AbstractManager<ISupplier>
     {

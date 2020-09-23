@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Stars.Interface.Router;
+using Terradue.Stars.Interface.Router;
 
-namespace Stars.Service.Router
+namespace Terradue.Stars.Service.Router
 {
     public class RoutingTaskParameters
     {

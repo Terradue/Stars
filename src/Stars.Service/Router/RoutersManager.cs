@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Stars.Interface.Router;
+using Terradue.Stars.Interface.Router;
 
-namespace Stars.Service.Router
+namespace Terradue.Stars.Service.Router
 {
     public class RoutersManager : AbstractManager<IRouter>
     {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Service.Router;
 using Terradue.ServiceModel.Syndication;
 
-namespace Stars.Service.Model.Atom
+namespace Terradue.Stars.Service.Model.Atom
 {
     public class AtomLinkAsset : IAsset
     {

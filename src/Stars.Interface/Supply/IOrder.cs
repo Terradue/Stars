@@ -1,8 +1,8 @@
 using System;
 using System.Net.Mime;
-using Stars.Interface.Router;
+using Terradue.Stars.Interface.Router;
 
-namespace Stars.Interface.Supply
+namespace Terradue.Stars.Interface.Supply
 {
     public interface IOrder : IStreamable
     {

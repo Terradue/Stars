@@ -6,13 +6,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
 using Stac.Item;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Service.Router;
-using Stars.Service.Supply;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Supply;
 using Terradue.ServiceModel.Syndication;
 
-namespace Stars.Service.Model.Atom
+namespace Terradue.Stars.Service.Model.Atom
 {
     [PluginPriority(10)]
     public class AtomRouter : IRouter

@@ -9,19 +9,19 @@ using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Catalog;
 using Stac.Item;
-using Stars.Interface;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Asset;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Model.Stac;
-using Stars.Service.Router;
-using Stars.Service.Router.Translator;
-using Stars.Service.Supply;
-using Stars.Service.Supply.Carrier;
-using Stars.Service.Supply.Destination;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Model.Stac;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Router.Translator;
+using Terradue.Stars.Service.Supply;
+using Terradue.Stars.Service.Supply.Carrier;
+using Terradue.Stars.Service.Supply.Destination;
 
-namespace Stars.Service.Catalog
+namespace Terradue.Stars.Service.Catalog
 {
     public class CatalogingService : IStarsService
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Stars.Interface.Router
+namespace Terradue.Stars.Interface.Router
 {
     public interface IRoutable : INode
     {

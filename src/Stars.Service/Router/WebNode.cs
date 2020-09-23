@@ -4,10 +4,10 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
 
-namespace Stars.Service.Router
+namespace Terradue.Stars.Service.Router
 {
     internal class WebNode : INode, IStreamable
     {

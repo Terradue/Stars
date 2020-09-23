@@ -4,15 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Tar;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Router;
-using Stars.Service.Supply.Carrier;
-using Stars.Service.Supply.Destination;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Supply.Carrier;
+using Terradue.Stars.Service.Supply.Destination;
 using Microsoft.Extensions.Logging;
 
-namespace Stars.Service.Supply.Receipt
+namespace Terradue.Stars.Service.Supply.Receipt
 {
     public class ExtractArchiveAction : IReceiptAction
     {

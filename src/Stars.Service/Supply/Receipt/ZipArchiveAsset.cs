@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using ICSharpCode.SharpZipLib.Zip;
-using Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Supply.Asset;
 
-namespace Stars.Service.Supply.Receipt
+namespace Terradue.Stars.Service.Supply.Receipt
 {
     internal class ZipArchiveAsset : Archive
     {

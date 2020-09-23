@@ -1,11 +1,11 @@
 using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Stars.Interface.Router;
-using Stars.Service.Router;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Service.Router;
 using Terradue.ServiceModel.Syndication;
 
-namespace Stars.Service.Model.Atom
+namespace Terradue.Stars.Service.Model.Atom
 {
     internal class AtomLinkRoute : IRoute
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Stars.Interface.Supply.Asset
+namespace Terradue.Stars.Interface.Supply.Asset
 {
     public interface IAssetsContainer
     {

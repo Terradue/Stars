@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stars.Console", "Stars.Console\Stars.Console.csproj", "{0A482385-290D-4219-BF95-B32958FDD9B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Console", "Stars.Console\Terradue.Stars.Console.csproj", "{0A482385-290D-4219-BF95-B32958FDD9B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stars.Interface", "Stars.Interface\Stars.Interface.csproj", "{2A4E4830-9D87-44D5-8201-A9D2B2710D51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Interface", "Stars.Interface\Terradue.Stars.Interface.csproj", "{2A4E4830-9D87-44D5-8201-A9D2B2710D51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stars.Service", "Stars.Service\Stars.Service.csproj", "{FC70586C-0FBA-4C1C-81B3-3E899BF30654}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Service", "Stars.Service\Terradue.Stars.Service.csproj", "{FC70586C-0FBA-4C1C-81B3-3E899BF30654}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

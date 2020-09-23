@@ -4,10 +4,10 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
-using Stars.Interface.Router;
-using Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply.Asset;
 
-namespace Stars.Service.Supply.Receipt
+namespace Terradue.Stars.Service.Supply.Receipt
 {
     internal class ZipEntryAsset : IAsset, IStreamable
     {

@@ -6,17 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Stars.Interface;
-using Stars.Interface.Router;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Asset;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Router;
-using Stars.Service.Router.Translator;
-using Stars.Service.Supply;
-using Stars.Service.Supply.Destination;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Router.Translator;
+using Terradue.Stars.Service.Supply;
+using Terradue.Stars.Service.Supply.Destination;
 
-namespace Stars.Service.Supply
+namespace Terradue.Stars.Service.Supply
 {
     public class SupplyService : IStarsService
     {

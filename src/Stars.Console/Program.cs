@@ -6,23 +6,23 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Stars.Interface.Router;
-using Stars.Interface.Router.Translator;
-using Stars.Interface.Supply;
-using Stars.Interface.Supply.Destination;
-using Stars.Service.Model.Atom;
-using Stars.Service.Model.Stac;
-using Stars.Operations;
-using Stars.Service.Router;
-using Stars.Service.Supply;
-using Stars.Service.Supply.Destination;
-using Stars.Service.Router.Translator;
-using Stars.Interface;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Router.Translator;
+using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Service.Model.Atom;
+using Terradue.Stars.Service.Model.Stac;
+using Terradue.Stars.Operations;
+using Terradue.Stars.Service.Router;
+using Terradue.Stars.Service.Supply;
+using Terradue.Stars.Service.Supply.Destination;
+using Terradue.Stars.Service.Router.Translator;
+using Terradue.Stars.Interface;
 using System.ComponentModel.DataAnnotations;
 using McMaster.Extensions.CommandLineUtils.Conventions;
 using System.Threading;
 
-namespace Stars
+namespace Terradue.Stars
 {
     [Command(Name = "Stars", Description = "Spatio Temporal Asset Router & Supplier")]
     [HelpOption]

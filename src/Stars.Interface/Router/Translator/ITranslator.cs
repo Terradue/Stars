@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Stars.Interface.Router.Translator
+namespace Terradue.Stars.Interface.Router.Translator
 {
     public interface ITranslator
     {
