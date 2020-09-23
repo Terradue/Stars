@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-      VERSION = getVersionFromCsProj('src/Stars.Service/Terradue.Stars.Service.csproj')
+      VERSION_N = getVersionFromCsProj('src/Stars.Service/Terradue.Stars.Service.csproj')
       VERSION_TYPE = getTypeOfVersion(env.BRANCH_NAME)
       CONFIGURATION = getConfiguration(env.BRANCH_NAME)
   }
@@ -13,7 +13,7 @@ pipeline {
           } 
       }
       steps {
-        echo "${env.VERSION}"
+        echo "${env.VERSION_N}"
         echo "Build .NET application"
         sh "dotnet restore src/"
         sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
@@ -44,10 +44,10 @@ pipeline {
         sh 'cp stars-console.spec $WORKSPACE/build/SPECS/stars-console.spec'
         sh 'spectool -g -R --directory $WORKSPACE/build/SOURCES $WORKSPACE/build/SPECS/stars-console.spec'
         echo "Build package"
-        sh "rpmbuild --define \"_topdir $WORKSPACE/build\" -ba --define '_branch ${env.BRANCH_NAME}' --define '_version ${env.VERSION}' --define '_release ${env.release}' $WORKSPACE/build/SPECS/stars-console.spec"
+        sh "rpmbuild --define \"_topdir $WORKSPACE/build\" -ba --define '_branch ${env.BRANCH_NAME}' --define '_version ${env.VERSION_N}' --define '_release ${env.release}' $WORKSPACE/build/SPECS/stars-console.spec"
         sh "rpm -qpl $WORKSPACE/build/RPMS/*/*.rpm"
         sh 'rm -f $WORKSPACE/build/SOURCES/stars'
-        sh "tar -cvzf stars-console-${env.VERSION}-${env.release}.tar.gz -C $WORKSPACE/build/SOURCES/ ."
+        sh "tar -cvzf stars-console-${env.VERSION_N}-${env.release}.tar.gz -C $WORKSPACE/build/SOURCES/ ."
         archiveArtifacts artifacts: 'build/RPMS/**/*.rpm,stars-console-*.tar.gz', fingerprint: true
         stash includes: 'stars-console-*.tar.gz', name: 'stars-console-tgz'
         stash includes: 'build/RPMS/**/*.rpm', name: 'stars-console-rpm'
@@ -117,7 +117,7 @@ def readDescriptor (){
 def getVersionFromCsProj (csProjFilePath){
   def file = readFile(csProjFilePath) 
   def xml = new XmlSlurper().parseText(file)
-  return xml.PropertyGroup.text()
+  return xml.PropertyGroup.Version.text()
 }
 
 
