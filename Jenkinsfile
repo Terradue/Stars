@@ -13,7 +13,7 @@ pipeline {
           } 
       }
       steps {
-          sh "mv $WORKSPACE ${WORKSPACE/\\@/_}"
+          sh """mv $WORKSPACE ${WORKSPACE/\\@/_}"""
           sh "cd -P ."
           echo "Build .NET application"
           sh "dotnet restore src/"
