@@ -17,8 +17,8 @@ pipeline {
       }
       steps {
         echo "Build .NET application"
-        sh "dotnet restore src/"
-        sh "dotnet build -c ${env.CONFIGURATION} src/"
+        sh "dotnet restore --no-cache src/"
+        sh "dotnet build --no-cache -c ${env.CONFIGURATION} src/"
         stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
       }
     }
@@ -58,6 +58,9 @@ pipeline {
     }
     stage('Publish Artifacts') {
       agent { node { label 'artifactory' } }
+      when{
+        branch 'master'
+      }
       steps {
         echo 'Deploying'
         unstash name: 'stars-console-rpm'
