@@ -117,7 +117,7 @@ def readDescriptor (){
 def getVersionFromCsProj (csProjFilePath){
   def file = readFile(csProjFilePath) 
   def xml = new XmlSlurper().parseText(file)
-  return xml.text()
+  return xml.PropertyGroup.text()
 }
 
 
