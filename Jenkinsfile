@@ -33,20 +33,19 @@ pipeline {
             env.release = env.BUILD_NUMBER
           else
             env.release = "SNAPSHOT" + sdf
-          def descriptor = readDescriptor()
         }
         sh 'mkdir -p $WORKSPACE/build/{BUILD,RPMS,SOURCES,SPECS,SRPMS}'
         sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/lib/stars-console'
         sh 'cp -r src/Terradue.Stars.Console/bin/Debug/*/* $WORKSPACE/build/SOURCES/usr/lib/stars/'
         sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/bin'
-        sh 'cp src/main/scripts/stars-console $WORKSPACE/build/SOURCES/usr/bin'
-        sh 'cp src/main/scripts/stars-console $WORKSPACE/build/SOURCES/'
+        sh 'cp src/main/scripts/stars $WORKSPACE/build/SOURCES/usr/bin'
+        sh 'cp src/main/scripts/stars $WORKSPACE/build/SOURCES/'
         sh 'cp stars-console.spec $WORKSPACE/build/SPECS/stars-console.spec'
         sh 'spectool -g -R --directory $WORKSPACE/build/SOURCES $WORKSPACE/build/SPECS/stars-console.spec'
         echo "Build package"
         sh "rpmbuild --define \"_topdir $WORKSPACE/build\" -ba --define '_branch ${env.BRANCH_NAME}' --define '_version ${env.VERSION}' --define '_release ${env.release}' $WORKSPACE/build/SPECS/stars-console.spec"
         sh "rpm -qpl $WORKSPACE/build/RPMS/*/*.rpm"
-        sh 'rm -f $WORKSPACE/build/SOURCES/stars-console'
+        sh 'rm -f $WORKSPACE/build/SOURCES/stars'
         sh "tar -cvzf stars-console-${env.VERSION}-${env.release}.tar.gz -C $WORKSPACE/build/SOURCES/ ."
         archiveArtifacts artifacts: 'build/RPMS/**/*.rpm,stars-console-*.tar.gz', fingerprint: true
         stash includes: 'stars-console-*.tar.gz', name: 'stars-console-tgz'
@@ -81,7 +80,7 @@ pipeline {
             unstash name: 'stars-console-tgz'
             script {
               def opensearchclienttgz = findFiles(glob: "stars-console-*.tar.gz")
-              def descriptor = readDescriptor()
+              def descriptor = readreadDescriptorDescriptor()
               def testsuite = docker.build(descriptor.docker_image_name, "--build-arg OPENSEARCH_CLIENT_TGZ=${opensearchclienttgz[0].name} .")
               def mType=getTypeOfVersion(env.BRANCH_NAME)
               docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-emmanuelmathot') {
