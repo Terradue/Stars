@@ -1,4 +1,7 @@
 pipeline {
+  options {
+    disableConcurrentBuilds()
+  }
   agent any
   environment {
       VERSION = getVersionFromCsProj('src/Stars.Service/Terradue.Stars.Service.csproj')
