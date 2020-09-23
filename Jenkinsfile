@@ -35,7 +35,7 @@ pipeline {
             env.release = "SNAPSHOT" + sdf
         }
         sh 'mkdir -p $WORKSPACE/build/{BUILD,RPMS,SOURCES,SPECS,SRPMS}'
-        sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/lib/stars-console'
+        sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/lib/stars'
         sh 'cp -r src/Stars.Console/bin/Debug/*/* $WORKSPACE/build/SOURCES/usr/lib/stars/'
         sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/bin'
         sh 'cp src/main/scripts/stars $WORKSPACE/build/SOURCES/usr/bin'
