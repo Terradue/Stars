@@ -17,6 +17,7 @@ pipeline {
       }
       steps {
         echo "Build .NET application"
+        sh "dotnet restore src/"
         sh "dotnet build -c ${env.CONFIGURATION} src/"
         stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
       }
