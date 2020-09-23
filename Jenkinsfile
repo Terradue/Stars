@@ -114,7 +114,7 @@ def readDescriptor (){
 }
 
 def getVersionFromCsProj (csProjFilePath){
-  def file = new File(csProjFilePath) 
+  def file = readFile(csProjFilePath) 
   def xml = new XmlSlurper().parseText(file)
   return xml.Project.PropertyGroup.Version
 }
