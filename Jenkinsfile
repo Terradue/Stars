@@ -16,8 +16,7 @@ pipeline {
         skipDefaultCheckout()
       }
       steps {
-        sh "mkdir /build"
-        ws("/build") {
+        ws("workspace") {
           sh 'pwd'
           checkout scm
           sh 'pwd'
