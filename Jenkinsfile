@@ -12,21 +12,15 @@ pipeline {
               image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic' 
           } 
       }
-      options {
-        skipDefaultCheckout()
-      }
       steps {
-        ws("workspace") {
-          sh 'pwd'
-          checkout scm
-          sh 'pwd'
-          // echo "Build .NET application"
-          // sh "dotnet restore src/"
-          // sh "echo test"
-          // sh "ls -l"
-          // sh "dotnet build -c ${env.CONFIGURATION} src/"
-          // stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
-        }
+          sh "mv $PWD ${PWD/\@/_}"
+          sh "cd -P ."
+          echo "Build .NET application"
+          sh "dotnet restore src/"
+          sh "echo test"
+          sh "ls -l"
+          sh "dotnet build -c ${env.CONFIGURATION} src/"
+          stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
       }
     }
     stage('Package as RPM') {
