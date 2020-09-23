@@ -114,9 +114,8 @@ def readDescriptor (){
 }
 
 def getVersionFromCsProj (csProjFilePath){
-  import groovy.util.XmlParser
   def file = new File(csProjFilePath) 
-  def xml = new XmlParser.parseText(file)
+  def xml = new XmlSlurper().parseText(xml)
   return xml.Project.PropertyGroup.Version
 }
 
