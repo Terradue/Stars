@@ -9,15 +9,11 @@ pipeline {
     stage('Build') {
       agent { 
           docker { 
-              image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic' 
+              image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic'
+              customWorkspace 'workspace'
           } 
       }
       steps {
-        script{
-          env.NEW_WORKSPACE = env.WORKSPACE.replace("@", "_")
-        }
-        sh "mv ${env.WORKSPACE} ${env.NEW_WORKSPACE}"
-        sh "cd -P ."
         echo "Build .NET application"
         sh "dotnet restore src/"
         sh "echo test"
