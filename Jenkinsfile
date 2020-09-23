@@ -15,14 +15,17 @@ pipeline {
               image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic' 
           } 
       }
-      environment {
-          HOME = '$WORKSPACE'
+      options {
+        skipDefaultCheckout()
       }
       steps {
-        echo "Build .NET application"
-        sh "dotnet restore --no-cache src/"
-        sh "dotnet build --no-cache -c ${env.CONFIGURATION} src/"
-        stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
+        ws("/source") {
+          checkout scm
+          echo "Build .NET application"
+          sh "dotnet restore src/"
+          sh "dotnet build -c ${env.CONFIGURATION} src/"
+          stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
+        }
       }
     }
     stage('Package as RPM') {
