@@ -10,14 +10,13 @@ pipeline {
       agent { 
           docker { 
               image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic'
-              customWorkspace WORKSPACE
           } 
       }
       steps {
         echo "Build .NET application"
         sh "dotnet restore src/"
         sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
-        stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
+        stash includes: 'src/**/bin/**', name: 'terradue-stars-build'
       }
     }
     stage('Package as RPM') {
