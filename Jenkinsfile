@@ -16,7 +16,8 @@ pipeline {
         skipDefaultCheckout()
       }
       steps {
-        ws("/source") {
+        sh "mkdir /build"
+        ws("/build") {
           checkout scm
           echo "Build .NET application"
           // sh "dotnet restore src/"
