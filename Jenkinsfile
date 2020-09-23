@@ -13,14 +13,17 @@ pipeline {
           } 
       }
       steps {
-          sh """mv $WORKSPACE ${WORKSPACE/\\@/_}"""
-          sh "cd -P ."
-          echo "Build .NET application"
-          sh "dotnet restore src/"
-          sh "echo test"
-          sh "ls -l"
-          sh "dotnet build -c ${env.CONFIGURATION} src/"
-          stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
+        script{
+          env.NEW_WORKSPACE = env.WORKSPACE.replace("@", "_")
+        }
+        sh "mv ${env.WORKSPACE} ${env.NEW_WORKSPACE}"
+        sh "cd -P ."
+        echo "Build .NET application"
+        sh "dotnet restore src/"
+        sh "echo test"
+        sh "ls -l"
+        sh "dotnet build -c ${env.CONFIGURATION} src/"
+        stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
       }
     }
     stage('Package as RPM') {
