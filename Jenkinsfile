@@ -13,7 +13,7 @@ pipeline {
           } 
       }
       steps {
-          sh "mv $PWD ${PWD/\@/_}"
+          sh 'mv $PWD ${PWD/\@/_}'
           sh "cd -P ."
           echo "Build .NET application"
           sh "dotnet restore src/"
