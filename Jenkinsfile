@@ -80,7 +80,7 @@ pipeline {
             unstash name: 'stars-console-tgz'
             script {
               def opensearchclienttgz = findFiles(glob: "stars-console-*.tar.gz")
-              def descriptor = readreadDescriptorDescriptor()
+              def descriptor = readDescriptor()
               def testsuite = docker.build(descriptor.docker_image_name, "--build-arg OPENSEARCH_CLIENT_TGZ=${opensearchclienttgz[0].name} .")
               def mType=getTypeOfVersion(env.BRANCH_NAME)
               docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-emmanuelmathot') {
