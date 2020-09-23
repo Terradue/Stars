@@ -38,8 +38,8 @@ pipeline {
         sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/lib/stars'
         sh 'cp -r src/Stars.Console/bin/Debug/*/* $WORKSPACE/build/SOURCES/usr/lib/stars/'
         sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/bin'
-        sh 'cp src/main/scripts/stars $WORKSPACE/build/SOURCES/usr/bin'
-        sh 'cp src/main/scripts/stars $WORKSPACE/build/SOURCES/'
+        sh 'cp src/scripts/stars $WORKSPACE/build/SOURCES/usr/bin'
+        sh 'cp src/scripts/stars $WORKSPACE/build/SOURCES/'
         sh 'cp stars-console.spec $WORKSPACE/build/SPECS/stars-console.spec'
         sh 'spectool -g -R --directory $WORKSPACE/build/SOURCES $WORKSPACE/build/SPECS/stars-console.spec'
         echo "Build package"
