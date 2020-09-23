@@ -22,7 +22,7 @@ namespace Stars.Service.Model.Stac
 
         public IDictionary<string, IAsset> GetAssets()
         {
-            return StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, StacItem));
+            return StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value));
         }
 
         public override IList<IRoute> GetRoutes()

@@ -16,7 +16,7 @@ namespace Stars.Service.Supply.Destination
             this.directory = directory;
         }
 
-        public Uri Uri => new Uri(directory.FullName);
+        public Uri Uri => new Uri(directory.FullName + "/");
 
         public static LocalDirectoryDestination Create(string destination)
         {

@@ -74,9 +74,9 @@ namespace Stars.Service.Catalog
             foreach (var delivery in stacDeliveries)
             {
                 if (stacNode.IsCatalog)
-                    await RelinkStacCatalog(stacNode, childrenRoutes, delivery);
+                    await RelinkStacCatalog(stacNode, childrenRoutes, delivery, destination);
                 else
-                    RelinkStacItem(stacNode, childrenRoutes, assets, delivery);
+                    RelinkStacItem(stacNode, childrenRoutes, assets, delivery, destination);
                 stacRoute = await delivery.Carrier.Deliver(delivery);
                 if (stacRoute != null) break;
             }
@@ -85,13 +85,13 @@ namespace Stars.Service.Catalog
 
         }
 
-        private async Task RelinkStacCatalog(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDelivery delivery)
+        private async Task RelinkStacCatalog(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDelivery delivery, IDestination destination)
         {
             StacCatalog stacCatalog = stacNode.StacObject as StacCatalog;
             if (stacCatalog == null) return;
 
             stacCatalog.Links.Clear();
-            stacCatalog.Links.Add(StacLink.CreateSelfLink(delivery.TargetUri));
+            stacCatalog.Links.Add(StacLink.CreateSelfLink(destination.Uri.MakeRelativeUri(delivery.TargetUri)));
 
             foreach (var childRoute in childrenRoutes)
             {
@@ -113,13 +113,13 @@ namespace Stars.Service.Catalog
 
 
 
-        private void RelinkStacItem(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDelivery delivery)
+        private void RelinkStacItem(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDelivery delivery, IDestination destination)
         {
             StacItem stacItem = stacNode.StacObject as StacItem;
             if (stacItem == null) return;
 
             stacItem.Links.Clear();
-            stacItem.Links.Add(StacLink.CreateSelfLink(delivery.TargetUri));
+            stacItem.Links.Add(StacLink.CreateSelfLink(destination.Uri.MakeRelativeUri(delivery.TargetUri)));
 
             foreach (var assetKey in assets.Keys)
             {
@@ -132,7 +132,16 @@ namespace Stars.Service.Catalog
 
         private StacAsset CreateAsset(IAsset asset, Uri relativeUri, IStacObject stacObject)
         {
-            return new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType, asset.ContentLength);
+            StacAssetAsset stacAssetAsset = asset as StacAssetAsset;
+            StacAsset stacAsset = null;
+            if (stacAssetAsset == null)
+                stacAsset = new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType, asset.ContentLength);
+            else{
+                stacAsset = stacAssetAsset.StacAsset;
+                stacAsset.Uri = relativeUri;
+            }
+
+            return stacAsset;
         }
     }
 }

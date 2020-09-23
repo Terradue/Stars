@@ -15,12 +15,10 @@ namespace Stars.Service.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private StacAsset asset;
-        private readonly IStacObject stacObject;
 
-        public StacAssetAsset(StacAsset asset, IStacObject stacObject)
+        public StacAssetAsset(StacAsset asset)
         {
             this.asset = asset;
-            this.stacObject = stacObject;
         }
 
         public Uri Uri => asset.Uri;
@@ -46,6 +44,8 @@ namespace Stars.Service.Model.Stac
         public string Filename => Path.GetFileName(Uri.ToString());
 
         public IEnumerable<string> Roles => asset.Roles;
+
+        public StacAsset StacAsset { get => asset; }
 
         public async Task<INode> GoToNode()
         {

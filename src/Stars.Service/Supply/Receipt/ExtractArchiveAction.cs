@@ -30,7 +30,7 @@ namespace Stars.Service.Supply.Receipt
 
         public bool CanReceive(NodeInventory deliveryForm)
         {
-            return deliveryForm.Assets.Any(asset => IsArchive(asset.Value));
+            return deliveryForm.Assets != null && deliveryForm.Assets.Any(asset => IsArchive(asset.Value));
         }
 
         private bool IsArchive(IAsset asset)
