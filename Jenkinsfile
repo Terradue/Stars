@@ -18,13 +18,15 @@ pipeline {
       steps {
         sh "mkdir /build"
         ws("/build") {
+          sh 'pwd'
           checkout scm
-          echo "Build .NET application"
+          sh 'pwd'
+          // echo "Build .NET application"
           // sh "dotnet restore src/"
-          sh "echo test"
-          sh "ls -l"
-          sh "dotnet build -c ${env.CONFIGURATION} src/"
-          stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
+          // sh "echo test"
+          // sh "ls -l"
+          // sh "dotnet build -c ${env.CONFIGURATION} src/"
+          // stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
         }
       }
     }
