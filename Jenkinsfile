@@ -21,6 +21,7 @@ pipeline {
           checkout scm
           echo "Build .NET application"
           // sh "dotnet restore src/"
+          sh "echo test"
           sh "ls -l"
           sh "dotnet build -c ${env.CONFIGURATION} src/"
           stash includes: 'src/Terradue.Stars.*/bin/**', name: 'terradue-stars-build'
