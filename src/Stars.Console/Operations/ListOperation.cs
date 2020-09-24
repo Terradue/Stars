@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Terradue.Stars.Operations
 {
-    [Command(Name = "list", Description = "List the routing from the input reference")]
+    [Command(Name = "list", Description = "List the routing from the input catalog")]
     internal class ListOperation : BaseOperation
     {
         [Argument(0)]

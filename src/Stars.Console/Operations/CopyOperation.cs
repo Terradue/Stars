@@ -21,7 +21,7 @@ using Terradue.Stars.Service.Supply.Receipt;
 
 namespace Terradue.Stars.Operations
 {
-    [Command(Name = "copy", Description = "Copy the tree of resources and assets by routing from the input reference")]
+    [Command(Name = "copy", Description = "Copy the tree of resources and assets by routing from the input catalog")]
     internal class CopyOperation : BaseOperation
     {
         [Argument(0)]

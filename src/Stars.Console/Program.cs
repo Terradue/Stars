@@ -24,7 +24,7 @@ using System.Threading;
 
 namespace Terradue.Stars
 {
-    [Command(Name = "Stars", Description = "Spatio Temporal Asset Router & Supplier")]
+    [Command(Name = "Stars", Description = "Spatio Temporal Asset Routing Services")]
     [HelpOption]
     [Subcommand(
         typeof(ListOperation),
