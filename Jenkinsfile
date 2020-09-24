@@ -55,7 +55,7 @@ pipeline {
     stage('Publish Artifacts') {
       agent { node { label 'artifactory' } }
       when{
-        branch 'master'
+        branch 'master2'
       }
       steps {
         echo 'Deploying'
@@ -76,19 +76,36 @@ pipeline {
       }       
     }
     stage('Build & Publish Docker') {
-        steps {
-            unstash name: 'stars-console-tgz'
-            script {
-              def starsconsoletgz = findFiles(glob: "stars-console-*.tar.gz")
-              def descriptor = readDescriptor()
-              def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_CONSOLE_TGZ=${starsconsoletgz[0].name} .")
-              def mType=getTypeOfVersion(env.BRANCH_NAME)
-              docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                testsuite.push("${mType}${env.VERSION}")
-                testsuite.push("${mType}latest")
-              }
-            }
+      steps {
+        unstash name: 'stars-console-tgz'
+        script {
+          def starsconsoletgz = findFiles(glob: "stars-console-*.tar.gz")
+          def descriptor = readDescriptor()
+          def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_CONSOLE_TGZ=${starsconsoletgz[0].name} .")
+          def mType=getTypeOfVersion(env.BRANCH_NAME)
+          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            testsuite.push("${mType}${env.VERSION}")
+            testsuite.push("${mType}latest")
+          }
         }
+      }
+    }
+    stage('Build & Publish Docker') {
+      agent { 
+          docker { 
+              image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic'
+          } 
+      }
+      when{
+        branch 'master'
+      }
+      steps {
+        withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
+          sh "dotnet publish src/Stars.Service -c ${env.CONFIGURATION} -f netstandard2.1"
+          sh "dotnet pack src/Stars.Service -c ${env.CONFIGURATION} --include-symbols -o publish"
+          sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
+        }
+      }
     }
   }
 }
