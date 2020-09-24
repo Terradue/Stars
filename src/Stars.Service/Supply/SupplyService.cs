@@ -66,8 +66,14 @@ namespace Terradue.Stars.Service.Supply
                 }
 
                 deliveryForm = await Deliver(deliveryQuotation);
-                if ( deliveryForm == null ){
-                    logger.LogDebug("[{0}] Delivery failed. Skipping supplier", suppliers.Current.Id);
+                if (deliveryForm == null)
+                {
+                    if (Parameters.ContinueOnDeliveryError)
+                    {
+                        logger.LogDebug("[{0}] Delivery failed. Skipping supplier", suppliers.Current.Id);
+                        continue;
+                    }
+                    
                 }
 
                 deliveryForm.SupplierNode = supplierNode;
@@ -131,11 +137,18 @@ namespace Terradue.Stars.Service.Supply
             Dictionary<string, IAsset> assetsDeliveredRoutes = new Dictionary<string, IAsset>();
             foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
-                if ( item.Value.Count() == 0)  continue;
+                if (item.Value.Count() == 0) continue;
                 var route = await Deliver(item.Key, item.Value);
-                if (route == null) return null;
-                IAsset asset = MakeAsset(route, (IAsset)item.Value.First().Route);
-                assetsDeliveredRoutes.Add(item.Key, asset);
+                if (route == null)
+                {
+                    if (!Parameters.ContinueOnDeliveryError) return null;
+                }
+                // OK
+                else
+                {
+                    IAsset asset = MakeAsset(route, (IAsset)item.Value.First().Route);
+                    assetsDeliveredRoutes.Add(item.Key, asset);
+                }
             }
             return new NodeInventory(nodeDeliveredRoute, assetsDeliveredRoutes, deliveryQuotation.Destination);
         }
@@ -163,7 +176,6 @@ namespace Terradue.Stars.Service.Supply
                 catch (Exception e)
                 {
                     logger.LogError("Error supplying {0} to {1} : {2}", delivery.Route.Uri, delivery.TargetUri, e.Message);
-                    logger.LogDebug(e.StackTrace);
                 }
             }
             return null;

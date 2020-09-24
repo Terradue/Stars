@@ -3,30 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Terradue.Stars.Service
 {
-    public class CredentialsOptions : Dictionary<string, object> 
+    public class CredentialsOptions
     {
-
         CredentialCache _credentialCache = new CredentialCache();
 
-        public void Configure(IConfigurationSection configuration)
+        public CredentialsOptions()
+        {
+        }
+
+        public CredentialCache CredentialCache { get => _credentialCache; }
+
+        public void Configure(IConfigurationSection configuration, ILogger logger)
         {
             if (configuration == null)
                 return;
-            if (configuration.GetSection("NetworkCredentials") != null)
+            var credentials = configuration.GetChildren();
+            foreach (var credential in credentials)
             {
-                Console.Out.WriteLine(configuration.GetSection("NetworkCredentials").Path);
-                Console.Out.WriteLine(string.Join(",", configuration.GetSection("NetworkCredentials").GetChildren().Select(nc => nc.Key)));
-                var networkCredentials = configuration.GetSection("NetworkCredentials").GetChildren();
-                foreach (var networkCredential in networkCredentials)
+                try
                 {
                     _credentialCache.Add(
-                        new Uri(networkCredential["UrlPrefix"]),
-                        string.IsNullOrEmpty(networkCredential["AuthType"]) ? "Basic" : networkCredential["AuthType"],
-                        new NetworkCredential(networkCredential["Username"], networkCredential["Password"])
+                        new Uri(credential["UriPrefix"]),
+                        string.IsNullOrEmpty(credential["AuthType"]) ? "Basic" : credential["AuthType"],
+                        new NetworkCredential(credential["Username"], credential["Password"])
                     );
+                }
+                catch (Exception e)
+                {
+                    logger.LogWarning("Credential {0} skipped : {1}", credential.Key, e.Message);
                 }
             }
         }

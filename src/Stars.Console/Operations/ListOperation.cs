@@ -10,6 +10,7 @@ using Terradue.Stars.Service.Router;
 using Terradue.Stars.Service;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 
 namespace Terradue.Stars.Operations
 {
@@ -25,31 +26,26 @@ namespace Terradue.Stars.Operations
         [Option("-sa|--skip-assets", "Do not list assets", CommandOptionType.NoValue)]
         public bool SkippAssets { get; set; }
 
-        private readonly IConsole console;
-        private readonly ILogger logger;
-        private readonly RoutingService routingTask;
+        private RoutingService routingService;
         private int recursivity = 1;
         private string[] inputs = new string[0];
 
-        public ListOperation(IConsole console, ILogger logger, RoutingService routingTask)
+        public ListOperation()
         {
-            this.console = console;
-            this.logger = logger;
-            this.routingTask = routingTask;
-            
+
         }
 
         private void InitRoutingTask()
         {
-            routingTask.Parameters = new RoutingTaskParameters()
+            routingService.Parameters = new RoutingTaskParameters()
             {
                 Recursivity = Recursivity,
                 SkipAssets = SkippAssets
             };
-            routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
-            routingTask.OnBranchingNode((node, router, state) => PrintBranchingNode(node, router, state));
-            routingTask.OnLeafNode((node, router, state) => PrintLeafNode(node, router, state));
-            routingTask.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
+            routingService.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
+            routingService.OnBranchingNode((node, router, state) => PrintBranchingNode(node, router, state));
+            routingService.OnLeafNode((node, router, state) => PrintLeafNode(node, router, state));
+            routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
         }
 
         private Task<object> PrepareNewRoute(IRoute parentRoute, IRoute route, IList<IRoute> siblings, object state)
@@ -114,8 +110,11 @@ namespace Terradue.Stars.Operations
 
         protected override async Task ExecuteAsync()
         {
+          
+
+            this.routingService = ServiceProvider.GetService<RoutingService>();
             InitRoutingTask();
-            await routingTask.ExecuteAsync(Inputs);
+            await routingService.ExecuteAsync(Inputs);
         }
 
         private async Task PrintAssets(INode resource, IRouter router, string prefix)

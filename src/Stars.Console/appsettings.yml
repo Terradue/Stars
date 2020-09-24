@@ -17,7 +17,7 @@ Global:
   ForceOverwrite: false
 Credentials:
   SciHub:
-    Type: HTTP-BASIC
+    Type: Basic
     UriPrefix: https://scihub.copernicus.eu
-    Username: test
-    Password: secret
+    Username: emmanuel.mathot
+    Password: w2kf22gffx

@@ -34,6 +34,7 @@ namespace Terradue.Stars.Operations
         public bool SkippAssets { get; set; }
 
         [Option("-o|--output-dir", "Output Directory", CommandOptionType.SingleValue)]
+        [Required]
         public string OutputDirectory { get; set; }
 
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
@@ -41,6 +42,9 @@ namespace Terradue.Stars.Operations
 
         [Option("-xa|--extract-archive", "Extract archive files (default to true)", CommandOptionType.NoValue)]
         public bool ExtractArchives { get; set; } = true;
+
+        [Option("--stop-on-error", "Stop on Error (copy) (default to false)", CommandOptionType.NoValue)]
+        public bool StopOnError { get; set; } = false;
 
 
         private RoutingService routingTask;
@@ -116,9 +120,15 @@ namespace Terradue.Stars.Operations
 
             SupplyService supplyTask = ServiceProvider.GetService<SupplyService>();
 
-            supplyTask.Parameters = new SupplyTaskParameters();
+            supplyTask.Parameters = new SupplyTaskParameters()
+            {
+                ContinueOnDeliveryError = !StopOnError
+            };
 
             NodeInventory deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
+
+            if ( deliveryForm == null && StopOnError )
+                throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
 
             deliveryForm = await PostDelivery(deliveryForm);
 

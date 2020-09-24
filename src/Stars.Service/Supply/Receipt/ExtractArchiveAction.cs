@@ -83,7 +83,8 @@ namespace Terradue.Stars.Service.Supply.Receipt
 
             foreach (var archiveAsset in archive.GetAssets())
             {
-                var archiveAssetDestination = archiveFolder.To(archiveAsset.Value);
+                 var archiveAssetDestination = archiveFolder.To(archiveAsset.Value);
+                archiveAssetDestination.Create();
                 var assetDeliveries = carrierManager.GetSingleDeliveryQuotations(null, archiveAsset.Value, archiveAssetDestination);
                 logger.LogDebug(archiveAsset.Key);
                 foreach (var delivery in assetDeliveries)

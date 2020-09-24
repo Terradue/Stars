@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -15,19 +16,21 @@ namespace Terradue.Stars.Service.Router
         public RoutingTaskParameters Parameters { get; set; }
         private readonly ILogger logger;
         private readonly RoutersManager routersManager;
+        private readonly ICredentials credentialsManager;
 
-        public RoutingService(ILogger logger, RoutersManager routersManager)
+        public RoutingService(ILogger logger, RoutersManager routersManager, ICredentials credentialsManager)
         {
             this.Parameters = new RoutingTaskParameters();
             this.logger = logger;
             this.routersManager = routersManager;
+            this.credentialsManager = credentialsManager;
         }
 
         public async Task ExecuteAsync(IEnumerable<string> inputs)
         {
             foreach (var input in inputs)
             {
-                IRoute initRoute = WebRoute.Create(new Uri(input));
+                WebRoute initRoute = WebRoute.Create(new Uri(input), credentials: credentialsManager);
                 object state = await onBranchingFunction.Invoke(null, initRoute, null, null);
                 await Route(initRoute, Parameters.Recursivity, null, state);
             }

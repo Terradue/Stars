@@ -2,6 +2,7 @@ namespace Terradue.Stars.Service.Supply
 {
     public class SupplyTaskParameters
     {
-        internal SupplierFilters SupplierFilters { get; set; }
+        public SupplierFilters SupplierFilters { get; set; }
+        public bool ContinueOnDeliveryError { get; set; }
     }
 }

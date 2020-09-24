@@ -43,14 +43,7 @@ namespace Terradue.Stars.Service.Router
 
         public async Task<Stream> GetStreamAsync()
         {
-            try
-            {
-                return await WebRoute.Create(Uri).GetStreamAsync();
-            }
-            catch
-            {
-                return null;
-            }
+            return await WebRoute.Create(Uri).GetStreamAsync();
         }
     }
 }

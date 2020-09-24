@@ -20,12 +20,13 @@ namespace Terradue.Stars.Service.Supply.Carrier
     public class LocalWebDownloadCarrier : LocalCarrier, ICarrier
     {
 
-        CredentialCache _credentialCache = new CredentialCache();
         private readonly ILogger logger;
+        private readonly ICredentials credentials;
 
-        public LocalWebDownloadCarrier(IOptions<GlobalOptions> options, ILogger logger) : base(options)
+        public LocalWebDownloadCarrier(IOptions<GlobalOptions> options, ILogger logger, ICredentials credentials) : base(options)
         {
             this.logger = logger;
+            this.credentials = credentials;
         }
 
         public override string Id => "WebDownload";
@@ -49,7 +50,7 @@ namespace Terradue.Stars.Service.Supply.Carrier
         private WebRequest CreateWebRequest(Uri uri)
         {
             var request = WebRequest.Create(uri);
-            request.Credentials = _credentialCache;
+            request.Credentials = credentials;
             return request;
         }
 
@@ -58,14 +59,15 @@ namespace Terradue.Stars.Service.Supply.Carrier
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileSystemRoute localRoute = new LocalFileSystemRoute(localDelivery.LocalPath, localDelivery.Route.ContentType, localDelivery.Route.ResourceType, localDelivery.Route.ContentLength);
 
-            if ( !carrierServiceOptions.ForceOverwrite && localRoute.File.Exists && delivery.Route.ContentLength > 0 &&
-                Convert.ToUInt64(localRoute.File.Length) == delivery.Route.ContentLength ){
+            if (!carrierServiceOptions.ForceOverwrite && localRoute.File.Exists && delivery.Route.ContentLength > 0 &&
+                Convert.ToUInt64(localRoute.File.Length) == delivery.Route.ContentLength)
+            {
                 logger.LogDebug("File {0} exists with the same size. Skipping download", localRoute.File.Name);
                 return localRoute;
             }
 
             var wr = CreateWebRequest(delivery.Route.Uri);
-            
+
             await DownloadFile(wr.GetResponseAsync(), localRoute.File);
             return localRoute;
         }
@@ -73,7 +75,11 @@ namespace Terradue.Stars.Service.Supply.Carrier
         private async Task DownloadFile(Task<WebResponse> arg1, FileInfo file)
         {
             var webResponse = await arg1;
-            await webResponse.GetResponseStream().CopyToAsync(file.Create());
+            using (FileStream fileStream = file.Create())
+            {
+                await webResponse.GetResponseStream().CopyToAsync(fileStream);
+                fileStream.Close();
+            }
         }
 
 
@@ -84,21 +90,38 @@ namespace Terradue.Stars.Service.Supply.Carrier
             ulong contentLength = route.ContentLength;
 
             var wr = CreateWebRequest(route.Uri);
-            var response = wr.GetResponse();
-            if (response.Headers.AllKeys.Contains("Content-Disposition"))
+            try
             {
-                try
+                using (var response = wr.GetResponse())
                 {
-                    ContentDisposition disposition = new ContentDisposition(response.Headers["Content-Disposition"]);
-                    if (disposition != null && !string.IsNullOrEmpty(disposition.FileName)) filename = disposition.FileName;
+                    if (response.Headers.AllKeys.Contains("Content-Disposition"))
+                    {
+                        try
+                        {
+                            ContentDisposition disposition = new ContentDisposition(response.Headers["Content-Disposition"]);
+                            if (disposition != null && !string.IsNullOrEmpty(disposition.FileName)) filename = disposition.FileName;
+                        }
+                        catch (FormatException) { }
+                    }
+                    if (response.ContentLength > 0)
+                    {
+                        ulong cl = Convert.ToUInt64(response.ContentLength);
+                        if (cl > 0) contentLength = cl;
+                    }
                 }
-                catch (FormatException) { }
             }
-            if (response.ContentLength > 0)
+            catch (WebException e)
             {
-                ulong cl = Convert.ToUInt64(response.ContentLength);
-                if (cl > 0) contentLength = cl;
+                if (e.Status == WebExceptionStatus.ProtocolError)
+                {
+                    HttpWebResponse webResponse = e.Response as HttpWebResponse;
+                    if (webResponse != null && webResponse.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        throw e;
+                    }
+                }
             }
+
 
             return (Path.Join(directory.Uri.ToString(), filename), contentLength);
         }

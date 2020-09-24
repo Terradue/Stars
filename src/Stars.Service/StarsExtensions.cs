@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using Terradue.Stars.Interface.Router;
 
@@ -42,6 +43,19 @@ namespace Terradue.Stars.Service
         {
             StreamReader sr = new StreamReader(streamable.GetStreamAsync().Result);
             return sr.ReadToEnd();
+        }
+
+        public static CredentialsConfigurationSection ToCredentialsConfigurationSection(this ICredentials cred, Uri uri)
+        {
+            CredentialsConfigurationSection credentialsConfigurationSection = new CredentialsConfigurationSection();
+            if (cred is NetworkCredential)
+            {
+                credentialsConfigurationSection.Type = "Basic";
+                credentialsConfigurationSection.UriPrefix = uri.ToString();
+                credentialsConfigurationSection.Username = (cred as NetworkCredential).UserName;
+                credentialsConfigurationSection.Password = (cred as NetworkCredential).Password;
+            }
+            return credentialsConfigurationSection;
         }
     }
 }
