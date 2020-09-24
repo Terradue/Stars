@@ -20,17 +20,19 @@ namespace Terradue.Stars.Operations
 
         public override NetworkCredential GetCredential(Uri uri, string authType)
         {
-            NetworkCredential cred = base.GetCredential(uri, authType);
+            Uri uriCut = new Uri(uri.GetLeftPart(UriPartial.Authority));
+            NetworkCredential cred = base.GetCredential(uriCut, authType);
             if (cred == null)
             {
                 if (!console.IsInputRedirected)
                 {
-                    console.WriteLine("No credentials found for {0}. Please provide one.", uri);
-                    cred = PromptCredentials(uri, authType);
+                    console.WriteLine("No credentials found for {0}. Please provide one.", uriCut);
+                    cred = PromptCredentials(uriCut, authType);
                 }
                 if (cred != null)
                 {
-                    PromptSaveCredentials(cred, uri);
+                    base.CacheCredential(uriCut, authType, cred);
+                    PromptSaveCredentials(cred, uriCut);
                 }
             }
             return cred;

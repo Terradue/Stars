@@ -25,5 +25,10 @@ namespace Terradue.Stars.Service
             }
             return cred;
         }
+
+        public void CacheCredential(Uri uriCut, string authType, NetworkCredential cred)
+        {
+            _options.Value.CredentialCache.Add(uriCut, authType, cred);
+        }
     }
 }

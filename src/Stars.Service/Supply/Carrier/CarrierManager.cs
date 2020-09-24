@@ -16,12 +16,10 @@ namespace Terradue.Stars.Service.Supply.Carrier
     public class CarrierManager : AbstractManager<ICarrier>
     {
         private readonly ILogger logger;
-        private readonly IConfiguration configuration;
 
-        public CarrierManager(ILogger logger, IConfiguration configuration, IServiceProvider serviceProvider) : base(logger, serviceProvider)
+        public CarrierManager(ILogger logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
         {
             this.logger = logger;
-            this.configuration = configuration;
         }
 
         internal IEnumerable<ICarrier> GetCarriers(IRoute route, ISupplier supplier, IDestination destination)

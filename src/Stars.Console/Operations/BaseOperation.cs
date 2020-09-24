@@ -143,7 +143,7 @@ namespace Terradue.Stars.Operations
 
             Configuration = builder.Build();
 
-            collection.AddSingleton<IConfiguration>(Configuration);
+            collection.AddSingleton<IConfigurationRoot>(Configuration);
 
             // Add the command line services
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);

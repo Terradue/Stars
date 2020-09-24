@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,10 +11,12 @@ namespace Terradue.Stars
     {
         private readonly string userSettingsFilePath = Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "stars.appsettings.json");
         private readonly ILogger logger;
+        private readonly IConfigurationRoot configuration;
 
-        public ConsoleUserSettings(ILogger logger)
+        public ConsoleUserSettings(ILogger logger, IConfigurationRoot configuration)
         {
             this.logger = logger;
+            this.configuration = configuration;
             try
             {
                 if (!File.Exists(userSettingsFilePath))
@@ -50,6 +53,7 @@ namespace Terradue.Stars
                 logger.LogError("Error writing user app settings : {0}", ex.Message);
                 logger.LogDebug(ex.StackTrace);
             }
+            configuration.Reload();
         }
 
         private void SetValueRecursively<T>(string sectionPathKey, dynamic jsonObj, T value)
