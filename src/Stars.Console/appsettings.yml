@@ -15,9 +15,3 @@ Receivers:
     Type: Terradue.Data.Stac.Model.Metadata.Kompsat3.Kompsat3MetadataExtraction, Terradue.Data.Stac
 Global:
   ForceOverwrite: false
-Credentials:
-  SciHub:
-    Type: Basic
-    UriPrefix: https://scihub.copernicus.eu
-    Username: emmanuel.mathot
-    Password: w2kf22gffx

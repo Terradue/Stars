@@ -8,7 +8,7 @@ namespace Terradue.Stars
 {
     internal class ConsoleUserSettings
     {
-        private readonly string userSettingsFilePath = Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "stars.appsettings");
+        private readonly string userSettingsFilePath = Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "stars.appsettings.json");
         private readonly ILogger logger;
 
         public ConsoleUserSettings(ILogger logger)
@@ -19,7 +19,7 @@ namespace Terradue.Stars
                 if (!File.Exists(userSettingsFilePath))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(userSettingsFilePath));
-                    File.Create(userSettingsFilePath).Close();
+                    File.WriteAllText(userSettingsFilePath, "{}");
                 }
 
             }

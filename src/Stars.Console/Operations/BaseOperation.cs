@@ -131,7 +131,7 @@ namespace Terradue.Stars.Operations
             // Add Configuration
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
-            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "stars.appsettings"), optional:true, reloadOnChange: true)
+            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "stars.appsettings.json"), optional:true, reloadOnChange: true)
                    .AddYamlFile("appsettings.yml", optional: true)    
                    .AddNewtonsoftJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
