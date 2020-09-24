@@ -81,7 +81,7 @@ pipeline {
             script {
               def starsconsoletgz = findFiles(glob: "stars-console-*.tar.gz")
               def descriptor = readDescriptor()
-              def testsuite = docker.build(descriptor.docker_image_name, "--build-arg STARS_CONSOLE_TGZ=${starsconsoletgz[0].name} .")
+              def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_CONSOLE_TGZ=${starsconsoletgz[0].name} .")
               def mType=getTypeOfVersion(env.BRANCH_NAME)
               docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                 testsuite.push("${mType}${descriptor.version}")
