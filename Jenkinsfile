@@ -12,14 +12,15 @@ pipeline {
               image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic'
           } 
       }
+      environment { 
+                CREDENTIALS = credentials('dockerhub') 
+            }
       steps {
-        withCredentials([usernameColonPassword(credentialsId: 'dockerhub', variable: 'USERPASS')]) {
-        echo "$USERPASS"
+        echo "$CREDENTIALS_USR"
         echo "Build .NET application"
         sh "dotnet restore src/"
         sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
         stash includes: 'src/**/bin/**', name: 'terradue-stars-build'
-        }
       }
     }
     stage('Package as RPM') {
