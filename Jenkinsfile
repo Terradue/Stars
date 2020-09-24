@@ -101,6 +101,7 @@ pipeline {
       }
       steps {
         withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
+          sh "dotnet restore src/Stars.Service"
           sh "dotnet publish src/Stars.Service -c ${env.CONFIGURATION} -f netstandard2.1"
           sh "dotnet pack src/Stars.Service -c ${env.CONFIGURATION} --include-symbols -o publish"
           sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
