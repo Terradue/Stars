@@ -12,14 +12,14 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supply;
 using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Service.Catalog;
-using Terradue.Stars.Service.Model.Stac;
-using Terradue.Stars.Service.Router;
-using Terradue.Stars.Service.Supply;
-using Terradue.Stars.Service.Supply.Carrier;
-using Terradue.Stars.Service.Supply.Destination;
-using Terradue.Stars.Service.Supply.Receipt;
-using Terradue.Stars.Service.Translator;
+using Terradue.Stars.Services.Catalog;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Supply;
+using Terradue.Stars.Services.Supply.Carrier;
+using Terradue.Stars.Services.Supply.Destination;
+using Terradue.Stars.Services.Supply.Receipt;
+using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Stars.Operations
 {

@@ -11,16 +11,16 @@ using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supply;
 using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Service;
-using Terradue.Stars.Service.Catalog;
-using Terradue.Stars.Service.Model.Atom;
-using Terradue.Stars.Service.Model.Stac;
-using Terradue.Stars.Service.Router;
-using Terradue.Stars.Service.Router.Translator;
-using Terradue.Stars.Service.Supply;
-using Terradue.Stars.Service.Supply.Carrier;
-using Terradue.Stars.Service.Supply.Destination;
-using Terradue.Stars.Service.Supply.Receipt;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Catalog;
+using Terradue.Stars.Services.Model.Atom;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Router.Translator;
+using Terradue.Stars.Services.Supply;
+using Terradue.Stars.Services.Supply.Carrier;
+using Terradue.Stars.Services.Supply.Destination;
+using Terradue.Stars.Services.Supply.Receipt;
 
 namespace Terradue.Stars.Operations
 {

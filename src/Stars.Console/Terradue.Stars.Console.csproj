@@ -23,7 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj"/>
-    <ProjectReference Include="..\Stars.Service\Terradue.Stars.Service.csproj"/>
+    <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj"/>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
