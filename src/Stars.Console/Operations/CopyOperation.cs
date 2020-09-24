@@ -9,6 +9,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supply;
 using Terradue.Stars.Interface.Supply.Destination;
 using Terradue.Stars.Service.Catalog;
@@ -18,6 +19,7 @@ using Terradue.Stars.Service.Supply;
 using Terradue.Stars.Service.Supply.Carrier;
 using Terradue.Stars.Service.Supply.Destination;
 using Terradue.Stars.Service.Supply.Receipt;
+using Terradue.Stars.Service.Translator;
 
 namespace Terradue.Stars.Operations
 {
@@ -88,7 +90,7 @@ namespace Terradue.Stars.Operations
 
             CatalogingService catalogingTask = ServiceProvider.GetService<CatalogingService>();
 
-            IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Assets, operationState.Destination);
+            IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Assets, operationState.Destination, operationState.Depth);
 
             operationState.LastRoute = stacRoute;
 
@@ -161,6 +163,7 @@ namespace Terradue.Stars.Operations
 
         protected override void RegisterOperationServices(ServiceCollection collection)
         {
+            collection.AddTransient<ITranslator, DefaultStacTranslator>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
             if (ExtractArchives)

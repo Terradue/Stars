@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
@@ -24,10 +25,18 @@ namespace Terradue.Stars.Service.Supply.Receipt
 
         public string Label => parentAsset.Label + " / " + entry.Name;
 
-        public IEnumerable<string> Roles => new string[] { "data" };
+        public IEnumerable<string> Roles
+        {
+            get
+            {
+                var ext = Path.GetExtension(entry.Name).TrimStart('.'); 
+                if ( (new string[]{ "txt", "xml", "json" }).Contains(ext)) return new string[] { "metadata" };
+                return new string[] { "data" };
+            }
+        }
 
         public Uri Uri => new Uri(entry.Name, UriKind.Relative);
-        
+
         public ContentType ContentType => new ContentType(System.Net.Mime.MediaTypeNames.Application.Octet);
 
         public ResourceType ResourceType => ResourceType.Asset;

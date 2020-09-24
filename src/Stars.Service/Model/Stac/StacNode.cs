@@ -45,8 +45,9 @@ namespace Terradue.Stars.Service.Model.Stac
         {
             get
             {
+                if ( IsRoot )
+                    return "catalog.json";
                 return stacObject.Id + ".json";
-
             }
         }
 
@@ -68,6 +69,8 @@ namespace Terradue.Stars.Service.Model.Stac
         }
 
         public IStacObject StacObject => stacObject;
+
+        public bool IsRoot { get; set; }
 
         public abstract IList<IRoute> GetRoutes();
 

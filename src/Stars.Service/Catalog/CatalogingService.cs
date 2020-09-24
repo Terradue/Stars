@@ -40,7 +40,7 @@ namespace Terradue.Stars.Service.Catalog
             Parameters = new CatalogTaskParameters();
         }
 
-        public async Task<IRoute> ExecuteAsync(IRoute parentRoute, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDestination destination)
+        public async Task<IRoute> ExecuteAsync(IRoute parentRoute, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDestination destination, int depth)
         {
             INode parentNode = await parentRoute.GoToNode();
             StacNode stacNode = parentNode as StacNode;
@@ -62,19 +62,21 @@ namespace Terradue.Stars.Service.Catalog
                 }
             }
 
-            return await RelinkAndDeliverStacNode(stacNode, childrenRoutes, assets, destination);
+            return await RelinkAndDeliverStacNode(stacNode, childrenRoutes, assets, destination, depth);
         }
 
-        private async Task<IRoute> RelinkAndDeliverStacNode(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDestination destination)
+        private async Task<IRoute> RelinkAndDeliverStacNode(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDestination destination, int depth)
         {
+            if ( depth == 1) stacNode.IsRoot = true;
             var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(null, stacNode, destination);
 
             IRoute stacRoute = null;
 
             foreach (var delivery in stacDeliveries)
             {
-                if (stacNode.IsCatalog)
+                if (stacNode.IsCatalog){
                     await RelinkStacCatalog(stacNode, childrenRoutes, delivery, destination);
+                }
                 else
                     RelinkStacItem(stacNode, childrenRoutes, assets, delivery, destination);
                 stacRoute = await delivery.Carrier.Deliver(delivery);
