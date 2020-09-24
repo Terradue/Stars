@@ -1,0 +1,17 @@
+Suppliers:
+  Onda:
+    Type: Terradue.Data.Stac.Suppliers.DataHubSourceSupplier, Terradue.Data.Stac
+    Parameters: [""]
+    ServiceUrl: "https://catalogue.onda-dias.eu/dias-catalogue"
+    Credentials:
+      Username: test
+      Password: secret
+Translators:
+  Onda:
+    Type: Terradue.Data.Stac.Translators.AtomToStacTranslator, Terradue.Data.Stac
+    Parameters: [""]
+Receivers:
+  Kompsat3:
+    Type: Terradue.Data.Stac.Model.Metadata.Kompsat3.Kompsat3MetadataExtraction, Terradue.Data.Stac
+Global:
+  ForceOverwrite: false
