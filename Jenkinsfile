@@ -13,10 +13,13 @@ pipeline {
           } 
       }
       steps {
+        withCredentials([usernameColonPassword(credentialsId: 'dockerhub', variable: 'USERPASS')]) {
+        echo "$USERPASS"
         echo "Build .NET application"
         sh "dotnet restore src/"
         sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
         stash includes: 'src/**/bin/**', name: 'terradue-stars-build'
+        }
       }
     }
     stage('Package as RPM') {
