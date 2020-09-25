@@ -37,7 +37,7 @@ pipeline {
               sh "dotnet pack src/Stars.Services -c ${env.CONFIGURATION} --include-symbols -o publish"
               sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
             }
-            stash name: 'stars-packages' includes: 'src/Stars.Console/bin/**/*'
+            stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*'
           }
         }
       }
