@@ -23,7 +23,7 @@ namespace Terradue.Stars.Services.Supply
         public ISupplier Supplier => OrderVoucher.Supplier;
         public int Cost { get; }
 
-        public IOrderable OrderableRoute => Route as IOrderable;
+        public IOrderable OrderableRoute => OrderVoucher.OrderableRoute;
 
         public Uri TargetUri => VoucherDelivery.TargetUri;
 

@@ -9,9 +9,10 @@
     <PackageReference Include="Terradue.ServiceModel.Syndication" Version="1.1.1"/>
     <PackageReference Include="SharpZipLib" Version="1.2.0"/>
     <PackageReference Include="DotNetStac" Version="0.4.0"/>
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />
+    <ProjectReference PrivateAssets="All" Include="..\Stars.Interface\Terradue.Stars.Interface.csproj"/>
   </ItemGroup>
-  <Import Project="WalkEachTargetPerProject.targets" />
+  <Import Project="WalkEachTargetPerProject.targets"/>
 </Project>

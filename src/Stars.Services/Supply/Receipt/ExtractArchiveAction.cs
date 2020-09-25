@@ -11,6 +11,7 @@ using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supply.Carrier;
 using Terradue.Stars.Services.Supply.Destination;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace Terradue.Stars.Services.Supply.Receipt
 {
@@ -105,6 +106,11 @@ namespace Terradue.Stars.Services.Supply.Receipt
         {
             FolderRoute folderRoute = new FolderRoute(archiveAsset);
             return destination.To(folderRoute);
+        }
+
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
+           
         }
     }
 }

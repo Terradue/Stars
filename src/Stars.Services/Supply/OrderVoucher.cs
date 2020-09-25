@@ -1,15 +1,17 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supply.Asset;
 
 namespace Terradue.Stars.Services.Supply
 {
     [JsonObject]
-    public class OrderVoucher : IRoute, IStreamable, IOrder
+    public class OrderVoucher : IRoute, IStreamable, IOrder, IAsset
     {
         private IOrderable orderableRoute;
         private ISupplier supplier;
@@ -38,12 +40,17 @@ namespace Terradue.Stars.Services.Supply
         public string SupplierType => supplier.GetType().FullName;
 
         [JsonIgnore]
-        public ContentDisposition ContentDisposition => new ContentDisposition(){ FileName = string.Format("{0}.order.json", orderId) };
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = string.Format("{0}.order.json", orderId) };
 
         [JsonProperty]
         public string OrderId => orderId;
 
         public ISupplier Supplier { get => supplier; set => supplier = value; }
+        public IOrderable OrderableRoute { get => orderableRoute; }
+
+        public string Label => string.Format("Order {0} to supplier {1}", orderId, supplier.Id);
+
+        public IEnumerable<string> Roles => new string[1] { "order" };
 
         public async Task<Stream> GetStreamAsync()
         {
@@ -67,6 +74,11 @@ namespace Terradue.Stars.Services.Supply
         internal async Task<IOrder> Order()
         {
             return await supplier.Order(orderableRoute);
+        }
+
+        public IStreamable GetStreamable()
+        {
+            return this;
         }
     }
 }

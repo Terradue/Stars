@@ -11,6 +11,7 @@ using Terradue.Stars.Interface.Supply;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supply;
 using Terradue.ServiceModel.Syndication;
+using Microsoft.Extensions.Configuration;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -42,6 +43,11 @@ namespace Terradue.Stars.Services.Model.Atom
             }
             catch { }
             return false;
+        }
+
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
+           
         }
 
         public async Task<IRoutable> Route(INode node)

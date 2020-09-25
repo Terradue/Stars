@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
@@ -42,6 +43,10 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
             }
             return false;
+        }
+
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
         }
 
         public async Task<IRoutable> Route(INode node)

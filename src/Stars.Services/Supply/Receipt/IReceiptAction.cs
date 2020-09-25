@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Supply.Receipt
 {
-    public interface IReceiptAction
+    public interface IReceiptAction : IPlugin
     {
         bool CanReceive(NodeInventory deliveryForm);
 

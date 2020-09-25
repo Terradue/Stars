@@ -15,6 +15,7 @@ using Terradue.Stars.Services.Supply;
 using Terradue.Stars.Services.Supply.Carrier;
 using Terradue.Stars.Services.Supply.Destination;
 using Terradue.ServiceModel.Syndication;
+using Microsoft.Extensions.Configuration;
 
 namespace Terradue.Stars.Services.Supply
 {
@@ -43,6 +44,10 @@ namespace Terradue.Stars.Services.Supply
         public Task<IOrder> Order(IOrderable orderableRoute)
         {
             throw new NotSupportedException();
+        }
+
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
         }
     }
 }

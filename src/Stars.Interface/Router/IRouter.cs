@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface.Router
 {
-    public interface IRouter
+    public interface IRouter : IPlugin
     {
         string Label { get; }
 

@@ -6,10 +6,11 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services
 {
-    public abstract class AbstractManager<T>
+    public abstract class AbstractManager<T> where T : class, IPlugin
     {
         private readonly ILogger logger;
         private readonly IServiceProvider serviceProvider;
@@ -24,7 +25,6 @@ namespace Terradue.Stars.Services
 
         public static void RegisterConfiguredPlugins(IConfigurationSection configurationSection, ServiceCollection collection, ILogger logger, Assembly assembly)
         {
-
             foreach (var section in configurationSection.GetChildren())
             {
                 if (string.IsNullOrEmpty(section["type"]))
@@ -71,12 +71,18 @@ namespace Terradue.Stars.Services
         private static T CreateItem(Type type, IConfigurationSection configurationSection, int prio, IServiceProvider serviceProvider)
         {
 
-            if (type.GetInterface(typeof(T).FullName) == null)
+            if (!(typeof(T).IsAssignableFrom(type)))
                 return default(T);
 
-            MethodInfo createMethod = type.GetMethod("Create", BindingFlags.Public | BindingFlags.Static);
+            var plugin = Activator.CreateInstance(type);
+            T item = plugin as T;
+            item.Configure(configurationSection, serviceProvider );
 
-            return (T)createMethod.Invoke(null, new object[2] { configurationSection, serviceProvider });
+            return item;
+
+            // MethodInfo createMethod = type.GetMethod("Configure", BindingFlags.Public | BindingFlags.Static);
+
+            // return (T)createMethod.Invoke(null, new object[2] { (IConfigurationSection)configurationSection, serviceProvider });
         }
 
         public static Type GetTypeFromAssembly(string typeName, Assembly assembly)

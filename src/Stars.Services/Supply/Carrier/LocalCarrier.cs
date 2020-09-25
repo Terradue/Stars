@@ -66,5 +66,9 @@ namespace Terradue.Stars.Services.Supply.Carrier
         }
 
         protected abstract (string, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory);
+
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
+        }
     }
 }

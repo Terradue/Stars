@@ -58,5 +58,10 @@ namespace Terradue.Stars.Services.Translator
         {
             return new DefaultStacTranslator((ILogger)serviceProvider.GetService(typeof(ILogger)));
         }
+
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
+        
+        }
     }
 }

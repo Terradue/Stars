@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
@@ -114,19 +115,20 @@ namespace Terradue.Stars.Operations
                 if (!File.Exists(assemblyPath))
                     continue;
 
-                var assembly = Assembly.LoadFile(assemblyPath);
+                PluginLoadContext loadContext = new PluginLoadContext(assemblyPath, logger, AssemblyLoadContext.Default);
+                var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(assemblyPath)));
 
-                RoutersManager.RegisterConfiguredPlugins(configuration.GetSection("Routers"), collection, logger, assembly);
+                RoutersManager.RegisterConfiguredPlugins(plugin.GetSection("Routers"), collection, logger, assembly);
 
-                SupplierManager.RegisterConfiguredPlugins(configuration.GetSection("Suppliers"), collection, logger, assembly);
+                SupplierManager.RegisterConfiguredPlugins(plugin.GetSection("Suppliers"), collection, logger, assembly);
 
-                TranslatorManager.RegisterConfiguredPlugins(configuration.GetSection("Translators"), collection, logger, assembly);
+                TranslatorManager.RegisterConfiguredPlugins(plugin.GetSection("Translators"), collection, logger, assembly);
 
-                DestinationManager.RegisterConfiguredPlugins(configuration.GetSection("Destinations"), collection, logger, assembly);
+                DestinationManager.RegisterConfiguredPlugins(plugin.GetSection("Destinations"), collection, logger, assembly);
 
-                CarrierManager.RegisterConfiguredPlugins(configuration.GetSection("Carriers"), collection, logger, assembly);
+                CarrierManager.RegisterConfiguredPlugins(plugin.GetSection("Carriers"), collection, logger, assembly);
 
-                ReceiptManager.RegisterConfiguredPlugins(configuration.GetSection("Receivers"), collection, logger, assembly);
+                ReceiptManager.RegisterConfiguredPlugins(plugin.GetSection("Receivers"), collection, logger, assembly);
             }
         }
 

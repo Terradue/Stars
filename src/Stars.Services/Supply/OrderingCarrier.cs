@@ -66,5 +66,8 @@ namespace Terradue.Stars.Services.Supply
             return new OrderedDelivery(this, voucherDelivery, orderVoucher, voucherDelivery.Cost + 10000);
         }
 
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
+        }
     }
 }

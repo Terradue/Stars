@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Supply.Destination;
 
@@ -30,6 +31,11 @@ namespace Terradue.Stars.Services.Supply.Destination
                 logger.LogWarning(e.Message);
                 return false;
             }
+        }
+
+        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
+        {
+            
         }
 
         public Task<IDestination> Guide(string destination)
