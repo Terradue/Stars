@@ -28,14 +28,14 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 try
                 {
-                    new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((node as IStreamable).ReadAsString()), node.Uri));
+                    new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((node as IStreamable).ReadAsString().Result), node.Uri));
                     return true;
                 }
                 catch
                 {
                     try
                     {
-                        new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((node as IStreamable).ReadAsString()), node.Uri));
+                        new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((node as IStreamable).ReadAsString().Result), node.Uri));
                         return true;
                     }
                     catch { }

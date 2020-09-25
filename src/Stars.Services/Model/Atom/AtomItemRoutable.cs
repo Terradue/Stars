@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(this.ReadAsString()).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(this.ReadAsString().Result).Length);
 
         public bool IsCatalog => false;
 
