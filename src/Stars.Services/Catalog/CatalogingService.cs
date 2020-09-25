@@ -67,14 +67,15 @@ namespace Terradue.Stars.Services.Catalog
 
         private async Task<IRoute> RelinkAndDeliverStacNode(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDictionary<string, IAsset> assets, IDestination destination, int depth)
         {
-            if ( depth == 1) stacNode.IsRoot = true;
+            if (depth == 1) stacNode.IsRoot = true;
             var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(null, stacNode, destination);
 
             IRoute stacRoute = null;
 
             foreach (var delivery in stacDeliveries)
             {
-                if (stacNode.IsCatalog){
+                if (stacNode.IsCatalog)
+                {
                     await RelinkStacCatalog(stacNode, childrenRoutes, delivery, destination);
                 }
                 else
@@ -97,6 +98,7 @@ namespace Terradue.Stars.Services.Catalog
 
             foreach (var childRoute in childrenRoutes)
             {
+                if (childRoute == null) continue;
                 INode childNode = await childRoute.GoToNode();
                 var relativeUri = delivery.TargetUri.MakeRelativeUri(childNode.Uri);
                 logger.LogDebug("Link to {0}", relativeUri.ToString());
@@ -138,7 +140,8 @@ namespace Terradue.Stars.Services.Catalog
             StacAsset stacAsset = null;
             if (stacAssetAsset == null)
                 stacAsset = new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType, asset.ContentLength);
-            else{
+            else
+            {
                 stacAsset = stacAssetAsset.StacAsset;
                 stacAsset.Uri = relativeUri;
             }

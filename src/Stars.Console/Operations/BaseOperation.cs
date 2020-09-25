@@ -134,8 +134,11 @@ namespace Terradue.Stars.Operations
             builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true, reloadOnChange: true)
                    .AddNewtonsoftJsonFile("appsettings.json", optional: true)
                    .AddNewtonsoftJsonFile("/etc/Stars/appsettings.json", optional: true, reloadOnChange: true);
-            foreach (var yamlFilename in Directory.EnumerateFiles("/etc/Stars/conf.d", "*.json", SearchOption.TopDirectoryOnly))
-                builder.AddNewtonsoftJsonFile(yamlFilename);
+            if (Directory.Exists("/etc/Stars/conf.d"))
+            {
+                foreach (var yamlFilename in Directory.EnumerateFiles("/etc/Stars/conf.d", "*.json", SearchOption.TopDirectoryOnly))
+                    builder.AddNewtonsoftJsonFile(yamlFilename);
+            }
 
             //only add secrets in development
             if (isDevelopment)

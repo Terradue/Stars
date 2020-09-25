@@ -80,7 +80,10 @@ namespace Terradue.Stars.Operations
 
             CopyOperationState operationState = newState as CopyOperationState;
 
-            return await Stacify(operationState.LastRoute, router, newState, new object[0]);
+            if (operationState.LastRoute != null)
+                return await Stacify(operationState.LastRoute, router, newState, new object[0]);
+
+            return newState;
         }
 
 
@@ -129,13 +132,20 @@ namespace Terradue.Stars.Operations
 
             NodeInventory deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
 
-            if ( deliveryForm == null && StopOnError )
-                throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
+            if (deliveryForm == null)
+            {
+                if (StopOnError)
+                    throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
+                operationState.LastRoute = null;
+                operationState.Assets = null;
+            }
+            else
+            {
+                deliveryForm = await PostDelivery(deliveryForm);
 
-            deliveryForm = await PostDelivery(deliveryForm);
-
-            operationState.LastRoute = deliveryForm.Node;
-            operationState.Assets = deliveryForm.Assets;
+                operationState.LastRoute = deliveryForm.Node;
+                operationState.Assets = deliveryForm.Assets;
+            }
 
             return operationState;
         }
