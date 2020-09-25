@@ -93,11 +93,11 @@ namespace Terradue.Stars.Operations
             // Cataloging Task
             collection.AddTransient<CatalogingService, CatalogingService>();
 
-             // Credentials Options & Manager
+            // Credentials Options & Manager
             collection.Configure<CredentialsOptions>(co => co.Configure(Configuration.GetSection("Credentials"), logger));
             collection.AddSingleton<ICredentials, ConsoleCredentialsManager>();
             collection.AddSingleton<ConsoleUserSettings, ConsoleUserSettings>();
-            
+
         }
 
 
@@ -131,9 +131,11 @@ namespace Terradue.Stars.Operations
             // Add Configuration
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
-            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "stars.appsettings.json"), optional:true, reloadOnChange: true)
-                   .AddYamlFile("appsettings.yml", optional: true)    
-                   .AddNewtonsoftJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true, reloadOnChange: true)
+                   .AddNewtonsoftJsonFile("appsettings.json", optional: true)
+                   .AddNewtonsoftJsonFile("/etc/Stars/appsettings.json", optional: true, reloadOnChange: true);
+            foreach (var yamlFilename in Directory.EnumerateFiles("/etc/Stars/conf.d", "*.json", SearchOption.TopDirectoryOnly))
+                builder.AddNewtonsoftJsonFile(yamlFilename);
 
             //only add secrets in development
             if (isDevelopment)
