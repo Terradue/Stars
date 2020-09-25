@@ -1,7 +1,8 @@
 pipeline {
   agent any
   environment {
-      VERSION_N = getVersionFromCsProj('src/Stars.Services/Terradue.Stars.Services.csproj')
+      VERSION_LIB = getVersionFromCsProj('src/Stars.Services/Terradue.Stars.Services.csproj')
+      VERSION_TOOL = getVersionFromCsProj('src/Stars.Console/Terradue.Stars.Console.csproj')
       VERSION_TYPE = getTypeOfVersion(env.BRANCH_NAME)
       CONFIGURATION = getConfiguration(env.BRANCH_NAME)
   }
@@ -75,7 +76,7 @@ pipeline {
           def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_RPM=${starsrpm[0].name} .")
           def mType=getTypeOfVersion(env.BRANCH_NAME)
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            testsuite.push("${mType}${env.VERSION}")
+            testsuite.push("${mType}${env.VERSION_TOOL}")
             testsuite.push("${mType}latest")
           }
         }
