@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-      VERSION_N = getVersionFromCsProj('src/Stars.Services/Terradue.Stars.Service.csproj')
+      VERSION_N = getVersionFromCsProj('src/Stars.Services/Terradue.Stars.Services.csproj')
       VERSION_TYPE = getTypeOfVersion(env.BRANCH_NAME)
       CONFIGURATION = getConfiguration(env.BRANCH_NAME)
   }
