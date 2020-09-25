@@ -1,32 +1,32 @@
 {
   "files": [
     {
-      "pattern": "build\/RPMS\/noarch\/.*-SNAPSHOT\.centos\.6.*\.rpm",
+      "pattern": ".*-SNAPSHOT\.rhel\.6-x64.rpm",
       "regexp" : true,
-      "target": "yum-terradue-testing/el7/x86_64/"
+      "target": "yum-terradue-testing/el6/x86_64/"
     },
     {
-      "pattern": "build\/RPMS\/noarch\/(?!.*SNAPSHOT)\.centos\.6.*\.rpm",
+      "pattern": ".*(?!.*SNAPSHOT)\.rhel\.6-x64.rpm",
       "regexp" : true,
       "target": "yum-terradue-stable/el7/x86_64/"
     },
     {
-      "pattern": "build\/RPMS\/noarch\/.*-SNAPSHOT\.centos\.7.*\.rpm",
+      "pattern": ".*-SNAPSHOT\.centos\.7-x64.rpm",
       "regexp" : true,
       "target": "yum-terradue-testing/el7/x86_64/"
     },
     {
-      "pattern": "build\/RPMS\/noarch\/(?!.*SNAPSHOT)\.centos\.7.*\.rpm",
+      "pattern":  ".*(?!.*SNAPSHOT)\.centos\.7-x64.rpm",,
       "regexp" : true,
-      "target": "yum-terradue-stable/el8/x86_64/"
+      "target": "yum-terradue-stable/el7/x86_64/"
     },
     {
-      "pattern": "build\/RPMS\/noarch\/.*-SNAPSHOT\.centos\.8.*\.rpm",
+      "pattern": ".*-SNAPSHOT\.rhel-x64.rpm",
       "regexp" : true,
       "target": "yum-terradue-testing/el8/x86_64/"
     },
     {
-      "pattern": "build\/RPMS\/noarch\/(?!.*SNAPSHOT)\.centos\.8.*\.rpm",
+      "pattern":  ".*(?!.*SNAPSHOT)\.rhel-x64.rpm",
       "regexp" : true,
       "target": "yum-terradue-stable/el8/x86_64/"
     }
