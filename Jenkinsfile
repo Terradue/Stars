@@ -37,6 +37,7 @@ pipeline {
               sh "dotnet pack src/Stars.Services -c ${env.CONFIGURATION} --include-symbols -o publish"
               sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
             }
+            stash name: 'stars-packages' includes: 'src/Stars.Console/bin/**/*'
           }
         }
       }
@@ -48,7 +49,7 @@ pipeline {
       }
       steps {
         echo 'Deploying'
-        unstash name: 'stars-console-rpm'
+        unstash name: 'stars-packages'
         script {
             // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
             def server = Artifactory.server "repository.terradue.com"
@@ -67,7 +68,8 @@ pipeline {
     stage('Build & Publish Docker') {
       steps {
         script {
-          def starsrpm = findFiles(glob: "src/Stars.Console/**/Stars.*.centos.7-x64.rpm")
+          unstash name: 'stars-packages'
+          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.centos.7-x64.rpm")
           def descriptor = readDescriptor()
           def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_RPM=${starsrpm[0].name} .")
           def mType=getTypeOfVersion(env.BRANCH_NAME)
