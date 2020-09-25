@@ -22,6 +22,7 @@ pipeline {
         }
         stage("Make packages"){
           steps {
+            sh "dotnet tool restore"
             sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
           }
