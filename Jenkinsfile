@@ -6,50 +6,38 @@ pipeline {
       CONFIGURATION = getConfiguration(env.BRANCH_NAME)
   }
   stages {
-    stage('Build') {
+    stage('.Net Core') {
       agent { 
           docker { 
-              image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic'
+              image 'mcr.microsoft.com/dotnet/core/sdk:3.1'
           } 
       }
-      steps {
-        echo "Build .NET application"
-        sh "dotnet restore src/"
-        sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
-        stash includes: 'src/**/bin/**', name: 'terradue-stars-build'
-      }
-    }
-    stage('Package as RPM') {
-      agent { 
-        docker { 
-            image 'alectolytic/rpmbuilder:centos-7' 
-        } 
-      }
-      steps {
-        unstash name: 'terradue-stars-build'
-        script{
-          def sdf = sh(returnStdout: true, script: 'date -u +%Y%m%dT%H%M%S').trim()
-          if (env.BRANCH_NAME == 'master') 
-            env.release = env.BUILD_NUMBER
-          else
-            env.release = "SNAPSHOT" + sdf
+      stages {
+        stage("Build") {
+          steps {
+            echo "Build .NET application"
+            sh "dotnet restore src/"
+            sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
+          }
         }
-        sh 'mkdir -p $WORKSPACE/build/{BUILD,RPMS,SOURCES,SPECS,SRPMS}'
-        sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/lib/stars'
-        sh 'cp -r src/Stars.Console/bin/${CONFIGURATION}/*/* $WORKSPACE/build/SOURCES/usr/lib/stars/'
-        sh 'mkdir -p $WORKSPACE/build/SOURCES/usr/bin'
-        sh 'cp src/scripts/stars $WORKSPACE/build/SOURCES/usr/bin'
-        sh 'cp src/scripts/stars $WORKSPACE/build/SOURCES/'
-        sh 'cp stars-console.spec $WORKSPACE/build/SPECS/stars-console.spec'
-        sh 'spectool -g -R --directory $WORKSPACE/build/SOURCES $WORKSPACE/build/SPECS/stars-console.spec'
-        echo "Build package"
-        sh "rpmbuild --define \"_topdir $WORKSPACE/build\" -ba --define '_branch ${env.BRANCH_NAME}' --define '_version ${env.VERSION_N}' --define '_release ${env.release}' $WORKSPACE/build/SPECS/stars-console.spec"
-        sh "rpm -qpl $WORKSPACE/build/RPMS/*/*.rpm"
-        sh 'rm -f $WORKSPACE/build/SOURCES/stars'
-        sh "tar -cvzf stars-console-${env.VERSION_N}-${env.release}.tar.gz -C $WORKSPACE/build/SOURCES/ ."
-        archiveArtifacts artifacts: 'build/RPMS/**/*.rpm,stars-console-*.tar.gz', fingerprint: true
-        stash includes: 'stars-console-*.tar.gz', name: 'stars-console-tgz'
-        stash includes: 'build/RPMS/**/*.rpm', name: 'stars-console-rpm'
+        stage("Make packages"){
+          steps {
+            sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
+          }
+        }
+        stage('Publish NuGet') {
+          when{
+            branch 'master'
+          }
+          steps {
+            withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
+              sh "dotnet publish src/Stars.Service -c ${env.CONFIGURATION} -f netstandard2.1"
+              sh "dotnet pack src/Stars.Service -c ${env.CONFIGURATION} --include-symbols -o publish"
+              sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
+            }
+          }
+        }
       }
     }
     stage('Publish Artifacts') {
@@ -77,11 +65,10 @@ pipeline {
     }
     stage('Build & Publish Docker') {
       steps {
-        unstash name: 'stars-console-tgz'
         script {
-          def starsconsoletgz = findFiles(glob: "stars-console-*.tar.gz")
+          def starsrpm = findFiles(glob: "src/Stars.Console/**/Stars-*.centos.7-x64.rpm")
           def descriptor = readDescriptor()
-          def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_CONSOLE_TGZ=${starsconsoletgz[0].name} .")
+          def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_RPM=${starsrpm[0].name} .")
           def mType=getTypeOfVersion(env.BRANCH_NAME)
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             testsuite.push("${mType}${env.VERSION}")
@@ -89,25 +76,7 @@ pipeline {
           }
         }
       }
-    }
-    stage('Package & Publish NuGet') {
-      agent { 
-          docker { 
-              image 'mcr.microsoft.com/dotnet/core/sdk:3.1-bionic'
-          } 
-      }
-      when{
-        branch 'master'
-      }
-      steps {
-        withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
-          sh "dotnet restore src/"
-          sh "dotnet publish src/Stars.Service -c ${env.CONFIGURATION} -f netstandard2.1"
-          sh "dotnet pack src/Stars.Service -c ${env.CONFIGURATION} --include-symbols -o publish"
-          sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
-        }
-      }
-    }
+    }    
   }
 }
 
