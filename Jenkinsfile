@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-      VERSION_N = getVersionFromCsProj('src/Stars.Service/Terradue.Stars.Service.csproj')
+      VERSION_N = getVersionFromCsProj('src/Stars.Services/Terradue.Stars.Service.csproj')
       VERSION_TYPE = getTypeOfVersion(env.BRANCH_NAME)
       CONFIGURATION = getConfiguration(env.BRANCH_NAME)
   }
@@ -32,8 +32,8 @@ pipeline {
           }
           steps {
             withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
-              sh "dotnet publish src/Stars.Service -c ${env.CONFIGURATION} -f netstandard2.1"
-              sh "dotnet pack src/Stars.Service -c ${env.CONFIGURATION} --include-symbols -o publish"
+              sh "dotnet publish src/Stars.Services -c ${env.CONFIGURATION} -f netstandard2.1"
+              sh "dotnet pack src/Stars.Services -c ${env.CONFIGURATION} --include-symbols -o publish"
               sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
             }
           }
