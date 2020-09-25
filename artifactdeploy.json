@@ -16,7 +16,7 @@
       "target": "yum-terradue-testing/el7/x86_64/"
     },
     {
-      "pattern":  ".*(?!.*SNAPSHOT)\.centos\.7-x64.rpm",,
+      "pattern":  ".*(?!.*SNAPSHOT)\.centos\.7-x64.rpm",
       "regexp" : true,
       "target": "yum-terradue-stable/el7/x86_64/"
     },
