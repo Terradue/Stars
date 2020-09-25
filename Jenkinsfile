@@ -40,7 +40,7 @@ pipeline {
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*'
             stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
-            archiveArtifacts artifacts: 'src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip, fingerprint: true
+            archiveArtifacts artifacts: 'src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
           }
         }
         stage('Publish NuGet') {
