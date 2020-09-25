@@ -67,7 +67,7 @@ pipeline {
     stage('Build & Publish Docker') {
       steps {
         script {
-          def starsrpm = findFiles(glob: "src/Stars.Console/**/Stars-*.centos.7-x64.rpm")
+          def starsrpm = findFiles(glob: "src/Stars.Console/**/Stars.*.centos.7-x64.rpm")
           def descriptor = readDescriptor()
           def testsuite = docker.build(descriptor.docker_image_name, "--no-cache --build-arg STARS_RPM=${starsrpm[0].name} .")
           def mType=getTypeOfVersion(env.BRANCH_NAME)
