@@ -1,4 +1,4 @@
-FROM centos7
+FROM centos:7
 
 # MAINTAINER Emmanuel Mathot <emmanuel.mathot@terradue.com>
 
