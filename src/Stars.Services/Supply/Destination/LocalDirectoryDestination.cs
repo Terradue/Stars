@@ -16,7 +16,7 @@ namespace Terradue.Stars.Services.Supply.Destination
             this.directory = directory;
         }
 
-        public Uri Uri => new Uri(directory.FullName + "/");
+        public Uri Uri => new Uri(directory.FullName.TrimEnd('/') + "/");
 
         public static LocalDirectoryDestination Create(string destination)
         {

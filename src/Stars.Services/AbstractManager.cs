@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,7 @@ namespace Terradue.Stars.Services
             this.serviceProvider = serviceProvider;
         }
 
-        public static void RegisterConfiguredPlugins(IConfigurationSection configurationSection, ServiceCollection collection, ILogger logger)
+        public static void RegisterConfiguredPlugins(IConfigurationSection configurationSection, ServiceCollection collection, ILogger logger, Assembly assembly)
         {
 
             foreach (var section in configurationSection.GetChildren())
@@ -30,7 +31,7 @@ namespace Terradue.Stars.Services
                     continue;
                 try
                 {
-                    Type type = GetTypeFromAssemblies(section["type"]);
+                    Type type = GetTypeFromAssembly(section["type"], assembly);
                     if (type == null) throw new DllNotFoundException(string.Format("Plugin {0} for {1} not found.", section["type"], typeof(T)));
                     int prio = 50;
                     PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
@@ -78,16 +79,14 @@ namespace Terradue.Stars.Services
             return (T)createMethod.Invoke(null, new object[2] { configurationSection, serviceProvider });
         }
 
-        public static Type GetTypeFromAssemblies(string typeName)
+        public static Type GetTypeFromAssembly(string typeName, Assembly assembly)
         {
             var type = Type.GetType(typeName);
             if (type != null) return type;
-            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                type = a.GetType(typeName);
-                if (type != null)
-                    return type;
-            }
+
+            type = assembly.GetType(typeName);
+            if (type != null)
+                return type;
             return null;
         }
     }
