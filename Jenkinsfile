@@ -25,6 +25,7 @@ pipeline {
             sh "dotnet tool restore"
             sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
+            stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*'
           }
         }
         stage('Publish NuGet') {
@@ -37,7 +38,6 @@ pipeline {
               sh "dotnet pack src/Stars.Services -c ${env.CONFIGURATION} --include-symbols -o publish"
               sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
             }
-            stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*'
           }
         }
       }

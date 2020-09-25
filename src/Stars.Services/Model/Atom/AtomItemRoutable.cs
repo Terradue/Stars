@@ -19,7 +19,6 @@ namespace Terradue.Stars.Services.Model.Atom
     public class AtomItemRoutable : INode, IRoutable, IAssetsContainer, IStreamable
     {
         private SyndicationItem item;
-        private readonly ISupplier supplier;
 
         public AtomItemRoutable(SyndicationItem item)
         {

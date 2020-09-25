@@ -53,13 +53,13 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 try
                 {
-                    return new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((node as IStreamable).ReadAsString()), node.Uri));
+                    return new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (node as IStreamable).ReadAsString()), node.Uri));
                 }
                 catch
                 {
                     try
                     {
-                        return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((node as IStreamable).ReadAsString()), node.Uri));
+                        return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (node as IStreamable).ReadAsString()), node.Uri));
                     }
                     catch { }
                 }

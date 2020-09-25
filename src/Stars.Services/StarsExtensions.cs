@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services
@@ -39,9 +40,9 @@ namespace Terradue.Stars.Services
             return (array == null || array.Length == 0);
         }
 
-        public static string ReadAsString(this IStreamable streamable)
+        public async static Task<string> ReadAsString(this IStreamable streamable)
         {
-            StreamReader sr = new StreamReader(streamable.GetStreamAsync().Result);
+            StreamReader sr = new StreamReader(await streamable.GetStreamAsync());
             return sr.ReadToEnd();
         }
 
