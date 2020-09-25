@@ -23,10 +23,18 @@ pipeline {
         }
         stage("Make packages"){
           steps {
+            script {
+              def sdf = sh(returnStdout: true, script: 'date -u +%Y%m%dT%H%M%S').trim()
+              if (env.BRANCH_NAME == 'master') 
+                env.RELEASE = env.BUILD_NUMBER
+              else
+                env.RELEASE = "SNAPSHOT" + sdf
+            }
             sh "dotnet tool restore"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*'
+            stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
           }
         }
         stage('Publish NuGet') {
@@ -45,12 +53,9 @@ pipeline {
     }
     stage('Publish Artifacts') {
       agent { node { label 'artifactory' } }
-      when{
-        branch 'master2'
-      }
       steps {
         echo 'Deploying'
-        unstash name: 'stars-packages'
+        unstash name: 'stars-rpms'
         script {
             // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
             def server = Artifactory.server "repository.terradue.com"
