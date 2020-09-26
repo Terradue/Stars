@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Reflection;
+using System.Runtime.Loader;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
@@ -11,16 +14,16 @@ using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supply;
 using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Service;
-using Terradue.Stars.Service.Catalog;
-using Terradue.Stars.Service.Model.Atom;
-using Terradue.Stars.Service.Model.Stac;
-using Terradue.Stars.Service.Router;
-using Terradue.Stars.Service.Router.Translator;
-using Terradue.Stars.Service.Supply;
-using Terradue.Stars.Service.Supply.Carrier;
-using Terradue.Stars.Service.Supply.Destination;
-using Terradue.Stars.Service.Supply.Receipt;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Catalog;
+using Terradue.Stars.Services.Model.Atom;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Router.Translator;
+using Terradue.Stars.Services.Supply;
+using Terradue.Stars.Services.Supply.Carrier;
+using Terradue.Stars.Services.Supply.Destination;
+using Terradue.Stars.Services.Supply.Receipt;
 
 namespace Terradue.Stars.Operations
 {
@@ -93,27 +96,40 @@ namespace Terradue.Stars.Operations
             // Cataloging Task
             collection.AddTransient<CatalogingService, CatalogingService>();
 
-             // Credentials Options & Manager
+            // Credentials Options & Manager
             collection.Configure<CredentialsOptions>(co => co.Configure(Configuration.GetSection("Credentials"), logger));
             collection.AddSingleton<ICredentials, ConsoleCredentialsManager>();
             collection.AddSingleton<ConsoleUserSettings, ConsoleUserSettings>();
-            
+
         }
 
 
         private void LoadPlugins(ServiceCollection collection, IConfigurationRoot configuration)
         {
-            RoutersManager.RegisterConfiguredPlugins(configuration.GetSection("Routers"), collection, logger);
+            IConfigurationSection pluginSection = configuration.GetSection("Plugins");
+            foreach (var plugin in pluginSection.GetChildren())
+            {
+                if (plugin.GetSection("Assembly") == null)
+                    continue;
+                var assemblyPath = plugin.GetSection("Assembly").Value;
+                if (!File.Exists(assemblyPath))
+                    continue;
 
-            SupplierManager.RegisterConfiguredPlugins(configuration.GetSection("Suppliers"), collection, logger);
+                PluginLoadContext loadContext = new PluginLoadContext(assemblyPath, logger, AssemblyLoadContext.Default);
+                var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(assemblyPath)));
 
-            TranslatorManager.RegisterConfiguredPlugins(configuration.GetSection("Translators"), collection, logger);
+                RoutersManager.RegisterConfiguredPlugins(plugin.GetSection("Routers"), collection, logger, assembly);
 
-            DestinationManager.RegisterConfiguredPlugins(configuration.GetSection("Destinations"), collection, logger);
+                SupplierManager.RegisterConfiguredPlugins(plugin.GetSection("Suppliers"), collection, logger, assembly);
 
-            CarrierManager.RegisterConfiguredPlugins(configuration.GetSection("Carriers"), collection, logger);
+                TranslatorManager.RegisterConfiguredPlugins(plugin.GetSection("Translators"), collection, logger, assembly);
 
-            ReceiptManager.RegisterConfiguredPlugins(configuration.GetSection("Receivers"), collection, logger);
+                DestinationManager.RegisterConfiguredPlugins(plugin.GetSection("Destinations"), collection, logger, assembly);
+
+                CarrierManager.RegisterConfiguredPlugins(plugin.GetSection("Carriers"), collection, logger, assembly);
+
+                ReceiptManager.RegisterConfiguredPlugins(plugin.GetSection("Receivers"), collection, logger, assembly);
+            }
         }
 
         private ServiceCollection RegisterServices()
@@ -131,9 +147,14 @@ namespace Terradue.Stars.Operations
             // Add Configuration
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
-            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "stars.appsettings.json"), optional:true, reloadOnChange: true)
-                   .AddYamlFile("appsettings.yml", optional: true)    
-                   .AddNewtonsoftJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true, reloadOnChange: true)
+                   .AddNewtonsoftJsonFile("appsettings.json", optional: true)
+                   .AddNewtonsoftJsonFile("/etc/Stars/appsettings.json", optional: true, reloadOnChange: true);
+            if (Directory.Exists("/etc/Stars/conf.d"))
+            {
+                foreach (var yamlFilename in Directory.EnumerateFiles("/etc/Stars/conf.d", "*.json", SearchOption.TopDirectoryOnly))
+                    builder.AddNewtonsoftJsonFile(yamlFilename);
+            }
 
             //only add secrets in development
             if (isDevelopment)

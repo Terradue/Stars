@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface.Supply.Destination
 {
-    public interface IDestinationGuide
+    public interface IDestinationGuide : IPlugin
     {
         string Id { get; }
 

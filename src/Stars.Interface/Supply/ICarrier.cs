@@ -6,7 +6,7 @@ using Terradue.Stars.Interface.Supply.Destination;
 
 namespace Terradue.Stars.Interface.Supply
 {
-    public interface ICarrier
+    public interface ICarrier : IPlugin
     {
         string Id { get; }
         

@@ -12,14 +12,14 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supply;
 using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Service.Catalog;
-using Terradue.Stars.Service.Model.Stac;
-using Terradue.Stars.Service.Router;
-using Terradue.Stars.Service.Supply;
-using Terradue.Stars.Service.Supply.Carrier;
-using Terradue.Stars.Service.Supply.Destination;
-using Terradue.Stars.Service.Supply.Receipt;
-using Terradue.Stars.Service.Translator;
+using Terradue.Stars.Services.Catalog;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Supply;
+using Terradue.Stars.Services.Supply.Carrier;
+using Terradue.Stars.Services.Supply.Destination;
+using Terradue.Stars.Services.Supply.Receipt;
+using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Stars.Operations
 {
@@ -80,7 +80,10 @@ namespace Terradue.Stars.Operations
 
             CopyOperationState operationState = newState as CopyOperationState;
 
-            return await Stacify(operationState.LastRoute, router, newState, new object[0]);
+            if (operationState.LastRoute != null)
+                return await Stacify(operationState.LastRoute, router, newState, new object[0]);
+
+            return newState;
         }
 
 
@@ -129,13 +132,20 @@ namespace Terradue.Stars.Operations
 
             NodeInventory deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
 
-            if ( deliveryForm == null && StopOnError )
-                throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
+            if (deliveryForm == null)
+            {
+                if (StopOnError)
+                    throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
+                operationState.LastRoute = null;
+                operationState.Assets = null;
+            }
+            else
+            {
+                deliveryForm = await PostDelivery(deliveryForm);
 
-            deliveryForm = await PostDelivery(deliveryForm);
-
-            operationState.LastRoute = deliveryForm.Node;
-            operationState.Assets = deliveryForm.Assets;
+                operationState.LastRoute = deliveryForm.Node;
+                operationState.Assets = deliveryForm.Assets;
+            }
 
             return operationState;
         }

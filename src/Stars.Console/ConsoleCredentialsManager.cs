@@ -3,7 +3,7 @@ using System.Net;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Terradue.Stars.Service;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Operations
 {

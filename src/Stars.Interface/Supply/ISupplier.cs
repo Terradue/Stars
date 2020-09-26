@@ -5,7 +5,7 @@ using Terradue.Stars.Interface.Supply.Destination;
 
 namespace Terradue.Stars.Interface.Supply
 {
-    public interface ISupplier 
+    public interface ISupplier : IPlugin
     {
         string Id { get; }
 
