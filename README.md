@@ -4,7 +4,7 @@
 <h2 align="center">
 Spatio Temporal Asset Router Services
 <br/>
-<img src="docs/logo/Stars_logo_wide.png" height="200" />
+<img src="https://github.com/Terradue/Stars/raw/develop/docs/logo/Stars_logo.png" height="200" />
 
 </h2>
 
