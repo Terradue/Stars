@@ -23,15 +23,15 @@ namespace Terradue.Stars
             try
             {
                 mainAppAssemblyLoadContext.LoadFromAssemblyName(assemblyName);
-                logger.LogDebug("{0} already loaded", assemblyName);
                 return null;
             }
-            catch { }
-
-            string assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
-            if (assemblyPath != null)
+            catch (Exception)
             {
-                return LoadFromAssemblyPath(assemblyPath);
+                string assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+                if (assemblyPath != null)
+                {
+                    return LoadFromAssemblyPath(assemblyPath);
+                }
             }
 
             return null;
