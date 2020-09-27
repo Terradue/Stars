@@ -4,7 +4,7 @@
 <h2 align="center">
 Spatio Temporal Asset Router Services
 <br/>
-<img src="https://github.com/Terradue/Stars/raw/develop/docs/logo/Stars_logo.png" height="200" />
+<img src="docs/logo/Stars_logo.png" height="200" />
 
 </h2>
 
@@ -41,4 +41,17 @@ All the services runs around the [principle](#Principles) of navigating inside a
 ***
 
 ## Services Principles
+
+<div hidden>
+```
+@startuml firstDiagram
+
+Alice -> Bob: Hello
+Bob -> Alice: Hi!
+		
+@enduml
+```
+</div>
+
+![](docs/diagrams/firstDiagram.svg)
 
