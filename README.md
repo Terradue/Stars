@@ -18,7 +18,7 @@ Spatio Temporal Asset Router Services
 </h3>
 
 <h3 align="center">
-  <a href="#Services-Principles">Principles</a>
+  <a href="#Services">Services</a>
   <span> · </span>
   <a href="#Getting-Started">Getting started</a>
   <span> · </span>
@@ -29,29 +29,25 @@ Spatio Temporal Asset Router Services
 
 **Stars** is a set of services for working with Spatio Temporal Catalog such as [STAC](https://stacspec.org) but not only.
 
-All the services runs around the [principle](#Principles) of navigating inside a Catalog called "**Routing**". When routing in a catalog, the programmer can use other services
+All [services are built around the **Catalog**](#Services) :
 
-* **Supplying** the *assets* of the catalog. E.g. the Copernicus datasets from the [DIAS](https://www.copernicus.eu/en/access-data/dias).
-* **Carrying** the resources from a source to a **Destination**. For instance downloading the *catalogs*, *items* and *assets* locally.
-* **Translating** the catalogs from a *data model* or an *encoding* to another. *Atom feeds* from an *OpenSearch Catalog* can be transformed to *STAC JSON Catalog*.
-* **Processing** the *assets* to enhance their availibility. Archive assets can be extracted and metadata *harvested* for associating useful information with the data.
-* **Cataloging** the *Spatio Temporal Assets* into the standard specifications [STAC](https://stacspec.org)
-
+* **Router** is a service for navigating a catalog.
+* **Supplier** service enables Data Provider for the *assets* of the catalog. E.g. Copernicus datasets providers like [DIAS](https://www.copernicus.eu/en/access-data/dias) can be implemented as a supllier and managed in this service.
+* **Harvester** allows the assets to be processed by various modules for extracting additional information.
+* **Processing** the *assets* to enhance their availibility.
+* **Coordinator** for linking the different resources in a catalog. For instance, by gathering items in a collection.
 
 ***
 
-## Services Principles
+## Services
 
-<div hidden>
-```
-@startuml firstDiagram
+**Stars** is basically a collection of services implemented in .Net that can be used to implement command line tools, web services or any programmtic logic arounf Spatio Temporal Catalogs.
+They can be combined togheter to perform simples operations like listing a catalog to complex processing of assets.
 
-Alice -> Bob: Hello
-Bob -> Alice: Hi!
-		
-@enduml
-```
-</div>
+<IMG SRC="docs/diagrams/servicesStarsConcepts.svg" ALIGN=”left” HSPACE=”50” VSPACE=”50” height="400"/> 
 
-![](docs/diagrams/firstDiagram.svg)
+### Router
 
+ This is a recursive function for trigger functions during the navigation of a Catalog. Basically it reads a catalog as a tree and crawl in every node of the catalog allowing the programmer to set functions to be executed when it meets a new node, before and after branching to the node children or when the parser comes to a leaf node.
+
+ ### 
