@@ -53,23 +53,49 @@ They can be combined togheter to perform simples operations like listing a catal
 This is a recursive function for trigger functions during the navigation of a Catalog. Basically it reads a catalog as a tree and crawl in every node of the catalog allowing the programmer to set functions to be executed when it meets a new node, before and after branching to the node children or when the parser comes to a leaf node.
 This service uses the plugins manager to find the appropriate router for a catalog data model and encoding.
 
-> :mag: a Router plugin implements readers for various catalog data model and encoding. [Stars CLI](#Stars-CLI) implements natively
+> :mag: plugins implementing routers may reader various catalog data model and encoding. [Stars Tools](#Stars-Tools) implements natively
 > * Atom feed from an [OpenSearch](https://github.com/dewitt/opensearch) results
 > * [STAC](https://stacspec.org) ([catalog](https://github.com/radiantearth/stac-spec/tree/master/catalog-spec), [collection](https://github.com/radiantearth/stac-spec/tree/master/collection-spec), [item](https://github.com/radiantearth/stac-spec/tree/master/catalog-spec))
 
 ### Supplier
 
-Service managing a collection of suppliers for providing with the assets. From a resource description (e.g. uid, AOI, time...) it requests them for the data availability and organize the delivery of the assets using **Carriers** (e.g. HTTP/FTP/S3 download). It also allows to make orders to suppliers that offers offline datasets. Suppliers and Carriers in this service are managed as configurable plugins.
+Service managing a collection of suppliers for providing with the assets. From a resource description (e.g. uid, AOI, time...) it requests them for the data availability and organize the *delivery* of the assets using **Carriers** (e.g. HTTP/FTP/S3 download). It also allows to make **orders** to suppliers that offers offline datasets. Suppliers and Carriers in this service are managed as configurable plugins.
 
-    E.g. Copernicus datasets providers like [DIAS](https://www.copernicus.eu/en/access-data/dias) can be implemented as a supllier and managed in this service.
+> :satellite: E.g. Copernicus datasets providers like [DIAS](https://www.copernicus.eu/en/access-data/dias) can be implemented as a supllier and managed in this service.
 
 ### Harvester
 
 Collection of executors that perform a scan of the data to extract useful infromation that can be added to the catalog. Executors are managed as configurable plugins.
 
-
+> :package: Harvester Service includes an archive extractor by default
 
 ### Processing
 
-An abstracted service enabling a trigger for procesing *items* of a catalog 
+An abstracted service enabling a trigger for procesing *items* of a catalog.
 
+### Coordinator
+
+The coordination service links the catalogs and their items.
+
+> :earth_africa: By default the coordinator creates a STAC catalog with the items and their assets.
+
+## Getting Started
+
+### Stars Command Line Tools
+
+Stars Services are used to provide common operations with catalogs. The currently implemented ones are:
+
+* **List** crawls the tree of an input catalog
+* **Copy** replicates the tree of items and assets from the tree of an input catalog
+
+## Documentation
+
+Documentation will come soon
+
+## Developing
+
+To ensure development libraries are installed, restore all dependencies
+
+```
+> dotnet restore src
+```
