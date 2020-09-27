@@ -1,0 +1,47 @@
+@startuml servicesPrinciplesStars
+
+hide stereotype
+
+skinparam usecase {
+
+    BackgroundColor<< Catalog >> SlateGrey
+    BorderColor<< Catalog >> SlateGrey
+    FontSize<< Catalog >>  32
+
+    BackgroundColor<< Supplier >> Crimson
+    BorderColor<< Supplier >> Crimson
+
+    BackgroundColor<< Harvester >> LimeGreen
+    BorderColor<< Harvester >> LimeGreen
+
+    BackgroundColor<< Coordinator >> Khaki
+    BorderColor<< Coordinator >> Khaki
+
+    BackgroundColor<< Processing >> Orchid
+    BorderColor<< Processing >> Orchid
+
+    BackgroundColor<< Router >> DodgerBlue
+    BorderColor<< Router >> DodgerBlue
+
+    FontColor White
+    FontName Verdana
+    FontStyle Bold
+    FontSize 24
+
+    shadowing false
+
+    ArrowColor CadetBlue
+    ArrowThickness 6
+
+}
+
+(Router) <<Router>> as router
+(Catalog) <<Catalog>> as catalog
+(Supplier) <<Supplier>> as supplier
+(Harvester) <<Harvester>> as harvester
+(Processing) <<Processing>> as processing
+(Coordinator) <<Coordinator>> as coordinator
+
+
+
+@enduml

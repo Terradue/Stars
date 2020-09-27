@@ -21,6 +21,16 @@
       "target": "yum-terradue-stable/el7/x86_64/"
     },
     {
+      "pattern": ".*-SNAPSHOT\.centos\.7-x64.rpm",
+      "regexp" : true,
+      "target": "yum-ciop-testing/el7/x86_64/"
+    },
+    {
+      "pattern":  ".*(?!.*SNAPSHOT)\.centos\.7-x64.rpm",
+      "regexp" : true,
+      "target": "yum-ciop-stable/el7/x86_64/"
+    },
+    {
       "pattern": ".*-SNAPSHOT\.rhel-x64.rpm",
       "regexp" : true,
       "target": "yum-terradue-testing/el8/x86_64/"
