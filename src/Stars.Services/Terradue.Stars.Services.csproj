@@ -4,7 +4,7 @@
     <Title>Terradue.Stars</Title>
     <Description>Stars is a set of services for working with Spatio Temporal Catalog such as STAC but not only</Description>
     <Version>0.1.4</Version>
-    <AssemblyName>Terradue.Stars</AssemblyName>
+    <AssemblyName>Terradue.Stars.Services</AssemblyName>
     <PackageId>Terradue.Stars</PackageId>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageTags>STAC;OpenSearch;Terradue;Geo;Json</PackageTags>
