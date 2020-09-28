@@ -1,5 +1,6 @@
 {
     "vssolution.altSolutionFolders": [
         "src"
-    ]
+    ],
+    "omnisharp.disableMSBuildDiagnosticWarning": true
 }
