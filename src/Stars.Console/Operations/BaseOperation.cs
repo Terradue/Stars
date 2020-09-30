@@ -20,10 +20,9 @@ using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Router.Translator;
-using Terradue.Stars.Services.Supply;
-using Terradue.Stars.Services.Supply.Carrier;
-using Terradue.Stars.Services.Supply.Destination;
-using Terradue.Stars.Services.Supply.Receipt;
+using Terradue.Stars.Services.Processing;
+using Terradue.Stars.Services.Processing.Carrier;
+using Terradue.Stars.Services.Processing.Destination;
 
 namespace Terradue.Stars.Operations
 {
@@ -94,7 +93,7 @@ namespace Terradue.Stars.Operations
             // Supplying Task
             collection.AddTransient<SupplyService, SupplyService>();
             // Cataloging Task
-            collection.AddTransient<CatalogingService, CatalogingService>();
+            collection.AddTransient<CoordinatorService, CoordinatorService>();
 
             // Credentials Options & Manager
             collection.Configure<CredentialsOptions>(co => co.Configure(Configuration.GetSection("Credentials"), logger));
@@ -128,7 +127,7 @@ namespace Terradue.Stars.Operations
 
                 CarrierManager.RegisterConfiguredPlugins(plugin.GetSection("Carriers"), collection, logger, assembly);
 
-                ReceiptManager.RegisterConfiguredPlugins(plugin.GetSection("Receivers"), collection, logger, assembly);
+                ProcessingManager.RegisterConfiguredPlugins(plugin.GetSection("Processings"), collection, logger, assembly);
             }
         }
 
@@ -182,7 +181,7 @@ namespace Terradue.Stars.Operations
             collection.AddSingleton<DestinationManager, DestinationManager>();
             collection.AddSingleton<CarrierManager, CarrierManager>();
             collection.AddSingleton<TranslatorManager, TranslatorManager>();
-            collection.AddSingleton<ReceiptManager, ReceiptManager>();
+            collection.AddSingleton<ProcessingManager, ProcessingManager>();
 
             // Registers services specific to operation
             RegisterOperationServices(collection);

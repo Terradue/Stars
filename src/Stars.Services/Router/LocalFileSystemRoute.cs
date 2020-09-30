@@ -4,7 +4,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Services.Supply.Destination;
+using Terradue.Stars.Services.Processing.Destination;
 
 namespace Terradue.Stars.Services.Router
 {

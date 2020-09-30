@@ -9,7 +9,7 @@ using Stac.Item;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supply;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supply;
+using Terradue.Stars.Services.Processing;
 using Terradue.ServiceModel.Syndication;
 using Microsoft.Extensions.Configuration;
 
