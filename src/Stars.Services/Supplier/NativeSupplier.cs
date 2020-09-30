@@ -1,23 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using System.Xml;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Stac.Catalog;
-using Stac.Item;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply;
-using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Processing.Carrier;
-using Terradue.Stars.Services.Processing.Destination;
-using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Supplier.Carrier;
 using Microsoft.Extensions.Configuration;
 
-namespace Terradue.Stars.Services.Processing
+namespace Terradue.Stars.Services.Supplier
 {
     [PluginPriority(10)]
     public class NativeSupplier : ISupplier
@@ -31,12 +20,12 @@ namespace Terradue.Stars.Services.Processing
 
         public string Id => "Native";
 
-        public Task<INode> SearchFor(INode resource)
+        public Task<IRoute> SearchFor(IRoute route)
         {
-            return Task.FromResult<INode>(resource);
+            return Task.FromResult<IRoute>(route);
         }
 
-        public IDeliveryQuotation QuoteDelivery(INode resource, IDestination destination)
+        public IDeliveryQuotation QuoteDelivery(IRoute resource, IDestination destination)
         {
             return carriersManager.QuoteDeliveryFromCarriers((this, resource), destination);
         }

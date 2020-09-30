@@ -35,11 +35,6 @@ namespace Terradue.Stars.Services.Router
             return request;
         }
 
-        public async Task<INode> GoToNode()
-        {
-            return await GetResponse().ContinueWith(wr => new WebNode(wr.Result));
-        }
-
         public async Task<Stream> GetStreamAsync()
         {
             return (await GetResponse()).GetResponseStream();
@@ -47,25 +42,12 @@ namespace Terradue.Stars.Services.Router
 
         public async Task<WebResponse> GetResponse()
         {
-            // try
-            // {
-                return await request.GetResponseAsync();
-            // }
-            // catch (WebException e)
-            // {
-            //     var httpResponse = e.Response as HttpWebResponse;
-            //     if ( httpResponse != null && httpResponse.StatusCode == HttpStatusCode.Unauthorized && CredentialsManager != null){
-                    
-            //     }
-            // }
-            // return null;
+            return await request.CloneRequest(request.RequestUri).GetResponseAsync();
         }
 
         public Uri Uri => request.RequestUri;
 
-        public ContentType ContentType => null;
-
-        public bool CanRead => true;
+        public ContentType ContentType => new ContentType("application/octet-stream");
 
         public ResourceType ResourceType => ResourceType.Unknown;
 

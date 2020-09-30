@@ -9,12 +9,12 @@ using Stac;
 using Stac.Catalog;
 using Stac.Item;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public abstract class StacNode : IRoutable, INode, IStreamable
+    public abstract class StacNode : IRoute, IStreamable
     {
         protected IStacObject stacObject;
         protected ContentType contentType;
@@ -63,10 +63,6 @@ namespace Terradue.Stars.Services.Model.Stac
         }
 
 
-        public Task<INode> GoToNode()
-        {
-            return Task.FromResult((INode)this);
-        }
 
         public IStacObject StacObject => stacObject;
 

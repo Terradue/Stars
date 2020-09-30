@@ -12,7 +12,5 @@ namespace Terradue.Stars.Interface.Router
         ResourceType ResourceType { get; }
         ulong ContentLength { get; }
         
-
-        Task<INode> GoToNode();
     }
 }

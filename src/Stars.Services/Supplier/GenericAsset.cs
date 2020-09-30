@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
 
-namespace Terradue.Stars.Services.Processing
+namespace Terradue.Stars.Services.Supplier
 {
     internal class GenericAsset : IAsset
     {
@@ -31,11 +30,6 @@ namespace Terradue.Stars.Services.Processing
         public ResourceType ResourceType => ResourceType.Asset;
 
         public ulong ContentLength => route.ContentLength;
-
-        public async Task<INode> GoToNode()
-        {
-            return await route.GoToNode();
-        }
 
         public IStreamable GetStreamable()
         {

@@ -5,13 +5,13 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply;
-using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Interface.Supply.Asset;
-using Terradue.Stars.Services.Processing.Destination;
 
-namespace Terradue.Stars.Services.Processing.Carrier
+using Terradue.Stars.Services.Supplier.Destination;
+
+namespace Terradue.Stars.Services.Supplier.Carrier
 {
     public class CarrierManager : AbstractManager<ICarrier>
     {
@@ -67,7 +67,7 @@ namespace Terradue.Stars.Services.Processing.Carrier
         /// Make a set of quotation for each supplier
         /// </summary>
         /// <returns></returns>
-        public IDeliveryQuotation QuoteDeliveryFromCarriers((ISupplier, INode) supply, IDestination destination)
+        public IDeliveryQuotation QuoteDeliveryFromCarriers((ISupplier, IRoute) supply, IDestination destination)
         {
             List<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = new List<(ISupplier, DeliveryQuotation)>();
 

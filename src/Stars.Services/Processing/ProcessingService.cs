@@ -11,15 +11,16 @@ using Stac.Catalog;
 using Stac.Item;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply;
-using Terradue.Stars.Interface.Supply.Asset;
-using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Supplier;
+
+using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Router.Translator;
+using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Processing.Carrier;
-using Terradue.Stars.Services.Processing.Destination;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -36,15 +37,15 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<NodeInventory> ExecuteAsync(NodeInventory nodeInventory)
+        public async Task<IRoute> ExecuteAsync(IRoute route)
         {
-            NodeInventory newNodeInventory = nodeInventory;
+            IRoute newRoute = route;
             foreach (var processing in processingManager.Plugins)
             {
-                if (!processing.CanProcess(nodeInventory)) continue;
-                newNodeInventory = await processing.Process(nodeInventory);
+                if (!processing.CanProcess(route)) continue;
+                newRoute = await processing.Process(route);
             }
-            return newNodeInventory;
+            return newRoute;
         }
 
 

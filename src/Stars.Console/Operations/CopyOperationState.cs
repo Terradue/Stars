@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
-using Terradue.Stars.Interface.Supply.Destination;
+
+using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Operations
 {
@@ -16,6 +16,5 @@ namespace Terradue.Stars.Operations
         public int Depth { get; internal set; }
         public IDestination Destination { get; internal set; }
         public IRoute LastRoute { get; internal set; }
-        public IDictionary<string, IAsset> Assets { get; internal set; }
     }
 }

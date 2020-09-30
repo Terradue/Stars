@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Supplier.Destination;
 
-namespace Terradue.Stars.Services.Processing.Destination
+namespace Terradue.Stars.Services.Supplier.Destination
 {
     public class LocalFileSystemDestinationGuide : IDestinationGuide
     {
@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Processing.Destination
         public bool CanGuide(string destination)
         {
             try {
-                FileAttributes fa = File.GetAttributes(destination.Replace("file://", "").TrimEnd('/'));
+                FileAttributes fa = File.GetAttributes(destination.Replace("file:", "").TrimEnd('/'));
                 return (fa & FileAttributes.Directory) == FileAttributes.Directory;
             }
             catch (Exception e) {
@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Processing.Destination
 
         public Task<IDestination> Guide(string destination)
         {
-            FileAttributes fa = File.GetAttributes(destination.Replace("file://", "").TrimEnd('/'));
+            FileAttributes fa = File.GetAttributes(destination.Replace("file:", "").TrimEnd('/'));
             if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
                 throw new InvalidOperationException(string.Format("{0} is not a directory", destination));
             return Task.FromResult((IDestination)LocalDirectoryDestination.Create(destination));

@@ -68,6 +68,8 @@ namespace Terradue.Stars.Services
             }
         }
 
+        public static Dictionary<Type, int> PluginsPriority { get => pluginsPriority; }
+
         private static T CreateItem(Type type, IConfigurationSection configurationSection, int prio, IServiceProvider serviceProvider)
         {
 
@@ -76,7 +78,7 @@ namespace Terradue.Stars.Services
 
             var plugin = Activator.CreateInstance(type);
             T item = plugin as T;
-            item.Configure(configurationSection, serviceProvider );
+            item.Configure(configurationSection, serviceProvider);
 
             return item;
 

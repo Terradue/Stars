@@ -5,10 +5,9 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply;
-using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Supplier;
 
-namespace Terradue.Stars.Services.Processing
+namespace Terradue.Stars.Services.Supplier
 {
     [JsonObject]
     public class OrderVoucher : IRoute, IStreamable, IOrder, IAsset
@@ -66,10 +65,6 @@ namespace Terradue.Stars.Services.Processing
             });
         }
 
-        public Task<INode> GoToNode()
-        {
-            throw new NotImplementedException();
-        }
 
         internal async Task<IOrder> Order()
         {

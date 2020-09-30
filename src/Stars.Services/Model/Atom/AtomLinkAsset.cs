@@ -4,7 +4,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
+
 using Terradue.Stars.Services.Router;
 using Terradue.ServiceModel.Syndication;
 
@@ -53,9 +53,5 @@ namespace Terradue.Stars.Services.Model.Atom
             return WebRoute.Create(Uri);
         }
 
-        public async Task<INode> GoToNode()
-        {
-            return await WebRoute.Create(Uri).GoToNode();
-        }
     }
 }

@@ -69,22 +69,5 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ulong ContentLength => link.Length;
 
-        public async Task<INode> GoToNode()
-        {
-            switch (link.RelationshipType)
-            {
-                case "self":
-                    return StacNode.Create(stacParentObject) as INode;
-                case "root":
-                case "parent":
-                    throw new NotImplementedException();
-                case "child":
-                    return StacNode.Create(await (StacCatalog.LoadStacLink(link)));
-                case "item":
-                    return StacNode.Create(await (StacItem.LoadStacLink(link)));
-                default:
-                    return null;
-            }
-        }
     }
 }

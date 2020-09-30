@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
+
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +26,7 @@ namespace Terradue.Stars.Operations
         [Option("-sa|--skip-assets", "Do not list assets", CommandOptionType.NoValue)]
         public bool SkippAssets { get; set; }
 
-        private RoutingService routingService;
+        private RouterService routingService;
         private int recursivity = 1;
         private string[] inputs = new string[0];
 
@@ -37,14 +37,14 @@ namespace Terradue.Stars.Operations
 
         private void InitRoutingTask()
         {
-            routingService.Parameters = new RoutingTaskParameters()
+            routingService.Parameters = new RouterServiceParameters()
             {
                 Recursivity = Recursivity,
                 SkipAssets = SkippAssets
             };
-            routingService.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
-            routingService.OnBranchingNode((node, router, state) => PrintBranchingNode(node, router, state));
-            routingService.OnLeafNode((node, router, state) => PrintLeafNode(node, router, state));
+            routingService.OnRoutingException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
+            routingService.OnBeforeBranching((node, router, state) => PrintBranchingNode(node, router, state));
+            routingService.OnItem((node, router, state) => PrintItem(node, router, state));
             routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
         }
 
@@ -73,7 +73,7 @@ namespace Terradue.Stars.Operations
             return 1;
         }
 
-        private async Task<object> PrintLeafNode(INode node, IRouter router, object state)
+        private async Task<object> PrintItem(IItem node, IRouter router, object state)
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
@@ -81,7 +81,7 @@ namespace Terradue.Stars.Operations
             return state;
         }
 
-        private async Task<object> PrintBranchingNode(INode node, IRouter router, object state)
+        private async Task<object> PrintBranchingNode(ICatalog node, IRouter router, object state)
         {
             console.ForegroundColor = GetColorFromType(node.ResourceType);
             // Print the information about the resource
@@ -90,7 +90,7 @@ namespace Terradue.Stars.Operations
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
             await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
-            await PrintAssets(node, router, operationState.Prefix);
+            // await PrintAssets(node, router, operationState.Prefix);
 
             return state;
         }
@@ -112,12 +112,12 @@ namespace Terradue.Stars.Operations
         {
           
 
-            this.routingService = ServiceProvider.GetService<RoutingService>();
+            this.routingService = ServiceProvider.GetService<RouterService>();
             InitRoutingTask();
             await routingService.ExecuteAsync(Inputs);
         }
 
-        private async Task PrintAssets(INode resource, IRouter router, string prefix)
+        private async Task PrintAssets(IItem resource, IRouter router, string prefix)
         {
             // List assets
             if (!SkippAssets && resource is IAssetsContainer)

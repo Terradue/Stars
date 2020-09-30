@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
+
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -23,10 +23,5 @@ namespace Terradue.Stars.Services.Processing
         public ResourceType ResourceType => ResourceType.Unknown;
 
         public ulong ContentLength => 0;
-
-        public Task<INode> GoToNode()
-        {
-            throw new NotSupportedException();
-        }
     }
 }

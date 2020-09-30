@@ -1,26 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Router.Translator;
-using Terradue.Stars.Interface.Supply;
-using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Services.Model.Atom;
-using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Operations;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Processing.Destination;
-using Terradue.Stars.Services.Router.Translator;
-using Terradue.Stars.Interface;
 using System.ComponentModel.DataAnnotations;
-using McMaster.Extensions.CommandLineUtils.Conventions;
-using System.Threading;
 
 namespace Terradue.Stars
 {

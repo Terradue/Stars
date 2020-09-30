@@ -24,34 +24,55 @@ namespace Terradue.Stars.Services.Translator
             this.logger = logger;
         }
 
-        public Task<T> Translate<T>(INode node) where T : INode
+        public Task<T> Translate<T>(IRoute route) where T : IRoute
         {
-            if (!(node is IRoutable)) return Task.FromResult<T>(default(T));
-            if (node.IsCatalog)
+            ICatalog catalogRoute = route as ICatalog;
+            if (catalogRoute != null)
             {
-                return Task.FromResult<T>((T)CreateStacCatalogNode(node));
+                return Task.FromResult<T>((T)CreateStacCatalogNode(catalogRoute));
             }
-            else
+            IItem itemRoute = route as IItem;
+            if (itemRoute != null)
             {
-                return Task.FromResult<T>((T)CreateStacItemNode(node));
+                return Task.FromResult<T>((T)CreateStacItemNode(itemRoute));
             }
+            return Task.FromResult<T>(default(T));
         }
 
-        private INode CreateStacCatalogNode(INode node)
+        private IRoute CreateStacCatalogNode(ICatalog node)
         {
             StacCatalog catalog = new StacCatalog(node.Id, node.Label, CreateStacLinks(node));
             return new StacCatalogNode(catalog);
         }
 
-        private IEnumerable<StacLink> CreateStacLinks(INode node)
+        private IEnumerable<StacLink> CreateStacLinks(ICatalog node)
         {
             return null;
         }
 
-        private INode CreateStacItemNode(INode node)
+        private IItem CreateStacItemNode(IItem node)
         {
-            StacItem stacItem = new StacItem(null, new Dictionary<string, object>(), node.Id);
+            StacItem stacItem = new StacItem(node.Geometry, new Dictionary<string, object>(), node.Id);
+            foreach(var kvp in node.GetAssets()){
+                var relativeUri = node.Uri.MakeRelativeUri(kvp.Value.Uri);
+                stacItem.Assets.Add(kvp.Key, CreateStacAsset(kvp.Value, relativeUri)); 
+            }
             return new StacItemNode(stacItem);
+        }
+
+        private StacAsset CreateStacAsset(IAsset asset, Uri relativeUri)
+        {
+            StacAssetAsset stacAssetAsset = asset as StacAssetAsset;
+            StacAsset stacAsset = null;
+            if (stacAssetAsset == null)
+                stacAsset = new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType, asset.ContentLength);
+            else
+            {
+                stacAsset = stacAssetAsset.StacAsset;
+                stacAsset.Uri = relativeUri;
+            }
+
+            return stacAsset;
         }
 
         public static DefaultStacTranslator Create(IConfigurationSection configurationSection, IServiceProvider serviceProvider)

@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Terradue.Stars</Title>
     <Description>Stars is a set of services for working with Spatio Temporal Catalog such as STAC but not only</Description>
-    <Version>0.1.7</Version>
+    <Version>0.2.0</Version>
     <AssemblyName>Terradue.Stars.Services</AssemblyName>
     <PackageId>Terradue.Stars</PackageId>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -21,15 +21,21 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.8" />
     <PackageReference Include="Terradue.ServiceModel.Syndication" Version="1.1.1" />
+    <PackageReference Include="Terradue.ServiceModel.Ogc" Version="2.2.0"/>
     <PackageReference Include="SharpZipLib" Version="1.2.0" />
-    <PackageReference Include="DotNetStac" Version="0.4.0" />
+    <PackageReference Include="DotNetStac" Version="0.4.1" />
     
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../Stars.Interface/Terradue.Stars.Interface.csproj">
-      <PrivateAssets>All</PrivateAssets>
+      <!-- <PrivateAssets>All</PrivateAssets> -->
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>Terradue.Stars.Interface.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="../Stars.Geometry/Terradue.Stars.Geometry.csproj">
+      <!-- <PrivateAssets>All</PrivateAssets> -->
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>Terradue.Stars.Geometry.dll</IncludeAssets>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

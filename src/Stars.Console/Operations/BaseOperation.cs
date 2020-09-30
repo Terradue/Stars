@@ -12,17 +12,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply;
-using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Catalog;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Router.Translator;
+using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Processing.Carrier;
-using Terradue.Stars.Services.Processing.Destination;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Operations
 {
@@ -85,14 +86,21 @@ namespace Terradue.Stars.Operations
             collection.Configure<GlobalOptions>(configuration.GetSection("Global"));
             // Web Download Carrier
             collection.AddTransient<ICarrier, LocalWebDownloadCarrier>();
+            CarrierManager.PluginsPriority.Add(typeof(LocalWebDownloadCarrier), 100);
             // Streaming Carrier
             collection.AddTransient<ICarrier, LocalStreamingCarrier>();
+            CarrierManager.PluginsPriority.Add(typeof(LocalStreamingCarrier), 75);
+            // Native Carrier
+            collection.AddTransient<ICarrier, NativeCarrier>();
+            CarrierManager.PluginsPriority.Add(typeof(NativeCarrier), 10000);
 
-            // Routing Task
-            collection.AddTransient<RoutingService, RoutingService>();
-            // Supplying Task
-            collection.AddTransient<SupplyService, SupplyService>();
-            // Cataloging Task
+            // Routing Service
+            collection.AddTransient<RouterService, RouterService>();
+            // Supplying Service
+            collection.AddTransient<SupplierService, SupplierService>();
+            // Processing Service
+            collection.AddTransient<ProcessingService, ProcessingService>();
+            // Coordinator Service
             collection.AddTransient<CoordinatorService, CoordinatorService>();
 
             // Credentials Options & Manager

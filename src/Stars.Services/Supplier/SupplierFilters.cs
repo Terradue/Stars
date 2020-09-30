@@ -1,4 +1,4 @@
-namespace Terradue.Stars.Services.Processing
+namespace Terradue.Stars.Services.Supplier
 {
     public class SupplierFilters
     {

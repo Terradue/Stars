@@ -12,7 +12,7 @@ using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public class StacCatalogNode : StacNode, IRoutable
+    public class StacCatalogNode : StacNode, ICatalog
     {
         public StacCatalogNode(IStacCatalog stacCatalog) : base(stacCatalog)
         {
