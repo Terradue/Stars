@@ -6,7 +6,6 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -45,10 +44,6 @@ namespace Terradue.Stars.Services.Processing
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(entry.Name) };
 
-        public Task<INode> GoToNode()
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<Stream> GetStreamAsync()
         {

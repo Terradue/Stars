@@ -5,10 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Router;
 
-namespace Terradue.Stars.Services.Processing
+namespace Terradue.Stars.Services.Supplier
 {
     public class SupplierManager : AbstractManager<ISupplier>
     {

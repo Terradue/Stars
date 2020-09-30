@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Services.Router;
 using System.Net.Http;
-using Terradue.Stars.Services.Processing.Destination;
-using Terradue.Stars.Interface.Supply;
+using Terradue.Stars.Services.Supplier.Destination;
+using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Supplier.Destination;
 using Microsoft.Extensions.Options;
 
-namespace Terradue.Stars.Services.Processing.Carrier
+namespace Terradue.Stars.Services.Supplier.Carrier
 {
     public abstract class LocalCarrier : ICarrier
     {

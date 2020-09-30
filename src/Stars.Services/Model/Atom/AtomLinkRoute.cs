@@ -51,17 +51,5 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public ulong ContentLength => Convert.ToUInt64(link.Length);
 
-        public Task<INode> GoToNode()
-        {
-            switch (link.RelationshipType)
-            {
-                case "self":
-                    return Task<INode>.FromResult((INode)new AtomItemRoutable(item));
-                case "enclosure":
-                case "icon":
-                default:
-                    return WebRoute.Create(link.Uri).GoToNode();
-            }
-        }
     }
 }

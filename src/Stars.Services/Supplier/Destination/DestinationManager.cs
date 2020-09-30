@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Supplier.Destination;
 
-namespace Terradue.Stars.Services.Processing.Destination
+namespace Terradue.Stars.Services.Supplier.Destination
 {
     public class DestinationManager : AbstractManager<IDestinationGuide>
     {

@@ -10,15 +10,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
-using Terradue.Stars.Interface.Supply;
-using Terradue.Stars.Interface.Supply.Destination;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Catalog;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Processing.Carrier;
-using Terradue.Stars.Services.Processing.Destination;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Translator;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Interface.Processing;
 
 namespace Terradue.Stars.Operations
 {
@@ -48,7 +50,7 @@ namespace Terradue.Stars.Operations
         public bool StopOnError { get; set; } = false;
 
 
-        private RoutingService routingTask;
+        private RouterService routingTask;
         private DestinationManager destinationManager;
         private CarrierManager carrierManager;
         private ProcessingManager receiptManager;
@@ -61,19 +63,19 @@ namespace Terradue.Stars.Operations
         }
         private void InitRoutingTask()
         {
-            routingTask.Parameters = new RoutingTaskParameters()
+            routingTask.Parameters = new RouterServiceParameters()
             {
                 Recursivity = Recursivity,
                 SkipAssets = SkippAssets
             };
             // routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
-            routingTask.OnBranchingNode((node, router, state) => CopyNode(node, router, state));
-            routingTask.OnLeafNode((node, router, state) => CopyLeafNode(node, router, state));
+            routingTask.OnBeforeBranching((node, router, state) => CopyNode(node, router, state));
+            routingTask.OnItem((node, router, state) => CopyItem(node, router, state));
             routingTask.OnBranching(async (parentRoute, route, siblings, state) => await PrepareNewRoute(parentRoute, route, siblings, state));
             routingTask.OnAfterBranching(async (parentRoute, router, parentState, subStates) => await Stacify(parentRoute, router, parentState, subStates));
         }
 
-        private async Task<object> CopyLeafNode(INode node, IRouter router, object state)
+        private async Task<object> CopyItem(IItem node, IRouter router, object state)
         {
             var newState = await CopyNode(node, router, state);
 
@@ -92,7 +94,7 @@ namespace Terradue.Stars.Operations
 
             CoordinatorService catalogingTask = ServiceProvider.GetService<CoordinatorService>();
 
-            IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Assets, operationState.Destination, operationState.Depth);
+            IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Destination, operationState.Depth);
 
             operationState.LastRoute = stacRoute;
 
@@ -118,33 +120,31 @@ namespace Terradue.Stars.Operations
             return new CopyOperationState(operationState.Depth + 1, newDestination);
         }
 
-        private async Task<object> CopyNode(INode node, IRouter router, object state)
+        private async Task<object> CopyNode(IRoute node, IRouter router, object state)
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            SupplyService supplyService = ServiceProvider.GetService<SupplyService>();
+            SupplierService supplyService = ServiceProvider.GetService<SupplierService>();
 
-            supplyService.Parameters = new SupplyTaskParameters()
+            supplyService.Parameters = new SupplierServiceParameters()
             {
                 ContinueOnDeliveryError = !StopOnError
             };
 
-            NodeInventory deliveryForm = await supplyService.ExecuteAsync(node, operationState.Destination);
+            IRoute deliveryNode = await supplyService.ExecuteAsync(node, operationState.Destination);
 
-            if (deliveryForm == null)
+            if (deliveryNode == null)
             {
                 if (StopOnError)
                     throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
                 operationState.LastRoute = null;
-                operationState.Assets = null;
             }
             else
             {
                 ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-                deliveryForm = await processingService.ExecuteAsync(deliveryForm);
+                deliveryNode = await processingService.ExecuteAsync(deliveryNode);
 
-                operationState.LastRoute = deliveryForm.Node;
-                operationState.Assets = deliveryForm.Assets;
+                operationState.LastRoute = deliveryNode;
             }
 
             return operationState;
@@ -152,7 +152,7 @@ namespace Terradue.Stars.Operations
 
         protected override async Task ExecuteAsync()
         {
-            this.routingTask = ServiceProvider.GetService<RoutingService>();
+            this.routingTask = ServiceProvider.GetService<RouterService>();
             this.destinationManager = ServiceProvider.GetService<DestinationManager>();
             this.carrierManager = ServiceProvider.GetService<CarrierManager>();
             this.receiptManager = ServiceProvider.GetService<ProcessingManager>();

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Interface", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Services", "Stars.Services\Terradue.Stars.Services.csproj", "{FC70586C-0FBA-4C1C-81B3-3E899BF30654}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Geometry", "Stars.Geometry\Terradue.Stars.Geometry.csproj", "{C4B0F840-9B72-478E-966C-C30BFC4138CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,18 @@ Global
 		{FC70586C-0FBA-4C1C-81B3-3E899BF30654}.Release|x64.Build.0 = Release|Any CPU
 		{FC70586C-0FBA-4C1C-81B3-3E899BF30654}.Release|x86.ActiveCfg = Release|Any CPU
 		{FC70586C-0FBA-4C1C-81B3-3E899BF30654}.Release|x86.Build.0 = Release|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Debug|x86.Build.0 = Debug|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Release|x64.Build.0 = Release|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Release|x86.ActiveCfg = Release|Any CPU
+		{C4B0F840-9B72-478E-966C-C30BFC4138CA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

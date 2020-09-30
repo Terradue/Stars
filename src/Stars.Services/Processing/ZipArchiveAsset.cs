@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using ICSharpCode.SharpZipLib.Zip;
-using Terradue.Stars.Interface.Supply.Asset;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Processing
 {

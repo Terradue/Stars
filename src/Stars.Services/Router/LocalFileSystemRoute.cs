@@ -3,8 +3,8 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Destination;
-using Terradue.Stars.Services.Processing.Destination;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Router
 {
@@ -35,10 +35,6 @@ namespace Terradue.Stars.Services.Router
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(filePath) };
 
-        public async Task<INode> GoToNode()
-        {
-            return await WebRoute.Create(Uri).GoToNode();
-        }
 
 
         public async Task<Stream> GetStreamAsync()

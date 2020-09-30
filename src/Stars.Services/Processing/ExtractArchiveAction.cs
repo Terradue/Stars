@@ -5,13 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Tar;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
-using Terradue.Stars.Interface.Supply.Destination;
+
+using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Processing.Carrier;
-using Terradue.Stars.Services.Processing.Destination;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Interface.Processing;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -29,9 +31,10 @@ namespace Terradue.Stars.Services.Processing
             this.logger = logger;
         }
 
-        public bool CanProcess(NodeInventory deliveryForm)
+        public bool CanProcess(IRoute route)
         {
-            return deliveryForm.Assets != null && deliveryForm.Assets.Any(asset => IsArchive(asset.Value));
+            IAssetsContainer assetsContainer = route as IAssetsContainer;
+            return assetsContainer != null && assetsContainer.GetAssets() != null && assetsContainer.GetAssets().Any(asset => IsArchive(asset.Value));
         }
 
         private bool IsArchive(IAsset asset)
@@ -49,16 +52,24 @@ namespace Terradue.Stars.Services.Processing
             return asset.ContentType != null && Archive.ArchiveContentTypes.Contains(asset.ContentType.MediaType);
         }
 
-        public async Task<NodeInventory> Process(NodeInventory nodeInventory)
+        public async Task<IRoute> Process(IRoute route)
         {
-            Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            foreach (var asset in nodeInventory.Assets)
+            IItem item = route as IItem;
+            if (item == null) return route;
+            IAssetsContainer assetsContainer = route as IAssetsContainer;
+            Dictionary<string, IAsset> newAssets = new Dictionary<string, IAsset>();
+            string dest = Path.GetDirectoryName(route.Uri.ToString());
+            IDestination destination = await destinationManager.CreateDestination(dest);
+            destination = destination.To(item.Id);
+            destination.Create();
+            foreach (var asset in assetsContainer.GetAssets())
             {
-                if (!IsArchive(asset.Value)) continue;
-                IDestination destination = nodeInventory.Destination;
+                if (!IsArchive(asset.Value))
+                {
+                    newAssets.Add(asset.Key, asset.Value);
+                    continue;
+                }
                 string subFolder = asset.Key;
-                if ( nodeInventory.SupplierNode != null )
-                    subFolder = nodeInventory.SupplierNode.Id + "." + subFolder;
                 var newDestination = destination.To(subFolder);
                 newDestination.Create();
                 logger.LogInformation("Extracting asset {0}...", subFolder);
@@ -66,12 +77,12 @@ namespace Terradue.Stars.Services.Processing
                 int i = 0;
                 foreach (var archiveAsset in archiveAssets)
                 {
-                    assetsExtracted.Add(archiveAsset.Key, archiveAsset.Value);
+                    newAssets.Add(archiveAsset.Key, archiveAsset.Value);
                     i++;
                 }
             }
 
-            return new NodeInventory(nodeInventory.Node, assetsExtracted, nodeInventory.Destination);
+            return new ContainerNode(route as IItem, newAssets, destination);
         }
 
         private async Task<Dictionary<string, IAsset>> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
@@ -84,7 +95,7 @@ namespace Terradue.Stars.Services.Processing
 
             foreach (var archiveAsset in archive.GetAssets())
             {
-                 var archiveAssetDestination = archiveFolder.To(archiveAsset.Value);
+                var archiveAssetDestination = archiveFolder.To(archiveAsset.Value);
                 archiveAssetDestination.Create();
                 var assetDeliveries = carrierManager.GetSingleDeliveryQuotations(null, archiveAsset.Value, archiveAssetDestination);
                 logger.LogDebug(archiveAsset.Key);
@@ -110,7 +121,7 @@ namespace Terradue.Stars.Services.Processing
 
         public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {
-           
+
         }
     }
 }

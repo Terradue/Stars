@@ -15,9 +15,9 @@ namespace Terradue.Stars.Services.Router
         {
         }
 
-        public IRouter GetRouter(INode resource)
+        public IRouter GetRouter(IRoute route)
         {
-            return Plugins.FirstOrDefault(r => r.CanRoute(resource));
+            return Plugins.FirstOrDefault(r => r.CanRoute(route));
         }
 
     }

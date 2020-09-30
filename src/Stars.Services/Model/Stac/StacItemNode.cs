@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 using Stac;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supply.Asset;
+using GeoJSON.Net.Geometry;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public class StacItemNode : StacNode, IAssetsContainer, IRoutable
+    public class StacItemNode : StacNode, IItem
     {
         public StacItemNode(IStacItem stacItem) : base(stacItem)
         {
@@ -19,6 +19,8 @@ namespace Terradue.Stars.Services.Model.Stac
         public IStacItem StacItem => stacObject as IStacItem;
 
         public override ResourceType ResourceType => ResourceType.Item;
+
+        public IGeometryObject Geometry => StacItem.Geometry;
 
         public IDictionary<string, IAsset> GetAssets()
         {
