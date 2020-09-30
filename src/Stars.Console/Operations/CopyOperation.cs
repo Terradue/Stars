@@ -15,10 +15,9 @@ using Terradue.Stars.Interface.Supply.Destination;
 using Terradue.Stars.Services.Catalog;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supply;
-using Terradue.Stars.Services.Supply.Carrier;
-using Terradue.Stars.Services.Supply.Destination;
-using Terradue.Stars.Services.Supply.Receipt;
+using Terradue.Stars.Services.Processing;
+using Terradue.Stars.Services.Processing.Carrier;
+using Terradue.Stars.Services.Processing.Destination;
 using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Stars.Operations
@@ -52,7 +51,7 @@ namespace Terradue.Stars.Operations
         private RoutingService routingTask;
         private DestinationManager destinationManager;
         private CarrierManager carrierManager;
-        private ReceiptManager receiptManager;
+        private ProcessingManager receiptManager;
         private string[] inputs = new string[0];
         private int recursivity = 1;
 
@@ -91,7 +90,7 @@ namespace Terradue.Stars.Operations
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            CatalogingService catalogingTask = ServiceProvider.GetService<CatalogingService>();
+            CoordinatorService catalogingTask = ServiceProvider.GetService<CoordinatorService>();
 
             IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Assets, operationState.Destination, operationState.Depth);
 
@@ -123,14 +122,14 @@ namespace Terradue.Stars.Operations
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            SupplyService supplyTask = ServiceProvider.GetService<SupplyService>();
+            SupplyService supplyService = ServiceProvider.GetService<SupplyService>();
 
-            supplyTask.Parameters = new SupplyTaskParameters()
+            supplyService.Parameters = new SupplyTaskParameters()
             {
                 ContinueOnDeliveryError = !StopOnError
             };
 
-            NodeInventory deliveryForm = await supplyTask.ExecuteAsync(node, operationState.Destination);
+            NodeInventory deliveryForm = await supplyService.ExecuteAsync(node, operationState.Destination);
 
             if (deliveryForm == null)
             {
@@ -141,7 +140,8 @@ namespace Terradue.Stars.Operations
             }
             else
             {
-                deliveryForm = await PostDelivery(deliveryForm);
+                ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+                deliveryForm = await processingService.ExecuteAsync(deliveryForm);
 
                 operationState.LastRoute = deliveryForm.Node;
                 operationState.Assets = deliveryForm.Assets;
@@ -150,23 +150,12 @@ namespace Terradue.Stars.Operations
             return operationState;
         }
 
-        private async Task<NodeInventory> PostDelivery(NodeInventory deliveryForm)
-        {
-            NodeInventory nodeInventory = deliveryForm;
-            foreach (var receiver in receiptManager.Plugins)
-            {
-                if (!receiver.CanReceive(nodeInventory)) continue;
-                nodeInventory = await receiver.Receive(nodeInventory);
-            }
-            return nodeInventory;
-        }
-
         protected override async Task ExecuteAsync()
         {
             this.routingTask = ServiceProvider.GetService<RoutingService>();
             this.destinationManager = ServiceProvider.GetService<DestinationManager>();
             this.carrierManager = ServiceProvider.GetService<CarrierManager>();
-            this.receiptManager = ServiceProvider.GetService<ReceiptManager>();
+            this.receiptManager = ServiceProvider.GetService<ProcessingManager>();
             InitRoutingTask();
             await routingTask.ExecuteAsync(Inputs);
         }
@@ -177,7 +166,7 @@ namespace Terradue.Stars.Operations
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
             if (ExtractArchives)
-                collection.AddTransient<IReceiptAction, ExtractArchiveAction>();
+                collection.AddTransient<IProcessing, ExtractArchiveAction>();
         }
     }
 }

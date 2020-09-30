@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using McMaster.Extensions.CommandLineUtils.Abstractions;
 using Microsoft.Extensions.Logging;
-using ShellProgressBar;
 
 namespace Terradue.Stars
 {
@@ -27,17 +26,6 @@ namespace Terradue.Stars
             
         }
 
-        protected void TickToCompletion(IProgressBar pbar, int ticks, int sleep = 1750, Action childAction = null)
-        {
-            var initialMessage = pbar.Message;
-            for (var i = 0; i < ticks; i++)
-            {
-                pbar.Message = $"Start {i + 1} of {ticks}: {initialMessage}";
-                childAction?.Invoke();
-                Thread.Sleep(sleep);
-                pbar.Tick($"End {i + 1} of {ticks}: {initialMessage}");
-            }
-        }
 
         public IDisposable BeginScope<TState>(TState state)
         {
