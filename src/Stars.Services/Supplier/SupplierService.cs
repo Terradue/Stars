@@ -165,7 +165,7 @@ namespace Terradue.Stars.Services.Supplier
 
         private IRoute MakeItem(IItem item, Dictionary<string, IAsset> assets, IDeliveryQuotation deliveryQuotation)
         {
-            return new ContainerNode(item, assets, deliveryQuotation.Destination);
+            return new ContainerNode(item, assets);
         }
 
         private IAsset MakeAsset(IRoute route, IAsset assetOrigin)

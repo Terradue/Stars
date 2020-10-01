@@ -82,7 +82,7 @@ namespace Terradue.Stars.Services.Processing
                 }
             }
 
-            return new ContainerNode(route as IItem, newAssets, destination);
+            return new ContainerNode(route as IItem, newAssets);
         }
 
         private async Task<Dictionary<string, IAsset>> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
