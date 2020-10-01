@@ -246,7 +246,7 @@
                 "-r",
                 "4",
                 "--output-dir",
-                "/home/emathot/Downloads/",
+                "/tmp/stars",
                 "--allow-ordering"
             ],
            "cwd": "${workspaceFolder}/src",

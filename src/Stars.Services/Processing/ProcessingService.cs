@@ -42,8 +42,8 @@ namespace Terradue.Stars.Services.Processing
             IRoute newRoute = route;
             foreach (var processing in processingManager.Plugins)
             {
-                if (!processing.CanProcess(route)) continue;
-                newRoute = await processing.Process(route);
+                if (!processing.CanProcess(newRoute)) continue;
+                newRoute = await processing.Process(newRoute);
             }
             return newRoute;
         }
