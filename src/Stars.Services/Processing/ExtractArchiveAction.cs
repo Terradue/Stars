@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
+using Stac;
+using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -73,11 +75,12 @@ namespace Terradue.Stars.Services.Processing
                 var newDestination = destination.To(subFolder);
                 newDestination.Create();
                 logger.LogInformation("Extracting asset {0}...", subFolder);
-                var archiveAssets = await ExtractArchive(asset, newDestination);
+                Dictionary<string, GenericAsset> extractedAssets = await ExtractArchive(asset, newDestination);
                 int i = 0;
-                foreach (var archiveAsset in archiveAssets)
+                foreach (var extractedAsset in extractedAssets)
                 {
-                    newAssets.Add(archiveAsset.Key, archiveAsset.Value);
+                    extractedAsset.Value.SetUriRelativeTo(item.Uri);
+                    newAssets.Add(extractedAsset.Key, extractedAsset.Value);
                     i++;
                 }
             }
@@ -85,13 +88,13 @@ namespace Terradue.Stars.Services.Processing
             return new ContainerNode(route as IItem, newAssets);
         }
 
-        private async Task<Dictionary<string, IAsset>> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
+        private async Task<Dictionary<string, GenericAsset>> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
         {
             IDestination archiveFolder = CreateArchiveFolderDestination(asset.Value, destination);
 
             Archive archive = await Archive.Read(asset.Value);
 
-            Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
+            Dictionary<string, GenericAsset> assetsExtracted = new Dictionary<string, GenericAsset>();
 
             foreach (var archiveAsset in archive.GetAssets())
             {
