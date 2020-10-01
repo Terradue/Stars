@@ -14,16 +14,13 @@ namespace Terradue.Stars.Services.Supplier
         private readonly IItem item;
         private readonly IDictionary<string, IAsset>  assets;
 
-        public ContainerNode(IItem item, IDictionary<string, IAsset>  assets, IDestination destination)
+        public ContainerNode(IItem item, IDictionary<string, IAsset>  assets)
         {
             this.item = item;
             this.assets = assets;
-            Destination = destination;
         }
 
         public IRoute Node => item;
-
-        public IDestination Destination { get; internal set; }
 
         public Uri Uri => item.Uri;
 
