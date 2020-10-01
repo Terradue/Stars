@@ -165,8 +165,10 @@ namespace Terradue.Stars.Operations
             collection.AddTransient<ITranslator, DefaultStacTranslator>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
-            if (ExtractArchives)
+            if (ExtractArchives){
                 collection.AddTransient<IProcessing, ExtractArchiveAction>();
+                ProcessingManager.PluginsPriority.Add(typeof(ExtractArchiveAction), 1);
+            }
         }
     }
 }

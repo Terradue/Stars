@@ -151,6 +151,9 @@ namespace Terradue.Stars.Operations
 
             var collection = new ServiceCollection();
 
+            // Add logging
+            collection.AddLogging(c => c.AddProvider(new StarsConsoleLoggerProvider(PhysicalConsole.Singleton, Program.Verbose)));
+
             // Add Configuration
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
