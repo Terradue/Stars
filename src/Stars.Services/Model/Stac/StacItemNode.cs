@@ -22,6 +22,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IGeometryObject Geometry => StacItem.Geometry;
 
+        public IDictionary<string, object> Properties => StacItem.Properties;
+
         public IDictionary<string, IAsset> GetAssets()
         {
             return StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value));

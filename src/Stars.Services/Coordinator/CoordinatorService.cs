@@ -93,7 +93,10 @@ namespace Terradue.Stars.Services.Catalog
             if (stacCatalog == null) return;
 
             stacCatalog.Links.Clear();
-            stacCatalog.Links.Add(StacLink.CreateSelfLink(destination.Uri.MakeRelativeUri(delivery.TargetUri)));
+            if (stacNode.IsRoot)
+                stacCatalog.Links.Add(StacLink.CreateRootLink(destination.Uri.MakeRelativeUri(delivery.TargetUri), "application/json"));
+            else
+                stacCatalog.Links.Add(StacLink.CreateSelfLink(destination.Uri.MakeRelativeUri(delivery.TargetUri), stacNode.ContentType.ToString()));
 
             foreach (var childRoute in childrenRoutes)
             {

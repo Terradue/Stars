@@ -38,6 +38,8 @@ namespace Terradue.Stars.Services.Supplier
 
         public IGeometryObject Geometry => item.Geometry;
 
+        public IDictionary<string, object> Properties => item.Properties;
+
         public IDictionary<string, IAsset> GetAssets() => assets;
 
         public async Task<Stream> GetStreamAsync()

@@ -78,6 +78,8 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IGeometryObject Geometry => item.FindGeometry();
 
+        public IDictionary<string, object> Properties => item.GetCommonMetadata();
+
         public IDictionary<string, IAsset> GetAssets()
         {
             Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
