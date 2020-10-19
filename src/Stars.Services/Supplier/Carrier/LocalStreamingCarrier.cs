@@ -24,8 +24,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public LocalStreamingCarrier(IOptions<GlobalOptions> options, ILogger logger) : base(options)
         {
             this.logger = logger;
+            Priority = 75;
         }
 
+        public override int Priority { get; set; }
+        public override string Key { get => Id; set {} }
 
         public override string Id => "Streaming";
 

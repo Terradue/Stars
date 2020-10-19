@@ -37,8 +37,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public override IList<IRoute> GetRoutes()
         {
-            return StacCatalog.GetChildrenLinks().Select(link => new StacLinkRoute(link, StacCatalog)).Concat(
-                    StacCatalog.GetItemLinks().Select(link => new StacLinkRoute(link, StacCatalog))
+            return StacCatalog.GetChildren().Values.Select(child => new StacCatalogNode(child)).Concat(
+                    StacCatalog.GetItems().Values.Select(item => new StacItemNode(item)).Cast<IRoute>()
                 ).Cast<IRoute>().ToList();
         }
 

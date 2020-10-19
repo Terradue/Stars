@@ -19,6 +19,9 @@ namespace Terradue.Stars.Services.Model.Stac
         {
         }
 
+        public int Priority { get; set; }
+        public string Key { get => "Stac"; set {} }
+
         public string Label => "Stac";
 
         public bool CanRoute(IRoute route)

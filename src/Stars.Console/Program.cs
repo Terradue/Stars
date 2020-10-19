@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
-using Terradue.Stars.Operations;
+using Terradue.Stars.Console.Operations;
 using System.ComponentModel.DataAnnotations;
 
-namespace Terradue.Stars
+namespace Terradue.Stars.Console
 {
     [Command(Name = "Stars", Description = "Spatio Temporal Asset Routing Services")]
     [HelpOption]
@@ -22,7 +22,7 @@ namespace Terradue.Stars
         [Option]
         public static bool Verbose { get; set; }
 
-        static async Task<int> Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
             CommandLineApplication<Program> app = new CommandLineApplication<Program>();
 

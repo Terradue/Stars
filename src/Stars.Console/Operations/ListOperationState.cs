@@ -1,4 +1,4 @@
-namespace Terradue.Stars.Operations
+namespace Terradue.Stars.Console.Operations
 {
     internal class ListOperationState
     {

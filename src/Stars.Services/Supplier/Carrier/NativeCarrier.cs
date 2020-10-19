@@ -25,7 +25,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public NativeCarrier(IOptions<GlobalOptions> options, ILogger logger) 
         {
             this.logger = logger;
+            Priority = 10000;
         }
+
+        public int Priority { get; set; }
+        public string Key { get => "Native"; set {} }
 
         public string Id => "Native";
 

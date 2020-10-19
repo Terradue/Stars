@@ -27,7 +27,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
             this.logger = logger;
             this.credentials = credentials;
+            Priority = 100;
         }
+
+        public override int Priority { get; set; }
+        public override string Key { get => Id; set {} }
 
         public override string Id => "WebDownload";
 

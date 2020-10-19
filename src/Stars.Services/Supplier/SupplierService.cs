@@ -137,7 +137,7 @@ namespace Terradue.Stars.Services.Supplier
                 if (route == null) return null;
                 nodeDeliveredRoute = route;
                 IRouter router = routersManager.GetRouter(route);
-                if ( router != null )
+                if (router != null)
                     nodeDeliveredRoute = await router.Route(route);
             }
             Dictionary<string, IAsset> assetsDeliveredRoutes = new Dictionary<string, IAsset>();
@@ -199,7 +199,15 @@ namespace Terradue.Stars.Services.Supplier
 
         private IDeliveryQuotation QuoteDelivery(ISupplier supplier, IRoute supplierRoute, IDestination destination)
         {
-            return supplier.QuoteDelivery(supplierRoute, destination);
+            try
+            {
+                return supplier.QuoteDelivery(supplierRoute, destination);
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning("Exception during quotation for {0} at {1} : {2}", supplierRoute.Uri, supplier.Id, e.Message);
+            }
+            return null;
         }
 
         private async Task<IRoute> AskForSupply(IRoute node, ISupplier supplier)

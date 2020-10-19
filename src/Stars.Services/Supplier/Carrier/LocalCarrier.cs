@@ -30,6 +30,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         }
 
+        public abstract int Priority { get; set; }
+        public abstract string Key { get; set; }
+
         public abstract string Id { get; }
 
         public abstract bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination);

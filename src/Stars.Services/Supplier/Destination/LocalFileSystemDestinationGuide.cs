@@ -19,15 +19,21 @@ namespace Terradue.Stars.Services.Supplier.Destination
             this.logger = logger;
         }
 
+        public int Priority { get; set; }
+
+        public string Key { get => Id; set { } }
+
         public string Id => "LocalFS";
 
         public bool CanGuide(string destination)
         {
-            try {
+            try
+            {
                 FileAttributes fa = File.GetAttributes(destination.Replace("file:", "").TrimEnd('/'));
                 return (fa & FileAttributes.Directory) == FileAttributes.Directory;
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 logger.LogWarning(e.Message);
                 return false;
             }
@@ -35,7 +41,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {
-            
+
         }
 
         public Task<IDestination> Guide(string destination)

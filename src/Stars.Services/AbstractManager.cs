@@ -13,9 +13,7 @@ namespace Terradue.Stars.Services
     public abstract class AbstractManager<T> where T : class, IPlugin
     {
         private readonly ILogger logger;
-        private readonly IServiceProvider serviceProvider;
-
-        private static Dictionary<Type, int> pluginsPriority = new Dictionary<Type, int>();
+        protected readonly IServiceProvider serviceProvider;
 
         public AbstractManager(ILogger logger, IServiceProvider serviceProvider)
         {
@@ -27,11 +25,11 @@ namespace Terradue.Stars.Services
         {
             foreach (var section in configurationSection.GetChildren())
             {
-                if (string.IsNullOrEmpty(section["type"]))
+                if (string.IsNullOrEmpty(section["Type"]))
                     continue;
                 try
                 {
-                    Type type = GetTypeFromAssembly(section["type"], assembly);
+                    Type type = GetTypeFromAssembly(section["Type"], assembly);
                     if (type == null) throw new DllNotFoundException(string.Format("Plugin {0} for {1} not found.", section["type"], typeof(T)));
                     int prio = 50;
                     PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
@@ -39,12 +37,9 @@ namespace Terradue.Stars.Services
                     {
                         prio = prioAttr.Priority;
                     }
-                    if (!string.IsNullOrEmpty(section["priority"]))
-                        prio = int.Parse(section["priority"]);
+                    if (!string.IsNullOrEmpty(section["Priority"]))
+                        prio = int.Parse(section["Priority"]);
                     collection.AddTransient(typeof(T), serviceProvider => CreateItem(type, section, prio, serviceProvider));
-                    if (pluginsPriority.ContainsKey(type))
-                        pluginsPriority.Remove(type);
-                    pluginsPriority.Add(type, prio);
                 }
                 catch (Exception e)
                 {
@@ -53,22 +48,13 @@ namespace Terradue.Stars.Services
             }
         }
 
-        public List<T> Plugins
+        public PluginList<T> Plugins
         {
             get
             {
-                List<(int, T)> sortedList = new List<(int, T)>();
-                foreach (var plugin in serviceProvider.GetServices<T>())
-                {
-                    int prio = pluginsPriority.ContainsKey(plugin.GetType()) ? pluginsPriority[plugin.GetType()] : 50;
-                    sortedList.Add((prio, plugin));
-                }
-                sortedList.Sort((a, b) => (a.Item1.CompareTo(b.Item1)));
-                return sortedList.Select(i => i.Item2).ToList();
+                return new PluginList<T>(serviceProvider.GetServices<T>());
             }
         }
-
-        public static Dictionary<Type, int> PluginsPriority { get => pluginsPriority; }
 
         private static T CreateItem(Type type, IConfigurationSection configurationSection, int prio, IServiceProvider serviceProvider)
         {
@@ -78,13 +64,12 @@ namespace Terradue.Stars.Services
 
             var plugin = Activator.CreateInstance(type);
             T item = plugin as T;
+            item.Priority = prio;
+            item.Key = string.IsNullOrEmpty(configurationSection.Key) ? Guid.NewGuid().ToString() : configurationSection.Key;
             item.Configure(configurationSection, serviceProvider);
 
             return item;
 
-            // MethodInfo createMethod = type.GetMethod("Configure", BindingFlags.Public | BindingFlags.Static);
-
-            // return (T)createMethod.Invoke(null, new object[2] { (IConfigurationSection)configurationSection, serviceProvider });
         }
 
         public static Type GetTypeFromAssembly(string typeName, Assembly assembly)

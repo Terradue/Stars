@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 
-namespace Terradue.Stars.Operations
+namespace Terradue.Stars.Console.Operations
 {
     [Command(Name = "list", Description = "List the routing from the input catalog")]
     internal class ListOperation : BaseOperation
@@ -77,6 +77,10 @@ namespace Terradue.Stars.Operations
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
+            if (router != null)
+                resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
+            console.ForegroundColor = GetColorFromType(node.ResourceType);
+            await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
             await PrintAssets(node, router, operationState.Prefix);
             return state;
         }
@@ -103,14 +107,19 @@ namespace Terradue.Stars.Operations
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
             console.ForegroundColor = GetColorFromType(route.ResourceType);
             await console.Out.WriteAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + route.Uri).Truncate(99), route.ContentType));
-            console.ForegroundColor = ConsoleColor.Red;
-            await console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
+            if (exception != null)
+            {
+                console.ForegroundColor = ConsoleColor.Red;
+                await console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
+            }
+            else
+                await console.Out.WriteLineAsync();
             return state;
         }
 
         protected override async Task ExecuteAsync()
         {
-          
+
 
             this.routingService = ServiceProvider.GetService<RouterService>();
             InitRoutingTask();

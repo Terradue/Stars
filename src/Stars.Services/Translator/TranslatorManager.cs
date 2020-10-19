@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Translator
             Dictionary<ITranslator, T> translations = new Dictionary<ITranslator, T>();
             foreach (var translator in Plugins)
             {
-                T translation = await translator.Translate<T>(node);
+                T translation = await translator.Value.Translate<T>(node);
                 if(translation != null)
                     return translation;
             }

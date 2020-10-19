@@ -12,6 +12,7 @@ using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Processing;
 using Terradue.ServiceModel.Syndication;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -22,6 +23,9 @@ namespace Terradue.Stars.Services.Model.Atom
         public AtomRouter()
         {
         }
+
+        public int Priority { get; set; }
+        public string Key { get => "Atom"; set { } }
 
         public string Label => "Atom";
 
@@ -58,7 +62,10 @@ namespace Terradue.Stars.Services.Model.Atom
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
                 await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
-                return new AtomFeedCatalog(feedFormatter.Feed, node.Uri);
+                if (feedFormatter.Feed.Items.Count() == 1)
+                    return new AtomItemNode(feedFormatter.Feed.Items.First(), node.Uri);
+                else
+                    return new AtomFeedCatalog(feedFormatter.Feed, node.Uri);
             }
             catch (Exception)
             {
