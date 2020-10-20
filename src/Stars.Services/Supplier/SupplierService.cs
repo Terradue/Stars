@@ -212,7 +212,16 @@ namespace Terradue.Stars.Services.Supplier
 
         private async Task<IRoute> AskForSupply(IRoute node, ISupplier supplier)
         {
-            return await supplier.SearchFor(node);
+            try
+            {
+                return await supplier.SearchFor(node);
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning("Exception during search for {0} at {1} : {2}", node.Uri, supplier.Id, e.Message);
+            }
+            return null;
+
         }
 
         private IEnumerator<ISupplier> InitSuppliersEnumerator(IRoute route)
