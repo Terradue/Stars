@@ -44,6 +44,7 @@ namespace Terradue.Stars.Services.Processing
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(entry.Name) };
 
+        public bool CanBeRanged => false;
 
         public Task<Stream> GetStreamAsync()
         {
@@ -53,6 +54,11 @@ namespace Terradue.Stars.Services.Processing
         public IStreamable GetStreamable()
         {
             return this;
+        }
+
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

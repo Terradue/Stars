@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Supplier
             this.carrier = carrier;
         }
 
-        public int Cost => 10000;
+        public int Cost => 100000;
 
         public IRoute Route => route;
 

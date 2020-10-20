@@ -44,12 +44,20 @@ namespace Terradue.Stars.Services.Supplier
         [JsonProperty]
         public string OrderId => orderId;
 
+        [JsonIgnore]
         public ISupplier Supplier { get => supplier; set => supplier = value; }
+
+        [JsonIgnore]
         public IOrderable OrderableRoute { get => orderableRoute; }
 
+        [JsonIgnore]
         public string Label => string.Format("Order {0} to supplier {1}", orderId, supplier.Id);
 
+        [JsonIgnore]
         public IEnumerable<string> Roles => new string[1] { "order" };
+
+        [JsonIgnore]
+        public bool CanBeRanged => false;
 
         public async Task<Stream> GetStreamAsync()
         {
@@ -74,6 +82,11 @@ namespace Terradue.Stars.Services.Supplier
         public IStreamable GetStreamable()
         {
             return this;
+        }
+
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

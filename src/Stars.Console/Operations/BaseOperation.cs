@@ -89,7 +89,7 @@ namespace Terradue.Stars.Console.Operations
             // Streaming Carrier
             collection.AddTransient<ICarrier, LocalStreamingCarrier>();
             // Native Carrier
-            collection.AddTransient<ICarrier, NativeCarrier>();
+            //collection.AddTransient<ICarrier, NativeCarrier>();
 
             // Routing Service
             collection.AddTransient<RouterService, RouterService>();

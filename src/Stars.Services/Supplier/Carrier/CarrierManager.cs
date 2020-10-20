@@ -56,7 +56,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 catch (Exception e)
                 {
-                    logger.LogWarning("Cannot quote delivery for {0} with carrier {1}: {2}", route.Uri, carrier.Id, e.Message);
+                    logger.LogDebug("Cannot quote delivery for {0} with carrier {1}: {2}", route.Uri, carrier.Id, e.Message);
                 }
 
             }

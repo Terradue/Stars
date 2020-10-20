@@ -14,6 +14,7 @@ using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Services;
 using GeoJSON.Net.Geometry;
 using Terradue.Stars.Geometry.Atom;
+using System.Net;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -21,11 +22,13 @@ namespace Terradue.Stars.Services.Model.Atom
     {
         private SyndicationItem item;
         private readonly Uri sourceUri;
+        private readonly ICredentials credentials;
 
-        public AtomItemNode(SyndicationItem item, Uri sourceUri)
+        public AtomItemNode(SyndicationItem item, Uri sourceUri, System.Net.ICredentials credentials = null)
         {
             this.item = item;
             this.sourceUri = sourceUri;
+            this.credentials = credentials;
         }
 
         public SyndicationItem AtomItem => item;
@@ -80,6 +83,8 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IDictionary<string, object> Properties => item.GetCommonMetadata();
 
+        public bool CanBeRanged => false;
+
         public IDictionary<string, IAsset> GetAssets()
         {
             Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
@@ -91,10 +96,15 @@ namespace Terradue.Stars.Services.Model.Atom
                     key = link.RelationshipType + i;
                     i++;
                 }
-                assets.Add(key, new AtomLinkAsset(link, item));
+                assets.Add(key, new AtomLinkAsset(link, item, credentials));
             }
 
             return assets;
+        }
+
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

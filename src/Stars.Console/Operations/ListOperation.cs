@@ -81,6 +81,7 @@ namespace Terradue.Stars.Console.Operations
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
             console.ForegroundColor = GetColorFromType(node.ResourceType);
             await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
+            console.ForegroundColor = ConsoleColor.White;
             await PrintAssets(node, router, operationState.Prefix);
             return state;
         }
@@ -114,6 +115,7 @@ namespace Terradue.Stars.Console.Operations
             }
             else
                 await console.Out.WriteLineAsync();
+            console.ForegroundColor = ConsoleColor.White;
             return state;
         }
 
@@ -148,6 +150,7 @@ namespace Terradue.Stars.Console.Operations
                         assetPrefix = string.Format("[{0}] {1}", router.Label, assetPrefix);
                     var asset = assets.ElementAt(i).Value;
                     await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + asset.Label).Truncate(99), asset.ContentType));
+                    console.ForegroundColor = ConsoleColor.White;
                 }
             }
         }

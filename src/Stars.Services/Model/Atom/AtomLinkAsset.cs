@@ -7,6 +7,7 @@ using Terradue.Stars.Interface.Router;
 
 using Terradue.Stars.Services.Router;
 using Terradue.ServiceModel.Syndication;
+using System.Net;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -14,11 +15,13 @@ namespace Terradue.Stars.Services.Model.Atom
     {
         private SyndicationLink link;
         private SyndicationItem item;
+        private readonly ICredentials credentials;
 
-        public AtomLinkAsset(SyndicationLink link, SyndicationItem item)
+        public AtomLinkAsset(SyndicationLink link, SyndicationItem item, System.Net.ICredentials credentials = null)
         {
             this.link = link;
             this.item = item;
+            this.credentials = credentials;
         }
 
         public Uri Uri => link.Uri;
@@ -50,7 +53,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IStreamable GetStreamable()
         {
-            return WebRoute.Create(Uri);
+            return WebRoute.Create(Uri, ContentLength, credentials);
         }
 
     }

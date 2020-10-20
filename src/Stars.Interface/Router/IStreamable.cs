@@ -8,8 +8,12 @@ namespace Terradue.Stars.Interface.Router
 {
     public interface IStreamable : IRoute
     {
+        bool CanBeRanged { get; }
+
         Task<Stream> GetStreamAsync();
-        
+
         ContentDisposition ContentDisposition { get; }
+
+        Task<Stream> GetStreamAsync(long start, long end = -1);
     }
 }

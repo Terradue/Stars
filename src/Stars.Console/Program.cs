@@ -3,6 +3,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Console.Operations;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Terradue.Stars.Console
 {
@@ -17,13 +18,12 @@ namespace Terradue.Stars.Console
 
         public static IConfigurationRoot Configuration { get; set; }
 
-        public static StarsConsoleReporter _logger;
-
         [Option]
         public static bool Verbose { get; set; }
 
         public static async Task<int> Main(string[] args)
         {
+
             CommandLineApplication<Program> app = new CommandLineApplication<Program>();
 
             app.Conventions.UseDefaultConventions();
@@ -35,6 +35,13 @@ namespace Terradue.Stars.Console
             catch (CommandParsingException cpe)
             {
                 return PrintErrorAndUsage(cpe.Command, cpe.Message);
+            }
+            catch (Exception e)
+            {
+                await PhysicalConsole.Singleton.Error.WriteLineAsync(e.Message);
+                if (Verbose)
+                    await PhysicalConsole.Singleton.Error.WriteLineAsync(e.StackTrace);
+                return 1;
             }
         }
 
@@ -52,16 +59,11 @@ namespace Terradue.Stars.Console
 
         }
 
-     
-
-
         public static int OnValidationError(CommandLineApplication command, ValidationResult ve)
         {
             PhysicalConsole.Singleton.Error.WriteLine(ve.ErrorMessage);
             command.ShowHelp();
             return 1;
         }
-
-   
     }
 }

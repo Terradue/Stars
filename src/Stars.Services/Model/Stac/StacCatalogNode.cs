@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using System.Text;
 using Newtonsoft.Json;
@@ -14,12 +15,15 @@ namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacCatalogNode : StacNode, ICatalog
     {
-        public StacCatalogNode(IStacCatalog stacCatalog) : base(stacCatalog)
+        private readonly ICredentials credentials;
+
+        public StacCatalogNode(IStacCatalog stacCatalog, System.Net.ICredentials credentials = null) : base(stacCatalog)
         {
             if (stacCatalog is StacCollection)
                 contentType.Parameters.Add("profile", "stac-collection");
             else
                 contentType.Parameters.Add("profile", "stac-catalog");
+            this.credentials = credentials;
         }
 
         public IStacCatalog StacCatalog => stacObject as IStacCatalog;
@@ -37,8 +41,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public override IList<IRoute> GetRoutes()
         {
-            return StacCatalog.GetChildren().Values.Select(child => new StacCatalogNode(child)).Concat(
-                    StacCatalog.GetItems().Values.Select(item => new StacItemNode(item)).Cast<IRoute>()
+            return StacCatalog.GetChildren().Values.Select(child => new StacCatalogNode(child, credentials)).Concat(
+                    StacCatalog.GetItems().Values.Select(item => new StacItemNode(item, credentials)).Cast<IRoute>()
                 ).Cast<IRoute>().ToList();
         }
 

@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
@@ -14,9 +16,11 @@ namespace Terradue.Stars.Services.Model.Stac
     [PluginPriority(1)]
     public class StacRouter : IRouter
     {
+        private ICredentials credentials;
 
-        public StacRouter()
+        public StacRouter(ICredentials credentials)
         {
+            this.credentials = credentials;
         }
 
         public int Priority { get; set; }
@@ -32,14 +36,14 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 try
                 {
-                    new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((route as IStreamable).ReadAsString().Result), route.Uri));
+                    new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((route as IStreamable).ReadAsString().Result), route.Uri), credentials);
                     return true;
                 }
                 catch
                 {
                     try
                     {
-                        new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((route as IStreamable).ReadAsString().Result), route.Uri));
+                        new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((route as IStreamable).ReadAsString().Result), route.Uri), credentials);
                         return true;
                     }
                     catch { }
@@ -50,6 +54,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {
+            credentials = serviceProvider.GetService<ICredentials>();
         }
 
         public async Task<IRoute> Route(IRoute route)
@@ -61,13 +66,13 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 try
                 {
-                    return new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri));
+                    return new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri), credentials);
                 }
                 catch
                 {
                     try
                     {
-                        return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri));
+                        return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri), credentials);
                     }
                     catch { }
                 }

@@ -35,11 +35,16 @@ namespace Terradue.Stars.Services.Router
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(filePath) };
 
-
+        public bool CanBeRanged => true;
 
         public async Task<Stream> GetStreamAsync()
         {
             return await WebRoute.Create(Uri).GetStreamAsync();
+        }
+
+        public async Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            return await WebRoute.Create(Uri).GetStreamAsync(start, end);
         }
     }
 }

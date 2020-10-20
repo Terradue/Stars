@@ -142,7 +142,7 @@ namespace Terradue.Stars.Console.Operations
             if (deliveryNode == null)
             {
                 if (StopOnError)
-                    throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
+                    throw new InvalidOperationException("Delivery failed. Stopping");
                 operationState.LastRoute = null;
             }
             else

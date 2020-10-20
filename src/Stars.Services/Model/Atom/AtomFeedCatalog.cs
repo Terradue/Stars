@@ -14,6 +14,7 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Router;
 using Terradue.ServiceModel.Syndication;
+using System.Net;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -21,11 +22,13 @@ namespace Terradue.Stars.Services.Model.Atom
     {
         private readonly SyndicationFeed feed;
         private readonly Uri sourceUri;
+        private readonly ICredentials credentials;
 
-        public AtomFeedCatalog(SyndicationFeed feed, Uri sourceUri)
+        public AtomFeedCatalog(SyndicationFeed feed, Uri sourceUri, System.Net.ICredentials credentials = null)
         {
             this.feed = feed;
             this.sourceUri = sourceUri;
+            this.credentials = credentials;
         }
 
         public SyndicationFeed AtomFeed => feed;
@@ -48,6 +51,8 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Filename };
 
+        public bool CanBeRanged => false;
+
         public IList<IRoute> GetRoutes()
         {
             return feed.Items.Select(item => new AtomItemNode(item, null)).Cast<IRoute>().ToList();
@@ -65,6 +70,11 @@ namespace Terradue.Stars.Services.Model.Atom
                 ms.Seek(0, SeekOrigin.Begin);
                 return ms as Stream;
             });
+        }
+
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            throw new NotImplementedException();
         }
 
         public IStacObject ReadAsStacObject()
