@@ -25,6 +25,7 @@ namespace Terradue.Stars.Console
         {
 
             CommandLineApplication<Program> app = new CommandLineApplication<Program>();
+            app.VersionOptionFromAssemblyAttributes(typeof(Program).Assembly);
 
             app.Conventions.UseDefaultConventions();
 
