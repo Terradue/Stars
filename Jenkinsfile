@@ -13,6 +13,9 @@ pipeline {
               image 'mcr.microsoft.com/dotnet/core/sdk:3.1'
           } 
       }
+      environment {
+        DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+      }
       stages {
         stage("Build") {
           steps {
@@ -81,7 +84,9 @@ pipeline {
       steps {
         script {
           unstash name: 'stars-packages'
-          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.centos.7-x64.rpm")
+          def starsrpm = fi  environment {
+        DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+      }ndFiles(glob: "src/Stars.Console/bin/**/Stars.*.centos.7-x64.rpm")
           def descriptor = readDescriptor()
           sh "mv ${starsrpm[0].path} ."
           def mType=getTypeOfVersion(env.BRANCH_NAME)
