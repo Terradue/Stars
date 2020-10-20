@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
-using Terradue.Stars.Operations;
+using Terradue.Stars.Console.Operations;
 using System.ComponentModel.DataAnnotations;
+using System;
 
-namespace Terradue.Stars
+namespace Terradue.Stars.Console
 {
     [Command(Name = "Stars", Description = "Spatio Temporal Asset Routing Services")]
     [HelpOption]
@@ -17,14 +18,14 @@ namespace Terradue.Stars
 
         public static IConfigurationRoot Configuration { get; set; }
 
-        public static StarsConsoleReporter _logger;
-
         [Option]
         public static bool Verbose { get; set; }
 
-        static async Task<int> Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
+
             CommandLineApplication<Program> app = new CommandLineApplication<Program>();
+            app.VersionOptionFromAssemblyAttributes(typeof(Program).Assembly);
 
             app.Conventions.UseDefaultConventions();
 
@@ -35,6 +36,13 @@ namespace Terradue.Stars
             catch (CommandParsingException cpe)
             {
                 return PrintErrorAndUsage(cpe.Command, cpe.Message);
+            }
+            catch (Exception e)
+            {
+                await PhysicalConsole.Singleton.Error.WriteLineAsync(e.Message);
+                if (Verbose)
+                    await PhysicalConsole.Singleton.Error.WriteLineAsync(e.StackTrace);
+                return 1;
             }
         }
 
@@ -52,16 +60,11 @@ namespace Terradue.Stars
 
         }
 
-     
-
-
         public static int OnValidationError(CommandLineApplication command, ValidationResult ve)
         {
             PhysicalConsole.Singleton.Error.WriteLine(ve.ErrorMessage);
             command.ShowHelp();
             return 1;
         }
-
-   
     }
 }

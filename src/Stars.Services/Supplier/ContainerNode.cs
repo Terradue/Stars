@@ -38,11 +38,20 @@ namespace Terradue.Stars.Services.Supplier
 
         public IGeometryObject Geometry => item.Geometry;
 
+        public IDictionary<string, object> Properties => item.Properties;
+
+        public bool CanBeRanged => item.CanBeRanged;
+
         public IDictionary<string, IAsset> GetAssets() => assets;
 
         public async Task<Stream> GetStreamAsync()
         {
             return await item.GetStreamAsync();
+        }
+
+        public async Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            return await item.GetStreamAsync(start, end);
         }
     }
 }

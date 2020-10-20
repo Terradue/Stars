@@ -12,12 +12,16 @@ using Terradue.Stars.Services.Model.Stac;
 using Stac.Catalog;
 using System.Collections.Generic;
 using Stac;
+using System.IO;
 
 namespace Terradue.Stars.Services.Translator
 {
     public class DefaultStacTranslator : ITranslator
     {
         private ILogger logger;
+
+        public int Priority { get; set; }
+        public string Key { get => "StacTranslator"; set {} }
 
         public DefaultStacTranslator(ILogger logger)
         {
@@ -52,9 +56,11 @@ namespace Terradue.Stars.Services.Translator
 
         private IItem CreateStacItemNode(IItem node)
         {
-            StacItem stacItem = new StacItem(node.Geometry, new Dictionary<string, object>(), node.Id);
+            StacItem stacItem = new StacItem(node.Geometry, node.Properties, node.Id);
             foreach(var kvp in node.GetAssets()){
-                var relativeUri = node.Uri.MakeRelativeUri(kvp.Value.Uri);
+                Uri relativeUri = kvp.Value.Uri;
+                if (kvp.Value.Uri.IsAbsoluteUri)
+                    relativeUri = node.Uri.MakeRelativeUri(kvp.Value.Uri);
                 stacItem.Assets.Add(kvp.Key, CreateStacAsset(kvp.Value, relativeUri)); 
             }
             return new StacItemNode(stacItem);

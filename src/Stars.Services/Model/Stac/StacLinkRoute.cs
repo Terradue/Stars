@@ -21,7 +21,15 @@ namespace Terradue.Stars.Services.Model.Stac
             this.stacParentObject = stacParentObject;
         }
 
-        public Uri Uri => link.Uri;
+        public Uri Uri
+        {
+            get
+            {
+                if (link.Uri.IsAbsoluteUri)
+                    return link.Uri;
+                return new Uri(stacParentObject.Uri, link.Uri);
+            }
+        }
 
         public ContentType ContentType
         {

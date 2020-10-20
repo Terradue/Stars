@@ -12,16 +12,24 @@ using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Processing;
 using Terradue.ServiceModel.Syndication;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
+using System.Net;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
     [PluginPriority(10)]
     public class AtomRouter : IRouter
     {
+        private ICredentials credentials;
 
-        public AtomRouter()
+        public AtomRouter(ICredentials credentials)
         {
+            this.credentials = credentials;
         }
+
+        public int Priority { get; set; }
+        public string Key { get => "Atom"; set { } }
 
         public string Label => "Atom";
 
@@ -48,7 +56,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {
-
+            credentials = serviceProvider.GetService<ICredentials>();
         }
 
         public async Task<IRoute> Route(IRoute node)
@@ -58,7 +66,10 @@ namespace Terradue.Stars.Services.Model.Atom
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
                 await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
-                return new AtomFeedCatalog(feedFormatter.Feed, node.Uri);
+                if (feedFormatter.Feed.Items.Count() == 1)
+                    return new AtomItemNode(feedFormatter.Feed.Items.First(), node.Uri, credentials);
+                else
+                    return new AtomFeedCatalog(feedFormatter.Feed, node.Uri, credentials);
             }
             catch (Exception)
             {
@@ -66,7 +77,7 @@ namespace Terradue.Stars.Services.Model.Atom
                 {
                     Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
                     await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
-                    return new AtomItemNode(itemFormatter.Item, node.Uri);
+                    return new AtomItemNode(itemFormatter.Item, node.Uri, credentials);
                 }
                 catch (Exception)
                 {

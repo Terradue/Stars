@@ -17,10 +17,10 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public async Task<IDestination> CreateDestination(string output)
         {
-            var dg = Plugins.FirstOrDefault(r => r.CanGuide(output));
-            if ( dg == null )
+            var dg = Plugins.FirstOrDefault(r => r.Value.CanGuide(output));
+            if ( dg.Value == null )
                 return null;
-            return await dg.Guide(output);
+            return await dg.Value.Guide(output);
         }
     }
 }

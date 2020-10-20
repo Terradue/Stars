@@ -29,7 +29,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ContentType ContentType => contentType;
 
-        public Uri Uri => stacObject.Uri;
+        public Uri Uri => stacObject.Uri == null ? new Uri(stacObject.Id + ".json", UriKind.Relative) : stacObject.Uri;
 
         public abstract ResourceType ResourceType { get; }
 
@@ -68,6 +68,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool IsRoot { get; set; }
 
+        public bool CanBeRanged => false;
+
         public abstract IList<IRoute> GetRoutes();
 
         public async Task<Stream> GetStreamAsync()
@@ -82,6 +84,11 @@ namespace Terradue.Stars.Services.Model.Stac
                 return ms as Stream;
             });
 
+        }
+
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

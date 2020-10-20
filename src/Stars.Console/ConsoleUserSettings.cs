@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Terradue.Stars
+namespace Terradue.Stars.Console
 {
     internal class ConsoleUserSettings
     {

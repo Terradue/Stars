@@ -18,6 +18,9 @@ namespace Terradue.Stars.Services.Supplier
             this.carriersManager = carriersManager;
         }
 
+        public int Priority { get; set; }
+        public string Key { get => Id; set {} }
+
         public string Id => "Native";
 
         public Task<IRoute> SearchFor(IRoute route)

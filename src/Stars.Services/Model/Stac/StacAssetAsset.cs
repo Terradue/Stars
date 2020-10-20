@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
@@ -15,10 +16,12 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private StacAsset asset;
+        private readonly ICredentials credentials;
 
-        public StacAssetAsset(StacAsset asset)
+        public StacAssetAsset(StacAsset asset, System.Net.ICredentials credentials = null)
         {
             this.asset = asset;
+            this.credentials = credentials;
         }
 
         public Uri Uri => asset.Uri;
@@ -49,7 +52,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IStreamable GetStreamable()
         {
-            return WebRoute.Create(Uri);
+            return WebRoute.Create(Uri, ContentLength, credentials);
         }
     }
 }

@@ -25,7 +25,7 @@ using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Supplier;
 
-namespace Terradue.Stars.Operations
+namespace Terradue.Stars.Console.Operations
 {
     internal abstract class BaseOperation
     {
@@ -86,13 +86,10 @@ namespace Terradue.Stars.Operations
             collection.Configure<GlobalOptions>(configuration.GetSection("Global"));
             // Web Download Carrier
             collection.AddTransient<ICarrier, LocalWebDownloadCarrier>();
-            CarrierManager.PluginsPriority.Add(typeof(LocalWebDownloadCarrier), 100);
             // Streaming Carrier
             collection.AddTransient<ICarrier, LocalStreamingCarrier>();
-            CarrierManager.PluginsPriority.Add(typeof(LocalStreamingCarrier), 75);
             // Native Carrier
-            collection.AddTransient<ICarrier, NativeCarrier>();
-            CarrierManager.PluginsPriority.Add(typeof(NativeCarrier), 10000);
+            //collection.AddTransient<ICarrier, NativeCarrier>();
 
             // Routing Service
             collection.AddTransient<RouterService, RouterService>();
@@ -114,10 +111,13 @@ namespace Terradue.Stars.Operations
         private void LoadPlugins(ServiceCollection collection, IConfigurationRoot configuration)
         {
             IConfigurationSection pluginSection = configuration.GetSection("Plugins");
+                
+            logger.LogDebug("Loading plugins [cwd: {0}]", Directory.GetCurrentDirectory());
             foreach (var plugin in pluginSection.GetChildren())
             {
                 if (plugin.GetSection("Assembly") == null)
                     continue;
+                
                 var assemblyPath = plugin.GetSection("Assembly").Value;
                 if (!File.Exists(assemblyPath))
                     continue;
@@ -169,6 +169,7 @@ namespace Terradue.Stars.Operations
             //only add secrets in development
             if (isDevelopment)
             {
+                builder.AddNewtonsoftJsonFile("appsettings.Development.json", optional: true);
                 builder.AddUserSecrets<Program>();
             }
 

@@ -76,8 +76,9 @@ namespace Terradue.Stars.Services.Router
                 {
                     // New route from new router!
                     var newRoute = await router.Route(route);
-                    if (newRoute is IItem)
-                        return await onItemFunction.Invoke(itemNode, prevRouter, state);
+                    if (newRoute is IItem){
+                        return await onItemFunction.Invoke(newRoute as IItem, prevRouter, state);
+                    }
 
                     catalogNode = newRoute as ICatalog;
 

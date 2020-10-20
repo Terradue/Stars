@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace Terradue.Stars.Interface.Router
         string Label { get; }
         string Id { get; }
         IGeometryObject Geometry { get; }
+        IDictionary<string, object> Properties { get; }
     }
 }

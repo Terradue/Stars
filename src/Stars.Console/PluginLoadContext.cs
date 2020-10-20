@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.Extensions.Logging;
 
-namespace Terradue.Stars
+namespace Terradue.Stars.Console
 {
     internal class PluginLoadContext : AssemblyLoadContext
     {

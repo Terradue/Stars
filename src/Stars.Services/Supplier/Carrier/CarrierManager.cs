@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         internal IEnumerable<ICarrier> GetCarriers(IRoute route, ISupplier supplier, IDestination destination)
         {
-            return Plugins.Where(r => r.CanDeliver(route, supplier, destination));
+            return Plugins.Where(r => r.Value.CanDeliver(route, supplier, destination)).Select(r => r.Value);
         }
 
         public Dictionary<string, IOrderedEnumerable<IDelivery>> GetAssetsDeliveryQuotations(ISupplier supplier, IAssetsContainer assetsContainer, IDestination destination)
@@ -42,7 +42,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(ISupplier supplier, IRoute route, IDestination destination)
         {
             List<IDelivery> quotes = new List<IDelivery>();
-            foreach (var carrier in Plugins)
+            foreach (var carrier in Plugins.Values)
             {
                 // Check that carrier can deliver
                 if (!carrier.CanDeliver(route, supplier, destination)) continue;
@@ -56,7 +56,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 catch (Exception e)
                 {
-                    logger.LogWarning("Cannot quote delivery for {0} with carrier {1}: {2}", route.Uri, carrier.Id, e.Message);
+                    logger.LogDebug("Cannot quote delivery for {0} with carrier {1}: {2}", route.Uri, carrier.Id, e.Message);
                 }
 
             }

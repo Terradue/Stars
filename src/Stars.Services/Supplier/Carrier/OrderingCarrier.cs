@@ -25,6 +25,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             this.carrierManager = carrierManager;
         }
 
+        public int Priority { get; set; }
+        public string Key { get => Id; set {} }
+
         public void Configure(IConfigurationSection configuration)
         {
         }

@@ -52,8 +52,8 @@ namespace Terradue.Stars.Services.Catalog
 
                     foreach (var router in routersManager.Plugins)
                     {
-                        if (!router.CanRoute(route)) continue;
-                        var routableNode = await router.Route(route);
+                        if (!router.Value.CanRoute(route)) continue;
+                        var routableNode = await router.Value.Route(route);
                         if (routableNode == null) continue;
                         stacNode = await translatorManager.Translate<StacNode>(routableNode);
                         if (stacNode != null) break;
@@ -61,12 +61,29 @@ namespace Terradue.Stars.Services.Catalog
                 }
             }
 
-            return await RelinkAndDeliverStacNode(stacNode, childrenRoutes, destination, depth);
+            var deliveredStacNode = await RelinkAndDeliverStacNode(stacNode, childrenRoutes, destination, depth);
+
+            if (depth == 1 && !stacNode.IsCatalog)
+            {
+                childrenRoutes = new List<IRoute>() { deliveredStacNode };
+                stacNode = CreateStacCatalogNode(stacNode.StacObject as StacItem, "root", new Uri("catalog.json", UriKind.Relative));
+                deliveredStacNode = await RelinkAndDeliverStacNode(stacNode, childrenRoutes, destination, depth);
+            }
+
+            return deliveredStacNode;
+        }
+
+        private StacCatalogNode CreateStacCatalogNode(StacItem stacItem, string id, Uri uri)
+        {
+            StacCatalog catalog = new StacCatalog(id, null);
+            catalog.Links.Add(StacLink.CreateItemLink(stacItem.Uri, stacItem.ToString()));
+            catalog.Uri = uri;
+            return new StacCatalogNode(catalog);
         }
 
         private async Task<IRoute> RelinkAndDeliverStacNode(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDestination destination, int depth)
         {
-            if (depth == 1) stacNode.IsRoot = true;
+            if (depth == 1 && stacNode.IsCatalog) stacNode.IsRoot = true;
             var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(null, stacNode, destination);
 
             IRoute stacRoute = null;
@@ -93,12 +110,15 @@ namespace Terradue.Stars.Services.Catalog
             if (stacCatalog == null) return;
 
             stacCatalog.Links.Clear();
-            stacCatalog.Links.Add(StacLink.CreateSelfLink(destination.Uri.MakeRelativeUri(delivery.TargetUri)));
+            if (stacNode.IsRoot)
+                stacCatalog.Links.Add(StacLink.CreateRootLink(destination.Uri.MakeRelativeUri(delivery.TargetUri), "application/json"));
+            else
+                stacCatalog.Links.Add(StacLink.CreateSelfLink(destination.Uri.MakeRelativeUri(delivery.TargetUri), stacNode.ContentType.ToString()));
 
             foreach (var childRoute in childrenRoutes)
             {
                 if (childRoute == null) continue;
-                var relativeUri = delivery.TargetUri.MakeRelativeUri(childRoute.Uri);
+                var relativeUri = childRoute.Uri.IsAbsoluteUri ? delivery.TargetUri.MakeRelativeUri(childRoute.Uri) : childRoute.Uri;
                 logger.LogDebug("Link to {0}", relativeUri.ToString());
                 switch (childRoute.ResourceType)
                 {

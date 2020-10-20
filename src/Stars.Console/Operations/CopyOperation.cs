@@ -22,7 +22,7 @@ using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
 
-namespace Terradue.Stars.Operations
+namespace Terradue.Stars.Console.Operations
 {
     [Command(Name = "copy", Description = "Copy the tree of resources and assets by routing from the input catalog")]
     internal class CopyOperation : BaseOperation
@@ -48,6 +48,9 @@ namespace Terradue.Stars.Operations
 
         [Option("--stop-on-error", "Stop on Error (copy) (default to false)", CommandOptionType.NoValue)]
         public bool StopOnError { get; set; } = false;
+
+        [Option("-si|--supplier-included", "Supplier to include for the data supply (default to all registered)", CommandOptionType.MultipleValue)]
+        public string[] SuppliersIncluded { get; set; }
 
 
         private RouterService routingTask;
@@ -130,13 +133,16 @@ namespace Terradue.Stars.Operations
             {
                 ContinueOnDeliveryError = !StopOnError
             };
+            // Limit suppliers only if the node is an item
+            if ( node is IItem )
+                supplyService.Parameters.SupplierFilters.IncludeIds = SuppliersIncluded;
 
             IRoute deliveryNode = await supplyService.ExecuteAsync(node, operationState.Destination);
 
             if (deliveryNode == null)
             {
                 if (StopOnError)
-                    throw new InvalidOperationException("[{0}] Delivery failed. Stopping");
+                    throw new InvalidOperationException("Delivery failed. Stopping");
                 operationState.LastRoute = null;
             }
             else
@@ -167,7 +173,6 @@ namespace Terradue.Stars.Operations
                 collection.AddTransient<ICarrier, OrderingCarrier>();
             if (ExtractArchives){
                 collection.AddTransient<IProcessing, ExtractArchiveAction>();
-                ProcessingManager.PluginsPriority.Add(typeof(ExtractArchiveAction), 1);
             }
         }
     }

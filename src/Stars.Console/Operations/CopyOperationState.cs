@@ -3,7 +3,7 @@ using Terradue.Stars.Interface.Router;
 
 using Terradue.Stars.Interface.Supplier.Destination;
 
-namespace Terradue.Stars.Operations
+namespace Terradue.Stars.Console.Operations
 {
     internal class CopyOperationState
     {

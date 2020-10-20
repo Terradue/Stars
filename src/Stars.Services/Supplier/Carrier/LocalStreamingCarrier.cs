@@ -24,14 +24,18 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public LocalStreamingCarrier(IOptions<GlobalOptions> options, ILogger logger) : base(options)
         {
             this.logger = logger;
+            Priority = 75;
         }
 
+        public override int Priority { get; set; }
+        public override string Key { get => Id; set { } }
 
         public override string Id => "Streaming";
 
         public override bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination)
         {
             if (!(destination is LocalDirectoryDestination)) return false;
+            if (route is IAsset) return true;
             if (!(route is IStreamable)) return false;
 
             return true;
@@ -42,34 +46,65 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileSystemRoute localRoute = new LocalFileSystemRoute(localDelivery.LocalPath, localDelivery.Route.ContentType, localDelivery.Route.ResourceType, localDelivery.Route.ContentLength);
 
-             if ( !carrierServiceOptions.ForceOverwrite && localRoute.File.Exists && delivery.Route.ContentLength > 0 &&
-                Convert.ToUInt64(localRoute.File.Length) == delivery.Route.ContentLength ){
+            IStreamable streamable = delivery.Route as IStreamable;
+            if (streamable == null && delivery.Route is IAsset)
+                streamable = (delivery.Route as IAsset).GetStreamable();
+
+            if (streamable == null)
+                throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Route.Uri));
+
+            if (!carrierServiceOptions.ForceOverwrite && localRoute.File.Exists && streamable.ContentLength > 0 &&
+               Convert.ToUInt64(localRoute.File.Length) == streamable.ContentLength)
+            {
                 logger.LogDebug("File {0} exists with the same size. Skipping download", localRoute.File.Name);
                 return localRoute;
             }
-
-            using (var stream = await (delivery.Route as IStreamable).GetStreamAsync())
-            {
-                await StreamToFile(stream, localRoute);
-            }
+            await StreamToFile(streamable, localRoute);
             return localRoute;
         }
 
-        private async Task StreamToFile(Stream stream, LocalFileSystemRoute localRoute)
+        private async Task StreamToFile(IStreamable streamable, LocalFileSystemRoute localRoute)
         {
             FileInfo file = new FileInfo(localRoute.Uri.AbsolutePath);
-            using ( FileStream fileStream = file.Create()){
-                await stream.CopyToAsync(fileStream);
-                await fileStream.FlushAsync();
+            Stream stream = null;
+
+            // Try a resume
+            if (file.Exists && streamable.CanBeRanged)
+            {
+                logger.LogDebug("Trying to resume from {0}", file.Length);
+                stream = await streamable.GetStreamAsync(file.Length);
+                using (FileStream fileStream = file.OpenWrite())
+                {
+                    fileStream.Seek(0, SeekOrigin.End);
+                    await stream.CopyToAsync(fileStream);
+                    await fileStream.FlushAsync();
+                }
             }
+            else
+            {
+                stream = await streamable.GetStreamAsync();
+                using (FileStream fileStream = file.Create())
+                {
+                    await stream.CopyToAsync(fileStream);
+                    await fileStream.FlushAsync();
+                }
+            }
+
+
         }
 
 
         protected override (string, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory)
         {
+            IStreamable streamable = route as IStreamable;
+            if (streamable == null && route is IAsset)
+                streamable = (route as IAsset).GetStreamable();
+
+            if (streamable == null)
+                throw new InvalidDataException(string.Format("There is no streamable content in {0}", route.Uri));
             string filename = route.Uri == null ? "unknown" : Path.GetFileName(route.Uri.ToString());
-            ulong contentLength = route.ContentLength;
-            ContentDisposition contentDisposition = (route as IStreamable).ContentDisposition;
+            ulong contentLength = streamable.ContentLength;
+            ContentDisposition contentDisposition = streamable.ContentDisposition;
             if (contentDisposition != null && !string.IsNullOrEmpty(contentDisposition.FileName))
                 filename = contentDisposition.FileName;
 

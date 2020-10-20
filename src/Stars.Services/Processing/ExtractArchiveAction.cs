@@ -26,11 +26,16 @@ namespace Terradue.Stars.Services.Processing
         private readonly CarrierManager carrierManager;
         private readonly ILogger logger;
 
+        public int Priority { get; set; }
+        public string Key { get; set; }
+
         public ExtractArchiveAction(DestinationManager destinationManager, CarrierManager carrierManager, ILogger logger)
         {
             this.destinationManager = destinationManager;
             this.carrierManager = carrierManager;
             this.logger = logger;
+            Key = "ExtractArchive";
+            Priority = 1;
         }
 
         public bool CanProcess(IRoute route)

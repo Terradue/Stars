@@ -47,14 +47,14 @@ namespace Terradue.Stars.Services.Supplier
 
             while (deliveryRoute == null && suppliers.MoveNext())
             {
-                logger.LogDebug("Searching at {0} supplier for {1}", suppliers.Current.Id, route.Uri.ToString());
+                logger.LogInformation("[{0}] Searching for {1}", suppliers.Current.Id, route.Uri.ToString());
                 var supplierNode = await AskForSupply(route, suppliers.Current);
                 if (supplierNode == null)
                 {
-                    logger.LogDebug("[{0}]  -->  no supply possible", suppliers.Current.Id);
+                    logger.LogInformation("[{0}] --> no supply possible", suppliers.Current.Id);
                     continue;
                 }
-                logger.LogDebug("[{0}] resource found at {1}", suppliers.Current.Id, supplierNode.Uri);
+                logger.LogInformation("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType);
 
                 IDeliveryQuotation deliveryQuotation = QuoteDelivery(suppliers.Current, supplierNode, destination);
                 if (deliveryQuotation == null)
@@ -137,7 +137,7 @@ namespace Terradue.Stars.Services.Supplier
                 if (route == null) return null;
                 nodeDeliveredRoute = route;
                 IRouter router = routersManager.GetRouter(route);
-                if ( router != null )
+                if (router != null)
                     nodeDeliveredRoute = await router.Route(route);
             }
             Dictionary<string, IAsset> assetsDeliveredRoutes = new Dictionary<string, IAsset>();
@@ -176,10 +176,10 @@ namespace Terradue.Stars.Services.Supplier
 
         private async Task<IRoute> Deliver(string key, IOrderedEnumerable<IDelivery> deliveries)
         {
-            logger.LogInformation("Delivery for {0}", key);
+            logger.LogInformation("Starting delivery for {0}", key);
             foreach (var delivery in deliveries)
             {
-                logger.LogInformation("Delivering {0}[{1}] ({2})...", key, delivery.Route.ResourceType, delivery.Route.Uri);
+                logger.LogInformation("Delivering {0} {1} {2} ({3})...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id);
                 try
                 {
                     IRoute delivered = await delivery.Carrier.Deliver(delivery);
@@ -191,7 +191,7 @@ namespace Terradue.Stars.Services.Supplier
                 }
                 catch (Exception e)
                 {
-                    logger.LogError("Error supplying {0} to {1} : {2}", delivery.Route.Uri, delivery.TargetUri, e.Message);
+                    logger.LogError("Error delivering {0} ({1}) : {2}", key, delivery.Carrier.Id, e.Message);
                 }
             }
             return null;
@@ -199,12 +199,29 @@ namespace Terradue.Stars.Services.Supplier
 
         private IDeliveryQuotation QuoteDelivery(ISupplier supplier, IRoute supplierRoute, IDestination destination)
         {
-            return supplier.QuoteDelivery(supplierRoute, destination);
+            try
+            {
+                return supplier.QuoteDelivery(supplierRoute, destination);
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning("Exception during quotation for {0} at {1} : {2}", supplierRoute.Uri, supplier.Id, e.Message);
+            }
+            return null;
         }
 
         private async Task<IRoute> AskForSupply(IRoute node, ISupplier supplier)
         {
-            return await supplier.SearchFor(node);
+            try
+            {
+                return await supplier.SearchFor(node);
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning("Exception during search for {0} at {1} : {2}", node.Uri, supplier.Id, e.Message);
+            }
+            return null;
+
         }
 
         private IEnumerator<ISupplier> InitSuppliersEnumerator(IRoute route)
