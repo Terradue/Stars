@@ -84,9 +84,7 @@ pipeline {
       steps {
         script {
           unstash name: 'stars-packages'
-          def starsrpm = fi  environment {
-        DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
-      }ndFiles(glob: "src/Stars.Console/bin/**/Stars.*.centos.7-x64.rpm")
+          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.centos.7-x64.rpm")
           def descriptor = readDescriptor()
           sh "mv ${starsrpm[0].path} ."
           def mType=getTypeOfVersion(env.BRANCH_NAME)
