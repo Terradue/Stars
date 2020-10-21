@@ -112,7 +112,7 @@ namespace Terradue.Stars.Console.Operations
         {
             IConfigurationSection pluginSection = configuration.GetSection("Plugins");
                 
-            logger.LogDebug("Loading plugins [cwd: {0}]", Directory.GetCurrentDirectory());
+            
             foreach (var plugin in pluginSection.GetChildren())
             {
                 if (plugin.GetSection("Assembly") == null)
@@ -122,6 +122,7 @@ namespace Terradue.Stars.Console.Operations
                 if (!File.Exists(assemblyPath))
                     continue;
 
+                logger.LogDebug("Loading plugins from {0}", assemblyPath);
                 PluginLoadContext loadContext = new PluginLoadContext(assemblyPath, logger, AssemblyLoadContext.Default);
                 var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(assemblyPath)));
 

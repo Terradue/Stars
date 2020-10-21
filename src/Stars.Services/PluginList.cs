@@ -11,9 +11,12 @@ namespace Terradue.Stars.Services
 
         public PluginList(IEnumerable<T> plugins)
         {
-            foreach (var plugin in plugins)
+            if (plugins != null)
             {
-                this.Add(plugin.Key, plugin);
+                foreach (var plugin in plugins)
+                {
+                    this.Add(plugin.Key, plugin);
+                }
             }
         }
 
