@@ -6,7 +6,7 @@ namespace Terradue.Stars.Services
     public class CredentialsConfigurationSection
     {
         [JsonProperty]
-        public string Type { get; set; }
+        public string AuthType { get; set; }
 
         [JsonProperty]
         public string UriPrefix { get; set; }
