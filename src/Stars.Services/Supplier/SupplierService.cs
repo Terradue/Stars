@@ -177,6 +177,7 @@ namespace Terradue.Stars.Services.Supplier
                 logger.LogInformation("Delivering {0} {1} {2} ({3})...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id);
                 try
                 {
+                    delivery.Destination.Create();
                     IRoute delivered = await delivery.Carrier.Deliver(delivery);
                     if (delivered != null)
                     {

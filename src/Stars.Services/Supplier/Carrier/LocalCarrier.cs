@@ -68,7 +68,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return new LocalDelivery(this, route, supplier, directory, localFile.Item1, cost);
         }
 
-        protected abstract (string, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory);
+        protected abstract (LocalFileDestination, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory);
 
         public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {

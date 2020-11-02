@@ -13,22 +13,22 @@ namespace Terradue.Stars.Services.Supplier
         private readonly IRoute route;
         private readonly ISupplier supplier;
         private readonly LocalDirectoryDestination dirDestination;
-        private readonly string localPath;
+        private readonly LocalFileDestination fileDestination;
         private readonly int cost;
 
-        public LocalDelivery(ICarrier carrier, IRoute route, ISupplier supplier, LocalDirectoryDestination dirDestination, string localPath, int cost)
+        public LocalDelivery(ICarrier carrier, IRoute route, ISupplier supplier, LocalDirectoryDestination dirDestination, LocalFileDestination fileDestination, int cost)
         {
             this.carrier = carrier;
             this.route = route;
             this.supplier = supplier;
             this.dirDestination = dirDestination;
-            this.localPath = localPath;
+            this.fileDestination = fileDestination;
             this.cost = cost;
         }
 
         public int Cost => cost;
 
-        public IDestination Destination => dirDestination;
+        public IDestination Destination => fileDestination;
 
         public IRoute Route => route;
 
@@ -36,8 +36,8 @@ namespace Terradue.Stars.Services.Supplier
 
         public ISupplier Supplier => supplier;
 
-        public Uri TargetUri => new Uri(localPath);
+        public Uri TargetUri => fileDestination.Uri;
 
-        public string LocalPath => localPath;
+        public string LocalPath => fileDestination.Uri.ToString();
     }
 }
