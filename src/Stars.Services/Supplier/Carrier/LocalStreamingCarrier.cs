@@ -69,7 +69,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             Stream stream = null;
 
             // Try a resume
-            if (file.Exists && streamable.CanBeRanged)
+            if (file.Exists && file.Length > 0 && streamable.CanBeRanged)
             {
                 logger.LogDebug("Trying to resume from {0}", file.Length);
                 stream = await streamable.GetStreamAsync(file.Length);
@@ -94,7 +94,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         }
 
 
-        protected override (string, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory)
+        protected override (LocalFileDestination, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory)
         {
             IStreamable streamable = route as IStreamable;
             if (streamable == null && route is IAsset)
@@ -108,7 +108,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             if (contentDisposition != null && !string.IsNullOrEmpty(contentDisposition.FileName))
                 filename = contentDisposition.FileName;
 
-            return (Path.Join(directory.Uri.ToString(), filename), contentLength);
+            return (new LocalFileDestination(new FileInfo(Path.Join(directory.Uri.LocalPath, filename))), contentLength);
         }
     }
 }

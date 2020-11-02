@@ -16,6 +16,8 @@ namespace Terradue.Stars.Interface.Supplier
 
         Uri TargetUri { get; }
 
+        IDestination Destination { get; }
+
         string ToString();
 
     }

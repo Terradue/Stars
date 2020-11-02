@@ -78,10 +78,7 @@ namespace Terradue.Stars.Services
 
         public static Type GetTypeFromAssembly(string typeName, Assembly assembly)
         {
-            var type = Type.GetType(typeName);
-            if (type != null) return type;
-
-            type = assembly.GetType(typeName);
+            var type = assembly.GetType(typeName);
             if (type != null)
                 return type;
             return null;

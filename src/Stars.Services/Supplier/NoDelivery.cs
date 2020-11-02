@@ -27,5 +27,7 @@ namespace Terradue.Stars.Services.Supplier
         public ISupplier Supplier => supplier;
 
         public Uri TargetUri => route.Uri;
+
+        public IDestination Destination => null;
     }
 }

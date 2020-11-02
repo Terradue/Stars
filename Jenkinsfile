@@ -41,7 +41,7 @@ pipeline {
             sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.19.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet deb -c ${env.CONFIGURATION} -r debian.9-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*'
+            stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
             archiveArtifacts artifacts: 'src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
           }

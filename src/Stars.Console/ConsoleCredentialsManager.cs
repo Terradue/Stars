@@ -62,11 +62,19 @@ namespace Terradue.Stars.Console.Operations
         {
             if (console.IsInputRedirected) return null;
 
+            string usernameLabel = "username";
+            string passwordLabel = "password";
+
+            if ( authType.Equals("s3", StringComparison.InvariantCultureIgnoreCase) ){
+                usernameLabel = "S3 Key Id";
+                passwordLabel = "S3 Secret";
+            }
+
             string username = null;
             int rtry = 3;
             while (string.IsNullOrEmpty(username) && rtry > 0)
             {
-                console.Write("username: ");
+                console.Write(usernameLabel + ": ");
                 username = console.In.ReadLine();
                 rtry--;
             }
@@ -75,7 +83,7 @@ namespace Terradue.Stars.Console.Operations
                 console.WriteLine("No input. Skipping");
                 return null;
             }
-            console.Write("password: ");
+            console.Write(passwordLabel+ ": ");
             var pass = string.Empty;
             ConsoleKey key;
             do

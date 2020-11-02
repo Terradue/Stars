@@ -87,7 +87,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         }
 
 
-        protected override (string, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory)
+        protected override (LocalFileDestination, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory)
         {
             string filename = route.Uri == null ? "unknown" : Path.GetFileName(route.Uri.ToString());
 
@@ -127,7 +127,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
 
 
-            return (Path.Join(directory.Uri.ToString(), filename), contentLength);
+            return (new LocalFileDestination(new FileInfo(Path.Join(directory.Uri.LocalPath, filename))), contentLength);
         }
     }
 }

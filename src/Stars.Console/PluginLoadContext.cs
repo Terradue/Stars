@@ -22,7 +22,13 @@ namespace Terradue.Stars.Console
         {
             try
             {
-                mainAppAssemblyLoadContext.LoadFromAssemblyName(assemblyName);
+                var assembly = mainAppAssemblyLoadContext.LoadFromAssemblyName(assemblyName);
+                string assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+                Assembly pluginAssembly = null;
+                if (assemblyPath != null)
+                {
+                    pluginAssembly = LoadFromAssemblyPath(assemblyPath);
+                }
                 return null;
             }
             catch (Exception)
