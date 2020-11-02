@@ -32,13 +32,13 @@ namespace Terradue.Stars.Console.Operations
                 if (cred != null)
                 {
                     base.CacheCredential(uriCut, authType, cred);
-                    PromptSaveCredentials(cred, uriCut);
+                    PromptSaveCredentials(cred, uriCut, authType);
                 }
             }
             return cred;
         }
 
-        private void PromptSaveCredentials(ICredentials cred, Uri uri)
+        private void PromptSaveCredentials(ICredentials cred, Uri uri, string authType)
         {
             string answer = "p";
             int i = 3;
@@ -49,12 +49,12 @@ namespace Terradue.Stars.Console.Operations
                 i--;
             }
             if (answer == "y")
-                SaveCredentials(cred, uri);
+                SaveCredentials(cred, uri, authType);
         }
 
-        private void SaveCredentials(ICredentials cred, Uri uri)
+        private void SaveCredentials(ICredentials cred, Uri uri, string authType)
         {
-            CredentialsConfigurationSection credConfigSection = cred.ToCredentialsConfigurationSection(uri);
+            CredentialsConfigurationSection credConfigSection = cred.ToCredentialsConfigurationSection(uri, authType);
             consoleUserSettings.AddOrUpdateSetting<CredentialsConfigurationSection>("Credentials:" + Guid.NewGuid().ToString(), credConfigSection);
         }
 

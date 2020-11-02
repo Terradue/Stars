@@ -46,12 +46,12 @@ namespace Terradue.Stars.Services
             return sr.ReadToEnd();
         }
 
-        public static CredentialsConfigurationSection ToCredentialsConfigurationSection(this ICredentials cred, Uri uri)
+        public static CredentialsConfigurationSection ToCredentialsConfigurationSection(this ICredentials cred, Uri uri, string authType)
         {
             CredentialsConfigurationSection credentialsConfigurationSection = new CredentialsConfigurationSection();
             if (cred is NetworkCredential)
             {
-                credentialsConfigurationSection.Type = "Basic";
+                credentialsConfigurationSection.AuthType = authType;
                 credentialsConfigurationSection.UriPrefix = uri.ToString();
                 credentialsConfigurationSection.Username = (cred as NetworkCredential).UserName;
                 credentialsConfigurationSection.Password = (cred as NetworkCredential).Password;
