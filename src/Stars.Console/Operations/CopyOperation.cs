@@ -119,6 +119,7 @@ namespace Terradue.Stars.Console.Operations
             if (operationState.Depth == 0) return state;
 
             var newDestination = operationState.Destination.RelativeTo(parentRoute, newRoute);
+            newDestination.Create();
 
             return new CopyOperationState(operationState.Depth + 1, newDestination);
         }

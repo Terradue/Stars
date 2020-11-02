@@ -310,6 +310,30 @@
             }
         },    
         {
+            "name": "Copy OpenSearch single Sentinel2 from T2",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "-v",
+                "copy",
+                "https://catalog.terradue.com/sentinel2/search?uid=S2A_MSIL2A_20201009T095041_N0214_R079_T33SVB_20201009T121025&do=terradue",
+                "-r",
+                "4",
+                "--output-dir",
+                "/tmp/stars"
+            ],
+           "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
