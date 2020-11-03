@@ -10,5 +10,7 @@ namespace Terradue.Stars.Interface.Supplier
         string Id { get; }
 
         Uri OriginUri { get; }
+
+        ISupplier Supplier { get; }
     }
 }

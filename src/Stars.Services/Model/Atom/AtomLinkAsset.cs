@@ -16,12 +16,14 @@ namespace Terradue.Stars.Services.Model.Atom
         private SyndicationLink link;
         private SyndicationItem item;
         private readonly ICredentials credentials;
+        private readonly WebRoute webRoute;
 
         public AtomLinkAsset(SyndicationLink link, SyndicationItem item, System.Net.ICredentials credentials = null)
         {
             this.link = link;
             this.item = item;
             this.credentials = credentials;
+            this.webRoute = WebRoute.Create(Uri, Convert.ToUInt64(link.Length), credentials);
         }
 
         public Uri Uri => link.Uri;
@@ -41,19 +43,19 @@ namespace Terradue.Stars.Services.Model.Atom
             }
         }
 
-        public ulong ContentLength => Convert.ToUInt64(link.Length);
+        public ulong ContentLength => link.Length == 0 ? webRoute.ContentLength : Convert.ToUInt64(link.Length);
 
         public string Label => string.Format("[{0}] {1}", string.Join(",", link.RelationshipType), string.IsNullOrEmpty(link.Title) ? Path.GetFileName(link.Uri.AbsolutePath) : link.Title);
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public string Filename => Path.GetFileName(Uri.ToString());
-
         public IEnumerable<string> Roles => new string[] { link.RelationshipType };
+
+        public ContentDisposition ContentDisposition => webRoute.ContentDisposition;
 
         public IStreamable GetStreamable()
         {
-            return WebRoute.Create(Uri, ContentLength, credentials);
+            return webRoute;
         }
 
     }

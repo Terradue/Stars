@@ -34,15 +34,15 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public string Id => "Ordering";
 
-        public bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination)
+        public bool CanDeliver(IRoute route, IDestination destination)
         {
             if (!(route is IOrderable)) return false;
-            return carrierManager.GetCarriers(CreateOrderVoucher(route, supplier, "dummy"), supplier, destination).Count() > 0;
+            return carrierManager.GetCarriers(CreateOrderVoucher(route as IOrderable, "dummy"), destination).Count() > 0;
         }
 
-        private OrderVoucher CreateOrderVoucher(IRoute route, ISupplier supplier, string orderId)
+        private OrderVoucher CreateOrderVoucher(IOrderable route, string orderId)
         {
-            return new OrderVoucher(route as IOrderable, supplier, orderId);
+            return new OrderVoucher(route, orderId);
         }
 
         public async Task<IRoute> Deliver(IDelivery delivery)
@@ -52,16 +52,16 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return await orderedDelivery.VoucherDelivery.Carrier.Deliver(orderedDelivery.VoucherDelivery);
         }
 
-        public IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination)
+        public IDelivery QuoteDelivery(IRoute route, IDestination destination)
         {
-            if (!CanDeliver(route, supplier, destination)) return null;
+            if (!CanDeliver(route, destination)) return null;
 
             IOrderable orderableRoute = route as IOrderable;
 
-            OrderVoucher orderVoucher = CreateOrderVoucher(route, supplier, orderableRoute.Id);
+            OrderVoucher orderVoucher = CreateOrderVoucher(orderableRoute, orderableRoute.Id);
 
             // Find a carrier for the voucher
-            var deliveryQuotes = carrierManager.GetSingleDeliveryQuotations(supplier, orderVoucher, destination);
+            var deliveryQuotes = carrierManager.GetSingleDeliveryQuotations(orderVoucher, destination);
             if ( deliveryQuotes == null ) return null;
             var voucherDelivery = deliveryQuotes.FirstOrDefault();
             if ( voucherDelivery == null ) return null;

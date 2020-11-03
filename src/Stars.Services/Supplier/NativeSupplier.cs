@@ -30,7 +30,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public IDeliveryQuotation QuoteDelivery(IRoute resource, IDestination destination)
         {
-            return carriersManager.QuoteDeliveryFromCarriers((this, resource), destination);
+            return carriersManager.QuoteDeliveryFromCarriers(resource, destination);
         }
 
         public Task<IOrder> Order(IOrderable orderableRoute)

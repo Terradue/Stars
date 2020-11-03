@@ -50,6 +50,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacAsset StacAsset { get => asset; }
 
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Filename };
         public IStreamable GetStreamable()
         {
             return WebRoute.Create(Uri, ContentLength, credentials);

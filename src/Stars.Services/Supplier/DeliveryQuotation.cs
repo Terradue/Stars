@@ -12,14 +12,12 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class DeliveryQuotation : IDeliveryQuotation
     {
-        private readonly ISupplier supplier;
         private readonly (IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes;
         private IDictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
         private readonly IDestination destination;
 
-        public DeliveryQuotation(ISupplier supplier, (IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes, IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes, IDestination destination)
+        public DeliveryQuotation((IRoute, IOrderedEnumerable<IDelivery>) nodeQuotes, IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes, IDestination destination)
         {
-            this.supplier = supplier;
             this.nodeQuotes = nodeQuotes;
             this.assetsDeliveryQuotes = assetsQuotes;
             this.destination = destination;
@@ -30,8 +28,6 @@ namespace Terradue.Stars.Services.Supplier
         public IDictionary<string, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes => assetsDeliveryQuotes;
 
         public (IRoute, IOrderedEnumerable<IDelivery>) NodeDeliveryQuotes => nodeQuotes;
-
-        public ISupplier Supplier => supplier;
 
         public IDestination Destination => destination;
     }

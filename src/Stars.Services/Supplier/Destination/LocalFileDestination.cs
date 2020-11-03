@@ -10,86 +10,71 @@ namespace Terradue.Stars.Services.Supplier.Destination
     public class LocalFileDestination : IDestination
     {
         private readonly FileInfo file;
+        private readonly IRoute route;
 
-        public LocalFileDestination(FileInfo file)
+        private LocalFileDestination(FileInfo file, IRoute route)
         {
             this.file = file;
+            this.route = route;
         }
 
         public Uri Uri => new Uri(file.FullName);
 
-        public static LocalFileDestination Create(string destination)
+        public static LocalFileDestination Create(string directory, IRoute route)
         {
-            FileInfo file = new FileInfo(destination);
-            return new LocalFileDestination(file);
+            var filename = Path.GetFileName(route.Uri.LocalPath);
+            if (route.ContentDisposition != null && !string.IsNullOrEmpty(route.ContentDisposition.FileName))
+                filename = route.ContentDisposition.FileName;
+            if ( string.IsNullOrEmpty(filename) )
+                filename = Guid.NewGuid().ToString("N");
+            return new LocalFileDestination(new FileInfo(Path.Join(directory, filename)), route);
         }
 
-        public void Create()
+        public void PrepareDestination()
         {
             file.Directory.Create();
         }
 
-        public IDestination RelativeTo(IRoute route, IRoute subroute)
+        public IDestination To(IRoute subroute, string relPathFix = null)
         {
-            string relPath = "";
-            if (subroute.Uri.IsAbsoluteUri)
+            // we first integrate the relPath
+            string relPath = relPathFix ?? "";
+
+            // we identify the filename
+            string filename = Path.GetFileName(subroute.Uri.IsAbsoluteUri ? subroute.Uri.LocalPath : subroute.Uri.ToString());
+            if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
+                filename = subroute.ContentDisposition.FileName;
+
+            // if the relPath requested is null, we will build one from the origin route to the new one
+            if (relPathFix == null)
             {
-                var relUri = route.Uri.MakeRelativeUri(subroute.Uri);
-                if (relUri.IsAbsoluteUri)
+                if (subroute.Uri.IsAbsoluteUri)
                 {
-                    if (!string.IsNullOrEmpty(Path.GetDirectoryName(subroute.Uri.AbsolutePath)) &&
-                        !string.IsNullOrEmpty(Path.GetDirectoryName(route.Uri.AbsolutePath)) &&
-                        Path.GetDirectoryName(subroute.Uri.AbsolutePath).Contains(Path.GetDirectoryName(route.Uri.AbsolutePath)))
+                    // Let's see if the 2 routes are relative
+                    var relUri = route.Uri.MakeRelativeUri(subroute.Uri);
+                    // If not, let's see if they have a common pattern
+                    if (relUri.IsAbsoluteUri)
                     {
-                        var startIndex = Path.GetDirectoryName(subroute.Uri.AbsolutePath).IndexOf(Path.GetDirectoryName(route.Uri.AbsolutePath));
-                        relPath = Path.GetDirectoryName(subroute.Uri.AbsolutePath).Substring(startIndex).Replace(Path.GetDirectoryName(route.Uri.AbsolutePath), "");
+                        if (!string.IsNullOrEmpty(Path.GetDirectoryName(subroute.Uri.AbsolutePath)) &&
+                            !string.IsNullOrEmpty(Path.GetDirectoryName(route.Uri.AbsolutePath)) &&
+                            Path.GetDirectoryName(subroute.Uri.AbsolutePath).StartsWith(Path.GetDirectoryName(route.Uri.AbsolutePath)))
+                        {
+                            relPath = Path.GetDirectoryName(subroute.Uri.AbsolutePath).Replace(Path.GetDirectoryName(route.Uri.AbsolutePath), "");
+                        }
                     }
                     else
-                        relPath = string.Format("{0}{1}", relUri.Host, relUri.AbsolutePath);
+                        relPath = Path.GetDirectoryName(relUri.ToString());
                 }
                 else
-                    relPath = Path.GetDirectoryName(relUri.ToString());
+                    relPath = Path.GetDirectoryName(subroute.Uri.ToString());
             }
-            else
-                relPath = Path.GetDirectoryName(subroute.Uri.ToString());
-            var newDirPath = Path.Join(file.FullName, relPath);
-            DirectoryInfo dir = new DirectoryInfo(newDirPath);
-            return new LocalDirectoryDestination(dir);
+            var newFilePath = Path.Join(file.Directory.FullName, relPath, filename);
+            return new LocalFileDestination(new FileInfo(newFilePath), subroute);
         }
 
-        public IDestination To(IRoute route)
+        public override string ToString()
         {
-            string relPath = "";
-            if (route.Uri.IsAbsoluteUri)
-            {
-                var relUri = route.Uri.MakeRelativeUri(route.Uri);
-                if (relUri.IsAbsoluteUri)
-                {
-                    if (!string.IsNullOrEmpty(Path.GetDirectoryName(route.Uri.AbsolutePath)) &&
-                        !string.IsNullOrEmpty(Path.GetDirectoryName(Uri.AbsolutePath)) &&
-                        Path.GetDirectoryName(route.Uri.AbsolutePath).Contains(Path.GetDirectoryName(route.Uri.AbsolutePath)))
-                    {
-                        var startIndex = Path.GetDirectoryName(route.Uri.AbsolutePath).IndexOf(Path.GetDirectoryName(Uri.AbsolutePath));
-                        relPath = Path.GetDirectoryName(route.Uri.AbsolutePath).Substring(startIndex).Replace(Path.GetDirectoryName(Uri.AbsolutePath), "");
-                    }
-                    else
-                        relPath = string.Format("{0}{1}", relUri.Host, relUri.AbsolutePath);
-                }
-                else
-                    relPath = Path.GetDirectoryName(relUri.ToString());
-            }
-            else
-                relPath = Path.GetDirectoryName(route.Uri.ToString());
-            var newDirPath = Path.Join(file.Directory.FullName, relPath);
-            DirectoryInfo dir = new DirectoryInfo(newDirPath);
-            return new LocalDirectoryDestination(dir);
-        }
-
-        public IDestination To(string relPath)
-        {
-            var newDirPath = Path.Join(file.Directory.FullName, relPath);
-            DirectoryInfo dir = new DirectoryInfo(newDirPath);
-            return new LocalDirectoryDestination(dir);
+            return Uri.LocalPath;
         }
     }
 }

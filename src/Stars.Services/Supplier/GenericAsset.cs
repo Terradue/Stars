@@ -33,6 +33,8 @@ namespace Terradue.Stars.Services.Supplier
 
         public ulong ContentLength => route.ContentLength;
 
+        public ContentDisposition ContentDisposition => route.ContentDisposition;
+
         public IStreamable GetStreamable()
         {
             return route as IStreamable;

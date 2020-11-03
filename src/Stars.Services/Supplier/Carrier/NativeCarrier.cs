@@ -33,7 +33,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public string Id => "Native";
 
-        public bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination)
+        public bool CanDeliver(IRoute route, IDestination destination)
         {
             return (route != null);
         }
@@ -47,9 +47,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return Task.FromResult<IRoute>(delivery.Route);
         }
 
-        public IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination)
+        public IDelivery QuoteDelivery(IRoute route, IDestination destination)
         {
-            return new NoDelivery(route, supplier, this);
+            return new NoDelivery(route, this);
         }
     }
 }

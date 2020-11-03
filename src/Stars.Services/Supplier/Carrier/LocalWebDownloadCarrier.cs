@@ -35,9 +35,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public override string Id => "WebDownload";
 
-        public override bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination)
+        public override bool CanDeliver(IRoute route, IDestination destination)
         {
-            if (!(destination is LocalDirectoryDestination)) return false;
+            if (!(destination is LocalFileDestination)) return false;
             if (route is IStreamable) return false;
 
             try
@@ -87,47 +87,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         }
 
 
-        protected override (LocalFileDestination, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory)
-        {
-            string filename = route.Uri == null ? "unknown" : Path.GetFileName(route.Uri.ToString());
-
-            ulong contentLength = route.ContentLength;
-
-            var wr = CreateWebRequest(route.Uri);
-            try
-            {
-                using (var response = wr.GetResponse())
-                {
-                    if (response.Headers.AllKeys.Contains("Content-Disposition"))
-                    {
-                        try
-                        {
-                            ContentDisposition disposition = new ContentDisposition(response.Headers["Content-Disposition"]);
-                            if (disposition != null && !string.IsNullOrEmpty(disposition.FileName)) filename = disposition.FileName;
-                        }
-                        catch (FormatException) { }
-                    }
-                    if (response.ContentLength > 0)
-                    {
-                        ulong cl = Convert.ToUInt64(response.ContentLength);
-                        if (cl > 0) contentLength = cl;
-                    }
-                }
-            }
-            catch (WebException e)
-            {
-                if (e.Status == WebExceptionStatus.ProtocolError)
-                {
-                    HttpWebResponse webResponse = e.Response as HttpWebResponse;
-                    if (webResponse != null && webResponse.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        throw e;
-                    }
-                }
-            }
-
-
-            return (new LocalFileDestination(new FileInfo(Path.Join(directory.Uri.LocalPath, filename))), contentLength);
-        }
+        
     }
 }

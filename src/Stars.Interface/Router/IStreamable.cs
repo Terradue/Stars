@@ -12,7 +12,7 @@ namespace Terradue.Stars.Interface.Router
 
         Task<Stream> GetStreamAsync();
 
-        ContentDisposition ContentDisposition { get; }
+        
 
         Task<Stream> GetStreamAsync(long start, long end = -1);
     }

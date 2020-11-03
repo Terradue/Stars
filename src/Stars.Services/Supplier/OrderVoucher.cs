@@ -13,13 +13,11 @@ namespace Terradue.Stars.Services.Supplier
     public class OrderVoucher : IRoute, IStreamable, IOrder, IAsset
     {
         private IOrderable orderableRoute;
-        private ISupplier supplier;
         private readonly string orderId;
 
-        public OrderVoucher(IOrderable route, ISupplier supplier, string orderId)
+        public OrderVoucher(IOrderable route, string orderId)
         {
             this.orderableRoute = route;
-            this.supplier = supplier;
             this.orderId = orderId;
         }
 
@@ -36,7 +34,7 @@ namespace Terradue.Stars.Services.Supplier
         public ulong ContentLength => orderableRoute.ContentLength;
 
         [JsonProperty]
-        public string SupplierType => supplier.GetType().FullName;
+        public string SupplierType => orderableRoute.Supplier.GetType().FullName;
 
         [JsonIgnore]
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = string.Format("{0}.order.json", orderId) };
@@ -45,13 +43,13 @@ namespace Terradue.Stars.Services.Supplier
         public string OrderId => orderId;
 
         [JsonIgnore]
-        public ISupplier Supplier { get => supplier; set => supplier = value; }
+        public ISupplier Supplier { get => orderableRoute.Supplier; }
 
         [JsonIgnore]
         public IOrderable OrderableRoute { get => orderableRoute; }
 
         [JsonIgnore]
-        public string Label => string.Format("Order {0} to supplier {1}", orderId, supplier.Id);
+        public string Label => string.Format("Order {0} to supplier {1}", orderId, Supplier.Id);
 
         [JsonIgnore]
         public IEnumerable<string> Roles => new string[1] { "order" };
@@ -76,7 +74,7 @@ namespace Terradue.Stars.Services.Supplier
 
         internal async Task<IOrder> Order()
         {
-            return await supplier.Order(orderableRoute);
+            return await Supplier.Order(orderableRoute);
         }
 
         public IStreamable GetStreamable()

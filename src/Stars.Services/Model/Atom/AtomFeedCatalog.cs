@@ -55,7 +55,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IList<IRoute> GetRoutes()
         {
-            return feed.Items.Select(item => new AtomItemNode(item, new Uri(Uri, item.Id))).Cast<IRoute>().ToList();
+            return feed.Items.Select(item => new AtomItemNode(item, new Uri(Uri, item.Id), credentials)).Cast<IRoute>().ToList();
         }
 
         public async Task<Stream> GetStreamAsync()

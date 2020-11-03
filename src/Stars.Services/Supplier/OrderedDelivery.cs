@@ -26,8 +26,6 @@ namespace Terradue.Stars.Services.Supplier
 
         public IOrderable OrderableRoute => OrderVoucher.OrderableRoute;
 
-        public Uri TargetUri => VoucherDelivery.TargetUri;
-
         public IDestination Destination => VoucherDelivery.Destination;
 
         public override string ToString() => string.Format("[Order] {0}: {1} for {2}$", Supplier.Id, OrderVoucher.OrderId, Cost);
