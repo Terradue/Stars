@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier.Destination
@@ -15,12 +16,12 @@ namespace Terradue.Stars.Services.Supplier.Destination
         {
         }
 
-        public async Task<IDestination> CreateDestination(string output)
+        public async Task<IDestination> CreateDestination(string output, IRoute route)
         {
-            var dg = Plugins.FirstOrDefault(r => r.Value.CanGuide(output));
+            var dg = Plugins.FirstOrDefault(r => r.Value.CanGuide(output, route));
             if ( dg.Value == null )
                 return null;
-            return await dg.Value.Guide(output);
+            return await dg.Value.Guide(output, route);
         }
     }
 }

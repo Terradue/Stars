@@ -1,26 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Stac;
-using Stac.Catalog;
-using Stac.Item;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Services.Supplier.Destination;
-using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -37,17 +19,17 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<IRoute> ExecuteAsync(IRoute route)
+        public async Task<IRoute> ExecuteAsync(IRoute route, IDestination destination)
         {
             IRoute newRoute = route;
             foreach (var processing in processingManager.Plugins)
             {
-                if (!processing.Value.CanProcess(newRoute)) continue;
-                newRoute = await processing.Value.Process(newRoute);
+                if (!processing.Value.CanProcess(newRoute, destination)) continue;
+                // Create a new destination for each processing
+                IDestination procDestination = destination.To(route, processing.Value.GetRelativePath(route, destination));
+                newRoute = await processing.Value.Process(newRoute, procDestination);
             }
             return newRoute;
         }
-
-
     }
 }

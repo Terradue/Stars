@@ -21,7 +21,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     {
         private readonly ILogger logger;
 
-        public LocalStreamingCarrier(IOptions<GlobalOptions> options, ILogger logger) : base(options)
+        public LocalStreamingCarrier(IOptions<GlobalOptions> options, ILogger<LocalStreamingCarrier> logger) : base(options)
         {
             this.logger = logger;
             Priority = 75;
@@ -32,9 +32,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public override string Id => "Streaming";
 
-        public override bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination)
+        public override bool CanDeliver(IRoute route, IDestination destination)
         {
-            if (!(destination is LocalDirectoryDestination)) return false;
+            if (!(destination is LocalFileDestination)) return false;
             if (route is IAsset) return true;
             if (!(route is IStreamable)) return false;
 
@@ -89,26 +89,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     await fileStream.FlushAsync();
                 }
             }
-
-
-        }
-
-
-        protected override (LocalFileDestination, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory)
-        {
-            IStreamable streamable = route as IStreamable;
-            if (streamable == null && route is IAsset)
-                streamable = (route as IAsset).GetStreamable();
-
-            if (streamable == null)
-                throw new InvalidDataException(string.Format("There is no streamable content in {0}", route.Uri));
-            string filename = route.Uri == null ? "unknown" : Path.GetFileName(route.Uri.ToString());
-            ulong contentLength = streamable.ContentLength;
-            ContentDisposition contentDisposition = streamable.ContentDisposition;
-            if (contentDisposition != null && !string.IsNullOrEmpty(contentDisposition.FileName))
-                filename = contentDisposition.FileName;
-
-            return (new LocalFileDestination(new FileInfo(Path.Join(directory.Uri.LocalPath, filename))), contentLength);
         }
     }
 }

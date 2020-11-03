@@ -42,7 +42,7 @@ namespace Terradue.Stars.Services.Processing
 
         public ulong ContentLength => Convert.ToUInt64(entry.Size);
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(entry.Name) };
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = entry.Name };
 
         public bool CanBeRanged => false;
 

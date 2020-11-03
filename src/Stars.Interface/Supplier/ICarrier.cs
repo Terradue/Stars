@@ -10,11 +10,11 @@ namespace Terradue.Stars.Interface.Supplier
     {
         string Id { get; }
         
-        bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination);
+        bool CanDeliver(IRoute route, IDestination destination);
 
         Task<IRoute> Deliver (IDelivery delivery);
         
-        IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination);
+        IDelivery QuoteDelivery(IRoute route, IDestination destination);
 
     }
 }

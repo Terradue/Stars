@@ -35,7 +35,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public abstract string Id { get; }
 
-        public abstract bool CanDeliver(IRoute route, ISupplier supplier, IDestination destination);
+        public abstract bool CanDeliver(IRoute route, IDestination destination);
 
         public abstract Task<IRoute> Deliver(IDelivery delivery);
 
@@ -49,26 +49,17 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
         }
 
-        public IDelivery QuoteDelivery(IRoute route, ISupplier supplier, IDestination destination)
+        public IDelivery QuoteDelivery(IRoute route, IDestination destination)
         {
-            if (!CanDeliver(route, supplier, destination)) return null;
-
-            LocalDirectoryDestination directory = (LocalDirectoryDestination)destination;
-
-            var localFile = FindLocalDestination(route, directory);
+            if (!CanDeliver(route, destination)) return null;
 
             // Let's make a cost as MB to download
             int cost = 1000;
             if (route.ContentLength > 0)
                 cost = Convert.ToInt32(route.ContentLength / 1024 / 1024);
-            else if (localFile.Item2 > 0) {
-                cost = Convert.ToInt32(localFile.Item2 / 1024 / 1024);
-            }
 
-            return new LocalDelivery(this, route, supplier, directory, localFile.Item1, cost);
+            return new LocalDelivery(this, route, destination as LocalFileDestination, cost);
         }
-
-        protected abstract (LocalFileDestination, ulong) FindLocalDestination(IRoute route, LocalDirectoryDestination directory);
 
         public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {

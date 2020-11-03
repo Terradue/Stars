@@ -60,7 +60,7 @@ namespace Terradue.Stars.Services.Supplier
 
                 logger.LogDebug("[{0}] Delivery quotation for {1} assets", suppliers.Current.Id, deliveryQuotation.AssetsDeliveryQuotes.Count);
 
-                if (!CheckDelivery(deliveryQuotation))
+                if (!CheckDelivery(deliveryQuotation, suppliers.Current))
                 {
                     continue;
                 }
@@ -83,20 +83,20 @@ namespace Terradue.Stars.Services.Supplier
             return null;
         }
 
-        private bool CheckDelivery(IDeliveryQuotation deliveryQuotation)
+        private bool CheckDelivery(IDeliveryQuotation deliveryQuotation, ISupplier supplier)
         {
             if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() == 0)
-                logger.LogWarning("[{0}]N[{1}] No Carrier", deliveryQuotation.Supplier.Id, deliveryQuotation.NodeDeliveryQuotes.Item1.Uri);
+                logger.LogWarning("[{0}]N[{1}] No Carrier", supplier.Id, deliveryQuotation.NodeDeliveryQuotes.Item1.Uri);
             else
             {
-                logger.LogDebug("[{0}]N[{1}] {2} carriers", deliveryQuotation.Supplier.Id,
+                logger.LogDebug("[{0}]N[{1}] {2} carriers", supplier.Id,
                      deliveryQuotation.NodeDeliveryQuotes.Item1.Uri, deliveryQuotation.NodeDeliveryQuotes.Item2.Count());
                 int j = 1;
                 foreach (var delivery in deliveryQuotation.NodeDeliveryQuotes.Item2)
                 {
-                    logger.LogDebug("[{0}]N[{1}]#{2}[{3}] to {4} : {5}$", deliveryQuotation.Supplier.Id,
+                    logger.LogDebug("[{0}]N[{1}]#{2}[{3}] to {4} : {5}$", supplier.Id,
                         deliveryQuotation.NodeDeliveryQuotes.Item1.Uri, j,
-                        delivery.Carrier.Id, delivery.TargetUri.ToString(), delivery.Cost);
+                        delivery.Carrier.Id, delivery.Destination.ToString(), delivery.Cost);
                     j++;
                 }
                 j++;
@@ -105,18 +105,18 @@ namespace Terradue.Stars.Services.Supplier
             {
                 if (item.Value.Count() == 0)
                 {
-                    logger.LogDebug("[{0}]A[{1}] No carrier. Skipping supplier.", deliveryQuotation.Supplier.Id,
+                    logger.LogDebug("[{0}]A[{1}] No carrier. Skipping supplier.", supplier.Id,
                         item.Key);
                     return false;
                 }
 
-                logger.LogDebug("[{0}]A[{1}] : {2} carriers", deliveryQuotation.Supplier.Id,
+                logger.LogDebug("[{0}]A[{1}] : {2} carriers", supplier.Id,
                         item.Key, item.Value.Count());
                 int j = 1;
                 foreach (var delivery in item.Value)
                 {
-                    logger.LogDebug("[{0}]A[{1}]#{2}[{3}] to {4} : {5}$", deliveryQuotation.Supplier.Id,
-                        item.Key, j, delivery.Carrier.Id, delivery.TargetUri.ToString(), delivery.Cost);
+                    logger.LogDebug("[{0}]A[{1}]#{2}[{3}] to {4} : {5}$", supplier.Id,
+                        item.Key, j, delivery.Carrier.Id, delivery.Destination.ToString(), delivery.Cost);
                     j++;
                 }
             }
@@ -177,7 +177,7 @@ namespace Terradue.Stars.Services.Supplier
                 logger.LogInformation("Delivering {0} {1} {2} ({3})...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id);
                 try
                 {
-                    delivery.Destination.Create();
+                    delivery.Destination.PrepareDestination();
                     IRoute delivered = await delivery.Carrier.Deliver(delivery);
                     if (delivered != null)
                     {
@@ -202,6 +202,7 @@ namespace Terradue.Stars.Services.Supplier
             catch (Exception e)
             {
                 logger.LogWarning("Exception during quotation for {0} at {1} : {2}", supplierRoute.Uri, supplier.Id, e.Message);
+                logger.LogDebug(e.StackTrace);
             }
             return null;
         }
