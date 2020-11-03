@@ -8,12 +8,9 @@ namespace Terradue.Stars.Interface.Supplier
 {
     public interface IDeliveryQuotation
     {
-
         (IRoute, IOrderedEnumerable<IDelivery>) NodeDeliveryQuotes { get; }
 
         IDictionary<string, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes { get; }
-        
-        ISupplier Supplier { get; }
         
         IDestination Destination { get; }
     }

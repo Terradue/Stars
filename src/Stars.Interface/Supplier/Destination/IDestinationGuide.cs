@@ -6,9 +6,9 @@ namespace Terradue.Stars.Interface.Supplier.Destination
     {
         string Id { get; }
 
-        bool CanGuide(string destination);
+        bool CanGuide(string destination, Router.IRoute route);
 
-        Task<IDestination> Guide(string destination);
+        Task<IDestination> Guide(string destination, Router.IRoute route);
 
     }
 }

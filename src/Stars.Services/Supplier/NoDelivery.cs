@@ -8,13 +8,11 @@ namespace Terradue.Stars.Services.Supplier
     internal class NoDelivery : IDelivery
     {
         private IRoute route;
-        private ISupplier supplier;
         private readonly ICarrier carrier;
 
-        public NoDelivery(IRoute route, ISupplier supplier, ICarrier carrier)
+        public NoDelivery(IRoute route, ICarrier carrier)
         {
             this.route = route;
-            this.supplier = supplier;
             this.carrier = carrier;
         }
 
@@ -23,10 +21,6 @@ namespace Terradue.Stars.Services.Supplier
         public IRoute Route => route;
 
         public ICarrier Carrier => carrier;
-
-        public ISupplier Supplier => supplier;
-
-        public Uri TargetUri => route.Uri;
 
         public IDestination Destination => null;
     }

@@ -12,10 +12,6 @@ namespace Terradue.Stars.Interface.Supplier
 
         ICarrier Carrier { get; }
 
-        ISupplier Supplier { get; }
-
-        Uri TargetUri { get; }
-
         IDestination Destination { get; }
 
         string ToString();

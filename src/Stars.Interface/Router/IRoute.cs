@@ -11,6 +11,7 @@ namespace Terradue.Stars.Interface.Router
         ContentType ContentType { get; }
         ResourceType ResourceType { get; }
         ulong ContentLength { get; }
+        ContentDisposition ContentDisposition { get; }
         
     }
 }

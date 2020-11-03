@@ -36,14 +36,14 @@ namespace Terradue.Stars.Console.Operations
         [Option("-sa|--skip-assets", "Do not list assets", CommandOptionType.NoValue)]
         public bool SkippAssets { get; set; }
 
-        [Option("-o|--output-dir", "Output Directory", CommandOptionType.SingleValue)]
+        [Option("-o|--output", "Output Url", CommandOptionType.SingleValue)]
         [Required]
         public string OutputDirectory { get; set; }
 
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
         public bool AllowOrdering { get; set; }
 
-        [Option("-xa|--extract-archive", "Extract archive files (default to true)", CommandOptionType.NoValue)]
+        [Option("-xa|--extract-archive", "Extract archive files (default to true)", CommandOptionType.SingleValue)]
         public bool ExtractArchives { get; set; } = true;
 
         [Option("--stop-on-error", "Stop on Error (copy) (default to false)", CommandOptionType.NoValue)]
@@ -109,7 +109,7 @@ namespace Terradue.Stars.Console.Operations
         {
             if (state == null)
             {
-                var destination = await destinationManager.CreateDestination(OutputDirectory);
+                var destination = await destinationManager.CreateDestination(OutputDirectory, newRoute);
                 if (destination == null)
                     throw new InvalidProgramException("No destination found for " + OutputDirectory);
                 return new CopyOperationState(1, destination);
@@ -118,8 +118,14 @@ namespace Terradue.Stars.Console.Operations
             CopyOperationState operationState = state as CopyOperationState;
             if (operationState.Depth == 0) return state;
 
-            var newDestination = operationState.Destination.RelativeTo(parentRoute, newRoute);
-            newDestination.Create();
+            // we will use a subfolder with this id
+            string id = Guid.NewGuid().ToString("N");
+            if ( newRoute is IItem )
+                id = (newRoute as IItem).Id;
+            if ( newRoute is ICatalog )
+                id = (newRoute as ICatalog).Id;
+            var newDestination = operationState.Destination.To(newRoute, id);
+            newDestination.PrepareDestination();
 
             return new CopyOperationState(operationState.Depth + 1, newDestination);
         }
@@ -138,7 +144,10 @@ namespace Terradue.Stars.Console.Operations
             if ( node is IItem )
                 supplyService.Parameters.SupplierFilters.IncludeIds = SuppliersIncluded;
 
-            IRoute deliveryNode = await supplyService.ExecuteAsync(node, operationState.Destination);
+            // We update the destination in case a new router updated the route
+            IDestination destination = operationState.Destination.To(node);
+
+            IRoute deliveryNode = await supplyService.ExecuteAsync(node, destination);
 
             if (deliveryNode == null)
             {
@@ -149,7 +158,7 @@ namespace Terradue.Stars.Console.Operations
             else
             {
                 ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-                deliveryNode = await processingService.ExecuteAsync(deliveryNode);
+                deliveryNode = await processingService.ExecuteAsync(deliveryNode, destination);
 
                 operationState.LastRoute = deliveryNode;
             }

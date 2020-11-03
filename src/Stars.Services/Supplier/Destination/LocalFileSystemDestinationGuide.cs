@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier.Destination
@@ -25,7 +26,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public string Id => "LocalFS";
 
-        public bool CanGuide(string destination)
+        public bool CanGuide(string destination, IRoute route)
         {
             try
             {
@@ -44,12 +45,12 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         }
 
-        public Task<IDestination> Guide(string destination)
+        public Task<IDestination> Guide(string destination, IRoute route)
         {
             FileAttributes fa = File.GetAttributes(destination.Replace("file:", "").TrimEnd('/'));
             if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
                 throw new InvalidOperationException(string.Format("{0} is not a directory", destination));
-            return Task.FromResult((IDestination)LocalDirectoryDestination.Create(destination.Replace("file:", "").TrimEnd('/')));
+            return Task.FromResult<IDestination>(LocalFileDestination.Create(destination.Replace("file:", "").TrimEnd('/'), route));
         }
     }
 }

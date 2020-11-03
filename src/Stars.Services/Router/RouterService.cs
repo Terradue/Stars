@@ -27,12 +27,20 @@ namespace Terradue.Stars.Services.Router
 
         public async Task ExecuteAsync(IEnumerable<string> inputs)
         {
-            foreach (var input in inputs)
+            List<IRoute> routes = inputs.Select(input => (IRoute)WebRoute.Create(new Uri(input), credentials: credentialsManager)).ToList();
+            IRoute rootRoute = null;
+
+            if (routes.Count == 1)
             {
-                WebRoute initRoute = WebRoute.Create(new Uri(input), credentials: credentialsManager);
-                object state = await onBranchingFunction.Invoke(null, initRoute, null, null);
-                await Route(initRoute, Parameters.Recursivity, null, state);
+                rootRoute = routes.First();
             }
+            else
+            {
+                rootRoute = new GenericCatalog(routes, "catalog");
+            }
+
+            object state = await onBranchingFunction.Invoke(null, rootRoute, null, null);
+            await Route(rootRoute, Parameters.Recursivity, null, state);
         }
 
         internal async Task<object> Route(IRoute route, int recursivity, IRouter prevRouter, object state)
@@ -76,7 +84,8 @@ namespace Terradue.Stars.Services.Router
                 {
                     // New route from new router!
                     var newRoute = await router.Route(route);
-                    if (newRoute is IItem){
+                    if (newRoute is IItem)
+                    {
                         return await onItemFunction.Invoke(newRoute as IItem, prevRouter, state);
                     }
 
