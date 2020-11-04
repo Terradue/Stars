@@ -20,9 +20,11 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public Uri Uri => new Uri(file.FullName);
 
+        public bool Exists => file.Exists;
+
         public static LocalFileDestination Create(string directory, IRoute route)
         {
-            var filename = Path.GetFileName(route.Uri.LocalPath);
+            var filename = Path.GetFileName(route.Uri.ToString());
             if (route.ContentDisposition != null && !string.IsNullOrEmpty(route.ContentDisposition.FileName))
                 filename = route.ContentDisposition.FileName;
             if ( string.IsNullOrEmpty(filename) )

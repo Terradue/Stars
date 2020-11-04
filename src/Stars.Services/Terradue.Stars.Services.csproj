@@ -26,6 +26,7 @@
     <PackageReference Include="DotNetStac" Version="0.4.9"/>
     <PackageReference Include="Html2Markdown" Version="3.3.1.407"/>
     <PackageReference Include="Terradue.Metadata.EarthObservation" Version="1.6.7"/>
+    <PackageReference Include="System.IO.FileSystem.AccessControl" Version="4.7.0"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../Stars.Interface/Terradue.Stars.Interface.csproj">

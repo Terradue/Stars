@@ -15,7 +15,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
     {
         private readonly ILogger logger;
 
-        public LocalFileSystemDestinationGuide(ILogger logger)
+        public LocalFileSystemDestinationGuide(ILogger<LocalFileSystemDestinationGuide> logger)
         {
             this.logger = logger;
         }
@@ -26,12 +26,12 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public string Id => "LocalFS";
 
-        public bool CanGuide(string destination, IRoute route)
+        public bool CanGuide(string directory, IRoute route)
         {
             try
             {
-                FileAttributes fa = File.GetAttributes(destination.Replace("file:", "").TrimEnd('/'));
-                return (fa & FileAttributes.Directory) == FileAttributes.Directory;
+                var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
+                return true;
             }
             catch (Exception e)
             {
@@ -45,12 +45,12 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         }
 
-        public Task<IDestination> Guide(string destination, IRoute route)
+        public Task<IDestination> Guide(string directory, IRoute route)
         {
-            FileAttributes fa = File.GetAttributes(destination.Replace("file:", "").TrimEnd('/'));
-            if ((fa & FileAttributes.Directory) != FileAttributes.Directory)
-                throw new InvalidOperationException(string.Format("{0} is not a directory", destination));
-            return Task.FromResult<IDestination>(LocalFileDestination.Create(destination.Replace("file:", "").TrimEnd('/'), route));
+            var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
+            if (!dir.Exists && !dir.Parent.Exists )
+                throw new InvalidOperationException(string.Format("{0} directory does not exist", directory));
+            return Task.FromResult<IDestination>(LocalFileDestination.Create(directory.Replace("file:", "").TrimEnd('/'), route));
         }
     }
 }
