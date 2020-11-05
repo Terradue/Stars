@@ -3,6 +3,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using Terradue.Stars.Interface.Router;
 using System.Linq;
 using System.IO;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
 {

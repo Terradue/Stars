@@ -5,7 +5,7 @@ using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Interface.Supplier
 {
-    public interface IOrderable : IRoute
+    public interface IOrderable : IResource
     {
         string Id { get; }
 

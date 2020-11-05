@@ -8,7 +8,7 @@ namespace Terradue.Stars.Interface.Supplier.Destination
         Uri Uri { get; }
         bool Exists { get; }
 
-        IDestination To(IRoute route, string relPath = null);
+        IDestination To(IResource route, string relPath = null);
         void PrepareDestination();
 
         string ToString();

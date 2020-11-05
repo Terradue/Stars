@@ -13,6 +13,7 @@ using Stac.Catalog;
 using System.Collections.Generic;
 using Stac;
 using System.IO;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -28,7 +29,7 @@ namespace Terradue.Stars.Services.Translator
             this.logger = logger;
         }
 
-        public Task<T> Translate<T>(IRoute route) where T : IRoute
+        public Task<T> Translate<T>(IResource route) where T : IResource
         {
             ICatalog catalogRoute = route as ICatalog;
             if (catalogRoute != null)
@@ -43,7 +44,7 @@ namespace Terradue.Stars.Services.Translator
             return Task.FromResult<T>(default(T));
         }
 
-        private IRoute CreateStacCatalogNode(ICatalog node)
+        private IResource CreateStacCatalogNode(ICatalog node)
         {
             StacCatalog catalog = new StacCatalog("catalog", node.Label, CreateStacLinks(node));
             return new StacCatalogNode(catalog);

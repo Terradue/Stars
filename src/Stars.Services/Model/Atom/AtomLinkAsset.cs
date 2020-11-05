@@ -8,6 +8,7 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Router;
 using Terradue.ServiceModel.Syndication;
 using System.Net;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Atom
 {

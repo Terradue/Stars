@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 
 using Terradue.Stars.Services.Router;

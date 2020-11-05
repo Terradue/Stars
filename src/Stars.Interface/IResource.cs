@@ -3,9 +3,9 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
-namespace Terradue.Stars.Interface.Router
+namespace Terradue.Stars.Interface
 {
-    public interface IRoute
+    public interface IResource
     {
         Uri Uri { get; }
         ContentType ContentType { get; }

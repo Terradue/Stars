@@ -7,6 +7,7 @@ using Terradue.Stars.Services.Router;
 using Terradue.Stars.Interface.Router;
 using GeoJSON.Net.Geometry;
 using System.Net;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -33,9 +34,9 @@ namespace Terradue.Stars.Services.Model.Stac
             return StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, credentials));
         }
 
-        public override IList<IRoute> GetRoutes()
+        public override IList<IResource> GetRoutes()
         {
-            return new List<IRoute>();
+            return new List<IResource>();
         }
 
     }

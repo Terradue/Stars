@@ -5,13 +5,13 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 
-namespace Terradue.Stars.Interface.Router
+namespace Terradue.Stars.Interface
 {
-    public interface ICatalog : IRoute
+    public interface ICatalog : IResource
     {
         string Label { get; }
         string Id { get; }
 
-        IList<IRoute> GetRoutes();
+        IList<IResource> GetRoutes();
     }
 }

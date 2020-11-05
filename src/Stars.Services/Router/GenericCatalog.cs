@@ -2,16 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Router
 {
     public class GenericCatalog : ICatalog
     {
-        private readonly IEnumerable<IRoute> routes;
+        private readonly IEnumerable<IResource> routes;
         private readonly string id;
 
-        public GenericCatalog(IEnumerable<IRoute> routes, string id)
+        public GenericCatalog(IEnumerable<IResource> routes, string id)
         {
             this.routes = routes;
             this.id = id;
@@ -35,7 +36,7 @@ namespace Terradue.Stars.Services.Router
 
         public ContentDisposition ContentDisposition => null;
 
-        public IList<IRoute> GetRoutes()
+        public IList<IResource> GetRoutes()
         {
             return routes.ToList();
         }

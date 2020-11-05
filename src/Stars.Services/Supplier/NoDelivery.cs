@@ -1,4 +1,5 @@
 using System;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
@@ -7,10 +8,10 @@ namespace Terradue.Stars.Services.Supplier
 {
     internal class NoDelivery : IDelivery
     {
-        private IRoute route;
+        private IResource route;
         private readonly ICarrier carrier;
 
-        public NoDelivery(IRoute route, ICarrier carrier)
+        public NoDelivery(IResource route, ICarrier carrier)
         {
             this.route = route;
             this.carrier = carrier;
@@ -18,7 +19,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public int Cost => 100000;
 
-        public IRoute Route => route;
+        public IResource Route => route;
 
         public ICarrier Carrier => carrier;
 

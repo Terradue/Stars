@@ -11,7 +11,7 @@ namespace Terradue.Stars.Services
         private readonly IOptions<CredentialsOptions> _options;
         protected readonly ILogger logger;
 
-        public ConfigurationCredentialsManager(IOptions<CredentialsOptions> options, ILogger logger)
+        public ConfigurationCredentialsManager(IOptions<CredentialsOptions> options, ILogger<ConfigurationCredentialsManager> logger)
         {
             this._options = options;
             this.logger = logger;

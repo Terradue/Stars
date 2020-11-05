@@ -8,7 +8,7 @@ namespace Terradue.Stars.Interface.Supplier
     {
         int Cost { get; }
 
-        IRoute Route { get; }
+        IResource Route { get; }
 
         ICarrier Carrier { get; }
 

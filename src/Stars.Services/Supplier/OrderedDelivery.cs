@@ -1,4 +1,5 @@
 using System;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
@@ -20,7 +21,7 @@ namespace Terradue.Stars.Services.Supplier
         public ICarrier Carrier { get; }
         public IDelivery VoucherDelivery { get; }
         public OrderVoucher OrderVoucher { get; }
-        public IRoute Route => OrderVoucher;
+        public IResource Route => OrderVoucher;
         public ISupplier Supplier => OrderVoucher.Supplier;
         public int Cost { get; }
 

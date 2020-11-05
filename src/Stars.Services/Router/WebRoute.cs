@@ -10,7 +10,7 @@ using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Router
 {
-    public class WebRoute : IRoute, IStreamable, IDisposable
+    public class WebRoute : IResource, IStreamable, IDisposable
     {
         private readonly WebRequest request;
         private readonly ulong contentLength;

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Router;
@@ -10,9 +11,9 @@ namespace Terradue.Stars.Services.Supplier.Destination
     public class LocalFileDestination : IDestination
     {
         private readonly FileInfo file;
-        private readonly IRoute route;
+        private readonly IResource route;
 
-        private LocalFileDestination(FileInfo file, IRoute route)
+        private LocalFileDestination(FileInfo file, IResource route)
         {
             this.file = file;
             this.route = route;
@@ -22,7 +23,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public bool Exists => file.Exists;
 
-        public static LocalFileDestination Create(string directory, IRoute route)
+        public static LocalFileDestination Create(string directory, IResource route)
         {
             var filename = Path.GetFileName(route.Uri.ToString());
             if (route.ContentDisposition != null && !string.IsNullOrEmpty(route.ContentDisposition.FileName))
@@ -37,7 +38,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
             file.Directory.Create();
         }
 
-        public IDestination To(IRoute subroute, string relPathFix = null)
+        public IDestination To(IResource subroute, string relPathFix = null)
         {
             // we first integrate the relPath
             string relPath = relPathFix ?? "";

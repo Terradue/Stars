@@ -32,13 +32,13 @@ namespace Terradue.Stars.Services.Supplier
             Parameters = new SupplierServiceParameters();
         }
 
-        public async Task<IRoute> ExecuteAsync(IRoute route, IDestination destination)
+        public async Task<IResource> CopyToDestination(IResource route, IDestination destination)
         {
             logger.LogDebug("{0} -> {1}", route.Uri, destination.Uri);
 
             var suppliers = InitSuppliersEnumerator(route);
 
-            IRoute deliveryRoute = null;
+            IResource deliveryRoute = null;
 
             while (deliveryRoute == null && suppliers.MoveNext())
             {
@@ -123,9 +123,9 @@ namespace Terradue.Stars.Services.Supplier
             return true;
         }
 
-        private async Task<IRoute> Deliver(IDeliveryQuotation deliveryQuotation)
+        private async Task<IResource> Deliver(IDeliveryQuotation deliveryQuotation)
         {
-            IRoute nodeDeliveredRoute = null;
+            IResource nodeDeliveredRoute = null;
             if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() > 0)
             {
                 var route = await Deliver(deliveryQuotation.NodeDeliveryQuotes.Item1.Uri.ToString(), deliveryQuotation.NodeDeliveryQuotes.Item2);
@@ -158,18 +158,18 @@ namespace Terradue.Stars.Services.Supplier
             return nodeDeliveredRoute;
         }
 
-        private IRoute MakeItem(IItem item, Dictionary<string, IAsset> assets, IDeliveryQuotation deliveryQuotation)
+        private IResource MakeItem(IItem item, Dictionary<string, IAsset> assets, IDeliveryQuotation deliveryQuotation)
         {
             return new ContainerNode(item, assets);
         }
 
-        private IAsset MakeAsset(IRoute route, IAsset assetOrigin)
+        private IAsset MakeAsset(IResource route, IAsset assetOrigin)
         {
             if (route is IAsset) return route as IAsset;
             return new GenericAsset(route, assetOrigin.Label, assetOrigin.Roles);
         }
 
-        private async Task<IRoute> Deliver(string key, IOrderedEnumerable<IDelivery> deliveries)
+        private async Task<IResource> Deliver(string key, IOrderedEnumerable<IDelivery> deliveries)
         {
             logger.LogInformation("Starting delivery for {0}", key);
             foreach (var delivery in deliveries)
@@ -178,7 +178,7 @@ namespace Terradue.Stars.Services.Supplier
                 try
                 {
                     delivery.Destination.PrepareDestination();
-                    IRoute delivered = await delivery.Carrier.Deliver(delivery);
+                    IResource delivered = await delivery.Carrier.Deliver(delivery);
                     if (delivered != null)
                     {
                         logger.LogInformation("Delivery complete to {0}", delivered.Uri);
@@ -193,7 +193,7 @@ namespace Terradue.Stars.Services.Supplier
             return null;
         }
 
-        private IDeliveryQuotation QuoteDelivery(ISupplier supplier, IRoute supplierRoute, IDestination destination)
+        private IDeliveryQuotation QuoteDelivery(ISupplier supplier, IResource supplierRoute, IDestination destination)
         {
             try
             {
@@ -207,7 +207,7 @@ namespace Terradue.Stars.Services.Supplier
             return null;
         }
 
-        private async Task<IRoute> AskForSupply(IRoute node, ISupplier supplier)
+        private async Task<IResource> AskForSupply(IResource node, ISupplier supplier)
         {
             try
             {
@@ -221,7 +221,7 @@ namespace Terradue.Stars.Services.Supplier
 
         }
 
-        private IEnumerator<ISupplier> InitSuppliersEnumerator(IRoute route)
+        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route)
         {
             if (route is IItem)
                 return suppliersManager.GetSuppliers(Parameters.SupplierFilters).GetEnumerator();

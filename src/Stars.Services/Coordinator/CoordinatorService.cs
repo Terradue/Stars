@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Catalog
             Parameters = new CoordinatorServiceParameters();
         }
 
-        public async Task<IRoute> ExecuteAsync(IRoute route, IEnumerable<IRoute> childrenRoutes, IDestination destination, int depth)
+        public async Task<IResource> ExecuteAsync(IResource route, IEnumerable<IResource> childrenRoutes, IDestination destination, int depth)
         {
             StacNode stacNode = route as StacNode;
             if (stacNode == null)
@@ -65,7 +65,7 @@ namespace Terradue.Stars.Services.Catalog
 
             if (depth == 1 && !stacNode.IsCatalog)
             {
-                childrenRoutes = new List<IRoute>() { deliveredStacNode };
+                childrenRoutes = new List<IResource>() { deliveredStacNode };
                 stacNode = CreateStacCatalogNode(stacNode.StacObject as StacItem, "root", new Uri("catalog.json", UriKind.Relative));
                 deliveredStacNode = await RelinkAndDeliverStacNode(stacNode, childrenRoutes, destination.To(stacNode), depth);
             }
@@ -81,12 +81,12 @@ namespace Terradue.Stars.Services.Catalog
             return new StacCatalogNode(catalog);
         }
 
-        private async Task<IRoute> RelinkAndDeliverStacNode(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDestination destination, int depth)
+        private async Task<IResource> RelinkAndDeliverStacNode(StacNode stacNode, IEnumerable<IResource> childrenRoutes, IDestination destination, int depth)
         {
             if (depth == 1 && stacNode.IsCatalog) stacNode.IsRoot = true;
             var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(stacNode, destination);
 
-            IRoute stacRoute = null;
+            IResource stacRoute = null;
 
             foreach (var delivery in stacDeliveries)
             {
@@ -104,7 +104,7 @@ namespace Terradue.Stars.Services.Catalog
 
         }
 
-        private void RelinkStacCatalog(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDelivery delivery, IDestination destination)
+        private void RelinkStacCatalog(StacNode stacNode, IEnumerable<IResource> childrenRoutes, IDelivery delivery, IDestination destination)
         {
             StacCatalog stacCatalog = stacNode.StacObject as StacCatalog;
             if (stacCatalog == null) return;
@@ -133,7 +133,7 @@ namespace Terradue.Stars.Services.Catalog
             }
         }
 
-        private void RelinkStacItem(StacNode stacNode, IEnumerable<IRoute> childrenRoutes, IDelivery delivery, IDestination destination)
+        private void RelinkStacItem(StacNode stacNode, IEnumerable<IResource> childrenRoutes, IDelivery delivery, IDestination destination)
         {
             StacItem stacItem = stacNode.StacObject as StacItem;
             if (stacItem == null) return;

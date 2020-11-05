@@ -11,6 +11,7 @@ using Terradue.Stars.Services;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -48,7 +49,7 @@ namespace Terradue.Stars.Console.Operations
             routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
         }
 
-        private Task<object> PrepareNewRoute(IRoute parentRoute, IRoute route, IList<IRoute> siblings, object state)
+        private Task<object> PrepareNewRoute(IResource parentRoute, IResource route, IList<IResource> siblings, object state)
         {
             if (state == null) return Task.FromResult<object>(new ListOperationState("", 1));
 
@@ -100,7 +101,7 @@ namespace Terradue.Stars.Console.Operations
             return state;
         }
 
-        private async Task<object> PrintRouteInfo(IRoute route, IRouter router, Exception exception, object state)
+        private async Task<object> PrintRouteInfo(IResource route, IRouter router, Exception exception, object state)
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;

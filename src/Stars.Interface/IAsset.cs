@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Terradue.Stars.Interface.Router
+namespace Terradue.Stars.Interface
 {
-    public interface IAsset : IRoute
+    public interface IAsset : IResource
     {
         string Label { get; }
 

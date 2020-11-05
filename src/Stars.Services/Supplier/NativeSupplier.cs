@@ -5,6 +5,7 @@ using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Microsoft.Extensions.Configuration;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -23,12 +24,12 @@ namespace Terradue.Stars.Services.Supplier
 
         public string Id => "Native";
 
-        public Task<IRoute> SearchFor(IRoute route)
+        public Task<IResource> SearchFor(IResource route)
         {
-            return Task.FromResult<IRoute>(route);
+            return Task.FromResult<IResource>(route);
         }
 
-        public IDeliveryQuotation QuoteDelivery(IRoute resource, IDestination destination)
+        public IDeliveryQuotation QuoteDelivery(IResource resource, IDestination destination)
         {
             return carriersManager.QuoteDeliveryFromCarriers(resource, destination);
         }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Terradue.Stars.Interface.Router
+namespace Terradue.Stars.Interface
 {
     public interface IAssetsContainer
     {

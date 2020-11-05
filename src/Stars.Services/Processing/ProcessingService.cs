@@ -19,9 +19,9 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<IRoute> ExecuteAsync(IRoute route, IDestination destination)
+        public async Task<IResource> ExecuteAsync(IResource route, IDestination destination)
         {
-            IRoute newRoute = route;
+            IResource newRoute = route;
             foreach (var processing in processingManager.Plugins)
             {
                 if (!processing.Value.CanProcess(newRoute, destination)) continue;

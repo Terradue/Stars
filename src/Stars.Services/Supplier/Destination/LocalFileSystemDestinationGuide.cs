@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 
@@ -26,7 +27,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public string Id => "LocalFS";
 
-        public bool CanGuide(string directory, IRoute route)
+        public bool CanGuide(string directory, IResource route)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         }
 
-        public Task<IDestination> Guide(string directory, IRoute route)
+        public Task<IDestination> Guide(string directory, IResource route)
         {
             var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
             if (!dir.Exists && !dir.Parent.Exists )

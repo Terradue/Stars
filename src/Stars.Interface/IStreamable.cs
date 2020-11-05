@@ -4,15 +4,13 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 
-namespace Terradue.Stars.Interface.Router
+namespace Terradue.Stars.Interface
 {
-    public interface IStreamable : IRoute
+    public interface IStreamable : IResource
     {
         bool CanBeRanged { get; }
 
         Task<Stream> GetStreamAsync();
-
-        
 
         Task<Stream> GetStreamAsync(long start, long end = -1);
     }

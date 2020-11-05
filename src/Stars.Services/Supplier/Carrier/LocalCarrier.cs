@@ -13,6 +13,7 @@ using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Microsoft.Extensions.Options;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -35,9 +36,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public abstract string Id { get; }
 
-        public abstract bool CanDeliver(IRoute route, IDestination destination);
+        public abstract bool CanDeliver(IResource route, IDestination destination);
 
-        public abstract Task<IRoute> Deliver(IDelivery delivery);
+        public abstract Task<IResource> Deliver(IDelivery delivery);
 
         private async Task StreamToFile(Stream stream, LocalFileSystemRoute localRoute)
         {
@@ -49,7 +50,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
         }
 
-        public IDelivery QuoteDelivery(IRoute route, IDestination destination)
+        public IDelivery QuoteDelivery(IResource route, IDestination destination)
         {
             if (!CanDeliver(route, destination)) return null;
 

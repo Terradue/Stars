@@ -21,6 +21,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -91,13 +92,13 @@ namespace Terradue.Stars.Console.Operations
         }
 
 
-        private async Task<object> Stacify(IRoute parentRoute, IRouter router, object state, IEnumerable<object> subStates)
+        private async Task<object> Stacify(IResource parentRoute, IRouter router, object state, IEnumerable<object> subStates)
         {
             CopyOperationState operationState = state as CopyOperationState;
 
             CoordinatorService catalogingTask = ServiceProvider.GetService<CoordinatorService>();
 
-            IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Destination, operationState.Depth);
+            IResource stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Destination, operationState.Depth);
 
             operationState.LastRoute = stacRoute;
 
@@ -105,7 +106,7 @@ namespace Terradue.Stars.Console.Operations
 
         }
 
-        private async Task<object> PrepareNewRoute(IRoute parentRoute, IRoute newRoute, IList<IRoute> siblings, object state)
+        private async Task<object> PrepareNewRoute(IResource parentRoute, IResource newRoute, IList<IResource> siblings, object state)
         {
             if (state == null)
             {
@@ -130,7 +131,7 @@ namespace Terradue.Stars.Console.Operations
             return new CopyOperationState(operationState.Depth + 1, newDestination);
         }
 
-        private async Task<object> CopyNode(IRoute node, IRouter router, object state)
+        private async Task<object> CopyNode(IResource node, IRouter router, object state)
         {
             CopyOperationState operationState = state as CopyOperationState;
 
@@ -147,7 +148,7 @@ namespace Terradue.Stars.Console.Operations
             // We update the destination in case a new router updated the route
             IDestination destination = operationState.Destination.To(node);
 
-            IRoute deliveryNode = await supplyService.ExecuteAsync(node, destination);
+            IResource deliveryNode = await supplyService.CopyToDestination(node, destination);
 
             if (deliveryNode == null)
             {
