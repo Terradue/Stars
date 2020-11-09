@@ -153,7 +153,7 @@ namespace Terradue.Stars.Geometry.Wkt {
         }
 
         /// <summary>
-        /// Polygon from WK.
+        /// Polygon from WKT.
         /// </summary>
         /// <returns>The Polygon</returns>
         /// <param name="wkt">WKT.</param>

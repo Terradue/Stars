@@ -4,7 +4,7 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class SupplyParameters
     {
-        internal static SupplyParameters Default => new SupplyParameters();
+        public static SupplyParameters Default => new SupplyParameters();
 
         public SupplyParameters()
         {

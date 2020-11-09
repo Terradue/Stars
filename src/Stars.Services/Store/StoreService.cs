@@ -123,7 +123,7 @@ namespace Terradue.Stars.Services.Store
 
         }
 
-        private async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDestination destination)
+        public async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDestination destination)
         {
             var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(stacNode, destination);
             IResource deliveredResource = null;
