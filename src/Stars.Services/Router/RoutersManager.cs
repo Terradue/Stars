@@ -12,7 +12,7 @@ namespace Terradue.Stars.Services.Router
     public class RoutersManager : AbstractManager<IRouter>
     {
 
-        public RoutersManager(ILogger logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
+        public RoutersManager(ILogger<RoutersManager> logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
         {
         }
 

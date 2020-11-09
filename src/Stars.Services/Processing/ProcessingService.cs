@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -19,17 +20,17 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<IResource> ExecuteAsync(IResource route, IDestination destination)
+        public async Task<StacNode> ExecuteAsync(StacNode node, IDestination destination)
         {
-            IResource newRoute = route;
+            StacNode newNode = node;
             foreach (var processing in processingManager.Plugins)
             {
-                if (!processing.Value.CanProcess(newRoute, destination)) continue;
+                if (!processing.Value.CanProcess(newNode, destination)) continue;
                 // Create a new destination for each processing
-                IDestination procDestination = destination.To(route, processing.Value.GetRelativePath(route, destination));
-                newRoute = await processing.Value.Process(newRoute, procDestination);
+                IDestination procDestination = destination.To(node, processing.Value.GetRelativePath(node, destination));
+                var processedResource = await processing.Value.Process(newNode, procDestination);
             }
-            return newRoute;
+            return newNode;
         }
     }
 }

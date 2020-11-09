@@ -31,7 +31,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IDictionary<string, IAsset> GetAssets()
         {
-            return StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, credentials));
+            return StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this, credentials));
         }
 
         public override IList<IResource> GetRoutes()

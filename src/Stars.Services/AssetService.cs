@@ -7,43 +7,47 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Store;
+using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Translator;
 
-namespace Terradue.Stars.Services.Supplier
+namespace Terradue.Stars.Services
 {
-    public class SupplierService : IStarsService
+    public class AssetService : IStarsService
     {
-        public SupplierServiceParameters Parameters { get; set; }
         protected readonly ILogger logger;
         private readonly RoutersManager routersManager;
         protected readonly SupplierManager suppliersManager;
         protected readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
 
-        public SupplierService(ILogger logger, RoutersManager routersManager, SupplierManager suppliersManager, TranslatorManager translatorManager, CarrierManager carrierManager)
+        public AssetService(ILogger<AssetService> logger, RoutersManager routersManager, SupplierManager suppliersManager, TranslatorManager translatorManager, CarrierManager carrierManager)
         {
             this.logger = logger;
             this.routersManager = routersManager;
             this.suppliersManager = suppliersManager;
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
-            Parameters = new SupplierServiceParameters();
         }
 
-        public async Task<IResource> CopyToDestination(IResource route, IDestination destination)
+        public async Task<StacNode> ImportToStore(IResource node, StoreService storeService, IDestination destination, SupplyParameters parameters)
         {
-            logger.LogDebug("{0} -> {1}", route.Uri, destination.Uri);
+            if (!(node is IAssetsContainer)) return null;
 
-            var suppliers = InitSuppliersEnumerator(route);
+            logger.LogDebug("Import assets from {0} to {1}", node.Uri, storeService.Id);
 
-            IResource deliveryRoute = null;
+            var suppliers = InitSuppliersEnumerator(node, parameters);
 
-            while (deliveryRoute == null && suppliers.MoveNext())
+            IDictionary<string, IAsset> assets = null;
+            IResource supplierNode = null;
+
+            while (assets == null && suppliers.MoveNext())
             {
-                logger.LogInformation("[{0}] Searching for {1}", suppliers.Current.Id, route.Uri.ToString());
-                var supplierNode = await AskForSupply(route, suppliers.Current);
+                logger.LogInformation("[{0}] Searching for {1}", suppliers.Current.Id, node.Uri.ToString());
+                supplierNode = await AskForSupply(node, suppliers.Current);
                 if (supplierNode == null)
                 {
                     logger.LogInformation("[{0}] --> no supply possible", suppliers.Current.Id);
@@ -52,7 +56,7 @@ namespace Terradue.Stars.Services.Supplier
                 logger.LogInformation("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType);
 
                 IDeliveryQuotation deliveryQuotation = QuoteDelivery(suppliers.Current, supplierNode, destination);
-                if (deliveryQuotation == null)
+                if (deliveryQuotation == null || deliveryQuotation.AssetsDeliveryQuotes.Count() == 0)
                 {
                     logger.LogDebug("[{0}]  -->  no delivery possible", suppliers.Current.Id);
                     continue;
@@ -65,42 +69,25 @@ namespace Terradue.Stars.Services.Supplier
                     continue;
                 }
 
-                deliveryRoute = await Deliver(deliveryQuotation);
-                if (deliveryRoute == null)
+                assets = await Deliver(deliveryQuotation, parameters);
+                if (assets == null)
                 {
-                    if (Parameters.ContinueOnDeliveryError)
+                    if (parameters.ContinueOnDeliveryError)
                     {
-                        logger.LogDebug("[{0}] Delivery failed. Skipping supplier", suppliers.Current.Id);
+                        logger.LogDebug("[{0}] Asset import failed. Skipping supplier", suppliers.Current.Id);
                         continue;
                     }
-
                 }
-
-                return deliveryRoute;
-
             }
 
-            return null;
+            if ( assets == null && !parameters.ContinueOnDeliveryError )
+                throw new InvalidOperationException(string.Format("Assets import failed for node {0}", node.Uri));
+
+            return await storeService.StoreNodeAtDestination(supplierNode, assets, destination, null);
         }
 
         private bool CheckDelivery(IDeliveryQuotation deliveryQuotation, ISupplier supplier)
         {
-            if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() == 0)
-                logger.LogWarning("[{0}]N[{1}] No Carrier", supplier.Id, deliveryQuotation.NodeDeliveryQuotes.Item1.Uri);
-            else
-            {
-                logger.LogDebug("[{0}]N[{1}] {2} carriers", supplier.Id,
-                     deliveryQuotation.NodeDeliveryQuotes.Item1.Uri, deliveryQuotation.NodeDeliveryQuotes.Item2.Count());
-                int j = 1;
-                foreach (var delivery in deliveryQuotation.NodeDeliveryQuotes.Item2)
-                {
-                    logger.LogDebug("[{0}]N[{1}]#{2}[{3}] to {4} : {5}$", supplier.Id,
-                        deliveryQuotation.NodeDeliveryQuotes.Item1.Uri, j,
-                        delivery.Carrier.Id, delivery.Destination.ToString(), delivery.Cost);
-                    j++;
-                }
-                j++;
-            }
             foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
                 if (item.Value.Count() == 0)
@@ -123,18 +110,8 @@ namespace Terradue.Stars.Services.Supplier
             return true;
         }
 
-        private async Task<IResource> Deliver(IDeliveryQuotation deliveryQuotation)
+        private async Task<IDictionary<string, IAsset>> Deliver(IDeliveryQuotation deliveryQuotation, SupplyParameters parameters)
         {
-            IResource nodeDeliveredRoute = null;
-            if (deliveryQuotation.NodeDeliveryQuotes.Item2.Count() > 0)
-            {
-                var route = await Deliver(deliveryQuotation.NodeDeliveryQuotes.Item1.Uri.ToString(), deliveryQuotation.NodeDeliveryQuotes.Item2);
-                if (route == null) return null;
-                nodeDeliveredRoute = route;
-                IRouter router = routersManager.GetRouter(route);
-                if (router != null)
-                    nodeDeliveredRoute = await router.Route(route);
-            }
             Dictionary<string, IAsset> assetsDeliveredRoutes = new Dictionary<string, IAsset>();
             foreach (var assetDeliveries in deliveryQuotation.AssetsDeliveryQuotes)
             {
@@ -142,7 +119,7 @@ namespace Terradue.Stars.Services.Supplier
                 var route = await Deliver(assetDeliveries.Key, assetDeliveries.Value);
                 if (route == null)
                 {
-                    if (!Parameters.ContinueOnDeliveryError) return null;
+                    if (!parameters.ContinueOnDeliveryError) return null;
                 }
                 // OK
                 else
@@ -151,16 +128,7 @@ namespace Terradue.Stars.Services.Supplier
                     assetsDeliveredRoutes.Add(assetDeliveries.Key, asset);
                 }
             }
-            if (nodeDeliveredRoute is IItem)
-            {
-                return MakeItem(nodeDeliveredRoute as IItem, assetsDeliveredRoutes, deliveryQuotation);
-            }
-            return nodeDeliveredRoute;
-        }
-
-        private IResource MakeItem(IItem item, Dictionary<string, IAsset> assets, IDeliveryQuotation deliveryQuotation)
-        {
-            return new ContainerNode(item, assets);
+            return assetsDeliveredRoutes;
         }
 
         private IAsset MakeAsset(IResource route, IAsset assetOrigin)
@@ -193,15 +161,15 @@ namespace Terradue.Stars.Services.Supplier
             return null;
         }
 
-        private IDeliveryQuotation QuoteDelivery(ISupplier supplier, IResource supplierRoute, IDestination destination)
+        private IDeliveryQuotation QuoteDelivery(ISupplier supplier, IResource supplierNode, IDestination destination)
         {
             try
             {
-                return supplier.QuoteDelivery(supplierRoute, destination);
+                return supplier.QuoteDelivery(supplierNode, destination);
             }
             catch (Exception e)
             {
-                logger.LogWarning("Exception during quotation for {0} at {1} : {2}", supplierRoute.Uri, supplier.Id, e.Message);
+                logger.LogWarning("Exception during quotation for {0} at {1} : {2}", supplierNode.Uri, supplier.Id, e.Message);
                 logger.LogDebug(e.StackTrace);
             }
             return null;
@@ -221,10 +189,10 @@ namespace Terradue.Stars.Services.Supplier
 
         }
 
-        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route)
+        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplyParameters parameters)
         {
             if (route is IItem)
-                return suppliersManager.GetSuppliers(Parameters.SupplierFilters).GetEnumerator();
+                return suppliersManager.GetSuppliers(parameters.SupplierFilters).GetEnumerator();
 
             return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
         }

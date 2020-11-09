@@ -18,8 +18,7 @@ namespace Terradue.Stars.Console
 
         public static IConfigurationRoot Configuration { get; set; }
 
-        [Option]
-        public static bool Verbose { get; set; }
+
 
         public static async Task<int> Main(string[] args)
         {
@@ -40,8 +39,7 @@ namespace Terradue.Stars.Console
             catch (Exception e)
             {
                 await PhysicalConsole.Singleton.Error.WriteLineAsync(e.Message);
-                if (Verbose)
-                    await PhysicalConsole.Singleton.Error.WriteLineAsync(e.StackTrace);
+                await PhysicalConsole.Singleton.Error.WriteLineAsync(e.StackTrace);
                 return 1;
             }
         }

@@ -17,7 +17,7 @@ namespace Terradue.Stars.Services.Router
         private readonly RoutersManager routersManager;
         private readonly ICredentials credentialsManager;
 
-        public RouterService(ILogger logger, RoutersManager routersManager, ICredentials credentialsManager)
+        public RouterService(ILogger<RouterService> logger, RoutersManager routersManager, ICredentials credentialsManager)
         {
             this.Parameters = new RouterServiceParameters();
             this.logger = logger;
@@ -25,25 +25,7 @@ namespace Terradue.Stars.Services.Router
             this.credentialsManager = credentialsManager;
         }
 
-        public async Task ExecuteAsync(IEnumerable<string> inputs)
-        {
-            List<IResource> routes = inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: credentialsManager)).ToList();
-            IResource rootRoute = null;
-
-            if (routes.Count == 1)
-            {
-                rootRoute = routes.First();
-            }
-            else
-            {
-                rootRoute = new GenericCatalog(routes, "catalog");
-            }
-
-            object state = await onBranchingFunction.Invoke(null, rootRoute, null, null);
-            await Route(rootRoute, Parameters.Recursivity, null, state);
-        }
-
-        internal async Task<object> Route(IResource route, int recursivity, IRouter prevRouter, object state)
+        public async Task<object> Route(IResource route, int recursivity, IRouter prevRouter, object state)
         {
             // Stop here if there is no route
             if (route == null)

@@ -70,19 +70,17 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         /// Make a set of quotation for each supplier
         /// </summary>
         /// <returns></returns>
-        public IDeliveryQuotation QuoteDeliveryFromCarriers(IResource supply, IDestination destination)
+        public IDeliveryQuotation QuoteDeliveryFromCarriers(IResource supplierNode, IDestination destination)
         {
-            List<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = new List<(ISupplier, DeliveryQuotation)>();
-
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotation = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
-            if (supply is IAssetsContainer)
+            if (supplierNode is IAssetsContainer)
             {
-                assetsDeliveryQuotation = GetAssetsDeliveryQuotations(supply as IAssetsContainer, destination);
+                assetsDeliveryQuotation = GetAssetsDeliveryQuotations(supplierNode as IAssetsContainer, destination);
             }
 
-            var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supply, destination);
+            var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supplierNode, destination);
 
-            return new DeliveryQuotation((supply, resourceDeliveryQuotations), assetsDeliveryQuotation, destination);
+            return new DeliveryQuotation(supplierNode, assetsDeliveryQuotation);
 
         }
     }

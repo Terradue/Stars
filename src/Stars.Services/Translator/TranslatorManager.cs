@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
 
 namespace Terradue.Stars.Services.Translator
 {
     public class TranslatorManager : AbstractManager<ITranslator>
     {
-        public TranslatorManager(ILogger logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
+        public TranslatorManager(ILogger<TranslatorManager> logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
         {
         }
 

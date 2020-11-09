@@ -15,7 +15,7 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class SupplierManager : AbstractManager<ISupplier>
     {
-        public SupplierManager(ILogger logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
+        public SupplierManager(ILogger<SupplierManager> logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
         {
         }
 

@@ -46,7 +46,7 @@ namespace Terradue.Stars.Services.Translator
 
         private IResource CreateStacCatalogNode(ICatalog node)
         {
-            StacCatalog catalog = new StacCatalog("catalog", node.Label, CreateStacLinks(node));
+            StacCatalog catalog = new StacCatalog(node.Id, node.Label, CreateStacLinks(node));
             return new StacCatalogNode(catalog);
         }
 

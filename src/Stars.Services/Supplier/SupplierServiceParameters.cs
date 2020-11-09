@@ -1,10 +1,13 @@
+using Terradue.Stars.Interface.Supplier;
+
 namespace Terradue.Stars.Services.Supplier
 {
-    public class SupplierServiceParameters
+    public class SupplyParameters
     {
-        public SupplierServiceParameters()
+        internal static SupplyParameters Default => new SupplyParameters();
+
+        public SupplyParameters()
         {
-            SupplierFilters = new SupplierFilters();
         }
 
         public SupplierFilters SupplierFilters { get; set; }

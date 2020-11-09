@@ -78,10 +78,5 @@ namespace Terradue.Stars.Services.Model.Atom
             throw new NotImplementedException();
         }
 
-        public IStacObject ReadAsStacObject()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

@@ -122,11 +122,16 @@ namespace Terradue.Stars.Console.Operations
 
         protected override async Task ExecuteAsync()
         {
-
-
             this.routingService = ServiceProvider.GetService<RouterService>();
             InitRoutingTask();
-            await routingService.ExecuteAsync(Inputs);
+            List<IResource> routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
+
+            foreach (var route in routes)
+            {
+                object state = await PrepareNewRoute(null, route, null, null);
+                await routingService.Route(route, recursivity, null, state);
+            }
+
         }
 
         private async Task PrintAssets(IItem resource, IRouter router, string prefix)

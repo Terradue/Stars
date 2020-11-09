@@ -13,23 +13,17 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class DeliveryQuotation : IDeliveryQuotation
     {
-        private readonly (IResource, IOrderedEnumerable<IDelivery>) nodeQuotes;
+        private readonly IResource supplierNode;
         private IDictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
-        private readonly IDestination destination;
 
-        public DeliveryQuotation((IResource, IOrderedEnumerable<IDelivery>) nodeQuotes, IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes, IDestination destination)
+        public DeliveryQuotation(IResource supplierNode, IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes)
         {
-            this.nodeQuotes = nodeQuotes;
+            this.supplierNode = supplierNode;
             this.assetsDeliveryQuotes = assetsQuotes;
-            this.destination = destination;
         }
-
-        public IEnumerable<ICarrier> Carriers => assetsDeliveryQuotes.SelectMany(q => q.Value.Select(q1 => q1.Carrier).Distinct()).Distinct();
 
         public IDictionary<string, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes => assetsDeliveryQuotes;
 
-        public (IResource, IOrderedEnumerable<IDelivery>) NodeDeliveryQuotes => nodeQuotes;
-
-        public IDestination Destination => destination;
+        public IResource SupplierNode => supplierNode;
     }
 }

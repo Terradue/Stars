@@ -42,5 +42,6 @@ namespace Terradue.Stars.Services.Supplier
         public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
         {
         }
+
     }
 }

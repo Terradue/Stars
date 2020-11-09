@@ -7,10 +7,10 @@ namespace Terradue.Stars.Interface.Processing
 {
     public interface IProcessing : IPlugin
     {
-        bool CanProcess(IResource route, IDestination destination);
+        bool CanProcess(IResource resource, IDestination destination);
 
-        Task<IResource> Process(IResource route, IDestination destination);
+        Task<IResource> Process(IResource resource, IDestination destination);
 
-        string GetRelativePath(IResource route, IDestination destination);
+        string GetRelativePath(IResource resource, IDestination destination);
     }
 }
