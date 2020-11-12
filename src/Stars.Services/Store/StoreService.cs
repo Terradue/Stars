@@ -23,6 +23,7 @@ namespace Terradue.Stars.Services.Store
         private readonly DestinationManager destinationManager;
         private readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
+        protected readonly ICredentials credentials;
         private readonly StacRouter _stacRouter;
         private readonly StoreOptions storeOptions;
         private IDestination rootCatalogDestination;
@@ -49,6 +50,7 @@ namespace Terradue.Stars.Services.Store
             this.destinationManager = destinationManager;
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
+            this.credentials = credentials;
             this._stacRouter = new StacRouter(credentials);
         }
 

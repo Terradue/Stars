@@ -33,7 +33,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             if (route is StacNode) return true;
             if (!(route is IStreamable)) return false;
-            if (route.ContentType.MediaType == "application/json" || Path.GetExtension(route.Uri.ToString()) == ".json")
+            if (route.ContentType.MediaType.Contains("application/json") || Path.GetExtension(route.Uri.ToString()) == ".json")
             {
                 try
                 {
@@ -62,8 +62,10 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             if (route is StacCatalogNode)
                 return route as StacCatalogNode;
+            if (route is StacItemNode)
+                return route as StacItemNode;
             if (!(route is IStreamable)) return null;
-            if (route.ContentType.MediaType == "application/json" || Path.GetExtension(route.Uri.ToString()) == ".json")
+            if (route.ContentType.MediaType.Contains("application/json") || Path.GetExtension(route.Uri.ToString()) == ".json")
             {
                 try
                 {
