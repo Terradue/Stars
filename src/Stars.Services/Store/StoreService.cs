@@ -14,6 +14,7 @@ using Terradue.Stars.Services.Translator;
 using System.IO;
 using Stac.Item;
 using System.Net;
+using System.Linq;
 
 namespace Terradue.Stars.Services.Store
 {
@@ -197,14 +198,18 @@ namespace Terradue.Stars.Services.Store
             }
         }
 
-        public async Task AddChildrenToRootCatalog(IEnumerable<StacNode> stacNodes)
+        public async Task UpdateRootCatalogWithNodes(IEnumerable<StacNode> stacNodes)
         {
             foreach (var stacNode in stacNodes)
             {
+                Uri relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(stacNode.Uri);
+                var link = RootCatalogNode.StacCatalog.Links.FirstOrDefault(l => l.Uri.Equals(relativeUri));
+                if (link != null)
+                    RootCatalogNode.StacCatalog.Links.Remove(link);
                 if (stacNode.IsCatalog)
-                    RootCatalogNode.StacCatalog.Links.Add(StacLink.CreateChildLink(RootCatalogDestination.Uri.MakeRelativeUri(stacNode.Uri), stacNode.ContentType.MediaType));
+                    RootCatalogNode.StacCatalog.Links.Add(StacLink.CreateChildLink(relativeUri, stacNode.ContentType.MediaType));
                 else
-                    RootCatalogNode.StacCatalog.Links.Add(StacLink.CreateItemLink(RootCatalogDestination.Uri.MakeRelativeUri(stacNode.Uri), stacNode.ContentType.MediaType));
+                    RootCatalogNode.StacCatalog.Links.Add(StacLink.CreateItemLink(relativeUri, stacNode.ContentType.MediaType));
             }
             await StoreNodeAtDestination(RootCatalogNode, RootCatalogDestination);
         }
@@ -223,5 +228,6 @@ namespace Terradue.Stars.Services.Store
 
             return stacAsset;
         }
+
     }
 }

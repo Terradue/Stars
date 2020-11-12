@@ -186,7 +186,7 @@ namespace Terradue.Stars.Console.Operations
                 stacNodes.Add(copyState.CurrentStacObject);
             }
             if ( stacNodes.Count == 1 && stacNodes.First().IsCatalog )
-                await storeService.AddChildrenToRootCatalog(stacNodes.First().GetRoutes().Cast<StacNode>());
+                await storeService.UpdateRootCatalogWithNodes(stacNodes.First().GetRoutes().Cast<StacNode>());
         }
 
         protected override void RegisterOperationServices(ServiceCollection collection)
