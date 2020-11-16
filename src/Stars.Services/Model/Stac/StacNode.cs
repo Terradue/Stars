@@ -8,13 +8,14 @@ using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Item;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public abstract class StacNode : IRoute, IStreamable
+    public abstract class StacNode : IResource, IStreamable
     {
         protected IStacObject stacObject;
         protected ContentType contentType;
@@ -70,7 +71,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanBeRanged => false;
 
-        public abstract IList<IRoute> GetRoutes();
+        public abstract IList<IResource> GetRoutes();
 
         public async Task<Stream> GetStreamAsync()
         {

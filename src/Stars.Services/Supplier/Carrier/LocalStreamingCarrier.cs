@@ -1,19 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Services.Router;
-using System.Net.Http;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Interface;
+using System.Security.AccessControl;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -32,7 +27,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public override string Id => "Streaming";
 
-        public override bool CanDeliver(IRoute route, IDestination destination)
+        public override bool CanDeliver(IResource route, IDestination destination)
         {
             if (!(destination is LocalFileDestination)) return false;
             if (route is IAsset) return true;
@@ -41,7 +36,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return true;
         }
 
-        public override async Task<IRoute> Deliver(IDelivery delivery)
+        public override async Task<IResource> Deliver(IDelivery delivery)
         {
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileSystemRoute localRoute = new LocalFileSystemRoute(localDelivery.LocalPath, localDelivery.Route.ContentType, localDelivery.Route.ResourceType, localDelivery.Route.ContentLength);
@@ -83,7 +78,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             else
             {
                 stream = await streamable.GetStreamAsync();
-                using (FileStream fileStream = file.Create())
+                using (FileStream fileStream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                 {
                     await stream.CopyToAsync(fileStream);
                     await fileStream.FlushAsync();

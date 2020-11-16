@@ -15,6 +15,7 @@ using Terradue.Stars.Services;
 using GeoJSON.Net.Geometry;
 using Terradue.Stars.Geometry.Atom;
 using System.Net;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -51,9 +52,9 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Filename };
 
-        public IList<IRoute> GetRoutes()
+        public IList<IResource> GetRoutes()
         {
-            return new List<IRoute>();
+            return new List<IResource>();
         }
 
         public async Task<Stream> GetStreamAsync()

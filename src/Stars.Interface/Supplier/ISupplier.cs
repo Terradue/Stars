@@ -10,9 +10,9 @@ namespace Terradue.Stars.Interface.Supplier
         string Id { get; }
 
         // TODO add assets filters
-        Task<IRoute> SearchFor(IRoute item);
+        Task<IResource> SearchFor(IResource item);
 
-        IDeliveryQuotation QuoteDelivery(IRoute resource, IDestination destination);
+        IDeliveryQuotation QuoteDelivery(IResource resource, IDestination destination);
 
         Task<IOrder> Order(IOrderable orderableRoute);
     }

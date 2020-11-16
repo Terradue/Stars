@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Supplier
 {
     internal class GenericAsset : IAsset
     {
-        private IRoute route;
+        private IResource route;
         private readonly string label;
         private readonly IEnumerable<string> roles;
         private Uri uri;
 
-        public GenericAsset(IRoute route, string label, IEnumerable<string> roles)
+        public GenericAsset(IResource route, string label, IEnumerable<string> roles)
         {
             this.route = route;
             this.label = label;

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac.Catalog;
 using Stac.Item;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Router;
 
@@ -28,11 +29,11 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public string Label => "Stac";
 
-        public bool CanRoute(IRoute route)
+        public bool CanRoute(IResource route)
         {
             if (route is StacNode) return true;
             if (!(route is IStreamable)) return false;
-            if (route.ContentType.MediaType == "application/json" || Path.GetExtension(route.Uri.ToString()) == ".json")
+            if (route.ContentType.MediaType.Contains("application/json") || Path.GetExtension(route.Uri.ToString()) == ".json")
             {
                 try
                 {
@@ -57,12 +58,14 @@ namespace Terradue.Stars.Services.Model.Stac
             credentials = serviceProvider.GetService<ICredentials>();
         }
 
-        public async Task<IRoute> Route(IRoute route)
+        public async Task<IResource> Route(IResource route)
         {
             if (route is StacCatalogNode)
                 return route as StacCatalogNode;
+            if (route is StacItemNode)
+                return route as StacItemNode;
             if (!(route is IStreamable)) return null;
-            if (route.ContentType.MediaType == "application/json" || Path.GetExtension(route.Uri.ToString()) == ".json")
+            if (route.ContentType.MediaType.Contains("application/json") || Path.GetExtension(route.Uri.ToString()) == ".json")
             {
                 try
                 {

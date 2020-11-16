@@ -4,6 +4,6 @@ namespace Terradue.Stars.Interface.Router.Translator
 {
     public interface ITranslator : IPlugin
     {
-        Task<T> Translate<T>(IRoute node) where T : IRoute;
+        Task<T> Translate<T>(IResource node) where T : IResource;
     }
 }

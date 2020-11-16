@@ -1,21 +1,19 @@
 using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Router
 {
-    public class WebRoute : IRoute, IStreamable, IDisposable
+    public class WebRoute : IResource, IStreamable
     {
         private readonly WebRequest request;
         private readonly ulong contentLength;
 
-        private WebResponse cacheResponse = null;
+        private WebResponse cachedResponse;
 
         internal WebRoute(WebRequest request, ulong contentLength = 0)
         {
@@ -39,9 +37,8 @@ namespace Terradue.Stars.Services.Router
 
         public async Task<Stream> GetStreamAsync()
         {
-            if ( cacheResponse != null ) cacheResponse.Close();
-            cacheResponse = await request.CloneRequest(request.RequestUri).GetResponseAsync();
-            return cacheResponse.GetResponseStream();
+            var response = await request.CloneRequest(request.RequestUri).GetResponseAsync();
+            return response.GetResponseStream();
         }
 
         public Uri Uri => request.RequestUri;
@@ -50,9 +47,9 @@ namespace Terradue.Stars.Services.Router
         {
             get
             {
-                var response = GetOrCreateCacheResponse().Result;
-                if (!string.IsNullOrEmpty(response.ContentType))
-                    return new ContentType(response.ContentType);
+                if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentType]))
+                    return new ContentType(CachedHeaders[HttpResponseHeader.ContentType]);
+
                 return new ContentType("application/octet-stream");
             }
         }
@@ -61,15 +58,23 @@ namespace Terradue.Stars.Services.Router
 
         public WebRequest Request { get => request; }
 
-        public ulong ContentLength => contentLength == 0 ? Convert.ToUInt64(GetOrCreateCacheResponse().Result.ContentLength) : contentLength;
+        public ulong ContentLength
+        {
+            get
+            {
+                if (contentLength > 0) return contentLength;
+                if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentLength]))
+                    return Convert.ToUInt64(CachedHeaders[HttpResponseHeader.ContentLength]);
+                return 0;
+            }
+        }
 
         public ContentDisposition ContentDisposition
         {
             get
             {
-                var response = GetOrCreateCacheResponse().Result;
-                if (!string.IsNullOrEmpty(response.Headers["Content-Disposition"]))
-                    return new ContentDisposition(response.Headers["Content-Disposition"]);
+                if (!string.IsNullOrEmpty(CachedHeaders["Content-Disposition"]))
+                    return new ContentDisposition(CachedHeaders["Content-Disposition"]);
                 return new ContentDisposition() { FileName = Path.GetFileName(request.RequestUri.ToString()) };
             }
 
@@ -79,22 +84,40 @@ namespace Terradue.Stars.Services.Router
         {
             get
             {
-                WebResponse response = GetOrCreateCacheResponse().Result;
-                return response is FileWebResponse ||
-                    (response is HttpWebResponse && response.Headers[HttpResponseHeader.AcceptRanges] == "bytes");
+                try
+                {
+                    if (cachedResponse is FileWebResponse) return true;
+                    if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.AcceptRanges]))
+                        return (CachedHeaders[HttpResponseHeader.AcceptRanges] == "bytes");
+                }
+                catch { }
+                return false;
             }
         }
 
-        private async Task<WebResponse> GetOrCreateCacheResponse()
+        public WebHeaderCollection CachedHeaders
         {
-            if (cacheResponse == null)
+            get
+            {
+                if (cachedResponse == null)
+                    CacheResponse().GetAwaiter().GetResult();
+                return cachedResponse?.Headers;
+            }
+        }
+
+        private async Task CacheResponse()
+        {
+            try
             {
                 var cacheRequest = request.CloneRequest(request.RequestUri);
-                if ( cacheResponse != null ) cacheResponse.Close();
-                cacheResponse = await cacheRequest.GetResponseAsync();
-                // cacheResponse.Close();
+                var response = await cacheRequest.GetResponseAsync();
+                cachedResponse = new CachedWebResponse(response);
+                response.Close();
             }
-            return cacheResponse;
+            catch
+            {
+                cachedResponse = new CachedWebResponse();
+            }
         }
 
         public async Task<Stream> GetStreamAsync(long start, long end = -1)
@@ -111,20 +134,13 @@ namespace Terradue.Stars.Services.Router
             {
                 (rangedRequest as FtpWebRequest).ContentOffset = start;
             }
-            if ( cacheResponse != null ) cacheResponse.Close();
-            cacheResponse = await rangedRequest.GetResponseAsync();
-            var stream = cacheResponse.GetResponseStream();
+            var response = await rangedRequest.GetResponseAsync();
+            var stream = response.GetResponseStream();
             if (rangedRequest is FileWebRequest)
             {
                 stream.Seek(start, SeekOrigin.Begin);
             }
             return stream;
-        }
-
-        public void Dispose()
-        {
-            if ( cacheResponse != null )
-                cacheResponse.Close();
         }
     }
 }

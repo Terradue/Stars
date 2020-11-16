@@ -16,6 +16,7 @@ using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
 using Stac;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -38,7 +39,7 @@ namespace Terradue.Stars.Services.Processing
             Priority = 1;
         }
 
-        public bool CanProcess(IRoute route, IDestination destination)
+        public bool CanProcess(IResource route, IDestination destination)
         {
             IAssetsContainer assetsContainer = route as IAssetsContainer;
             return assetsContainer != null && assetsContainer.GetAssets() != null && assetsContainer.GetAssets().Any(asset => IsArchive(asset.Value));
@@ -59,7 +60,7 @@ namespace Terradue.Stars.Services.Processing
             return asset.ContentType != null && Archive.ArchiveContentTypes.Contains(asset.ContentType.MediaType);
         }
 
-        public async Task<IRoute> Process(IRoute route, IDestination destination)
+        public async Task<IResource> Process(IResource route, IDestination destination)
         {
             IItem item = route as IItem;
             if (item == null) return route;
@@ -118,7 +119,7 @@ namespace Terradue.Stars.Services.Processing
 
         }
 
-        public string GetRelativePath(IRoute route, IDestination destination)
+        public string GetRelativePath(IResource route, IDestination destination)
         {
             return null;
         }

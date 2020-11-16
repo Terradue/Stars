@@ -7,8 +7,8 @@ namespace Terradue.Stars.Interface.Router
     {
         string Label { get; }
 
-        bool CanRoute(IRoute node);
+        bool CanRoute(IResource node);
 
-        Task<IRoute> Route(IRoute node);
+        Task<IResource> Route(IResource node);
     }
 }

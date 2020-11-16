@@ -243,8 +243,8 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
-                "-v",
                 "copy",
+                "-v",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SR_2_LAN____20190404T224853_20190404T233910_20190430T202207_3016_024_015______LN3_O_NT_003",
                 "-r",
                 "4",

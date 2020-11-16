@@ -12,7 +12,7 @@ namespace Terradue.Stars.Console.Operations
         private readonly IConsole console;
         private readonly ConsoleUserSettings consoleUserSettings;
 
-        public ConsoleCredentialsManager(IOptions<CredentialsOptions> options, IConsole console, ConsoleUserSettings consoleUserSettings, ILogger logger) : base(options, logger)
+        public ConsoleCredentialsManager(IOptions<CredentialsOptions> options, IConsole console, ConsoleUserSettings consoleUserSettings, ILogger<ConsoleCredentialsManager> logger) : base(options, logger)
         {
             this.console = console;
             this.consoleUserSettings = consoleUserSettings;

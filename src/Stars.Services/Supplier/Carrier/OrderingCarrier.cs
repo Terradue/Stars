@@ -13,6 +13,7 @@ using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -34,7 +35,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public string Id => "Ordering";
 
-        public bool CanDeliver(IRoute route, IDestination destination)
+        public bool CanDeliver(IResource route, IDestination destination)
         {
             if (!(route is IOrderable)) return false;
             return carrierManager.GetCarriers(CreateOrderVoucher(route as IOrderable, "dummy"), destination).Count() > 0;
@@ -45,14 +46,14 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return new OrderVoucher(route, orderId);
         }
 
-        public async Task<IRoute> Deliver(IDelivery delivery)
+        public async Task<IResource> Deliver(IDelivery delivery)
         {
             OrderedDelivery orderedDelivery = delivery as OrderedDelivery;
             IOrder order = await orderedDelivery.Supplier.Order(orderedDelivery.OrderableRoute);
             return await orderedDelivery.VoucherDelivery.Carrier.Deliver(orderedDelivery.VoucherDelivery);
         }
 
-        public IDelivery QuoteDelivery(IRoute route, IDestination destination)
+        public IDelivery QuoteDelivery(IResource route, IDestination destination)
         {
             if (!CanDeliver(route, destination)) return null;
 

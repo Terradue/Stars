@@ -14,6 +14,7 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -33,7 +34,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public string Id => "Native";
 
-        public bool CanDeliver(IRoute route, IDestination destination)
+        public bool CanDeliver(IResource route, IDestination destination)
         {
             return (route != null);
         }
@@ -42,12 +43,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
         }
 
-        public Task<IRoute> Deliver(IDelivery delivery)
+        public Task<IResource> Deliver(IDelivery delivery)
         {
-            return Task.FromResult<IRoute>(delivery.Route);
+            return Task.FromResult<IResource>(delivery.Route);
         }
 
-        public IDelivery QuoteDelivery(IRoute route, IDestination destination)
+        public IDelivery QuoteDelivery(IResource route, IDestination destination)
         {
             return new NoDelivery(route, this);
         }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Processing

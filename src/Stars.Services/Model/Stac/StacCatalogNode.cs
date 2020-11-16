@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Stac;
 using Stac.Catalog;
 using Stac.Collection;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Router;
 
@@ -39,11 +40,11 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public override IList<IRoute> GetRoutes()
+        public override IList<IResource> GetRoutes()
         {
             return StacCatalog.GetChildren().Values.Select(child => new StacCatalogNode(child, credentials)).Concat(
-                    StacCatalog.GetItems().Values.Select(item => new StacItemNode(item, credentials)).Cast<IRoute>()
-                ).Cast<IRoute>().ToList();
+                    StacCatalog.GetItems().Values.Select(item => new StacItemNode(item, credentials)).Cast<IResource>()
+                ).Cast<IResource>().ToList();
         }
 
     }

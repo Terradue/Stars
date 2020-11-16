@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 
 

@@ -15,7 +15,6 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services;
-using Terradue.Stars.Services.Catalog;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
@@ -29,6 +28,9 @@ namespace Terradue.Stars.Console.Operations
 {
     internal abstract class BaseOperation
     {
+        [Option]
+        public static bool Verbose { get; set; }
+
         protected static StarsConsoleReporter logger;
 
         protected IConsole console;
@@ -94,11 +96,9 @@ namespace Terradue.Stars.Console.Operations
             // Routing Service
             collection.AddTransient<RouterService, RouterService>();
             // Supplying Service
-            collection.AddTransient<SupplierService, SupplierService>();
+            collection.AddTransient<AssetService, AssetService>();
             // Processing Service
             collection.AddTransient<ProcessingService, ProcessingService>();
-            // Coordinator Service
-            collection.AddTransient<CoordinatorService, CoordinatorService>();
 
             // Credentials Options & Manager
             collection.Configure<CredentialsOptions>(co => co.Configure(Configuration.GetSection("Credentials"), logger));
@@ -111,13 +111,13 @@ namespace Terradue.Stars.Console.Operations
         private void LoadPlugins(ServiceCollection collection, IConfigurationRoot configuration)
         {
             IConfigurationSection pluginSection = configuration.GetSection("Plugins");
-                
-            
+
+
             foreach (var plugin in pluginSection.GetChildren())
             {
                 if (plugin.GetSection("Assembly") == null)
                     continue;
-                
+
                 var assemblyPath = plugin.GetSection("Assembly").Value;
                 if (!File.Exists(assemblyPath))
                     continue;
@@ -144,7 +144,7 @@ namespace Terradue.Stars.Console.Operations
         private ServiceCollection RegisterServices()
         {
 
-            logger = new StarsConsoleReporter(PhysicalConsole.Singleton, Program.Verbose);
+            logger = new StarsConsoleReporter(PhysicalConsole.Singleton, Verbose);
 
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
             //Determines the working environment as IHostingEnvironment is unavailable in a console app
@@ -154,7 +154,8 @@ namespace Terradue.Stars.Console.Operations
             var collection = new ServiceCollection();
 
             // Add logging
-            collection.AddLogging(c => c.AddProvider(new StarsConsoleLoggerProvider(PhysicalConsole.Singleton, Program.Verbose)));
+            collection.AddLogging(c => c.AddProvider(new StarsConsoleLoggerProvider(PhysicalConsole.Singleton, Verbose))
+                        .AddFilter(logLevel => logLevel > LogLevel.Debug || Verbose));
 
             // Add Configuration
             var builder = new ConfigurationBuilder();
@@ -167,7 +168,6 @@ namespace Terradue.Stars.Console.Operations
             }
             builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true, reloadOnChange: true)
                    .AddNewtonsoftJsonFile("appsettings.json", optional: true);
-                   
 
             //only add secrets in development
             if (isDevelopment)

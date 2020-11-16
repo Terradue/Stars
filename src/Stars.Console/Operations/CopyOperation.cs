@@ -7,12 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Catalog;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Processing;
@@ -21,6 +20,11 @@ using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Store;
+using Microsoft.Extensions.Options;
+using System.Net;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -36,9 +40,8 @@ namespace Terradue.Stars.Console.Operations
         [Option("-sa|--skip-assets", "Do not list assets", CommandOptionType.NoValue)]
         public bool SkippAssets { get; set; }
 
-        [Option("-o|--output", "Output Url", CommandOptionType.SingleValue)]
-        [Required]
-        public string OutputDirectory { get; set; }
+        [Option("-o|--output", "Output Url (Default to current dir)", CommandOptionType.SingleValue)]
+        public string OutputUrl { get => outputUrl; set => outputUrl = value; }
 
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
         public bool AllowOrdering { get; set; }
@@ -52,13 +55,18 @@ namespace Terradue.Stars.Console.Operations
         [Option("-si|--supplier-included", "Supplier to include for the data supply (default to all registered)", CommandOptionType.MultipleValue)]
         public string[] SuppliersIncluded { get; set; }
 
+        [Option("-mc|--merge-catalog", "Merge catalog if one already exists", CommandOptionType.NoValue)]
+        public bool MergeCatalog { get; set; } = false;
 
-        private RouterService routingTask;
-        private DestinationManager destinationManager;
+
+        private RouterService routingService;
         private CarrierManager carrierManager;
-        private ProcessingManager receiptManager;
+        private ProcessingManager processingManager;
+        private TranslatorManager translatorManager;
+        private StoreService storeService;
         private string[] inputs = new string[0];
         private int recursivity = 1;
+        private string outputUrl = "file://" + Directory.GetCurrentDirectory();
 
         public CopyOperation()
         {
@@ -66,122 +74,139 @@ namespace Terradue.Stars.Console.Operations
         }
         private void InitRoutingTask()
         {
-            routingTask.Parameters = new RouterServiceParameters()
+            routingService.Parameters = new RouterServiceParameters()
             {
                 Recursivity = Recursivity,
                 SkipAssets = SkippAssets
             };
             // routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
-            routingTask.OnBeforeBranching((node, router, state) => CopyNode(node, router, state));
-            routingTask.OnItem((node, router, state) => CopyItem(node, router, state));
-            routingTask.OnBranching(async (parentRoute, route, siblings, state) => await PrepareNewRoute(parentRoute, route, siblings, state));
-            routingTask.OnAfterBranching(async (parentRoute, router, parentState, subStates) => await Stacify(parentRoute, router, parentState, subStates));
+            routingService.OnBeforeBranching((node, router, state) => CreateCatalog(node, router, state));
+            routingService.OnItem((node, router, state) => CopyNode(node, router, state));
+            routingService.OnBranching((parentRoute, route, siblings, state) => Task.FromResult((object)PrepareNewRoute(parentRoute, route, siblings, state)));
+            routingService.OnAfterBranching(async (parentRoute, router, parentState, subStates) => await UpdateCatalog(parentRoute, router, parentState, subStates));
         }
 
-        private async Task<object> CopyItem(IItem node, IRouter router, object state)
-        {
-            var newState = await CopyNode(node, router, state);
-
-            CopyOperationState operationState = newState as CopyOperationState;
-
-            if (operationState.LastRoute != null)
-                return await Stacify(operationState.LastRoute, router, newState, new object[0]);
-
-            return newState;
-        }
-
-
-        private async Task<object> Stacify(IRoute parentRoute, IRouter router, object state, IEnumerable<object> subStates)
+        private async Task<object> CreateCatalog(ICatalog node, IRouter router, object state)
         {
             CopyOperationState operationState = state as CopyOperationState;
-
-            CoordinatorService catalogingTask = ServiceProvider.GetService<CoordinatorService>();
-
-            IRoute stacRoute = await catalogingTask.ExecuteAsync(parentRoute, subStates.Cast<CopyOperationState>().Select(s => s.LastRoute), operationState.Destination, operationState.Depth);
-
-            operationState.LastRoute = stacRoute;
-
+            StacNode stacNode = node as StacNode;
+            if (stacNode == null)
+            {
+                // No? Let's try to translate it to Stac
+                stacNode = await translatorManager.Translate<StacNode>(node);
+                if (stacNode == null)
+                    throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", node.Uri));
+            }
+            operationState.CurrentStacObject = stacNode;
             return operationState;
-
         }
 
-        private async Task<object> PrepareNewRoute(IRoute parentRoute, IRoute newRoute, IList<IRoute> siblings, object state)
+        private async Task<object> UpdateCatalog(ICatalog parentRoute, IRouter router, object parentState, IEnumerable<object> subStates)
+        {
+            CopyOperationState operationState = parentState as CopyOperationState;
+            if (operationState.CurrentStacObject is IItem)
+                return operationState;
+            if (operationState.CurrentStacObject is StacCatalogNode)
+            {
+                StacCatalogNode stacCatalogNode = operationState.CurrentStacObject as StacCatalogNode;
+                operationState.CurrentStacObject = await operationState.StoreService.StoreNodeAtDestination(stacCatalogNode, null, operationState.CurrentDestination, subStates.Select(ss => (ss as CopyOperationState).CurrentStacObject));
+            }
+            return operationState;
+        }
+
+        private CopyOperationState PrepareNewRoute(IResource parentRoute, IResource newRoute, IList<IResource> siblings, object state)
         {
             if (state == null)
             {
-                var destination = await destinationManager.CreateDestination(OutputDirectory, newRoute);
-                if (destination == null)
-                    throw new InvalidProgramException("No destination found for " + OutputDirectory);
-                return new CopyOperationState(1, destination);
+                return new CopyOperationState(1, storeService, storeService.RootCatalogDestination);
             }
 
             CopyOperationState operationState = state as CopyOperationState;
-            if (operationState.Depth == 0) return state;
+            if (operationState.Depth == 0) return operationState;
 
             // we will use a subfolder with this id
             string id = Guid.NewGuid().ToString("N");
-            if ( newRoute is IItem )
+            if (newRoute is IItem)
                 id = (newRoute as IItem).Id;
-            if ( newRoute is ICatalog )
+            if (newRoute is ICatalog)
                 id = (newRoute as ICatalog).Id;
-            var newDestination = operationState.Destination.To(newRoute, id);
+            var newDestination = operationState.CurrentDestination.To(newRoute, id);
             newDestination.PrepareDestination();
 
-            return new CopyOperationState(operationState.Depth + 1, newDestination);
+            return new CopyOperationState(operationState.Depth + 1, operationState.StoreService, newDestination);
         }
 
-        private async Task<object> CopyNode(IRoute node, IRouter router, object state)
+        private async Task<object> CopyNode(IResource node, IRouter router, object state)
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            SupplierService supplyService = ServiceProvider.GetService<SupplierService>();
+            // We update the destination in case a new router updated the route
+            IDestination destination = operationState.CurrentDestination.To(node);
 
-            supplyService.Parameters = new SupplierServiceParameters()
+            // 1. Import node and its assets via suppliers
+            AssetService assetService = ServiceProvider.GetService<AssetService>();
+            SupplyParameters supplyParameters = new SupplyParameters()
             {
                 ContinueOnDeliveryError = !StopOnError
+
             };
-            // Limit suppliers only if the node is an item
-            if ( node is IItem )
-                supplyService.Parameters.SupplierFilters.IncludeIds = SuppliersIncluded;
-
-            // We update the destination in case a new router updated the route
-            IDestination destination = operationState.Destination.To(node);
-
-            IRoute deliveryNode = await supplyService.ExecuteAsync(node, destination);
-
-            if (deliveryNode == null)
+            if (SuppliersIncluded != null && SuppliersIncluded.Count() > 0)
             {
-                if (StopOnError)
-                    throw new InvalidOperationException("Delivery failed. Stopping");
-                operationState.LastRoute = null;
+                supplyParameters.SupplierFilters = new SupplierFilters();
+                supplyParameters.SupplierFilters.IncludeIds = SuppliersIncluded;
             }
-            else
-            {
-                ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-                deliveryNode = await processingService.ExecuteAsync(deliveryNode, destination);
+            StacNode stacNode = await assetService.ImportToStore(node, operationState.StoreService, destination, supplyParameters);
 
-                operationState.LastRoute = deliveryNode;
-            }
+            operationState.CurrentStacObject = stacNode;
+
+            // 2. Apply processing services if any
+            ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+            stacNode = await processingService.ExecuteAsync(stacNode, destination);
 
             return operationState;
         }
 
         protected override async Task ExecuteAsync()
         {
-            this.routingTask = ServiceProvider.GetService<RouterService>();
-            this.destinationManager = ServiceProvider.GetService<DestinationManager>();
+            this.routingService = ServiceProvider.GetService<RouterService>();
             this.carrierManager = ServiceProvider.GetService<CarrierManager>();
-            this.receiptManager = ServiceProvider.GetService<ProcessingManager>();
+            this.processingManager = ServiceProvider.GetService<ProcessingManager>();
+            this.storeService = ServiceProvider.GetService<StoreService>();
+            this.translatorManager = ServiceProvider.GetService<TranslatorManager>();
+            await this.storeService.Init(!MergeCatalog);
             InitRoutingTask();
-            await routingTask.ExecuteAsync(Inputs);
+            PrepareNewRoute(null, storeService.RootCatalogNode, null, null);
+            List<IResource> routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
+            List<StacNode> stacNodes = new List<StacNode>();
+            foreach (var route in routes)
+            {
+                CopyOperationState state = PrepareNewRoute(null, route, null, null);
+                state = await routingService.Route(route, recursivity, null, (object)state) as CopyOperationState;
+                CopyOperationState copyState = state as CopyOperationState;
+                stacNodes.Add(copyState.CurrentStacObject);
+            }
+            if ( stacNodes.Count == 1 && stacNodes.First().IsCatalog )
+                await storeService.UpdateRootCatalogWithNodes(stacNodes.First().GetRoutes().Cast<StacNode>());
         }
 
         protected override void RegisterOperationServices(ServiceCollection collection)
         {
+            collection.ConfigureAll<StoreOptions>(so =>
+            {
+                so.RootCatalogue = new CatalogueConfiguration()
+                {
+                    Identifier = "catalog",
+                    Description = "Root catalog",
+                    Url = string.Format("{0}/catalog.json", OutputUrl),
+                    DestinationUrl = OutputUrl
+                };
+            });
             collection.AddTransient<ITranslator, DefaultStacTranslator>();
+            collection.AddTransient<StoreService, StoreService>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
-            if (ExtractArchives){
+            if (ExtractArchives)
+            {
                 collection.AddTransient<IProcessing, ExtractArchiveAction>();
             }
         }

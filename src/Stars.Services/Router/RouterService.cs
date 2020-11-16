@@ -17,7 +17,7 @@ namespace Terradue.Stars.Services.Router
         private readonly RoutersManager routersManager;
         private readonly ICredentials credentialsManager;
 
-        public RouterService(ILogger logger, RoutersManager routersManager, ICredentials credentialsManager)
+        public RouterService(ILogger<RouterService> logger, RoutersManager routersManager, ICredentials credentialsManager)
         {
             this.Parameters = new RouterServiceParameters();
             this.logger = logger;
@@ -25,25 +25,7 @@ namespace Terradue.Stars.Services.Router
             this.credentialsManager = credentialsManager;
         }
 
-        public async Task ExecuteAsync(IEnumerable<string> inputs)
-        {
-            List<IRoute> routes = inputs.Select(input => (IRoute)WebRoute.Create(new Uri(input), credentials: credentialsManager)).ToList();
-            IRoute rootRoute = null;
-
-            if (routes.Count == 1)
-            {
-                rootRoute = routes.First();
-            }
-            else
-            {
-                rootRoute = new GenericCatalog(routes, "catalog");
-            }
-
-            object state = await onBranchingFunction.Invoke(null, rootRoute, null, null);
-            await Route(rootRoute, Parameters.Recursivity, null, state);
-        }
-
-        internal async Task<object> Route(IRoute route, int recursivity, IRouter prevRouter, object state)
+        public async Task<object> Route(IResource route, int recursivity, IRouter prevRouter, object state)
         {
             // Stop here if there is no route
             if (route == null)
@@ -105,7 +87,7 @@ namespace Terradue.Stars.Services.Router
             }
 
             // Let's get sub routes
-            IList<IRoute> subroutes = catalogNode.GetRoutes();
+            IList<IResource> subroutes = catalogNode.GetRoutes();
 
             state = await beforeBranchingFunction.Invoke(catalogNode, router, state);
 
@@ -140,14 +122,14 @@ namespace Terradue.Stars.Services.Router
             this.onItemFunction = onItemFunction;
         }
 
-        private Func<IRoute, IRouter, Exception, object, Task<object>> onRoutingExceptionFunction = (route, router, e, state) => { return Task.FromResult<object>(state); };
-        public void OnRoutingException(Func<IRoute, IRouter, Exception, object, Task<object>> onRoutingException)
+        private Func<IResource, IRouter, Exception, object, Task<object>> onRoutingExceptionFunction = (route, router, e, state) => { return Task.FromResult<object>(state); };
+        public void OnRoutingException(Func<IResource, IRouter, Exception, object, Task<object>> onRoutingException)
         {
             this.onRoutingExceptionFunction = onRoutingException;
         }
 
-        private Func<IRoute, IRoute, IList<IRoute>, object, Task<object>> onBranchingFunction = (parentRoute, route, siblings, state) => { return Task.FromResult<object>(state); };
-        public void OnBranching(Func<IRoute, IRoute, IList<IRoute>, object, Task<object>> onBranchingFunction)
+        private Func<IResource, IResource, IList<IResource>, object, Task<object>> onBranchingFunction = (parentRoute, route, siblings, state) => { return Task.FromResult<object>(state); };
+        public void OnBranching(Func<IResource, IResource, IList<IResource>, object, Task<object>> onBranchingFunction)
         {
             this.onBranchingFunction = onBranchingFunction;
         }

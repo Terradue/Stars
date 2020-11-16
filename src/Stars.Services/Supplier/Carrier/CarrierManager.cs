@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Router;
-
-using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -22,7 +18,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             this.logger = logger;
         }
 
-        internal IEnumerable<ICarrier> GetCarriers(IRoute route, IDestination destination)
+        internal IEnumerable<ICarrier> GetCarriers(IResource route, IDestination destination)
         {
             return Plugins.Where(r => r.Value.CanDeliver(route, destination)).Select(r => r.Value);
         }
@@ -46,7 +42,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return assetsQuotes;
         }
 
-        public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(IRoute route, IDestination destination)
+        public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(IResource route, IDestination destination)
         {
             List<IDelivery> quotes = new List<IDelivery>();
             foreach (var carrier in Plugins.Values)
@@ -74,19 +70,17 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         /// Make a set of quotation for each supplier
         /// </summary>
         /// <returns></returns>
-        public IDeliveryQuotation QuoteDeliveryFromCarriers(IRoute supply, IDestination destination)
+        public IDeliveryQuotation QuoteDeliveryFromCarriers(IResource supplierNode, IDestination destination)
         {
-            List<(ISupplier, DeliveryQuotation)> resourceSupplyQuotations = new List<(ISupplier, DeliveryQuotation)>();
-
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotation = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
-            if (supply is IAssetsContainer)
+            if (supplierNode is IAssetsContainer)
             {
-                assetsDeliveryQuotation = GetAssetsDeliveryQuotations(supply as IAssetsContainer, destination);
+                assetsDeliveryQuotation = GetAssetsDeliveryQuotations(supplierNode as IAssetsContainer, destination);
             }
 
-            var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supply, destination);
+            var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supplierNode, destination);
 
-            return new DeliveryQuotation((supply, resourceDeliveryQuotations), assetsDeliveryQuotation, destination);
+            return new DeliveryQuotation(supplierNode, assetsDeliveryQuotation);
 
         }
     }

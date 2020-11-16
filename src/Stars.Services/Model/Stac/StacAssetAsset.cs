@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
 using Stac.Catalog;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 
 using Terradue.Stars.Services.Router;
@@ -17,14 +18,18 @@ namespace Terradue.Stars.Services.Model.Stac
     {
         private StacAsset asset;
         private readonly ICredentials credentials;
+        private readonly Uri absoluteUri;
+        private readonly WebRoute resource;
 
-        public StacAssetAsset(StacAsset asset, System.Net.ICredentials credentials = null)
+        public StacAssetAsset(StacAsset asset, StacItemNode parent, System.Net.ICredentials credentials = null)
         {
             this.asset = asset;
             this.credentials = credentials;
+            this.absoluteUri = asset.Uri.IsAbsoluteUri ? asset.Uri : new Uri(parent.Uri, asset.Uri);
+            this.resource = WebRoute.Create(Uri, ContentLength, credentials);
         }
 
-        public Uri Uri => asset.Uri;
+        public Uri Uri => absoluteUri;
 
         public ContentType ContentType => asset.MediaType;
 
@@ -50,10 +55,11 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacAsset StacAsset { get => asset; }
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Filename };
+        public ContentDisposition ContentDisposition => resource.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+
         public IStreamable GetStreamable()
         {
-            return WebRoute.Create(Uri, ContentLength, credentials);
+            return resource;
         }
     }
 }

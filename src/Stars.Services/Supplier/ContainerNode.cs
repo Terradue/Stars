@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 
@@ -20,7 +21,7 @@ namespace Terradue.Stars.Services.Supplier
             this.assets = assets;
         }
 
-        public IRoute Node => item;
+        public IResource Node => item;
 
         public Uri Uri => item.Uri;
 
