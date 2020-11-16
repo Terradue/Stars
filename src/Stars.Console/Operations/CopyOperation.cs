@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supplier;
@@ -16,14 +13,12 @@ using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Processing;
 using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Store;
-using Microsoft.Extensions.Options;
 using System.Net;
 
 namespace Terradue.Stars.Console.Operations
@@ -37,7 +32,7 @@ namespace Terradue.Stars.Console.Operations
         [Option("-r|--recursivity", "Resource recursivity depth routing", CommandOptionType.SingleValue)]
         public int Recursivity { get => recursivity; set => recursivity = value; }
 
-        [Option("-sa|--skip-assets", "Do not list assets", CommandOptionType.NoValue)]
+        [Option("-sa|--skip-assets", "Do not copy assets", CommandOptionType.NoValue)]
         public bool SkippAssets { get; set; }
 
         [Option("-o|--output", "Output Url (Default to current dir)", CommandOptionType.SingleValue)]
@@ -55,8 +50,11 @@ namespace Terradue.Stars.Console.Operations
         [Option("-si|--supplier-included", "Supplier to include for the data supply (default to all registered)", CommandOptionType.MultipleValue)]
         public string[] SuppliersIncluded { get; set; }
 
-        [Option("-mc|--merge-catalog", "Merge catalog if one already exists", CommandOptionType.NoValue)]
-        public bool MergeCatalog { get; set; } = false;
+        [Option("-ac|--append-catalog", "Append to existing catalog if one is found", CommandOptionType.NoValue)]
+        public bool AppendCatalog { get; set; } = false;
+
+        [Option("-da|--delete-archives", "Delete archives from the catalog when inflated", CommandOptionType.NoValue)]
+        public bool DeleteArchive { get; set; } = false;
 
 
         private RouterService routingService;
@@ -173,7 +171,7 @@ namespace Terradue.Stars.Console.Operations
             this.processingManager = ServiceProvider.GetService<ProcessingManager>();
             this.storeService = ServiceProvider.GetService<StoreService>();
             this.translatorManager = ServiceProvider.GetService<TranslatorManager>();
-            await this.storeService.Init(!MergeCatalog);
+            await this.storeService.Init(!AppendCatalog);
             InitRoutingTask();
             PrepareNewRoute(null, storeService.RootCatalogNode, null, null);
             List<IResource> routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
@@ -201,8 +199,12 @@ namespace Terradue.Stars.Console.Operations
                     DestinationUrl = OutputUrl
                 };
             });
+            collection.ConfigureAll<ExtractArchiveOptions>(so =>
+            {
+                so.KeepArchive = !DeleteArchive;
+            });
             collection.AddTransient<ITranslator, DefaultStacTranslator>();
-            collection.AddTransient<StoreService, StoreService>();
+            collection.AddSingleton<StoreService, StoreService>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
             if (ExtractArchives)
