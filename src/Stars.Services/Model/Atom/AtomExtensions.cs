@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System;
 using Terradue.OpenSearch.Result;
 using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using GeoJSON.Net.Geometry;
+using Terradue.Stars.Services.Model.EOP;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
-    public static class AtomExtensions
+    public static class AtomExtension
     {
+        public static string CreateIdentifier(this IOpenSearchResultCollection collection)
+        {
+            return collection.Id;
+        }
+
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/master/item-spec/common-metadata.md
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public static Dictionary<string, object> GetCommonMetadata(this SyndicationItem item){
+        public static Dictionary<string, object> GetCommonMetadata(this SyndicationItem item)
+        {
 
             AtomItem atomItem = new AtomItem(item);
 
@@ -47,7 +55,8 @@ namespace Terradue.Stars.Services.Model.Atom
             {
                 properties.Remove("description");
                 var summary = item.Summary.Text;
-                if(item.Summary.Type.Contains("html", StringComparison.InvariantCultureIgnoreCase)){
+                if (item.Summary.Type.Contains("html", StringComparison.InvariantCultureIgnoreCase))
+                {
                     var converter = new Html2Markdown.Converter();
                     summary = converter.Convert(item.Summary.Text);
                 }
@@ -92,13 +101,13 @@ namespace Terradue.Stars.Services.Model.Atom
             if (item.PublishDate.Ticks != 0)
             {
                 properties.Remove("created");
-                properties.Add("created", item.PublishDate);
+                properties.Add("created", item.PublishDate.DateTime);
             }
 
             if (item.LastUpdatedTime.Ticks != 0)
             {
                 properties.Remove("updated");
-                properties.Add("updated", item.LastUpdatedTime);
+                properties.Add("updated", item.LastUpdatedTime.DateTime);
             }
 
         }
@@ -139,5 +148,24 @@ namespace Terradue.Stars.Services.Model.Atom
 
             // TODO gsd
         }
+
+        public static IGeometryObject FindGeometry(this AtomItem item)
+        {
+
+            IGeometryObject savegeom = null;
+
+            savegeom = Terradue.Stars.Geometry.Atom.AtomExtensions.FindGeometry(item);
+
+            if (savegeom == null)
+            {
+                var eop = item.GetEarthObservationProfile();
+
+                if (eop != null)
+                    savegeom = EoProfileExtensions.FindGeometry(eop);
+            }
+
+            return savegeom;
+        }
+
     }
 }

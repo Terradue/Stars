@@ -26,11 +26,16 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Terradue.ServiceModel.Ogc.Gml321;
 using GeoJSON.Net.Geometry;
+using System.Globalization;
 
 namespace Terradue.Stars.Geometry.Gml321
 {
     public static class Gml321Extensions
     {
+
+        private static string conversionSpecifier = "G";
+        private static CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+            
 
         public static MultiSurfaceType ToGmlMultiSurface(this IGeometryObject geometry)
         {
@@ -501,7 +506,7 @@ namespace Terradue.Stars.Geometry.Gml321
             for (int i = 0; i < coord.Count(); i += dim)
             {
                 if (dim == 2)
-                    positions.Add(new Position(coord[i + 0], coord[i + 1], null));
+                    positions.Add(new Position(coord[i + 0].ToString(), coord[i + 1]));
                 if (dim == 3)
                     positions.Add(new Position(coord[i + 0], coord[i + 1], coord[i + 2]));
             }

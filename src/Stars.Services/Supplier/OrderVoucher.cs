@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Terradue.Stars.Interface;
@@ -22,17 +23,23 @@ namespace Terradue.Stars.Services.Supplier
             this.orderId = orderId;
         }
 
-        [JsonProperty]
-        public Uri Uri => orderableRoute.OriginUri;
+        [JsonIgnore]
+        public Uri Uri => new Uri(orderId + ".json", UriKind.Relative);
 
         [JsonProperty]
-        public ContentType ContentType => orderableRoute.ContentType;
+        public Uri OrderedItemUri => orderableRoute.OriginUri;
 
         [JsonProperty]
-        public ResourceType ResourceType => orderableRoute.ResourceType;
+        public string OrderedItemId => orderableRoute.Id;
 
-        [JsonProperty]
-        public ulong ContentLength => orderableRoute.ContentLength;
+        [JsonIgnore]
+        public ContentType ContentType => new ContentType("application/json");
+
+        [JsonIgnore]
+        public ResourceType ResourceType => ResourceType.Asset;
+
+        [JsonIgnore]
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(JsonConvert.SerializeObject(this)).Length);
 
         [JsonProperty]
         public string SupplierType => orderableRoute.Supplier.GetType().FullName;

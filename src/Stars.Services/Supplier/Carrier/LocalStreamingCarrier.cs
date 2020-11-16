@@ -16,7 +16,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     {
         private readonly ILogger logger;
 
-        public LocalStreamingCarrier(IOptions<GlobalOptions> options, ILogger<LocalStreamingCarrier> logger) : base(options)
+        public LocalStreamingCarrier(IOptions<GlobalOptions> options, ILogger<LocalStreamingCarrier> logger) : base(options, logger)
         {
             this.logger = logger;
             Priority = 75;
@@ -64,7 +64,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             Stream stream = null;
 
             // Try a resume
-            if (file.Exists && file.Length > 0 && streamable.CanBeRanged)
+            if (file.Exists && file.Length > 0 && Convert.ToUInt64(file.Length) < streamable.ContentLength && streamable.CanBeRanged)
             {
                 logger.LogDebug("Trying to resume from {0}", file.Length);
                 stream = await streamable.GetStreamAsync(file.Length);

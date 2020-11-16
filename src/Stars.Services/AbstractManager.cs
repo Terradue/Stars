@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
-using Terradue.OpenSearch.Result;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services
@@ -69,7 +64,6 @@ namespace Terradue.Stars.Services
             T item = plugin as T;
             item.Priority = prio;
             item.Key = string.IsNullOrEmpty(configurationSection.Key) ? Guid.NewGuid().ToString() : configurationSection.Key;
-            var test = new AtomItem().FindStartDate();
             item.Configure(configurationSection, serviceProvider);
 
             return item;

@@ -14,16 +14,19 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface;
+using Microsoft.Extensions.Logging;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
     public abstract class LocalCarrier : ICarrier
     {
         protected GlobalOptions carrierServiceOptions;
+        private readonly ILogger logger;
 
-        public LocalCarrier(IOptions<GlobalOptions> options)
+        public LocalCarrier(IOptions<GlobalOptions> options, ILogger logger)
         {
             this.carrierServiceOptions = options.Value;
+            this.logger = logger;
         }
 
         public void Configure(IConfigurationSection configuration)
@@ -56,8 +59,15 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
             // Let's make a cost as MB to download
             int cost = 1000;
-            if (route.ContentLength > 0)
-                cost = Convert.ToInt32(route.ContentLength / 1024 / 1024);
+            try
+            {
+                if (route.ContentLength > 0)
+                    cost = Convert.ToInt32(route.ContentLength / 1024 / 1024);
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning("Error trying to get size of the node {0} : {1}", route.Uri, e.Message);
+            }
 
             return new LocalDelivery(this, route, destination as LocalFileDestination, cost);
         }
