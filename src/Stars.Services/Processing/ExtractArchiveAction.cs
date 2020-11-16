@@ -17,6 +17,8 @@ using Terradue.Stars.Interface.Processing;
 using Stac;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Store;
+using Microsoft.Extensions.Options;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -25,15 +27,20 @@ namespace Terradue.Stars.Services.Processing
 
         private readonly DestinationManager destinationManager;
         private readonly CarrierManager carrierManager;
+        private readonly StoreService storeService;
         private readonly ILogger logger;
+        private readonly IOptions<ExtractArchiveOptions> options;
 
         public int Priority { get; set; }
         public string Key { get; set; }
 
-        public ExtractArchiveAction(DestinationManager destinationManager, CarrierManager carrierManager, ILogger logger)
+
+        public ExtractArchiveAction(IOptions<ExtractArchiveOptions> options, DestinationManager destinationManager, CarrierManager carrierManager, StoreService storeService, ILogger logger)
         {
+            this.options = options;
             this.destinationManager = destinationManager;
             this.carrierManager = carrierManager;
+            this.storeService = storeService;
             this.logger = logger;
             Key = "ExtractArchive";
             Priority = 1;
@@ -78,13 +85,21 @@ namespace Terradue.Stars.Services.Processing
                 int i = 0;
                 foreach (var extractedAsset in extractedAssets)
                 {
-                    extractedAsset.Value.SetUriRelativeTo(item.Uri);
                     newAssets.Add(extractedAsset.Key, extractedAsset.Value);
                     i++;
                 }
+                if (options.Value.KeepArchive)
+                {
+                    newAssets.Add(asset.Key, asset.Value);
+                }
             }
 
-            return new ContainerNode(route as IItem, newAssets);
+            if (newAssets == null || newAssets.Count == 0) return route;
+
+            var node = new ContainerNode(route as IItem, newAssets);
+
+            return await storeService.StoreNodeAtDestination(node, newAssets, destination.To(node));
+
         }
 
         private async Task<Dictionary<string, GenericAsset>> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)

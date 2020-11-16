@@ -40,10 +40,5 @@ namespace Terradue.Stars.Services.Supplier
         {
             return route as IStreamable;
         }
-
-        internal void SetUriRelativeTo(Uri uriRelative)
-        {
-            uri = uriRelative.MakeRelativeUri(uri);
-        }
     }
 }

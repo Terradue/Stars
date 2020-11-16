@@ -98,7 +98,7 @@ namespace Terradue.Stars.Services.Store
             StacCatalogNode catalogNode = new StacCatalogNode(stacCatalog);
             logger.LogInformation("Trying to init a root catalog {0} on {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.DestinationUri);
             rootCatalogDestination = await destinationManager.CreateDestination(storeOptions.RootCatalogue.DestinationUrl, catalogNode);
-
+            rootCatalogDestination.PrepareDestination();
             await StoreNodeAtDestination(catalogNode, rootCatalogDestination);
             logger.LogInformation("Root catalog {0} created at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri);
             await LoadRootCatalogNode();
@@ -172,7 +172,7 @@ namespace Terradue.Stars.Services.Store
             foreach (var assetKey in assets.Keys)
             {
                 IAsset asset = assets[assetKey];
-                var relativeUri = destination.Uri.MakeRelativeUri(asset.Uri);
+                var relativeUri = asset.Uri.IsAbsoluteUri ? destination.Uri.MakeRelativeUri(asset.Uri) : asset.Uri;
                 stacItem.Assets.Add(assetKey, CreateAsset(asset, relativeUri, stacItem));
             }
         }
