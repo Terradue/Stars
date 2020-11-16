@@ -27,7 +27,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         }
 
         public int Priority { get; set; }
-        public string Key { get => Id; set {} }
+        public string Key { get => Id; set { } }
 
         public void Configure(IConfigurationSection configuration)
         {
@@ -62,10 +62,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             OrderVoucher orderVoucher = CreateOrderVoucher(orderableRoute, orderableRoute.Id);
 
             // Find a carrier for the voucher
-            var deliveryQuotes = carrierManager.GetSingleDeliveryQuotations(orderVoucher, destination);
-            if ( deliveryQuotes == null ) return null;
+            var deliveryQuotes = carrierManager.GetSingleDeliveryQuotations(orderVoucher, destination.To(orderVoucher, orderableRoute.Id + "/orders/"));
+            if (deliveryQuotes == null) return null;
             var voucherDelivery = deliveryQuotes.FirstOrDefault();
-            if ( voucherDelivery == null ) return null;
+            if (voucherDelivery == null) return null;
 
             return new OrderedDelivery(this, voucherDelivery, orderVoucher, voucherDelivery.Cost + 10000);
         }

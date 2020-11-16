@@ -52,7 +52,7 @@ namespace Terradue.Stars.Services.Translator
 
         private IEnumerable<StacLink> CreateStacLinks(ICatalog node)
         {
-            return null;
+            return new List<StacLink>();
         }
 
         private IItem CreateStacItemNode(IItem node)

@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         private readonly ILogger logger;
         private readonly ICredentials credentials;
 
-        public LocalWebDownloadCarrier(IOptions<GlobalOptions> options, ILogger logger, ICredentials credentials) : base(options)
+        public LocalWebDownloadCarrier(IOptions<GlobalOptions> options, ILogger logger, ICredentials credentials) : base(options, logger)
         {
             this.logger = logger;
             this.credentials = credentials;

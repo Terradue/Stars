@@ -6,12 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stac;
-using Stac.Catalog;
-using Stac.Item;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -30,7 +25,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ContentType ContentType => contentType;
 
-        public Uri Uri => stacObject.Uri == null ? new Uri(stacObject.Id + ".json", UriKind.Relative) : stacObject.Uri;
+        public Uri Uri => stacObject.Uri == null ? new Uri(Id+ ".json", UriKind.Relative) : stacObject.Uri;
 
         public abstract ResourceType ResourceType { get; }
 
@@ -48,7 +43,7 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 if ( IsRoot )
                     return "catalog.json";
-                return stacObject.Id + ".json";
+                return Id + ".json";
             }
         }
 
