@@ -18,18 +18,17 @@ namespace Terradue.Stars.Services.Model.Stac
     {
         private StacAsset asset;
         private readonly ICredentials credentials;
-        private readonly Uri absoluteUri;
-        private readonly WebRoute resource;
+        private readonly Uri uri;
 
         public StacAssetAsset(StacAsset asset, StacItemNode parent, System.Net.ICredentials credentials = null)
         {
             this.asset = asset;
             this.credentials = credentials;
-            this.absoluteUri = asset.Uri.IsAbsoluteUri ? asset.Uri : new Uri(parent.Uri, asset.Uri);
-            this.resource = WebRoute.Create(Uri, ContentLength, credentials);
+            this.uri = asset.Uri.IsAbsoluteUri ? asset.Uri :
+                (parent.Uri.IsAbsoluteUri ? new Uri(parent.Uri, asset.Uri) : new Uri(parent.Uri.ToString() + "/" + asset.Uri.ToString(), UriKind.Relative));
         }
 
-        public Uri Uri => absoluteUri;
+        public Uri Uri => uri;
 
         public ContentType ContentType => asset.MediaType;
 
@@ -55,11 +54,11 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacAsset StacAsset { get => asset; }
 
-        public ContentDisposition ContentDisposition => resource.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+        public ContentDisposition ContentDisposition => (asset as IStreamable)?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
 
         public IStreamable GetStreamable()
         {
-            return resource;
+            return asset as IStreamable;
         }
     }
 }
