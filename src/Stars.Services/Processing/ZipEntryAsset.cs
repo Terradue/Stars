@@ -47,6 +47,8 @@ namespace Terradue.Stars.Services.Processing
 
         public bool CanBeRanged => false;
 
+        public IDictionary<string, object> Properties => new Dictionary<string, object>();
+
         public Task<Stream> GetStreamAsync()
         {
             return Task.FromResult(zipFile.GetInputStream(entry));

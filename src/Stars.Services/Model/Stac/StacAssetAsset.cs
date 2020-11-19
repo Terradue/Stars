@@ -57,6 +57,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ContentDisposition ContentDisposition => GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
 
+        public IDictionary<string, object> Properties => asset.Properties;
+
         public IStreamable GetStreamable()
         {
             if (asset is IStreamable)

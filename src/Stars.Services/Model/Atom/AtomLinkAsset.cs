@@ -9,6 +9,7 @@ using Terradue.Stars.Services.Router;
 using Terradue.ServiceModel.Syndication;
 using System.Net;
 using Terradue.Stars.Interface;
+using System.Linq;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -53,6 +54,8 @@ namespace Terradue.Stars.Services.Model.Atom
         public IEnumerable<string> Roles => new string[] { link.RelationshipType };
 
         public ContentDisposition ContentDisposition => webRoute.ContentDisposition;
+
+        public IDictionary<string, object> Properties => link.AttributeExtensions.ToDictionary(k => k.Key.ToString(), k => k.Value as object);
 
         public IStreamable GetStreamable()
         {

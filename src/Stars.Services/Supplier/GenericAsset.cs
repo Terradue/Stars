@@ -13,6 +13,7 @@ namespace Terradue.Stars.Services.Supplier
         private readonly string label;
         private readonly IEnumerable<string> roles;
         private Uri uri;
+        private Dictionary<string, object> properties = new Dictionary<string, object>();
 
         public GenericAsset(IResource route, string label, IEnumerable<string> roles)
         {
@@ -35,6 +36,8 @@ namespace Terradue.Stars.Services.Supplier
         public ulong ContentLength => route.ContentLength;
 
         public ContentDisposition ContentDisposition => route.ContentDisposition;
+
+        public IDictionary<string, object> Properties => properties;
 
         public IStreamable GetStreamable()
         {

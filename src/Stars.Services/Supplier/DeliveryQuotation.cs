@@ -13,17 +13,17 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class DeliveryQuotation : IDeliveryQuotation
     {
-        private readonly IResource supplierNode;
         private IDictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
+        private readonly Dictionary<string, Exception> assetsExceptions;
 
-        public DeliveryQuotation(IResource supplierNode, IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes)
+        public DeliveryQuotation(IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes, Dictionary<string, Exception> assetsExceptions)
         {
-            this.supplierNode = supplierNode;
             this.assetsDeliveryQuotes = assetsQuotes;
+            this.assetsExceptions = assetsExceptions;
         }
 
         public IDictionary<string, IOrderedEnumerable<IDelivery>> AssetsDeliveryQuotes => assetsDeliveryQuotes;
 
-        public IResource SupplierNode => supplierNode;
+        public IDictionary<string, Exception> AssetsExceptions => assetsExceptions;
     }
 }

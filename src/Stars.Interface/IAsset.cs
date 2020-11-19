@@ -8,6 +8,8 @@ namespace Terradue.Stars.Interface
 
         IEnumerable<string> Roles { get; }
 
+        IDictionary<string, object> Properties { get; }
+
         IStreamable GetStreamable();
     }
 }

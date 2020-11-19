@@ -23,9 +23,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return Plugins.Where(r => r.Value.CanDeliver(route, destination)).Select(r => r.Value);
         }
 
-        public Dictionary<string, IOrderedEnumerable<IDelivery>> GetAssetsDeliveryQuotations(IAssetsContainer assetsContainer, IDestination destination)
+        public IDeliveryQuotation GetAssetsDeliveryQuotations(IAssetsContainer assetsContainer, IDestination destination)
         {
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
+            Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
 
             foreach (var asset in assetsContainer.GetAssets())
             {
@@ -37,9 +38,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 catch (Exception e)
                 {
                     logger.LogDebug("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
+                    assetsExceptions.Add(asset.Key, e);
                 }
             }
-            return assetsQuotes;
+            return new DeliveryQuotation(assetsQuotes, assetsExceptions);
         }
 
         public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(IResource route, IDestination destination)
@@ -64,24 +66,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
             }
             return quotes.OrderBy(q => q.Cost);
-        }
-
-        /// <summary>
-        /// Make a set of quotation for each supplier
-        /// </summary>
-        /// <returns></returns>
-        public IDeliveryQuotation QuoteDeliveryFromCarriers(IResource supplierNode, IDestination destination)
-        {
-            Dictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotation = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
-            if (supplierNode is IAssetsContainer)
-            {
-                assetsDeliveryQuotation = GetAssetsDeliveryQuotations(supplierNode as IAssetsContainer, destination);
-            }
-
-            var resourceDeliveryQuotations = GetSingleDeliveryQuotations(supplierNode, destination);
-
-            return new DeliveryQuotation(supplierNode, assetsDeliveryQuotation);
-
         }
     }
 }
