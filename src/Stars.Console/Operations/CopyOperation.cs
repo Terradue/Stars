@@ -161,7 +161,6 @@ namespace Terradue.Stars.Console.Operations
 
                 var suppliers = InitSuppliersEnumerator(node, supplierFilters);
                 IResource supplierNode = null;
-                
 
                 // 2. Try each of them until one provide the resource
                 while (suppliers.MoveNext())
