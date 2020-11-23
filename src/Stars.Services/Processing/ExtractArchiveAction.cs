@@ -27,7 +27,7 @@ namespace Terradue.Stars.Services.Processing
 
         private readonly DestinationManager destinationManager;
         private readonly CarrierManager carrierManager;
-        private readonly StoreService storeService;
+        private readonly StacStoreService storeService;
         private readonly ILogger logger;
         private readonly IOptions<ExtractArchiveOptions> options;
 
@@ -35,7 +35,7 @@ namespace Terradue.Stars.Services.Processing
         public string Key { get; set; }
 
 
-        public ExtractArchiveAction(IOptions<ExtractArchiveOptions> options, DestinationManager destinationManager, CarrierManager carrierManager, StoreService storeService, ILogger logger)
+        public ExtractArchiveAction(IOptions<ExtractArchiveOptions> options, DestinationManager destinationManager, CarrierManager carrierManager, StacStoreService storeService, ILogger logger)
         {
             this.options = options;
             this.destinationManager = destinationManager;
@@ -96,9 +96,7 @@ namespace Terradue.Stars.Services.Processing
 
             if (newAssets == null || newAssets.Count == 0) return route;
 
-            var node = new ContainerNode(route as IItem, newAssets);
-
-            return await storeService.StoreNodeAtDestination(node, newAssets, destination.To(node));
+            return new ContainerNode(route as IItem, newAssets);
 
         }
 

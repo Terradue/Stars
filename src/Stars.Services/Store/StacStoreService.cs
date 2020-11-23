@@ -19,15 +19,15 @@ using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Store
 {
-    public class StoreService : IStarsService
+    public class StacStoreService : IStarsService
     {
-        private readonly ILogger<StoreService> logger;
+        private readonly ILogger<StacStoreService> logger;
         private readonly DestinationManager destinationManager;
         private readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
         protected readonly ICredentials credentials;
         private readonly StacRouter _stacRouter;
-        private readonly StoreOptions storeOptions;
+        private readonly StacStoreConfiguration storeOptions;
         private IDestination rootCatalogDestination;
         private StacCatalogNode rootCatalogNode;
 
@@ -39,8 +39,8 @@ namespace Terradue.Stars.Services.Store
         public int Priority { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string Key { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public StoreService(IOptions<StoreOptions> options,
-                            ILogger<StoreService> logger,
+        public StacStoreService(IOptions<StacStoreConfiguration> options,
+                            ILogger<StacStoreService> logger,
                             DestinationManager destinationManager,
                             TranslatorManager translatorManager,
                             CarrierManager carrierManager,
@@ -112,17 +112,9 @@ namespace Terradue.Stars.Services.Store
 
         }
 
-        public async Task<StacNode> StoreNodeAtDestination(IResource node, IDictionary<string, IAsset> assets, IDestination destination, IEnumerable<StacNode> childrenNodes = null)
+        public async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDictionary<string, IAsset> assets, IDestination destination, IEnumerable<StacNode> childrenNodes = null)
         {
-            // Maybe the node is already a stac node
-            StacNode stacNode = node as StacNode;
-            if (stacNode == null)
-            {
-                // No? Let's try to translate it to Stac
-                stacNode = await translatorManager.Translate<StacNode>(node);
-                if (stacNode == null)
-                    throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", node.Uri));
-            }
+          
 
             IDestination stacDestination = destination.To(stacNode);
 
