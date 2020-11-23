@@ -10,7 +10,10 @@ namespace Terradue.Stars.Services.Supplier
         {
         }
 
-        public SupplierFilters SupplierFilters { get; set; }
+        
+
+        public AssetFilters AssetFilters { get; set; }
+        
         public bool ContinueOnDeliveryError { get; set; }
     }
 }

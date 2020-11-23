@@ -65,6 +65,8 @@ namespace Terradue.Stars.Services.Supplier
         [JsonIgnore]
         public bool CanBeRanged => false;
 
+        [JsonProperty]
+        public IDictionary<string, object> Properties => new Dictionary<string, object>();
         public async Task<Stream> GetStreamAsync()
         {
             return await Task<Stream>.Run(() =>

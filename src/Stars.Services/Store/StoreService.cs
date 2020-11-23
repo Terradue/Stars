@@ -15,6 +15,7 @@ using System.IO;
 using Stac.Item;
 using System.Net;
 using System.Linq;
+using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Store
 {
@@ -64,6 +65,12 @@ namespace Terradue.Stars.Services.Store
                 await LoadOrInitRootCatalogNode();
             rootCatalogDestination = await destinationManager.CreateDestination(storeOptions.RootCatalogue.DestinationUrl, RootCatalogNode);
             CheckSynchronization();
+        }
+
+        public async Task<StacNode> Load(Uri uri)
+        {
+            var resource = WebRoute.Create(uri, credentials: credentials);
+            return (await _stacRouter.Route(resource)) as StacNode;
         }
 
         private void CheckSynchronization()

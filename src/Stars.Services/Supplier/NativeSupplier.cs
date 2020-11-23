@@ -24,14 +24,9 @@ namespace Terradue.Stars.Services.Supplier
 
         public string Id => "Native";
 
-        public Task<IResource> SearchFor(IResource route)
+        public Task<IResource> SearchFor(IResource resource)
         {
-            return Task.FromResult<IResource>(route);
-        }
-
-        public IDeliveryQuotation QuoteDelivery(IResource resource, IDestination destination)
-        {
-            return carriersManager.QuoteDeliveryFromCarriers(resource, destination);
+            return Task.FromResult<IResource>(resource);
         }
 
         public Task<IOrder> Order(IOrderable orderableRoute)

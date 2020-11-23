@@ -19,7 +19,7 @@ namespace Terradue.Stars.Services
 
         public virtual NetworkCredential GetCredential(Uri uri, string authType)
         {
-            var cred = _options.Value.CredentialCache.GetCredential(uri, authType);
+            NetworkCredential cred = _options.Value.GetCredential(uri, authType);
             if ( cred != null ){
                 logger.LogInformation("Using saved credentials ({0})", cred.UserName);
             }
@@ -28,7 +28,7 @@ namespace Terradue.Stars.Services
 
         public void CacheCredential(Uri uriCut, string authType, NetworkCredential cred)
         {
-            _options.Value.CredentialCache.Add(uriCut, authType, cred);
+            _options.Value.Add(uriCut, authType, cred);
         }
     }
 }

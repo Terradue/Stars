@@ -17,7 +17,7 @@ namespace Terradue.Stars.Services
             // Replace invalid characters with empty strings.
             try
             {
-                return Regex.Replace(strIn, @"[^\w]", "_",
+                return Regex.Replace(strIn, @"[^\w\.-]", "_",
                                      RegexOptions.None, TimeSpan.FromSeconds(1.5));
             }
             // If we timeout when replacing invalid characters,

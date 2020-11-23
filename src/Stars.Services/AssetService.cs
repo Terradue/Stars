@@ -33,113 +33,78 @@ namespace Terradue.Stars.Services
             this.carrierManager = carrierManager;
         }
 
-        public async Task<StacNode> ImportToStore(IResource node, StoreService storeService, IDestination destination, SupplyParameters parameters)
+        public async Task<AssetImportReport> ImportAssets(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetsFilters)
         {
-            if (!(node is IAssetsContainer)) return null;
+            if (assetsContainer.GetAssets().Count() == 0) return new AssetImportReport(null, destination);
 
-            logger.LogDebug("Import assets from {0} to {1}", node.Uri, storeService.Id);
+            logger.LogDebug("Importing {0} assets to {1}", assetsContainer.GetAssets().Count(), destination);
 
-            var suppliers = InitSuppliersEnumerator(node, parameters);
+            IDeliveryQuotation deliveryQuotation = QuoteAssetsDelivery(assetsContainer, destination, assetsFilters);
+            AssetImportReport report = new AssetImportReport(deliveryQuotation, destination);
 
-            IDictionary<string, IAsset> assets = null;
-            IResource supplierNode = null;
+            logger.LogDebug("Delivery quotation for {0} assets ({1} exceptions)", deliveryQuotation.AssetsDeliveryQuotes.Count, deliveryQuotation.AssetsExceptions.Count);
 
-            while (assets == null && suppliers.MoveNext())
+            CheckDelivery(deliveryQuotation);
+
+            foreach (var assetDeliveries in deliveryQuotation.AssetsDeliveryQuotes)
             {
-                logger.LogInformation("[{0}] Searching for {1}", suppliers.Current.Id, node.Uri.ToString());
-                supplierNode = await AskForSupply(node, suppliers.Current);
-                if (supplierNode == null)
+                if (assetDeliveries.Value.Count() == 0)
                 {
-                    logger.LogInformation("[{0}] --> no supply possible", suppliers.Current.Id);
+                    report.AssetsExceptions.Add(assetDeliveries.Key, new AssetImportException("No delivery possible"));
                     continue;
                 }
-                logger.LogInformation("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType);
-
-                IDeliveryQuotation deliveryQuotation = QuoteDelivery(suppliers.Current, supplierNode, destination);
-                if (deliveryQuotation == null || deliveryQuotation.AssetsDeliveryQuotes.Count() == 0)
+                IResource importedResource = null;
+                try
                 {
-                    logger.LogDebug("[{0}]  -->  no delivery possible", suppliers.Current.Id);
-                    continue;
+                    importedResource = await Import(assetDeliveries.Key, assetDeliveries.Value);
+                    if ( importedResource == null )
+                        throw new AssetImportException("Imported asset is null");
                 }
-
-                logger.LogDebug("[{0}] Delivery quotation for {1} assets", suppliers.Current.Id, deliveryQuotation.AssetsDeliveryQuotes.Count);
-
-                if (!CheckDelivery(deliveryQuotation, suppliers.Current))
+                catch (AggregateException ae)
                 {
-                    continue;
+                    report.AssetsExceptions.Add(assetDeliveries.Key, ae);
                 }
-
-                assets = await Deliver(deliveryQuotation, parameters);
-                if (assets == null)
+                // OK
+                if (importedResource != null)
                 {
-                    if (parameters.ContinueOnDeliveryError)
-                    {
-                        logger.LogDebug("[{0}] Asset import failed. Skipping supplier", suppliers.Current.Id);
-                        continue;
-                    }
+                    IAsset importedAsset = MakeAsset(importedResource, (IAsset)assetDeliveries.Value.First().Route);
+                    report.ImportedAssets.Add(assetDeliveries.Key, importedAsset);
                 }
             }
 
-            if ( assets == null && !parameters.ContinueOnDeliveryError )
-                throw new InvalidOperationException(string.Format("Assets import failed for node {0}", node.Uri));
-
-            return await storeService.StoreNodeAtDestination(supplierNode, assets, destination, null);
+            return report;
         }
 
-        private bool CheckDelivery(IDeliveryQuotation deliveryQuotation, ISupplier supplier)
+        private void CheckDelivery(IDeliveryQuotation deliveryQuotation)
         {
             foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
                 if (item.Value.Count() == 0)
                 {
-                    logger.LogDebug("[{0}]A[{1}] No carrier. Skipping supplier.", supplier.Id,
-                        item.Key);
-                    return false;
+                    logger.LogDebug("No delivery for asset {0}", item.Key);
                 }
 
-                logger.LogDebug("[{0}]A[{1}] : {2} carriers", supplier.Id,
-                        item.Key, item.Value.Count());
+                logger.LogDebug("Asset {0} : {1} possible deliveries", item.Key, item.Value.Count());
                 int j = 1;
                 foreach (var delivery in item.Value)
                 {
-                    logger.LogDebug("[{0}]A[{1}]#{2}[{3}] to {4} : {5}$", supplier.Id,
-                        item.Key, j, delivery.Carrier.Id, delivery.Destination.ToString(), delivery.Cost);
+                    logger.LogDebug("  #{0}{1} to {2} : {3}$", j, delivery.Carrier.Id, delivery.Destination.ToString(), delivery.Cost);
                     j++;
                 }
             }
-            return true;
-        }
-
-        private async Task<IDictionary<string, IAsset>> Deliver(IDeliveryQuotation deliveryQuotation, SupplyParameters parameters)
-        {
-            Dictionary<string, IAsset> assetsDeliveredRoutes = new Dictionary<string, IAsset>();
-            foreach (var assetDeliveries in deliveryQuotation.AssetsDeliveryQuotes)
-            {
-                if (assetDeliveries.Value.Count() == 0) continue;
-                var route = await Deliver(assetDeliveries.Key, assetDeliveries.Value);
-                if (route == null)
-                {
-                    if (!parameters.ContinueOnDeliveryError) return null;
-                }
-                // OK
-                else
-                {
-                    IAsset asset = MakeAsset(route, (IAsset)assetDeliveries.Value.First().Route);
-                    assetsDeliveredRoutes.Add(assetDeliveries.Key, asset);
-                }
-            }
-            return assetsDeliveredRoutes;
         }
 
         private IAsset MakeAsset(IResource route, IAsset assetOrigin)
         {
             if (route is IAsset) return route as IAsset;
-            return new GenericAsset(route, assetOrigin.Label, assetOrigin.Roles);
+            var genericAsset = new GenericAsset(route, assetOrigin.Label, assetOrigin.Roles);
+            return genericAsset;
         }
 
-        private async Task<IResource> Deliver(string key, IOrderedEnumerable<IDelivery> deliveries)
+        private async Task<IResource> Import(string key, IOrderedEnumerable<IDelivery> deliveries)
         {
             logger.LogInformation("Starting delivery for {0}", key);
+            List<Exception> exceptions = new List<Exception>();
             foreach (var delivery in deliveries)
             {
                 logger.LogInformation("Delivering {0} {1} {2} ({3})...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id);
@@ -156,46 +121,16 @@ namespace Terradue.Stars.Services
                 catch (Exception e)
                 {
                     logger.LogError("Error delivering {0} ({1}) : {2}", key, delivery.Carrier.Id, e.Message);
+                    exceptions.Add(e);
                 }
             }
-            return null;
+            throw new AggregateException(exceptions);
         }
 
-        private IDeliveryQuotation QuoteDelivery(ISupplier supplier, IResource supplierNode, IDestination destination)
+        private IDeliveryQuotation QuoteAssetsDelivery(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters)
         {
-            try
-            {
-                return supplier.QuoteDelivery(supplierNode, destination);
-            }
-            catch (Exception e)
-            {
-                logger.LogWarning("Exception during quotation for {0} at {1} : {2}", supplierNode.Uri, supplier.Id, e.Message);
-                logger.LogDebug(e.StackTrace);
-            }
-            return null;
-        }
-
-        private async Task<IResource> AskForSupply(IResource node, ISupplier supplier)
-        {
-            try
-            {
-                return await supplier.SearchFor(node);
-            }
-            catch (Exception e)
-            {
-                logger.LogWarning("Exception during search for {0} at {1} : {2}", node.Uri, supplier.Id, e.Message);
-            }
-            return null;
-
-        }
-
-        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplyParameters parameters)
-        {
-            if (route is IItem)
-                return suppliersManager.GetSuppliers(parameters.SupplierFilters).GetEnumerator();
-
-            return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
+            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(assetsContainer, assetFilters);
+            return carrierManager.GetAssetsDeliveryQuotations(filteredAssetContainer, destination);
         }
     }
-
 }

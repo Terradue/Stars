@@ -61,6 +61,7 @@ namespace Terradue.Stars.Console.Operations
         private CarrierManager carrierManager;
         private ProcessingManager processingManager;
         private TranslatorManager translatorManager;
+        private SupplierManager supplierManager;
         private StoreService storeService;
         private string[] inputs = new string[0];
         private int recursivity = 1;
@@ -141,19 +142,48 @@ namespace Terradue.Stars.Console.Operations
             // We update the destination in case a new router updated the route
             IDestination destination = operationState.CurrentDestination.To(node);
 
-            // 1. Import node and its assets via suppliers
-            AssetService assetService = ServiceProvider.GetService<AssetService>();
-            SupplyParameters supplyParameters = new SupplyParameters()
-            {
-                ContinueOnDeliveryError = !StopOnError
+            IDictionary<string, IAsset> importedAssets = null;
 
-            };
-            if (SuppliersIncluded != null && SuppliersIncluded.Count() > 0)
+            // In case of a Item
+            if (node is IItem)
             {
-                supplyParameters.SupplierFilters = new SupplierFilters();
-                supplyParameters.SupplierFilters.IncludeIds = SuppliersIncluded;
+
+                // 1. Select Suppliers
+                AssetService assetService = ServiceProvider.GetService<AssetService>();
+
+                SupplierFilters supplierFilters = new SupplierFilters();
+
+                if (SuppliersIncluded != null && SuppliersIncluded.Count() > 0)
+                {
+                    supplierFilters = new SupplierFilters();
+                    supplierFilters.IncludeIds = SuppliersIncluded;
+                }
+
+                var suppliers = InitSuppliersEnumerator(node, supplierFilters);
+                IResource supplierNode = null;
+
+                // 2. Try each of them until one provide the resource
+                while (suppliers.MoveNext())
+                {
+                    logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, node.Uri.ToString()));
+                    supplierNode = await suppliers.Current.SearchFor(node);
+                    if (supplierNode == null && !(supplierNode is IAssetsContainer))
+                    {
+                        logger.Output(string.Format("[{0}] --> no supply possible", suppliers.Current.Id));
+                        continue;
+                    }
+                    logger.Output(string.Format("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType));
+
+                    AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, AssetFilters.None);
+                    if ( StopOnError && deliveryReport.AssetsExceptions.Count > 0 )
+                        throw new AggregateException(deliveryReport.AssetsExceptions.Values);
+
+                    importedAssets = deliveryReport.GetAssets();
+                    break;
+                }
             }
-            StacNode stacNode = await assetService.ImportToStore(node, operationState.StoreService, destination, supplyParameters);
+
+            StacNode stacNode = await storeService.StoreNodeAtDestination(node, importedAssets, destination, null);
 
             operationState.CurrentStacObject = stacNode;
 
@@ -164,6 +194,14 @@ namespace Terradue.Stars.Console.Operations
             return operationState;
         }
 
+        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
+        {
+            if (route is IItem)
+                return supplierManager.GetSuppliers(filters).GetEnumerator();
+
+            return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
+        }
+
         protected override async Task ExecuteAsync()
         {
             this.routingService = ServiceProvider.GetService<RouterService>();
@@ -171,6 +209,7 @@ namespace Terradue.Stars.Console.Operations
             this.processingManager = ServiceProvider.GetService<ProcessingManager>();
             this.storeService = ServiceProvider.GetService<StoreService>();
             this.translatorManager = ServiceProvider.GetService<TranslatorManager>();
+            this.supplierManager = ServiceProvider.GetService<SupplierManager>();
             await this.storeService.Init(!AppendCatalog);
             InitRoutingTask();
             PrepareNewRoute(null, storeService.RootCatalogNode, null, null);
@@ -183,7 +222,7 @@ namespace Terradue.Stars.Console.Operations
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
             }
-            if ( stacNodes.Count == 1 && stacNodes.First().IsCatalog )
+            if (stacNodes.Count == 1 && stacNodes.First().IsCatalog)
                 await storeService.UpdateRootCatalogWithNodes(stacNodes.First().GetRoutes().Cast<StacNode>());
         }
 

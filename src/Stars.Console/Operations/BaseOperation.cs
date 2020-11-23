@@ -86,8 +86,6 @@ namespace Terradue.Stars.Console.Operations
 
             // Carrier Options
             collection.Configure<GlobalOptions>(configuration.GetSection("Global"));
-            // Web Download Carrier
-            collection.AddTransient<ICarrier, LocalWebDownloadCarrier>();
             // Streaming Carrier
             collection.AddTransient<ICarrier, LocalStreamingCarrier>();
             // Native Carrier
