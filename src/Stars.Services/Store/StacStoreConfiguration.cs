@@ -2,11 +2,11 @@ using System.IO;
 
 namespace Terradue.Stars.Services.Store
 {
-    public class StoreOptions
+    public class StacStoreConfiguration
     {
-        public StoreOptions()
+        public StacStoreConfiguration()
         {
-            RootCatalogue = new CatalogueConfiguration()
+            RootCatalogue = new StacCatalogueConfiguration()
             {
                 Identifier = "catalog",
                 Description = "Root catalog",
@@ -15,6 +15,6 @@ namespace Terradue.Stars.Services.Store
             };
         }
 
-        public CatalogueConfiguration RootCatalogue { get; set; }
+        public StacCatalogueConfiguration RootCatalogue { get; set; }
     }
 }

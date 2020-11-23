@@ -10,7 +10,7 @@ namespace Terradue.Stars.Console.Operations
 {
     internal class CopyOperationState
     {
-        public CopyOperationState(int depth, StoreService storeService, IDestination destination)
+        public CopyOperationState(int depth, StacStoreService storeService, IDestination destination)
         {
             Depth = depth;
             StoreService = storeService;
@@ -20,6 +20,6 @@ namespace Terradue.Stars.Console.Operations
         public int Depth { get; internal set; }
         public IDestination CurrentDestination { get; internal set; }
         public StacNode CurrentStacObject { get; internal set; }
-        public StoreService StoreService { get; internal set; }
+        public StacStoreService StoreService { get; internal set; }
     }
 }

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.Store
 {
-    public class CatalogueConfiguration
+    public class StacCatalogueConfiguration
     {
 
         public string Url { get; set; }

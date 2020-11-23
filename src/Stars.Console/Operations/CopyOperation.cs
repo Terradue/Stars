@@ -62,7 +62,7 @@ namespace Terradue.Stars.Console.Operations
         private ProcessingManager processingManager;
         private TranslatorManager translatorManager;
         private SupplierManager supplierManager;
-        private StoreService storeService;
+        private StacStoreService storeService;
         private string[] inputs = new string[0];
         private int recursivity = 1;
         private string outputUrl = "file://" + Directory.GetCurrentDirectory();
@@ -183,7 +183,16 @@ namespace Terradue.Stars.Console.Operations
                 }
             }
 
-            StacNode stacNode = await storeService.StoreNodeAtDestination(node, importedAssets, destination, null);
+            StacNode stacNode = node as StacNode;
+            if (stacNode == null)
+            {
+                // No? Let's try to translate it to Stac
+                stacNode = await translatorManager.Translate<StacNode>(node);
+                if (stacNode == null)
+                    throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", node.Uri));
+            }
+
+            stacNode = await storeService.StoreNodeAtDestination(stacNode, importedAssets, destination, null);
 
             operationState.CurrentStacObject = stacNode;
 
@@ -207,7 +216,7 @@ namespace Terradue.Stars.Console.Operations
             this.routingService = ServiceProvider.GetService<RouterService>();
             this.carrierManager = ServiceProvider.GetService<CarrierManager>();
             this.processingManager = ServiceProvider.GetService<ProcessingManager>();
-            this.storeService = ServiceProvider.GetService<StoreService>();
+            this.storeService = ServiceProvider.GetService<StacStoreService>();
             this.translatorManager = ServiceProvider.GetService<TranslatorManager>();
             this.supplierManager = ServiceProvider.GetService<SupplierManager>();
             await this.storeService.Init(!AppendCatalog);
@@ -228,9 +237,9 @@ namespace Terradue.Stars.Console.Operations
 
         protected override void RegisterOperationServices(ServiceCollection collection)
         {
-            collection.ConfigureAll<StoreOptions>(so =>
+            collection.ConfigureAll<StacStoreConfiguration>(so =>
             {
-                so.RootCatalogue = new CatalogueConfiguration()
+                so.RootCatalogue = new StacCatalogueConfiguration()
                 {
                     Identifier = "catalog",
                     Description = "Root catalog",
@@ -243,7 +252,7 @@ namespace Terradue.Stars.Console.Operations
                 so.KeepArchive = !DeleteArchive;
             });
             collection.AddTransient<ITranslator, DefaultStacTranslator>();
-            collection.AddSingleton<StoreService, StoreService>();
+            collection.AddSingleton<StacStoreService, StacStoreService>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
             if (ExtractArchives)
