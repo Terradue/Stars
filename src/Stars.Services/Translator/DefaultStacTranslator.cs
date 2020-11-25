@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Translator
         public int Priority { get; set; }
         public string Key { get => "StacTranslator"; set {} }
 
-        public DefaultStacTranslator(ILogger logger)
+        public DefaultStacTranslator(ILogger<DefaultStacTranslator> logger)
         {
             this.logger = logger;
         }
@@ -80,11 +80,6 @@ namespace Terradue.Stars.Services.Translator
             }
 
             return stacAsset;
-        }
-
-        public static DefaultStacTranslator Create(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-            return new DefaultStacTranslator((ILogger)serviceProvider.GetService(typeof(ILogger)));
         }
     }
 }

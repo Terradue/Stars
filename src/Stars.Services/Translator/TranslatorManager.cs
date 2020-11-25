@@ -16,6 +16,7 @@ namespace Terradue.Stars.Services.Translator
         public async Task<T> Translate<T>(IResource node) where T : IResource
         {
             Dictionary<ITranslator, T> translations = new Dictionary<ITranslator, T>();
+            if ( node is T ) return (T)node;
             foreach (var translator in Plugins)
             {
                 T translation = await translator.Value.Translate<T>(node);
