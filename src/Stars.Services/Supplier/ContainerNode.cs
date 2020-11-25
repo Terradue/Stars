@@ -14,11 +14,13 @@ namespace Terradue.Stars.Services.Supplier
     {
         private readonly IItem item;
         private readonly IDictionary<string, IAsset>  assets;
+        private readonly string suffix;
 
-        public ContainerNode(IItem item, IDictionary<string, IAsset>  assets)
+        public ContainerNode(IItem item, IDictionary<string, IAsset> assets, string suffix)
         {
             this.item = item;
             this.assets = assets;
+            this.suffix = suffix;
         }
 
         public IResource Node => item;
@@ -33,7 +35,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public string Label => item.Label;
 
-        public string Id => item.Id;
+        public string Id => item.Id + suffix;
 
         public ContentDisposition ContentDisposition => item.ContentDisposition;
 
