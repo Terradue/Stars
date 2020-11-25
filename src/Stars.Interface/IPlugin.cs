@@ -8,6 +8,5 @@ namespace Terradue.Stars.Interface
         int Priority { get; set; }
         string Key { get; set; }
 
-        void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider);
     }
 }

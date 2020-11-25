@@ -20,18 +20,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 {
     public abstract class LocalCarrier : ICarrier
     {
-        protected GlobalOptions carrierServiceOptions;
         private readonly ILogger logger;
 
-        public LocalCarrier(IOptions<GlobalOptions> options, ILogger logger)
+        public LocalCarrier(ILogger logger)
         {
-            this.carrierServiceOptions = options.Value;
             this.logger = logger;
-        }
-
-        public void Configure(IConfigurationSection configuration)
-        {
-
         }
 
         public abstract int Priority { get; set; }
@@ -70,10 +63,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
 
             return new LocalDelivery(this, route, destination as LocalFileDestination, cost);
-        }
-
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
         }
     }
 }

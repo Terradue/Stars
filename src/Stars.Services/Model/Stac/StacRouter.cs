@@ -10,6 +10,7 @@ using Stac.Catalog;
 using Stac.Item;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
@@ -51,11 +52,6 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
             }
             return false;
-        }
-
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-            credentials = serviceProvider.GetService<ICredentials>();
         }
 
         public async Task<IResource> Route(IResource route)

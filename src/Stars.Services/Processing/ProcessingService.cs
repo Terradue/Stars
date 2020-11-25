@@ -16,19 +16,17 @@ namespace Terradue.Stars.Services.Processing
         public ProcessingServiceParameters Parameters { get; set; }
         private readonly ILogger logger;
         private readonly ProcessingManager processingManager;
-        private readonly StacStoreService storeService;
         private readonly TranslatorManager translatorManager;
 
-        public ProcessingService(ILogger logger, ProcessingManager processingManager, StacStoreService storeService, TranslatorManager translatorManager)
+        public ProcessingService(ILogger<ProcessingService> logger, ProcessingManager processingManager, TranslatorManager translatorManager)
         {
             this.logger = logger;
             this.processingManager = processingManager;
-            this.storeService = storeService;
             this.translatorManager = translatorManager;
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<StacNode> ExecuteAsync(StacNode node, IDestination destination)
+        public async Task<StacNode> ExecuteAsync(StacNode node, IDestination destination, StacStoreService stacStoreService)
         {
             StacNode newNode = node;
             foreach (var processing in processingManager.Plugins.Values)
@@ -51,7 +49,7 @@ namespace Terradue.Stars.Services.Processing
                     if (stacNode == null)
                         throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
                 }
-                newNode = await storeService.StoreNodeAtDestination(stacNode, assets, destination, null);
+                newNode = await stacStoreService.StoreNodeAtDestination(stacNode, assets, destination, null);
             }
             return newNode;
         }

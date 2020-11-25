@@ -4,6 +4,7 @@ using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Services;
+using Terradue.Stars.Services.Credentials;
 
 namespace Terradue.Stars.Console.Operations
 {

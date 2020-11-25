@@ -31,19 +31,13 @@ namespace Terradue.Stars.Services.Supplier.Destination
         {
             try
             {
-                var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
-                return true;
+                return directory.StartsWith("/") || directory.StartsWith("file:/");
             }
             catch (Exception e)
             {
                 logger.LogWarning(e.Message);
                 return false;
             }
-        }
-
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-
         }
 
         public Task<IDestination> Guide(string directory, IResource route)

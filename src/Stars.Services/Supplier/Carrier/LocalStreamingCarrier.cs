@@ -16,7 +16,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     {
         private readonly ILogger logger;
 
-        public LocalStreamingCarrier(IOptions<GlobalOptions> options, ILogger<LocalStreamingCarrier> logger) : base(options, logger)
+        public LocalStreamingCarrier(ILogger<LocalStreamingCarrier> logger) : base(logger)
         {
             this.logger = logger;
             Priority = 75;
@@ -48,7 +48,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             if (streamable == null)
                 throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Route.Uri));
 
-            if (!carrierServiceOptions.ForceOverwrite && localRoute.File.Exists && streamable.ContentLength > 0 &&
+            if (localRoute.File.Exists && streamable.ContentLength > 0 &&
                Convert.ToUInt64(localRoute.File.Length) == streamable.ContentLength)
             {
                 logger.LogDebug("File {0} exists with the same size. Skipping download", localRoute.File.Name);

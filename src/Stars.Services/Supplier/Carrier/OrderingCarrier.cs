@@ -29,10 +29,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public int Priority { get; set; }
         public string Key { get => Id; set { } }
 
-        public void Configure(IConfigurationSection configuration)
-        {
-        }
-
         public string Id => "Ordering";
 
         public bool CanDeliver(IResource route, IDestination destination)
@@ -70,8 +66,5 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return new OrderedDelivery(this, voucherDelivery, orderVoucher, voucherDelivery.Cost + 10000);
         }
 
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-        }
     }
 }
