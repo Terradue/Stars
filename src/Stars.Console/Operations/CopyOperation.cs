@@ -257,7 +257,6 @@ namespace Terradue.Stars.Console.Operations
             {
                 so.KeepArchive = !DeleteArchive;
             });
-            collection.AddTransient<ITranslator, DefaultStacTranslator>();
             collection.AddSingleton<StacStoreService, StacStoreService>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();

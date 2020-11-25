@@ -26,7 +26,7 @@ namespace Terradue.Stars.Services
             return this;
         }
 
-        public StarsConfiguration UseGlobalConfiguration(IConfigurationRoot configuration)
+        public StarsConfiguration UseGlobalConfiguration(IConfiguration configuration)
         {
             UseCredentialsOptions(configuration.GetSection("Credentials"));
             UsePluginsOptions(configuration.GetSection("Plugins"));

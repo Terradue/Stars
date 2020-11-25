@@ -94,7 +94,7 @@ namespace Terradue.Stars.Services.Processing
 
             if (newAssets == null || newAssets.Count == 0) return route;
 
-            return new ContainerNode(route as IItem, newAssets);
+            return new ContainerNode(route as IItem, newAssets, "-inflated");
 
         }
 

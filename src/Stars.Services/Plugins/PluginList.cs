@@ -15,6 +15,7 @@ namespace Terradue.Stars.Services.Plugins
             {
                 foreach (var plugin in plugins)
                 {
+                    this.Remove(plugin.Key);
                     this.Add(plugin.Key, plugin);
                 }
             }

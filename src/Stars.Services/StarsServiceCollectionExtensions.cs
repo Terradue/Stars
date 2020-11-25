@@ -24,6 +24,7 @@ using Terradue.Stars.Services.Model.Atom;
 using System.Runtime.Loader;
 using Terradue.Stars.Services.Plugins;
 using Microsoft.Extensions.Options;
+using Terradue.Stars.Interface.Router.Translator;
 
 namespace Terradue.Stars.Services
 {
@@ -114,6 +115,8 @@ namespace Terradue.Stars.Services
 
             // Archive extraction
             services.AddTransient<IProcessing, ExtractArchiveAction>();
+
+            services.AddTransient<ITranslator, DefaultStacTranslator>();
 
             return services;
 
