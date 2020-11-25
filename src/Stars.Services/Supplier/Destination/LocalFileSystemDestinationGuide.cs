@@ -44,7 +44,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
         {
             var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
             if (!dir.Exists && !dir.Parent.Exists )
-                throw new InvalidOperationException(string.Format("{0} directory does not exist", directory));
+                throw new InvalidOperationException(string.Format("{0} directory does not exist", dir.Parent.FullName));
             return Task.FromResult<IDestination>(LocalFileDestination.Create(directory.Replace("file:", "").TrimEnd('/'), route));
         }
     }

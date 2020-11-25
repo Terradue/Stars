@@ -238,10 +238,10 @@ namespace Terradue.Stars.Console.Operations
         protected override void RegisterOperationServices(ServiceCollection collection)
         {
             Uri outputUrl = null;
-            try { outputUrl = new Uri(output); }
+            try { outputUrl = new Uri(output + "/"); }
             catch
             {
-                outputUrl = new Uri(Path.GetFullPath(output));
+                outputUrl = new Uri(Path.GetFullPath(output) + "/");
             }
             collection.ConfigureAll<StacStoreConfiguration>(so =>
             {
