@@ -11,7 +11,7 @@ namespace Terradue.Stars.Services.Processing
     public class ProcessingManager : AbstractManager<IProcessing>
     {
 
-        public ProcessingManager(ILogger logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
+        public ProcessingManager(ILogger<ProcessingManager> logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
         {
         }
 

@@ -1,20 +1,17 @@
 using System;
 using System.Reflection;
 using System.Runtime.Loader;
-using Microsoft.Extensions.Logging;
 
 namespace Terradue.Stars.Console
 {
     internal class PluginLoadContext : AssemblyLoadContext
     {
-        private readonly ILogger logger;
         private readonly AssemblyLoadContext mainAppAssemblyLoadContext;
         private AssemblyDependencyResolver _resolver;
 
-        public PluginLoadContext(string pluginPath, ILogger logger, AssemblyLoadContext mainAppAssemblyLoadContext)
+        public PluginLoadContext(string pluginPath, AssemblyLoadContext mainAppAssemblyLoadContext)
         {
             _resolver = new AssemblyDependencyResolver(pluginPath);
-            this.logger = logger;
             this.mainAppAssemblyLoadContext = mainAppAssemblyLoadContext;
         }
 

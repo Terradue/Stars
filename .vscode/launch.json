@@ -268,13 +268,13 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
-                "-v",
                 "copy",
+                "-v",
                 "https://catalog.terradue.com/cos2/search?format=atom&uid=750-KARI-KOMPSAT3A-urn_ogc_def_EOP_KARI_KOMPSAT3_K3A_20200508102646_28267_00027320_L1G_Aux_xml",
                 "-r",
                 "4",
-                "--output-dir",
-                "/tmp/stars",
+                "--output",
+                "./",
                 "--allow-ordering"
             ],
            "cwd": "${workspaceFolder}/src",
@@ -293,13 +293,13 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
-                "-v",
                 "copy",
+                "-v",
                 "https://catalog.terradue.com//sentinel1/series/GRD/search?format=atomeop&uid=S1A_IW_GRDH_1SSH_20201004T173230_20201004T173247_034649_04090D_F0B5",
                 "-r",
                 "4",
-                "--output-dir",
-                "/tmp/stars"
+                "--output",
+                "s3://bucket.terradue.com/bucket/test"
             ],
            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

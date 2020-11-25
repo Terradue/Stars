@@ -39,10 +39,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return (route != null);
         }
 
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-        }
-
         public Task<IResource> Deliver(IDelivery delivery)
         {
             return Task.FromResult<IResource>(delivery.Route);

@@ -31,8 +31,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
         {
             try
             {
-                var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
-                return true;
+                return directory.StartsWith("/") || directory.StartsWith("file:/");
             }
             catch (Exception e)
             {
@@ -41,16 +40,11 @@ namespace Terradue.Stars.Services.Supplier.Destination
             }
         }
 
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-
-        }
-
         public Task<IDestination> Guide(string directory, IResource route)
         {
             var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
             if (!dir.Exists && !dir.Parent.Exists )
-                throw new InvalidOperationException(string.Format("{0} directory does not exist", directory));
+                throw new InvalidOperationException(string.Format("{0} directory does not exist", dir.Parent.FullName));
             return Task.FromResult<IDestination>(LocalFileDestination.Create(directory.Replace("file:", "").TrimEnd('/'), route));
         }
     }

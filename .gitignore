@@ -360,3 +360,4 @@ MigrationBackup/
 FodyWeavers.xsd
 src/appsettings.yml
 out/
+src/catalog.json

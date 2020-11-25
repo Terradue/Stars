@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services.Credentials;
 
 namespace Terradue.Stars.Services
 {

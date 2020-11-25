@@ -36,7 +36,7 @@ namespace Terradue.Stars.Console.Operations
         public bool SkippAssets { get; set; }
 
         [Option("-o|--output", "Output Url (Default to current dir)", CommandOptionType.SingleValue)]
-        public string OutputUrl { get => outputUrl; set => outputUrl = value; }
+        public string Output { get => output; set => output = value; }
 
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
         public bool AllowOrdering { get; set; }
@@ -65,7 +65,7 @@ namespace Terradue.Stars.Console.Operations
         private StacStoreService storeService;
         private string[] inputs = new string[0];
         private int recursivity = 1;
-        private string outputUrl = "file://" + Directory.GetCurrentDirectory();
+        private string output = "file://" + Directory.GetCurrentDirectory();
 
         public CopyOperation()
         {
@@ -175,7 +175,7 @@ namespace Terradue.Stars.Console.Operations
                     logger.Output(string.Format("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType));
 
                     AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, AssetFilters.None);
-                    if ( StopOnError && deliveryReport.AssetsExceptions.Count > 0 )
+                    if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                         throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
                     importedAssets = deliveryReport.GetAssets();
@@ -198,7 +198,7 @@ namespace Terradue.Stars.Console.Operations
 
             // 2. Apply processing services if any
             ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-            stacNode = await processingService.ExecuteAsync(stacNode, destination);
+            stacNode = await processingService.ExecuteAsync(stacNode, destination, storeService);
 
             return operationState;
         }
@@ -237,14 +237,20 @@ namespace Terradue.Stars.Console.Operations
 
         protected override void RegisterOperationServices(ServiceCollection collection)
         {
+            Uri outputUrl = null;
+            try { outputUrl = new Uri(output + "/"); }
+            catch
+            {
+                outputUrl = new Uri(Path.GetFullPath(output) + "/");
+            }
             collection.ConfigureAll<StacStoreConfiguration>(so =>
             {
                 so.RootCatalogue = new StacCatalogueConfiguration()
                 {
                     Identifier = "catalog",
                     Description = "Root catalog",
-                    Url = string.Format("{0}/catalog.json", OutputUrl),
-                    DestinationUrl = OutputUrl
+                    Uri = new Uri(outputUrl, "catalog.json"),
+                    DestinationUri = outputUrl
                 };
             });
             collection.ConfigureAll<ExtractArchiveOptions>(so =>
@@ -255,9 +261,9 @@ namespace Terradue.Stars.Console.Operations
             collection.AddSingleton<StacStoreService, StacStoreService>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
-            if (ExtractArchives)
+            if (!ExtractArchives)
             {
-                collection.AddTransient<IProcessing, ExtractArchiveAction>();
+                collection.RemoveAll<ExtractArchiveAction>();
             }
         }
     }

@@ -6,6 +6,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -33,10 +34,5 @@ namespace Terradue.Stars.Services.Supplier
         {
             throw new NotSupportedException();
         }
-
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-        }
-
     }
 }

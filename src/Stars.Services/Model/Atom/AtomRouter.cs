@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Net;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -54,12 +55,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
             return false;
         }
-
-        public void Configure(IConfigurationSection configurationSection, IServiceProvider serviceProvider)
-        {
-            credentials = serviceProvider.GetService<ICredentials>();
-        }
-
+        
         public async Task<IResource> Route(IResource node)
         {
             if (!(node is IStreamable)) return null;

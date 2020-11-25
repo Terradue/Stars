@@ -1,28 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services;
-using Terradue.Stars.Services.Model.Atom;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Services.Supplier.Destination;
-using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -71,73 +56,6 @@ namespace Terradue.Stars.Console.Operations
 
         protected abstract Task ExecuteAsync();
 
-        private void LoadBase(ServiceCollection collection, IConfigurationRoot configuration)
-        {
-            // Stac Router
-            collection.AddTransient<IRouter, StacRouter>();
-            // Atom Router
-            collection.AddTransient<IRouter, AtomRouter>();
-
-            // Generic Supplier
-            collection.AddTransient<ISupplier, NativeSupplier>();
-
-            // Local Filesystem destination
-            collection.AddTransient<IDestinationGuide, LocalFileSystemDestinationGuide>();
-
-            // Carrier Options
-            collection.Configure<GlobalOptions>(configuration.GetSection("Global"));
-            // Streaming Carrier
-            collection.AddTransient<ICarrier, LocalStreamingCarrier>();
-            // Native Carrier
-            //collection.AddTransient<ICarrier, NativeCarrier>();
-
-            // Routing Service
-            collection.AddTransient<RouterService, RouterService>();
-            // Supplying Service
-            collection.AddTransient<AssetService, AssetService>();
-            // Processing Service
-            collection.AddTransient<ProcessingService, ProcessingService>();
-
-            // Credentials Options & Manager
-            collection.Configure<CredentialsOptions>(co => co.Configure(Configuration.GetSection("Credentials"), logger));
-            collection.AddSingleton<ICredentials, ConsoleCredentialsManager>();
-            collection.AddSingleton<ConsoleUserSettings, ConsoleUserSettings>();
-
-        }
-
-
-        private void LoadPlugins(ServiceCollection collection, IConfigurationRoot configuration)
-        {
-            IConfigurationSection pluginSection = configuration.GetSection("Plugins");
-
-
-            foreach (var plugin in pluginSection.GetChildren())
-            {
-                if (plugin.GetSection("Assembly") == null)
-                    continue;
-
-                var assemblyPath = plugin.GetSection("Assembly").Value;
-                if (!File.Exists(assemblyPath))
-                    continue;
-
-                logger.LogDebug("Loading plugins from {0}", assemblyPath);
-                PluginLoadContext loadContext = new PluginLoadContext(assemblyPath, logger, AssemblyLoadContext.Default);
-                // var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
-                var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(assemblyPath)));
-
-                RoutersManager.RegisterConfiguredPlugins(plugin.GetSection("Routers"), collection, logger, assembly);
-
-                SupplierManager.RegisterConfiguredPlugins(plugin.GetSection("Suppliers"), collection, logger, assembly);
-
-                TranslatorManager.RegisterConfiguredPlugins(plugin.GetSection("Translators"), collection, logger, assembly);
-
-                DestinationManager.RegisterConfiguredPlugins(plugin.GetSection("Destinations"), collection, logger, assembly);
-
-                CarrierManager.RegisterConfiguredPlugins(plugin.GetSection("Carriers"), collection, logger, assembly);
-
-                ProcessingManager.RegisterConfiguredPlugins(plugin.GetSection("Processings"), collection, logger, assembly);
-            }
-        }
 
         private ServiceCollection RegisterServices()
         {
@@ -182,23 +100,26 @@ namespace Terradue.Stars.Console.Operations
             collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
             collection.AddSingleton<ILogger>(logger);
 
-            // Load Base Routers, Supplier, Destination and Carriers
-            LoadBase(collection, Configuration);
-
-            // Load Plugins
-            LoadPlugins(collection, Configuration);
-
-            // Add the Managers
-            collection.AddSingleton<RoutersManager, RoutersManager>();
-            collection.AddSingleton<SupplierManager, SupplierManager>();
-            collection.AddSingleton<DestinationManager, DestinationManager>();
-            collection.AddSingleton<CarrierManager, CarrierManager>();
-            collection.AddSingleton<TranslatorManager, TranslatorManager>();
-            collection.AddSingleton<ProcessingManager, ProcessingManager>();
+            // Add Stars Services
+            collection.AddStarsServices((provider, configuration) => configuration
+                .UseGlobalConfiguration(Configuration)
+                // .UseCredentials(Configuration.GetSection("Credentials"))
+            );
+            collection.LoadConfiguredStarsPlugin((assemblyPath) =>
+            {
+                if (!File.Exists(assemblyPath))
+                {
+                    logger.LogWarning("No assembly file at {0}", assemblyPath);
+                }
+                logger.LogDebug("Loading plugins from {0}", assemblyPath);
+                return new PluginLoadContext(assemblyPath, AssemblyLoadContext.Default);
+            });
+            // Use also the console for the credentials
+            collection.AddSingleton<ConsoleUserSettings, ConsoleUserSettings>();
+            collection.UseCredentialsManager<ConsoleCredentialsManager>();
 
             // Registers services specific to operation
             RegisterOperationServices(collection);
-
 
             return collection;
 
