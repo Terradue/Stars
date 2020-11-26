@@ -21,7 +21,7 @@ namespace Terradue.Stars.Services.Model.Stac
             this.credentials = credentials;
         }
 
-        public IStacItem StacItem => stacObject as IStacItem;
+        public StacItem StacItem => stacObject as StacItem;
 
         public override ResourceType ResourceType => ResourceType.Item;
 

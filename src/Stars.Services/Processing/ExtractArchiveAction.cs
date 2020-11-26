@@ -3,21 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using ICSharpCode.SharpZipLib.Tar;
-using Terradue.Stars.Interface.Router;
-
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Supplier.Destination;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
-using Stac;
-using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Store;
 using Microsoft.Extensions.Options;
 
 namespace Terradue.Stars.Services.Processing
@@ -65,7 +57,7 @@ namespace Terradue.Stars.Services.Processing
             return asset.ContentType != null && Archive.ArchiveContentTypes.Contains(asset.ContentType.MediaType);
         }
 
-        public async Task<IResource> Process(IResource route, IDestination destination)
+        public async Task<IResource> Process(IResource route, IDestination destination, string suffix = null)
         {
             IItem item = route as IItem;
             if (item == null) return route;
@@ -94,7 +86,7 @@ namespace Terradue.Stars.Services.Processing
 
             if (newAssets == null || newAssets.Count == 0) return route;
 
-            return new ContainerNode(route as IItem, newAssets, "-inflated");
+            return new ContainerNode(route as IItem, newAssets, suffix);
 
         }
 

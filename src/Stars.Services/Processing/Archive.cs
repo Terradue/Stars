@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Processing
             
             switch (compression){
                 case ArchiveCompression.Zip:
-                    var zipFile = new ICSharpCode.SharpZipLib.Zip.ZipFile(await streamableAsset.GetStreamAsync());
+                    var zipFile = Ionic.Zip.ZipFile.Read(await streamableAsset.GetStreamAsync());
                     return new ZipArchiveAsset(zipFile, asset);
                 default:
                     throw new System.IO.InvalidDataException("Asset is not recognized as an archive");

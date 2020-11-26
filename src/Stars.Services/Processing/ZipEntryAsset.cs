@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using ICSharpCode.SharpZipLib.Zip;
+using Ionic.Zip;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -23,27 +22,27 @@ namespace Terradue.Stars.Services.Processing
             this.parentAsset = parentAsset;
         }
 
-        public string Label => parentAsset.Label + " / " + entry.Name;
+        public string Label => parentAsset.Label + " / " + entry.FileName;
 
         public IEnumerable<string> Roles
         {
             get
             {
-                var ext = Path.GetExtension(entry.Name).TrimStart('.'); 
+                var ext = Path.GetExtension(entry.FileName).TrimStart('.'); 
                 if ( (new string[]{ "txt", "xml", "json" }).Contains(ext)) return new string[] { "metadata" };
                 return new string[] { "data" };
             }
         }
 
-        public Uri Uri => new Uri(entry.Name, UriKind.Relative);
+        public Uri Uri => new Uri(entry.FileName, UriKind.Relative);
 
         public ContentType ContentType => new ContentType(System.Net.Mime.MediaTypeNames.Application.Octet);
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public ulong ContentLength => Convert.ToUInt64(entry.Size);
+        public ulong ContentLength => Convert.ToUInt64(entry.UncompressedSize);
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = entry.Name };
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = entry.FileName };
 
         public bool CanBeRanged => false;
 
@@ -51,7 +50,7 @@ namespace Terradue.Stars.Services.Processing
 
         public Task<Stream> GetStreamAsync()
         {
-            return Task.FromResult(zipFile.GetInputStream(entry));
+            return Task.FromResult(entry.OpenReader() as Stream);
         }
 
         public IStreamable GetStreamable()

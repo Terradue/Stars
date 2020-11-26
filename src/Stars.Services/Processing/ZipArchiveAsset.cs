@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using ICSharpCode.SharpZipLib.Zip;
-using Terradue.Stars.Interface.Router;
-using System.Linq;
 using System.IO;
+using Ionic.Zip;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
@@ -23,9 +21,9 @@ namespace Terradue.Stars.Services.Processing
             Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
             foreach (ZipEntry entry in zipFile)
             {
-                if (!entry.IsFile) continue;
+                if (entry.IsDirectory) continue;
 
-                assets.Add(entry.Name, new ZipEntryAsset(entry, zipFile, asset));
+                assets.Add(entry.FileName, new ZipEntryAsset(entry, zipFile, asset));
             }
             return assets;
         }
@@ -35,7 +33,7 @@ namespace Terradue.Stars.Services.Processing
             List<string> names = new List<string>();
             foreach (ZipEntry entry in zipFile)
             {
-                names.Add(entry.Name);
+                names.Add(entry.FileName);
             }
             var commonfolder = Findstem(names.ToArray());
             if ( commonfolder.IndexOf('/') > 1 )

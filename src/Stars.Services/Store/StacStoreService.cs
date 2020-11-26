@@ -114,8 +114,6 @@ namespace Terradue.Stars.Services.Store
 
         public async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDictionary<string, IAsset> assets, IDestination destination, IEnumerable<StacNode> childrenNodes = null)
         {
-          
-
             IDestination stacDestination = destination.To(stacNode);
 
             // Now we make the proper links between items and assets and store the node
@@ -125,7 +123,18 @@ namespace Terradue.Stars.Services.Store
 
         }
 
-        public async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDestination destination)
+        public async Task<StacItemNode> StoreItemNodeAtDestination(StacItemNode stacItemNode, IDestination destination)
+        {
+            PrepareStacItemForDestination(stacItemNode, destination);
+            return await StoreNodeAtDestination(stacItemNode, destination) as StacItemNode;
+        }
+
+        public async Task<StacCatalogNode> StoreCatalogNodeAtDestination(StacCatalogNode stacItemNode, IDestination destination)
+        {
+            return await StoreNodeAtDestination(stacItemNode, destination) as StacCatalogNode;
+        }
+
+        private async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDestination destination)
         {
             var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(stacNode, destination);
             IResource deliveredResource = null;
@@ -138,10 +147,20 @@ namespace Terradue.Stars.Services.Store
             if (deliveredResource == null)
                 throw new InvalidDataException(string.Format("No carrier could store node {0} at {1}", stacNode.Id, destination));
 
-            return (await _stacRouter.Route(deliveredResource)) as StacNode;
+            if (RootCatalogNode != null)
+            {
+                Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
+                var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri));
+
+                return (await _stacRouter.Route(publicResource)) as StacNode;
+            }
+            else
+            {
+                return (await _stacRouter.Route(deliveredResource)) as StacNode;
+            }
         }
 
-        private void LinkStacNode(StacNode stacNode, IDictionary<string, IAsset> assets, IDestination destination, IEnumerable<StacNode> childrenNodes)
+        public void LinkStacNode(StacNode stacNode, IDictionary<string, IAsset> assets, IDestination destination, IEnumerable<StacNode> childrenNodes)
         {
             LinkStacNode(stacNode, destination);
             if (stacNode.IsCatalog)
@@ -162,7 +181,7 @@ namespace Terradue.Stars.Services.Store
 
         }
 
-        private void LinkStacItem(StacItemNode stacNode, IDictionary<string, IAsset> assets, IDestination destination)
+        public void LinkStacItem(StacItemNode stacNode, IDictionary<string, IAsset> assets, IDestination destination)
         {
             StacItem stacItem = stacNode.StacObject as StacItem;
             if (stacItem == null || assets == null) return;
@@ -173,6 +192,34 @@ namespace Terradue.Stars.Services.Store
                 IAsset asset = assets[assetKey];
                 var relativeUri = asset.Uri.IsAbsoluteUri ? destination.Uri.MakeRelativeUri(asset.Uri) : asset.Uri;
                 stacItem.Assets.Add(assetKey, CreateAsset(asset, relativeUri, stacItem));
+            }
+        }
+
+        private void PrepareStacItemForDestination(StacItemNode stacNode, IDestination destination)
+        {
+            StacItem stacItem = stacNode.StacObject as StacItem;
+            if (stacItem == null) return;
+
+            foreach (var asset in stacItem.Assets)
+            {
+                if (!asset.Value.Uri.IsAbsoluteUri) continue;
+                // 1. Check the asset uri can be relative to destination itself
+                var relativeUri = destination.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (!relativeUri.IsAbsoluteUri)
+                {
+                    asset.Value.Uri = relativeUri;
+                    continue;
+                }
+                // 1. Check the asset uri can be relative to root catalog
+                relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (relativeUri.IsAbsoluteUri) continue;
+                Uri absoluteUri = new Uri(RootCatalogNode.Uri, relativeUri);
+                relativeUri = stacNode.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (!relativeUri.IsAbsoluteUri)
+                {
+                    asset.Value.Uri = relativeUri;
+                    continue;
+                }
             }
         }
 
