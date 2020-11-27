@@ -37,7 +37,7 @@ namespace Terradue.Stars.Services.Router
 
         public async Task<Stream> GetStreamAsync()
         {
-            if ( request is HttpWebRequest && CanBeRanged )
+            if (request is HttpWebRequest && CanBeRanged)
                 return new SeekableHttpStream(request as HttpWebRequest);
             var response = await request.CloneRequest(request.RequestUri).GetResponseAsync();
             return response.GetResponseStream();
@@ -49,6 +49,9 @@ namespace Terradue.Stars.Services.Router
         {
             get
             {
+                if (request is FileWebRequest)
+                    return new ContentType(MimeTypes.GetMimeType(Path.GetFileName(request.RequestUri.ToString())));
+
                 if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentType]))
                     return new ContentType(CachedHeaders[HttpResponseHeader.ContentType]);
 
@@ -64,6 +67,8 @@ namespace Terradue.Stars.Services.Router
         {
             get
             {
+                if (request is FileWebRequest)
+                    return Convert.ToUInt64(new FileInfo(request.RequestUri.ToString().Replace("file://", "")).Length);
                 if (contentLength > 0) return contentLength;
                 if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentLength]))
                     return Convert.ToUInt64(CachedHeaders[HttpResponseHeader.ContentLength]);

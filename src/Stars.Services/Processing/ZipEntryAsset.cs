@@ -22,9 +22,9 @@ namespace Terradue.Stars.Services.Processing
             this.parentAsset = parentAsset;
         }
 
-        public string Label => parentAsset.Label + " / " + entry.FileName;
+        public string Title => parentAsset.Title + " / " + entry.FileName;
 
-        public IEnumerable<string> Roles
+        public IReadOnlyList<string> Roles
         {
             get
             {
@@ -46,7 +46,7 @@ namespace Terradue.Stars.Services.Processing
 
         public bool CanBeRanged => false;
 
-        public IDictionary<string, object> Properties => new Dictionary<string, object>();
+        public IReadOnlyDictionary<string, object> Properties => new Dictionary<string, object>();
 
         public Task<Stream> GetStreamAsync()
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -35,29 +36,19 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ulong ContentLength => asset.ContentLength;
 
-        public string Label
-        {
-            get
-            {
-                string label = "";
-                if (asset.Roles != null && asset.Roles.Count() > 0)
-                    label += string.Format("[{0}] ", string.Join(",", asset.Roles));
-                label += string.IsNullOrEmpty(asset.Title) ? Path.GetFileName(asset.Uri.AbsolutePath) : asset.Title;
-                return label;
-            }
-        }
+        public string Title => asset.Title;
 
         public ResourceType ResourceType => ResourceType.Asset;
 
         public string Filename => Path.GetFileName(Uri.ToString());
 
-        public IEnumerable<string> Roles => asset.Roles;
+        public IReadOnlyList<string> Roles => asset.Roles;
 
         public StacAsset StacAsset { get => asset; }
 
         public ContentDisposition ContentDisposition => GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
 
-        public IDictionary<string, object> Properties => asset.Properties;
+        public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 
         public IStreamable GetStreamable()
         {

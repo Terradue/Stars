@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Mime;
 using System.Text;
@@ -56,17 +57,18 @@ namespace Terradue.Stars.Services.Supplier
         [JsonIgnore]
         public IOrderable OrderableRoute { get => orderableRoute; }
 
-        [JsonIgnore]
-        public string Label => string.Format("Order {0} to supplier {1}", orderId, Supplier.Id);
+        [JsonProperty]
+        public string Title => string.Format("Order {0} to supplier {1}", orderId, Supplier.Id);
 
         [JsonIgnore]
-        public IEnumerable<string> Roles => new string[1] { "order" };
+        public IReadOnlyList<string> Roles => new string[1] { "order" };
 
         [JsonIgnore]
         public bool CanBeRanged => false;
 
         [JsonProperty]
-        public IDictionary<string, object> Properties => new Dictionary<string, object>();
+        public IReadOnlyDictionary<string, object> Properties => new Dictionary<string, object>();
+
         public async Task<Stream> GetStreamAsync()
         {
             return await Task<Stream>.Run(() =>

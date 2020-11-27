@@ -87,7 +87,7 @@ namespace Terradue.Stars.Services.Router
             }
 
             // Let's get sub routes
-            IList<IResource> subroutes = catalogNode.GetRoutes();
+            IReadOnlyList<IResource> subroutes = catalogNode.GetRoutes();
 
             state = await beforeBranchingFunction.Invoke(catalogNode, router, state);
 
@@ -128,8 +128,8 @@ namespace Terradue.Stars.Services.Router
             this.onRoutingExceptionFunction = onRoutingException;
         }
 
-        private Func<IResource, IResource, IList<IResource>, object, Task<object>> onBranchingFunction = (parentRoute, route, siblings, state) => { return Task.FromResult<object>(state); };
-        public void OnBranching(Func<IResource, IResource, IList<IResource>, object, Task<object>> onBranchingFunction)
+        private Func<IResource, IResource, IEnumerable<IResource>, object, Task<object>> onBranchingFunction = (parentRoute, route, siblings, state) => { return Task.FromResult<object>(state); };
+        public void OnBranching(Func<IResource, IResource, IEnumerable<IResource>, object, Task<object>> onBranchingFunction)
         {
             this.onBranchingFunction = onBranchingFunction;
         }

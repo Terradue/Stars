@@ -10,22 +10,22 @@ namespace Terradue.Stars.Services.Supplier
     internal class GenericAsset : IAsset
     {
         private IResource route;
-        private readonly string label;
-        private readonly IEnumerable<string> roles;
+        private readonly string title;
+        private readonly IReadOnlyList<string> roles;
         private Uri uri;
         private Dictionary<string, object> properties = new Dictionary<string, object>();
 
-        public GenericAsset(IResource route, string label, IEnumerable<string> roles)
+        public GenericAsset(IResource route, string title, IReadOnlyList<string> roles)
         {
             this.route = route;
-            this.label = label;
+            this.title = title;
             this.roles = roles;
             this.uri = route.Uri;
         }
 
-        public string Label => label;
+        public string Title => title;
 
-        public IEnumerable<string> Roles => roles;
+        public IReadOnlyList<string> Roles => roles;
 
         public Uri Uri => uri;
 
@@ -37,7 +37,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public ContentDisposition ContentDisposition => route.ContentDisposition;
 
-        public IDictionary<string, object> Properties => properties;
+        public IReadOnlyDictionary<string, object> Properties => properties;
 
         public IStreamable GetStreamable()
         {

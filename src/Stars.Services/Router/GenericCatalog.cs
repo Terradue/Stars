@@ -37,7 +37,7 @@ namespace Terradue.Stars.Services.Router
 
         public ContentDisposition ContentDisposition => null;
 
-        public IList<IResource> GetRoutes()
+        public IReadOnlyList<IResource> GetRoutes()
         {
             return routes.ToList();
         }

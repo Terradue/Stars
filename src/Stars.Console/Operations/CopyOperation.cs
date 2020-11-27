@@ -108,12 +108,13 @@ namespace Terradue.Stars.Console.Operations
             if (operationState.CurrentStacObject is StacCatalogNode)
             {
                 StacCatalogNode stacCatalogNode = operationState.CurrentStacObject as StacCatalogNode;
-                operationState.CurrentStacObject = await operationState.StoreService.StoreNodeAtDestination(stacCatalogNode, null, operationState.CurrentDestination, subStates.Select(ss => (ss as CopyOperationState).CurrentStacObject));
+                stacCatalogNode.StacCatalog.AddLinks(subStates.Select(ss => (ss as CopyOperationState).CurrentStacObject));
+                operationState.CurrentStacObject = await operationState.StoreService.StoreCatalogNodeAtDestination(stacCatalogNode, operationState.CurrentDestination);
             }
             return operationState;
         }
 
-        private CopyOperationState PrepareNewRoute(IResource parentRoute, IResource newRoute, IList<IResource> siblings, object state)
+        private CopyOperationState PrepareNewRoute(IResource parentRoute, IResource newRoute, IEnumerable<IResource> siblings, object state)
         {
             if (state == null)
             {
@@ -139,14 +140,22 @@ namespace Terradue.Stars.Console.Operations
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            // We update the destination in case a new router updated the route
-            IDestination destination = operationState.CurrentDestination.To(node);
+            StacNode stacNode = node as StacNode;
+            if (stacNode == null)
+            {
+                // No? Let's try to translate it to Stac
+                stacNode = await translatorManager.Translate<StacNode>(node);
+                if (stacNode == null)
+                    throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", node.Uri));
+            }
 
-            IDictionary<string, IAsset> importedAssets = null;
+            // We update the destination in case a new router updated the route
+            IDestination destination = operationState.CurrentDestination.To(stacNode);
 
             // In case of a Item
             if (node is IItem)
             {
+                StacItemNode stacItemNode = stacNode as StacItemNode;
 
                 // 1. Select Suppliers
                 AssetService assetService = ServiceProvider.GetService<AssetService>();
@@ -178,27 +187,26 @@ namespace Terradue.Stars.Console.Operations
                     if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                         throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
-                    importedAssets = deliveryReport.GetAssets();
+
+                    stacItemNode.StacItem.MergeAssets(deliveryReport);
                     break;
                 }
-            }
 
-            StacNode stacNode = node as StacNode;
-            if (stacNode == null)
+                stacNode = await storeService.StoreItemNodeAtDestination(stacItemNode, destination);
+            }
+            else
             {
-                // No? Let's try to translate it to Stac
-                stacNode = await translatorManager.Translate<StacNode>(node);
-                if (stacNode == null)
-                    throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", node.Uri));
+                stacNode = await storeService.StoreCatalogNodeAtDestination(stacNode as StacCatalogNode, destination);
             }
-
-            stacNode = await storeService.StoreNodeAtDestination(stacNode, importedAssets, destination, null);
 
             operationState.CurrentStacObject = stacNode;
 
             // 2. Apply processing services if any
-            ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-            stacNode = await processingService.ExecuteAsync(stacNode, destination, storeService);
+            if (stacNode is StacItemNode)
+            {
+                ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+                stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);
+            }
 
             return operationState;
         }

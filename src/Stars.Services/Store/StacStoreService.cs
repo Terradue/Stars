@@ -112,26 +112,16 @@ namespace Terradue.Stars.Services.Store
 
         }
 
-        public async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDictionary<string, IAsset> assets, IDestination destination, IEnumerable<StacNode> childrenNodes = null)
-        {
-            IDestination stacDestination = destination.To(stacNode);
-
-            // Now we make the proper links between items and assets and store the node
-            LinkStacNode(stacNode, assets, stacDestination, childrenNodes);
-
-            return await StoreNodeAtDestination(stacNode, stacDestination);
-
-        }
-
         public async Task<StacItemNode> StoreItemNodeAtDestination(StacItemNode stacItemNode, IDestination destination)
         {
             PrepareStacItemForDestination(stacItemNode, destination);
             return await StoreNodeAtDestination(stacItemNode, destination) as StacItemNode;
         }
 
-        public async Task<StacCatalogNode> StoreCatalogNodeAtDestination(StacCatalogNode stacItemNode, IDestination destination)
+        public async Task<StacCatalogNode> StoreCatalogNodeAtDestination(StacCatalogNode stacCatalogNode, IDestination destination)
         {
-            return await StoreNodeAtDestination(stacItemNode, destination) as StacCatalogNode;
+            PrepareStacCatalogueForDestination(stacCatalogNode, destination);
+            return await StoreNodeAtDestination(stacCatalogNode, destination) as StacCatalogNode;
         }
 
         private async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDestination destination)
@@ -160,44 +150,56 @@ namespace Terradue.Stars.Services.Store
             }
         }
 
-        public void LinkStacNode(StacNode stacNode, IDictionary<string, IAsset> assets, IDestination destination, IEnumerable<StacNode> childrenNodes)
-        {
-            LinkStacNode(stacNode, destination);
-            if (stacNode.IsCatalog)
-                LinkStacCatalog(stacNode as StacCatalogNode, childrenNodes, destination);
-            else
-                LinkStacItem(stacNode as StacItemNode, assets, destination);
-        }
 
-        private void LinkStacNode(StacNode stacNode, IDestination destination)
+        private void PrepareStacNodeForDestination(StacNode stacNode, IDestination destination)
         {
             IStacObject stacObject = stacNode.StacObject;
-
             if (stacObject == null) return;
 
-            stacObject.Links.Clear();
-            stacObject.Links.Add(StacLink.CreateRootLink(destination.Uri.MakeRelativeUri(RootCatalogNode.Uri), RootCatalogNode.ContentType.ToString()));
-            stacObject.Links.Add(StacLink.CreateSelfLink(new Uri(Path.GetFileName(destination.Uri.ToString()), UriKind.Relative), stacNode.ContentType.ToString()));
+            var selfLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "self");
+            if(selfLink != null)
+                stacObject.Links.Remove(selfLink);
+            stacObject.Links.Add(StacLink.CreateSelfLink(stacNode.Uri, stacNode.ContentType.ToString()));
 
-        }
+            var rootLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "root");
+            if(rootLink != null)
+                stacObject.Links.Remove(rootLink);
+            stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
 
-        public void LinkStacItem(StacItemNode stacNode, IDictionary<string, IAsset> assets, IDestination destination)
-        {
-            StacItem stacItem = stacNode.StacObject as StacItem;
-            if (stacItem == null || assets == null) return;
-
-            stacItem.Assets.Clear();
-            foreach (var assetKey in assets.Keys)
+            foreach (var link in stacObject.Links)
             {
-                IAsset asset = assets[assetKey];
-                var relativeUri = asset.Uri.IsAbsoluteUri ? destination.Uri.MakeRelativeUri(asset.Uri) : asset.Uri;
-                stacItem.Assets.Add(assetKey, CreateAsset(asset, relativeUri, stacItem));
+                if (!link.Uri.IsAbsoluteUri) continue;
+                // 1. Check the link uri can be relative to destination itself
+                var relativeUri = destination.Uri.MakeRelativeUri(link.Uri);
+                if ( relativeUri.ToString() == "") relativeUri = new Uri(Path.GetFileName(link.Uri.ToString()), UriKind.Relative);
+                if (!relativeUri.IsAbsoluteUri)
+                {
+                    link.Uri = relativeUri;
+                    continue;
+                }
+                // 2. Check the link uri can be relative to root catalog
+                relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(link.Uri);
+                if ( relativeUri.ToString() == "") relativeUri = new Uri(Path.GetFileName(link.Uri.ToString()), UriKind.Relative);
+                if (relativeUri.IsAbsoluteUri) continue;
+                Uri absoluteUri = new Uri(RootCatalogNode.Uri, relativeUri);
+                relativeUri = stacNode.Uri.MakeRelativeUri(link.Uri);
+                if (!relativeUri.IsAbsoluteUri)
+                {
+                    link.Uri = relativeUri;
+                    continue;
+                }
             }
         }
 
-        private void PrepareStacItemForDestination(StacItemNode stacNode, IDestination destination)
+        private void PrepareStacCatalogueForDestination(StacCatalogNode stacCatalogNode, IDestination destination)
         {
-            StacItem stacItem = stacNode.StacObject as StacItem;
+            PrepareStacNodeForDestination(stacCatalogNode, destination);
+        }
+
+        public void PrepareStacItemForDestination(StacItemNode stacItemNode, IDestination destination)
+        {
+            PrepareStacNodeForDestination(stacItemNode, destination);
+            StacItem stacItem = stacItemNode.StacObject as StacItem;
             if (stacItem == null) return;
 
             foreach (var asset in stacItem.Assets)
@@ -214,32 +216,11 @@ namespace Terradue.Stars.Services.Store
                 relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(asset.Value.Uri);
                 if (relativeUri.IsAbsoluteUri) continue;
                 Uri absoluteUri = new Uri(RootCatalogNode.Uri, relativeUri);
-                relativeUri = stacNode.Uri.MakeRelativeUri(asset.Value.Uri);
+                relativeUri = stacItemNode.Uri.MakeRelativeUri(asset.Value.Uri);
                 if (!relativeUri.IsAbsoluteUri)
                 {
                     asset.Value.Uri = relativeUri;
                     continue;
-                }
-            }
-        }
-
-        private void LinkStacCatalog(StacCatalogNode stacCatalogNode, IEnumerable<StacNode> childrenNodes, IDestination destination)
-        {
-            StacCatalog stacCatalog = stacCatalogNode.StacObject as StacCatalog;
-            if (childrenNodes == null) return;
-            foreach (var childNode in childrenNodes)
-            {
-                if (childNode == null) continue;
-                var relativeUri = childNode.Uri.IsAbsoluteUri ? destination.Uri.MakeRelativeUri(childNode.Uri) : childNode.Uri;
-                switch (childNode.ResourceType)
-                {
-                    case ResourceType.Catalog:
-                    case ResourceType.Collection:
-                        stacCatalog.Links.Add(StacLink.CreateChildLink(relativeUri, childNode.ContentType.ToString()));
-                        break;
-                    case ResourceType.Item:
-                        stacCatalog.Links.Add(StacLink.CreateItemLink(relativeUri, childNode.ContentType.ToString()));
-                        break;
                 }
             }
         }
@@ -257,22 +238,7 @@ namespace Terradue.Stars.Services.Store
                 else
                     RootCatalogNode.StacCatalog.Links.Add(StacLink.CreateItemLink(relativeUri, stacNode.ContentType.MediaType));
             }
-            await StoreNodeAtDestination(RootCatalogNode, RootCatalogDestination);
-        }
-
-        private StacAsset CreateAsset(IAsset asset, Uri relativeUri, IStacObject stacObject)
-        {
-            StacAssetAsset stacAssetAsset = asset as StacAssetAsset;
-            StacAsset stacAsset = null;
-            if (stacAssetAsset == null)
-                stacAsset = new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType, asset.ContentLength);
-            else
-            {
-                stacAsset = stacAssetAsset.StacAsset;
-                stacAsset.Uri = relativeUri;
-            }
-
-            return stacAsset;
+            await StoreCatalogNodeAtDestination(RootCatalogNode, RootCatalogDestination);
         }
 
     }

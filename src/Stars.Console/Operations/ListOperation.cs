@@ -49,7 +49,7 @@ namespace Terradue.Stars.Console.Operations
             routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
         }
 
-        private Task<object> PrepareNewRoute(IResource parentRoute, IResource route, IList<IResource> siblings, object state)
+        private Task<object> PrepareNewRoute(IResource parentRoute, IResource route, IEnumerable<IResource> siblings, object state)
         {
             if (state == null) return Task.FromResult<object>(new ListOperationState("", 1));
 
@@ -57,7 +57,7 @@ namespace Terradue.Stars.Console.Operations
             if (operationState.Depth == 0) return Task.FromResult<object>(state);
 
             string newPrefix = operationState.Prefix.Replace('─', ' ').Replace('└', ' ');
-            int i = siblings.IndexOf(route);
+            int i = siblings.ToList().IndexOf(route);
             if (i == siblings.Count() - 1)
             {
                 newPrefix += "└─";
@@ -139,7 +139,7 @@ namespace Terradue.Stars.Console.Operations
             // List assets
             if (!SkippAssets && resource is IAssetsContainer)
             {
-                IDictionary<string, IAsset> assets = ((IAssetsContainer)resource).GetAssets();
+                IReadOnlyDictionary<string, IAsset> assets = ((IAssetsContainer)resource).Assets;
                 for (int i = 0; i < assets.Count(); i++)
                 {
                     string newPrefix = prefix.Replace('─', ' ').Replace('└', ' ');
@@ -155,7 +155,7 @@ namespace Terradue.Stars.Console.Operations
                     if (router != null)
                         assetPrefix = string.Format("[{0}] {1}", router.Label, assetPrefix);
                     var asset = assets.ElementAt(i).Value;
-                    await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + asset.Label).Truncate(99), asset.ContentType));
+                    await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + asset.Title).Truncate(99), asset.ContentType));
                     console.ForegroundColor = ConsoleColor.White;
                 }
             }

@@ -11,15 +11,15 @@ namespace Terradue.Stars.Services.Supplier.Destination
     public class LocalFileDestination : IDestination
     {
         private readonly FileInfo file;
-        private readonly IResource route;
+        private readonly IResource resource;
 
-        private LocalFileDestination(FileInfo file, IResource route)
+        private LocalFileDestination(FileInfo file, IResource resource)
         {
             this.file = file;
-            this.route = route;
+            this.resource = resource;
         }
 
-        public Uri Uri => new Uri(file.FullName);
+        public Uri Uri => new Uri("file://" + file.FullName);
 
         public bool Exists => file.Exists;
 
@@ -54,15 +54,15 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 if (subroute.Uri.IsAbsoluteUri)
                 {
                     // Let's see if the 2 routes are relative
-                    var relUri = route.Uri.MakeRelativeUri(subroute.Uri);
+                    var relUri = Uri.MakeRelativeUri(subroute.Uri);
                     // If not, let's see if they have a common pattern
                     if (relUri.IsAbsoluteUri)
                     {
                         if (!string.IsNullOrEmpty(Path.GetDirectoryName(subroute.Uri.AbsolutePath)) &&
-                            !string.IsNullOrEmpty(Path.GetDirectoryName(route.Uri.AbsolutePath)) &&
-                            Path.GetDirectoryName(subroute.Uri.AbsolutePath).StartsWith(Path.GetDirectoryName(route.Uri.AbsolutePath)))
+                            !string.IsNullOrEmpty(Path.GetDirectoryName(Uri.AbsolutePath)) &&
+                            Path.GetDirectoryName(subroute.Uri.AbsolutePath).StartsWith(Path.GetDirectoryName(Uri.AbsolutePath)))
                         {
-                            relPath = Path.GetDirectoryName(subroute.Uri.AbsolutePath).Replace(Path.GetDirectoryName(route.Uri.AbsolutePath), "");
+                            relPath = Path.GetDirectoryName(subroute.Uri.AbsolutePath).Replace(Path.GetDirectoryName(Uri.AbsolutePath), "");
                         }
                     }
                     else

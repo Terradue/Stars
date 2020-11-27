@@ -16,16 +16,19 @@ namespace Terradue.Stars.Services.Processing
             this.asset = asset;
         }
 
-        public override IDictionary<string, IAsset> GetAssets()
+        public override IReadOnlyDictionary<string, IAsset> Assets
         {
-            Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-            foreach (ZipEntry entry in zipFile)
+            get
             {
-                if (entry.IsDirectory) continue;
+                Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
+                foreach (ZipEntry entry in zipFile)
+                {
+                    if (entry.IsDirectory) continue;
 
-                assets.Add(entry.FileName, new ZipEntryAsset(entry, zipFile, asset));
+                    assets.Add(entry.FileName, new ZipEntryAsset(entry, zipFile, asset));
+                }
+                return assets;
             }
-            return assets;
         }
 
         public override string AutodetectSubfolder()
@@ -36,7 +39,7 @@ namespace Terradue.Stars.Services.Processing
                 names.Add(entry.FileName);
             }
             var commonfolder = Findstem(names.ToArray());
-            if ( commonfolder.IndexOf('/') > 1 )
+            if (commonfolder.IndexOf('/') > 1)
                 return "";
             return Path.GetFileNameWithoutExtension(asset.Uri.ToString());
         }

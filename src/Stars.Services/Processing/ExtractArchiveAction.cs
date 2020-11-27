@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services.Processing
         public bool CanProcess(IResource route, IDestination destination)
         {
             IAssetsContainer assetsContainer = route as IAssetsContainer;
-            return assetsContainer != null && assetsContainer.GetAssets() != null && assetsContainer.GetAssets().Any(asset => IsArchive(asset.Value));
+            return assetsContainer != null && assetsContainer.Assets != null && assetsContainer.Assets.Any(asset => IsArchive(asset.Value));
         }
 
         private bool IsArchive(IAsset asset)
@@ -63,7 +63,7 @@ namespace Terradue.Stars.Services.Processing
             if (item == null) return route;
             IAssetsContainer assetsContainer = route as IAssetsContainer;
             Dictionary<string, IAsset> newAssets = new Dictionary<string, IAsset>();
-            foreach (var asset in assetsContainer.GetAssets())
+            foreach (var asset in assetsContainer.Assets)
             {
                 if (!IsArchive(asset.Value))
                 {
@@ -97,7 +97,7 @@ namespace Terradue.Stars.Services.Processing
             Dictionary<string, GenericAsset> assetsExtracted = new Dictionary<string, GenericAsset>();
             string subFolder = archive.AutodetectSubfolder();
 
-            foreach (var archiveAsset in archive.GetAssets())
+            foreach (var archiveAsset in archive.Assets)
             {
                 var archiveAssetDestination = destination.To(archiveAsset.Value, subFolder);
                 archiveAssetDestination.PrepareDestination();
@@ -108,7 +108,7 @@ namespace Terradue.Stars.Services.Processing
                     var assetExtracted = await delivery.Carrier.Deliver(delivery);
                     if (assetExtracted != null)
                     {
-                        assetsExtracted.Add(asset.Key + "!" + archiveAsset.Key, new GenericAsset(assetExtracted, archiveAsset.Value.Label, archiveAsset.Value.Roles));
+                        assetsExtracted.Add(asset.Key + "!" + archiveAsset.Key, new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles));
                         break;
                     }
                 }

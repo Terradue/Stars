@@ -66,7 +66,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanBeRanged => false;
 
-        public abstract IList<IResource> GetRoutes();
+        public abstract IReadOnlyList<IResource> GetRoutes();
 
         public async Task<Stream> GetStreamAsync()
         {

@@ -26,32 +26,27 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<StacNode> ExecuteAsync(StacNode node, IDestination destination, StacStoreService stacStoreService)
+        public async Task<StacNode> ExecuteAsync(StacItemNode itemNode, IDestination destination, StacStoreService stacStoreService)
         {
-            StacNode newNode = node;
+            StacNode newItemNode = itemNode;
             foreach (var processing in processingManager.Plugins.Values)
             {
-                if (!processing.CanProcess(newNode, destination)) continue;
+                if (!processing.CanProcess(newItemNode, destination)) continue;
                 // Create a new destination for each processing
-                IDestination procDestination = destination.To(node, processing.GetRelativePath(node, destination));
-                var processedResource = await processing.Process(newNode, procDestination);
-                IDictionary<string, IAsset> assets = null;
-                if (processedResource is IItem)
-                {
-                    assets = (processedResource as IItem).GetAssets();
-                }
-                StacNode stacNode = processedResource as StacNode;
+                IDestination procDestination = destination.To(itemNode, processing.GetRelativePath(itemNode, destination));
+                var processedResource = await processing.Process(newItemNode, procDestination);
+                StacItemNode stacItemNode = processedResource as StacItemNode;
                 // Maybe the node is already a stac node
-                if (stacNode == null)
+                if (stacItemNode == null)
                 {
                     // No? Let's try to translate it to Stac
-                    stacNode = await translatorManager.Translate<StacNode>(processedResource);
-                    if (stacNode == null)
+                    stacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
+                    if (stacItemNode == null)
                         throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
                 }
-                newNode = await stacStoreService.StoreNodeAtDestination(stacNode, assets, destination, null);
+                newItemNode = await stacStoreService.StoreItemNodeAtDestination(stacItemNode, destination);
             }
-            return newNode;
+            return newItemNode;
         }
     }
 }

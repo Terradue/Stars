@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public bool CanBeRanged => item.CanBeRanged;
 
-        public IDictionary<string, IAsset> GetAssets() => assets;
+        public IReadOnlyDictionary<string, IAsset> Assets => new ReadOnlyDictionary<string, IAsset>(assets);
 
         public async Task<Stream> GetStreamAsync()
         {
