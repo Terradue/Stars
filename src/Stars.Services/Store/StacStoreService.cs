@@ -157,12 +157,12 @@ namespace Terradue.Stars.Services.Store
             if (stacObject == null) return;
 
             var selfLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "self");
-            if(selfLink != null)
+            if (selfLink != null)
                 stacObject.Links.Remove(selfLink);
             stacObject.Links.Add(StacLink.CreateSelfLink(stacNode.Uri, stacNode.ContentType.ToString()));
 
             var rootLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "root");
-            if(rootLink != null)
+            if (rootLink != null)
                 stacObject.Links.Remove(rootLink);
             stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
 
@@ -171,24 +171,43 @@ namespace Terradue.Stars.Services.Store
                 if (!link.Uri.IsAbsoluteUri) continue;
                 // 1. Check the link uri can be relative to destination itself
                 var relativeUri = destination.Uri.MakeRelativeUri(link.Uri);
-                if ( relativeUri.ToString() == "") relativeUri = new Uri(Path.GetFileName(link.Uri.ToString()), UriKind.Relative);
                 if (!relativeUri.IsAbsoluteUri)
                 {
+                    if (relativeUri.ToString() == "") relativeUri = new Uri(Path.GetFileName(link.Uri.ToString()), UriKind.Relative);
                     link.Uri = relativeUri;
                     continue;
                 }
                 // 2. Check the link uri can be relative to root catalog
                 relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(link.Uri);
-                if ( relativeUri.ToString() == "") relativeUri = new Uri(Path.GetFileName(link.Uri.ToString()), UriKind.Relative);
+                if (relativeUri.IsAbsoluteUri)
+                {
+                    relativeUri = RootCatalogNode.Uri.MakeRelativeUri(link.Uri);
+                }
                 if (relativeUri.IsAbsoluteUri) continue;
                 Uri absoluteUri = new Uri(RootCatalogNode.Uri, relativeUri);
-                relativeUri = stacNode.Uri.MakeRelativeUri(link.Uri);
+                relativeUri = MapToFrontUri(destination).MakeRelativeUri(absoluteUri);
+
                 if (!relativeUri.IsAbsoluteUri)
                 {
+                    if (relativeUri.ToString() == "") relativeUri = new Uri(Path.GetFileName(link.Uri.ToString()), UriKind.Relative);
                     link.Uri = relativeUri;
                     continue;
                 }
             }
+        }
+
+        public Uri MapToFrontUri(IDestination destination)
+        {
+            if (!destination.Uri.IsAbsoluteUri) throw new InvalidDataException("Destination URI must be absolute");
+
+            // 2. Check the link uri can be relative to root catalog
+            var relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(destination.Uri);
+            if (relativeUri.IsAbsoluteUri)
+            {
+                relativeUri = RootCatalogNode.Uri.MakeRelativeUri(destination.Uri);
+            }
+            if (relativeUri.IsAbsoluteUri) return destination.Uri;
+            return new Uri(RootCatalogNode.Uri, relativeUri);
         }
 
         private void PrepareStacCatalogueForDestination(StacCatalogNode stacCatalogNode, IDestination destination)
