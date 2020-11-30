@@ -47,15 +47,15 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public ulong ContentLength => link.Length == 0 ? webRoute.ContentLength : Convert.ToUInt64(link.Length);
 
-        public string Label => string.Format("[{0}] {1}", string.Join(",", link.RelationshipType), string.IsNullOrEmpty(link.Title) ? Path.GetFileName(link.Uri.AbsolutePath) : link.Title);
+        public string Title => link.Title == null ? Path.GetFileName(link.Uri.AbsolutePath) : link.Title.ToString();
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public IEnumerable<string> Roles => new string[] { link.RelationshipType };
+        public IReadOnlyList<string> Roles => new string[] { link.RelationshipType };
 
         public ContentDisposition ContentDisposition => webRoute.ContentDisposition;
 
-        public IDictionary<string, object> Properties => link.AttributeExtensions.ToDictionary(k => k.Key.ToString(), k => k.Value as object);
+        public IReadOnlyDictionary<string, object> Properties => link.AttributeExtensions.ToDictionary(k => k.Key.ToString(), k => k.Value as object);
 
         public IStreamable GetStreamable()
         {

@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public override async Task<IResource> Deliver(IDelivery delivery)
         {
             LocalDelivery localDelivery = delivery as LocalDelivery;
-            LocalFileSystemRoute localRoute = new LocalFileSystemRoute(localDelivery.LocalPath, localDelivery.Route.ContentType, localDelivery.Route.ResourceType, localDelivery.Route.ContentLength);
+            LocalFileSystemResource localRoute = new LocalFileSystemResource(localDelivery.LocalPath, localDelivery.Route.ResourceType);
 
             IStreamable streamable = delivery.Route as IStreamable;
             if (streamable == null && delivery.Route is IAsset)
@@ -55,12 +55,13 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 return localRoute;
             }
             await StreamToFile(streamable, localRoute);
+            localRoute.File.Refresh();
             return localRoute;
         }
 
-        private async Task StreamToFile(IStreamable streamable, LocalFileSystemRoute localRoute)
+        private async Task StreamToFile(IStreamable streamable, LocalFileSystemResource localResource)
         {
-            FileInfo file = new FileInfo(localRoute.Uri.AbsolutePath);
+            FileInfo file = localResource.File;
             Stream stream = null;
 
             // Try a resume

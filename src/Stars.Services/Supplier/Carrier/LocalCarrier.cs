@@ -36,9 +36,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public abstract Task<IResource> Deliver(IDelivery delivery);
 
-        private async Task StreamToFile(Stream stream, LocalFileSystemRoute localRoute)
+        private async Task StreamToFile(Stream stream, LocalFileSystemResource localRoute)
         {
-            FileInfo file = new FileInfo(localRoute.Uri.AbsolutePath);
+            FileInfo file = localRoute.File;
             using (FileStream fileStream = file.Create())
             {
                 await stream.CopyToAsync(fileStream);

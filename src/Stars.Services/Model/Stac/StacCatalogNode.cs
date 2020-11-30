@@ -27,7 +27,7 @@ namespace Terradue.Stars.Services.Model.Stac
             this.credentials = credentials;
         }
 
-        public IStacCatalog StacCatalog => stacObject as IStacCatalog;
+        public StacCatalog StacCatalog => stacObject as StacCatalog;
 
         public override ResourceType ResourceType
         {
@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public override IList<IResource> GetRoutes()
+        public override IReadOnlyList<IResource> GetRoutes()
         {
             return StacCatalog.GetChildren().Values.Select(child => new StacCatalogNode(child, credentials)).Concat(
                     StacCatalog.GetItems().Values.Select(item => new StacItemNode(item, credentials)).Cast<IResource>()

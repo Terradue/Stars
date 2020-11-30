@@ -26,7 +26,7 @@ namespace Terradue.Stars.Services.Model.Stac
         }
 
         public int Priority { get; set; }
-        public string Key { get => "Stac"; set {} }
+        public string Key { get => "Stac"; set { } }
 
         public string Label => "Stac";
 
@@ -69,11 +69,7 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
                 catch
                 {
-                    try
-                    {
-                        return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri), credentials);
-                    }
-                    catch { }
+                    return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri), credentials);
                 }
             }
             throw new NotSupportedException(route.ContentType.ToString());

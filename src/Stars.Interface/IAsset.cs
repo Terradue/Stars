@@ -4,12 +4,12 @@ namespace Terradue.Stars.Interface
 {
     public interface IAsset : IResource
     {
-        string Label { get; }
+        string Title { get; }
 
-        IEnumerable<string> Roles { get; }
+        IReadOnlyList<string> Roles { get; }
 
-        IDictionary<string, object> Properties { get; }
-
+        IReadOnlyDictionary<string, object> Properties { get; }
+        
         IStreamable GetStreamable();
     }
 }

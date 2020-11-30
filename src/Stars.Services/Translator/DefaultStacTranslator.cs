@@ -22,7 +22,7 @@ namespace Terradue.Stars.Services.Translator
         private ILogger logger;
 
         public int Priority { get; set; }
-        public string Key { get => "StacTranslator"; set {} }
+        public string Key { get => "StacTranslator"; set { } }
 
         public DefaultStacTranslator(ILogger<DefaultStacTranslator> logger)
         {
@@ -58,11 +58,12 @@ namespace Terradue.Stars.Services.Translator
         private IItem CreateStacItemNode(IItem node)
         {
             StacItem stacItem = new StacItem(node.Geometry, node.Properties, node.Id);
-            foreach(var kvp in node.GetAssets()){
-                Uri relativeUri = kvp.Value.Uri;
-                if (kvp.Value.Uri.IsAbsoluteUri)
-                    relativeUri = node.Uri.MakeRelativeUri(kvp.Value.Uri);
-                stacItem.Assets.Add(kvp.Key, CreateStacAsset(kvp.Value, relativeUri)); 
+            foreach (var asset in node.Assets){
+            
+                Uri relativeUri = asset.Value.Uri;
+                if (asset.Value.Uri.IsAbsoluteUri)
+                    relativeUri = node.Uri.MakeRelativeUri(asset.Value.Uri);
+                stacItem.Assets.Add(asset.Key, CreateStacAsset(asset.Value, relativeUri));
             }
             return new StacItemNode(stacItem);
         }
@@ -72,7 +73,7 @@ namespace Terradue.Stars.Services.Translator
             StacAssetAsset stacAssetAsset = asset as StacAssetAsset;
             StacAsset stacAsset = null;
             if (stacAssetAsset == null)
-                stacAsset = new StacAsset(relativeUri, asset.Roles, asset.Label, asset.ContentType, asset.ContentLength);
+                stacAsset = new StacAsset(relativeUri, asset.Roles, asset.Title, asset.ContentType, asset.ContentLength);
             else
             {
                 stacAsset = stacAssetAsset.StacAsset;

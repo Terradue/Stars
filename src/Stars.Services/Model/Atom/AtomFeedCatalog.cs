@@ -54,7 +54,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public bool CanBeRanged => false;
 
-        public IList<IResource> GetRoutes()
+        public IReadOnlyList<IResource> GetRoutes()
         {
             return feed.Items.Select(item => new AtomItemNode(item, new Uri(Uri, item.Id), credentials)).Cast<IResource>().ToList();
         }

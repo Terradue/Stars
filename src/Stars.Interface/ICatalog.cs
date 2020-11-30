@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -12,6 +13,6 @@ namespace Terradue.Stars.Interface
         string Label { get; }
         string Id { get; }
 
-        IList<IResource> GetRoutes();
+        IReadOnlyList<IResource> GetRoutes();
     }
 }

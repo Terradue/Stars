@@ -9,32 +9,28 @@ using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Router
 {
-    public class LocalFileSystemRoute : IResource, IStreamable
+    public class LocalFileSystemResource : IResource, IStreamable
     {
-        private string filePath;
-        private ContentType contentType;
-        private ResourceType resourceType;
-        private readonly ulong contentLength;
+        private readonly ResourceType resourceType;
+        private FileInfo fileInfo;
 
-        public LocalFileSystemRoute(string filePath, ContentType contentType, ResourceType resourceType, ulong contentLength)
+        public LocalFileSystemResource(string filePath, ResourceType ResourceType)
         {
-            this.filePath = filePath;
-            this.contentType = contentType;
-            this.resourceType = resourceType;
-            this.contentLength = contentLength;
+            this.fileInfo = new FileInfo(filePath);
+            resourceType = ResourceType;
         }
 
-        public Uri Uri => new Uri(filePath);
+        public Uri Uri => new Uri("file://" + fileInfo.FullName);
 
-        public ContentType ContentType => contentType;
+        public ContentType ContentType => new ContentType(MimeTypes.GetMimeType(fileInfo.Name));
 
         public ResourceType ResourceType => resourceType;
 
-        public ulong ContentLength => contentLength;
+        public ulong ContentLength => Convert.ToUInt64(fileInfo.Length);
 
-        public FileInfo File => new FileInfo(Uri.AbsolutePath);
+        public FileInfo File => fileInfo;
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(filePath) };
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = fileInfo.Name };
 
         public bool CanBeRanged => true;
 

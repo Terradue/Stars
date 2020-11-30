@@ -52,7 +52,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Filename };
 
-        public IList<IResource> GetRoutes()
+        public IReadOnlyList<IResource> GetRoutes()
         {
             return new List<IResource>();
         }
@@ -73,8 +73,10 @@ namespace Terradue.Stars.Services.Model.Atom
 
 
 
-        public string Identifier {
-            get {
+        public string Identifier
+        {
+            get
+            {
                 var identifier = item.ElementExtensions.ReadElementExtensions<string>("identifier", "http://purl.org/dc/elements/1.1/");
                 return identifier.Count == 0 ? null : identifier[0];
             }
@@ -86,23 +88,27 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public bool CanBeRanged => false;
 
-        public IDictionary<string, IAsset> GetAssets()
+        public IReadOnlyDictionary<string, IAsset> Assets
         {
-            Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-            foreach (var link in item.Links.Where(link => new string[] { "enclosure", "icon" }.Contains(link.RelationshipType)))
+            get
             {
-                string key = link.RelationshipType;
-                int i = 1;
-                while ( assets.ContainsKey(key )){
-                    key = link.RelationshipType + i;
-                    i++;
+                Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
+                foreach (var link in item.Links.Where(link => new string[] { "enclosure", "icon" }.Contains(link.RelationshipType)))
+                {
+                    string key = link.RelationshipType;
+                    int i = 1;
+                    while (assets.ContainsKey(key))
+                    {
+                        key = link.RelationshipType + i;
+                        i++;
+                    }
+                    assets.Add(key, new AtomLinkAsset(link, item, credentials));
                 }
-                assets.Add(key, new AtomLinkAsset(link, item, credentials));
+
+                return assets;
             }
-
-            return assets;
         }
-
+        
         public Task<Stream> GetStreamAsync(long start, long end = -1)
         {
             throw new NotImplementedException();

@@ -33,14 +33,15 @@ namespace Terradue.Stars.Services.Processing
         {
             IStreamable streamableAsset = asset.GetStreamable();
 
-            if ( streamableAsset == null )
+            if (streamableAsset == null)
                 throw new System.IO.InvalidDataException("Asset must be streamable to be read as an archive");
 
             ArchiveCompression compression = FindCompression(asset);
-            
-            switch (compression){
+
+            switch (compression)
+            {
                 case ArchiveCompression.Zip:
-                    var zipFile = new ICSharpCode.SharpZipLib.Zip.ZipFile(await streamableAsset.GetStreamAsync());
+                    var zipFile = Ionic.Zip.ZipFile.Read(await streamableAsset.GetStreamAsync());
                     return new ZipArchiveAsset(zipFile, asset);
                 default:
                     throw new System.IO.InvalidDataException("Asset is not recognized as an archive");
@@ -52,7 +53,7 @@ namespace Terradue.Stars.Services.Processing
             return ArchiveFileExtensions[Path.GetExtension(asset.Uri.ToString())];
         }
 
-        public abstract IDictionary<string, IAsset> GetAssets();
+        public abstract IReadOnlyDictionary<string, IAsset> Assets { get; }
 
         public abstract string AutodetectSubfolder();
 

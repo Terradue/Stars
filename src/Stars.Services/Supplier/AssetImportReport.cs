@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
@@ -37,9 +38,6 @@ namespace Terradue.Stars.Services.Supplier
 
         public IDictionary<string, IAsset> ImportedAssets { get => importedAssets; set => importedAssets = value; }
 
-        public IDictionary<string, IAsset> GetAssets()
-        {
-            return importedAssets;
-        }
+        public IReadOnlyDictionary<string, IAsset> Assets => new ReadOnlyDictionary<string, IAsset>(importedAssets);
     }
 }

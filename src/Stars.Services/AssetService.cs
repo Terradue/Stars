@@ -35,9 +35,9 @@ namespace Terradue.Stars.Services
 
         public async Task<AssetImportReport> ImportAssets(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetsFilters)
         {
-            if (assetsContainer.GetAssets().Count() == 0) return new AssetImportReport(null, destination);
+            if (assetsContainer.Assets.Count() == 0) return new AssetImportReport(null, destination);
 
-            logger.LogDebug("Importing {0} assets to {1}", assetsContainer.GetAssets().Count(), destination);
+            logger.LogDebug("Importing {0} assets to {1}", assetsContainer.Assets.Count(), destination);
 
             IDeliveryQuotation deliveryQuotation = QuoteAssetsDelivery(assetsContainer, destination, assetsFilters);
             AssetImportReport report = new AssetImportReport(deliveryQuotation, destination);
@@ -97,7 +97,7 @@ namespace Terradue.Stars.Services
         private IAsset MakeAsset(IResource route, IAsset assetOrigin)
         {
             if (route is IAsset) return route as IAsset;
-            var genericAsset = new GenericAsset(route, assetOrigin.Label, assetOrigin.Roles);
+            var genericAsset = new GenericAsset(route, assetOrigin.Title, assetOrigin.Roles);
             return genericAsset;
         }
 

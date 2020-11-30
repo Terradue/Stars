@@ -31,6 +31,6 @@ namespace Terradue.Stars.Services.Supplier
 
         public ICarrier Carrier => carrier;
 
-        public string LocalPath => fileDestination.Uri.ToString();
+        public string LocalPath => fileDestination.Uri.AbsolutePath;
     }
 }

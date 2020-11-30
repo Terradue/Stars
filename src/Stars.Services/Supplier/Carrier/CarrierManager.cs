@@ -28,7 +28,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
             Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
 
-            foreach (var asset in assetsContainer.GetAssets())
+            foreach (var asset in assetsContainer.Assets)
             {
                 try
                 {

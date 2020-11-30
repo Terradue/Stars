@@ -18,16 +18,7 @@ namespace Terradue.Stars.Services
             this.assetFilters = assetFilters;
         }
 
-        public IDictionary<string, IAsset> GetAssets()
-        {
-            Dictionary<string, IAsset> filteredAssets = new Dictionary<string, IAsset>();
-            foreach (var asset in assetsContainer.GetAssets())
-            {
-                if (AssetMatch(asset))
-                    filteredAssets.Add(asset.Key, asset.Value);
-            }
-            return filteredAssets;
-        }
+        public IReadOnlyDictionary<string, IAsset> Assets => assetsContainer.Assets.Where(a => AssetMatch(a)).ToDictionary(k => k.Key, k => k.Value);
 
         private bool AssetMatch(KeyValuePair<string, IAsset> asset)
         {
