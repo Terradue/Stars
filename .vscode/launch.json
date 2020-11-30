@@ -249,7 +249,7 @@
                 "-r",
                 "4",
                 "--output",
-                "/tmp/stars",
+                "./tmp/stars",
                 "--allow-ordering"
             ],
            "cwd": "${workspaceFolder}/src",
@@ -274,8 +274,7 @@
                 "-r",
                 "4",
                 "--output",
-                "./",
-                "--allow-ordering"
+                "./"
             ],
            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
