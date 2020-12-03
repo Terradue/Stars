@@ -56,6 +56,9 @@ namespace Terradue.Stars.Console.Operations
         [Option("-da|--delete-archives", "Delete archives from the catalog when inflated", CommandOptionType.NoValue)]
         public bool DeleteArchive { get; set; } = false;
 
+        [Option("-rel|--relative", "Make all links relative (and self links removed)", CommandOptionType.NoValue)]
+        public bool AllRelative { get; set; } = false;
+
 
         private RouterService routingService;
         private CarrierManager carrierManager;
@@ -188,7 +191,6 @@ namespace Terradue.Stars.Console.Operations
                     if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                         throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
-
                     stacItemNode.StacItem.MergeAssets(deliveryReport);
                     break;
                 }
@@ -263,6 +265,7 @@ namespace Terradue.Stars.Console.Operations
                     Uri = new Uri(outputUrl, "catalog.json"),
                     DestinationUri = outputUrl
                 };
+                so.AllRelative = AllRelative;
             });
             collection.ConfigureAll<ExtractArchiveOptions>(so =>
             {

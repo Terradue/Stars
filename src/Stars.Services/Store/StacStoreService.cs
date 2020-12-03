@@ -155,7 +155,7 @@ namespace Terradue.Stars.Services.Store
         {
             IStacObject stacObject = stacNode.StacObject;
             if (stacObject == null) return;
-            
+
             foreach (var link in stacObject.Links)
             {
                 if (!link.Uri.IsAbsoluteUri) continue;
@@ -185,28 +185,27 @@ namespace Terradue.Stars.Services.Store
                 }
             }
 
-            var selfLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "self");
-            if (selfLink != null)
-                stacObject.Links.Remove(selfLink);
-            stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination), stacNode.ContentType.ToString()));
+            foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "self").ToList())
+                stacObject.Links.Remove(link);
+            if (!storeOptions.AllRelative)
+                stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination), stacNode.ContentType.ToString()));
 
-            var rootLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "root");
-            if (rootLink != null)
-                stacObject.Links.Remove(rootLink);
-            stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
+            foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "root").ToList())
+                stacObject.Links.Remove(link);
+            if (!storeOptions.AllRelative)
+                stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
 
             RemoveDuplicateLinks(stacNode);
-
         }
 
         private void RemoveDuplicateLinks(StacNode stacNode)
         {
             IStacObject stacObject = stacNode.StacObject;
             if (stacObject == null) return;
-            
+
             var links = stacObject.Links.GroupBy(link => link.Uri).Select(grp => grp.First()).ToList();
             stacObject.Links.Clear();
-            foreach(var link in links)
+            foreach (var link in links)
                 stacObject.Links.Add(link);
         }
 
