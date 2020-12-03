@@ -22,7 +22,7 @@ namespace Terradue.Stars.Services
 
         private static HttpWebRequest CloneHttpWebRequest(HttpWebRequest old, Uri newUri)
         {
-            var @new = (HttpWebRequest) WebRequest.Create(newUri);
+            var @new = (HttpWebRequest)WebRequest.Create(newUri);
             CopyWebRequestProperties(old, @new);
             CopyHttpWebRequestProperties(old, @new);
             CopyHttpWebRequestHeaders(old, @new);
@@ -42,15 +42,24 @@ namespace Terradue.Stars.Services
             @new.AuthenticationLevel = old.AuthenticationLevel;
             @new.CachePolicy = old.CachePolicy;
             @new.ConnectionGroupName = old.ConnectionGroupName;
-            @new.ContentType = old.ContentType;
-            try {
-            @new.UseDefaultCredentials = old.UseDefaultCredentials;
+            try
+            {
+                @new.ContentType = old.ContentType;
             }
-            catch{}
+            catch { }
+            try
+            {
+                @new.UseDefaultCredentials = old.UseDefaultCredentials;
+            }
+            catch { }
             @new.Credentials = old.Credentials;
             @new.ImpersonationLevel = old.ImpersonationLevel;
             @new.Method = old.Method;
-            @new.PreAuthenticate = old.PreAuthenticate;
+            try
+            {
+                @new.PreAuthenticate = old.PreAuthenticate;
+            }
+            catch { }
             @new.Proxy = old.Proxy;
             @new.Timeout = old.Timeout;
 

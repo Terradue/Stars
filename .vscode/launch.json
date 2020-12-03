@@ -307,7 +307,31 @@
             "logging": {
                 "moduleLoad": false
             }
-        },    
+        },
+        {
+            "name": "Copy OpenSearch single Sentinel1 GRD FTP",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://catalog.terradue.com/cos2/search?format=atom&uid=790-ESA-SENTINEL_1A-S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9_SAFE",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/charter"
+            ],
+           "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
         {
             "name": "Copy OpenSearch single Sentinel2 from T2",
             "type": "coreclr",
