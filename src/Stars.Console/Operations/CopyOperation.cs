@@ -108,6 +108,7 @@ namespace Terradue.Stars.Console.Operations
             if (operationState.CurrentStacObject is StacCatalogNode)
             {
                 StacCatalogNode stacCatalogNode = operationState.CurrentStacObject as StacCatalogNode;
+                stacCatalogNode.StacCatalog.Links.Clear();
                 stacCatalogNode.StacCatalog.UpdateLinks(subStates.Select(ss => (ss as CopyOperationState).CurrentStacObject));
                 operationState.CurrentStacObject = await operationState.StoreService.StoreCatalogNodeAtDestination(stacCatalogNode, operationState.CurrentDestination);
             }
