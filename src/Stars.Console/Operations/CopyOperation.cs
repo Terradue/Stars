@@ -108,7 +108,7 @@ namespace Terradue.Stars.Console.Operations
             if (operationState.CurrentStacObject is StacCatalogNode)
             {
                 StacCatalogNode stacCatalogNode = operationState.CurrentStacObject as StacCatalogNode;
-                stacCatalogNode.StacCatalog.AddLinks(subStates.Select(ss => (ss as CopyOperationState).CurrentStacObject));
+                stacCatalogNode.StacCatalog.UpdateLinks(subStates.Select(ss => (ss as CopyOperationState).CurrentStacObject));
                 operationState.CurrentStacObject = await operationState.StoreService.StoreCatalogNodeAtDestination(stacCatalogNode, operationState.CurrentDestination);
             }
             return operationState;
@@ -201,8 +201,8 @@ namespace Terradue.Stars.Console.Operations
 
             operationState.CurrentStacObject = stacNode;
 
-            // 2. Apply processing services if any
-            if (stacNode is StacItemNode)
+            // 2. Apply processing services if node was not stac originally
+            if (stacNode is StacItemNode && !(node is StacNode))
             {
                 ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
                 stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);

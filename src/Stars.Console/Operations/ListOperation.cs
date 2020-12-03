@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using Terradue.Stars.Interface;
+using System.IO;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -155,7 +156,11 @@ namespace Terradue.Stars.Console.Operations
                     if (router != null)
                         assetPrefix = string.Format("[{0}] {1}", router.Label, assetPrefix);
                     var asset = assets.ElementAt(i).Value;
-                    await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + asset.Title).Truncate(99), asset.ContentType));
+                    string title = asset.Title;
+                    if ( string.IsNullOrEmpty(title) )
+                        title = Path.GetFileName(asset.Uri.ToString());
+                    title = string.Format("[{0}] {1}", assets.ElementAt(i).Key, title);
+                    await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + title).Truncate(99), asset.ContentType));
                     console.ForegroundColor = ConsoleColor.White;
                 }
             }
