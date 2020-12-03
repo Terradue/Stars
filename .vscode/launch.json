@@ -249,7 +249,7 @@
                 "-r",
                 "4",
                 "--output",
-                "./tmp/stars",
+                "../tmp/stars",
                 "--allow-ordering"
             ],
            "cwd": "${workspaceFolder}/src",
@@ -270,11 +270,11 @@
             "args": [
                 "copy",
                 "-v",
-                "https://catalog.terradue.com/cos2/search?format=atom&uid=750-KARI-KOMPSAT3A-urn_ogc_def_EOP_KARI_KOMPSAT3_K3A_20200508102646_28267_00027320_L1G_Aux_xml",
+                "http://localhost:8082/catalog/acquisitions/products.json",
                 "-r",
                 "4",
                 "--output",
-                "./"
+                "/tmp/charter"
             ],
            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

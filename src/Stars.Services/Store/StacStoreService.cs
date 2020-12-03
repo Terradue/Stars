@@ -155,17 +155,7 @@ namespace Terradue.Stars.Services.Store
         {
             IStacObject stacObject = stacNode.StacObject;
             if (stacObject == null) return;
-
-            var selfLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "self");
-            if (selfLink != null)
-                stacObject.Links.Remove(selfLink);
-            stacObject.Links.Add(StacLink.CreateSelfLink(stacNode.Uri, stacNode.ContentType.ToString()));
-
-            var rootLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "root");
-            if (rootLink != null)
-                stacObject.Links.Remove(rootLink);
-            stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
-
+            
             foreach (var link in stacObject.Links)
             {
                 if (!link.Uri.IsAbsoluteUri) continue;
@@ -194,6 +184,17 @@ namespace Terradue.Stars.Services.Store
                     continue;
                 }
             }
+
+            var selfLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "self");
+            if (selfLink != null)
+                stacObject.Links.Remove(selfLink);
+            stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination), stacNode.ContentType.ToString()));
+
+            var rootLink = stacObject.Links.FirstOrDefault(l => l.RelationshipType == "root");
+            if (rootLink != null)
+                stacObject.Links.Remove(rootLink);
+            stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
+
         }
 
         public Uri MapToFrontUri(IDestination destination)

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using System.Security.AccessControl;
+using System.Net;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -64,26 +65,40 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             FileInfo file = localResource.File;
             Stream stream = null;
 
-            // Try a resume
-            if (file.Exists && file.Length > 0 && Convert.ToUInt64(file.Length) < streamable.ContentLength && streamable.CanBeRanged)
+            try
             {
-                logger.LogDebug("Trying to resume from {0}", file.Length);
-                stream = await streamable.GetStreamAsync(file.Length);
-                using (FileStream fileStream = file.OpenWrite())
+
+                // Try a resume
+                if (file.Exists && file.Length > 0 && Convert.ToUInt64(file.Length) < streamable.ContentLength && streamable.CanBeRanged)
                 {
-                    fileStream.Seek(0, SeekOrigin.End);
-                    await stream.CopyToAsync(fileStream);
-                    await fileStream.FlushAsync();
+                    logger.LogDebug("Trying to resume from {0}", file.Length);
+                    stream = await streamable.GetStreamAsync(file.Length);
+                    using (FileStream fileStream = file.OpenWrite())
+                    {
+                        fileStream.Seek(0, SeekOrigin.End);
+                        await stream.CopyToAsync(fileStream);
+                        await fileStream.FlushAsync();
+                    }
+                }
+                else
+                {
+                    stream = await streamable.GetStreamAsync();
+                    using (FileStream fileStream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                    {
+                        await stream.CopyToAsync(fileStream);
+                        await fileStream.FlushAsync();
+                    }
                 }
             }
-            else
+            catch (WebException we)
             {
-                stream = await streamable.GetStreamAsync();
-                using (FileStream fileStream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                try
                 {
-                    await stream.CopyToAsync(fileStream);
-                    await fileStream.FlushAsync();
+                    using (StreamReader sr = new StreamReader(we.Response.GetResponseStream()))
+                        logger.LogDebug(sr.ReadToEnd());
                 }
+                catch { }
+                throw;
             }
         }
     }

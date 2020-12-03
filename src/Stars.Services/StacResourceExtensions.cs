@@ -31,14 +31,11 @@ namespace Terradue.Stars.Services
             return new StacAsset(asset.Uri, asset.Roles, asset.Title, asset.ContentType, asset.ContentLength);
         }
 
-        public static void AddLinks(this StacCatalog catalogNode, IEnumerable<IResource> resources)
+        public static void UpdateLinks(this StacCatalog catalogNode, IEnumerable<IResource> resources)
         {
+            catalogNode.Links.Clear();
             foreach (var resource in resources)
             {
-                var value = catalogNode.Links.FirstOrDefault(a => a.Uri.Equals(resource.Uri));
-                if (value != null)
-                    catalogNode.Links.Remove(value);
-
                 if (resource is ICatalog)
                     catalogNode.Links.Add(StacLink.CreateChildLink(resource.Uri, resource.ContentType.ToString()));
                 if (resource is IItem)
