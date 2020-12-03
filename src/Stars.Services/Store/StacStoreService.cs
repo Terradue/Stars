@@ -195,6 +195,19 @@ namespace Terradue.Stars.Services.Store
                 stacObject.Links.Remove(rootLink);
             stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
 
+            RemoveDuplicateLinks(stacNode);
+
+        }
+
+        private void RemoveDuplicateLinks(StacNode stacNode)
+        {
+            IStacObject stacObject = stacNode.StacObject;
+            if (stacObject == null) return;
+            
+            var links = stacObject.Links.GroupBy(link => link.Uri).Select(grp => grp.First()).ToList();
+            stacObject.Links.Clear();
+            foreach(var link in links)
+                stacObject.Links.Add(link);
         }
 
         public Uri MapToFrontUri(IDestination destination)
@@ -243,22 +256,6 @@ namespace Terradue.Stars.Services.Store
                     continue;
                 }
             }
-        }
-
-        public async Task UpdateRootCatalogWithNodes(IEnumerable<StacNode> stacNodes)
-        {
-            foreach (var stacNode in stacNodes)
-            {
-                Uri relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(stacNode.Uri);
-                var link = RootCatalogNode.StacCatalog.Links.FirstOrDefault(l => l.Uri.Equals(relativeUri));
-                if (link != null)
-                    RootCatalogNode.StacCatalog.Links.Remove(link);
-                if (stacNode.IsCatalog)
-                    RootCatalogNode.StacCatalog.Links.Add(StacLink.CreateChildLink(relativeUri, stacNode.ContentType.MediaType));
-                else
-                    RootCatalogNode.StacCatalog.Links.Add(StacLink.CreateItemLink(relativeUri, stacNode.ContentType.MediaType));
-            }
-            await StoreCatalogNodeAtDestination(RootCatalogNode, RootCatalogDestination);
         }
 
     }

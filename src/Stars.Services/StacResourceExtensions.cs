@@ -33,9 +33,11 @@ namespace Terradue.Stars.Services
 
         public static void UpdateLinks(this StacCatalog catalogNode, IEnumerable<IResource> resources)
         {
-            catalogNode.Links.Clear();
             foreach (var resource in resources)
             {
+                foreach (var link in catalogNode.Links.Where(a => a.Uri.Equals(resource.Uri)))
+                    catalogNode.Links.Remove(link);
+
                 if (resource is ICatalog)
                     catalogNode.Links.Add(StacLink.CreateChildLink(resource.Uri, resource.ContentType.ToString()));
                 if (resource is IItem)
