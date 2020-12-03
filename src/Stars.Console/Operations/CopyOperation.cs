@@ -240,8 +240,10 @@ namespace Terradue.Stars.Console.Operations
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
             }
-            if (stacNodes.Count == 1 && stacNodes.First().IsCatalog)
-                await storeService.UpdateRootCatalogWithNodes(stacNodes.First().GetRoutes().Cast<StacNode>());
+            if (stacNodes.Count == 1 && stacNodes.First().IsCatalog){
+                storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.First().GetRoutes().Cast<StacNode>());
+                await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
+            }
         }
 
         protected override void RegisterOperationServices(ServiceCollection collection)
