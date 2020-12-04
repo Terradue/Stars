@@ -40,6 +40,7 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
+      
         public override IReadOnlyList<IResource> GetRoutes()
         {
             return StacCatalog.GetChildren().Values.Select(child => new StacCatalogNode(child, credentials)).Concat(
