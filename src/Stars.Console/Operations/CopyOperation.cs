@@ -69,6 +69,7 @@ namespace Terradue.Stars.Console.Operations
         private TranslatorManager translatorManager;
         private SupplierManager supplierManager;
         private StacStoreService storeService;
+        private StacLinkTranslator stacLinkTranslator;
         private string[] inputs = new string[0];
         private int recursivity = 1;
         private string output = "file://" + Directory.GetCurrentDirectory();
@@ -156,6 +157,8 @@ namespace Terradue.Stars.Console.Operations
                     throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", node.Uri));
             }
 
+            logger.Output(string.Format("Copy node {0} from {1}", stacNode.Id, node.Uri));
+
             // We update the destination in case a new router updated the route
             IDestination destination = operationState.CurrentDestination.To(stacNode);
 
@@ -175,14 +178,24 @@ namespace Terradue.Stars.Console.Operations
                     supplierFilters.IncludeIds = SuppliersIncluded;
                 }
 
-                var suppliers = InitSuppliersEnumerator(stacNode, supplierFilters);
-                IResource supplierNode = null;
+                IItem sourceItemNode = await stacLinkTranslator.Translate<StacItemNode>(node);
+                if (sourceItemNode == null)
+                {
+                    sourceItemNode = node as IItem;
+                }
+                else
+                {
+                    logger.Output(string.Format("alternate STAC source found at {0}", sourceItemNode.Uri));
+                    stacItemNode = sourceItemNode as StacItemNode;
+                }
+
+                IEnumerator<ISupplier> suppliers = InitSuppliersEnumerator(sourceItemNode, supplierFilters);
 
                 // 2. Try each of them until one provide the resource
                 while (suppliers.MoveNext())
                 {
-                    logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, stacNode.Uri.ToString()));
-                    supplierNode = await suppliers.Current.SearchFor(stacNode);
+                    logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, sourceItemNode.Uri.ToString()));
+                    IResource supplierNode = await suppliers.Current.SearchFor(sourceItemNode);
                     if (supplierNode == null && !(supplierNode is IAssetsContainer))
                     {
                         logger.Output(string.Format("[{0}] --> no supply possible", suppliers.Current.Id));
@@ -233,6 +246,7 @@ namespace Terradue.Stars.Console.Operations
             this.storeService = ServiceProvider.GetService<StacStoreService>();
             this.translatorManager = ServiceProvider.GetService<TranslatorManager>();
             this.supplierManager = ServiceProvider.GetService<SupplierManager>();
+            this.stacLinkTranslator = ServiceProvider.GetService<StacLinkTranslator>();
             await this.storeService.Init(!AppendCatalog);
             InitRoutingTask();
             PrepareNewRoute(null, storeService.RootCatalogNode, null, null);
@@ -276,6 +290,7 @@ namespace Terradue.Stars.Console.Operations
                 so.KeepArchive = !DeleteArchive;
             });
             collection.AddSingleton<StacStoreService, StacStoreService>();
+            collection.AddSingleton<StacLinkTranslator, StacLinkTranslator>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
             if (!ExtractArchives)
