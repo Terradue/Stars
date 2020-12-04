@@ -14,15 +14,17 @@ using System.Collections.Generic;
 using Stac;
 using System.IO;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Services.Translator
 {
+    [PluginPriority(10)]
     public class DefaultStacTranslator : ITranslator
     {
         private ILogger logger;
 
         public int Priority { get; set; }
-        public string Key { get => "StacTranslator"; set { } }
+        public string Key { get => "DefaultStacTranslator"; set { } }
 
         public DefaultStacTranslator(ILogger<DefaultStacTranslator> logger)
         {

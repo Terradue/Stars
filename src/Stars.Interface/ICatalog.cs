@@ -11,7 +11,10 @@ namespace Terradue.Stars.Interface
     public interface ICatalog : IResource
     {
         string Label { get; }
+        
         string Id { get; }
+
+        IReadOnlyList<IResourceLink> GetLinks();
 
         IReadOnlyList<IResource> GetRoutes();
     }

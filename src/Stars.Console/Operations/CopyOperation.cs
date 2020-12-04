@@ -59,6 +59,9 @@ namespace Terradue.Stars.Console.Operations
         [Option("-rel|--relative", "Make all links relative (and self links removed)", CommandOptionType.NoValue)]
         public bool AllRelative { get; set; } = false;
 
+        [Option("-h|--harvest", "Make the assets harvesting if missing metadata", CommandOptionType.NoValue)]
+        public bool Harvest { get; set; } = false;
+
 
         private RouterService routingService;
         private CarrierManager carrierManager;
@@ -172,14 +175,14 @@ namespace Terradue.Stars.Console.Operations
                     supplierFilters.IncludeIds = SuppliersIncluded;
                 }
 
-                var suppliers = InitSuppliersEnumerator(node, supplierFilters);
+                var suppliers = InitSuppliersEnumerator(stacNode, supplierFilters);
                 IResource supplierNode = null;
 
                 // 2. Try each of them until one provide the resource
                 while (suppliers.MoveNext())
                 {
-                    logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, node.Uri.ToString()));
-                    supplierNode = await suppliers.Current.SearchFor(node);
+                    logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, stacNode.Uri.ToString()));
+                    supplierNode = await suppliers.Current.SearchFor(stacNode);
                     if (supplierNode == null && !(supplierNode is IAssetsContainer))
                     {
                         logger.Output(string.Format("[{0}] --> no supply possible", suppliers.Current.Id));
@@ -205,7 +208,7 @@ namespace Terradue.Stars.Console.Operations
             operationState.CurrentStacObject = stacNode;
 
             // 2. Apply processing services if node was not stac originally
-            if (stacNode is StacItemNode && !(node is StacNode))
+            if (node is IItem && Harvest && !(stacNode as StacItemNode).StacItem.Properties.ContainsKey("platform"))
             {
                 ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
                 stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);
@@ -242,7 +245,8 @@ namespace Terradue.Stars.Console.Operations
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
             }
-            if (stacNodes.Count == 1 && stacNodes.First().IsCatalog){
+            if (stacNodes.Count == 1 && stacNodes.First().IsCatalog)
+            {
                 storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.First().GetRoutes().Cast<StacNode>());
                 await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
             }

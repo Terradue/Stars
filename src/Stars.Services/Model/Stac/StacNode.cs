@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ContentType ContentType => contentType;
 
-        public Uri Uri => stacObject.Uri == null ? new Uri(Id+ ".json", UriKind.Relative) : stacObject.Uri;
+        public Uri Uri => stacObject.Uri == null ? new Uri(Id + ".json", UriKind.Relative) : stacObject.Uri;
 
         public abstract ResourceType ResourceType { get; }
 
@@ -41,7 +42,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                if ( IsRoot )
+                if (IsRoot)
                     return "catalog.json";
                 return Id + ".json";
             }
@@ -58,6 +59,10 @@ namespace Terradue.Stars.Services.Model.Stac
             return null;
         }
 
+        public IReadOnlyList<IResourceLink> GetLinks()
+        {
+            return stacObject.Links.Select(l => new StacResourceLink(l)).ToList();
+        }
 
 
         public IStacObject StacObject => stacObject;

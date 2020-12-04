@@ -41,7 +41,13 @@ namespace Terradue.Stars.Services.Router
         public async Task<Stream> GetStreamAsync()
         {
             if (request is HttpWebRequest && CanBeRanged)
-                return new SeekableHttpStream(request as HttpWebRequest);
+            {
+                try
+                {
+                    return new SeekableHttpStream(request as HttpWebRequest);
+                }
+                catch { }
+            }
             var response = await request.CloneRequest(request.RequestUri).GetResponseAsync();
             return response.GetResponseStream();
         }

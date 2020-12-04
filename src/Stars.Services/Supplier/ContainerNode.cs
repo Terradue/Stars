@@ -48,6 +48,11 @@ namespace Terradue.Stars.Services.Supplier
 
         public IReadOnlyDictionary<string, IAsset> Assets => new ReadOnlyDictionary<string, IAsset>(assets);
 
+        public IReadOnlyList<IResourceLink> GetLinks()
+        {
+            return item.GetLinks();
+        }
+
         public async Task<Stream> GetStreamAsync()
         {
             return await item.GetStreamAsync();

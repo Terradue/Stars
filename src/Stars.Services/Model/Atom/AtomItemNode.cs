@@ -113,5 +113,10 @@ namespace Terradue.Stars.Services.Model.Atom
         {
             throw new NotImplementedException();
         }
+
+        public IReadOnlyList<IResourceLink> GetLinks()
+        {
+            return item.Links.Select(l => new AtomResourceLink(l)).ToList();
+        }
     }
 }

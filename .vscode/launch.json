@@ -261,7 +261,7 @@
             }
         },
         {
-            "name": "Copy OpenSearch single Kompsat3",
+            "name": "Copy OpenSearch single Kompsat3 (stac catalog)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -275,6 +275,30 @@
                 "4",
                 "--output",
                 "/tmp/charter"
+            ],
+           "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy OpenSearch single Kompsat3 (stac item via atom)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://catalog-cpe.terradue.com/charter/search?format=atom&uid=K3_20201112193439_45302_18521139_L1G",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/charter2"
             ],
            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

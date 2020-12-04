@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,6 +44,8 @@ namespace Terradue.Stars.Services.Router
             var initialHttpWebRequest = httpWebRequest.CloneRequest(_originalHttpWebRequest.RequestUri);
 
             var m = initialHttpWebRequest.GetResponseAsync().GetAwaiter().GetResult() as HttpWebResponse;
+            if ( m.ContentLength < 1 )
+                throw new NotSupportedException("SeekableHttpStream needs a ContentLength in the HTTP response");
             _metadata.Length = m.ContentLength;
             _metadata.HTTPeTag = m.Headers[HttpResponseHeader.ETag];
             m.Close();
