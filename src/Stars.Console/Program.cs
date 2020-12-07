@@ -7,7 +7,7 @@ using System;
 
 namespace Terradue.Stars.Console
 {
-    [Command(Name = "Stars", Description = "Spatio Temporal Asset Routing Services")]
+    [Command(Name = "Stars", FullName = "Stars", Description = "Spatio Temporal Asset Routing Services")]
     [HelpOption]
     [Subcommand(
         typeof(ListOperation),
@@ -30,6 +30,7 @@ namespace Terradue.Stars.Console
 
             try
             {
+                await PhysicalConsole.Singleton.Out.WriteLineAsync(app.GetVersionText().Replace("\n", "/").TrimEnd('/'));
                 return await app.ExecuteAsync(args);
             }
             catch (CommandParsingException cpe)

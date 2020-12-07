@@ -250,6 +250,7 @@ namespace Terradue.Stars.Console.Operations
             await this.storeService.Init(!AppendCatalog);
             InitRoutingTask();
             PrepareNewRoute(null, storeService.RootCatalogNode, null, null);
+            routingService.OnRoutingException((res, router, ex, state) => Task.FromResult(OnRoutingException(res, router, ex, state)));
             List<IResource> routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
             List<StacNode> stacNodes = new List<StacNode>();
             foreach (var route in routes)
@@ -259,11 +260,23 @@ namespace Terradue.Stars.Console.Operations
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
             }
-            if (stacNodes.Count == 1 && stacNodes.First().IsCatalog)
+            if (stacNodes.Count == 1 && stacNodes.First() != null && stacNodes.First().IsCatalog)
             {
                 storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.First().GetRoutes().Cast<StacNode>());
                 await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
             }
+        }
+
+        private object OnRoutingException(IResource resource, IRouter router, Exception ex, object state)
+        {
+            if ( StopOnError ){
+                logger.Error(string.Format("Cannot route to resource at {0}. Aborting: {1}", resource.Uri, ex.Message));
+                logger.Verbose(ex.StackTrace);
+                throw ex;
+            }
+            logger.Warn(string.Format("Cannot route to resource at {0}. Skipping: {1}", resource.Uri, ex.Message));
+            logger.Verbose(ex.StackTrace);
+            return state;
         }
 
         protected override void RegisterOperationServices(ServiceCollection collection)
