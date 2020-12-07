@@ -35,6 +35,7 @@ namespace Terradue.Stars.Services
         {
             foreach (var resource in resources)
             {
+                if (resource == null) continue;
                 foreach (var link in catalogNode.Links.Where(a => a.Uri.Equals(resource.Uri)))
                     catalogNode.Links.Remove(link);
 

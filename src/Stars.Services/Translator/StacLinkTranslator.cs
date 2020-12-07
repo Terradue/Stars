@@ -58,7 +58,7 @@ namespace Terradue.Stars.Services.Translator
                 if (itemNode != null)
                 {
                     var links = itemNode.GetLinks();
-                    foreach (IResourceLink stacLink in links.Where(l => l.Relationship == "alternate" && l.ContentType.MediaType == "application/json"))
+                    foreach (IResourceLink stacLink in links.Where(l => l.Relationship == "alternate" && l.ContentType?.MediaType == "application/json"))
                     {
                         try
                         {

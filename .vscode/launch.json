@@ -261,6 +261,30 @@
             }
         },
         {
+            "name": "Copy OpenSearch single Kompsat3 (Atom)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://catalog.terradue.com:443/cos2/series/acquisitions/search?format=atom&uid=749-KARI-KOMPSAT3-urn_ogc_def_EOP_KARI_KOMPSAT3_K3_20200421012311_42296_12370853_L1G_Aux_xml",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/charter2"
+            ],
+           "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
             "name": "Copy OpenSearch single Kompsat3 (stac catalog)",
             "type": "coreclr",
             "request": "launch",
@@ -294,9 +318,34 @@
             "args": [
                 "copy",
                 "-v",
-                "https://catalog-cpe.terradue.com/charter/search?format=atom&uid=K3_20201112193439_45302_18521139_L1G",
+                "https://catalogs-cpe.terradue.com/charter/search?format=atom&uid=K3_20201112193439_45302_18521139_L1G",
                 "-r",
                 "4",
+                "--output",
+                "/tmp/charter2"
+            ],
+           "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy OpenSearch single Landsat8 (stac item)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://terradue-stac.gitlab.io/landsat-8-l1/098/085/LC80980852020009/LC80980852020009.json",
+                "-r",
+                "4",
+                "-sa",
                 "--output",
                 "/tmp/charter2"
             ],

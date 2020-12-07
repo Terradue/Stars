@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public string Relationship => atomLink.RelationshipType;
 
-        public ContentType ContentType => new ContentType(atomLink.MediaType);
+        public ContentType ContentType => string.IsNullOrEmpty(atomLink.MediaType) ? null : new ContentType(atomLink.MediaType);
 
         public string Title => atomLink.Title;
 
