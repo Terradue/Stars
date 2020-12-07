@@ -203,11 +203,14 @@ namespace Terradue.Stars.Console.Operations
                     }
                     logger.Output(string.Format("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType));
 
-                    AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, AssetFilters.None);
-                    if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
-                        throw new AggregateException(deliveryReport.AssetsExceptions.Values);
+                    if (!SkippAssets)
+                    {
+                        AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, AssetFilters.None);
+                        if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
+                            throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
-                    stacItemNode.StacItem.MergeAssets(deliveryReport);
+                        stacItemNode.StacItem.MergeAssets(deliveryReport);
+                    }
                     break;
                 }
 
@@ -260,16 +263,14 @@ namespace Terradue.Stars.Console.Operations
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
             }
-            if (stacNodes.Count == 1 && stacNodes.First() != null && stacNodes.First().IsCatalog)
-            {
-                storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.First().GetRoutes().Cast<StacNode>());
-                await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
-            }
+            storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes);
+            await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
         }
 
         private object OnRoutingException(IResource resource, IRouter router, Exception ex, object state)
         {
-            if ( StopOnError ){
+            if (StopOnError)
+            {
                 logger.Error(string.Format("Cannot route to resource at {0}. Aborting: {1}", resource.Uri, ex.Message));
                 logger.Verbose(ex.StackTrace);
                 throw ex;

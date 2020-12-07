@@ -34,8 +34,16 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ContentType ContentType => asset.MediaType;
 
-        public ulong ContentLength => asset.ContentLength;
-
+        public ulong ContentLength
+        {
+            get
+            {
+                if (asset.ContentLength > 0) return asset.ContentLength;
+                var cl = GetStreamable()?.ContentLength;
+                if (cl.HasValue) return cl.Value;
+                return 0;
+            }
+        }
         public string Title => asset.Title;
 
         public ResourceType ResourceType => ResourceType.Asset;
