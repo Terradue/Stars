@@ -224,22 +224,24 @@ namespace Terradue.Stars.Console.Operations
             operationState.CurrentStacObject = stacNode;
 
             // 2. Apply processing services if node was not stac originally
-            if (node is IItem && Harvest && !(stacNode as StacItemNode).StacItem.Properties.ContainsKey("platform"))
+            if (node is IItem)
             {
-                ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-                stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);
+                if (Harvest || !(stacNode as StacItemNode).StacItem.Properties.ContainsKey("platform"))
+                {
+                    ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+                    stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);
+                }
+
+                return operationState;
             }
 
-            return operationState;
-        }
+            private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
+            {
+                if (route is IItem)
+                    return supplierManager.GetSuppliers(filters).GetEnumerator();
 
-        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
-        {
-            if (route is IItem)
-                return supplierManager.GetSuppliers(filters).GetEnumerator();
-
-            return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
-        }
+                return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
+            }
 
         protected override async Task ExecuteAsync()
         {
