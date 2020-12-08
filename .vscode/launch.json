@@ -430,6 +430,30 @@
             }
         },
         {
+            "name": "Copy calibrated LS8",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://preauth@nx13206.your-storageshare.de/remote.php/dav/files/eoepca-storage/wf-ls8/catalog.json",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/stars"
+            ],
+           "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

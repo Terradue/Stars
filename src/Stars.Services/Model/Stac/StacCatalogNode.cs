@@ -40,12 +40,21 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-      
+
         public override IReadOnlyList<IResource> GetRoutes()
         {
-            return StacCatalog.GetChildren().Values.Select(child => new StacCatalogNode(child, credentials)).Concat(
-                    StacCatalog.GetItems().Values.Select(item => new StacItemNode(item, credentials)).Cast<IResource>()
-                ).Cast<IResource>().ToList();
+            StacRouter stacRouter = new StacRouter(credentials);
+            return StacCatalog.GetChildrenLinks().Select(link =>
+                    {
+                        var wr = WebRoute.Create(link.AbsoluteUri, link.Length, credentials);
+                        return stacRouter.Route(wr).GetAwaiter().GetResult();
+                    })
+                    .Concat(StacCatalog.GetItemLinks().Select(link =>
+                    {
+                        var wr = WebRoute.Create(link.AbsoluteUri, link.Length, credentials);
+                        return stacRouter.Route(wr).GetAwaiter().GetResult();
+                    }))
+                    .ToList();
         }
 
     }
