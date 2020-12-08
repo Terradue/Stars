@@ -231,17 +231,18 @@ namespace Terradue.Stars.Console.Operations
                     ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
                     stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);
                 }
-
-                return operationState;
             }
 
-            private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
-            {
-                if (route is IItem)
-                    return supplierManager.GetSuppliers(filters).GetEnumerator();
+            return operationState;
+        }
 
-                return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
-            }
+        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
+        {
+            if (route is IItem)
+                return supplierManager.GetSuppliers(filters).GetEnumerator();
+
+            return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
+        }
 
         protected override async Task ExecuteAsync()
         {
