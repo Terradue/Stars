@@ -257,7 +257,16 @@ namespace Terradue.Stars.Console.Operations
             InitRoutingTask();
             PrepareNewRoute(null, storeService.RootCatalogNode, null, null);
             routingService.OnRoutingException((res, router, ex, state) => Task.FromResult(OnRoutingException(res, router, ex, state)));
-            List<IResource> routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
+            List<IResource> routes = null;
+            try
+            {
+                routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
+            }
+            catch (Exception e)
+            {
+                logger.Error(string.Format("Exception creating initial routes [{0}] : {1}", string.Join(',', Inputs), e.Message));
+                throw e;
+            }
             List<StacNode> stacNodes = new List<StacNode>();
             foreach (var route in routes)
             {

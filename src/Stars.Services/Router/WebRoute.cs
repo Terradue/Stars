@@ -24,9 +24,14 @@ namespace Terradue.Stars.Services.Router
         public static WebRoute Create(Uri uri, ulong contentLength = 0, ICredentials credentials = null)
         {
             ICredentials creds = credentials;
-            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo.Contains(":"))
-                creds = new NetworkCredential(uri.UserInfo.Split(':')[0], uri.UserInfo.Split(':')[1]);
             WebRequest request = CreateWebRequest(uri, creds);
+            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo.Contains(":")){
+                request.Credentials = new NetworkCredential(uri.UserInfo.Split(':')[0], uri.UserInfo.Split(':')[1]);
+                request.PreAuthenticate = true;
+            }
+            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo == "preauth"){
+                request.PreAuthenticate = true;
+            }
             return new WebRoute(request, contentLength);
         }
 
