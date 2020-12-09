@@ -17,12 +17,12 @@ namespace Terradue.Stars.Services
         {
             foreach (var asset in assetContainer.Assets)
             {
-                if (stacItem.Assets.ContainsKey(asset.Key))
-                    stacItem.Assets.Remove(asset.Key);
-                var value = stacItem.Assets.FirstOrDefault(a => a.Value.Uri.Equals(asset.Value.Uri));
-                if (value.Value != null)
-                    stacItem.Assets.Remove(value);
-                stacItem.Assets.Add(asset.Key, asset.Value.CreateStacAsset());
+                if (!stacItem.Assets.ContainsKey(asset.Key))
+                {
+                    stacItem.Assets.Add(asset.Key, asset.Value.CreateStacAsset());
+                    continue;
+                }
+                stacItem.Assets[asset.Key].Uri = asset.Value.Uri;
             }
         }
 
