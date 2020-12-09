@@ -318,7 +318,7 @@
             "args": [
                 "copy",
                 "-v",
-                "https://catalogs-cpe.terradue.com/charter/search?format=atom&uid=K3_20201112193439_45302_18521139_L1G",
+                "https://catalog-cpe.terradue.com/charter/search?format=atom&uid=K3_20201202191207_45594_18491125_L1G",
                 "-r",
                 "4",
                 "--output",

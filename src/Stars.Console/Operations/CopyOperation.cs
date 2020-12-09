@@ -275,7 +275,11 @@ namespace Terradue.Stars.Console.Operations
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
             }
-            storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes);
+            storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.SelectMany<StacNode, IResource>(sn =>
+            {
+                if (sn is StacItemNode) return new IResource[] { sn };
+                return sn.GetRoutes();
+            }));
             await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
         }
 
