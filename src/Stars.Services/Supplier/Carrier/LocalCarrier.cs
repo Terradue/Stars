@@ -34,7 +34,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public abstract bool CanDeliver(IResource route, IDestination destination);
 
-        public abstract Task<IResource> Deliver(IDelivery delivery);
+        public abstract Task<IResource> Deliver(IDelivery delivery, bool overwrite = false);
 
         private async Task StreamToFile(Stream stream, LocalFileSystemResource localRoute)
         {
