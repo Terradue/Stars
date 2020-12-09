@@ -130,7 +130,7 @@ namespace Terradue.Stars.Services.Store
             IResource deliveredResource = null;
             foreach (var delivery in stacDeliveries)
             {
-                deliveredResource = await delivery.Carrier.Deliver(delivery);
+                deliveredResource = await delivery.Carrier.Deliver(delivery, true);
                 if (deliveredResource != null) break;
             }
 

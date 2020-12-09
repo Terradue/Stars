@@ -42,11 +42,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return new OrderVoucher(route, orderId);
         }
 
-        public async Task<IResource> Deliver(IDelivery delivery)
+        public async Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
         {
             OrderedDelivery orderedDelivery = delivery as OrderedDelivery;
             IOrder order = await orderedDelivery.Supplier.Order(orderedDelivery.OrderableRoute);
-            return await orderedDelivery.VoucherDelivery.Carrier.Deliver(orderedDelivery.VoucherDelivery);
+            return await orderedDelivery.VoucherDelivery.Carrier.Deliver(orderedDelivery.VoucherDelivery, overwrite);
         }
 
         public IDelivery QuoteDelivery(IResource route, IDestination destination)

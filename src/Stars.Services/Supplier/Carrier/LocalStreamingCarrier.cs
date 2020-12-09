@@ -37,7 +37,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return true;
         }
 
-        public override async Task<IResource> Deliver(IDelivery delivery)
+        public override async Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
         {
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileSystemResource localRoute = new LocalFileSystemResource(localDelivery.LocalPath, localDelivery.Route.ResourceType);
@@ -49,18 +49,18 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             if (streamable == null)
                 throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Route.Uri));
 
-            if (localRoute.File.Exists && streamable.ContentLength > 0 &&
+            if (!overwrite && localRoute.File.Exists && streamable.ContentLength > 0 &&
                Convert.ToUInt64(localRoute.File.Length) == streamable.ContentLength)
             {
                 logger.LogDebug("File {0} exists with the same size. Skipping download", localRoute.File.Name);
                 return localRoute;
             }
-            await StreamToFile(streamable, localRoute);
+            await StreamToFile(streamable, localRoute, overwrite);
             localRoute.File.Refresh();
             return localRoute;
         }
 
-        private async Task StreamToFile(IStreamable streamable, LocalFileSystemResource localResource)
+        private async Task StreamToFile(IStreamable streamable, LocalFileSystemResource localResource, bool overwrite = false)
         {
             FileInfo file = localResource.File;
             Stream stream = null;
@@ -69,7 +69,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             {
 
                 // Try a resume
-                if (file.Exists && file.Length > 0 && Convert.ToUInt64(file.Length) < streamable.ContentLength && streamable.CanBeRanged)
+                if (!overwrite && file.Exists && file.Length > 0 && Convert.ToUInt64(file.Length) < streamable.ContentLength && streamable.CanBeRanged)
                 {
                     logger.LogDebug("Trying to resume from {0}", file.Length);
                     stream = await streamable.GetStreamAsync(file.Length);

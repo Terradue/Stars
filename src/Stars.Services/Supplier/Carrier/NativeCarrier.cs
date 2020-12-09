@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return (route != null);
         }
 
-        public Task<IResource> Deliver(IDelivery delivery)
+        public Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
         {
             return Task.FromResult<IResource>(delivery.Route);
         }

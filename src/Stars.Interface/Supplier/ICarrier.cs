@@ -12,7 +12,7 @@ namespace Terradue.Stars.Interface.Supplier
         
         bool CanDeliver(IResource route, IDestination destination);
 
-        Task<IResource> Deliver (IDelivery delivery);
+        Task<IResource> Deliver (IDelivery delivery, bool overwrite = false);
         
         IDelivery QuoteDelivery(IResource route, IDestination destination);
 
