@@ -13,7 +13,7 @@ namespace Terradue.Stars.Services
     public static class StacResourceExtensions
     {
 
-        public static void MergeAssets(this StacItem stacItem, IAssetsContainer assetContainer)
+        public static void MergeAssets(this IStacItem stacItem, IAssetsContainer assetContainer)
         {
             foreach (var asset in assetContainer.Assets)
             {
