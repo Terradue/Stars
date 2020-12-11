@@ -321,6 +321,7 @@
                 "https://catalog-cpe.terradue.com/charter/search?format=atom&uid=K3_20201202191207_45594_18491125_L1G",
                 "-r",
                 "4",
+                "-aa",
                 "--output",
                 "/tmp/charter2"
             ],

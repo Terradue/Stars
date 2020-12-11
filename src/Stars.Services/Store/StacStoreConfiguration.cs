@@ -18,5 +18,7 @@ namespace Terradue.Stars.Services.Store
         public StacCatalogueConfiguration RootCatalogue { get; set; }
 
         public bool AllRelative { get; set; }
+
+        public bool AbsoluteAssetsUrl { get; set; }
     }
 }

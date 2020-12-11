@@ -156,6 +156,23 @@ namespace Terradue.Stars.Services.Store
             IStacObject stacObject = stacNode.StacObject;
             if (stacObject == null) return;
 
+            MakeAllLinksRelative(stacObject, destination);
+
+            foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "self").ToList())
+                stacObject.Links.Remove(link);
+            if (!storeOptions.AllRelative)
+                stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination), stacNode.ContentType.ToString()));
+
+            foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "root").ToList())
+                stacObject.Links.Remove(link);
+            if (!storeOptions.AllRelative)
+                stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
+
+            RemoveDuplicateLinks(stacNode);
+        }
+
+        private void MakeAllLinksRelative(IStacObject stacObject, IDestination destination)
+        {
             foreach (var link in stacObject.Links)
             {
                 if (!link.Uri.IsAbsoluteUri) continue;
@@ -184,18 +201,6 @@ namespace Terradue.Stars.Services.Store
                     continue;
                 }
             }
-
-            foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "self").ToList())
-                stacObject.Links.Remove(link);
-            if (!storeOptions.AllRelative)
-                stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination), stacNode.ContentType.ToString()));
-
-            foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "root").ToList())
-                stacObject.Links.Remove(link);
-            if (!storeOptions.AllRelative)
-                stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
-
-            RemoveDuplicateLinks(stacNode);
         }
 
         private void RemoveDuplicateLinks(StacNode stacNode)
@@ -234,7 +239,24 @@ namespace Terradue.Stars.Services.Store
             StacItem stacItem = stacItemNode.StacObject as StacItem;
             if (stacItem == null) return;
 
-            foreach (var asset in stacItem.Assets)
+            if (storeOptions.AbsoluteAssetsUrl)
+                MakeAssetUriAbsolute(stacItemNode, destination);
+            else
+                MakeAssetUriRelative(stacItemNode, destination);
+        }
+
+        private void MakeAssetUriAbsolute(StacItemNode stacItemNode, IDestination destination)
+        {
+            foreach (var asset in stacItemNode.StacItem.Assets)
+            {
+                if (asset.Value.Uri.IsAbsoluteUri) continue;
+                asset.Value.Uri = new Uri(MapToFrontUri(destination), asset.Value.Uri);
+            }
+        }
+
+        private void MakeAssetUriRelative(StacItemNode stacItemNode, IDestination destination)
+        {
+            foreach (var asset in stacItemNode.StacItem.Assets)
             {
                 if (!asset.Value.Uri.IsAbsoluteUri) continue;
                 // 1. Check the asset uri can be relative to destination itself
@@ -256,6 +278,5 @@ namespace Terradue.Stars.Services.Store
                 }
             }
         }
-
     }
 }

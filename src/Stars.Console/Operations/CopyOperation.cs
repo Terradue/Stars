@@ -62,6 +62,9 @@ namespace Terradue.Stars.Console.Operations
         [Option("-h|--harvest", "Make the assets harvesting if missing metadata", CommandOptionType.NoValue)]
         public bool Harvest { get; set; } = false;
 
+        [Option("-aa|--absolute-assets", "Make the assets urls absolute", CommandOptionType.NoValue)]
+        public bool AbsoluteAssets { get; set; } = false;
+
 
         private RouterService routingService;
         private CarrierManager carrierManager;
@@ -314,6 +317,7 @@ namespace Terradue.Stars.Console.Operations
                     DestinationUri = outputUrl
                 };
                 so.AllRelative = AllRelative;
+                so.AbsoluteAssetsUrl = AbsoluteAssets;
             });
             collection.ConfigureAll<ExtractArchiveOptions>(so =>
             {
