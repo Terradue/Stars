@@ -247,6 +247,7 @@ namespace Terradue.Stars.Services.Store
 
         private void MakeAssetUriAbsolute(StacItemNode stacItemNode, IDestination destination)
         {
+            MakeAssetUriRelative(stacItemNode, destination);
             foreach (var asset in stacItemNode.StacItem.Assets)
             {
                 if (asset.Value.Uri.IsAbsoluteUri) continue;
