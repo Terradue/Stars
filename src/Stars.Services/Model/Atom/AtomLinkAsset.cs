@@ -34,13 +34,14 @@ namespace Terradue.Stars.Services.Model.Atom
         {
             get
             {
+                string mediaType = MimeTypes.GetMimeType(link.Uri.ToString());
                 try
                 {
                     return new ContentType(link.MediaType);
                 }
-                catch
+                catch(Exception e)
                 {
-                    return null;
+                    return new ContentType(mediaType);
                 }
             }
         }

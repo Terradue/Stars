@@ -23,6 +23,9 @@ namespace Terradue.Stars.Services
                     continue;
                 }
                 stacItem.Assets[asset.Key].Uri = asset.Value.Uri;
+                stacItem.Assets[asset.Key].ContentLength = asset.Value.ContentLength;
+                stacItem.Assets[asset.Key].MediaType = asset.Value.ContentType;
+                stacItem.Assets[asset.Key].Title = asset.Value.Title;
             }
         }
 
