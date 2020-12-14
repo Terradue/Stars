@@ -28,7 +28,11 @@ namespace Terradue.Stars.Services.Router
             if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo.Contains(":"))
             {
                 request.Credentials = new NetworkCredential(uri.UserInfo.Split(':')[0], uri.UserInfo.Split(':')[1]);
-                request.PreAuthenticate = true;
+                try
+                {
+                    request.PreAuthenticate = true;
+                }
+                catch { }
             }
             if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo == "preauth")
             {
