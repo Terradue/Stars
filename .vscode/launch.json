@@ -248,6 +248,7 @@
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SR_2_LAN____20190404T224853_20190404T233910_20190430T202207_3016_024_015______LN3_O_NT_003",
                 "-r",
                 "4",
+                "--harvest",
                 "--output",
                 "../tmp/stars",
                 "--allow-ordering"
@@ -392,7 +393,7 @@
             "args": [
                 "copy",
                 "-v",
-                "https://catalog.terradue.com/cos2/search?format=atom&uid=790-ESA-SENTINEL_1A-S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9_SAFE",
+                "https://catalog.terradue.com//cos2/cat/call790/search?format=atomeop&uid=790-ESA-SENTINEL_1A-S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9_SAFE",
                 "-r",
                 "4",
                 "--output",

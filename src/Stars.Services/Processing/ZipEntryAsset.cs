@@ -36,7 +36,7 @@ namespace Terradue.Stars.Services.Processing
 
         public Uri Uri => new Uri(entry.FileName, UriKind.Relative);
 
-        public ContentType ContentType => new ContentType(System.Net.Mime.MediaTypeNames.Application.Octet);
+        public ContentType ContentType => new ContentType(MimeTypes.GetMimeType(entry.FileName));
 
         public ResourceType ResourceType => ResourceType.Asset;
 

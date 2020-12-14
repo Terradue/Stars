@@ -281,7 +281,8 @@ namespace Terradue.Stars.Console.Operations
             storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.SelectMany<StacNode, IResource>(sn =>
             {
                 if (sn is StacItemNode) return new IResource[] { sn };
-                return sn.GetRoutes();
+                if (sn is StacCatalogNode) return sn.GetRoutes();
+                return new IResource[0];
             }));
             await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
         }

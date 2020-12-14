@@ -25,11 +25,17 @@ namespace Terradue.Stars.Services.Router
         {
             ICredentials creds = credentials;
             WebRequest request = CreateWebRequest(uri, creds);
-            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo.Contains(":")){
+            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo.Contains(":"))
+            {
                 request.Credentials = new NetworkCredential(uri.UserInfo.Split(':')[0], uri.UserInfo.Split(':')[1]);
-                request.PreAuthenticate = true;
+                try
+                {
+                    request.PreAuthenticate = true;
+                }
+                catch { }
             }
-            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo == "preauth"){
+            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo == "preauth")
+            {
                 request.PreAuthenticate = true;
             }
             return new WebRoute(request, contentLength);
@@ -63,13 +69,17 @@ namespace Terradue.Stars.Services.Router
         {
             get
             {
+                string mediaType = null;
                 if (request is FileWebRequest)
-                    return new ContentType(MimeTypes.GetMimeType(Path.GetFileName(request.RequestUri.ToString())));
+                    mediaType = MimeTypes.GetMimeType(Path.GetFileName(request.RequestUri.ToString()));
 
                 if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentType]))
-                    return new ContentType(CachedHeaders[HttpResponseHeader.ContentType]);
+                    mediaType = CachedHeaders[HttpResponseHeader.ContentType];
 
-                return new ContentType("application/octet-stream");
+                if (string.IsNullOrEmpty(mediaType) || mediaType == MimeTypes.FallbackMimeType)
+                    mediaType = MimeTypes.GetMimeType(MimeTypes.GetMimeType(ContentDisposition.FileName));
+
+                return new ContentType(mediaType);
             }
         }
 
