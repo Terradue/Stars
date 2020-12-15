@@ -94,6 +94,18 @@ namespace Terradue.Stars.Services.Router
                 if (request is FileWebRequest)
                     return Convert.ToUInt64(new FileInfo(request.RequestUri.ToString().Replace("file://", "")).Length);
                 if (contentLength > 0) return contentLength;
+                if (request is FtpWebRequest)
+                {
+                    try
+                    {
+                        FtpWebRequest ftpWebRequest = request.CloneRequest(request.RequestUri) as FtpWebRequest;
+                        ftpWebRequest.Method = WebRequestMethods.Ftp.GetFileSize;
+                        using (var response = ftpWebRequest.GetResponse()){
+                            return Convert.ToUInt64(response.ContentLength);
+                        }
+                    }
+                    catch (Exception e) { }
+                }
                 if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentLength]))
                     return Convert.ToUInt64(CachedHeaders[HttpResponseHeader.ContentLength]);
                 return 0;
