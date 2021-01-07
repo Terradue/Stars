@@ -229,11 +229,10 @@ namespace Terradue.Stars.Console.Operations
             // 2. Apply processing services if node was not stac originally
             if (node is IItem)
             {
-                if (Harvest || !(stacNode as StacItemNode).StacItem.Properties.ContainsKey("platform"))
-                {
-                    ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-                    stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);
-                }
+
+                ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+                stacNode = await processingService.ExecuteAsync(stacNode as StacItemNode, destination, storeService);
+
             }
 
             return operationState;
@@ -328,9 +327,17 @@ namespace Terradue.Stars.Console.Operations
             collection.AddSingleton<StacLinkTranslator, StacLinkTranslator>();
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
-            if (!ExtractArchives)
+
+            if (!Harvest)
             {
-                collection.RemoveAll<ExtractArchiveAction>();
+                foreach(var service in collection){
+                    if ( service.GetType().IsAssignableFrom(typeof(IProcessing)) )
+                        collection.Remove(service);
+                }
+            }
+            if (ExtractArchives)
+            {
+                collection.AddTransient<IProcessing, ExtractArchiveAction>();
             }
         }
     }
