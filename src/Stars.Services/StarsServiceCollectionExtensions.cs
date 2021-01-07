@@ -113,9 +113,6 @@ namespace Terradue.Stars.Services
             // Processing Service
             services.AddTransient<ProcessingService, ProcessingService>();
 
-            // Archive extraction
-            services.AddTransient<IProcessing, ExtractArchiveAction>();
-
             services.AddTransient<ITranslator, DefaultStacTranslator>();
 
             return services;
