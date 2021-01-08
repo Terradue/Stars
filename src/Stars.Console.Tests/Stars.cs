@@ -115,11 +115,6 @@ namespace Stars.Console.Tests
                 psi.ArgumentList.Add(directory);
             }
 
-            if (!port.HasValue)
-            {
-                port = Interlocked.Increment(ref s_nextPort);
-            }
-
             psi.ArgumentList.Add("-p");
             psi.ArgumentList.Add(port.ToString());
 
@@ -163,7 +158,7 @@ namespace Stars.Console.Tests
                 StartInfo = psi,
             };
 
-            var serve = new DotNetServe(process, port.Value, enableTls, output);
+            var serve = new Stars(process, port.Value, enableTls, output);
             serve.Start();
             return serve;
         }
