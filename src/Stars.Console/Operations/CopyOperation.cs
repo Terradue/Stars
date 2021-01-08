@@ -50,6 +50,9 @@ namespace Terradue.Stars.Console.Operations
         [Option("-si|--supplier-included", "Supplier to include for the data supply (default to all registered)", CommandOptionType.MultipleValue)]
         public string[] SuppliersIncluded { get; set; }
 
+        [Option("-se|--supplier-excluded", "Supplier to exclude for the data supply (default to none)", CommandOptionType.MultipleValue)]
+        public string[] SuppliersExcluded { get; set; }
+
         [Option("-ac|--append-catalog", "Append to existing catalog if one is found", CommandOptionType.NoValue)]
         public bool AppendCatalog { get; set; } = false;
 
@@ -181,6 +184,12 @@ namespace Terradue.Stars.Console.Operations
                     supplierFilters.IncludeIds = SuppliersIncluded;
                 }
 
+                if (SuppliersExcluded != null && SuppliersExcluded.Count() > 0)
+                {
+                    supplierFilters = new SupplierFilters();
+                    supplierFilters.ExcludeIds = SuppliersExcluded;
+                }
+
                 IItem sourceItemNode = await stacLinkTranslator.Translate<StacItemNode>(node);
                 if (sourceItemNode == null)
                 {
@@ -212,7 +221,9 @@ namespace Terradue.Stars.Console.Operations
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
-                        stacItemNode.StacItem.MergeAssets(deliveryReport);
+                        if ( deliveryReport.ImportedAssets.Count() > 0 )
+                            stacItemNode.StacItem.MergeAssets(deliveryReport);
+                        else continue;
                     }
                     break;
                 }
