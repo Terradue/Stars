@@ -16,6 +16,9 @@ namespace Terradue.Stars.Console.Operations
         [Option]
         public static bool Verbose { get; set; }
 
+        [Option("-conf|--config-file", "Config file to use", CommandOptionType.SingleOrNoValue)]
+        public string ConfigFile { get; set; }
+
         protected static StarsConsoleReporter logger;
 
         protected IConsole console;
@@ -92,6 +95,13 @@ namespace Terradue.Stars.Console.Operations
                 builder.AddUserSecrets<Program>();
             }
 
+            if (!string.IsNullOrEmpty(ConfigFile))
+            {
+                if (!File.Exists(ConfigFile))
+                    throw new FileNotFoundException(ConfigFile);
+                builder.AddNewtonsoftJsonFile(ConfigFile, optional: true);
+            }
+
             Configuration = builder.Build();
 
             collection.AddSingleton<IConfigurationRoot>(Configuration);
@@ -103,7 +113,7 @@ namespace Terradue.Stars.Console.Operations
             // Add Stars Services
             collection.AddStarsServices((provider, configuration) => configuration
                 .UseGlobalConfiguration(Configuration)
-                // .UseCredentials(Configuration.GetSection("Credentials"))
+            // .UseCredentials(Configuration.GetSection("Credentials"))
             );
             collection.LoadConfiguredStarsPlugin((assemblyPath) =>
             {

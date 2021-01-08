@@ -30,6 +30,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         public override bool CanDeliver(IResource route, IDestination destination)
         {
+            if (route is IOrderable) return false;
             if (!(destination is LocalFileDestination)) return false;
             if (route is IAsset) return true;
             if (!(route is IStreamable)) return false;
@@ -57,6 +58,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
             await StreamToFile(streamable, localRoute, overwrite);
             localRoute.File.Refresh();
+            if (streamable.ContentLength > 0 && Convert.ToUInt64(localRoute.File.Length) != streamable.ContentLength)
+                throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", localRoute.File.Length, streamable.ContentLength));
             return localRoute;
         }
 

@@ -31,12 +31,12 @@ namespace Terradue.Stars.Services.Supplier
                     if (suppliers.FirstOrDefault(supplier => supplierId == supplier.Key) == null)
                         throw new KeyNotFoundException(string.Format("Supplier {0} not found!", supplierId));
                 }
-                suppliers = suppliers.Where(supplier => supplierFilters.IncludeIds.IsNullOrEmpty() ? true : supplierFilters.IncludeIds.Contains(supplier.Key)).ToList();
+                suppliers = suppliers.Where(supplier => supplierFilters.IncludeIds.IsNullOrEmpty() ? true : supplierFilters.IncludeIds.Contains(supplier.Key, StringComparer.InvariantCultureIgnoreCase)).ToList();
             }
 
             if (supplierFilters.ExcludeIds != null)
             {
-                suppliers = suppliers.Where(supplier => supplierFilters.ExcludeIds.IsNullOrEmpty() ? true : !supplierFilters.IncludeIds.Contains(supplier.Key)).ToList();
+                suppliers = suppliers.Where(supplier => supplierFilters.ExcludeIds.IsNullOrEmpty() ? true : !supplierFilters.ExcludeIds.Contains(supplier.Key, StringComparer.InvariantCultureIgnoreCase)).ToList();
             }
 
             return suppliers;
