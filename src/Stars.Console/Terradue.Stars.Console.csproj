@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.5.38</Version>
+    <Version>0.5.39</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <AssemblyName>Stars</AssemblyName>
@@ -35,12 +35,12 @@
   <ItemGroup>
     <LinuxFolder Include="/etc/stars" RemoveOnUninstall="true"/>
   </ItemGroup>
-  <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('ol'))">
+  <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel-x64')) OR $(RuntimeIdentifier.StartsWith('centos.7-x64')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('ol'))">
     <RpmDotNetDependency Include="libstdc++" Version=""/>
     <RpmDotNetDependency Include="libunwind" Version=""/>
     <RpmDotNetDependency Include="libicu" Version=""/>
   </ItemGroup>
-  <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('fedora'))">
+  <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel-x64')) OR $(RuntimeIdentifier.StartsWith('centos.7-x64')) OR $(RuntimeIdentifier.StartsWith('fedora'))">
     <RpmDotNetDependency Include="compat-openssl10" Version=""/>
   </ItemGroup>
   <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('ol'))">
