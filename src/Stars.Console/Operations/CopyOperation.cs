@@ -340,16 +340,6 @@ namespace Terradue.Stars.Console.Operations
             if (AllowOrdering)
                 collection.AddTransient<ICarrier, OrderingCarrier>();
 
-<<<<<<< HEAD
-            if (!Harvest)
-            {
-                foreach(var service in collection){
-                    if ( typeof(IProcessing).IsAssignableFrom(service.GetType()) )
-                        collection.Remove(service);
-                }
-            }
-=======
->>>>>>> feature/harvesting
             if (ExtractArchives)
             {
                 collection.AddTransient<IProcessing, ExtractArchiveAction>();
