@@ -25,6 +25,7 @@ namespace Terradue.Stars.Services.Processing
         public int Priority { get; set; }
         public string Key { get; set; }
 
+        public ProcessingType ProcessingType => ProcessingType.ArchiveExtractor;
 
         public ExtractArchiveAction(IOptions<ExtractArchiveOptions> options, DestinationManager destinationManager, CarrierManager carrierManager, ILogger<ExtractArchiveAction> logger)
         {
