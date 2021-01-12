@@ -342,7 +342,7 @@ namespace Terradue.Stars.Console.Operations
             if (!Harvest)
             {
                 foreach(var service in collection){
-                    if ( service.GetType().IsAssignableFrom(typeof(IProcessing)) )
+                    if ( typeof(IProcessing).IsAssignableFrom(service.GetType()) )
                         collection.Remove(service);
                 }
             }
