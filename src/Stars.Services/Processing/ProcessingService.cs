@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Processing;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
@@ -26,10 +28,35 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<StacNode> ExecuteAsync(StacItemNode itemNode, IDestination destination, StacStoreService stacStoreService)
+        public async Task<StacNode> ExtractArchive(StacItemNode stacItemNode, IDestination destination, StacStoreService storeService)
+        {
+            StacNode newItemNode = stacItemNode;
+            foreach (var processing in processingManager.GetProcessings(ProcessingType.ArchiveExtractor))
+            {
+                if (!processing.CanProcess(newItemNode, destination)) continue;
+                // Create a new destination for each processing
+                IDestination procDestination = destination.To(stacItemNode, processing.GetRelativePath(stacItemNode, destination));
+                var processedResource = await processing.Process(newItemNode, procDestination);
+                if ( processedResource == null ) continue;
+                StacItemNode newStacItemNode = processedResource as StacItemNode;
+                // Maybe the node is already a stac node
+                if (newStacItemNode == null)
+                {
+                    // No? Let's try to translate it to Stac
+                    newStacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
+                    if (newStacItemNode == null)
+                        throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
+                }
+                newItemNode = await storeService.StoreItemNodeAtDestination(stacItemNode, destination);
+                break;
+            }
+            return newItemNode;
+        }
+
+        public async Task<StacNode> ExtractMetadata(StacItemNode itemNode, IDestination destination, StacStoreService storeService)
         {
             StacNode newItemNode = itemNode;
-            foreach (var processing in processingManager.Plugins.Values)
+            foreach (var processing in processingManager.GetProcessings(ProcessingType.MetadataExtractor))
             {
                 if (!processing.CanProcess(newItemNode, destination)) continue;
                 // Create a new destination for each processing
@@ -44,7 +71,7 @@ namespace Terradue.Stars.Services.Processing
                     if (stacItemNode == null)
                         throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
                 }
-                newItemNode = await stacStoreService.StoreItemNodeAtDestination(stacItemNode, destination);
+                newItemNode = await storeService.StoreItemNodeAtDestination(stacItemNode, destination);
             }
             return newItemNode;
         }
