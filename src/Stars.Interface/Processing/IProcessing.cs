@@ -7,6 +7,8 @@ namespace Terradue.Stars.Interface.Processing
 {
     public interface IProcessing : IPlugin
     {
+        ProcessingType ProcessingType { get; }
+
         bool CanProcess(IResource resource, IDestination destination);
 
         Task<IResource> Process(IResource resource, IDestination destination, string suffix = null);
