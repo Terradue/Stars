@@ -100,7 +100,8 @@ namespace Terradue.Stars.Services.Router
                     {
                         FtpWebRequest ftpWebRequest = request.CloneRequest(request.RequestUri) as FtpWebRequest;
                         ftpWebRequest.Method = WebRequestMethods.Ftp.GetFileSize;
-                        using (var response = ftpWebRequest.GetResponse()){
+                        using (var response = ftpWebRequest.GetResponse())
+                        {
                             return Convert.ToUInt64(response.ContentLength);
                         }
                     }
@@ -118,6 +119,8 @@ namespace Terradue.Stars.Services.Router
             {
                 if (!string.IsNullOrEmpty(CachedHeaders["Content-Disposition"]))
                     return new ContentDisposition(CachedHeaders["Content-Disposition"]);
+                if (!string.IsNullOrEmpty(CachedHeaders["X-Artifactory-Filename"]))
+                    return new ContentDisposition() { FileName = CachedHeaders["X-Artifactory-Filename"] };
                 return new ContentDisposition() { FileName = Path.GetFileName(request.RequestUri.ToString()) };
             }
 
