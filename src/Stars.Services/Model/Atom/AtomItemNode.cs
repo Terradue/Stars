@@ -93,7 +93,14 @@ namespace Terradue.Stars.Services.Model.Atom
             get
             {
                 Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-                foreach (var link in item.Links.Where(link => new string[] { "enclosure", "icon" }.Contains(link.RelationshipType)))
+                List<SyndicationLink> links = new List<SyndicationLink>();
+                var enclosure = item.Links.FirstOrDefault(link => link.RelationshipType == "enclosure");
+                if (enclosure != null)
+                    links.Add(enclosure);
+                var icon = item.Links.FirstOrDefault(link => link.RelationshipType == "icon");
+                if (icon != null)
+                    links.Add(icon);
+                foreach (var link in links)
                 {
                     string key = link.RelationshipType;
                     int i = 1;
@@ -108,7 +115,7 @@ namespace Terradue.Stars.Services.Model.Atom
                 return assets;
             }
         }
-        
+
         public Task<Stream> GetStreamAsync(long start, long end = -1)
         {
             throw new NotImplementedException();

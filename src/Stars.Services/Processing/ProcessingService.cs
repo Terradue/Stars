@@ -47,7 +47,7 @@ namespace Terradue.Stars.Services.Processing
                     if (newStacItemNode == null)
                         throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
                 }
-                newItemNode = await storeService.StoreItemNodeAtDestination(stacItemNode, destination);
+                newItemNode = await storeService.StoreItemNodeAtDestination(newStacItemNode, destination);
                 break;
             }
             return newItemNode;
