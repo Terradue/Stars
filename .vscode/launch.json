@@ -4,7 +4,6 @@
     // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
     "version": "0.2.0",
     "configurations": [
-
         {
             "name": "Launch blank",
             "type": "coreclr",
@@ -187,7 +186,6 @@
             "console": "internalConsole",
             "stopAtEntry": false
         },
-        
         {
             "name": "Copy STAC CBERS4/MUX/027/069",
             "type": "coreclr",
@@ -253,7 +251,7 @@
                 "../tmp/stars",
                 "--allow-ordering"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -277,7 +275,7 @@
                 "--output",
                 "/tmp/charter2"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -301,7 +299,7 @@
                 "--output",
                 "/tmp/charter"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -326,7 +324,7 @@
                 "--output",
                 "/tmp/charter2"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -351,7 +349,7 @@
                 "--output",
                 "/tmp/charter2"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -375,7 +373,7 @@
                 "--output",
                 "s3://bucket.terradue.com/bucket/test"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -399,7 +397,7 @@
                 "--output",
                 "/tmp/charter"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -423,7 +421,7 @@
                 "--output-dir",
                 "/tmp/stars"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
@@ -447,7 +445,103 @@
                 "--output",
                 "/tmp/stars"
             ],
-           "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "List S2 on S3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "list",
+                "-v",
+                "https://tamn.snapplanet.io/collections/S2/items/d0f257c7-522c-537c-b911-ee00b5ac863e",
+                "-r",
+                "4",
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy S2 on S3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://tamn.snapplanet.io/collections/S2/items/d0f257c7-522c-537c-b911-ee00b5ac863e",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/stars"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy CBERS on S3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "s3://cbers-stac-1-0/CBERS4/MUX/003/073/catalog.json",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/stars"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy OpenSearch single Sentinel1 GRD to S3",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://catalog.terradue.com//sentinel1/series/GRD/search?format=atomeop&uid=S1A_IW_GRDH_1SSH_20201004T173230_20201004T173247_034649_04090D_F0B5",
+                "-r",
+                "4",
+                "-xa",
+                "false",
+                "--output",
+                "s3://sentinel-1/"
+            ],
+            "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,

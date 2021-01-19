@@ -25,6 +25,7 @@ using System.Runtime.Loader;
 using Terradue.Stars.Services.Plugins;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router.Translator;
+using System.Net.S3;
 
 namespace Terradue.Stars.Services
 {
@@ -70,8 +71,13 @@ namespace Terradue.Stars.Services
                 // }
 
                 // do configuration inside callback
-
                 configure(serviceProvider, configurationInstance);
+
+                WebRequest.RegisterPrefix("s3", 
+                    new S3WebRequestCreate(serviceProvider.GetService<ILogger<S3WebRequest>>(), 
+                                            configurationInstance.AWSOptions,
+                                            configurationInstance.S3BucketsOptions
+                                            ));
 
                 return configurationInstance;
             });
@@ -103,8 +109,14 @@ namespace Terradue.Stars.Services
             // Local Filesystem destination
             services.AddTransient<IDestinationGuide, LocalFileSystemDestinationGuide>();
 
-            // Streaming Carrier
+            // S3 destination
+            services.AddTransient<IDestinationGuide, S3DestinationGuide>();
+
+            // Local Streaming Carrier
             services.AddTransient<ICarrier, LocalStreamingCarrier>();
+
+            // S3 Streaming Carrier
+            services.AddTransient<ICarrier, S3StreamingCarrier>();
 
             // Routing Service
             services.AddTransient<RouterService, RouterService>();

@@ -28,6 +28,21 @@
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0"/>
     <PackageReference Include="MimeTypes" Version="2.0.2"/>
     <PackageReference Include="DotNetZip" Version="1.15.0"/>
+    <PackageReference Include="S3.System.Net" Version="0.1.1"/>
+  </ItemGroup>
+  <!-- <ItemGroup>
+    <ProjectReference Include="../../../../../../Private/Projects/S3WebRequest/System.Net.S3/System.Net.S3.csproj">
+    </ProjectReference>
+  </ItemGroup> -->
+  <ItemGroup>
+    <ProjectReference Include="../Stars.Interface/Terradue.Stars.Interface.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>Terradue.Stars.Interface.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="../Stars.Geometry/Terradue.Stars.Geometry.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>Terradue.Stars.Geometry.dll</IncludeAssets>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../Stars.Interface/Terradue.Stars.Interface.csproj">

@@ -6,7 +6,6 @@ namespace Terradue.Stars.Interface.Supplier.Destination
     public interface IDestination
     {
         Uri Uri { get; }
-        bool Exists { get; }
 
         IDestination To(IResource route, string relPath = null);
         void PrepareDestination();
