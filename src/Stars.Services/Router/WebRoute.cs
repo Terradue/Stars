@@ -153,17 +153,10 @@ namespace Terradue.Stars.Services.Router
 
         private async Task CacheResponse()
         {
-            try
-            {
-                var cacheRequest = request.CloneRequest(request.RequestUri);
-                var response = await cacheRequest.GetResponseAsync();
-                cachedResponse = new CachedWebResponse(response);
-                response.Close();
-            }
-            catch
-            {
-                cachedResponse = new CachedWebResponse();
-            }
+            var cacheRequest = request.CloneRequest(request.RequestUri);
+            var response = await cacheRequest.GetResponseAsync();
+            cachedResponse = new CachedWebResponse(response);
+            response.Close();
         }
 
         public async Task<Stream> GetStreamAsync(long start, long end = -1)

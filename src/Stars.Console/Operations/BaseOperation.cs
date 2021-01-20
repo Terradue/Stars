@@ -111,10 +111,11 @@ namespace Terradue.Stars.Console.Operations
             collection.AddSingleton<ILogger>(logger);
 
             // Add Stars Services
-            collection.AddStarsServices((provider, configuration) => configuration
-                .UseGlobalConfiguration(Configuration)
-            // .UseCredentials(Configuration.GetSection("Credentials"))
-            );
+            collection.AddStarsServices((provider, configuration) => {
+                configuration
+                    .UseGlobalConfiguration(Configuration);
+
+            });
             collection.LoadConfiguredStarsPlugin((assemblyPath) =>
             {
                 if (!File.Exists(assemblyPath))

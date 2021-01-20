@@ -66,11 +66,11 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 if (webRoute == null)
                 {
-                    try
-                    {
+                    // try
+                    // {
                         webRoute = WebRoute.Create(uri, asset.ContentLength, credentials);
-                    }
-                    catch { }
+                    // }
+                    // catch { }
                 }
                 return webRoute;
             }
