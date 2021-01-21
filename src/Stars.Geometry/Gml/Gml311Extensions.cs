@@ -467,6 +467,27 @@ namespace Terradue.Stars.Geometry.Gml311
             return new MultiPoint(points);
         }
 
+        public static Polygon ToGeometry(this EnvelopeType gmlEnvelope)
+        {
+            LineString ls = null;
+            if (gmlEnvelope.ItemsElementName[0] == ItemsChoiceType2.lowerCorner 
+                && gmlEnvelope.ItemsElementName[1] == ItemsChoiceType2.upperCorner)
+            {
+                var ll = ((DirectPositionType)gmlEnvelope.Items[0]).ToGeometry();
+                var ur = ((DirectPositionType)gmlEnvelope.Items[1]).ToGeometry();
+                ls = new LineString(
+                    new IPosition[5]{
+                        new Position(ll.Latitude, ll.Longitude),
+                        new Position(ur.Latitude, ll.Longitude),
+                        new Position(ur.Latitude, ur.Longitude),
+                        new Position(ll.Latitude, ur.Longitude),
+                        new Position(ll.Latitude, ll.Longitude),
+                    }
+                );
+            }
+            return new Polygon(new LineString[] { ls });
+        }
+
         public static Polygon ToGeometry(this PolygonType gmlPolygon)
         {
             List<LineString> polygon = new List<LineString>();

@@ -65,7 +65,7 @@ namespace Terradue.Stars.Geometry.GeoRss {
         public static IGeometryObject ToGeometry(this GeoRssWhere where) {
            
 			if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is EnvelopeType) {
-                throw new NotImplementedException();
+                return ((EnvelopeType)where.Item[0]).ToGeometry();
             }
 
 			if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is CircleByCenterPointType) {
