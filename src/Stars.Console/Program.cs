@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Console.Operations;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Net;
 
 namespace Terradue.Stars.Console
 {
@@ -22,6 +23,8 @@ namespace Terradue.Stars.Console
 
         public static async Task<int> Main(string[] args)
         {
+
+            
 
             CommandLineApplication<Program> app = new CommandLineApplication<Program>();
             app.VersionOptionFromAssemblyAttributes(typeof(Program).Assembly);

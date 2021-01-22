@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Net;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Services;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -18,6 +20,9 @@ namespace Terradue.Stars.Console.Operations
 
         [Option("-conf|--config-file", "Config file to use", CommandOptionType.SingleOrNoValue)]
         public string ConfigFile { get; set; }
+
+        [Option("-k|--skip-certificate-validation", "Skip SSL certificate verfification for endpoints", CommandOptionType.NoValue)]
+        public bool SkipSsl { get; set; }
 
         protected static StarsConsoleReporter logger;
 
@@ -44,6 +49,12 @@ namespace Terradue.Stars.Console.Operations
         {
             try
             {
+                if (SkipSsl)
+                {
+                    ServicePointManager
+                        .ServerCertificateValidationCallback +=
+                        (sender, cert, chain, sslPolicyErrors) => true;
+                }
                 await ExecuteAsync();
             }
             catch (CommandParsingException cpe)
@@ -94,6 +105,7 @@ namespace Terradue.Stars.Console.Operations
                 builder.AddNewtonsoftJsonFile("appsettings.Development.json", optional: true);
                 builder.AddUserSecrets<Program>();
             }
+            builder.AddEnvironmentVariables();
 
             if (!string.IsNullOrEmpty(ConfigFile))
             {
@@ -111,7 +123,8 @@ namespace Terradue.Stars.Console.Operations
             collection.AddSingleton<ILogger>(logger);
 
             // Add Stars Services
-            collection.AddStarsServices((provider, configuration) => {
+            collection.AddStarsServices((provider, configuration) =>
+            {
                 configuration
                     .UseGlobalConfiguration(Configuration);
 

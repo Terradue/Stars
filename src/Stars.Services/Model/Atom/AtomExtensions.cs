@@ -86,16 +86,18 @@ namespace Terradue.Stars.Services.Model.Atom
             {
                 properties.Add("datetime", null);
             }
-
-            if (dateInterval.IsMoment)
-            {
-                properties.Add("datetime", dateInterval.Start);
-            }
             else
             {
-                properties.Add("datetime", dateInterval.Start);
-                properties.Add("start_datetime", dateInterval.Start);
-                properties.Add("end_datetime", dateInterval.Start);
+                if (dateInterval.IsMoment)
+                {
+                    properties.Add("datetime", dateInterval.Start);
+                }
+                else
+                {
+                    properties.Add("datetime", dateInterval.Start);
+                    properties.Add("start_datetime", dateInterval.Start);
+                    properties.Add("end_datetime", dateInterval.Start);
+                }
             }
 
             if (item.PublishDate.Ticks != 0)
