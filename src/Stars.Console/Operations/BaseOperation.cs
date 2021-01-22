@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Services;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -104,6 +105,7 @@ namespace Terradue.Stars.Console.Operations
                 builder.AddNewtonsoftJsonFile("appsettings.Development.json", optional: true);
                 builder.AddUserSecrets<Program>();
             }
+            builder.AddEnvironmentVariables();
 
             if (!string.IsNullOrEmpty(ConfigFile))
             {
