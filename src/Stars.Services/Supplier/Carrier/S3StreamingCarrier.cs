@@ -142,7 +142,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 Stream contentStream = await streamable.GetStreamAsync();
                 ur.InputStream = contentStream;
                 ur.ContentType = streamable.ContentType.MediaType;
-                ur.Headers.ContentLength = Convert.ToInt64(streamable.ContentLength);
                 await tx.UploadAsync(ur);
 
                 // s3WebRequest.Method = "POST";
