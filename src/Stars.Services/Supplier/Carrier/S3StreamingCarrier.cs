@@ -13,17 +13,49 @@ using System.Net;
 using System.Net.S3;
 using Amazon.S3.Model;
 using System.Threading;
+using Amazon.S3.Transfer;
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.S3;
+using System.Reflection;
+using Amazon.S3.Util;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
     public class S3StreamingCarrier : ICarrier
     {
         private readonly ILogger logger;
+        private readonly AWSOptions options;
+        private readonly S3BucketsOptions s3BucketsConfiguration;
 
-        public S3StreamingCarrier(ILogger<S3StreamingCarrier> logger)
+        private readonly Regex regEx = new Regex(@"^s3://(?'hostOrBucket'[^/]*)(/.*)?$");
+
+        public S3StreamingCarrier(ILogger<S3StreamingCarrier> logger, Amazon.Extensions.NETCore.Setup.AWSOptions options, S3BucketsOptions s3BucketsConfiguration = null)
         {
             this.logger = logger;
+            this.options = options;
+            this.s3BucketsConfiguration = s3BucketsConfiguration;
             Priority = 75;
+
+        }
+
+        public IAmazonS3 CreateS3Client()
+        {
+            IAmazonS3 client = null;
+            // Create client from config
+            try
+            {
+                if (options != null)
+                {
+                    client = options?.CreateServiceClient<IAmazonS3>();
+                }
+            }
+            catch (TargetInvocationException e)
+            {
+                throw e.InnerException;
+            }
+            return client;
         }
 
         public int Priority { get; set; }
@@ -89,18 +121,25 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             try
             {
                 // TODO Try a resume
+                var tx = new TransferUtility(CreateS3Client());
+                TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
+                SetRequestParametersWithUri(s3Resource.Uri, ur);
 
-                S3WebRequest s3WebRequest = (S3WebRequest)WebRequest.Create(s3Resource.Uri);
-                s3WebRequest.Method = "POST";
-                s3WebRequest.ContentLength = (long)streamable.ContentLength;
-                var uploadStream = await s3WebRequest.GetRequestStreamAsync();
                 Stream contentStream = await streamable.GetStreamAsync();
-                var writingTask = contentStream.CopyToAsync(uploadStream).ConfigureAwait(false);
-                Thread.Sleep(100);
-                var responseTask = s3WebRequest.GetResponseAsync().ConfigureAwait(false);
-                await writingTask;
-                uploadStream.Close();
-                S3ObjectWebResponse<PutObjectResponse> s3WebResponse = (S3ObjectWebResponse<PutObjectResponse>)await responseTask;
+                ur.InputStream = contentStream;
+                ur.ContentType = streamable.ContentType.MediaType;
+                await tx.UploadAsync(ur);
+
+                // s3WebRequest.Method = "POST";
+                // s3WebRequest.ContentLength = (long)streamable.ContentLength;
+                // s3WebRequest.ContentType = streamable.ContentType.MediaType;
+                // var uploadStream = await s3WebRequest.GetRequestStreamAsync();
+                // Stream contentStream = await streamable.GetStreamAsync();
+                // var writingTask = contentStream.CopyToAsync(uploadStream);
+                // var responseTask = s3WebRequest.GetResponseAsync();
+                // await writingTask;
+                // uploadStream.Close();
+                // S3ObjectWebResponse<PutObjectResponse> s3WebResponse = (S3ObjectWebResponse<PutObjectResponse>)await responseTask;
                 return WebRoute.Create(s3Resource.Uri);
             }
             catch (WebException we)
@@ -114,5 +153,40 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 throw;
             }
         }
+
+        private void SetRequestParametersWithUri(Uri uri, TransferUtilityUploadRequest ur)
+        {
+            try
+            {
+                AmazonS3Uri amazonS3Uri = new AmazonS3Uri(uri);
+                ur.BucketName = amazonS3Uri.Bucket;
+                ur.Key = amazonS3Uri.Key;
+                return;
+            }
+            catch { }
+            Match match = regEx.Match(uri.OriginalString);
+            var absolutePath = uri.AbsolutePath;
+            if (match.Success)
+            {
+                try
+                {
+                    Dns.GetHostEntry(match.Groups["hostOrBucket"].Value);
+                }
+                catch
+                {
+                    absolutePath = "/" + uri.Host + absolutePath;
+                }
+
+                var pathParts = absolutePath.Split('/');
+                if (pathParts.Length >= 2 && !string.IsNullOrEmpty(pathParts[1]))
+                {
+                    if (string.IsNullOrEmpty(ur.BucketName))
+                        ur.BucketName = pathParts[1];
+                    if (string.IsNullOrEmpty(ur.Key))
+                        ur.Key = string.Join("/", pathParts.Skip(2));
+                }
+            }
+        }
     }
+
 }
