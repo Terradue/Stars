@@ -68,6 +68,9 @@ namespace Terradue.Stars.Console.Operations
         [Option("-aa|--absolute-assets", "Make the assets urls absolute", CommandOptionType.NoValue)]
         public bool AbsoluteAssets { get; set; } = false;
 
+        [Option("-uf|--uri-file", "Write the root url in a file", CommandOptionType.SingleValue)]
+        public string UriFile { get; set; }
+
 
         private RouterService routingService;
         private CarrierManager carrierManager;
@@ -221,7 +224,7 @@ namespace Terradue.Stars.Console.Operations
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
-                        if ( deliveryReport.ImportedAssets.Count() > 0 )
+                        if (deliveryReport.ImportedAssets.Count() > 0)
                             stacItemNode.StacItem.MergeAssets(deliveryReport);
                         else continue;
                     }
@@ -241,9 +244,9 @@ namespace Terradue.Stars.Console.Operations
             if (node is IItem)
             {
                 ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-                if ( ExtractArchives )
+                if (ExtractArchives)
                     stacNode = await processingService.ExtractArchive(stacNode as StacItemNode, destination, storeService);
-                if ( Harvest )
+                if (Harvest)
                     stacNode = await processingService.ExtractMetadata(stacNode as StacItemNode, destination, storeService);
             }
 
@@ -295,7 +298,11 @@ namespace Terradue.Stars.Console.Operations
                 if (sn is StacCatalogNode) return sn.GetRoutes();
                 return new IResource[0];
             }));
-            await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
+            var rootCat = await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
+            if (!string.IsNullOrEmpty(UriFile))
+            {
+                File.WriteAllText(UriFile, rootCat.Uri.ToString());
+            }
         }
 
         private object OnRoutingException(IResource resource, IRouter router, Exception ex, object state)
