@@ -32,7 +32,12 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public string Id => stacObject.Id.CleanIdentifier();
 
-        public virtual ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(JsonConvert.SerializeObject(stacObject)).Length);
+        public virtual ulong ContentLength {
+            get {
+                MemoryStream ms = (MemoryStream)GetStreamAsync().GetAwaiter().GetResult();
+                return Convert.ToUInt64(ms.Length);
+            }
+        } 
 
         public bool IsCatalog => (stacObject is IStacCatalog);
 

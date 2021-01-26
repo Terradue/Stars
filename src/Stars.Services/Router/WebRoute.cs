@@ -73,7 +73,7 @@ namespace Terradue.Stars.Services.Router
                 if (request is FileWebRequest)
                     mediaType = MimeTypes.GetMimeType(Path.GetFileName(request.RequestUri.ToString()));
 
-                if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentType]))
+                if (string.IsNullOrEmpty(mediaType) && !string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentType]))
                     mediaType = CachedHeaders[HttpResponseHeader.ContentType];
 
                 if (string.IsNullOrEmpty(mediaType) || mediaType == MimeTypes.FallbackMimeType)
