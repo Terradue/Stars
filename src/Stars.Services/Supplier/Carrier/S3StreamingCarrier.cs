@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         }
 
-        public IAmazonS3 CreateS3Client()
+        public IAmazonS3 CreateS3Client(Uri s3uri)
         {
             IAmazonS3 client = null;
             // Create client from config
@@ -54,6 +54,20 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             catch (TargetInvocationException e)
             {
                 throw e.InnerException;
+            }
+            Match match = regEx.Match(s3uri.OriginalString);
+            var absolutePath = s3uri.AbsolutePath;
+            if (match.Success)
+            {
+                try
+                {
+                    Dns.GetHostEntry(match.Groups["hostOrBucket"].Value);
+                }
+                catch
+                {
+                    absolutePath = "/" + s3uri.Host + absolutePath;
+                    ((AmazonS3Config)client.Config).ForcePathStyle = true;
+                }
             }
             return client;
         }
@@ -121,7 +135,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             try
             {
                 // TODO Try a resume
-                var tx = new TransferUtility(CreateS3Client());
+                var tx = new TransferUtility(CreateS3Client(s3Resource.Uri));
                 TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
                 SetRequestParametersWithUri(s3Resource.Uri, ur);
 
@@ -150,6 +164,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                         logger.LogDebug(sr.ReadToEnd());
                 }
                 catch { }
+                throw;
+            }
+            catch (Exception e)
+            {
                 throw;
             }
         }
