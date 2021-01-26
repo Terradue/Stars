@@ -26,6 +26,7 @@ using Terradue.Stars.Services.Plugins;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router.Translator;
 using System.Net.S3;
+using Amazon.Extensions.NETCore.Setup;
 
 namespace Terradue.Stars.Services
 {
@@ -41,6 +42,7 @@ namespace Terradue.Stars.Services
             services.AddOptions<CredentialsOptions>().Configure<StarsConfiguration>((co, sc) => co.Load(sc.CredentialsOptions));
             // Add default credentials manager
             services.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
+            services.AddSingleton<AWSOptions>(sp => sp.GetService<StarsConfiguration>().AWSOptions);
 
             //  ## Add plugins
             //  1. Add predefined plugins

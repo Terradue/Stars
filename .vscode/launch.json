@@ -542,12 +542,14 @@
                 "-xa",
                 "false",
                 "--output",
-                "s3://processing-results/"
+                "s3://sentinel-1/testmanu"
             ],
-            "env": {
-                "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
-                "AWS__Profile": "minio"
-            },
+            // "env": {
+            //     "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
+            //     "AWS__Profile": "minio",
+            //     "AWS__Region": "fr-par",
+            //     "AWS__AuthenticationRegion": "fr-par",
+            // },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
