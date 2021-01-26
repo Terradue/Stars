@@ -17,23 +17,22 @@ namespace Terradue.Stars.Console
         {
             this.logger = logger;
             this.configuration = configuration;
+        }
+
+        public void AddOrUpdateSetting<T>(string sectionPathKey, T value)
+        {
             try
             {
                 if (!File.Exists(userSettingsFilePath))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(userSettingsFilePath));
+                    var dir = Directory.CreateDirectory(Path.GetDirectoryName(userSettingsFilePath));
                     File.WriteAllText(userSettingsFilePath, "{}");
                 }
-
             }
             catch (Exception ex)
             {
                 logger.LogError("Error creating user app settings : {0}", ex.Message);
             }
-        }
-
-        public void AddOrUpdateSetting<T>(string sectionPathKey, T value)
-        {
             if (string.IsNullOrEmpty(sectionPathKey) || value == null)
                 return;
             try
