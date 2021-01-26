@@ -94,16 +94,13 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 s3WebRequest.Method = "POST";
                 s3WebRequest.ContentLength = (long)streamable.ContentLength;
                 var uploadStream = await s3WebRequest.GetRequestStreamAsync();
-                Task.Run(() =>
-                {
-                    Stream contentStream = streamable.GetStreamAsync().GetAwaiter().GetResult();
-                    contentStream.CopyTo(uploadStream);
-                    uploadStream.Flush();
-                    uploadStream.Close();
-                });
-                Thread.Sleep(5000);
-                var ResponseTask = s3WebRequest.GetResponseAsync();
-                S3ObjectWebResponse<PutObjectResponse> s3WebResponse = (S3ObjectWebResponse<PutObjectResponse>)s3WebRequest.EndGetResponse(ResponseTask);
+                Stream contentStream = await streamable.GetStreamAsync();
+                var writingTask = contentStream.CopyToAsync(uploadStream).ConfigureAwait(false);
+                Thread.Sleep(100);
+                var responseTask = s3WebRequest.GetResponseAsync().ConfigureAwait(false);
+                await writingTask;
+                uploadStream.Close();
+                S3ObjectWebResponse<PutObjectResponse> s3WebResponse = (S3ObjectWebResponse<PutObjectResponse>)await responseTask;
                 return WebRoute.Create(s3Resource.Uri);
             }
             catch (WebException we)

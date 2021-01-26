@@ -32,20 +32,21 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanRoute(IResource route)
         {
-            if (route is StacNode) return true;
-            if (!(route is IStreamable)) return false;
-            if (route.ContentType.MediaType.Contains("application/json") || Path.GetExtension(route.Uri.ToString()) == ".json")
+            var routeFound = AffineRoute(route);
+            if (routeFound is StacNode) return true;
+            if (!(routeFound is IStreamable)) return false;
+            if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 try
                 {
-                    new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((route as IStreamable).ReadAsString().Result), route.Uri), credentials);
+                    new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((routeFound as IStreamable).ReadAsString().Result), routeFound.Uri), credentials);
                     return true;
                 }
                 catch
                 {
                     try
                     {
-                        new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((route as IStreamable).ReadAsString().Result), route.Uri), credentials);
+                        new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((routeFound as IStreamable).ReadAsString().Result), routeFound.Uri), credentials);
                         return true;
                     }
                     catch { }
@@ -54,25 +55,57 @@ namespace Terradue.Stars.Services.Model.Stac
             return false;
         }
 
+        private IResource AffineRoute(IResource route)
+        {
+            try
+            {
+                if (route.ContentType.MediaType.Contains("application/json"))
+                {
+                    return route;
+                }
+            }
+            catch (Exception)
+            {
+                // maybe the route is a folder
+                if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())) && route is WebRoute)
+                {
+                    try
+                    {
+                        WebRoute newRoute = WebRoute.Create(new Uri(route.Uri.ToString() + "/catalog.json"));
+                        if ( newRoute.ContentType.MediaType.Contains("application/json"))
+                        {
+                            return newRoute;
+                        }
+                    }
+                    catch
+                    {
+                        return route;
+                    }
+                }
+            }
+            return route;
+        }
+
         public async Task<IResource> Route(IResource route)
         {
-            if (route is StacCatalogNode)
-                return route as StacCatalogNode;
-            if (route is StacItemNode)
-                return route as StacItemNode;
-            if (!(route is IStreamable)) return null;
-            if (route.ContentType.MediaType.Contains("application/json") || Path.GetExtension(route.Uri.ToString()) == ".json")
+            var routeFound = AffineRoute(route);
+            if (routeFound is StacCatalogNode)
+                return routeFound as StacCatalogNode;
+            if (routeFound is StacItemNode)
+                return routeFound as StacItemNode;
+            if (!(routeFound is IStreamable)) return null;
+            if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 try
                 {
-                    return new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri), credentials);
+                    return new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (routeFound as IStreamable).ReadAsString()), routeFound.Uri), credentials);
                 }
                 catch
                 {
-                    return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (route as IStreamable).ReadAsString()), route.Uri), credentials);
+                    return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (routeFound as IStreamable).ReadAsString()), routeFound.Uri), credentials);
                 }
             }
-            throw new NotSupportedException(route.ContentType.ToString());
+            throw new NotSupportedException(routeFound.ContentType.ToString());
         }
 
     }
