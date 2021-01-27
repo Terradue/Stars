@@ -20,6 +20,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Store;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -68,8 +69,8 @@ namespace Terradue.Stars.Console.Operations
         [Option("-aa|--absolute-assets", "Make the assets urls absolute", CommandOptionType.NoValue)]
         public bool AbsoluteAssets { get; set; } = false;
 
-        [Option("-uf|--uri-file", "Write the root url in a file", CommandOptionType.SingleValue)]
-        public string UriFile { get; set; }
+        [Option("-res|--result-file", "Write the copy result in a file", CommandOptionType.SingleValue)]
+        public string ResultFile { get; set; }
 
 
         private RouterService routingService;
@@ -299,9 +300,11 @@ namespace Terradue.Stars.Console.Operations
                 return new IResource[0];
             }));
             var rootCat = await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);
-            if (!string.IsNullOrEmpty(UriFile))
+            if (!string.IsNullOrEmpty(ResultFile))
             {
-                File.WriteAllText(UriFile, rootCat.Uri.ToString());
+                Dictionary<string, string> results = new Dictionary<string, string>();
+                results.Add("StacCatalogUri", rootCat.Uri.ToString());
+                File.WriteAllText(ResultFile, JsonConvert.SerializeObject(results));
             }
         }
 
