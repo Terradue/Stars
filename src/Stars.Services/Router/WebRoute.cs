@@ -38,6 +38,10 @@ namespace Terradue.Stars.Services.Router
             {
                 request.PreAuthenticate = true;
             }
+            if (request is FtpWebRequest && request.Proxy == null && WebRequest.DefaultWebProxy != null)
+            {
+                request.Proxy = WebRequest.DefaultWebProxy;
+            }
             return new WebRoute(request, contentLength);
         }
 
@@ -45,7 +49,8 @@ namespace Terradue.Stars.Services.Router
         {
             var request = WebRequest.Create(uri);
             request.Headers.Set("User-Agent", "Stars/0.0.1");
-            request.Credentials = credentials;
+            if (credentials != null)
+                request.Credentials = credentials;
             return request;
         }
 
