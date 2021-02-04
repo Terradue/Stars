@@ -542,14 +542,15 @@
                 "-xa",
                 "false",
                 "--output",
-                "s3://fe994dc67fb44e118433b19fd2e01232:dev_user_001_container_002/testmanu",
+                "s3://eoepca-ades/testmanu",
                 "-res",
                 "workflow.res"
             ],
-            // "env": {
-            //     "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
-            //     "AWS__Profile": "minio"
-            // },
+            "env": {
+                "AWS__ServiceURL": "https://s3.fr-par.scw.cloud",
+                "AWS__Region": "fr-par",
+                "AWS__AuthenticationRegion": "fr-par"
+            },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
