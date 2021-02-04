@@ -10,6 +10,7 @@ using Terradue.ServiceModel.Syndication;
 using System.Net;
 using Terradue.Stars.Interface;
 using System.Linq;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -39,7 +40,7 @@ namespace Terradue.Stars.Services.Model.Atom
                 {
                     return new ContentType(link.MediaType);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return new ContentType(mediaType);
                 }
@@ -63,5 +64,26 @@ namespace Terradue.Stars.Services.Model.Atom
             return webRoute;
         }
 
+        public static IDictionary<string, IAsset> ResolveEnclosure(SyndicationLink link, SyndicationItem item, ICredentials credentials, string key)
+        {
+            Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
+            WebRoute webRoute = WebRoute.Create(link.Uri, Convert.ToUInt64(link.Length), credentials);
+            if (webRoute.IsFolder)
+            {
+                IEnumerable<WebRoute> childrenRoutes = webRoute.ListFolder();
+                int i = 0;
+                foreach (var childRoute in childrenRoutes)
+                {
+                    i++;
+                    assets.Add(key + "-" + i, new GenericAsset(childRoute, 
+                        link.Title + " " + childRoute.Uri.ToString().Replace(webRoute.Uri.ToString(), ""),
+                         new string[] { link.RelationshipType }));
+                }
+            }
+            else
+                assets.Add(key, new AtomLinkAsset(link, item, credentials));
+
+            return assets;
+        }
     }
 }

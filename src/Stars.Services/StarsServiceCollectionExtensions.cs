@@ -75,11 +75,13 @@ namespace Terradue.Stars.Services
                 // do configuration inside callback
                 configure(serviceProvider, configurationInstance);
 
-                WebRequest.RegisterPrefix("s3", 
-                    new S3WebRequestCreate(serviceProvider.GetService<ILogger<S3WebRequest>>(), 
+                WebRequest.RegisterPrefix("s3",
+                    new S3WebRequestCreate(serviceProvider.GetService<ILogger<S3WebRequest>>(),
                                             configurationInstance.AWSOptions,
                                             configurationInstance.S3BucketsOptions
                                             ));
+                if (!UriParser.IsKnownScheme("s3"))
+                    UriParser.Register(new S3UriParser(), "s3", -1);
 
                 return configurationInstance;
             });

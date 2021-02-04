@@ -466,7 +466,7 @@
             "args": [
                 "list",
                 "-v",
-                "https://tamn.snapplanet.io/collections/S2/items/d0f257c7-522c-537c-b911-ee00b5ac863e",
+                "file:///home/emathot/Downloads/S2B_MSIL1C_20210115T070229_N0209_R120_T39LUC_20210115T083645.xml",
                 "-r",
                 "4",
             ],
@@ -542,14 +542,14 @@
                 "-xa",
                 "false",
                 "--output",
-                "s3://sentinel-1/testmanu",
+                "s3://fe994dc67fb44e118433b19fd2e01232:dev_user_001_container_002/testmanu",
                 "-res",
                 "workflow.res"
             ],
-            "env": {
-                "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
-                "AWS__Profile": "minio"
-            },
+            // "env": {
+            //     "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
+            //     "AWS__Profile": "minio"
+            // },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
