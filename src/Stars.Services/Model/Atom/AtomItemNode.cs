@@ -93,25 +93,25 @@ namespace Terradue.Stars.Services.Model.Atom
             get
             {
                 Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-                List<SyndicationLink> links = new List<SyndicationLink>();
-                var enclosure = item.Links.FirstOrDefault(link => link.RelationshipType == "enclosure");
-                if (enclosure != null)
-                    links.Add(enclosure);
-                var icon = item.Links.FirstOrDefault(link => link.RelationshipType == "icon");
-                if (icon != null)
-                    links.Add(icon);
-                foreach (var link in links)
+                int i = 1;
+                foreach (var link in item.Links.Where(link => link.RelationshipType == "enclosure" || link.RelationshipType == "icon"))
                 {
                     string key = link.RelationshipType;
-                    int i = 1;
-                    while (assets.ContainsKey(key))
+                    var existingKey = assets.Keys.FirstOrDefault(k => k.StartsWith(key + "-"));
+                    if (existingKey != null)
                     {
-                        key = link.RelationshipType + i;
-                        i++;
+                        try
+                        {
+                            key += "-" + (int.Parse(existingKey.Replace(key + "-", "").Split("-").First()) + 1);
+                        }
+                        catch { }
                     }
-                    assets.Add(key, new AtomLinkAsset(link, item, credentials));
+                    foreach (KeyValuePair<string, IAsset> atomLinkAsset in AtomLinkAsset.ResolveEnclosure(link, item, credentials, key))
+                    {
+                        assets.Add(atomLinkAsset.Key, atomLinkAsset.Value);
+                    }
+                    i++;
                 }
-
                 return assets;
             }
         }

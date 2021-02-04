@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using System.Net.S3;
 using System.Threading.Tasks;
+using Amazon.S3.Model;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Router
@@ -88,6 +92,36 @@ namespace Terradue.Stars.Services.Router
             }
         }
 
+        internal IEnumerable<WebRoute> ListFolder()
+        {
+            if (request is HttpWebRequest) throw new NotImplementedException();
+            if (request is FileWebRequest)
+            {
+                DirectoryInfo dir = new DirectoryInfo(request.RequestUri.LocalPath);
+                return dir.GetFiles("*", new EnumerationOptions() { RecurseSubdirectories = true }).Select(f =>
+                        WebRoute.Create(new Uri("file://" + f.FullName), Convert.ToUInt64(f.Length)));
+            }
+            if (request is FtpWebRequest) throw new NotImplementedException();
+            if (request is S3WebRequest)
+            {
+                return ListFolder((S3WebRequest)request.CloneRequest(request.RequestUri));
+            }
+            return null;
+        }
+
+        private IEnumerable<WebRoute> ListFolder(S3WebRequest s3WebRequest)
+        {
+            s3WebRequest.Method = S3RequestMethods.ListObject;
+            using (S3ObjectWebResponse<ListObjectsResponse> resp = (S3ObjectWebResponse<ListObjectsResponse>)s3WebRequest.GetResponse())
+            {
+                return resp.GetObject().S3Objects.Select(o =>
+                {
+                    S3WebRequest s3Req = s3WebRequest.Clone(o.Key);;
+                    return new WebRoute(s3Req, Convert.ToUInt64(o.Size));
+                });
+            }
+        }
+
         public ResourceType ResourceType => ResourceType.Unknown;
 
         public WebRequest Request { get => request; }
@@ -154,6 +188,47 @@ namespace Terradue.Stars.Services.Router
                     CacheResponse().GetAwaiter().GetResult();
                 return cachedResponse?.Headers;
             }
+        }
+
+        public bool IsFolder
+        {
+            get
+            {
+                if (request is HttpWebRequest) return false;
+                if (request is FileWebRequest) return (FileAttributes.Directory & File.GetAttributes(request.RequestUri.ToString())) == FileAttributes.Directory;
+                if (request is FtpWebRequest) return IsFtpFolder((FtpWebRequest)request.CloneRequest(request.RequestUri));
+                if (request is S3WebRequest) return IsS3Folder((S3WebRequest)request.CloneRequest(request.RequestUri));
+                return false;
+            }
+        }
+
+        private bool IsS3Folder(S3WebRequest s3WebRequest)
+        {
+            s3WebRequest.Method = S3RequestMethods.ListObject;
+            try
+            {
+                S3ObjectWebResponse<ListObjectsResponse> response = (S3ObjectWebResponse<ListObjectsResponse>)s3WebRequest.GetResponse();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        private bool IsFtpFolder(FtpWebRequest request)
+        {
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
+            try
+            {
+                request.GetResponse();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         }
 
         private async Task CacheResponse()

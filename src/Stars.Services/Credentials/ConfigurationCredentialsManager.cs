@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -8,42 +9,32 @@ namespace Terradue.Stars.Services.Credentials
 {
     public class ConfigurationCredentialsManager : ICredentials
     {
-        private readonly IOptions<CredentialsOptions> _options;
+        private readonly CredentialsOptions _credentialsCache = new CredentialsOptions();
         protected readonly ILogger logger;
-
-        private CredentialCache _credentialCache = new CredentialCache();
 
 
         public ConfigurationCredentialsManager(IOptions<CredentialsOptions> options, ILogger<ConfigurationCredentialsManager> logger)
         {
-            this._options = options;
+            if (options != null && options.Value != null)
+                this._credentialsCache.Load(options.Value);
             this.logger = logger;
-            CacheCredentials(options.Value);
-        }
-
-        private void CacheCredentials(CredentialsOptions options)
-        {
-            foreach (var credential in options.Values)
-            {
-                CacheCredential(new Uri(credential.UriPrefix),
-                                credential.AuthType,
-                                new NetworkCredential(credential.Username, credential.Password));
-            }
         }
 
         public virtual NetworkCredential GetCredential(Uri uri, string authType)
         {
-            NetworkCredential cred = _credentialCache.GetCredential(uri, authType);
-            if (cred != null)
-            {
-                logger.LogInformation("Using saved credentials ({0})", cred.UserName);
-            }
-            return cred;
+            var cred = _credentialsCache.Values.FirstOrDefault(v => MatchUriAndAuth(v, uri, authType));
+            if (cred == null) return null;
+            return cred.ToNetWorkCredential();
+        }
+
+        private bool MatchUriAndAuth(CredentialsOption v, Uri uri, string authType)
+        {
+            return v.Uri.IsBaseOf(uri) && v.AuthType.Equals(authType, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public void CacheCredential(Uri uriCut, string authType, NetworkCredential cred)
         {
-            _credentialCache.Add(uriCut, authType, cred);
+            this._credentialsCache.Add(new Guid().ToString("N"), new CredentialsOption(uriCut.ToString(), authType, cred.UserName, cred.Password));
         }
     }
 }

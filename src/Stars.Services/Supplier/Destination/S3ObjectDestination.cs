@@ -17,7 +17,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         private S3ObjectDestination(Uri s3Uri, IResource resource)
         {
-            if ( !s3Uri.Scheme.Equals("s3", StringComparison.CurrentCultureIgnoreCase) )
+            if (!s3Uri.Scheme.Equals("s3", StringComparison.CurrentCultureIgnoreCase))
                 throw new InvalidDataException("Only s3 URL supported");
             this.s3Uri = s3Uri;
             this.resource = resource;
@@ -71,9 +71,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
                     relPath = Path.GetDirectoryName(subroute.Uri.ToString());
             }
             var newFilePath = Path.Join(Path.GetDirectoryName(s3Uri.AbsolutePath), relPath, filename);
-            UriBuilder uriBuilder = new UriBuilder(s3Uri);
-            uriBuilder.Path = newFilePath;
-            return new S3ObjectDestination(uriBuilder.Uri, subroute);
+            Uri newUri = new Uri(s3Uri, newFilePath);
+            return new S3ObjectDestination(newUri, subroute);
         }
 
         public override string ToString()

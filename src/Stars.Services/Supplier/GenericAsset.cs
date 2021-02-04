@@ -7,7 +7,7 @@ using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Supplier
 {
-    internal class GenericAsset : IAsset
+    public class GenericAsset : IAsset
     {
         private IResource route;
         private readonly string title;

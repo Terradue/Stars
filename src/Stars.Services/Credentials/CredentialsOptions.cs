@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.Credentials
 {
@@ -38,6 +39,21 @@ namespace Terradue.Stars.Services.Credentials
             AuthType = authType;
             Username = username;
             Password = password;
+        }
+
+        internal NetworkCredential ToNetWorkCredential()
+        {
+            return new NetworkCredential(Username, Password);
+        }
+
+        [JsonIgnore]
+        public Uri Uri
+        {
+            get
+            {
+                if (UriPrefix == null) return null;
+                return new Uri(UriPrefix);
+            }
         }
 
         public string UriPrefix { get; set; }

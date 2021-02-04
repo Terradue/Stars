@@ -210,14 +210,24 @@ namespace Terradue.Stars.Console.Operations
                 // 2. Try each of them until one provide the resource
                 while (suppliers.MoveNext())
                 {
-                    logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, sourceItemNode.Uri.ToString()));
-                    IResource supplierNode = await suppliers.Current.SearchFor(sourceItemNode);
-                    if (supplierNode == null && !(supplierNode is IAssetsContainer))
+                    IResource supplierNode = null;
+                    try
                     {
-                        logger.Output(string.Format("[{0}] --> no supply possible", suppliers.Current.Id));
+                        logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, sourceItemNode.Uri.ToString()));
+                        supplierNode = await suppliers.Current.SearchFor(sourceItemNode);
+                        if (supplierNode == null && !(supplierNode is IAssetsContainer))
+                        {
+                            logger.Output(string.Format("[{0}] --> no supply possible", suppliers.Current.Id));
+                            continue;
+                        }
+                        logger.Output(string.Format("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType));
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Warn(string.Format("[{0}] Exception searching for {1}: {2}", suppliers.Current.Id, sourceItemNode.Uri.ToString(), e.Message));
+                        logger.Verbose(e.StackTrace);
                         continue;
                     }
-                    logger.Output(string.Format("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType));
 
                     if (!SkippAssets)
                     {
