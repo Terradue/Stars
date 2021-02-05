@@ -246,7 +246,7 @@
             "args": [
                 "copy",
                 "-v",
-                "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SR_2_LAN____20190404T224853_20190404T233910_20190430T202207_3016_024_015______LN3_O_NT_003",
+                "https://catalog.terradue.com//cos2/series/acquisitions/search?uid=797-ICEYE-ICEYE-X2-Activation-694-Call-797-7",
                 "-r",
                 "4",
                 "--harvest",
