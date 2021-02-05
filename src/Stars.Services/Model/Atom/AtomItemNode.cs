@@ -93,8 +93,8 @@ namespace Terradue.Stars.Services.Model.Atom
             get
             {
                 Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-                Dictionary<string, int> keysCount = item.Links.GroupBy(l => l.RelationshipType).ToDictionary(g => g.Key, g => g.Count());
-                Dictionary<string, int> keysIndex = item.Links.GroupBy(l => l.RelationshipType).ToDictionary(g => g.Key, g => 1);
+                Dictionary<string, int> keysCount = item.Links.Where(link => !string.IsNullOrEmpty(link.RelationshipType)).GroupBy(l => l.RelationshipType).ToDictionary(g => g.Key, g => g.Count());
+                Dictionary<string, int> keysIndex = item.Links.Where(link => !string.IsNullOrEmpty(link.RelationshipType)).GroupBy(l => l.RelationshipType).ToDictionary(g => g.Key, g => 1);
                 foreach (var link in item.Links.Where(link => link.RelationshipType == "enclosure" || link.RelationshipType == "icon").OrderBy(i => i.RelationshipType))
                 {
                     string key = link.RelationshipType;
