@@ -20,6 +20,8 @@ namespace Terradue.Stars.Services
 
         public IReadOnlyDictionary<string, IAsset> Assets => assetsContainer.Assets.Where(a => AssetMatch(a)).ToDictionary(k => k.Key, k => k.Value);
 
+        public Uri Uri => assetsContainer.Uri;
+
         private bool AssetMatch(KeyValuePair<string, IAsset> asset)
         {
             if (assetFilters == null) return true;

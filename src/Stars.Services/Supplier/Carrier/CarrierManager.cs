@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
@@ -32,7 +33,14 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             {
                 try
                 {
-                    var assetsDeliveryQuotations = GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value));
+                    string relPath = "";
+                    if (assetsContainer.Uri != null)
+                    {
+                        var relUri = assetsContainer.Uri.MakeRelativeUri(asset.Value.Uri);
+                        if (!relUri.IsAbsoluteUri)
+                            relPath = Path.GetDirectoryName(relUri.ToString());
+                    }
+                    var assetsDeliveryQuotations = GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath));
                     assetsQuotes.Add(asset.Key, assetsDeliveryQuotations);
                 }
                 catch (Exception e)
