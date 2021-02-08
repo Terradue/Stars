@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface
 {
-    public interface IResource
+    public interface IResource : ILocatable
     {
-        Uri Uri { get; }
         ContentType ContentType { get; }
         ResourceType ResourceType { get; }
         ulong ContentLength { get; }

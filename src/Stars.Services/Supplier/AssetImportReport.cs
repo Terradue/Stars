@@ -39,5 +39,7 @@ namespace Terradue.Stars.Services.Supplier
         public IDictionary<string, IAsset> ImportedAssets { get => importedAssets; set => importedAssets = value; }
 
         public IReadOnlyDictionary<string, IAsset> Assets => new ReadOnlyDictionary<string, IAsset>(importedAssets);
+
+        public Uri Uri => destination.Uri;
     }
 }

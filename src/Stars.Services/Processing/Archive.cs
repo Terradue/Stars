@@ -55,6 +55,8 @@ namespace Terradue.Stars.Services.Processing
 
         public abstract IReadOnlyDictionary<string, IAsset> Assets { get; }
 
+        public abstract Uri Uri { get; }
+
         public abstract string AutodetectSubfolder();
 
         protected static String Findstem(String[] arr)

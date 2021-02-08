@@ -31,6 +31,8 @@ namespace Terradue.Stars.Services.Processing
             }
         }
 
+        public override System.Uri Uri => asset.Uri;
+
         public override string AutodetectSubfolder()
         {
             List<string> names = new List<string>();

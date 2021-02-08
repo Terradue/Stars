@@ -36,16 +36,26 @@ namespace Terradue.Stars.Services.Processing
                 if (!processing.CanProcess(newItemNode, destination)) continue;
                 // Create a new destination for each processing
                 IDestination procDestination = destination.To(stacItemNode, processing.GetRelativePath(stacItemNode, destination));
-                var processedResource = await processing.Process(newItemNode, procDestination);
-                if ( processedResource == null ) continue;
-                StacItemNode newStacItemNode = processedResource as StacItemNode;
-                // Maybe the node is already a stac node
-                if (newStacItemNode == null)
+                StacItemNode newStacItemNode = null;
+                try
                 {
-                    // No? Let's try to translate it to Stac
-                    newStacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
+                    var processedResource = await processing.Process(newItemNode, procDestination);
+                    if (processedResource == null) continue;
+                    newStacItemNode = processedResource as StacItemNode;
+
+                    // Maybe the node is already a stac node
                     if (newStacItemNode == null)
-                        throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
+                    {
+                        // No? Let's try to translate it to Stac
+                        newStacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
+                        if (newStacItemNode == null)
+                            throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogWarning("Exception extracting archive assets in {0} : {1}", newItemNode.Uri, e.Message);
+                    continue;
                 }
                 newItemNode = await storeService.StoreItemNodeAtDestination(newStacItemNode, destination);
                 break;

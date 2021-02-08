@@ -99,12 +99,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             if (streamable == null)
                 throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Route.Uri));
 
-            // if (!overwrite && s3Route.Exists && streamable.ContentLength > 0 &&
-            //    Convert.ToUInt64(s3Route.Length) == streamable.ContentLength)
-            // {
-            //     logger.LogDebug("Object {0} exists with the same size. Skipping transfer", s3Route.File.Name);
-            //     return s3Route;
-            // }
+            if (!overwrite && streamable.ContentLength > 0 &&
+               Convert.ToUInt64(s3Route.ContentLength) == streamable.ContentLength)
+            {
+                logger.LogDebug("Object {0} exists with the same size. Skipping transfer", s3Route.Uri);
+                return s3Route;
+            }
             s3Route = await StreamToS3Object(streamable, s3Route, overwrite);
             if (streamable.ContentLength > 0 && Convert.ToUInt64(s3Route.ContentLength) != streamable.ContentLength)
                 throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", s3Route.ContentLength, streamable.ContentLength));
