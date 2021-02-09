@@ -173,7 +173,7 @@ namespace Terradue.Stars.Services.Store
 
         private void MakeAllLinksRelative(IStacObject stacObject, IDestination destination)
         {
-            foreach (var link in stacObject.Links)
+            foreach (var link in stacObject.Links.ToArray())
             {
                 if (!link.Uri.IsAbsoluteUri) continue;
                 // 1. Check the link uri can be relative to destination itself
