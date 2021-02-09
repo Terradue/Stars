@@ -144,7 +144,24 @@ namespace Terradue.Stars.Services.Router
                             return Convert.ToUInt64(response.ContentLength);
                         }
                     }
-                    catch (Exception e) { }
+                    catch (Exception e) {
+                        return 0;
+                    }
+                }
+                if (request is S3WebRequest)
+                {
+                    try
+                    {
+                        S3WebRequest s3WebRequest = request.CloneRequest(request.RequestUri) as S3WebRequest;
+                        s3WebRequest.Method = S3RequestMethods.ListObject;
+                        using (S3ObjectWebResponse<ListObjectsResponse> response = (S3ObjectWebResponse<ListObjectsResponse>)s3WebRequest.GetResponse())
+                        {
+                            return Convert.ToUInt64(response.GetObject().S3Objects.First().Size);
+                        }
+                    }
+                    catch (Exception e) { 
+                        return 0;
+                    }
                 }
                 if (!string.IsNullOrEmpty(CachedHeaders[HttpResponseHeader.ContentLength]))
                     return Convert.ToUInt64(CachedHeaders[HttpResponseHeader.ContentLength]);

@@ -536,16 +536,19 @@
             "args": [
                 "copy",
                 "-v",
-                "file:///home/emathot/Workspace/Terradue/Components/systems/Stars/tmp/stars/catalog.json",
+                "file:///home/emathot/s3up/catalog.json",
                 "-r",
                 "4",
                 "-rel",
                 "--output",
-                "s3://bucket1/teststars"
+                // "s3://processing-results/wf-sar-calibration-s1-rep"
+                "s3://fe994dc67fb44e118433b19fd2e01232:dev_user_001_container_002"
             ],
             "env": {
-                "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
-                "AWS__Profile": "minio"
+                "AWS__ServiceURL": "https://cf2.cloudferro.com:8080",
+                "AWS__Profile": "creodiasowner",
+                // "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
+                // "AWS__Profile": "minio"
             },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
