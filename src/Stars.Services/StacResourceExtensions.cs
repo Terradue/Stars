@@ -31,6 +31,7 @@ namespace Terradue.Stars.Services
 
         public static StacAsset CreateStacAsset(this IAsset asset)
         {
+            if ( asset is StacAssetAsset ) return new StacAsset((asset as StacAssetAsset).StacAsset);
             return new StacAsset(asset.Uri, asset.Roles, asset.Title, asset.ContentType, asset.ContentLength);
         }
 

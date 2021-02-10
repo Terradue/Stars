@@ -75,7 +75,7 @@ namespace Terradue.Stars.Services.Model.Atom
                 foreach (var childRoute in childrenRoutes)
                 {
                     i++;
-                    assets.Add(key + "-" + i, new GenericAsset(childRoute, 
+                    assets.Add(key + "-" + i, new GenericAsset(childRoute,
                         link.Title + " " + childRoute.Uri.ToString().Replace(webRoute.Uri.ToString(), ""),
                          new string[] { link.RelationshipType }));
                 }
@@ -84,6 +84,11 @@ namespace Terradue.Stars.Services.Model.Atom
                 assets.Add(key, new AtomLinkAsset(link, item, credentials));
 
             return assets;
+        }
+
+        public async Task Remove()
+        {
+            await webRoute.Remove();
         }
     }
 }

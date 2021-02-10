@@ -62,5 +62,10 @@ namespace Terradue.Stars.Services.Processing
         {
             throw new NotImplementedException();
         }
+
+        public async Task Remove()
+        {
+            await parentAsset.Remove();
+        }
     }
 }

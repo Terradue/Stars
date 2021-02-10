@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface
 {
@@ -11,5 +13,7 @@ namespace Terradue.Stars.Interface
         IReadOnlyDictionary<string, object> Properties { get; }
         
         IStreamable GetStreamable();
+
+        Task Remove();
     }
 }

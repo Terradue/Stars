@@ -26,8 +26,19 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             this.asset = asset;
             this.credentials = credentials;
-            this.uri = asset.Uri.IsAbsoluteUri ? asset.Uri :
-                (parent.Uri.IsAbsoluteUri ? new Uri(parent.Uri, asset.Uri) : new Uri(parent.Uri.ToString() + "/" + asset.Uri.ToString(), UriKind.Relative));
+            if (asset.Uri.IsAbsoluteUri)
+                this.uri = asset.Uri;
+            else
+            {
+                if (parent != null)
+                {
+                    if (parent.Uri.IsAbsoluteUri)
+                        this.uri = new Uri(parent.Uri, asset.Uri);
+                    else
+                        this.uri = new Uri(parent.Uri.ToString() + "/" + asset.Uri.ToString(), UriKind.Relative);
+                }
+                else this.uri = asset.Uri;
+            }
         }
 
         public Uri Uri => uri;
@@ -62,21 +73,35 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             if (asset is IStreamable)
                 return asset as IStreamable;
-            if (uri.IsAbsoluteUri)
-            {
-                if (webRoute == null)
-                {
-                    // try
-                    // {
-                        webRoute = WebRoute.Create(uri, asset.ContentLength, credentials);
-                    // }
-                    // catch { }
-                }
-                return webRoute;
-            }
-            return null;
+
+            return WebRoute;
 
         }
 
+        public WebRoute WebRoute
+        {
+            get
+            {
+                if (uri.IsAbsoluteUri)
+                {
+                    if (webRoute == null)
+                    {
+                        // try
+                        // {
+                        webRoute = WebRoute.Create(uri, asset.ContentLength, credentials);
+                        // }
+                        // catch { }
+                    }
+                    return webRoute;
+                }
+                return null;
+            }
+        }
+
+        public async Task Remove()
+        {
+            if ( WebRoute != null )
+                await WebRoute.Remove();
+        }
     }
 }

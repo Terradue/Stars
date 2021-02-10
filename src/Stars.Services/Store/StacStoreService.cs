@@ -175,7 +175,7 @@ namespace Terradue.Stars.Services.Store
         {
             foreach (var link in stacObject.Links.ToArray())
             {
-                if (!link.Uri.IsAbsoluteUri) continue;
+                if (link == null || !link.Uri.IsAbsoluteUri) continue;
                 // 1. Check the link uri can be relative to destination itself
                 var relativeUri = destination.Uri.MakeRelativeUri(link.Uri);
                 if (!relativeUri.IsAbsoluteUri)
