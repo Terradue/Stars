@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
@@ -97,34 +98,60 @@ namespace Terradue.Stars.Services
         private IAsset MakeAsset(IResource route, IAsset assetOrigin)
         {
             if (route is IAsset) return route as IAsset;
+            if (assetOrigin is StacAssetAsset){
+                var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset);
+                clonedAsset.Uri = route.Uri;
+                return new StacAssetAsset(clonedAsset, null);
+            }
             var genericAsset = new GenericAsset(route, assetOrigin.Title, assetOrigin.Roles);
             return genericAsset;
         }
 
         private async Task<IResource> Import(string key, IOrderedEnumerable<IDelivery> deliveries)
         {
-            logger.LogInformation("Starting delivery for {0}", key);
+            logger.LogInformation("Starting delivery of assets for {0}", key);
             List<Exception> exceptions = new List<Exception>();
             foreach (var delivery in deliveries)
             {
-                logger.LogInformation("Delivering {0} {1} {2} ({3})...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id);
+                logger.LogInformation("Delivering asset {0} {1} {2} ({3})...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id);
                 try
                 {
                     delivery.Destination.PrepareDestination();
                     IResource delivered = await delivery.Carrier.Deliver(delivery);
                     if (delivered != null)
                     {
-                        logger.LogInformation("Delivery complete to {0}", delivered.Uri);
+                        logger.LogInformation("Delivery asset complete to {0}", delivered.Uri);
                         return delivered;
                     }
                 }
                 catch (Exception e)
                 {
-                    logger.LogError("Error delivering {0} ({1}) : {2}", key, delivery.Carrier.Id, e.Message);
+                    logger.LogError("Error delivering asset {0} ({1}) : {2}", key, delivery.Carrier.Id, e.Message);
                     exceptions.Add(e);
                 }
             }
             throw new AggregateException(exceptions);
+        }
+
+        public async Task<AssetDeleteReport> DeleteAssets(IAssetsContainer assetsContainer, AssetFilters assetsFilters)
+        {
+            AssetDeleteReport assetDeleteReport = new AssetDeleteReport();
+
+            logger.LogDebug("Deleting {0} assets of {1}", assetsContainer.Assets.Count(), assetsContainer.Uri.ToString());
+
+            foreach (var asset in assetsContainer.Assets)
+            {
+                try {
+                    await asset.Value.Remove();
+                }
+                catch(Exception e)
+                {
+                    logger.LogWarning("Cannot delete asset {0} : {1}", asset.Key, e.Message);
+                    assetDeleteReport.AssetsExceptions.Add(asset.Key, e);
+                }
+            }
+
+            return assetDeleteReport;
         }
 
         private IDeliveryQuotation QuoteAssetsDelivery(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters)

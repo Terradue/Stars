@@ -33,11 +33,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             {
                 try
                 {
-                    string relPath = "";
-                    if (assetsContainer.Uri != null)
+                    string relPath = null;
+                    if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
                     {
                         var relUri = assetsContainer.Uri.MakeRelativeUri(asset.Value.Uri);
-                        if (!relUri.IsAbsoluteUri)
+                        // Use the relative path only if a sub-directory
+                        if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
                             relPath = Path.GetDirectoryName(relUri.ToString());
                     }
                     var assetsDeliveryQuotations = GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath));

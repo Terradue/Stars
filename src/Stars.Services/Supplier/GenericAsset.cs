@@ -43,5 +43,13 @@ namespace Terradue.Stars.Services.Supplier
         {
             return route as IStreamable;
         }
+
+        public async Task Remove()
+        {
+            if (route is IAsset)
+                await (route as IAsset).Remove();
+            else
+                throw new NotSupportedException();
+        }
     }
 }

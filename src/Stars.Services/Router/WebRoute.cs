@@ -92,6 +92,45 @@ namespace Terradue.Stars.Services.Router
             }
         }
 
+        internal async Task Remove()
+        {
+            if (request is HttpWebRequest)
+                throw new NotSupportedException("Cannot remove HTTP object");
+
+            if (request is FileWebRequest)
+            {
+                FileInfo file = new FileInfo(request.RequestUri.LocalPath);
+                file.Delete();
+                return;
+            }
+
+            if (request is FtpWebRequest)
+            {
+                var ftpWebRequest = (FtpWebRequest)request.CloneRequest(request.RequestUri);
+                ftpWebRequest.Method = WebRequestMethods.Ftp.DeleteFile;
+                using (FtpWebResponse resp = (FtpWebResponse)ftpWebRequest.GetResponse())
+                {
+                    if (!(resp.StatusCode != FtpStatusCode.CommandOK))
+                        throw new Exception(string.Format("FTP server returned an error ({0})", resp.StatusCode));
+                }
+                return;
+            }
+
+            if (request is S3WebRequest)
+            {
+                var s3WebRequest = (S3WebRequest)request.CloneRequest(request.RequestUri);
+                s3WebRequest.Method = S3RequestMethods.DeleteObject;
+                using (S3ObjectWebResponse<DeleteObjectResponse> resp = (S3ObjectWebResponse<DeleteObjectResponse>)s3WebRequest.GetResponse())
+                {
+                    if (!(resp.GetObject().HttpStatusCode == HttpStatusCode.OK))
+                        throw new Exception(string.Format("S3 server returned an error ({0})", resp.GetObject().HttpStatusCode));
+                }
+                return;
+            }
+
+            throw new NotSupportedException(string.Format("Cannot remove {0} object", request.GetType()));
+        }
+
         internal IEnumerable<WebRoute> ListFolder()
         {
             if (request is HttpWebRequest) throw new NotImplementedException();
@@ -116,7 +155,7 @@ namespace Terradue.Stars.Services.Router
             {
                 return resp.GetObject().S3Objects.Select(o =>
                 {
-                    S3WebRequest s3Req = s3WebRequest.Clone(o.Key);;
+                    S3WebRequest s3Req = s3WebRequest.Clone(o.Key); ;
                     return new WebRoute(s3Req, Convert.ToUInt64(o.Size));
                 });
             }
@@ -144,7 +183,8 @@ namespace Terradue.Stars.Services.Router
                             return Convert.ToUInt64(response.ContentLength);
                         }
                     }
-                    catch (Exception e) {
+                    catch (Exception e)
+                    {
                         return 0;
                     }
                 }
@@ -159,7 +199,8 @@ namespace Terradue.Stars.Services.Router
                             return Convert.ToUInt64(response.GetObject().S3Objects.First().Size);
                         }
                     }
-                    catch (Exception e) { 
+                    catch (Exception e)
+                    {
                         return 0;
                     }
                 }
