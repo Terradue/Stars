@@ -32,24 +32,33 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public string Id => stacObject.Id.CleanIdentifier();
 
-        public virtual ulong ContentLength {
-            get {
+        public virtual ulong ContentLength
+        {
+            get
+            {
                 MemoryStream ms = (MemoryStream)GetStreamAsync().GetAwaiter().GetResult();
                 return Convert.ToUInt64(ms.Length);
             }
-        } 
+        }
 
         public bool IsCatalog => (stacObject is IStacCatalog);
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = FileName };
 
+        private string filename = null;
         public string FileName
         {
             get
             {
+                if (!string.IsNullOrEmpty(filename))
+                    return filename;
                 if (IsRoot)
                     return "catalog.json";
                 return Id + ".json";
+            }
+            set
+            {
+                filename = value;
             }
         }
 
