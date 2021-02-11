@@ -59,7 +59,15 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public string Filename => Path.GetFileName(Uri.ToString());
+        public string Filename
+        {
+            get
+            {
+                if (asset.Properties.ContainsKey("filename"))
+                    return asset.GetProperty<string>("filename");
+                return Path.GetFileName(Uri.ToString());
+            }
+        }
 
         public IReadOnlyList<string> Roles => asset.Roles;
 
@@ -100,7 +108,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public async Task Remove()
         {
-            if ( WebRoute != null )
+            if (WebRoute != null)
                 await WebRoute.Remove();
         }
     }
