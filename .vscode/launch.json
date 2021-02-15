@@ -584,6 +584,32 @@
             }
         },
         {
+            "name": "Copy and extract tar.gz aset",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-796/acquisitions/796-CNSA-GF2-urn_ogc_def_EOP_CNSA_GF2PMS5383354/796-CNSA-GF2-urn_ogc_def_EOP_CNSA_GF2PMS5383354.json",
+                "-v",
+                "-r",
+                "4",
+                "-k",
+                "--output",
+                "/tmp/charter"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

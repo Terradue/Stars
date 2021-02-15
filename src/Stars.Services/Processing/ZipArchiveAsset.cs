@@ -1,7 +1,12 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Ionic.Zip;
+using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services.Supplier.Carrier;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -9,14 +14,16 @@ namespace Terradue.Stars.Services.Processing
     {
         private ZipFile zipFile;
         private readonly IAsset asset;
+        private readonly ILogger logger;
 
-        public ZipArchiveAsset(ZipFile zipFile, IAsset asset)
+        public ZipArchiveAsset(ZipFile zipFile, IAsset asset, ILogger logger)
         {
             this.zipFile = zipFile;
             this.asset = asset;
+            this.logger = logger;
         }
 
-        public override IReadOnlyDictionary<string, IAsset> Assets
+        public IReadOnlyDictionary<string, IAsset> Assets
         {
             get
             {
@@ -33,7 +40,7 @@ namespace Terradue.Stars.Services.Processing
 
         public override System.Uri Uri => asset.Uri;
 
-        public override string AutodetectSubfolder()
+        public string AutodetectSubfolder()
         {
             List<string> names = new List<string>();
             foreach (ZipEntry entry in zipFile)
@@ -44,6 +51,30 @@ namespace Terradue.Stars.Services.Processing
             if (commonfolder.IndexOf('/') > 1)
                 return "";
             return Path.GetFileNameWithoutExtension(asset.Uri.ToString());
+        }
+
+        internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
+        {
+            Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
+            string subFolder = AutodetectSubfolder();
+
+            foreach (var archiveAsset in Assets)
+            {
+                var archiveAssetDestination = destination.To(archiveAsset.Value, subFolder);
+                archiveAssetDestination.PrepareDestination();
+                var assetDeliveries = carrierManager.GetSingleDeliveryQuotations(archiveAsset.Value, archiveAssetDestination);
+                logger.LogDebug(archiveAsset.Key);
+                foreach (var delivery in assetDeliveries)
+                {
+                    var assetExtracted = await delivery.Carrier.Deliver(delivery);
+                    if (assetExtracted != null)
+                    {
+                        assetsExtracted.Add(asset.ContentDisposition.FileName + "!" + archiveAsset.Key, new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles));
+                        break;
+                    }
+                }
+            }
+            return new GenericAssetContainer(this, assetsExtracted);
         }
     }
 }

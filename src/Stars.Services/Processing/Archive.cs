@@ -1,27 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
-
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services.Supplier.Carrier;
 
 namespace Terradue.Stars.Services.Processing
 {
-    public abstract class Archive : IAssetsContainer
+    public abstract class Archive : ILocatable
     {
-        public static readonly Dictionary<string, ArchiveCompression> ArchiveFileExtensions = new Dictionary<string, ArchiveCompression>() {
-            { ".tar.gz", ArchiveCompression.Gzip },
-            { ".tgz",  ArchiveCompression.Gzip },
-            { ".tar.Z",   ArchiveCompression.Gzip },
-            { ".tar.bz2",  ArchiveCompression.Bzip2 },
-            { ".tbz2",   ArchiveCompression.Bzip2 },
-            { ".tar.lz",   ArchiveCompression.Lzip },
-            { ".tlz",   ArchiveCompression.Lzip },
-            {".tar.xz",   ArchiveCompression.Xz },
-            {".txz",  ArchiveCompression.Xz },
-            {".zip",   ArchiveCompression.Zip },
-            {".zipx",   ArchiveCompression.Zip }
+        public static readonly Dictionary<string, ArchiveType> ArchiveFileExtensions = new Dictionary<string, ArchiveType>() {
+            { ".tar.gz", ArchiveType.TarGzip },
+            { ".tgz",  ArchiveType.TarGzip },
+            { ".tar.Z",   ArchiveType.TarGzip },
+            { ".tar.bz2",  ArchiveType.TarBzip2 },
+            { ".tbz2",   ArchiveType.TarBzip2 },
+            { ".tar.lz",   ArchiveType.TarLzip },
+            { ".tlz",   ArchiveType.TarLzip },
+            {".tar.xz",   ArchiveType.TarXz },
+            {".txz",  ArchiveType.TarXz },
+            {".zip",   ArchiveType.Zip },
+            {".zipx",   ArchiveType.Zip }
         };
 
         public static readonly string[] ArchiveContentTypes = {
@@ -29,35 +33,34 @@ namespace Terradue.Stars.Services.Processing
             "application/zip"
         };
 
-        internal async static Task<Archive> Read(IAsset asset)
+        internal async static Task<Archive> Read(IAsset asset, ILogger logger)
         {
             IStreamable streamableAsset = asset.GetStreamable();
 
             if (streamableAsset == null)
                 throw new System.IO.InvalidDataException("Asset must be streamable to be read as an archive");
 
-            ArchiveCompression compression = FindCompression(asset);
+            ArchiveType compression = FindCompression(asset);
 
             switch (compression)
             {
-                case ArchiveCompression.Zip:
+                case ArchiveType.Zip:
                     var zipFile = Ionic.Zip.ZipFile.Read(await streamableAsset.GetStreamAsync());
-                    return new ZipArchiveAsset(zipFile, asset);
+                    return new ZipArchiveAsset(zipFile, asset, logger);
+                case ArchiveType.TarGzip:
+                    return new TarGzipArchive(asset, logger);
+
                 default:
                     throw new System.IO.InvalidDataException("Asset is not recognized as an archive");
             }
         }
 
-        private static ArchiveCompression FindCompression(IAsset asset)
+        private static ArchiveType FindCompression(IAsset asset)
         {
-            return ArchiveFileExtensions[Path.GetExtension(asset.Uri.ToString())];
+            return ArchiveFileExtensions.FirstOrDefault(ext => asset.ContentDisposition.FileName.EndsWith(ext.Key)).Value;
         }
 
-        public abstract IReadOnlyDictionary<string, IAsset> Assets { get; }
-
         public abstract Uri Uri { get; }
-
-        public abstract string AutodetectSubfolder();
 
         protected static String Findstem(String[] arr)
         {
@@ -96,5 +99,7 @@ namespace Terradue.Stars.Services.Processing
 
             return res;
         }
+
+        internal abstract Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager);
     }
 }

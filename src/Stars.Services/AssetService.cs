@@ -101,6 +101,8 @@ namespace Terradue.Stars.Services
             if (assetOrigin is StacAssetAsset){
                 var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset);
                 clonedAsset.Uri = route.Uri;
+                clonedAsset.ContentLength = route.ContentLength > 0 ? route.ContentLength : clonedAsset.ContentLength;
+                clonedAsset.MediaType = route.ContentType;
                 return new StacAssetAsset(clonedAsset, null);
             }
             var genericAsset = new GenericAsset(route, assetOrigin.Title, assetOrigin.Roles);

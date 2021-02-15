@@ -11,6 +11,7 @@ using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Processing;
 using Terradue.Stars.Interface;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -50,7 +51,7 @@ namespace Terradue.Stars.Services.Processing
 
         private bool IsArchiveFileNameExtension(IAsset asset)
         {
-            return Archive.ArchiveFileExtensions.Keys.Contains(Path.GetExtension(asset.Uri.ToString()));
+            return Archive.ArchiveFileExtensions.Keys.Any( ext => asset.ContentDisposition.FileName.EndsWith(ext, true, CultureInfo.InvariantCulture));
         }
 
         private bool IsArchiveContentType(IAsset asset)
@@ -72,9 +73,9 @@ namespace Terradue.Stars.Services.Processing
                     continue;
                 }
                 logger.LogInformation("Extracting asset {0}...", asset.Value.Uri);
-                Dictionary<string, GenericAsset> extractedAssets = await ExtractArchive(asset, destination);
+                IAssetsContainer extractedAssets = await ExtractArchive(asset, destination);
                 int i = 0;
-                foreach (var extractedAsset in extractedAssets)
+                foreach (var extractedAsset in extractedAssets.Assets)
                 {
                     newAssets.Add(extractedAsset.Key, extractedAsset.Value);
                     i++;
@@ -91,30 +92,11 @@ namespace Terradue.Stars.Services.Processing
 
         }
 
-        private async Task<Dictionary<string, GenericAsset>> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
+        private async Task<IAssetsContainer> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
         {
-            Archive archive = await Archive.Read(asset.Value);
+            Archive archive = await Archive.Read(asset.Value, logger);
 
-            Dictionary<string, GenericAsset> assetsExtracted = new Dictionary<string, GenericAsset>();
-            string subFolder = archive.AutodetectSubfolder();
-
-            foreach (var archiveAsset in archive.Assets)
-            {
-                var archiveAssetDestination = destination.To(archiveAsset.Value, subFolder);
-                archiveAssetDestination.PrepareDestination();
-                var assetDeliveries = carrierManager.GetSingleDeliveryQuotations(archiveAsset.Value, archiveAssetDestination);
-                logger.LogDebug(archiveAsset.Key);
-                foreach (var delivery in assetDeliveries)
-                {
-                    var assetExtracted = await delivery.Carrier.Deliver(delivery);
-                    if (assetExtracted != null)
-                    {
-                        assetsExtracted.Add(asset.Key + "!" + archiveAsset.Key, new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles));
-                        break;
-                    }
-                }
-            }
-            return assetsExtracted;
+            return await archive.ExtractToDestination(destination, carrierManager);
         }
 
         public string GetRelativePath(IResource route, IDestination destination)

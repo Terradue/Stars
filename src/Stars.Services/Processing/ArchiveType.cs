@@ -1,13 +1,13 @@
 namespace Terradue.Stars.Services.Processing
 {
-    public enum ArchiveCompression
+    public enum ArchiveType
     {
         None,
 		Compress,
-		Gzip,
-		Bzip2,
+		TarGzip,
+		TarBzip2,
         Zip,
-        Xz,
-        Lzip
+        TarXz,
+        TarLzip
     }
 }
