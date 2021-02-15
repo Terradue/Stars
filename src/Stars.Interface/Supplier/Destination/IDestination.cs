@@ -3,7 +3,7 @@ using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Interface.Supplier.Destination
 {
-    public interface IDestination
+    public interface IDestination : ILocatable
     {
         Uri Uri { get; }
 
