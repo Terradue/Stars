@@ -73,7 +73,16 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacAsset StacAsset { get => asset; }
 
-        public ContentDisposition ContentDisposition => GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+        public ContentDisposition ContentDisposition
+        {
+            get
+            {
+                var cd = GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+                if (asset.Properties.ContainsKey("filename"))
+                    cd.FileName = asset.GetProperty<string>("filename");
+                return cd;
+            }
+        }
 
         public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 

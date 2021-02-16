@@ -70,6 +70,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 }
                 else
                     relPath = Path.GetDirectoryName(subroute.Uri.ToString());
+                if ( relPath.StartsWith("..") )
+                    relPath = relPathFix ?? "";
             }
             var newFilePath = Path.Join(file.Directory.FullName, relPath, filename);
             return new LocalFileDestination(new FileInfo(newFilePath), subroute);
