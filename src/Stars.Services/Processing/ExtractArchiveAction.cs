@@ -51,7 +51,7 @@ namespace Terradue.Stars.Services.Processing
 
         private bool IsArchiveFileNameExtension(IAsset asset)
         {
-            return Archive.ArchiveFileExtensions.Keys.Any( ext => asset.ContentDisposition != null && asset.ContentDisposition.FileName.EndsWith(ext, true, CultureInfo.InvariantCulture));
+            return Archive.ArchiveFileExtensions.Keys.Any(ext => asset.ContentDisposition != null && !string.IsNullOrEmpty(asset.ContentDisposition.FileName) && asset.ContentDisposition.FileName.EndsWith(ext, true, CultureInfo.InvariantCulture));
         }
 
         private bool IsArchiveContentType(IAsset asset)
