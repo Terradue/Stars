@@ -260,8 +260,12 @@ namespace Terradue.Stars.Services.Store
             foreach (var asset in stacItemNode.StacItem.Assets)
             {
                 if (!asset.Value.Uri.IsAbsoluteUri) continue;
+                // 0. make sure the uri is not outside of the root catalog
+                var relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(asset.Value.Uri);
+                if ( relativeUri.IsAbsoluteUri || relativeUri.ToString().StartsWith("../") )
+                    continue;
                 // 1. Check the asset uri can be relative to destination itself
-                var relativeUri = destination.Uri.MakeRelativeUri(asset.Value.Uri);
+                relativeUri = destination.Uri.MakeRelativeUri(asset.Value.Uri);
                 if (!relativeUri.IsAbsoluteUri)
                 {
                     asset.Value.Uri = relativeUri;
