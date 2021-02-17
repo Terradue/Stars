@@ -53,10 +53,10 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.Console",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
-                "-v",
                 "list",
+                "-v",
                 "https://cbers-stac-1-0.s3.amazonaws.com/CBERS4/MUX/027/catalog.json",
                 "-r",
                 "4"
