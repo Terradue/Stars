@@ -17,7 +17,6 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacItemNode(IStacItem stacItem, System.Net.ICredentials credentials = null) : base(stacItem)
         {
-            contentType.Parameters.Add("profile", "stac-item");
             this.credentials = credentials;
         }
 

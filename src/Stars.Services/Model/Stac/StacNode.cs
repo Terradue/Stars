@@ -14,17 +14,15 @@ namespace Terradue.Stars.Services.Model.Stac
     public abstract class StacNode : IResource, IStreamable
     {
         protected IStacObject stacObject;
-        protected ContentType contentType;
 
         protected StacNode(IStacObject stacObject)
         {
             this.stacObject = stacObject;
-            this.contentType = new ContentType("application/json");
         }
 
         public string Label => stacObject.Id;
 
-        public ContentType ContentType => contentType;
+        public ContentType ContentType => stacObject.MediaType;
 
         public Uri Uri => stacObject.Uri == null ? new Uri(Id + ".json", UriKind.Relative) : stacObject.Uri;
 
