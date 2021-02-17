@@ -48,7 +48,6 @@ namespace Terradue.Stars.Services.Translator
                         }
                         catch { }
                     }
-                    return default(T);
                 }
             }
 
@@ -68,7 +67,6 @@ namespace Terradue.Stars.Services.Translator
                         }
                         catch { }
                     }
-                    return default(T);
                 }
             }
 

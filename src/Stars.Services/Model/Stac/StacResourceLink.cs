@@ -14,11 +14,11 @@ namespace Terradue.Stars.Services.Model.Stac
             this.stacLink = l;
         }
 
-        public Uri Uri => stacLink.AbsoluteUri;
+        public Uri Uri => stacLink.Uri;
 
         public string Relationship => stacLink.RelationshipType;
 
-        public ContentType ContentType => new ContentType(stacLink.MediaType);
+        public ContentType ContentType => stacLink.MediaType;
 
         public string Title => stacLink.Title;
 
