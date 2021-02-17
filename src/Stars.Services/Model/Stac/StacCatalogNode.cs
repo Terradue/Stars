@@ -20,10 +20,6 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacCatalogNode(IStacCatalog stacCatalog, System.Net.ICredentials credentials = null) : base(stacCatalog)
         {
-            if (stacCatalog is StacCollection)
-                contentType.Parameters.Add("profile", "stac-collection");
-            else
-                contentType.Parameters.Add("profile", "stac-catalog");
             this.credentials = credentials;
         }
 
@@ -39,7 +35,6 @@ namespace Terradue.Stars.Services.Model.Stac
                     return ResourceType.Catalog;
             }
         }
-
 
         public override IReadOnlyList<IResource> GetRoutes()
         {
