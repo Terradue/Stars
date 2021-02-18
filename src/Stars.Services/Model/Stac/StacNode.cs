@@ -17,6 +17,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         protected StacNode(IStacObject stacObject)
         {
+            if ( stacObject == null )
+                throw new ArgumentNullException("stacObject");
             this.stacObject = stacObject;
         }
 
