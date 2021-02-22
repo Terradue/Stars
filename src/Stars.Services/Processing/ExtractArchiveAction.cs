@@ -67,9 +67,17 @@ namespace Terradue.Stars.Services.Processing
             Dictionary<string, IAsset> newAssets = new Dictionary<string, IAsset>();
             foreach (var asset in assetsContainer.Assets)
             {
-                if (!IsArchive(asset.Value))
+                try
                 {
-                    newAssets.Add(asset.Key, asset.Value);
+                    if (!IsArchive(asset.Value))
+                    {
+                        newAssets.Add(asset.Key, asset.Value);
+                        continue;
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogWarning("Impossible to identify asset {0} as an archive: {1}", asset.Key, e.Message);
                     continue;
                 }
                 logger.LogInformation("Extracting asset {0}...", asset.Value.Uri);
