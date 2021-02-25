@@ -28,11 +28,26 @@ namespace Terradue.Stars.Services.Store
         protected readonly ICredentials credentials;
         private readonly StacRouter _stacRouter;
         private readonly StacStoreConfiguration storeOptions;
-        private IDestination rootCatalogDestination;
-        private StacCatalogNode rootCatalogNode;
+        private static IDestination rootCatalogDestination;
+        private static StacCatalogNode rootCatalogNode;
 
-        public IDestination RootCatalogDestination { get => rootCatalogDestination; }
-        public StacCatalogNode RootCatalogNode { get => rootCatalogNode; }
+        public IDestination RootCatalogDestination
+        {
+            get
+            {
+                if (rootCatalogDestination == null)
+                    throw new DriveNotFoundException("Stac store not ready. Initialization required");
+                return rootCatalogDestination;
+            }
+        }
+        public StacCatalogNode RootCatalogNode
+        {
+            get
+            {
+                if (rootCatalogNode == null)
+                    throw new DriveNotFoundException("Stac store not ready. Initialization required"); return rootCatalogNode;
+            }
+        }
 
         public string Id => "Store";
 
@@ -263,7 +278,7 @@ namespace Terradue.Stars.Services.Store
                 if (!asset.Value.Uri.IsAbsoluteUri) continue;
                 // 0. make sure the uri is not outside of the root catalog
                 var relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(asset.Value.Uri);
-                if ( relativeUri.IsAbsoluteUri || relativeUri.ToString().StartsWith("../") )
+                if (relativeUri.IsAbsoluteUri || relativeUri.ToString().StartsWith("../"))
                     continue;
                 // 1. Check the asset uri can be relative to destination itself
                 relativeUri = destination.Uri.MakeRelativeUri(asset.Value.Uri);
