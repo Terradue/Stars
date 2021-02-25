@@ -161,7 +161,7 @@ namespace Terradue.Stars.Services.Store
             foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "self").ToList())
                 stacObject.Links.Remove(link);
             if (!storeOptions.AllRelative)
-                stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination), stacNode.ContentType.ToString()));
+                stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination.Uri), stacNode.ContentType.ToString()));
 
             foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "root").ToList())
                 stacObject.Links.Remove(link);
@@ -192,7 +192,7 @@ namespace Terradue.Stars.Services.Store
                 }
                 if (relativeUri.IsAbsoluteUri) continue;
                 Uri absoluteUri = new Uri(RootCatalogNode.Uri, relativeUri);
-                relativeUri = MapToFrontUri(destination).MakeRelativeUri(absoluteUri);
+                relativeUri = MapToFrontUri(destination.Uri).MakeRelativeUri(absoluteUri);
 
                 if (!relativeUri.IsAbsoluteUri)
                 {
@@ -214,17 +214,18 @@ namespace Terradue.Stars.Services.Store
                 stacObject.Links.Add(link);
         }
 
-        public Uri MapToFrontUri(IDestination destination)
+        public Uri MapToFrontUri(Uri uri)
         {
-            if (!destination.Uri.IsAbsoluteUri) throw new InvalidDataException("Destination URI must be absolute");
+            if (!uri.IsAbsoluteUri) throw new InvalidDataException("Destination URI must be absolute");
 
-            // 2. Check the link uri can be relative to root catalog
-            var relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(destination.Uri);
+            // Check the link uri can be relative to the backend root catalog
+            var relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(uri);
+            // If yes, then make an absolute uri from frontend
             if (relativeUri.IsAbsoluteUri)
             {
-                relativeUri = RootCatalogNode.Uri.MakeRelativeUri(destination.Uri);
+                relativeUri = RootCatalogNode.Uri.MakeRelativeUri(uri);
             }
-            if (relativeUri.IsAbsoluteUri) return destination.Uri;
+            if (relativeUri.IsAbsoluteUri) return uri;
             return new Uri(RootCatalogNode.Uri, relativeUri);
         }
 
@@ -251,7 +252,7 @@ namespace Terradue.Stars.Services.Store
             foreach (var asset in stacItemNode.StacItem.Assets)
             {
                 if (asset.Value.Uri.IsAbsoluteUri) continue;
-                asset.Value.Uri = new Uri(MapToFrontUri(destination), asset.Value.Uri);
+                asset.Value.Uri = new Uri(MapToFrontUri(destination.Uri), asset.Value.Uri);
             }
         }
 
