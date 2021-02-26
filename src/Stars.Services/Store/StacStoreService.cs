@@ -152,7 +152,7 @@ namespace Terradue.Stars.Services.Store
             if (deliveredResource == null)
                 throw new InvalidDataException(string.Format("No carrier could store node {0} at {1}", stacNode.Id, destination));
 
-            if (RootCatalogNode != null)
+            if (rootCatalogNode != null)
             {
                 Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
                 var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri));
