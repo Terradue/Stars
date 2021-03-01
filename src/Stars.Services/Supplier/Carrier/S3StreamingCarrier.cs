@@ -40,38 +40,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         }
 
-        public IAmazonS3 CreateS3Client(Uri s3uri)
-        {
-            IAmazonS3 client = null;
-            // Create client from config
-            try
-            {
-                if (options != null)
-                {
-                    client = options?.CreateServiceClient<IAmazonS3>();
-                }
-            }
-            catch (TargetInvocationException e)
-            {
-                throw e.InnerException;
-            }
-            Match match = regEx.Match(s3uri.OriginalString);
-            var absolutePath = s3uri.AbsolutePath;
-            if (match.Success)
-            {
-                try
-                {
-                    Dns.GetHostEntry(match.Groups["hostOrBucket"].Value);
-                }
-                catch
-                {
-                    absolutePath = "/" + s3uri.Host + absolutePath;
-                    ((AmazonS3Config)client.Config).ForcePathStyle = true;
-                }
-            }
-            return client;
-        }
-
         public int Priority { get; set; }
         public string Key { get => Id; set { } }
 
@@ -135,7 +103,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             try
             {
                 // TODO Try a resume
-                var tx = new TransferUtility(CreateS3Client(s3Resource.Uri));
+                S3WebRequest s3WebRequest = (S3WebRequest)(s3Resource.Request as S3WebRequest).CloneRequest(s3Resource.Uri);
+                var tx = new TransferUtility(s3WebRequest.S3Client);
                 TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
                 SetRequestParametersWithUri(s3Resource.Uri, ur);
 
@@ -174,36 +143,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         private void SetRequestParametersWithUri(Uri uri, TransferUtilityUploadRequest ur)
         {
-            try
-            {
-                AmazonS3Uri amazonS3Uri = new AmazonS3Uri(uri);
-                ur.BucketName = amazonS3Uri.Bucket;
-                ur.Key = amazonS3Uri.Key;
-                return;
-            }
-            catch { }
-            Match match = regEx.Match(uri.OriginalString);
-            var absolutePath = uri.AbsolutePath;
-            if (match.Success)
-            {
-                try
-                {
-                    Dns.GetHostEntry(match.Groups["hostOrBucket"].Value);
-                }
-                catch
-                {
-                    absolutePath = "/" + uri.Host + absolutePath;
-                }
-
-                var pathParts = absolutePath.Split('/');
-                if (pathParts.Length >= 2 && !string.IsNullOrEmpty(pathParts[1]))
-                {
-                    if (string.IsNullOrEmpty(ur.BucketName))
-                        ur.BucketName = pathParts[1];
-                    if (string.IsNullOrEmpty(ur.Key))
-                        ur.Key = string.Join("/", pathParts.Skip(2));
-                }
-            }
+            ur.BucketName = S3UriParser.GetBucketName(uri);
+            ur.Key = S3UriParser.GetKey(uri);
         }
     }
 
