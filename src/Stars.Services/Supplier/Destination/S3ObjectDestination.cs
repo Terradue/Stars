@@ -23,6 +23,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
             this.resource = resource;
         }
 
+        public string BucketName => S3UriParser.GetBucketName(s3Uri);
+
         public static S3ObjectDestination Create(string s3UriStr, IResource route)
         {
             Uri s3Uri = new Uri(s3UriStr);
@@ -70,8 +72,11 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 else
                     relPath = Path.GetDirectoryName(subroute.Uri.ToString());
             }
-            var newFilePath = Path.Join(Path.GetDirectoryName(s3Uri.AbsolutePath), relPath, filename);
-            Uri newUri = new Uri(s3Uri, newFilePath);
+            var newFilePath = Path.Join(relPath, filename);
+            Uri newUri = new Uri(string.Format("s3://" + Path.Join(
+                                               S3UriParser.GetBucketName(s3Uri),
+                                               Path.GetDirectoryName(S3UriParser.GetKey(s3Uri)),
+                                               newFilePath)));
             return new S3ObjectDestination(newUri, subroute);
         }
 
