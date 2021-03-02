@@ -30,7 +30,7 @@ namespace Terradue.Stars.Services.Processing
         protected virtual BlockingStream GetTarStream(IAsset asset)
         {
             const int chunk = 4096;
-            BlockingStream blockingStream = new BlockingStream();
+            BlockingStream blockingStream = new BlockingStream(1000);
             asset.GetStreamable().GetStreamAsync()
                 .ContinueWith(task =>
                 {
@@ -44,6 +44,7 @@ namespace Terradue.Stars.Services.Processing
                             read = stream.Read(buffer, 0, chunk);
                             blockingStream.Write(buffer, 0, read);
                         } while (read == chunk);
+                        blockingStream.Close();
                     });
                 });
             return blockingStream;
@@ -75,60 +76,84 @@ namespace Terradue.Stars.Services.Processing
         public Task<IDictionary<string, IAsset>> ExtractTar(Stream tarStream, Func<TarEntryAsset, IDestination, CarrierManager, Task<IAsset>> tarEntryAction, IDestination destination, CarrierManager carrierManager)
         {
             Dictionary<string, IAsset> extractedAssets = new Dictionary<string, IAsset>();
-            var buffer = new byte[100];
+            string longLink = null;
             while (true)
             {
+                var buffer = new byte[100];
                 tarStream.Read(buffer, 0, 100);
                 var name = Encoding.ASCII.GetString(buffer);
-                name = name.Substring(0, name.IndexOf('\0'));
+                if (name.IndexOf('\0') >= 0)
+                    name = name.Substring(0, name.IndexOf('\0'));
                 if (String.IsNullOrWhiteSpace(name))
                     break;
                 buffer = new byte[24];
                 tarStream.Read(buffer, 0, 24);
                 buffer = new byte[12];
                 tarStream.Read(buffer, 0, 12);
-                var size = Convert.ToInt64(Encoding.UTF8.GetString(buffer, 0, 12).Trim('\0').Trim(), 8);
-
+                string sizestr = Encoding.UTF8.GetString(buffer, 0, 12).Trim('\0').Trim();
+                int size = 0;
+                if (!string.IsNullOrEmpty(sizestr))
+                    size = Convert.ToInt32(sizestr, 8);
                 buffer = new byte[376];
                 tarStream.Read(buffer, 0, 376);
 
-                BlockingStream blockingStream = new BlockingStream(Convert.ToUInt64(size));
-
-                TarEntryAsset tarEntryAsset = new TarEntryAsset(name, Convert.ToUInt64(size), blockingStream);
-
-                const int chunk = 81920;
-                long totalRead = 0;
-                var extractTask = Task.Factory.StartNew((state) =>
+                if (longLink != null)
                 {
-                    int chunkSize = chunk;
-                    int read = 0;
-                    if (size < chunk)
-                        chunkSize = Convert.ToInt32(size);
-                    var buffer = new byte[chunk];
-                    do
+                    name = longLink;
+                    longLink = null;
+                }
+
+                if (name.Contains("@LongLink"))
+                {
+                    buffer = new byte[size];
+                    tarStream.Read(buffer, 0, size);
+                    longLink = Encoding.ASCII.GetString(buffer);
+                    longLink = longLink.Substring(0, longLink.IndexOf('\0'));
+                    size = 0;
+                }
+
+                if (size > 0)
+                {
+
+                    BlockingStream blockingStream = new BlockingStream(Convert.ToUInt64(size));
+
+                    TarEntryAsset tarEntryAsset = new TarEntryAsset(name, Convert.ToUInt64(size), blockingStream);
+
+                    const int chunk = 81920;
+                    long totalRead = 0;
+                    var extractTask = Task.Factory.StartNew((state) =>
                     {
-                        try
+                        int chunkSize = chunk;
+                        int read = 0;
+                        if (size < chunk)
+                            chunkSize = Convert.ToInt32(size);
+                        var buffer = new byte[chunk];
+                        do
                         {
-                            read = tarStream.Read(buffer, 0, chunkSize);
-                            blockingStream.Write(buffer, 0, read);
-                        }
-                        catch (Exception e)
-                        {
-                            logger.LogWarning(e.Message);
-                        }
-                        totalRead += read;
-                        if (size < (totalRead + chunk))
-                            chunkSize = Convert.ToInt32(size - totalRead);
-                        buffer = new byte[chunk];
-                    } while (totalRead < size);
-                    blockingStream.Close();
-                }, null, TaskCreationOptions.AttachedToParent);
+                            try
+                            {
+                                read = tarStream.Read(buffer, 0, chunkSize);
+                                blockingStream.Write(buffer, 0, read);
+                            }
+                            catch (Exception e)
+                            {
+                                logger.LogWarning(e.Message);
+                            }
+                            totalRead += read;
+                            if (size < (totalRead + chunk))
+                                chunkSize = Convert.ToInt32(size - totalRead);
+                            buffer = new byte[chunk];
+                        } while (totalRead < size);
+                        blockingStream.Close();
+                    }, null, TaskCreationOptions.AttachedToParent);
 
-                extractedAssets.Add(name, tarEntryAction(tarEntryAsset, destination, carrierManager).GetAwaiter().GetResult());
+                    extractedAssets.Add(name, tarEntryAction(tarEntryAsset, destination, carrierManager).GetAwaiter().GetResult());
 
-                if ( !extractTask.IsCompleted ){
-                    // Read until the end of the entry
-                    blockingStream.CopyTo(Stream.Null);
+                    if (!extractTask.IsCompleted)
+                    {
+                        // Read until the end of the entry
+                        blockingStream.CopyTo(Stream.Null);
+                    }
                 }
 
                 var pos = tarStream.Position;

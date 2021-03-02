@@ -41,7 +41,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             FileInfo file = localRoute.File;
             using (FileStream fileStream = file.Create())
             {
-                await stream.CopyToAsync(fileStream);
+                await stream.CopyToAsync(fileStream, 4096);
                 await fileStream.FlushAsync();
             }
         }

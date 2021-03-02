@@ -417,7 +417,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://catalog.terradue.com/sentinel2/search?uid=S2B_MSIL1C_20210105T100319_N0209_R122_T33TUF_20210105T111236&do=[terradue]",
+                "https://catalog.charter.uat.esaportal.eu/charter/search?format=atom&uid=802-TSX1_SAR__EEC_RE___SM_S_SRA_20160324T215413_20160324T215421E",
                 "-v",
                 "-r",
                 "4",
