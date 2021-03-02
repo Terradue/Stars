@@ -79,7 +79,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     using (FileStream fileStream = file.OpenWrite())
                     {
                         fileStream.Seek(0, SeekOrigin.End);
-                        await stream.CopyToAsync(fileStream);
+                        await stream.CopyToAsync(fileStream, 131072);
                         await fileStream.FlushAsync();
                     }
                 }
@@ -88,7 +88,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     stream = await streamable.GetStreamAsync();
                     using (FileStream fileStream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                     {
-                        await stream.CopyToAsync(fileStream);
+                        await stream.CopyToAsync(fileStream, 131072);
                         await fileStream.FlushAsync();
                     }
                 }

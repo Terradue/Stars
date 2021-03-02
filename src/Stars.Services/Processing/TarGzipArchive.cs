@@ -28,6 +28,7 @@ namespace Terradue.Stars.Services.Processing
                             read = stream.Read(buffer, 0, chunk);
                             blockingStream.Write(buffer, 0, read);
                         } while (read == chunk);
+                        blockingStream.Close();
                     });
                 });
             return blockingStream;
