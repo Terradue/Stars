@@ -102,7 +102,7 @@ namespace Terradue.Stars.Services
                 var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset);
                 clonedAsset.Uri = route.Uri;
                 clonedAsset.ContentLength = route.ContentLength > 0 ? route.ContentLength : clonedAsset.ContentLength;
-                clonedAsset.MediaType = route.ContentType;
+                clonedAsset.MediaType = assetOrigin.ContentType?.MediaType != "application/octet-stream" ? assetOrigin.ContentType : route.ContentType;
                 return new StacAssetAsset(clonedAsset, null);
             }
             var genericAsset = new GenericAsset(route, assetOrigin.Title, assetOrigin.Roles);
