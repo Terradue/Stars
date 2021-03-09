@@ -74,8 +74,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 return s3Route;
             }
             s3Route = await StreamToS3Object(streamable, s3Route, overwrite);
-            if (streamable.ContentLength > 0 && Convert.ToUInt64(s3Route.ContentLength) != streamable.ContentLength)
-                throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", s3Route.ContentLength, streamable.ContentLength));
+            // if (streamable.ContentLength > 0 && Convert.ToUInt64(s3Route.ContentLength) != streamable.ContentLength)
+                // throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", s3Route.ContentLength, streamable.ContentLength));
             return s3Route;
         }
 
