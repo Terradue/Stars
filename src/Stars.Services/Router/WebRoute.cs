@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Net.S3;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
 using Terradue.Stars.Interface;
@@ -28,17 +29,24 @@ namespace Terradue.Stars.Services.Router
         public static WebRoute Create(Uri uri, ulong contentLength = 0, ICredentials credentials = null)
         {
             ICredentials creds = credentials;
-            WebRequest request = CreateWebRequest(uri, creds);
-            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo.Contains(":"))
+            Uri requestUri = uri;
+            // URL substitution
+            var urlFind = Environment.GetEnvironmentVariable("STARS_URL_FIND");
+            var urlReplace = Environment.GetEnvironmentVariable("STARS_URL_REPLACE");
+            if ( !string.IsNullOrEmpty(urlFind) && !string.IsNullOrEmpty(urlReplace) ){
+                requestUri = new Uri(Regex.Replace(uri.ToString(), urlFind, urlReplace));
+            }
+            WebRequest request = CreateWebRequest(requestUri, creds);
+            if (!string.IsNullOrEmpty(requestUri.UserInfo) && requestUri.UserInfo.Contains(":"))
             {
-                request.Credentials = new NetworkCredential(uri.UserInfo.Split(':')[0], uri.UserInfo.Split(':')[1]);
+                request.Credentials = new NetworkCredential(requestUri.UserInfo.Split(':')[0], requestUri.UserInfo.Split(':')[1]);
                 try
                 {
                     request.PreAuthenticate = true;
                 }
                 catch { }
             }
-            if (!string.IsNullOrEmpty(uri.UserInfo) && uri.UserInfo == "preauth")
+            if (!string.IsNullOrEmpty(requestUri.UserInfo) && requestUri.UserInfo == "preauth")
             {
                 request.PreAuthenticate = true;
             }
