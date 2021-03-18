@@ -606,6 +606,10 @@
                 "--output",
                 "/tmp/charter"
             ],
+            "env": {
+                "STARS_URL_FIND": "https?://supervisor.charter.uat.esaportal.eu/catalog",
+                "STARS_URL_REPLACE": "http://acceptance-supervisor-catalog-stac.cpe/catalog",
+            },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
