@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -42,7 +43,7 @@ namespace Terradue.Stars.Services.Router
             return new List<IResourceLink>();
         }
 
-        public IReadOnlyList<IResource> GetRoutes()
+        public IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
         {
             return routes.ToList();
         }

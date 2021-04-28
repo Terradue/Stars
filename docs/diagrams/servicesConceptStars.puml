@@ -14,8 +14,8 @@ skinparam usecase {
     BackgroundColor<< Harvester >> LimeGreen
     BorderColor<< Harvester >> LimeGreen
 
-    BackgroundColor<< Coordinator >> Khaki
-    BorderColor<< Coordinator >> Khaki
+    BackgroundColor<< Store >> Khaki
+    BorderColor<< Store >> Khaki
 
     BackgroundColor<< Processing >> Orchid
     BorderColor<< Processing >> Orchid
@@ -40,13 +40,13 @@ skinparam usecase {
 (Supplier) <<Supplier>> as supplier
 (Harvester) <<Harvester>> as harvester
 (Processing) <<Processing>> as processing
-(Coordinator) <<Coordinator>> as coordinator
+(Store) <<Store>> as store
 
 catalog -up-> router
 catalog -left-> supplier
 catalog -right-> harvester
 catalog --> processing
-catalog --> coordinator
+catalog --> store
 
 
 

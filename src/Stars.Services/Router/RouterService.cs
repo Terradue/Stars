@@ -87,7 +87,7 @@ namespace Terradue.Stars.Services.Router
             }
 
             // Let's get sub routes
-            IReadOnlyList<IResource> subroutes = catalogNode.GetRoutes();
+            IReadOnlyList<IResource> subroutes = catalogNode.GetRoutes(credentialsManager);
 
             state = await beforeBranchingFunction.Invoke(catalogNode, router, state);
 

@@ -98,10 +98,5 @@ namespace Terradue.Stars.Services.Supplier
         {
             throw new NotImplementedException();
         }
-
-        public Task Remove()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

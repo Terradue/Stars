@@ -5,14 +5,12 @@ using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Supplier.Destination;
-using Stac.Catalog;
 using Stac;
 using System.Collections.Generic;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Translator;
 using System.IO;
-using Stac.Item;
 using System.Net;
 using System.Linq;
 using Terradue.Stars.Services.Router;
@@ -108,16 +106,17 @@ namespace Terradue.Stars.Services.Store
 
         private async Task LoadRootCatalogNode()
         {
-            IStacCatalog rootCatalog = await StacCatalog.LoadUri(storeOptions.RootCatalogue.Uri);
+            var rootCatalogRoute = WebRoute.Create(storeOptions.RootCatalogue.Uri, credentials: credentials);
+            IStacCatalog rootCatalog = StacConvert.Deserialize<IStacCatalog>(await rootCatalogRoute.ReadAsString());
             if (!rootCatalog.Id.Equals(storeOptions.RootCatalogue.Identifier))
                 throw new KeyNotFoundException(string.Format("No catalog with ID {0} at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri));
-            rootCatalogNode = new StacCatalogNode(rootCatalog);
+            rootCatalogNode = new StacCatalogNode(rootCatalog, storeOptions.RootCatalogue.Uri);
         }
 
         private async Task InitRootCatalogNode()
         {
             StacCatalog stacCatalog = new StacCatalog(storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Description);
-            StacCatalogNode catalogNode = new StacCatalogNode(stacCatalog);
+            StacCatalogNode catalogNode = new StacCatalogNode(stacCatalog, storeOptions.RootCatalogue.DestinationUri);
             logger.LogInformation("Trying to init a root catalog {0} on {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.DestinationUri);
             rootCatalogDestination = await destinationManager.CreateDestination(storeOptions.RootCatalogue.DestinationUrl, catalogNode);
             rootCatalogDestination.PrepareDestination();

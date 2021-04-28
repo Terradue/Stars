@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public string Relationship => stacLink.RelationshipType;
 
-        public ContentType ContentType => stacLink.MediaType;
+        public ContentType ContentType => stacLink.ContentType;
 
         public string Title => stacLink.Title;
 

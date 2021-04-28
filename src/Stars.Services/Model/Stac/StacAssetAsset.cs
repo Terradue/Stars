@@ -2,14 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
-using Stac.Catalog;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 
 using Terradue.Stars.Services.Router;
 
@@ -18,14 +15,11 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private StacAsset asset;
-        private WebRoute webRoute;
-        private readonly ICredentials credentials;
         private readonly Uri uri;
 
-        public StacAssetAsset(StacAsset asset, StacItemNode parent, System.Net.ICredentials credentials = null)
+        public StacAssetAsset(StacAsset asset, StacItemNode parent)
         {
             this.asset = asset;
-            this.credentials = credentials;
             if (asset.Uri.IsAbsoluteUri)
                 this.uri = asset.Uri;
             else
@@ -91,34 +85,8 @@ namespace Terradue.Stars.Services.Model.Stac
             if (asset is IStreamable)
                 return asset as IStreamable;
 
-            return WebRoute;
+            return WebRoute.Create(uri);
 
-        }
-
-        public WebRoute WebRoute
-        {
-            get
-            {
-                if (uri.IsAbsoluteUri)
-                {
-                    if (webRoute == null)
-                    {
-                        // try
-                        // {
-                        webRoute = WebRoute.Create(uri, asset.ContentLength, credentials);
-                        // }
-                        // catch { }
-                    }
-                    return webRoute;
-                }
-                return null;
-            }
-        }
-
-        public async Task Remove()
-        {
-            if (WebRoute != null)
-                await WebRoute.Remove();
         }
     }
 }

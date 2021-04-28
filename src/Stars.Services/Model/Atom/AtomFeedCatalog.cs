@@ -6,13 +6,6 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using Newtonsoft.Json;
-using Stac;
-using Stac.Catalog;
-using Stac.Collection;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Services.Router;
 using Terradue.ServiceModel.Syndication;
 using System.Net;
 using Terradue.Stars.Interface;
@@ -59,7 +52,7 @@ namespace Terradue.Stars.Services.Model.Atom
             return feed.Links.Select(l => new AtomResourceLink(l)).ToList();
         }
 
-        public IReadOnlyList<IResource> GetRoutes()
+        public IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
         {
             return feed.Items.Select(item => new AtomItemNode(item, new Uri(Uri, item.Id), credentials)).Cast<IResource>().ToList();
         }

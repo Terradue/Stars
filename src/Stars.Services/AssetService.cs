@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Stac;
@@ -24,14 +25,21 @@ namespace Terradue.Stars.Services
         protected readonly SupplierManager suppliersManager;
         protected readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
+        private readonly ICredentials credentials;
 
-        public AssetService(ILogger<AssetService> logger, RoutersManager routersManager, SupplierManager suppliersManager, TranslatorManager translatorManager, CarrierManager carrierManager)
+        public AssetService(ILogger<AssetService> logger,
+                            RoutersManager routersManager,
+                            SupplierManager suppliersManager,
+                            TranslatorManager translatorManager,
+                            CarrierManager carrierManager,
+                            ICredentials credentials)
         {
             this.logger = logger;
             this.routersManager = routersManager;
             this.suppliersManager = suppliersManager;
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
+            this.credentials = credentials;
         }
 
         public async Task<AssetImportReport> ImportAssets(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetsFilters)
@@ -98,8 +106,8 @@ namespace Terradue.Stars.Services
         private IAsset MakeAsset(IResource route, IAsset assetOrigin)
         {
             if (route is IAsset) return route as IAsset;
-            if (assetOrigin is StacAssetAsset){
-                var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset);
+            if (assetOrigin is StacAssetAsset && route is StacItem){
+                var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset, route as StacItem);
                 clonedAsset.Uri = route.Uri;
                 clonedAsset.ContentLength = route.ContentLength > 0 ? route.ContentLength : clonedAsset.ContentLength;
                 clonedAsset.MediaType = assetOrigin.ContentType?.MediaType != "application/octet-stream" ? assetOrigin.ContentType : route.ContentType;
@@ -144,11 +152,12 @@ namespace Terradue.Stars.Services
             foreach (var asset in assetsContainer.Assets)
             {
                 try {
-                    await asset.Value.Remove();
+                    WebRoute assetRoute = WebRoute.Create(asset.Value.Uri, 0, credentials);
+                    await assetRoute.Remove();
                 }
                 catch(Exception e)
                 {
-                    logger.LogWarning("Cannot delete asset {0} : {1}", asset.Key, e.Message);
+                    logger.LogWarning("Cannot delete asset {0}({2}) : {1}", asset.Key, e.Message, asset.Value.Uri);
                     assetDeleteReport.AssetsExceptions.Add(asset.Key, e);
                 }
             }
