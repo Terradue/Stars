@@ -52,7 +52,7 @@ namespace Stars.Services.Model.Stac
             foreach (var itemLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "item"))
             {
                 WebRoute itemRoute = itemLink.CreateRoute(stacObject, baseUri, stacRouter.Credentials);
-                items.Add(itemRoute.Uri, await stacRouter.Route(itemRoute) as StacItem);
+                items.Add(itemRoute.Uri, StacConvert.Deserialize<StacItem>(await itemRoute.GetStreamAsync()));
             }
             return items;
         }
