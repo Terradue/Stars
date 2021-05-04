@@ -121,7 +121,7 @@ namespace Terradue.Stars.Services.Store
             logger.LogInformation("Trying to init a root catalog {0} on {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.DestinationUri);
             rootCatalogDestination = await destinationManager.CreateDestination(storeOptions.RootCatalogue.DestinationUrl, catalogNode);
             rootCatalogDestination.PrepareDestination();
-            await StoreNodeAtDestination(catalogNode, rootCatalogDestination);
+            await StoreResourceAtDestination(catalogNode, rootCatalogDestination);
             logger.LogInformation("Root catalog {0} created at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri);
             await LoadRootCatalogNode();
 
@@ -130,18 +130,18 @@ namespace Terradue.Stars.Services.Store
         public async Task<StacItemNode> StoreItemNodeAtDestination(StacItemNode stacItemNode, IDestination destination)
         {
             PrepareStacItemForDestination(stacItemNode, destination);
-            return await StoreNodeAtDestination(stacItemNode, destination) as StacItemNode;
+            return await StoreResourceAtDestination(stacItemNode, destination) as StacItemNode;
         }
 
         public async Task<StacCatalogNode> StoreCatalogNodeAtDestination(StacCatalogNode stacCatalogNode, IDestination destination)
         {
             PrepareStacCatalogueForDestination(stacCatalogNode, destination);
-            return await StoreNodeAtDestination(stacCatalogNode, destination) as StacCatalogNode;
+            return await StoreResourceAtDestination(stacCatalogNode, destination) as StacCatalogNode;
         }
 
-        private async Task<StacNode> StoreNodeAtDestination(StacNode stacNode, IDestination destination)
+        public async Task<IResource> StoreResourceAtDestination(IResource resource, IDestination destination)
         {
-            var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(stacNode, destination);
+            var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(resource, destination);
             IResource deliveredResource = null;
             foreach (var delivery in stacDeliveries)
             {
@@ -150,18 +150,19 @@ namespace Terradue.Stars.Services.Store
             }
 
             if (deliveredResource == null)
-                throw new InvalidDataException(string.Format("No carrier could store node {0} at {1}", stacNode.Id, destination));
+                throw new InvalidDataException(string.Format("No carrier could store resource from {0} to {1}", resource.Uri, destination));
 
+            // the returned resource should use the front interface if defined
             if (rootCatalogNode != null)
             {
                 Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
                 var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri));
 
-                return (await _stacRouter.Route(publicResource)) as StacNode;
+                return publicResource;
             }
             else
             {
-                return (await _stacRouter.Route(deliveredResource)) as StacNode;
+                return deliveredResource;
             }
         }
 
@@ -298,6 +299,11 @@ namespace Terradue.Stars.Services.Store
                     continue;
                 }
             }
+        }
+
+        public async Task<IEnumerable<StacAssetAsset>> GetAssetsInFolder(string relPath)
+        {
+            throw new NotImplementedException();
         }
     }
 }
