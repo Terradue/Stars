@@ -11,7 +11,7 @@ Spatio Temporal Asset Router Services
 <h3 align="center">
 
   <!-- [![Build Status](https://travis-ci.com/Terradue/DotNetStac.svg?branch=develop)](https://travis-ci.com/Terradue/DotNetStac) -->
-  [![NuGet](https://img.shields.io/nuget/vpre/Terradue.Stars.Services)](https://www.nuget.org/packages/Terradue.Stars.Services/)
+  [![NuGet](https://img.shields.io/nuget/vpre/Terradue.Stars)](https://www.nuget.org/packages/Terradue.Stars)
   [![License](https://img.shields.io/badge/license-AGPL3-blue.svg)](LICENSE)
   <!-- [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Terradue/DotNetStac/develop?filepath=example.ipynb) -->
 
@@ -27,15 +27,15 @@ Spatio Temporal Asset Router Services
   <a href="#Developing">Developing</a>
 </h3>
 
-**Stars** is a set of services for working with Spatio Temporal Catalog such as [STAC](https://stacspec.org) but not only.
+**Stars** is a set of .Net middleware for working with Spatio Temporal Catalog such as [STAC](https://stacspec.org) but not only.
 
-All [services are built around the **Catalog**](#Services) :
+All [services are built around the **Catalog Resource**](#catalog-resource) :
 
-* **Router** is a service for navigating a catalog.
-* **Supplier** service enables Data Provider for the *assets* of the catalog.
-* **Harvester** allows the assets to be processed by various modules for extracting additional information.
-* **Processing** the *assets* to enhance their availibility.
-* **Coordinator** for linking the different resources in a catalog. For instance, by gathering items in a collection.
+* **Route** service for navigating the catalog resource.
+* **Supply** service enables Data Providers for the *assets* of the catalog.
+* **Harvest** allows the assets to be processed by various modules for extracting additional information.
+* **Process** enable *assets* enhancement.
+* **Store** for linking the different resources in a catalog. For instance, by gathering items in a collection.
 
 ***
 
@@ -47,6 +47,8 @@ They can be combined togheter to perform simples operations like listing a catal
 <h4 align="center">
 <IMG SRC="docs/diagrams/servicesStarsConcepts.svg" ALIGN=”left” HSPACE=”50” VSPACE=”50” height="300"/>
 </h4>
+
+### Catalog Resource
 
 ### Router
 

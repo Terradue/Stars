@@ -120,5 +120,13 @@ namespace Terradue.Stars.Services.Model.Stac
             if (WebRoute != null)
                 await WebRoute.Remove();
         }
+
+        public static StacAssetAsset CreateAsset(IResource storedResource)
+        {
+            return new StacAssetAsset(
+                StacAsset.CreateDataAsset(storedResource.Uri, storedResource.ContentType), 
+                null, null
+            );
+        }
     }
 }
