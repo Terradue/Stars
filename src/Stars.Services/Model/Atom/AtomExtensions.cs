@@ -169,5 +169,17 @@ namespace Terradue.Stars.Services.Model.Atom
             return savegeom;
         }
 
+        public static AtomFeed ToAtomFeed(this AtomItem atomItem)
+        {
+            AtomFeed feed = new AtomFeed();
+
+            List<AtomItem> items = new List<AtomItem>();
+            items.Add(atomItem);
+
+            feed.Items = items.ToArray();
+
+            return feed;
+        }
+
     }
 }
