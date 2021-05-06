@@ -6,6 +6,7 @@ using Terradue.ServiceModel.Syndication;
 using System.Net;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
+using Terradue.OpenSearch.Result;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -52,7 +53,7 @@ namespace Terradue.Stars.Services.Model.Atom
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
                 await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
-                return new AtomFeedCatalog(feedFormatter.Feed, node.Uri, credentials);
+                return new AtomFeedCatalog(new AtomFeed(feedFormatter.Feed), node.Uri, credentials);
             }
             catch (Exception)
             {
@@ -60,7 +61,7 @@ namespace Terradue.Stars.Services.Model.Atom
                 {
                     Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
                     await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create((node as IStreamable).GetStreamAsync().Result)));
-                    return new AtomItemNode(itemFormatter.Item, node.Uri, credentials);
+                    return new AtomItemNode(new AtomItem(itemFormatter.Item), node.Uri, credentials);
                 }
                 catch (Exception)
                 {

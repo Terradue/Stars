@@ -9,23 +9,24 @@ using System.Xml;
 using Terradue.ServiceModel.Syndication;
 using System.Net;
 using Terradue.Stars.Interface;
+using Terradue.OpenSearch.Result;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
     public class AtomFeedCatalog : ICatalog, IStreamable
     {
-        private readonly SyndicationFeed feed;
+        private readonly AtomFeed feed;
         private readonly Uri sourceUri;
         private readonly ICredentials credentials;
 
-        public AtomFeedCatalog(SyndicationFeed feed, Uri sourceUri, System.Net.ICredentials credentials = null)
+        public AtomFeedCatalog(AtomFeed feed, Uri sourceUri, System.Net.ICredentials credentials = null)
         {
             this.feed = feed;
             this.sourceUri = sourceUri;
             this.credentials = credentials;
         }
 
-        public SyndicationFeed AtomFeed => feed;
+        public AtomFeed AtomFeed => feed;
 
         public string Label => feed.Title != null ? feed.Title.Text : feed.Id;
 
@@ -54,7 +55,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
         {
-            return feed.Items.Select(item => new AtomItemNode(item, new Uri(Uri, item.Id), credentials)).Cast<IResource>().ToList();
+            return feed.Items.Cast<AtomItem>().Select(item => new AtomItemNode(item, new Uri(Uri, item.Id), credentials)).Cast<IResource>().ToList();
         }
 
         public async Task<Stream> GetStreamAsync()

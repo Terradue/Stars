@@ -16,23 +16,24 @@ using GeoJSON.Net.Geometry;
 using Terradue.Stars.Geometry.Atom;
 using System.Net;
 using Terradue.Stars.Interface;
+using Terradue.OpenSearch.Result;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
     public class AtomItemNode : IItem, IAssetsContainer, IStreamable
     {
-        private SyndicationItem item;
+        private AtomItem item;
         private readonly Uri sourceUri;
         private readonly ICredentials credentials;
 
-        public AtomItemNode(SyndicationItem item, Uri sourceUri, System.Net.ICredentials credentials = null)
+        public AtomItemNode(AtomItem item, Uri sourceUri, System.Net.ICredentials credentials = null)
         {
             this.item = item;
             this.sourceUri = sourceUri;
             this.credentials = credentials;
         }
 
-        public SyndicationItem AtomItem => item;
+        public AtomItem AtomItem => item;
 
         public string Label => item.Title != null ? item.Title.Text : item.Id;
 
