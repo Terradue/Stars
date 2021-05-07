@@ -156,11 +156,10 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.0/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
-                "-v",
                 "list",
-                "-i",
+                "-v",
                 "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2A_30VWN_20200830_0_L2A",
                 "-r",
                 "2"

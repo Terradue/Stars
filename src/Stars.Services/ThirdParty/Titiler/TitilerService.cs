@@ -1,0 +1,176 @@
+using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using Stac;
+using System.Linq;
+using Stac.Extensions.Projection;
+using Stac.Extensions.Eo;
+
+namespace Terradue.Stars.Services.ThirdParty.Titiler
+{
+    public class TitilerService : IThirdPartyService
+    {
+        private readonly IOptions<TitilerConfiguration> options;
+        private readonly ILogger<TitilerService> logger;
+
+        private static string[] TITILER_VALID_TYPE = new string[6] {
+            "image/vnd.stac.geotiff; cloud-optimized=true",
+            "image/tiff",
+            "image/x.geotiff",
+            "image/jp2",
+            "application/x-hdf5",
+            "application/x-hdf",
+        };
+
+        private static string[] OVERVIEW_NAMES = new string[] { "red", "green", "blue", "nir", "pan" };
+
+        public TitilerService(IOptions<TitilerConfiguration> options,
+                                   ILogger<TitilerService> logger)
+        {
+            this.options = options;
+            this.logger = logger;
+        }
+
+        public Uri Uri => Configuration?.BaseUri;
+
+        public TitilerConfiguration Configuration => options.Value;
+
+        public bool IsAvailable => Configuration != null;
+
+        public Dictionary<string, StacAsset> SelectOverviewCombinationAssets(IStacItem stacItem)
+        {
+
+            Dictionary<string, StacAsset> overviewAssets = stacItem.Assets
+                                                            .Where(a => a.Value.Roles != null)
+                                                            .Where(a => a.Value.Roles.Contains("overview") ||
+                                                                        a.Value.Roles.Contains("visual"))
+                                                            .Where(a => a.Key == "overview-trc")
+                                                            .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                                                            .Take(1)
+                                                            .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            overviewAssets = stacItem.Assets.Where(a => a.Value.Roles != null)
+                                                            .Where(a => a.Value.Roles.Contains("overview") ||
+                                                                        a.Value.Roles.Contains("visual"))
+                                                            .OrderBy(a => a.Value.GetProperty<long>("size"))
+                                                            .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                                                            .Take(1)
+                                                            .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            var projext = stacItem.GetExtension<ProjectionStacExtension>();
+
+            overviewAssets = stacItem.Assets
+                .Where(a => a.Key.Equals("red", StringComparison.InvariantCultureIgnoreCase) ||
+                            a.Key.Equals("green", StringComparison.InvariantCultureIgnoreCase) ||
+                            a.Key.Equals("blue", StringComparison.InvariantCultureIgnoreCase))
+                .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                .OrderByDescending(a => a.Key)
+                .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 3 && projext != null) return overviewAssets;
+
+            var eoStacExtension = stacItem.GetExtension<EoStacExtension>();
+            if (eoStacExtension != null)
+            {
+                overviewAssets = stacItem.Assets.Where(a =>
+                {
+                    var bands = a.Value.GetProperty<EoBandObject[]>("eo:bands");
+                    if (bands == null) return false;
+                    return bands.Any(band => OVERVIEW_NAMES.ToList().Contains(band.CommonName.ToString()));
+                })
+                .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                .OrderByDescending(a => a.Value.GetProperty<EoBandObject[]>("eo:bands").First().CommonName.ToString())
+                .Take(3)
+                .ToDictionary(a => a.Key, a => a.Value);
+            }
+            if (overviewAssets.Count >= 1 && projext != null) return overviewAssets;
+
+            overviewAssets = stacItem.Assets
+                .Where(a => a.Key == "overview")
+                .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            overviewAssets = stacItem.Assets
+                .Where(a => a.Key == "composite")
+                .Where(a => TITILER_VALID_TYPE
+                .Contains(a.Value.MediaType?.MediaType)).ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            if (eoStacExtension != null)
+            {
+                overviewAssets = stacItem.Assets.Where(a =>
+                {
+                    var bands = a.Value.GetProperty<EoBandObject[]>("eo:bands");
+                    if (bands == null) return false;
+                    return bands.Any(band => OVERVIEW_NAMES.ToList().Contains(band.CommonName.ToString()));
+                })
+                .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                .ToDictionary(a => a.Key, a => a.Value);
+            }
+            if (overviewAssets.Count >= 1) return overviewAssets;
+
+            return new Dictionary<string, StacAsset>();
+        }
+
+        public Uri BuildServiceUri(Uri stacItemUri, IDictionary<string, StacAsset> overviewAssets)
+        {
+            Uri finalItemUri = MapSource(stacItemUri);
+
+            return new Uri(this.Uri,
+                string.Format("/stac/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?url={0}&assets={1}&rescale={2}&color_formula=&resampling_method=average",
+                    finalItemUri,
+                    string.Join(',', overviewAssets.Keys.Take(3)),
+                    string.Join(',', GetScale(overviewAssets.Values.First())),
+                    GetColorFormula(overviewAssets)
+                    ));
+        }
+
+        private Uri MapSource(Uri stacItemUri)
+        {
+            if ( options.Value.UrlSourceMappings.ContainsKey(stacItemUri.ToString()) )
+                return new Uri(options.Value.UrlSourceMappings[stacItemUri.ToString()]);
+            return stacItemUri;
+        }
+
+        private static int[] GetScale(StacAsset stacAsset)
+        {
+            if (stacAsset.Roles.Contains("visual") ||
+                stacAsset.Roles.Contains("overview"))
+                return new int[2] { 0, 255 };
+            if (stacAsset.Roles.Contains("sigma0") ||
+                stacAsset.Roles.Contains("beta0") ||
+                stacAsset.Roles.Contains("gamma0")
+                )
+            {
+                if (stacAsset.Roles.Contains("decibel"))
+                {
+                    return new int[2] { -25, 5 };
+                }
+            }
+            if (stacAsset.Roles.Contains("radiance") ||
+                stacAsset.Roles.Contains("reflectance")
+                )
+            {
+                return new int[2] { 0, 10000 };
+            }
+            return new int[2] { 0, 255 };
+        }
+
+        private object GetColorFormula(IDictionary<string, StacAsset> overviewAssets)
+        {
+            if (overviewAssets.Count == 1 &&
+                 (overviewAssets.First().Value.SemanticRoles.Contains("visual") ||
+                 overviewAssets.First().Value.SemanticRoles.Contains("overview")) &&
+                 overviewAssets.First().Value.SemanticRoles.Contains("reflectance"))
+                return "";
+
+            if (overviewAssets.Count == 3 &&
+                 overviewAssets.All(a => a.Value.SemanticRoles.Contains("reflectance")))
+                return "Gamma RGB 1.5 Saturation 1.1 Sigmoidal RGB 15 0.35";
+            return "";
+        }
+    }
+}

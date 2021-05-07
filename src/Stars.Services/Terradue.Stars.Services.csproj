@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Terradue.Stars</Title>
     <Description>Stars is a set of services for working with Spatio Temporal Catalog such as STAC but not only</Description>
-    <Version>0.6.21</Version>
+    <Version>0.7.0</Version>
     <AssemblyName>Terradue.Stars.Services</AssemblyName>
     <PackageId>Terradue.Stars</PackageId>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -21,9 +21,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.9"/>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.9"/>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.9" />
     <PackageReference Include="Terradue.ServiceModel.Syndication" Version="1.1.1"/>
     <PackageReference Include="Terradue.ServiceModel.Ogc" Version="2.2.0"/>
     <PackageReference Include="DotNetStac" Version="0.6.2"/>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.5" />
     <PackageReference Include="Html2Markdown" Version="3.3.1.407"/>
     <PackageReference Include="Terradue.Metadata.EarthObservation" Version="1.6.7"/>
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0"/>
