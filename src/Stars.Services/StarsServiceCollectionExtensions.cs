@@ -1,20 +1,14 @@
 using System;
 using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Interface.Processing;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Services.Credentials;
 using System.Linq;
@@ -27,7 +21,6 @@ using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router.Translator;
 using System.Net.S3;
 using Amazon.Extensions.NETCore.Setup;
-using Terradue.Stars.Services.ThirdParty.Titiler;
 
 namespace Terradue.Stars.Services
 {
