@@ -8,6 +8,8 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
     {
         public TitilerConfiguration()
         {
+            BaseUrl = "https://api.cogeo.xyz/";
+            UrlSourceMappings = new Dictionary<string, string>();
         }
 
         public string BaseUrl { get; set; }
@@ -16,6 +18,8 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
         public Uri BaseUri => new Uri(BaseUrl);
 
         public string Identifier { get; set; }
+
+        public IDictionary<string, string> UrlSourceMappings { get; set; }
 
     }
 }

@@ -135,7 +135,7 @@ namespace Terradue.Stars.Services.Store
         public async Task<StacCatalogNode> StoreCatalogNodeAtDestination(StacCatalogNode stacCatalogNode, IDestination destination)
         {
             PrepareStacCatalogueForDestination(stacCatalogNode, destination);
-            return  await _stacRouter.Route(await StoreResourceAtDestination(stacCatalogNode, destination)) as StacCatalogNode;
+            return await _stacRouter.Route(await StoreResourceAtDestination(stacCatalogNode, destination)) as StacCatalogNode;
         }
 
         public async Task<IResource> StoreResourceAtDestination(IResource resource, IDestination destination)
@@ -233,6 +233,8 @@ namespace Terradue.Stars.Services.Store
         {
             if (!uri.IsAbsoluteUri) throw new InvalidDataException("Destination URI must be absolute");
 
+            Uri frontUri = uri;
+
             // Check the link uri can be relative to the backend root catalog
             var relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(uri);
             // If yes, then make an absolute uri from frontend
@@ -240,8 +242,10 @@ namespace Terradue.Stars.Services.Store
             {
                 relativeUri = RootCatalogNode.Uri.MakeRelativeUri(uri);
             }
-            if (relativeUri.IsAbsoluteUri) return uri;
-            return new Uri(RootCatalogNode.Uri, relativeUri);
+            if (!relativeUri.IsAbsoluteUri)
+                frontUri = new Uri(RootCatalogNode.Uri, relativeUri);
+
+            return frontUri;
         }
 
         public Uri MapToBackendUri(Uri uri)
