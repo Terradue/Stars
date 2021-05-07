@@ -38,7 +38,7 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
 
         public bool IsAvailable => Configuration != null;
 
-        public Dictionary<string, StacAsset> SelectOverviewCombinationAssets(IStacItem stacItem)
+        public Dictionary<string, StacAsset> SelectOverviewCombinationAssets(StacItem stacItem)
         {
 
             Dictionary<string, StacAsset> overviewAssets = stacItem.Assets
@@ -60,7 +60,7 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
                                                             .ToDictionary(a => a.Key, a => a.Value);
             if (overviewAssets.Count == 1) return overviewAssets;
 
-            var projext = stacItem.GetExtension<ProjectionStacExtension>();
+            var projext = stacItem.ProjectionExtension();
 
             overviewAssets = stacItem.Assets
                 .Where(a => a.Key.Equals("red", StringComparison.InvariantCultureIgnoreCase) ||
@@ -69,10 +69,10 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
                 .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
                 .OrderByDescending(a => a.Key)
                 .ToDictionary(a => a.Key, a => a.Value);
-            if (overviewAssets.Count == 3 && projext != null) return overviewAssets;
+            if (overviewAssets.Count == 3 && projext.IsDeclared) return overviewAssets;
 
-            var eoStacExtension = stacItem.GetExtension<EoStacExtension>();
-            if (eoStacExtension != null)
+            var eoStacExtension = stacItem.EoExtension();
+            if (eoStacExtension.IsDeclared)
             {
                 overviewAssets = stacItem.Assets.Where(a =>
                 {
