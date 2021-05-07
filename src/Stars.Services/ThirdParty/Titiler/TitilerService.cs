@@ -117,8 +117,8 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
 
         public Uri BuildServiceUri(Uri stacItemUri, IDictionary<string, StacAsset> overviewAssets)
         {
-            Uri finalItemUri = stacItemUri;
-           
+            Uri finalItemUri = MapSource(stacItemUri);
+
             return new Uri(this.Uri,
                 string.Format("/stac/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?url={0}&assets={1}&rescale={2}&color_formula=&resampling_method=average",
                     finalItemUri,
@@ -126,6 +126,13 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
                     string.Join(',', GetScale(overviewAssets.Values.First())),
                     GetColorFormula(overviewAssets)
                     ));
+        }
+
+        private Uri MapSource(Uri stacItemUri)
+        {
+            if ( options.Value.UrlSourceMappings.ContainsKey(stacItemUri.ToString()) )
+                return new Uri(options.Value.UrlSourceMappings[stacItemUri.ToString()]);
+            return stacItemUri;
         }
 
         private static int[] GetScale(StacAsset stacAsset)

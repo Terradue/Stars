@@ -27,13 +27,14 @@ using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router.Translator;
 using System.Net.S3;
 using Amazon.Extensions.NETCore.Setup;
+using Terradue.Stars.Services.ThirdParty.Titiler;
 
 namespace Terradue.Stars.Services
 {
     public static class StarsServiceCollectionExtensions
     {
 
-        public static IServiceCollection AddStarsServices(this IServiceCollection services, Action<IServiceProvider, StarsConfiguration> configure)
+        public static IServiceCollection AddStarsManagedServices(this IServiceCollection services, Action<IServiceProvider, StarsConfiguration> configure)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             if (configure == null) throw new ArgumentNullException(nameof(configure));
