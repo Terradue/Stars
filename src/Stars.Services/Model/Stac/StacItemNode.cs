@@ -14,6 +14,10 @@ namespace Terradue.Stars.Services.Model.Stac
         {
         }
 
+        public static StacItemNode CreateUnlocatedNode(StacItem stacItem){
+            return new StacItemNode(stacItem, new Uri(stacItem.Id + ".json", UriKind.Relative));
+        }
+
         public StacItem StacItem => stacObject as StacItem;
 
         public override ResourceType ResourceType => ResourceType.Item;
