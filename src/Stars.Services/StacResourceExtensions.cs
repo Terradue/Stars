@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Stac;
+using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model.Stac;
 
@@ -19,7 +20,7 @@ namespace Terradue.Stars.Services
                     continue;
                 }
                 stacItem.Assets[asset.Key].Uri = asset.Value.Uri;
-                stacItem.Assets[asset.Key].ContentLength = asset.Value.ContentLength;
+                stacItem.Assets[asset.Key].FileExtension().Size = asset.Value.ContentLength;
                 stacItem.Assets[asset.Key].MediaType = asset.Value.ContentType;
                 stacItem.Assets[asset.Key].Title = asset.Value.Title;
             }
@@ -27,8 +28,10 @@ namespace Terradue.Stars.Services
 
         public static StacAsset CreateStacAsset(this IAsset asset, StacItem stacItem)
         {
-            if ( asset is StacAssetAsset ) return new StacAsset((asset as StacAssetAsset).StacAsset, stacItem);
-            return new StacAsset(stacItem, asset.Uri, asset.Roles, asset.Title, asset.ContentType, asset.ContentLength);
+            if (asset is StacAssetAsset) return new StacAsset((asset as StacAssetAsset).StacAsset, stacItem);
+            var stacAsset = new StacAsset(stacItem, asset.Uri, asset.Roles, asset.Title, asset.ContentType);
+            stacAsset.FileExtension().Size = asset.ContentLength;
+            return stacAsset;
         }
 
         public static void UpdateLinks(this IStacCatalog catalogNode, IEnumerable<IResource> resources)

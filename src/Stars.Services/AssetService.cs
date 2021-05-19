@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Stac;
+using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
@@ -109,7 +110,7 @@ namespace Terradue.Stars.Services
             if (assetOrigin is StacAssetAsset && route is StacItem){
                 var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset, route as StacItem);
                 clonedAsset.Uri = route.Uri;
-                clonedAsset.ContentLength = route.ContentLength > 0 ? route.ContentLength : clonedAsset.ContentLength;
+                clonedAsset.FileExtension().Size = route.ContentLength > 0 ? route.ContentLength : clonedAsset.FileExtension().Size;
                 clonedAsset.MediaType = assetOrigin.ContentType?.MediaType != "application/octet-stream" ? assetOrigin.ContentType : route.ContentType;
                 return new StacAssetAsset(clonedAsset, null);
             }

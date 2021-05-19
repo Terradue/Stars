@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
+using Stac.Extensions.File;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -52,8 +53,9 @@ namespace Terradue.Stars.Services.Translator
         private IItem CreateStacItemNode(IItem node)
         {
             StacItem stacItem = new StacItem(node.Id, node.Geometry, node.Properties);
-            foreach (var asset in node.Assets){
-            
+            foreach (var asset in node.Assets)
+            {
+
                 Uri relativeUri = asset.Value.Uri;
                 if (asset.Value.Uri.IsAbsoluteUri)
                     relativeUri = node.Uri.MakeRelativeUri(asset.Value.Uri);
@@ -68,7 +70,10 @@ namespace Terradue.Stars.Services.Translator
             StacAssetAsset stacAssetAsset = asset as StacAssetAsset;
             StacAsset stacAsset = null;
             if (stacAssetAsset == null)
-                stacAsset = new StacAsset(stacItem, uri, asset.Roles, asset.Title, asset.ContentType, asset.ContentLength);
+            {
+                stacAsset = new StacAsset(stacItem, uri, asset.Roles, asset.Title, asset.ContentType);
+                stacAsset.FileExtension().Size = asset.ContentLength;
+            }
             else
             {
                 stacAsset = stacAssetAsset.StacAsset;

@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
+using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 
 using Terradue.Stars.Services.Router;
@@ -43,7 +44,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                if (asset.ContentLength > 0) return asset.ContentLength;
+                if (asset.FileExtension().Size > 0) return asset.FileExtension().Size;
                 var cl = GetStreamable()?.ContentLength;
                 if (cl.HasValue) return cl.Value;
                 return 0;
