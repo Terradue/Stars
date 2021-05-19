@@ -162,13 +162,13 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
         private object GetColorFormula(IDictionary<string, StacAsset> overviewAssets)
         {
             if (overviewAssets.Count == 1 &&
-                 (overviewAssets.First().Value.SemanticRoles.Contains("visual") ||
-                 overviewAssets.First().Value.SemanticRoles.Contains("overview")) &&
-                 overviewAssets.First().Value.SemanticRoles.Contains("reflectance"))
+                 (overviewAssets.First().Value.Roles.Contains("visual") ||
+                 overviewAssets.First().Value.Roles.Contains("overview")) &&
+                 overviewAssets.First().Value.Roles.Contains("reflectance"))
                 return "";
 
             if (overviewAssets.Count == 3 &&
-                 overviewAssets.All(a => a.Value.SemanticRoles.Contains("reflectance")))
+                 overviewAssets.All(a => a.Value.Roles.Contains("reflectance")))
                 return "Gamma RGB 1.5 Saturation 1.1 Sigmoidal RGB 15 0.35";
             return "";
         }
