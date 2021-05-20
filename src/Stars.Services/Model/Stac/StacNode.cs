@@ -96,7 +96,7 @@ namespace Terradue.Stars.Services.Model.Stac
             return await Task<Stream>.Run(() =>
             {
                 var sw = new StreamWriter(ms);
-                JsonSerializer.Create().Serialize(sw, stacObject);
+                sw.Write(StacConvert.Serialize(stacObject));
                 sw.Flush();
                 ms.Seek(0, SeekOrigin.Begin);
                 return ms as Stream;

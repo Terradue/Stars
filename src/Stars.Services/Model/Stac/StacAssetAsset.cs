@@ -44,7 +44,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                if (asset.FileExtension().Size > 0) return asset.FileExtension().Size;
+                if (asset.FileExtension().Size.HasValue) return asset.FileExtension().Size.Value;
                 var cl = GetStreamable()?.ContentLength;
                 if (cl.HasValue) return cl.Value;
                 return 0;
