@@ -69,10 +69,5 @@ namespace Terradue.Stars.Services.Processing
         {
             throw new NotImplementedException();
         }
-
-        public Task Remove()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

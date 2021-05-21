@@ -14,6 +14,5 @@ namespace Terradue.Stars.Interface
         
         IStreamable GetStreamable();
 
-        Task Remove();
     }
 }

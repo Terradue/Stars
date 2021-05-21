@@ -85,10 +85,5 @@ namespace Terradue.Stars.Services.Model.Atom
 
             return assets;
         }
-
-        public async Task Remove()
-        {
-            await webRoute.Remove();
-        }
     }
 }

@@ -7,9 +7,8 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
-using Stac.Catalog;
+using Stac.Extensions.File;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 
 using Terradue.Stars.Services.Router;
 
@@ -18,14 +17,11 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private StacAsset asset;
-        private WebRoute webRoute;
-        private readonly ICredentials credentials;
         private readonly Uri uri;
 
-        public StacAssetAsset(StacAsset asset, StacItemNode parent, System.Net.ICredentials credentials = null)
+        public StacAssetAsset(StacAsset asset, StacItemNode parent)
         {
             this.asset = asset;
-            this.credentials = credentials;
             if (asset.Uri.IsAbsoluteUri)
                 this.uri = asset.Uri;
             else
@@ -49,7 +45,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                if (asset.ContentLength > 0) return asset.ContentLength;
+                if (asset.FileExtension().Size.HasValue) return asset.FileExtension().Size.Value;
                 var cl = GetStreamable()?.ContentLength;
                 if (cl.HasValue) return cl.Value;
                 return 0;
@@ -69,7 +65,7 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public IReadOnlyList<string> Roles => asset.Roles;
+        public IReadOnlyList<string> Roles => asset.Roles.ToList();
 
         public StacAsset StacAsset { get => asset; }
 
@@ -91,42 +87,8 @@ namespace Terradue.Stars.Services.Model.Stac
             if (asset is IStreamable)
                 return asset as IStreamable;
 
-            return WebRoute;
+            return WebRoute.Create(uri);
 
-        }
-
-        public WebRoute WebRoute
-        {
-            get
-            {
-                if (uri.IsAbsoluteUri)
-                {
-                    if (webRoute == null)
-                    {
-                        // try
-                        // {
-                        webRoute = WebRoute.Create(uri, asset.ContentLength, credentials);
-                        // }
-                        // catch { }
-                    }
-                    return webRoute;
-                }
-                return null;
-            }
-        }
-
-        public async Task Remove()
-        {
-            if (WebRoute != null)
-                await WebRoute.Remove();
-        }
-
-        public static StacAssetAsset CreateAsset(IResource storedResource)
-        {
-            return new StacAssetAsset(
-                StacAsset.CreateDataAsset(storedResource.Uri, storedResource.ContentType), 
-                null, null
-            );
         }
     }
 }

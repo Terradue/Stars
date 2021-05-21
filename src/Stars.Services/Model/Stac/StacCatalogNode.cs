@@ -2,28 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Mime;
-using System.Text;
-using Newtonsoft.Json;
 using Stac;
-using Stac.Catalog;
-using Stac.Collection;
+using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacCatalogNode : StacNode, ICatalog
     {
-        private readonly ICredentials credentials;
-
-        public StacCatalogNode(IStacCatalog stacCatalog, System.Net.ICredentials credentials = null) : base(stacCatalog)
+        public StacCatalogNode(IStacCatalog stacCatalog, Uri uri) : base(stacCatalog, uri)
         {
-            this.credentials = credentials;
         }
 
-        public StacCatalog StacCatalog => stacObject as StacCatalog;
+        public IStacCatalog StacCatalog => stacObject as IStacCatalog;
 
         public override ResourceType ResourceType
         {
@@ -36,13 +27,17 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public override IReadOnlyList<IResource> GetRoutes()
+        public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
         {
             StacRouter stacRouter = new StacRouter(credentials);
-            return StacCatalog.GetChildren().Select(child => new StacCatalogNode(child.Value)).Cast<IResource>()
-                    .Concat(StacCatalog.GetItems().Select(item => new StacItemNode(item.Value)))
+            return StacCatalog.GetChildren(this.Uri, stacRouter).Select(child => new StacCatalogNode(child.Value, child.Key)).Cast<IResource>()
+                    .Concat(StacCatalog.GetItems(this.Uri, stacRouter).Select(item => new StacItemNode(item.Value, item.Key)))
                     .ToList();
         }
 
+        public static StacCatalogNode CreateUnlocatedNode(StacCatalog catalog)
+        {
+            return new StacCatalogNode(catalog, new Uri(catalog.Id + ".json", UriKind.Relative));
+        }
     }
 }

@@ -1,20 +1,13 @@
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
-using Terradue.Stars.Services.Model.Atom;
-using Stac.Item;
 using Terradue.Stars.Services.Model.Stac;
-using Stac.Catalog;
-using System.Collections.Generic;
 using Stac;
-using System.IO;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
+using Terradue.Stars.Services.Router;
+using System.Net;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -22,13 +15,15 @@ namespace Terradue.Stars.Services.Translator
     public class StacLinkTranslator : ITranslator
     {
         private ILogger logger;
+        private readonly ICredentials credentials;
 
         public int Priority { get; set; }
         public string Key { get => "StacLinkTranslator"; set { } }
 
-        public StacLinkTranslator(ILogger<StacLinkTranslator> logger)
+        public StacLinkTranslator(ILogger<StacLinkTranslator> logger, ICredentials credentials)
         {
             this.logger = logger;
+            this.credentials = credentials;
         }
 
         public async Task<T> Translate<T>(IResource route) where T : IResource
@@ -42,9 +37,10 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacCatalog = await StacCatalog.LoadUri(stacLink.Uri);
+                            var stacRoute = WebRoute.Create(stacLink.Uri, credentials: credentials);
+                            var stacCatalog = StacConvert.Deserialize<IStacCatalog>(await stacRoute.ReadAsString());
                             if (stacCatalog != null)
-                                return (T)(new StacCatalogNode(stacCatalog) as IResource);
+                                return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri) as IResource);
                         }
                         catch { }
                     }
@@ -61,9 +57,10 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacItem = await StacItem.LoadUri(stacLink.Uri);
+                            var stacRoute = WebRoute.Create(stacLink.Uri, credentials: credentials);
+                            var stacItem = StacConvert.Deserialize<StacItem>(await stacRoute.ReadAsString());
                             if (stacItem != null)
-                                return (T)(new StacItemNode(stacItem) as IResource);
+                                return (T)(new StacItemNode(stacItem, stacRoute.Uri) as IResource);
                         }
                         catch { }
                     }

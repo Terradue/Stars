@@ -160,9 +160,10 @@
             "args": [
                 "list",
                 "-v",
-                "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2A_30VWN_20200830_0_L2A",
                 "-r",
-                "2"
+                "2",
+                "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2A_30VWN_20200830_0_L2A"
+             
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -175,13 +176,14 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.0/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
-                "-v",
                 "list",
-                "https://eod-catalog-svc-prod.astraea.earth",
+                "-v",
                 "-r",
-                "2"
+                "2",
+                "https://eod-catalog-svc-prod.astraea.earth"
+                
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

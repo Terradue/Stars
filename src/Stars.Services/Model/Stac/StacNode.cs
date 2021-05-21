@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,22 +12,24 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public abstract class StacNode : IResource, IStreamable
+    public abstract class StacNode : IResource, IStreamable, ILocatable
     {
         protected IStacObject stacObject;
+        private readonly Uri uri;
 
-        protected StacNode(IStacObject stacObject)
+        protected StacNode(IStacObject stacObject, Uri uri = null)
         {
             if ( stacObject == null )
                 throw new ArgumentNullException("stacObject");
             this.stacObject = stacObject;
+            this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;
         }
 
         public string Label => stacObject.Id;
 
         public ContentType ContentType => stacObject.MediaType;
 
-        public Uri Uri => stacObject.Uri == null ? new Uri(Id + ".json", UriKind.Relative) : stacObject.Uri;
+        public Uri Uri => uri;
 
         public abstract ResourceType ResourceType { get; }
 
@@ -62,13 +65,13 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        internal static StacNode Create(IStacObject stacObject)
+        public static StacNode Create(IStacObject stacObject, Uri uri)
         {
             if (stacObject is IStacCatalog)
-                return new StacCatalogNode(stacObject as IStacCatalog);
+                return new StacCatalogNode(stacObject as IStacCatalog, uri);
 
-            if (stacObject is IStacItem)
-                return new StacItemNode(stacObject as IStacItem);
+            if (stacObject is StacItem)
+                return new StacItemNode(stacObject as StacItem, uri);
 
             return null;
         }
@@ -85,7 +88,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanBeRanged => false;
 
-        public abstract IReadOnlyList<IResource> GetRoutes();
+        public abstract IReadOnlyList<IResource> GetRoutes(ICredentials credentials);
 
         public async Task<Stream> GetStreamAsync()
         {
@@ -93,7 +96,7 @@ namespace Terradue.Stars.Services.Model.Stac
             return await Task<Stream>.Run(() =>
             {
                 var sw = new StreamWriter(ms);
-                JsonSerializer.Create().Serialize(sw, stacObject);
+                sw.Write(StacConvert.Serialize(stacObject));
                 sw.Flush();
                 ms.Seek(0, SeekOrigin.Begin);
                 return ms as Stream;

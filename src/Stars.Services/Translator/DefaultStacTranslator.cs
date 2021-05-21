@@ -1,20 +1,13 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
-using Terradue.Stars.Services.Model.Atom;
-using Stac.Item;
 using Terradue.Stars.Services.Model.Stac;
-using Stac.Catalog;
 using System.Collections.Generic;
 using Stac;
-using System.IO;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
+using Stac.Extensions.File;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -49,7 +42,7 @@ namespace Terradue.Stars.Services.Translator
         private IResource CreateStacCatalogNode(ICatalog node)
         {
             StacCatalog catalog = new StacCatalog(node.Id, node.Label, CreateStacLinks(node));
-            return new StacCatalogNode(catalog);
+            return new StacCatalogNode(catalog, node.Uri);
         }
 
         private IEnumerable<StacLink> CreateStacLinks(ICatalog node)
@@ -59,27 +52,32 @@ namespace Terradue.Stars.Services.Translator
 
         private IItem CreateStacItemNode(IItem node)
         {
-            StacItem stacItem = new StacItem(node.Geometry, node.Properties, node.Id);
-            foreach (var asset in node.Assets){
-            
+            StacItem stacItem = new StacItem(node.Id, node.Geometry, node.Properties);
+            foreach (var asset in node.Assets)
+            {
+
                 Uri relativeUri = asset.Value.Uri;
                 if (asset.Value.Uri.IsAbsoluteUri)
                     relativeUri = node.Uri.MakeRelativeUri(asset.Value.Uri);
-                stacItem.Assets.Add(asset.Key, CreateStacAsset(asset.Value, relativeUri));
+                stacItem.Assets.Add(asset.Key, CreateStacAsset(asset.Value, stacItem, relativeUri));
             }
-            return new StacItemNode(stacItem);
+            return new StacItemNode(stacItem, node.Uri);
         }
 
-        private StacAsset CreateStacAsset(IAsset asset, Uri relativeUri)
+        private StacAsset CreateStacAsset(IAsset asset, StacItem stacItem, Uri uri)
         {
+            Preconditions.CheckNotNull(asset);
             StacAssetAsset stacAssetAsset = asset as StacAssetAsset;
             StacAsset stacAsset = null;
             if (stacAssetAsset == null)
-                stacAsset = new StacAsset(relativeUri, asset.Roles, asset.Title, asset.ContentType, asset.ContentLength);
+            {
+                stacAsset = new StacAsset(stacItem, uri, asset.Roles, asset.Title, asset.ContentType);
+                stacAsset.FileExtension().Size = asset.ContentLength;
+            }
             else
             {
                 stacAsset = stacAssetAsset.StacAsset;
-                stacAsset.Uri = relativeUri;
+                stacAsset.Uri = uri;
             }
 
             return stacAsset;

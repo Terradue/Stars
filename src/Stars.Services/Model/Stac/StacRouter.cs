@@ -2,12 +2,9 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Stac.Catalog;
-using Stac.Item;
+using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Plugins;
@@ -30,6 +27,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public string Label => "Stac";
 
+        public ICredentials Credentials => credentials;
+
         public bool CanRoute(IResource route)
         {
             var routeFound = AffineRoute(route);
@@ -39,18 +38,10 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 try
                 {
-                    new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>((routeFound as IStreamable).ReadAsString().Result), routeFound.Uri), credentials);
+                    StacConvert.Deserialize<IStacObject>((routeFound as IStreamable).ReadAsString().Result);
                     return true;
                 }
-                catch
-                {
-                    try
-                    {
-                        new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>((routeFound as IStreamable).ReadAsString().Result), routeFound.Uri), credentials);
-                        return true;
-                    }
-                    catch { }
-                }
+                catch { }
             }
             return false;
         }
@@ -72,7 +63,7 @@ namespace Terradue.Stars.Services.Model.Stac
                     try
                     {
                         WebRoute newRoute = WebRoute.Create(new Uri(route.Uri.ToString() + "/catalog.json"));
-                        if ( newRoute.ContentType.MediaType.Contains("application/json"))
+                        if (newRoute.ContentType.MediaType.Contains("application/json"))
                         {
                             return newRoute;
                         }
@@ -96,14 +87,11 @@ namespace Terradue.Stars.Services.Model.Stac
             if (!(routeFound is IStreamable)) return null;
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
-                try
-                {
-                    return new StacCatalogNode(StacCatalog.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (routeFound as IStreamable).ReadAsString()), routeFound.Uri), credentials);
-                }
-                catch
-                {
-                    return new StacItemNode(StacItem.LoadJToken(JsonConvert.DeserializeObject<JToken>(await (routeFound as IStreamable).ReadAsString()), routeFound.Uri), credentials);
-                }
+                IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamable).ReadAsString());
+                if ( stacObject is IStacCatalog )
+                    return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri);
+                else
+                    return new StacItemNode(stacObject as StacItem, routeFound.Uri);
             }
             throw new NotSupportedException(routeFound.ContentType.ToString());
         }
