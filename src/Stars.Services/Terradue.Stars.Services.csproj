@@ -26,7 +26,7 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.9" />
     <PackageReference Include="Terradue.ServiceModel.Syndication" Version="1.1.1" />
     <PackageReference Include="Terradue.ServiceModel.Ogc" Version="2.2.0" />
-    <!-- <PackageReference Include="DotNetStac" Version="0.8.0" /> -->
+    <PackageReference Include="DotNetStac" Version="0.8.1" />
     <PackageReference Include="Html2Markdown" Version="3.3.1.407" />
     <PackageReference Include="Terradue.Metadata.EarthObservation" Version="1.6.7" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
@@ -37,7 +37,7 @@
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" />
+    <!-- <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" /> -->
     <!-- <ProjectReference Include="../../../../../../Private/Projects/S3WebRequest/System.Net.S3/System.Net.S3.csproj" /> -->
   </ItemGroup>
   <ItemGroup>

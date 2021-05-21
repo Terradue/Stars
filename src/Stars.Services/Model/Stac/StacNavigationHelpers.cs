@@ -23,14 +23,15 @@ namespace Stars.Services.Model.Stac
             Dictionary<Uri, IStacCatalog> children = new Dictionary<Uri, IStacCatalog>();
             foreach (var childLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "child"))
             {
-                WebRoute childRoute = childLink.CreateRoute(stacObject, baseUri, stacRouter.Credentials);
-                children.Add(childRoute.Uri, StacConvert.Deserialize<IStacCatalog>(await childRoute.GetStreamAsync()));
+                children.Add(childLink.Uri, await childLink.CreateStacObject(baseUri, stacRouter.Credentials) as IStacCatalog);
             }
             return children;
         }
 
-        private static WebRoute CreateRoute(this StacLink stacLink, IStacObject stacObject, Uri baseUri = null, ICredentials credentials = null)
+        private static async Task<IStacObject> CreateStacObject(this StacLink stacLink, Uri baseUri = null, ICredentials credentials = null)
         {
+            if (stacLink is StacObjectLink)
+                return (stacLink as StacObjectLink).StacObject;
             Uri linkUri = stacLink.Uri;
             if (!linkUri.IsAbsoluteUri)
             {
@@ -38,7 +39,8 @@ namespace Stars.Services.Model.Stac
                     throw new RoutingException(string.Format("relative route without base Url : {0}", linkUri));
                 linkUri = new Uri(baseUri, linkUri);
             }
-            return WebRoute.Create(linkUri, stacLink.Length, credentials);
+            var webRoute = WebRoute.Create(linkUri, stacLink.Length, credentials);
+            return StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync());
         }
 
         public static IDictionary<Uri, StacItem> GetItems(this IStacObject stacObject, Uri baseUri, StacRouter stacRouter)
@@ -51,8 +53,7 @@ namespace Stars.Services.Model.Stac
             Dictionary<Uri, StacItem> items = new Dictionary<Uri, StacItem>();
             foreach (var itemLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "item"))
             {
-                WebRoute itemRoute = itemLink.CreateRoute(stacObject, baseUri, stacRouter.Credentials);
-                items.Add(itemRoute.Uri, StacConvert.Deserialize<StacItem>(await itemRoute.GetStreamAsync()));
+                items.Add(itemLink.Uri, await itemLink.CreateStacObject(baseUri, stacRouter.Credentials) as StacItem);
             }
             return items;
         }

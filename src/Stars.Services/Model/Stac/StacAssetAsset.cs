@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -64,7 +65,7 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public IReadOnlyList<string> Roles => asset.Roles;
+        public IReadOnlyList<string> Roles => asset.Roles.ToList();
 
         public StacAsset StacAsset { get => asset; }
 
