@@ -23,7 +23,10 @@ namespace Stars.Services.Model.Stac
             Dictionary<Uri, IStacCatalog> children = new Dictionary<Uri, IStacCatalog>();
             foreach (var childLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "child"))
             {
-                children.Add(childLink.Uri, await childLink.CreateStacObject(baseUri, stacRouter.Credentials) as IStacCatalog);
+                Uri linkUri = childLink.Uri;
+                if (!linkUri.IsAbsoluteUri)
+                    linkUri = new Uri(baseUri, childLink.Uri);
+                children.Add(linkUri, await childLink.CreateStacObject(baseUri, stacRouter.Credentials) as IStacCatalog);
             }
             return children;
         }
@@ -53,7 +56,10 @@ namespace Stars.Services.Model.Stac
             Dictionary<Uri, StacItem> items = new Dictionary<Uri, StacItem>();
             foreach (var itemLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "item"))
             {
-                items.Add(itemLink.Uri, await itemLink.CreateStacObject(baseUri, stacRouter.Credentials) as StacItem);
+                Uri linkUri = itemLink.Uri;
+                if (!linkUri.IsAbsoluteUri)
+                    linkUri = new Uri(baseUri, itemLink.Uri);
+                items.Add(linkUri, await itemLink.CreateStacObject(baseUri, stacRouter.Credentials) as StacItem);
             }
             return items;
         }
