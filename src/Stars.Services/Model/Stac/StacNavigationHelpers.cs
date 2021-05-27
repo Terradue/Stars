@@ -24,7 +24,7 @@ namespace Stars.Services.Model.Stac
             foreach (var childLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "child"))
             {
                 Uri linkUri = childLink.Uri;
-                if (!linkUri.IsAbsoluteUri)
+                if (!linkUri.IsAbsoluteUri && baseUri.IsAbsoluteUri)
                     linkUri = new Uri(baseUri, childLink.Uri);
                 children.Add(linkUri, await childLink.CreateStacObject(baseUri, stacRouter.Credentials) as IStacCatalog);
             }
@@ -57,7 +57,7 @@ namespace Stars.Services.Model.Stac
             foreach (var itemLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "item"))
             {
                 Uri linkUri = itemLink.Uri;
-                if (!linkUri.IsAbsoluteUri)
+                if (!linkUri.IsAbsoluteUri && baseUri.IsAbsoluteUri)
                     linkUri = new Uri(baseUri, itemLink.Uri);
                 items.Add(linkUri, await itemLink.CreateStacObject(baseUri, stacRouter.Credentials) as StacItem);
             }
