@@ -6,6 +6,7 @@ using Stac;
 using System.Linq;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Eo;
+using Stac.Extensions.Raster;
 
 namespace Terradue.Stars.Services.ThirdParty.Titiler
 {
@@ -117,7 +118,7 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
 
         public Uri BuildServiceUri(Uri stacItemUri, IDictionary<string, StacAsset> overviewAssets)
         {
-            Uri finalItemUri = MapSource(stacItemUri);
+            Uri finalItemUri = Configuration.MapUri(stacItemUri);
 
             return new Uri(this.Uri,
                 string.Format("/stac/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?url={0}&assets={1}&rescale={2}&color_formula=&resampling_method=average",
@@ -128,18 +129,21 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
                     ));
         }
 
-        private Uri MapSource(Uri stacItemUri)
+        private static double?[] GetScale(StacAsset stacAsset)
         {
-            if ( options.Value.UrlSourceMappings.ContainsKey(stacItemUri.ToString()) )
-                return new Uri(options.Value.UrlSourceMappings[stacItemUri.ToString()]);
-            return stacItemUri;
-        }
+            if (stacAsset.RasterExtension().Bands != null && stacAsset.RasterExtension().Bands.Count() > 0)
+            {
+                IEnumerable<double?[]> scales = stacAsset.RasterExtension().Bands.Select(b => new double?[2] { b.Statistics?.Minimum, b.Statistics?.Minimum });
+                if (scales.Any(s => s[0].HasValue || s[1].HasValue))
+                {
+                    return scales.SelectMany(s => new double?[2] { s[0].HasValue? s[0].Value : -10000,
+                                                                s[1].HasValue? s[1].Value : 10000 }).ToArray();
+                }
+            }
 
-        private static int[] GetScale(StacAsset stacAsset)
-        {
             if (stacAsset.Roles.Contains("visual") ||
                 stacAsset.Roles.Contains("overview"))
-                return new int[2] { 0, 255 };
+                return new double?[2] { 0, 255 };
             if (stacAsset.Roles.Contains("sigma0") ||
                 stacAsset.Roles.Contains("beta0") ||
                 stacAsset.Roles.Contains("gamma0")
@@ -147,30 +151,30 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             {
                 if (stacAsset.Roles.Contains("decibel"))
                 {
-                    return new int[2] { -25, 5 };
+                    return new double?[2] { -25, 5 };
                 }
             }
             if (stacAsset.Roles.Contains("radiance") ||
                 stacAsset.Roles.Contains("reflectance")
                 )
-            {
-                return new int[2] { 0, 10000 };
-            }
-            return new int[2] { 0, 255 };
+{
+    return new double?[2] { 0, 10000 };
+}
+return new double?[2] { 0, 255 };
         }
 
         private object GetColorFormula(IDictionary<string, StacAsset> overviewAssets)
-        {
-            if (overviewAssets.Count == 1 &&
-                 (overviewAssets.First().Value.Roles.Contains("visual") ||
-                 overviewAssets.First().Value.Roles.Contains("overview")) &&
-                 overviewAssets.First().Value.Roles.Contains("reflectance"))
-                return "";
+{
+    if (overviewAssets.Count == 1 &&
+         (overviewAssets.First().Value.Roles.Contains("visual") ||
+         overviewAssets.First().Value.Roles.Contains("overview")) &&
+         overviewAssets.First().Value.Roles.Contains("reflectance"))
+        return "";
 
-            if (overviewAssets.Count == 3 &&
-                 overviewAssets.All(a => a.Value.Roles.Contains("reflectance")))
-                return "Gamma RGB 1.5 Saturation 1.1 Sigmoidal RGB 15 0.35";
-            return "";
-        }
+    if (overviewAssets.Count == 3 &&
+         overviewAssets.All(a => a.Value.Roles.Contains("reflectance")))
+        return "Gamma RGB 1.5 Saturation 1.1 Sigmoidal RGB 15 0.35";
+    return "";
+}
     }
 }
