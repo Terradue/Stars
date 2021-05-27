@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1, net5.0</TargetFrameworks>
     <Version>0.8.4</Version>
     <!-- <VersionSuffix>beta.1</VersionSuffix> -->
     <AssemblyName>Stars</AssemblyName>
