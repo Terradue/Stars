@@ -34,14 +34,14 @@ pipeline {
                 env.RELEASE = "SNAPSHOT" + sdf
             }
             sh "dotnet tool restore"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel.6-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.18.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.19.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r debian.9-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true --self-contained true"
+            // sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel.6-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            // sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            // sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            // sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.18.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            // sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.19.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            // sh "dotnet deb -c ${env.CONFIGURATION} -r debian.9-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            // sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-exe', includes: 'src/Stars.Console/bin/**/publish/Stars'
