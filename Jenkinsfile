@@ -10,7 +10,7 @@ pipeline {
     stage('.Net Core') {
       agent { 
           docker { 
-              image 'mcr.microsoft.com/dotnet/core/sdk:5.0'
+              image 'mcr.microsoft.com/dotnet/sdk:5.0-buster-slim'
           } 
       }
       environment {
