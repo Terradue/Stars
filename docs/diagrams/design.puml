@@ -1,0 +1,91 @@
+@startuml Conceptual Design
+
+skinparam roundCorner 15
+
+frame Operation {
+    usecase "Use Case" as uc
+}
+
+component IRoutingService {
+    component IRouter
+    control function as routingFunction
+}
+
+
+
+cloud "catalog (local/web)" as catalog {
+    artifact IResource1 [
+    IResource
+    ====
+    ICatalogNode
+    ----
+    <<i>DataModel</i>>
+    ]
+    collections IResource2 [
+    IResource
+    ====
+    IItemNode
+    ----
+    <<i>DataModel</i>>
+    ]
+    IResource1 <- ILink
+    ILink -> IResource2
+}
+
+component ISupplyService {
+    component ISupplier
+    control function as supplyFunction
+}
+
+database storage {
+
+}
+
+component ITransactionService {
+    component IStoreProvider
+    control function as transactionFunction
+}
+
+component IConvertService {
+    control function as convertFunction
+    component IConverter
+}
+
+component IProcessingService {
+    component IProcess
+    control function as processFunction
+}
+
+uc -up-> routingFunction : uses
+uc -right-> supplyFunction : uses
+uc -> transactionFunction : uses
+uc -down-> convertFunction : uses
+uc -down-> processFunction : uses
+
+cloud "repositories (local/web)" as repo {
+    file "IAsset#1" as IAsset1
+    file "IAsset#2" as IAsset2
+}
+
+interface "Catalog\nStreaming\nService" as protocol
+IResource1 -down-( protocol : "read"
+IResource2 -down-( protocol : "read"
+protocol )-down- IRouter : "access\nvia"
+
+IResource2 -> IAsset1 : "references"
+IResource2 -> IAsset2 : "references"
+
+interface "Asset\nStreaming\nService" as protocol2
+
+IAsset1 -down-( protocol2 : "read/write"
+IAsset2 -down-( protocol2 : "read/write"
+protocol2 )-down- ISupplier : "supply\nvia"
+
+storage 0)-down- IStoreProvider : "performs\ntransaction"
+
+storage -up-> IResource1 #red;line.dashed : services
+storage -up-> IResource2 #red;line.dashed : services
+
+
+
+@enduml
