@@ -107,8 +107,8 @@ namespace Terradue.Stars.Services
         private IAsset MakeAsset(IResource route, IAsset assetOrigin)
         {
             if (route is IAsset) return route as IAsset;
-            if (assetOrigin is StacAssetAsset && route is StacItem){
-                var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset, route as StacItem);
+            if (assetOrigin is StacAssetAsset){
+                var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset, null);
                 clonedAsset.Uri = route.Uri;
                 clonedAsset.FileExtension().Size = route.ContentLength > 0 ? route.ContentLength : clonedAsset.FileExtension().Size;
                 clonedAsset.MediaType = assetOrigin.ContentType?.MediaType != "application/octet-stream" ? assetOrigin.ContentType : route.ContentType;

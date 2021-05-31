@@ -15,11 +15,11 @@ namespace Terradue.Stars.Services.Model.Stac
     public abstract class StacNode : IResource, IStreamable, ILocatable
     {
         protected IStacObject stacObject;
-        private readonly Uri uri;
+        private Uri uri;
 
         protected StacNode(IStacObject stacObject, Uri uri = null)
         {
-            if ( stacObject == null )
+            if (stacObject == null)
                 throw new ArgumentNullException("stacObject");
             this.stacObject = stacObject;
             this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;
@@ -29,7 +29,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ContentType ContentType => stacObject.MediaType;
 
-        public Uri Uri => uri;
+        public Uri Uri { get => uri; set => uri = value; }
 
         public abstract ResourceType ResourceType { get; }
 

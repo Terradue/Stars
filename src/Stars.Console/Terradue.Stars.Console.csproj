@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>0.8.4</Version>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <Version>0.8.5</Version>
     <!-- <VersionSuffix>beta.1</VersionSuffix> -->
     <AssemblyName>Stars</AssemblyName>
     <UserSecretsId>f195eead-6dad-49d2-ad76-d9dbf6662371</UserSecretsId>
-    <RuntimeIdentifiers>win7-x64;win10-x64;osx-x64;linux-x64;debian.8-x64;debian.9-x64;ubuntu.19.04-x64;ubuntu.18.04-x64;ubuntu.16.04-x64;ubuntu.14.04-x64;opensuse.42.3-x64;ol.7-x64;rhel.6-x64;rhel-x64;fedora.27-x64;fedora.28-x64;centos.7-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win7-x64;win10-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest">
