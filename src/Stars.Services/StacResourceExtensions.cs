@@ -14,15 +14,11 @@ namespace Terradue.Stars.Services
         {
             foreach (var asset in assetContainer.Assets)
             {
-                if (!stacItem.Assets.ContainsKey(asset.Key))
+                if (stacItem.Assets.ContainsKey(asset.Key))
                 {
-                    stacItem.Assets.Add(asset.Key, asset.Value.CreateStacAsset(stacItem));
-                    continue;
+                    stacItem.Assets.Remove(asset.Key);
                 }
-                stacItem.Assets[asset.Key].Uri = asset.Value.Uri;
-                stacItem.Assets[asset.Key].FileExtension().Size = asset.Value.ContentLength;
-                stacItem.Assets[asset.Key].MediaType = asset.Value.ContentType;
-                stacItem.Assets[asset.Key].Title = asset.Value.Title;
+                stacItem.Assets.Add(asset.Key, asset.Value.CreateStacAsset(stacItem));
             }
         }
 
