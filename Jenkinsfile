@@ -35,7 +35,7 @@ pipeline {
             }
             sh "dotnet tool restore"
             // sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel.6-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
-            // sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             // sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             // sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.18.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             // sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.19.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
