@@ -28,6 +28,7 @@ cloud "catalog (local/web)" as catalog {
     ----
     <<i>DataModel</i>>
     ]
+    interface ILink
     IResource1 <- ILink
     ILink -> IResource2
 }

@@ -73,9 +73,14 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                var cd = GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+                ContentDisposition cd = null;
                 if (asset.Properties.ContainsKey("filename"))
                     cd.FileName = asset.GetProperty<string>("filename");
+                try
+                {
+                    cd = GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+                }
+                catch { }
                 return cd;
             }
         }
