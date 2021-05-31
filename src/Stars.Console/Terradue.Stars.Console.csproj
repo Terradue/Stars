@@ -6,7 +6,7 @@
     <!-- <VersionSuffix>beta.1</VersionSuffix> -->
     <AssemblyName>Stars</AssemblyName>
     <UserSecretsId>f195eead-6dad-49d2-ad76-d9dbf6662371</UserSecretsId>
-    <RuntimeIdentifiers>win7-x64;win10-x64;osx-x64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win7-x64;win10-x64;osx-x64;linux-x64;centos.7-x64</RuntimeIdentifiers>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
   <ItemGroup>
