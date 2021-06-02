@@ -25,12 +25,7 @@ namespace Terradue.Stars.Services
         private bool AssetMatch(KeyValuePair<string, IAsset> asset)
         {
             if (assetFilters == null) return true;
-            return assetFilters.Values.All(af =>
-                (af.KeyRegex == null || af.KeyRegex.IsMatch(asset.Key)) &&
-                (af.RolesRegex == null || asset.Value.Roles.Any(role => af.RolesRegex.IsMatch(role))) &&
-                (af.UriRegex == null || af.UriRegex.IsMatch(asset.Value.Uri.ToString())) &&
-                (af.PropertyRegexPattern.Value == null || af.PropertyRegexPattern.Value.IsMatch(asset.Value.Properties[af.PropertyRegexPattern.Key].ToString()))
-            );
+            return assetFilters.All(af => af.IsMatch(asset));
         }
     }
 }
