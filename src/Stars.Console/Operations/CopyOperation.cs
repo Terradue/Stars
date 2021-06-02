@@ -237,7 +237,8 @@ namespace Terradue.Stars.Console.Operations
 
                     if (!SkippAssets)
                     {
-                        AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, AssetFilters.None);
+                        AssetFilters assetFilters = CreateAssetFiltersFromOptions();
+                        AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, assetFilters);
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
@@ -268,6 +269,11 @@ namespace Terradue.Stars.Console.Operations
             }
 
             return operationState;
+        }
+
+        private AssetFilters CreateAssetFiltersFromOptions()
+        {
+            return new AssetFilters();
         }
 
         private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
