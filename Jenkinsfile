@@ -115,8 +115,8 @@ pipeline {
         withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
           unstash name: 'stars-exe'
           sh "go get github.com/github-release/github-release"
-          echo "Deleting release from github before creating new one"
-          sh "github-release delete --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL}"
+          // echo "Deleting release from github before creating new one"
+          // sh "github-release delete --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL}"
 
           echo "Creating a new release in github"
           sh "github-release release --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name v${env.VERSION_TOOL}"
