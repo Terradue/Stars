@@ -73,7 +73,7 @@ namespace Terradue.Stars.Console.Operations
         [Option("-res|--result-file", "Write the copy result in a file", CommandOptionType.SingleValue)]
         public string ResultFile { get; set; }
 
-        [Option("-af|--assets-filters", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
+        [Option("-af|--asset-filter", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFilters { get; set; }
 
 
