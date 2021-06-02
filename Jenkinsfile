@@ -31,7 +31,7 @@ pipeline {
             script {
               def sdf = sh(returnStdout: true, script: 'date -u +%Y%m%dT%H%M%S').trim()
               if (env.BRANCH_NAME == 'master') 
-                env.RELEASE = env.BUILD_NUMBER
+                env.RELEASE = ""
               else
                 env.RELEASE = "SNAPSHOT" + sdf
             }
