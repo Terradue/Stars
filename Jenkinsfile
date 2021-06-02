@@ -107,22 +107,24 @@ pipeline {
               image 'golang'
           } 
       }
-      stage('Github release') {
-        when {
-          tag 'v*'
-        }
-        steps {
-          withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
-            unstash name: 'stars-exe'
-            sh "go get github.com/github-release/github-release"
-            echo "Deleting release from github before creating new one"
-            sh "github-release delete --user ${GITHUB_ORGANIZATION} --repo ${GITHUB_REPO} --tag v${env.VERSION_TOOL}"
+      stages{
+        stage('Github release') {
+          when {
+            tag 'v*'
+          }
+          steps {
+            withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
+              unstash name: 'stars-exe'
+              sh "go get github.com/github-release/github-release"
+              echo "Deleting release from github before creating new one"
+              sh "github-release delete --user ${GITHUB_ORGANIZATION} --repo ${GITHUB_REPO} --tag v${env.VERSION_TOOL}"
 
-            echo "Creating a new release in github"
-            sh "github-release release --user ${GITHUB_ORGANIZATION} --repo ${GITHUB_REPO} --tag v${env.VERSION_TOOL} --name v${env.VERSION_TOOL}"
+              echo "Creating a new release in github"
+              sh "github-release release --user ${GITHUB_ORGANIZATION} --repo ${GITHUB_REPO} --tag v${env.VERSION_TOOL} --name v${env.VERSION_TOOL}"
 
-            echo "Uploading the artifacts into github"
-            sh "github-release upload --user ${GITHUB_ORGANIZATION} --repo ${GITHUB_REPO} --tag v${env.VERSION_TOOL} --name Stars-linux-x64  --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
+              echo "Uploading the artifacts into github"
+              sh "github-release upload --user ${GITHUB_ORGANIZATION} --repo ${GITHUB_REPO} --tag v${env.VERSION_TOOL} --name Stars-linux-x64  --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
+            }
           }
         }
       }
