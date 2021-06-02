@@ -105,6 +105,7 @@ pipeline {
       agent { 
           docker { 
               image 'golang'
+              args '-u root'
           } 
       }
       when {
