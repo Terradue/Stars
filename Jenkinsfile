@@ -101,13 +101,13 @@ pipeline {
         }
       }
     }  
-    stage('.Net Core') {
+    stage('Create Release') {
       agent { 
           docker { 
               image 'golang'
           } 
       }
-      stage('Create Release') {
+      stage('Github release') {
         when {
           tag 'v*'
         }
