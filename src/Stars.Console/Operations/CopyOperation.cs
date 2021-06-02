@@ -21,6 +21,7 @@ using Terradue.Stars.Services;
 using Terradue.Stars.Services.Store;
 using System.Net;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -71,6 +72,9 @@ namespace Terradue.Stars.Console.Operations
 
         [Option("-res|--result-file", "Write the copy result in a file", CommandOptionType.SingleValue)]
         public string ResultFile { get; set; }
+
+        [Option("-af|--asset-filter", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
+        public string[] AssetsFilters { get; set; }
 
 
         private RouterService routingService;
@@ -231,7 +235,8 @@ namespace Terradue.Stars.Console.Operations
 
                     if (!SkippAssets)
                     {
-                        AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, AssetFilters.None);
+                        AssetFilters assetFilters = CreateAssetFiltersFromOptions();
+                        AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, assetFilters);
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
@@ -262,6 +267,37 @@ namespace Terradue.Stars.Console.Operations
             }
 
             return operationState;
+        }
+
+        private AssetFilters CreateAssetFiltersFromOptions()
+        {
+            AssetFilters assetFilters = new AssetFilters();
+            Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
+            foreach (var assetName in AssetsFilters)
+            {
+                Match propertyMatch = propertyRegex.Match(assetName);
+                if (propertyMatch.Success)
+                {
+                    if (propertyMatch.Groups["key"].Value == "roles")
+                    {
+                        assetFilters.Add(new RolesAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
+                        continue;
+                    }
+                    if (propertyMatch.Groups["key"].Value == "uri")
+                    {
+                        assetFilters.Add(new UriAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
+                        continue;
+                    }
+                    assetFilters.Add(new PropertyAssetFilter(propertyMatch.Groups["key"].Value,
+                        new Regex(propertyMatch.Groups["value"].Value)));
+                    continue;
+                }
+                else
+                {
+                    assetFilters.Add(new KeyAssetFilter(new Regex(assetName)));
+                }
+            }
+            return assetFilters;
         }
 
         private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
