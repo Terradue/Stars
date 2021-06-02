@@ -72,6 +72,12 @@ namespace Terradue.Stars.Console.Operations
         [Option("-res|--result-file", "Write the copy result in a file", CommandOptionType.SingleValue)]
         public string ResultFile { get; set; }
 
+        [Option("-ai|--assets-included", "Assets to include in the copy (default to all)", CommandOptionType.MultipleValue)]
+        public string[] AssetsIncluded { get; set; }
+
+        [Option("-ae|--assets-excluded", "Assets to exclude in the copy (default to none)", CommandOptionType.MultipleValue)]
+        public string[] AssetsExcluded { get; set; }
+
 
         private RouterService routingService;
         private CarrierManager carrierManager;
