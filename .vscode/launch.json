@@ -418,7 +418,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://catalog.charter.uat.esaportal.eu/charter/search?format=atom&uid=802-TSX1_SAR__EEC_RE___SM_S_SRA_20160324T215413_20160324T215421E",
+                "https://catalog.charter.uat.esaportal.eu//charter/cat/charterdataset/search?format=atom&uid=call100_AB0009e5_001_MUL_L1T",
                 "-v",
                 "-r",
                 "4",
