@@ -4,11 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Stac;
-using Stars.Services.Exceptions;
-using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
 
-namespace Stars.Services.Model.Stac
+namespace Terradue.Stars.Services.Model.Stac
 {
     public static class StacNavigationHelpers
     {

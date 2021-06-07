@@ -12,5 +12,10 @@ namespace Terradue.Stars.Interface
         ResourceType ResourceType { get; }
         ulong ContentLength { get; }
         ContentDisposition ContentDisposition { get; }
+
+        IResource Parent { get; }
+        string Id { get; }
+
+        ITransactableResource CloneForTransaction();
     }
 }

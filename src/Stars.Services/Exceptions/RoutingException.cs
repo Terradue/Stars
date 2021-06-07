@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Stars.Services.Exceptions
+namespace Terradue.Stars.Services.Exceptions
 {
     [Serializable]
     internal class RoutingException : Exception

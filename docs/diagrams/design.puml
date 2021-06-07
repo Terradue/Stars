@@ -42,7 +42,7 @@ database storage {
 
 }
 
-component ITransactionService {
+component IPersistenceService {
     component IStoreProvider
     control function as transactionFunction
 }
