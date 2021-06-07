@@ -272,6 +272,8 @@ namespace Terradue.Stars.Console.Operations
         private AssetFilters CreateAssetFiltersFromOptions()
         {
             AssetFilters assetFilters = new AssetFilters();
+            if ( AssetsFilters == null )
+                return assetFilters;
             Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
             foreach (var assetName in AssetsFilters)
             {
