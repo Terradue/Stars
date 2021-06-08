@@ -574,7 +574,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://resource-catalogue.185.52.193.87.nip.io/?mode=opensearch&service=CSW&version=3.0.0&request=GetRecords&elementsetname=full&resulttype=results&typenames=csw:Record&recordids=S2B_MSIL2A_20200902T090559_N0214_R050_T34SFH_20200902T113910.SAFE",
+                "https://catalog.charter.uat.esaportal.eu//charter/cat/[chartercalibrateddataset,%7Bcallid857%7D,mission_worldview_3]/search?format=atom&uid=call857_WV03S00_875416E119_8883332018100200000000MS00-calibrated&do=[terradue]",
                 "-v",
                 "-r",
                 "4",
@@ -603,7 +603,6 @@
                 "-v",
                 "-r",
                 "4",
-                "-k",
                 "--output",
                 "/tmp/charter"
             ],

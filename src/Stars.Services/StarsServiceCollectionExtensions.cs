@@ -122,7 +122,7 @@ namespace Terradue.Stars.Services
             services.AddTransient<AssetService, AssetService>();
             // Processing Service
             services.AddTransient<ProcessingService, ProcessingService>();
-
+            services.AddTransient<ITranslator, StacLinkTranslator>();
             services.AddTransient<ITranslator, DefaultStacTranslator>();
 
             return services;
