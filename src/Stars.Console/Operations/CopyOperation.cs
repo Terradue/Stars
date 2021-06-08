@@ -76,6 +76,8 @@ namespace Terradue.Stars.Console.Operations
         [Option("-af|--asset-filter", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFilters { get; set; }
 
+        [Option("--empty", "Empty argument", CommandOptionType.NoValue)]
+        public bool Empty { get; set; }
 
         private RouterService routingService;
         private CarrierManager carrierManager;
