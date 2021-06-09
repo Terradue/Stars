@@ -243,7 +243,7 @@ namespace Terradue.Stars.Console.Operations
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
                         if (deliveryReport.ImportedAssets.Count() > 0)
-                            stacItemNode.StacItem.MergeAssets(deliveryReport);
+                            stacItemNode.StacItem.MergeAssets(deliveryReport, true);
                         else continue;
                     }
                     break;
