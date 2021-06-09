@@ -298,7 +298,7 @@ namespace Terradue.Stars.Console.Operations
                 }
                 else
                 {
-                    assetFilters.Add(new KeyAssetFilter(new Regex(assetName)));
+                    assetFilters.Add(new KeyAssetFilter(new Regex("^" + assetName + "$")));
                 }
             }
             return assetFilters;
