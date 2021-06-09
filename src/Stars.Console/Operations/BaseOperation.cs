@@ -105,7 +105,7 @@ namespace Terradue.Stars.Console.Operations
                 builder.AddNewtonsoftJsonFile("appsettings.Development.json", optional: true);
                 builder.AddUserSecrets<Program>();
             }
-            builder.AddEnvironmentVariables("STARS_");
+            builder.AddEnvironmentVariables();
 
             if (!string.IsNullOrEmpty(ConfigFile))
             {

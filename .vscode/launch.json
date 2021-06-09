@@ -555,8 +555,8 @@
                 // "AWS__Profile": "creodiasowner",
                 // "AWS__SignatureVersion": "2",
                 // "AWS__Region": "RegionOne"
-                "STARS_AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
-                "STARS_AWS__Profile": "minio"
+                "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
+                "AWS__Profile": "minio"
             },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
