@@ -89,9 +89,9 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamable).ReadAsString());
                 if ( stacObject is IStacCatalog )
-                    return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri);
+                    return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri, credentials);
                 else
-                    return new StacItemNode(stacObject as StacItem, routeFound.Uri);
+                    return new StacItemNode(stacObject as StacItem, routeFound.Uri, credentials);
             }
             throw new NotSupportedException(routeFound.ContentType.ToString());
         }
