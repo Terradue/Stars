@@ -8,6 +8,7 @@ using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
 using Stac.Extensions.File;
+using System.Net;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -15,13 +16,15 @@ namespace Terradue.Stars.Services.Translator
     public class DefaultStacTranslator : ITranslator
     {
         private ILogger logger;
+        private readonly ICredentials credentials;
 
         public int Priority { get; set; }
         public string Key { get => "DefaultStacTranslator"; set { } }
 
-        public DefaultStacTranslator(ILogger<DefaultStacTranslator> logger)
+        public DefaultStacTranslator(ILogger<DefaultStacTranslator> logger, ICredentials credentials)
         {
             this.logger = logger;
+            this.credentials = credentials;
         }
 
         public Task<T> Translate<T>(IResource route) where T : IResource
@@ -42,7 +45,7 @@ namespace Terradue.Stars.Services.Translator
         private IResource CreateStacCatalogNode(ICatalog node)
         {
             StacCatalog catalog = new StacCatalog(node.Id, node.Label, CreateStacLinks(node));
-            return new StacCatalogNode(catalog, node.Uri);
+            return new StacCatalogNode(catalog, node.Uri, credentials);
         }
 
         private IEnumerable<StacLink> CreateStacLinks(ICatalog node)
@@ -61,7 +64,7 @@ namespace Terradue.Stars.Services.Translator
                     relativeUri = node.Uri.MakeRelativeUri(asset.Value.Uri);
                 stacItem.Assets.Add(asset.Key, CreateStacAsset(asset.Value, stacItem, relativeUri));
             }
-            return new StacItemNode(stacItem, node.Uri);
+            return new StacItemNode(stacItem, node.Uri, credentials);
         }
 
         private StacAsset CreateStacAsset(IAsset asset, StacItem stacItem, Uri uri)

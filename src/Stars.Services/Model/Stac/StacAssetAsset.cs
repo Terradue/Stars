@@ -17,11 +17,13 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private StacAsset asset;
+        private readonly ICredentials credentials;
         private readonly Uri uri;
 
-        public StacAssetAsset(StacAsset asset, StacItemNode parent)
+        public StacAssetAsset(StacAsset asset, StacItemNode parent, ICredentials credentials = null)
         {
             this.asset = asset;
+            this.credentials = credentials;
             if (asset.Uri.IsAbsoluteUri)
                 this.uri = asset.Uri;
             else
@@ -92,7 +94,7 @@ namespace Terradue.Stars.Services.Model.Stac
             if (asset is IStreamable)
                 return asset as IStreamable;
 
-            return WebRoute.Create(uri);
+            return WebRoute.Create(uri, credentials: credentials);
 
         }
     }

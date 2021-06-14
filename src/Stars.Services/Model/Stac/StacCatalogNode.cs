@@ -10,7 +10,7 @@ namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacCatalogNode : StacNode, ICatalog
     {
-        public StacCatalogNode(IStacCatalog stacCatalog, Uri uri) : base(stacCatalog, uri)
+        public StacCatalogNode(IStacCatalog stacCatalog, Uri uri, ICredentials credentials = null) : base(stacCatalog, uri, credentials)
         {
         }
 

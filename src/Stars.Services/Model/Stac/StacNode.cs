@@ -15,13 +15,15 @@ namespace Terradue.Stars.Services.Model.Stac
     public abstract class StacNode : IResource, IStreamable, ILocatable
     {
         protected IStacObject stacObject;
+        protected readonly ICredentials credentials;
         private Uri uri;
 
-        protected StacNode(IStacObject stacObject, Uri uri = null)
+        protected StacNode(IStacObject stacObject, Uri uri = null, ICredentials credentials = null)
         {
             if (stacObject == null)
                 throw new ArgumentNullException("stacObject");
             this.stacObject = stacObject;
+            this.credentials = credentials;
             this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;
         }
 
