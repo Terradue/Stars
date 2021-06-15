@@ -75,7 +75,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                ContentDisposition cd = null;
+                ContentDisposition cd = new ContentDisposition();
                 if (asset.Properties.ContainsKey("filename"))
                     cd.FileName = asset.GetProperty<string>("filename");
                 try
