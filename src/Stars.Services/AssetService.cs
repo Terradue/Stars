@@ -124,7 +124,7 @@ namespace Terradue.Stars.Services
             List<Exception> exceptions = new List<Exception>();
             foreach (var delivery in deliveries)
             {
-                logger.LogInformation("Delivering asset {0} {1} {2} ({3})...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id);
+                logger.LogInformation("Delivering asset {0} {1} {2} ({3}) to {4}...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id, delivery.Destination);
                 try
                 {
                     delivery.Destination.PrepareDestination();
