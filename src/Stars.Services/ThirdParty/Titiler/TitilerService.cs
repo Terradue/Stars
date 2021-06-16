@@ -137,14 +137,14 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             //     IEnumerable<double?[]> scales = stacAsset.RasterExtension().Bands.Select(b => new double?[2] { b.Statistics?.Minimum, b.Statistics?.Minimum });
             //     if (scales.All(s => s[0].HasValue && s[1].HasValue && s[0].Value < s[1].Value))
             //     {
-            //         return scales.SelectMany(s => new double?[2] { s[0].HasValue? s[0].Value : -10000,
+            //         return scales.SelectMany(s => new double?[2] { s[0].HasValue? s[0].Value : 0,
             //                                                     s[1].HasValue? s[1].Value : 10000 }).ToArray();
             //     }
             // }
 
-            if (stacAsset.Roles.Contains("visual") ||
-                stacAsset.Roles.Contains("overview"))
-                return new double?[0];
+            // if (stacAsset.Roles.Contains("visual") ||
+            //     stacAsset.Roles.Contains("overview"))
+            //     return new double?[0];
             if (stacAsset.Roles.Contains("sigma0") ||
                 stacAsset.Roles.Contains("beta0") ||
                 stacAsset.Roles.Contains("gamma0")
