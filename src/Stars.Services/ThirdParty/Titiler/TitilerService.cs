@@ -131,15 +131,16 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
 
         private static double?[] GetScale(StacAsset stacAsset)
         {
-            if (stacAsset.RasterExtension().Bands != null && stacAsset.RasterExtension().Bands.Count() > 0)
-            {
-                IEnumerable<double?[]> scales = stacAsset.RasterExtension().Bands.Select(b => new double?[2] { b.Statistics?.Minimum, b.Statistics?.Minimum });
-                if (scales.All(s => s[0].HasValue && s[1].HasValue && s[0].Value < s[1].Value))
-                {
-                    return scales.SelectMany(s => new double?[2] { s[0].HasValue? s[0].Value : -10000,
-                                                                s[1].HasValue? s[1].Value : 10000 }).ToArray();
-                }
-            }
+            // REMOVED statistics analysis
+            // if (stacAsset.RasterExtension().Bands != null && stacAsset.RasterExtension().Bands.Count() > 0)
+            // {
+            //     IEnumerable<double?[]> scales = stacAsset.RasterExtension().Bands.Select(b => new double?[2] { b.Statistics?.Minimum, b.Statistics?.Minimum });
+            //     if (scales.All(s => s[0].HasValue && s[1].HasValue && s[0].Value < s[1].Value))
+            //     {
+            //         return scales.SelectMany(s => new double?[2] { s[0].HasValue? s[0].Value : -10000,
+            //                                                     s[1].HasValue? s[1].Value : 10000 }).ToArray();
+            //     }
+            // }
 
             if (stacAsset.Roles.Contains("visual") ||
                 stacAsset.Roles.Contains("overview"))
