@@ -145,6 +145,10 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             // if (stacAsset.Roles.Contains("visual") ||
             //     stacAsset.Roles.Contains("overview"))
             //     return new double?[0];
+            if (stacAsset.Roles.Contains("composite"))
+            {
+                return new double?[2] { 0, 255 };
+            }
             if (stacAsset.Roles.Contains("sigma0") ||
                 stacAsset.Roles.Contains("beta0") ||
                 stacAsset.Roles.Contains("gamma0")
