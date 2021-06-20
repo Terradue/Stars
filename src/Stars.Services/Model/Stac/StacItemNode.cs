@@ -10,7 +10,7 @@ namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacItemNode : StacNode, IItem
     {
-        public StacItemNode(StacItem stacItem, Uri uri) : base(stacItem, uri)
+        public StacItemNode(StacItem stacItem, Uri uri, ICredentials credentials = null) : base(stacItem, uri, credentials)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IDictionary<string, object> Properties => StacItem.Properties;
 
-        public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this));
+        public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this, credentials));
 
         public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
         {

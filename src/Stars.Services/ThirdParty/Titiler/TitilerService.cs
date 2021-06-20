@@ -131,19 +131,24 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
 
         private static double?[] GetScale(StacAsset stacAsset)
         {
-            if (stacAsset.RasterExtension().Bands != null && stacAsset.RasterExtension().Bands.Count() > 0)
-            {
-                IEnumerable<double?[]> scales = stacAsset.RasterExtension().Bands.Select(b => new double?[2] { b.Statistics?.Minimum, b.Statistics?.Minimum });
-                if (scales.Any(s => s[0].HasValue || s[1].HasValue))
-                {
-                    return scales.SelectMany(s => new double?[2] { s[0].HasValue? s[0].Value : -10000,
-                                                                s[1].HasValue? s[1].Value : 10000 }).ToArray();
-                }
-            }
+            // REMOVED statistics analysis
+            // if (stacAsset.RasterExtension().Bands != null && stacAsset.RasterExtension().Bands.Count() > 0)
+            // {
+            //     IEnumerable<double?[]> scales = stacAsset.RasterExtension().Bands.Select(b => new double?[2] { b.Statistics?.Minimum, b.Statistics?.Minimum });
+            //     if (scales.All(s => s[0].HasValue && s[1].HasValue && s[0].Value < s[1].Value))
+            //     {
+            //         return scales.SelectMany(s => new double?[2] { s[0].HasValue? s[0].Value : 0,
+            //                                                     s[1].HasValue? s[1].Value : 10000 }).ToArray();
+            //     }
+            // }
 
-            if (stacAsset.Roles.Contains("visual") ||
-                stacAsset.Roles.Contains("overview"))
+            // if (stacAsset.Roles.Contains("visual") ||
+            //     stacAsset.Roles.Contains("overview"))
+            //     return new double?[0];
+            if (stacAsset.Roles.Contains("composite"))
+            {
                 return new double?[2] { 0, 255 };
+            }
             if (stacAsset.Roles.Contains("sigma0") ||
                 stacAsset.Roles.Contains("beta0") ||
                 stacAsset.Roles.Contains("gamma0")
@@ -157,24 +162,24 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             if (stacAsset.Roles.Contains("radiance") ||
                 stacAsset.Roles.Contains("reflectance")
                 )
-{
-    return new double?[2] { 0, 10000 };
-}
-return new double?[2] { 0, 255 };
+            {
+                return new double?[2] { 0, 10000 };
+            }
+            return new double?[2] { 0, 255 };
         }
 
         private object GetColorFormula(IDictionary<string, StacAsset> overviewAssets)
-{
-    if (overviewAssets.Count == 1 &&
-         (overviewAssets.First().Value.Roles.Contains("visual") ||
-         overviewAssets.First().Value.Roles.Contains("overview")) &&
-         overviewAssets.First().Value.Roles.Contains("reflectance"))
-        return "";
+        {
+            if (overviewAssets.Count == 1 &&
+                 (overviewAssets.First().Value.Roles.Contains("visual") ||
+                 overviewAssets.First().Value.Roles.Contains("overview")) &&
+                 overviewAssets.First().Value.Roles.Contains("reflectance"))
+                return "";
 
-    if (overviewAssets.Count == 3 &&
-         overviewAssets.All(a => a.Value.Roles.Contains("reflectance")))
-        return "Gamma RGB 1.5 Saturation 1.1 Sigmoidal RGB 15 0.35";
-    return "";
-}
+            if (overviewAssets.Count == 3 &&
+                 overviewAssets.All(a => a.Value.Roles.Contains("reflectance")))
+                return "Gamma RGB 1.5 Saturation 1.1 Sigmoidal RGB 15 0.35";
+            return "";
+        }
     }
 }

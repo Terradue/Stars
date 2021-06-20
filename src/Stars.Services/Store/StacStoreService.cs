@@ -126,13 +126,13 @@ namespace Terradue.Stars.Services.Store
 
         }
 
-        public async Task<StacItemNode> StoreStacNodeAtDestination(StacNode stacNode, IDestination destination)
+        public async Task<StacNode> StoreStacNodeAtDestination(StacNode stacNode, IDestination destination)
         {
             if (stacNode is StacItemNode)
                 PrepareStacItemForDestination(stacNode as StacItemNode, destination);
             if (stacNode is StacCatalogNode)
                 PrepareStacCatalogueForDestination(stacNode as StacCatalogNode, destination);
-            return await _stacRouter.Route(await StoreResourceAtDestination(stacNode, destination)) as StacItemNode;
+            return await _stacRouter.Route(await StoreResourceAtDestination(stacNode, destination)) as StacNode;
         }
 
         public async Task<StacItemNode> StoreItemNodeAtDestination(StacItemNode stacItemNode, IDestination destination)

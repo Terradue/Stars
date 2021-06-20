@@ -17,11 +17,13 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private StacAsset asset;
+        private readonly ICredentials credentials;
         private readonly Uri uri;
 
-        public StacAssetAsset(StacAsset asset, StacItemNode parent)
+        public StacAssetAsset(StacAsset asset, StacItemNode parent, ICredentials credentials = null)
         {
             this.asset = asset;
+            this.credentials = credentials;
             if (asset.Uri.IsAbsoluteUri)
                 this.uri = asset.Uri;
             else
@@ -73,14 +75,19 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                ContentDisposition cd = null;
+                ContentDisposition cd = new ContentDisposition();
                 if (asset.Properties.ContainsKey("filename"))
-                    cd.FileName = asset.GetProperty<string>("filename");
-                try
                 {
-                    cd = GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+                    cd.FileName = asset.GetProperty<string>("filename");
                 }
-                catch { }
+                else
+                {
+                    try
+                    {
+                        cd = GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+                    }
+                    catch { }
+                }
                 return cd;
             }
         }
@@ -92,7 +99,7 @@ namespace Terradue.Stars.Services.Model.Stac
             if (asset is IStreamable)
                 return asset as IStreamable;
 
-            return WebRoute.Create(uri);
+            return WebRoute.Create(uri, credentials: credentials);
 
         }
     }

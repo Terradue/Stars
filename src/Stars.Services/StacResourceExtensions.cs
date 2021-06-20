@@ -10,11 +10,13 @@ namespace Terradue.Stars.Services
     public static class StacResourceExtensions
     {
 
-        public static void MergeAssets(this StacItem stacItem, IAssetsContainer assetContainer)
+        public static void MergeAssets(this StacItem stacItem, IAssetsContainer assetContainer, bool removeIfNotInContainer = false)
         {
+            if ( removeIfNotInContainer )
+                stacItem.Assets.Clear();
             foreach (var asset in assetContainer.Assets)
             {
-                if (stacItem.Assets.ContainsKey(asset.Key))
+                if (stacItem.Assets.ContainsKey(asset.Key) )
                 {
                     stacItem.Assets.Remove(asset.Key);
                 }

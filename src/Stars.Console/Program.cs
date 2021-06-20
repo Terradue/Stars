@@ -16,16 +16,10 @@ namespace Terradue.Stars.Console
     )]
     public class Program
     {
-
         public static IConfigurationRoot Configuration { get; set; }
-
-
 
         public static async Task<int> Main(string[] args)
         {
-
-            
-
             CommandLineApplication<Program> app = new CommandLineApplication<Program>();
             app.VersionOptionFromAssemblyAttributes(typeof(Program).Assembly);
 

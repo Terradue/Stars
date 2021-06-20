@@ -76,6 +76,8 @@ namespace Terradue.Stars.Console.Operations
         [Option("-af|--asset-filter", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFilters { get; set; }
 
+        [Option("--empty", "Empty argument", CommandOptionType.NoValue)]
+        public bool Empty { get; set; }
 
         private RouterService routingService;
         private CarrierManager carrierManager;
@@ -241,7 +243,7 @@ namespace Terradue.Stars.Console.Operations
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
                         if (deliveryReport.ImportedAssets.Count() > 0)
-                            stacItemNode.StacItem.MergeAssets(deliveryReport);
+                            stacItemNode.StacItem.MergeAssets(deliveryReport, true);
                         else continue;
                     }
                     break;
@@ -272,6 +274,8 @@ namespace Terradue.Stars.Console.Operations
         private AssetFilters CreateAssetFiltersFromOptions()
         {
             AssetFilters assetFilters = new AssetFilters();
+            if ( AssetsFilters == null )
+                return assetFilters;
             Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
             foreach (var assetName in AssetsFilters)
             {
@@ -294,7 +298,7 @@ namespace Terradue.Stars.Console.Operations
                 }
                 else
                 {
-                    assetFilters.Add(new KeyAssetFilter(new Regex(assetName)));
+                    assetFilters.Add(new KeyAssetFilter(new Regex("^" + assetName + "$")));
                 }
             }
             return assetFilters;

@@ -92,7 +92,7 @@ pipeline {
           def descriptor = readDescriptor()
           sh "mv ${starsrpm[0].path} ."
           def mType=getTypeOfVersion(env.BRANCH_NAME)
-          def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--no-cache --build-arg STARS_RPM=${starsrpm[0].name} .")
+          def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--build-arg STARS_RPM=${starsrpm[0].name} .")
           testsuite.tag("${mType}latest")
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             testsuite.push("${mType}${env.VERSION_TOOL}")
@@ -105,29 +105,28 @@ pipeline {
       agent { 
           docker { 
               image 'golang'
+              args '-u root'
           } 
       }
-      stages{
-        stage('Github release') {
-          when {
-            tag 'v*'
-          }
-          steps {
-            withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
-              unstash name: 'stars-exe'
-              sh "go get github.com/github-release/github-release"
-              echo "Deleting release from github before creating new one"
-              sh "github-release delete --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag v${env.VERSION_TOOL}"
+      when {
+        branch 'master'
+      }
+      steps {
+        withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
+          unstash name: 'stars-exe'
+          sh "go get github.com/github-release/github-release"
+          // echo "Deleting release from github before creating new one"
+          // sh "github-release delete --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL}"
 
-              echo "Creating a new release in github"
-              sh "github-release release --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag v${env.VERSION_TOOL} --name v${env.VERSION_TOOL}"
+          echo "Creating a new release in github"
+          sh "github-release release --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name v${env.VERSION_TOOL}"
 
-              echo "Uploading the artifacts into github"
-              sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag v${env.VERSION_TOOL} --name Stars-linux-x64  --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
-            }
-          }
+          echo "Uploading the artifacts into github"
+          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-linux-x64  --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
         }
       }
+        
+      
     }  
   }
 }

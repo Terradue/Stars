@@ -418,7 +418,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://catalog.charter.uat.esaportal.eu/charter/search?format=atom&uid=802-TSX1_SAR__EEC_RE___SM_S_SRA_20160324T215413_20160324T215421E",
+                "https://catalog.charter.uat.esaportal.eu//charter/cat/charterdataset/search?format=atom&uid=call100_AB0009e5_001_MUL_L1T",
                 "-v",
                 "-r",
                 "4",
@@ -537,25 +537,26 @@
             "args": [
                 "copy",
                 "-v",
-                "file:///home/emathot/charter/calls/call-818/acquisitions/catalog.json",
+                "/home/emathot/charter/calls/call-100/acquisitions",
                 "-r",
                 "4",
                 "-rel",
                 "--output",
+                // "/tmp"
                 // "s3://processing-results/wf-sar-calibration-s1-manu"
-                // "s3://processing_results/"
-                "s3://fe994dc67fb44e118433b19fd2e01232:dev_user_001_container_002"
+                "s3://processing_results/testmanu"
+                // "s3://fe994dc67fb44e118433b19fd2e01232:dev_user_001_container_002"
             ],
             "env": {
-                "AWS__ServiceURL": "https://cf2.cloudferro.com:8080",
-                "AWS__Profile": "richardconway",
-                "AWS__SignatureVersion": "2",
+                // "AWS__ServiceURL": "https://cf2.cloudferro.com:8080",
+                // "AWS__Profile": "richardconway",
+                // "AWS__SignatureVersion": "2",
                 // "AWS__ServiceURL": "https://cf2.cloudferro.com:8080",
                 // "AWS__Profile": "creodiasowner",
                 // "AWS__SignatureVersion": "2",
                 // "AWS__Region": "RegionOne"
-                // "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
-                // "AWS__Profile": "minio"
+                "AWS__ServiceURL": "https://api.charter.uat.esaportal.eu",
+                "AWS__Profile": "minio"
             },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -574,7 +575,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://resource-catalogue.185.52.193.87.nip.io/?mode=opensearch&service=CSW&version=3.0.0&request=GetRecords&elementsetname=full&resulttype=results&typenames=csw:Record&recordids=S2B_MSIL2A_20200902T090559_N0214_R050_T34SFH_20200902T113910.SAFE",
+                "https://catalog.charter.uat.esaportal.eu//charter/cat/[chartercalibrateddataset,%7Bcallid857%7D,mission_worldview_3]/search?format=atom&uid=call857_WV03S00_875416E119_8883332018100200000000MS00-calibrated&do=[terradue]",
                 "-v",
                 "-r",
                 "4",
@@ -603,7 +604,6 @@
                 "-v",
                 "-r",
                 "4",
-                "-k",
                 "--output",
                 "/tmp/charter"
             ],
@@ -619,7 +619,32 @@
                 "moduleLoad": false
             }
         },
-        
+        {
+            "name": "Copy calibrated",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-100/calibratedDatasets/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720-calibrated/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720-calibrated.json",
+                "-v",
+                "-af",
+                "red",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/charter"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
