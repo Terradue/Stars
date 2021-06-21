@@ -28,6 +28,8 @@ namespace Terradue.Stars.Services
         private readonly CarrierManager carrierManager;
         private readonly ICredentials credentials;
 
+        public string Id => "Asset";
+
         public AssetService(ILogger<AssetService> logger,
                             RoutersManager routersManager,
                             SupplierManager suppliersManager,

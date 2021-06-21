@@ -3,11 +3,11 @@ using System.IO;
 using System.Runtime.Serialization;
 using Terradue.Stars.Interface;
 
-namespace Terradue.Stars.Services.Persistence.FileStore
+namespace Terradue.Stars.Services.Persistence.Stac.FileStore
 {
-    public class FileStorePersistenceMapper : PersistenceMapper
+    public class StacFileStorePersistenceMapper : PersistenceMapper
     {
-        public string GetPath(IResource resource)
+        public string GetPath(ITransactableResource resource)
         {
             var ancestors = GetAncestorsList(resource);
 

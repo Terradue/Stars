@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Stac;
-using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
@@ -38,6 +37,11 @@ namespace Terradue.Stars.Services.Model.Stac
         public static StacCatalogNode CreateUnlocatedNode(StacCatalog catalog)
         {
             return new StacCatalogNode(catalog, new Uri(catalog.Id + ".json", UriKind.Relative));
+        }
+
+        public override object Clone()
+        {
+            return new StacCatalogNode(this.StacCatalog, new Uri(this.Uri.ToString()), credentials);
         }
     }
 }

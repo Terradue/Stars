@@ -33,5 +33,9 @@ namespace Terradue.Stars.Services.Model.Stac
             return new List<IResource>();
         }
 
+        public override object Clone()
+        {
+            return new StacItemNode(this.StacItem, new Uri(this.Uri.ToString()), credentials);
+        }
     }
 }

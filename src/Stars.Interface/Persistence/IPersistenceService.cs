@@ -5,7 +5,7 @@ namespace Terradue.Stars.Interface.Persistence
     public interface IPersistenceService : IStarsService
     {
         Task Init(bool @new = false);
-        Task<T> Commit<T>(T resource) where T : IResource;
+        Task<T> Commit<T>(ITransactableResource resource);
         
     }
 }

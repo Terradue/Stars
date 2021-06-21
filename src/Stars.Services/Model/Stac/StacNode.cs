@@ -12,7 +12,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public abstract class StacNode : IResource, IStreamable, ILocatable
+    public abstract class StacNode : IResource, ITransactableResource, IStreamable, ILocatable
     {
         protected IStacObject stacObject;
         protected readonly ICredentials credentials;
@@ -110,5 +110,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             throw new NotImplementedException();
         }
+
+        public abstract object Clone();
     }
 }

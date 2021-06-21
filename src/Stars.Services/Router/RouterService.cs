@@ -13,6 +13,9 @@ namespace Terradue.Stars.Services.Router
     public class RouterService : IStarsService
     {
         public RouterServiceParameters Parameters { get; set; }
+
+        public string Id => "Router";
+
         private readonly ILogger logger;
         private readonly RoutersManager routersManager;
         private readonly ICredentials credentialsManager;

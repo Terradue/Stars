@@ -16,6 +16,9 @@ namespace Terradue.Stars.Services.Processing
     public class ProcessingService : IStarsService
     {
         public ProcessingServiceParameters Parameters { get; set; }
+
+        public string Id => "Processing";
+
         private readonly ILogger logger;
         private readonly ProcessingManager processingManager;
         private readonly TranslatorManager translatorManager;

@@ -35,6 +35,7 @@
     <PackageReference Include="S3.System.Net" Version="0.2.1" />
     <PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
+    <PackageReference Include="DistributedLock.FileSystem"  Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <!-- <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" /> -->

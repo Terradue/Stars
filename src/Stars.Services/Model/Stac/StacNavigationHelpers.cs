@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Stac;
+using Terradue.Stars.Services.Exceptions;
 using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
