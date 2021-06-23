@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface.Persistence
@@ -6,6 +7,6 @@ namespace Terradue.Stars.Interface.Persistence
     {
         Task Init(bool @new = false);
         Task<T> Commit<T>(ITransactableResource resource);
-        
+        Task<ITransactableResource> LoadLink(IResourceLink resourceLink);
     }
 }

@@ -295,5 +295,28 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
             }
         }
 
+        public async Task CreateOrUpdateItemCollections(CharterNode itemNode)
+        {
+            IEnumerable<StacCatalogNode> stacCollections = await LoadOrCreateCollections(itemNode.CharterItem.GetParentCollections());
+
+            foreach (var stacCollection in stacCollections)
+            {
+                StacLink link = stacCollection.StacCatalog.Links.FirstOrDefault(l => l.Uri.Equals(stacCollection.Uri.MakeRelativeUri(itemNode.Uri)));
+                if (link != null)
+                    stacCollection.StacCatalog.Links.Remove(link);
+
+                link = StacLink.CreateItemLink(stacCollection.Uri.MakeRelativeUri(itemNode.Uri), itemNode.ContentType.ToString());
+                link.Title = itemNode.CharterItem.Title;
+                stacCollection.StacCatalog.Links.Add(link);
+
+                StacCatalogNode storedCollectionNode = await StoreCatalogNodeAtDestination(stacCollection,
+                    RootCatalogDestination.To(stacCollection,
+                                              Path.GetDirectoryName(stacCollection.StacCatalog.GetProperty<string>("relative_path"))));
+
+                await CreateOrUpdateCollectionsOfCollection(storedCollectionNode);
+            }
+
+        }
+
     }
 }

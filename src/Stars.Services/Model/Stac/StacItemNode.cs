@@ -28,6 +28,15 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this, credentials));
 
+        public override Uri Parent {
+            get {
+                var collectionLink = StacItem.Links.FirstOrDefault(l => l.RelationshipType == "collection");
+                if ( collectionLink != null ){
+                    return collectionLink.Uri;
+                }
+               return base.Parent;
+            }
+        }
         public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
         {
             return new List<IResource>();
@@ -35,7 +44,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public override object Clone()
         {
-            return new StacItemNode(this.StacItem, new Uri(this.Uri.ToString()), credentials);
+            return new StacItemNode(this.StacItem.Clone(), new Uri(this.Uri.ToString()), credentials);
         }
     }
 }

@@ -1,25 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Persistence;
 
 namespace Terradue.Stars.Services.Persistence
 {
     public abstract class PersistenceMapper
     {
-        public virtual LinkedList<IResource> GetAncestorsList(IResource resource)
+        private readonly IPersistenceService persistenceService;
+
+        protected PersistenceMapper(IPersistenceService persistenceService)
         {
-            LinkedList<IResource> ancestors = new LinkedList<IResource>();
-            ancestors.AddFirst(resource);
-            return AddParent(ancestors);
+            this.persistenceService = persistenceService;
         }
 
-        protected LinkedList<IResource> AddParent(LinkedList<IResource> ancestors)
+        public virtual async Task<LinkedList<ITransactableResource>> GetAncestorsList(ITransactableResource resource)
         {
-            if ( ancestors.Last.Value.Parent != null && ancestors.Last.Value.Parent != ancestors.Last.Value ){
-                ancestors.AddLast(ancestors.Last.Value.Parent);
-                AddParent(ancestors);
-            }
+            LinkedList<ITransactableResource> ancestors = new LinkedList<ITransactableResource>();
+            await AddParent(ancestors, resource);
             return ancestors;
+        }
+
+        protected async Task AddParent(LinkedList<ITransactableResource> ancestors, ITransactableResource resource)
+        {
+            if (resource.Parent == null) return;
+            var parent = await persistenceService.LoadLink(resource.Parent);
+            ancestors.AddLast(parent);
+            await AddParent(ancestors, parent);
+            return;
         }
     }
 }

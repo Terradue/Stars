@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public override object Clone()
         {
-            return new StacCollectionNode(new StacCollection(this.StacCollection), new Uri(this.Uri.ToString()), credentials);
+            return new StacCollectionNode(this.StacCollection.Clone(), new Uri(this.Uri.ToString()), credentials);
         }
     }
 }

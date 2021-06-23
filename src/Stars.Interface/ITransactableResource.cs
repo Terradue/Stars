@@ -9,6 +9,6 @@ namespace Terradue.Stars.Interface
     public interface ITransactableResource : IResource, IStreamable, ICloneable
     {
         string Id { get; }
-
+        IResourceLink Parent { get; }
     }
 }

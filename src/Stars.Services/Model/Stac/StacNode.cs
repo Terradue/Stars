@@ -90,6 +90,16 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanBeRanged => false;
 
+        public virtual IResourceLink Parent {
+            get {
+                var parentLink = StacObject.Links.FirstOrDefault(l => l.RelationshipType == "parent");
+                if ( parentLink != null ){
+                    return new StacResourceLink(parentLink);
+                }
+                return null;
+            }
+        }
+
         public abstract IReadOnlyList<IResource> GetRoutes(ICredentials credentials);
 
         public async Task<Stream> GetStreamAsync()

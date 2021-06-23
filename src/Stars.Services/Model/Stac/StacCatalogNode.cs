@@ -7,7 +7,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public class StacCatalogNode : StacNode, ICatalog
+    public class StacCatalogNode : StacNode, ICatalog, ITransactableResource
     {
         public StacCatalogNode(IStacCatalog stacCatalog, Uri uri, ICredentials credentials = null) : base(stacCatalog, uri, credentials)
         {
