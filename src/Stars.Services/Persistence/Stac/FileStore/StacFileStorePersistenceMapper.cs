@@ -13,13 +13,13 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
         {
         }
 
-        public async Task<string> GetPath(ITransactableResource resource)
+        public string GetPath(ITransaction transaction)
         {
-            var ancestors = await GetAncestorsList(resource);
+            var ancestors = transaction.GetResourceMap();
 
             string path = "";
             var currentLink = ancestors.Last;
-            while (currentLink != null || currentLink.Value != resource)
+            while (currentLink != null || currentLink.Value != transaction)
             {
                 path += Path.Join(path, currentLink.Value.Id);
                 currentLink = currentLink.Previous;

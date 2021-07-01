@@ -41,6 +41,8 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
 
         public string Id => "FileStore";
 
+        public StacOptions StacOptions => options.Value.StacOptions;
+
         public StacFileStoreService(IOptions<StacFileStoreConfiguration> options,
                             ILogger<StacFileStoreService> logger,
                             TranslatorManager translatorManager,
@@ -108,16 +110,10 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
             return await LoadRootCatalogNode();
         }
 
-        public async Task<T> Commit<T>(ITransactableResource resource)
+        public async Task<T> Commit<T>(ITransaction stacTransaction)
         {
-            // 1. Make a transaction clone of the resource
-            StacNode newResource = (StacNode)resource.Clone();
-
-            // 2. Create the transaction
-            StacTransaction stacTransaction = StacTransaction.Create(newResource, this);
-
             // 3. Define its FS destination Uri (backend)
-            Uri stacNodeFileSystemUri = BuildFileStoreUri(resource);
+            Uri stacNodeFileSystemUri = BuildFileStoreUri(stacTransaction);
             stacTransaction.SetDestinationUri(stacNodeFileSystemUri);
 
             // 4. START transaction with file locking
@@ -142,7 +138,7 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
             // 4.5. Apply the "After Commit" method of the Transaction
             stacTransaction.AfterCommit(newResource);
 
-            return (T)newResource;
+            return (T)(newResource as ITransactableResource);
 
         }
 
@@ -189,10 +185,10 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
             return await stacRouter.Route(resourceRoute);
         }
 
-        private Uri BuildFileStoreUri(ITransactableResource resource)
+        private Uri BuildFileStoreUri(ITransaction transaction)
         {
             Uri baseUri = new Uri(Path.GetDirectoryName(rootCatalog.Uri.ToString()));
-            return new Uri(baseUri, persistenceMapper.GetPath(resource));
+            return new Uri(baseUri, persistenceMapper.GetPath(transaction));
         }
 
         private Uri BuildFrontEndUri(ITransactableResource resource)
@@ -295,28 +291,9 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
             }
         }
 
-        public async Task CreateOrUpdateItemCollections(CharterNode itemNode)
+        public Task<ITransactableResource> LoadLink(IResourceLink resourceLink)
         {
-            IEnumerable<StacCatalogNode> stacCollections = await LoadOrCreateCollections(itemNode.CharterItem.GetParentCollections());
-
-            foreach (var stacCollection in stacCollections)
-            {
-                StacLink link = stacCollection.StacCatalog.Links.FirstOrDefault(l => l.Uri.Equals(stacCollection.Uri.MakeRelativeUri(itemNode.Uri)));
-                if (link != null)
-                    stacCollection.StacCatalog.Links.Remove(link);
-
-                link = StacLink.CreateItemLink(stacCollection.Uri.MakeRelativeUri(itemNode.Uri), itemNode.ContentType.ToString());
-                link.Title = itemNode.CharterItem.Title;
-                stacCollection.StacCatalog.Links.Add(link);
-
-                StacCatalogNode storedCollectionNode = await StoreCatalogNodeAtDestination(stacCollection,
-                    RootCatalogDestination.To(stacCollection,
-                                              Path.GetDirectoryName(stacCollection.StacCatalog.GetProperty<string>("relative_path"))));
-
-                await CreateOrUpdateCollectionsOfCollection(storedCollectionNode);
-            }
-
+            throw new NotImplementedException();
         }
-
     }
 }

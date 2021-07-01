@@ -11,17 +11,15 @@ namespace Terradue.Stars.Services.Persistence.Stac
     internal class StacTransaction : ITransaction
     {
         private StacNode newResource;
-        private IStacPersistenceService stacFileStoreService;
 
-        public StacTransaction(StacNode newResource, IStacPersistenceService stacFileStoreService)
+        public StacTransaction(StacNode newResource)
         {
             this.newResource = newResource;
-            this.stacFileStoreService = stacFileStoreService;
         }
 
-        internal static StacTransaction Create(StacNode newResource, IStacPersistenceService stacFileStoreService)
+        internal static StacTransaction CreateWriteTransaction(StacNode resource)
         {
-            return new StacTransaction(newResource, stacFileStoreService);
+            return new StacTransaction(resource.Clone() as StacNode);
         }
 
         public void AfterCommit(ITransactableResource committedResource)
@@ -57,7 +55,7 @@ namespace Terradue.Stars.Services.Persistence.Stac
                     throw new InvalidOperationException(string.Format("Stac Object {0} referencing collection {1} is not an Item.", stacNode.Id, stacNode.Parent));
                 Dictionary<Uri, StacItem> items = new Dictionary<Uri, StacItem>();
                 items.Add(stacNode.Uri, (stacNode as StacItemNode).StacItem);
-                parentNode = UpdateCollection(catalogNode.StacCatalog as StacCollection, items);
+                UpdateCollection(catalogNode.StacCatalog as StacCollection, items);
             }
             else
             {
@@ -72,9 +70,9 @@ namespace Terradue.Stars.Services.Persistence.Stac
             throw new NotImplementedException();
         }
 
-        private ITransactableResource UpdateCollection(StacCollection stacCollection, IDictionary<Uri, StacItem> items)
+        private void UpdateCollection(StacCollection stacCollection, IDictionary<Uri, StacItem> items)
         {
-            stacCollection
+            stacCollection.Update(items);
         }
 
         private void ManageVersion(IResource existingResource)

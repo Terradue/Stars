@@ -9,6 +9,7 @@ namespace Terradue.Stars.Services.Persistence.Stac.FileStore
         public bool AbsoluteUris { get; set; }
         public TimeSpan LockTimeout { get; set; }
         public bool RelativeReference { get; set; }
+        public StacOptions StacOptions { get; set; }
     }
 
     public class FileStoreNode

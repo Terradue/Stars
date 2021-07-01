@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface
 {
@@ -9,5 +11,7 @@ namespace Terradue.Stars.Interface
         void BeforeWrite(IResource existingResource);
 
         void AfterCommit(ITransactableResource committedResource);
+
+        LinkedList<IResourceLink> GetResourceMap();
     }
 }
