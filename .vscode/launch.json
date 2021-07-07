@@ -575,6 +575,7 @@
                 "copy",
                 "https://localhost:5001/api/calls/100/acquisitions/datasets/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720.json",
                 "-v",
+                "-k",
                 "-r",
                 "4",
                 "--output",
