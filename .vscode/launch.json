@@ -163,7 +163,6 @@
                 "-r",
                 "2",
                 "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2A_30VWN_20200830_0_L2A"
-             
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -183,7 +182,6 @@
                 "-r",
                 "2",
                 "https://eod-catalog-svc-prod.astraea.earth"
-                
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -567,7 +565,7 @@
             }
         },
         {
-            "name": "Copy eoepca catalog",
+            "name": "Copy local charter item",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -575,13 +573,13 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://catalog.charter.uat.esaportal.eu//charter/cat/[chartercalibrateddataset,%7Bcallid857%7D,mission_worldview_3]/search?format=atom&uid=call857_WV03S00_875416E119_8883332018100200000000MS00-calibrated&do=[terradue]",
+                "https://localhost:5001/api/calls/100/acquisitions/datasets/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720.json",
                 "-v",
+                "-k",
                 "-r",
                 "4",
-                "-k",
                 "--output",
-                "/tmp/eoepca"
+                "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

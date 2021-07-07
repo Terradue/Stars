@@ -60,7 +60,7 @@ namespace Terradue.Stars.Services.Router
         private static WebRequest CreateWebRequest(Uri uri, ICredentials credentials = null)
         {
             var request = WebRequest.Create(uri);
-            request.Headers.Set("User-Agent", "Stars/0.0.1");
+            request.Headers.Set("User-Agent", "Stars/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
             if (credentials != null)
                 request.Credentials = credentials;
             return request;
