@@ -626,10 +626,8 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-100/calibratedDatasets/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720-calibrated/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720-calibrated.json",
+                "https://catalog.charter.uat.esaportal.eu//charter/cat/[chartercalibrateddataset,%7Bcallid857%7D]/search?format=atom&uid=call857_TSX1_SAR__EEC_RE___SM_S_SRA_20160324T215413_20160324T215421-calibrated&do=[terradue]",
                 "-v",
-                "-af",
-                "red",
                 "-r",
                 "4",
                 "--output",

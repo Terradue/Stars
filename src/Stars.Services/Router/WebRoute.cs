@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Net.S3;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
@@ -33,7 +34,8 @@ namespace Terradue.Stars.Services.Router
             // URL substitution
             var urlFind = Environment.GetEnvironmentVariable("STARS_URL_FIND");
             var urlReplace = Environment.GetEnvironmentVariable("STARS_URL_REPLACE");
-            if ( !string.IsNullOrEmpty(urlFind) && !string.IsNullOrEmpty(urlReplace) ){
+            if (!string.IsNullOrEmpty(urlFind) && !string.IsNullOrEmpty(urlReplace))
+            {
                 requestUri = new Uri(Regex.Replace(uri.ToString(), urlFind, urlReplace));
             }
             WebRequest request = CreateWebRequest(requestUri, creds);
@@ -50,15 +52,23 @@ namespace Terradue.Stars.Services.Router
             {
                 request.PreAuthenticate = true;
             }
-            if (credentials.GetCredential(requestUri, "Basic") != null)
+            if (credentials?.GetCredential(requestUri, "Basic") != null)
             {
                 request.PreAuthenticate = true;
+                SetBasicAuthHeader(request, credentials?.GetCredential(requestUri, "Basic"));
             }
             if (request is FtpWebRequest && request.Proxy == null && WebRequest.DefaultWebProxy != null)
             {
                 request.Proxy = WebRequest.DefaultWebProxy;
             }
             return new WebRoute(request, contentLength);
+        }
+
+        public static void SetBasicAuthHeader(WebRequest request, NetworkCredential credential)
+        {
+            string authInfo = credential.UserName + ":" + credential.Password;
+            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+            request.Headers["Authorization"] = "Basic " + authInfo;
         }
 
         private static WebRequest CreateWebRequest(Uri uri, ICredentials credentials = null)

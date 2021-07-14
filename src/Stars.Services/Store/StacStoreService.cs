@@ -164,7 +164,7 @@ namespace Terradue.Stars.Services.Store
             if (rootCatalogNode != null)
             {
                 Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
-                var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri));
+                var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri), credentials: credentials);
 
                 return publicResource;
             }
