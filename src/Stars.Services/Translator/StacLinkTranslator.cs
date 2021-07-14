@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Translator
                             var stacRoute = WebRoute.Create(stacLink.Uri, credentials: credentials);
                             var stacCatalog = StacConvert.Deserialize<IStacCatalog>(await stacRoute.ReadAsString());
                             if (stacCatalog != null)
-                                return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri) as IResource);
+                                return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri, credentials: credentials) as IResource);
                         }
                         catch { }
                     }
@@ -61,7 +61,7 @@ namespace Terradue.Stars.Services.Translator
                             var stacRoute = WebRoute.Create(stacLink.Uri, credentials: credentials);
                             var stacItem = StacConvert.Deserialize<StacItem>(await stacRoute.ReadAsString());
                             if (stacItem != null)
-                                return (T)(new StacItemNode(stacItem, stacRoute.Uri) as IResource);
+                                return (T)(new StacItemNode(stacItem, stacRoute.Uri, credentials: credentials) as IResource);
                         }
                         catch { }
                     }
