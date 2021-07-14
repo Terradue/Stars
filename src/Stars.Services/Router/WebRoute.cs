@@ -50,6 +50,10 @@ namespace Terradue.Stars.Services.Router
             {
                 request.PreAuthenticate = true;
             }
+            if (credentials.GetCredential(requestUri, "Basic") != null)
+            {
+                request.PreAuthenticate = true;
+            }
             if (request is FtpWebRequest && request.Proxy == null && WebRequest.DefaultWebProxy != null)
             {
                 request.Proxy = WebRequest.DefaultWebProxy;
