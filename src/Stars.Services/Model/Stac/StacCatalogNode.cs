@@ -35,7 +35,7 @@ namespace Terradue.Stars.Services.Model.Stac
                     .ToList();
         }
 
-        public static StacCatalogNode CreateUnlocatedNode(StacCatalog catalog)
+        public static StacCatalogNode CreateUnlocatedNode(IStacCatalog catalog)
         {
             return new StacCatalogNode(catalog, new Uri(catalog.Id + ".json", UriKind.Relative));
         }
