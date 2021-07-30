@@ -626,7 +626,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://catalog.charter.uat.esaportal.eu//charter/cat/[chartercalibrateddataset,%7Bcallid857%7D]/search?format=atom&uid=call857_TSX1_SAR__EEC_RE___SM_S_SRA_20160324T215413_20160324T215421-calibrated&do=[terradue]",
+                "https://supervisor.disasterscharter.org/api/calls/823/acquisitions/calibratedDatasets/K5_20210621004940_000010_42994_A_ES16_HH_GTC_B_L1D_Aux_xml-calibrated.json",
                 "-v",
                 "-r",
                 "4",
