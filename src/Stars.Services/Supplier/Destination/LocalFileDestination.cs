@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -12,6 +13,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
     {
         private readonly FileInfo file;
         private readonly IResource resource;
+        private readonly char[] WRONG_FILENAME_STARTING_CHAR = new char[] { ' ', '.', '-', '$', '&' };
 
         private LocalFileDestination(FileInfo file, IResource resource)
         {
@@ -28,7 +30,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
             var filename = Path.GetFileName(route.Uri.ToString());
             if (route.ContentDisposition != null && !string.IsNullOrEmpty(route.ContentDisposition.FileName))
                 filename = route.ContentDisposition.FileName;
-            if ( string.IsNullOrEmpty(filename) )
+            if (string.IsNullOrEmpty(filename))
                 filename = Guid.NewGuid().ToString("N");
             return new LocalFileDestination(new FileInfo(Path.Join(directory, filename)), route);
         }
@@ -47,6 +49,10 @@ namespace Terradue.Stars.Services.Supplier.Destination
             string filename = Path.GetFileName(subroute.Uri.IsAbsoluteUri ? subroute.Uri.LocalPath : subroute.Uri.ToString());
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
                 filename = subroute.ContentDisposition.FileName;
+
+            // to avoid wrong filename such as '$value'
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Item)
+                filename = (subroute as IItem).Id + ".zip";
 
             // if the relPath requested is null, we will build one from the origin route to the new one
             if (relPathFix == null)
@@ -70,7 +76,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 }
                 else
                     relPath = Path.GetDirectoryName(subroute.Uri.ToString());
-                if ( relPath == null || relPath.StartsWith("..") )
+                if (relPath == null || relPath.StartsWith(".."))
                     relPath = relPathFix ?? "";
             }
             var newFilePath = Path.Join(file.Directory.FullName, relPath, filename);
