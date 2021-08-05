@@ -626,7 +626,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.disasterscharter.org/api/calls/823/acquisitions/calibratedDatasets/K5_20210621004940_000010_42994_A_ES16_HH_GTC_B_L1D_Aux_xml-calibrated.json",
+                "https://supervisor.disasterscharter.org/api/calls/831/acquisitions/notifications/831-ABAE-VRSS2-TUNEZ_1_VRSS2.json",
                 "-v",
                 "-r",
                 "4",

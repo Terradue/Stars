@@ -22,6 +22,7 @@ namespace Terradue.Stars.Services.Processing
             { ".tbz2",   ArchiveType.TarBzip2 },
             { ".tar.lz",   ArchiveType.TarLzip },
             { ".tlz",   ArchiveType.TarLzip },
+            { ".gz",   ArchiveType.Gzip },
             {".tar.xz",   ArchiveType.TarXz },
             {".txz",  ArchiveType.TarXz },
             {".zip",   ArchiveType.Zip },
@@ -30,6 +31,7 @@ namespace Terradue.Stars.Services.Processing
 
         public static readonly string[] ArchiveContentTypes = {
             "application/x-gtar",
+            "application/x-gzip",
             "application/zip"
         };
 
@@ -49,6 +51,8 @@ namespace Terradue.Stars.Services.Processing
                     return new ZipArchiveAsset(zipFile, asset, logger);
                 case ArchiveType.TarGzip:
                     return new TarGzipArchive(asset, logger);
+                case ArchiveType.Gzip:
+                    return new GzipArchive(asset, logger);
 
                 default:
                     throw new System.IO.InvalidDataException("Asset is not recognized as an archive");

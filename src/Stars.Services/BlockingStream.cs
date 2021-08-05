@@ -74,7 +74,7 @@ namespace Terradue.Stars.Services
         public override void SetLength(long value)
         {
             // Console.Out.WriteLine("SetLength");
-            throw new NotSupportedException();
+            contentRequestLength = Convert.ToUInt64(value);
         }
 
         public override int Read(byte[] buffer, int offset, int rcount)
