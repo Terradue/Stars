@@ -25,7 +25,7 @@ namespace Terradue.Stars.Services.Processing
         protected BlockingStream GetZipStream(IAsset asset)
         {
             const int chunk = 4096;
-            BlockingStream blockingStream = new BlockingStream(1000);
+            BlockingStream blockingStream = new BlockingStream(asset.ContentLength);
             asset.GetStreamable().GetStreamAsync()
                 .ContinueWith(task =>
                 {
