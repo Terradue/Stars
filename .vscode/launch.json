@@ -618,7 +618,7 @@
             }
         },
         {
-            "name": "Copy calibrated",
+            "name": "Copy charter",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -626,7 +626,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.disasterscharter.org/api/calls/831/acquisitions/notifications/831-ABAE-VRSS2-TUNEZ_1_VRSS2.json",
+                "https://supervisor.disasterscharter.org/catalog/calls/call-830/acquisitions/830-CNSA-GF3-urn_ogc_def_EOP_CNSA_GF3FSII5801137/830-CNSA-GF3-urn_ogc_def_EOP_CNSA_GF3FSII5801137.json",
                 "-v",
                 "-r",
                 "4",

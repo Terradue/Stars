@@ -45,7 +45,14 @@ namespace Terradue.Stars.Services.Processing
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public ulong ContentLength => Convert.ToUInt64(blockingStream.Length);
+        public ulong ContentLength
+        {
+            get
+            {
+                try { return Convert.ToUInt64(blockingStream.Length); }
+                catch { return 0; }
+            }
+        }
 
         public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(name) };
 

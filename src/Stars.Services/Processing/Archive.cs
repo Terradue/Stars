@@ -47,8 +47,7 @@ namespace Terradue.Stars.Services.Processing
             switch (compression)
             {
                 case ArchiveType.Zip:
-                    var zipFile = Ionic.Zip.ZipFile.Read(await streamableAsset.GetStreamAsync());
-                    return new ZipArchiveAsset(zipFile, asset, logger);
+                    return new ZipArchiveAsset(asset, logger);
                 case ArchiveType.TarGzip:
                     return new TarGzipArchive(asset, logger);
                 case ArchiveType.Gzip:
