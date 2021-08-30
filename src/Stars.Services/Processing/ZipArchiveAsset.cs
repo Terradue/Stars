@@ -79,7 +79,7 @@ namespace Terradue.Stars.Services.Processing
         internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            zipFile = Ionic.Zip.ZipFile.Read(GetZipStream(asset));
+            zipFile = Ionic.Zip.ZipFile.Read(await asset.GetStreamable().GetStreamAsync());
             string subFolder = AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)
