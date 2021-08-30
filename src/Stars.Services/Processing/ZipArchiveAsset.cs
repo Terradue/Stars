@@ -16,11 +16,33 @@ namespace Terradue.Stars.Services.Processing
         private readonly IAsset asset;
         private readonly ILogger logger;
 
-        public ZipArchiveAsset(ZipFile zipFile, IAsset asset, ILogger logger)
+        public ZipArchiveAsset(IAsset asset, ILogger logger)
         {
-            this.zipFile = zipFile;
             this.asset = asset;
             this.logger = logger;
+        }
+
+        protected BlockingStream GetZipStream(IAsset asset)
+        {
+            const int chunk = 4096;
+            BlockingStream blockingStream = new BlockingStream(1000);
+            asset.GetStreamable().GetStreamAsync()
+                .ContinueWith(task =>
+                {
+                    var stream = task.GetAwaiter().GetResult();
+                    Task.Factory.StartNew(() =>
+                    {
+                        int read;
+                        var buffer = new byte[chunk];
+                        do
+                        {
+                            read = stream.Read(buffer, 0, chunk);
+                            blockingStream.Write(buffer, 0, read);
+                        } while (read == chunk);
+                        blockingStream.Close();
+                    });
+                });
+            return blockingStream;
         }
 
         public IReadOnlyDictionary<string, IAsset> Assets
@@ -28,6 +50,7 @@ namespace Terradue.Stars.Services.Processing
             get
             {
                 Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
+                if (zipFile == null) return assets;
                 foreach (ZipEntry entry in zipFile)
                 {
                     if (entry.IsDirectory) continue;
@@ -56,6 +79,7 @@ namespace Terradue.Stars.Services.Processing
         internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
+            zipFile = Ionic.Zip.ZipFile.Read(GetZipStream(asset));
             string subFolder = AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)

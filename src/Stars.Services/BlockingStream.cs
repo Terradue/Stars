@@ -22,7 +22,7 @@ namespace Terradue.Stars.Services
         private int _doneWritingHandleIndex;
         private volatile bool _illegalToWrite;
         private volatile bool _writeClosed;
-        private ulong contentRequestLength;
+        private ulong? contentRequestLength;
         private readonly int maxChunk;
         private ulong totalRead;
 
@@ -55,7 +55,7 @@ namespace Terradue.Stars.Services
             get
             {
                 // Console.Out.WriteLine("GetLength: " + contentRequestLength);
-                if (contentRequestLength == 0)
+                if (!contentRequestLength.HasValue)
                     throw new NotSupportedException();
                 return Convert.ToInt64(contentRequestLength);
             }
