@@ -626,7 +626,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.disasterscharter.org/catalog/calls/call-830/acquisitions/830-CNSA-GF3-urn_ogc_def_EOP_CNSA_GF3FSII5801137/830-CNSA-GF3-urn_ogc_def_EOP_CNSA_GF3FSII5801137.json",
+                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-857/acquisitions/857-ALSAT1B-ORTHO-AB0009e5_001_BUN_L1T-AB0009e5_001_MUL_L1T/857-ALSAT1B-ORTHO-AB0009e5_001_BUN_L1T-AB0009e5_001_MUL_L1T.json",
                 "-v",
                 "-r",
                 "4",

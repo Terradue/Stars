@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Ionic.Zip;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -16,33 +20,24 @@ namespace Terradue.Stars.Services.Processing
         private readonly IAsset asset;
         private readonly ILogger logger;
 
+        private IStreamable localStreamable;
+
         public ZipArchiveAsset(IAsset asset, ILogger logger)
         {
             this.asset = asset;
             this.logger = logger;
         }
 
-        protected BlockingStream GetZipStream(IAsset asset)
+        protected async Task<Stream> GetZipStreamAsync(IAsset asset, CarrierManager carrierManager)
         {
-            const int chunk = 4096;
-            BlockingStream blockingStream = new BlockingStream(asset.ContentLength);
-            asset.GetStreamable().GetStreamAsync()
-                .ContinueWith(task =>
-                {
-                    var stream = task.GetAwaiter().GetResult();
-                    Task.Factory.StartNew(() =>
-                    {
-                        int read;
-                        var buffer = new byte[chunk];
-                        do
-                        {
-                            read = stream.Read(buffer, 0, chunk);
-                            blockingStream.Write(buffer, 0, read);
-                        } while (read == chunk);
-                        blockingStream.Close();
-                    });
-                });
-            return blockingStream;
+            if ( asset.Uri.Scheme == "file" )
+                return await asset.GetStreamable().GetStreamAsync();
+            var tmpDestination = LocalFileDestination.Create("/tmp", asset);
+            var tmpArchiveAssetDestination = tmpDestination.To(asset, Guid.NewGuid().ToString());
+            tmpArchiveAssetDestination.PrepareDestination();
+            var localZipDelivery = carrierManager.GetSingleDeliveryQuotations(asset, tmpArchiveAssetDestination).First();
+            localStreamable = await localZipDelivery.Carrier.Deliver(localZipDelivery) as LocalFileSystemResource;
+            return await localStreamable.GetStreamAsync();
         }
 
         public IReadOnlyDictionary<string, IAsset> Assets
@@ -79,7 +74,7 @@ namespace Terradue.Stars.Services.Processing
         internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            zipFile = Ionic.Zip.ZipFile.Read(await asset.GetStreamable().GetStreamAsync());
+            zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager));
             string subFolder = AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)
@@ -98,7 +93,15 @@ namespace Terradue.Stars.Services.Processing
                     }
                 }
             }
+            DisposeLocalStreamable();
             return new GenericAssetContainer(this, assetsExtracted);
+        }
+
+        private void DisposeLocalStreamable()
+        {
+            if ( localStreamable != null )
+                File.Delete(localStreamable.Uri.LocalPath);
+            localStreamable = null;
         }
     }
 }
