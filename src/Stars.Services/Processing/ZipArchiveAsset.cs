@@ -32,7 +32,7 @@ namespace Terradue.Stars.Services.Processing
         {
             if ( asset.Uri.Scheme == "file" )
                 return await asset.GetStreamable().GetStreamAsync();
-            var tmpDestination = LocalFileDestination.Create("/tmp", asset);
+            var tmpDestination = LocalFileDestination.Create(Path.GetTempPath(), asset);
             var tmpArchiveAssetDestination = tmpDestination.To(asset, Guid.NewGuid().ToString());
             tmpArchiveAssetDestination.PrepareDestination();
             var localZipDelivery = carrierManager.GetSingleDeliveryQuotations(asset, tmpArchiveAssetDestination).First();
