@@ -108,7 +108,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
                 SetRequestParametersWithUri(s3Resource.Uri, ur);
 
-                Stream contentStream = await streamable.GetStreamAsync();
+                Stream contentStream = await streamable.GetStreamAsync().ConfigureAwait(false);
                 ur.InputStream = contentStream;
                 ur.ContentType = streamable.ContentType.MediaType;
                 await tx.UploadAsync(ur);
