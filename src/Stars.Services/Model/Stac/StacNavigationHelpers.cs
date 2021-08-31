@@ -26,6 +26,7 @@ namespace Stars.Services.Model.Stac
                 Uri linkUri = childLink.Uri;
                 if (!linkUri.IsAbsoluteUri && baseUri.IsAbsoluteUri)
                     linkUri = new Uri(baseUri, childLink.Uri);
+                children.Remove(linkUri);
                 children.Add(linkUri, await childLink.CreateStacObject(baseUri, stacRouter.Credentials) as IStacCatalog);
             }
             return children;
@@ -59,6 +60,7 @@ namespace Stars.Services.Model.Stac
                 Uri linkUri = itemLink.Uri;
                 if (!linkUri.IsAbsoluteUri && baseUri.IsAbsoluteUri)
                     linkUri = new Uri(baseUri, itemLink.Uri);
+                items.Remove(linkUri);
                 items.Add(linkUri, await itemLink.CreateStacObject(baseUri, stacRouter.Credentials) as StacItem);
             }
             return items;
