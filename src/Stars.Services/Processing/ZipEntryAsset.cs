@@ -50,9 +50,7 @@ namespace Terradue.Stars.Services.Processing
 
         public Task<Stream> GetStreamAsync()
         {
-            BlockingStream stream = new BlockingStream(Convert.ToUInt64(entry.UncompressedSize));
-            Task.Factory.StartNew(() => entry.Extract(stream));
-            return Task.FromResult<Stream>(stream);
+            return Task.FromResult(entry.OpenReader() as Stream);
         }
 
         public IStreamable GetStreamable()
