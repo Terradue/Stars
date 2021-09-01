@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Terradue.Stars</Title>
     <Description>Stars is a set of services for working with Spatio Temporal Catalog such as STAC but not only</Description>
-    <Version>0.9.26</Version>
+    <Version>0.9.27</Version>
     <!-- <VersionSuffix>beta.1</VersionSuffix> -->
     <AssemblyName>Terradue.Stars.Services</AssemblyName>
     <PackageId>Terradue.Stars</PackageId>
@@ -32,7 +32,7 @@
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="MimeTypes" Version="2.0.2" />
     <PackageReference Include="DotNetZip" Version="1.15.0" />
-    <PackageReference Include="S3.System.Net" Version="0.2.1" />
+    <PackageReference Include="S3.System.Net" Version="0.4.*" />
     <PackageReference Include="SharpZipLib" Version="1.3.2" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
   </ItemGroup>

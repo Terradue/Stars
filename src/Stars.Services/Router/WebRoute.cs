@@ -333,6 +333,10 @@ namespace Terradue.Stars.Services.Router
             {
                 (rangedRequest as FtpWebRequest).ContentOffset = start;
             }
+            if (rangedRequest is S3WebRequest)
+            {
+                (rangedRequest as S3WebRequest).Method = S3RequestMethods.DownloadRangedObject;
+            }
             var response = await rangedRequest.GetResponseAsync();
             var stream = response.GetResponseStream();
             if (rangedRequest is FileWebRequest)
