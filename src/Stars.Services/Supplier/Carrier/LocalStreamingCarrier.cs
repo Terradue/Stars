@@ -76,7 +76,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 {
                     logger.LogDebug("Trying to resume from {0}", file.Length);
                     stream = await streamable.GetStreamAsync(file.Length);
-                    using (FileStream fileStream = file.Open(FileMode.Append, FileAccess.Write, FileShare.None))
+                    using (FileStream fileStream = file.Open(FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                     {
                         // fileStream.Seek(0, SeekOrigin.End);
                         await stream.CopyToAsync(fileStream, 5 * 1024 * 1024).ConfigureAwait(false);
@@ -86,7 +86,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 else
                 {
                     stream = await streamable.GetStreamAsync();
-                    using (FileStream fileStream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write, FileShare.None))
+                    using (FileStream fileStream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                     {
                         await stream.CopyToAsync(fileStream, 5 * 1024 * 1024).ConfigureAwait(false);
                         await fileStream.FlushAsync();
