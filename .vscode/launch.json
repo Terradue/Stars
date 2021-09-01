@@ -626,7 +626,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-857/acquisitions/857-ALSAT1B-ORTHO-AB0009e5_001_BUN_L1T-AB0009e5_001_MUL_L1T/857-ALSAT1B-ORTHO-AB0009e5_001_BUN_L1T-AB0009e5_001_MUL_L1T.json",
+                "s3://catalog/calls/call-857/datasets/WV03S00_875416E119_8883332018100200000000MS00/WV03S00_875416E119_8883332018100200000000MS00.json",
                 "-v",
                 "-r",
                 "4",
@@ -634,6 +634,11 @@
                 "/tmp/charter"
             ],
             "cwd": "${workspaceFolder}/src",
+            "env": {
+                "AWS_ACCESS_KEY_ID": "minioadmin",
+                "AWS_SECRET_ACCESS_KEY": "minioadmin",
+                "AWS__ServiceURL": "https://minio.charter.uat.esaportal.eu"
+            },
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
