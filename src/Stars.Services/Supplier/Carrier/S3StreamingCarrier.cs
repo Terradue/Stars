@@ -102,6 +102,16 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
             try
             {
+                // in case source is also S3
+                if ( streamable is WebRoute && (streamable as WebRoute).Request is S3WebRequest)
+                {
+                    S3WebRequest s3CopyWebRequest = (S3WebRequest)(streamable as WebRoute).Request.CloneRequest(streamable.Uri);
+                    s3CopyWebRequest.Method = System.Net.S3.S3RequestMethods.Copy;
+                    s3CopyWebRequest.CopyTo = s3Resource.Uri;
+                    await s3CopyWebRequest.GetResponseAsync().ConfigureAwait(false);
+                    return WebRoute.Create(s3Resource.Uri);
+                }
+
                 // TODO Try a resume
                 S3WebRequest s3WebRequest = (S3WebRequest)(s3Resource.Request as S3WebRequest).CloneRequest(s3Resource.Uri);
                 var tx = new TransferUtility(s3WebRequest.S3Client);

@@ -55,7 +55,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 if (subroute.Uri.IsAbsoluteUri)
                 {
                     // Let's see if the 2 routes are relative
-                    var relUri = Uri.MakeRelativeUri(subroute.Uri);
+                    var relUri = subroute.Uri.MakeRelativeUri(Uri);
                     // If not, let's see if they have a common pattern
                     if (relUri.IsAbsoluteUri)
                     {
@@ -73,10 +73,10 @@ namespace Terradue.Stars.Services.Supplier.Destination
                     relPath = Path.GetDirectoryName(subroute.Uri.ToString());
             }
             var newFilePath = Path.Join(relPath, filename);
-            Uri newUri = new Uri(string.Format("s3://" + Path.Join(
-                                               S3UriParser.GetBucketName(s3Uri),
+            Uri newUri = new Uri(string.Format("s3:/" + Path.GetFullPath(Path.Join(
+                                               "/" + S3UriParser.GetBucketName(s3Uri),
                                                Path.GetDirectoryName(S3UriParser.GetKey(s3Uri)),
-                                               newFilePath)));
+                                               newFilePath))));
             return new S3ObjectDestination(newUri, subroute);
         }
 
