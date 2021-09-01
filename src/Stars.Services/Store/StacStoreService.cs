@@ -185,12 +185,12 @@ namespace Terradue.Stars.Services.Store
 
             foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "self").ToList())
                 stacObject.Links.Remove(link);
-            if (!storeOptions.AllRelative)
+            // if (!storeOptions.AllRelative)
                 stacObject.Links.Add(StacLink.CreateSelfLink(MapToFrontUri(destination.Uri), stacNode.ContentType.ToString()));
 
             foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "root").ToList())
                 stacObject.Links.Remove(link);
-            if (!storeOptions.AllRelative)
+            // if (!storeOptions.AllRelative)
                 stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
 
             RemoveDuplicateLinks(stacNode);
