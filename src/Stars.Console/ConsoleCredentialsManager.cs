@@ -25,7 +25,7 @@ namespace Terradue.Stars.Console.Operations
             if (string.IsNullOrEmpty(authority)) { authority = "/"; }
             Uri uriCut = new Uri(authority);
             NetworkCredential cred = base.GetCredential(uriCut, authType);
-            if (cred == null)
+            if (cred == null && authority.Length > 2)
             {
                 if (!console.IsInputRedirected)
                 {
