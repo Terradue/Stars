@@ -626,7 +626,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "s3://catalog/calls/call-857/datasets/WV03S00_875416E119_8883332018100200000000MS00/WV03S00_875416E119_8883332018100200000000MS00.json",
+                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-857/acquisitions/857-ALSAT1B-ORTHO-AB0009e5_001_BUN_L1T-AB0009e5_001_MUL_L1T/857-ALSAT1B-ORTHO-AB0009e5_001_BUN_L1T-AB0009e5_001_MUL_L1T.json",
                 "-v",
                 "-r",
                 "4",
