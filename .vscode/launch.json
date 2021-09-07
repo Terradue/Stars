@@ -626,21 +626,20 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "s3://test-assets/test/vrss/857-ALSAT1B-ORTHO-AB0009e5_001_BUN_L1T-AB0009e5_001_MUL_L1T.json",
+                "s3://cpe-production-catalog/calls/call-841/datasets/S2B_MSIL1C_20210329T100609_N0209_R022_T31NCG_20210329T135236/S2B_MSIL1C_20210329T100609_N0209_R022_T31NCG_20210329T135236.json",
                 "-v",
                 "-r",
                 "4",
-                "-xa",
-                "false",
+                "-rel",
                 "--output",
-                "s3://test-assets/test/vrss2"
+                "/tmp/charter"
             ],
             "cwd": "${workspaceFolder}/src",
             "env": {
                 "AWS__Profile": "scw",
-                "AWS__ServiceURL": "https://s3.fr-par.scw.cloud",
-                "AWS__Region": "fr-par",
-                "AWS__AuthenticationRegion": "fr-par",
+                "AWS__ServiceURL": "https://s3.pl-waw.scw.cloud",
+                "AWS__Region": "pl-waw",
+                "AWS__AuthenticationRegion": "pl-waw",
             },
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
