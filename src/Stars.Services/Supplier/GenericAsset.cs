@@ -21,6 +21,10 @@ namespace Terradue.Stars.Services.Supplier
             this.title = title;
             this.roles = roles;
             this.uri = route.Uri;
+            if (route is IAsset)
+            {
+                properties = new Dictionary<string, object>((route as IAsset).Properties);
+            }
         }
 
         public string Title => title;
@@ -42,6 +46,15 @@ namespace Terradue.Stars.Services.Supplier
         public IStreamable GetStreamable()
         {
             return route as IStreamable;
+        }
+
+        internal void MergeProperties(IReadOnlyDictionary<string, object> props)
+        {
+            foreach (var key in props.Keys)
+            {
+                properties.Remove(key);
+                properties.Add(key, props[key]);
+            }
         }
     }
 }

@@ -76,6 +76,11 @@ namespace Terradue.Stars.Services.Translator
             {
                 stacAsset = new StacAsset(stacItem, uri, asset.Roles, asset.Title, asset.ContentType);
                 stacAsset.FileExtension().Size = asset.ContentLength;
+                foreach (var key in asset.Properties.Keys)
+                {
+                    stacAsset.Properties.Remove(key);
+                    stacAsset.Properties.Add(key, asset.Properties[key]);
+                }
             }
             else
             {

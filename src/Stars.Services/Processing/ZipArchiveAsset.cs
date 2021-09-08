@@ -30,7 +30,7 @@ namespace Terradue.Stars.Services.Processing
 
         protected async Task<Stream> GetZipStreamAsync(IAsset asset, CarrierManager carrierManager)
         {
-            if ( asset.Uri.Scheme == "file" )
+            if (asset.Uri.Scheme == "file")
                 return await asset.GetStreamable().GetStreamAsync();
             var tmpDestination = LocalFileDestination.Create(Path.GetTempPath(), asset);
             var tmpArchiveAssetDestination = tmpDestination.To(asset, Guid.NewGuid().ToString());
@@ -88,7 +88,13 @@ namespace Terradue.Stars.Services.Processing
                     var assetExtracted = await delivery.Carrier.Deliver(delivery);
                     if (assetExtracted != null)
                     {
-                        assetsExtracted.Add(asset.ContentDisposition.FileName + "!" + archiveAsset.Key, new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles));
+                        var extractedAsset = new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles);
+                        if (delivery.Route is IAsset)
+                        {
+                            extractedAsset.MergeProperties((delivery.Route as IAsset).Properties);
+                            
+                        }
+                        assetsExtracted.Add(asset.ContentDisposition.FileName + "!" + archiveAsset.Key, extractedAsset);
                         break;
                     }
                 }
@@ -99,7 +105,7 @@ namespace Terradue.Stars.Services.Processing
 
         private void DisposeLocalStreamable()
         {
-            if ( localStreamable != null )
+            if (localStreamable != null)
                 File.Delete(localStreamable.Uri.LocalPath);
             localStreamable = null;
         }

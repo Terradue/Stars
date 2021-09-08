@@ -29,7 +29,7 @@ namespace Terradue.Stars.Services.Processing
             get
             {
                 Dictionary<string, object> props = new Dictionary<string, object>();
-                props.Add("filename", Path.GetFileName(name));
+                props.Add("filename", name);
                 return props;
             }
         }
