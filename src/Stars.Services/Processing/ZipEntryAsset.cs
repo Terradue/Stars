@@ -46,7 +46,15 @@ namespace Terradue.Stars.Services.Processing
 
         public bool CanBeRanged => false;
 
-        public IReadOnlyDictionary<string, object> Properties => new Dictionary<string, object>();
+        public IReadOnlyDictionary<string, object> Properties
+        {
+            get
+            {
+                Dictionary<string, object> props = new Dictionary<string, object>();
+                props.Add("filename", entry.FileName);
+                return props;
+            }
+        }
 
         public Task<Stream> GetStreamAsync()
         {

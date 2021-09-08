@@ -41,6 +41,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                         if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
                             relPath = Path.GetDirectoryName(relUri.ToString());
                     }
+                    if (asset.Value.ContentDisposition != null && !string.IsNullOrEmpty(asset.Value.ContentDisposition.FileName))
+                    {
+                        if ( asset.Value.ContentDisposition.FileName.Contains("/"))
+                            relPath = "";
+                    }
                     var assetsDeliveryQuotations = GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath));
                     assetsQuotes.Add(asset.Key, assetsDeliveryQuotations);
                 }
