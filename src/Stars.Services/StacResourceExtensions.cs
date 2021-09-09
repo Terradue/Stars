@@ -28,6 +28,7 @@ namespace Terradue.Stars.Services
         {
             if (asset is StacAssetAsset) return new StacAsset((asset as StacAssetAsset).StacAsset, stacItem);
             var stacAsset = new StacAsset(stacItem, asset.Uri, asset.Roles, asset.Title, asset.ContentType);
+            stacAsset.Properties.AddRange(asset.Properties);
             stacAsset.FileExtension().Size = asset.ContentLength;
             return stacAsset;
         }

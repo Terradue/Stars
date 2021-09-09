@@ -92,7 +92,6 @@ namespace Terradue.Stars.Services.Processing
                         if (delivery.Route is IAsset)
                         {
                             extractedAsset.MergeProperties((delivery.Route as IAsset).Properties);
-                            
                         }
                         assetsExtracted.Add(asset.ContentDisposition.FileName + "!" + archiveAsset.Key, extractedAsset);
                         break;
