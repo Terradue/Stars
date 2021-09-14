@@ -626,14 +626,14 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
             "args": [
                 "copy",
-                "file:///tmp/charter/841-CNES-PLEIADES_1A-urn_ogc_def_EOP_PHR_1A_DS_PHR1A_202109071022088_FR1_PX_E001N06_0816_06110.json",
+                "file:///home/emathot/charter/httpsource.json",
                 "-v",
                 "-r",
                 "4",
                 "-aa",
                 // "-rel",
                 "--output",
-                "s3://cpe-production-catalog/test/841-CNES-PLEIADES_1A-urn_ogc_def_EOP_PHR_1A_DS_PHR1A_202109071022088_FR1_PX_E001N06_0816_06110/"
+                "s3://cpe-production-catalog/test/manu/"
             ],
             "cwd": "${workspaceFolder}/src",
             "env": {
