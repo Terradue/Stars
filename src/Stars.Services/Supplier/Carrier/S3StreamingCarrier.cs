@@ -75,7 +75,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
             s3Route = await StreamToS3Object(streamable, s3Route, overwrite);
             // if (streamable.ContentLength > 0 && Convert.ToUInt64(s3Route.ContentLength) != streamable.ContentLength)
-                // throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", s3Route.ContentLength, streamable.ContentLength));
+            // throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", s3Route.ContentLength, streamable.ContentLength));
             return s3Route;
         }
 
@@ -103,7 +103,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             try
             {
                 // in case source is also S3
-                if ( streamable is WebRoute && (streamable as WebRoute).Request is S3WebRequest)
+                if (streamable is WebRoute && (streamable as WebRoute).Request is S3WebRequest)
                 {
                     S3WebRequest s3CopyWebRequest = (S3WebRequest)(streamable as WebRoute).Request.CloneRequest(streamable.Uri);
                     s3CopyWebRequest.Method = System.Net.S3.S3RequestMethods.Copy;
@@ -112,14 +112,28 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     return WebRoute.Create(s3Resource.Uri);
                 }
 
-                // TODO Try a resume
+                // If streamable cannot be ranged, pass by a blocking stream
+                Stream sourceStream = await streamable.GetStreamAsync();
+                int partSize = 10 * 1024 * 1024;
+                try
+                {
+                    var length = sourceStream.Length;
+                }
+                catch (NotSupportedException)
+                {
+                    var newStream = new BlockingStream(streamable.ContentLength, 10);
+                    StartSourceCopy(sourceStream, newStream, streamable.ContentLength, partSize);
+                    sourceStream = newStream;
+                }
+
                 S3WebRequest s3WebRequest = (S3WebRequest)(s3Resource.Request as S3WebRequest).CloneRequest(s3Resource.Uri);
                 var tx = new TransferUtility(s3WebRequest.S3Client);
                 TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
+                ur.PartSize = partSize;
+                ur.AutoResetStreamPosition = false;
                 SetRequestParametersWithUri(s3Resource.Uri, ur);
 
-                Stream contentStream = await streamable.GetStreamAsync().ConfigureAwait(false);
-                ur.InputStream = contentStream;
+                ur.InputStream = sourceStream;
                 ur.ContentType = streamable.ContentType.MediaType;
                 await tx.UploadAsync(ur);
 
@@ -149,6 +163,36 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             {
                 throw;
             }
+        }
+
+        private Task StartSourceCopy(Stream sourceStream, Stream destStream, ulong size, int chunk = 80 * 1024)
+        {
+            return Task.Factory.StartNew((state) =>
+            {
+                ulong totalRead = 0;
+                int chunkSize = chunk;
+                int read = 0;
+                if (size < Convert.ToUInt32(chunk))
+                    chunkSize = Convert.ToInt32(size);
+                var buffer = new byte[chunk];
+                do
+                {
+                    try
+                    {
+                        read = sourceStream.Read(buffer, 0, chunkSize);
+                        destStream.Write(buffer, 0, read);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogWarning(e.Message);
+                    }
+                    totalRead += Convert.ToUInt32(read);
+                    if (size < (totalRead + Convert.ToUInt32(chunk)))
+                        chunkSize = Convert.ToInt32(size - totalRead);
+                    buffer = new byte[chunk];
+                } while (totalRead < size);
+                destStream.Close();
+            }, null, TaskCreationOptions.AttachedToParent);
         }
 
         private void SetRequestParametersWithUri(Uri uri, TransferUtilityUploadRequest ur)

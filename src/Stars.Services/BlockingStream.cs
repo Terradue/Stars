@@ -23,7 +23,7 @@ namespace Terradue.Stars.Services
         private volatile bool _illegalToWrite;
         private volatile bool _writeClosed;
         private ulong? contentRequestLength;
-        private readonly int maxChunk;
+        private readonly int _maxChunk;
         private ulong totalRead;
 
 
@@ -36,10 +36,10 @@ namespace Terradue.Stars.Services
             _doneWritingHandleIndex = 1;
             _lockForRead = new object();
             _lockForAll = new object();
-            this.maxChunk = maxChunk;
+            this._maxChunk = maxChunk;
         }
 
-        public BlockingStream(ulong contentRequestLength) : this()
+        public BlockingStream(ulong contentRequestLength, int maxChunk = 100) : this(maxChunk)
         {
             this.contentRequestLength = contentRequestLength;
 
@@ -65,6 +65,9 @@ namespace Terradue.Stars.Services
             get { return Convert.ToInt64(totalRead); }
             set { throw new NotSupportedException(); }
         }
+
+        public int MaxChunk => _maxChunk;
+
         public override long Seek(long offset, SeekOrigin origin)
         {
             // Console.Out.WriteLine("Seek: " + offset + " " + origin);
@@ -117,7 +120,7 @@ namespace Terradue.Stars.Services
 
             while (true)
             {
-                int handleIndex = WaitHandle.WaitAny(_events);
+                int handleIndex = WaitHandle.WaitAny(_events, TimeSpan.FromMilliseconds(100));
                 lock (_lockForRead)
                 {
                     lock (_lockForAll)
@@ -182,7 +185,7 @@ namespace Terradue.Stars.Services
             {
                 lock (_lockForAll)
                 {
-                    if (_chunks.Count >= maxChunk)
+                    if (_chunks.Count >= _maxChunk)
                         continue;
                     if (_illegalToWrite)
                         throw new InvalidOperationException(

@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Title>Terradue.Stars</Title>
     <Description>Stars is a set of services for working with Spatio Temporal Catalog such as STAC but not only</Description>
-    <Version>0.9.37</Version>
+    <Version>0.9.38</Version>
     <!-- <VersionSuffix>beta.1</VersionSuffix> -->
     <AssemblyName>Terradue.Stars.Services</AssemblyName>
     <PackageId>Terradue.Stars</PackageId>
