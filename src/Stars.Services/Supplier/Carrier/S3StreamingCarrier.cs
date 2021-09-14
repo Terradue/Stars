@@ -121,9 +121,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 catch (NotSupportedException)
                 {
-                    var newStream = new BlockingStream(streamable.ContentLength, 10);
-                    StartSourceCopy(sourceStream, newStream, streamable.ContentLength, partSize);
-                    sourceStream = newStream;
+                    if (streamable.ContentLength > 0)
+                    {
+                        var newStream = new BlockingStream(streamable.ContentLength, 10);
+                        StartSourceCopy(sourceStream, newStream, partSize);
+                        sourceStream = newStream;
+                    }
                 }
 
                 S3WebRequest s3WebRequest = (S3WebRequest)(s3Resource.Request as S3WebRequest).CloneRequest(s3Resource.Uri);
@@ -165,16 +168,13 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
         }
 
-        private Task StartSourceCopy(Stream sourceStream, Stream destStream, ulong size, int chunk = 80 * 1024)
+        private Task StartSourceCopy(Stream sourceStream, BlockingStream destStream, int chunkSize = 80 * 1024)
         {
             return Task.Factory.StartNew((state) =>
             {
                 ulong totalRead = 0;
-                int chunkSize = chunk;
                 int read = 0;
-                if (size < Convert.ToUInt32(chunk))
-                    chunkSize = Convert.ToInt32(size);
-                var buffer = new byte[chunk];
+                var buffer = new byte[chunkSize];
                 do
                 {
                     try
@@ -187,11 +187,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                         logger.LogWarning(e.Message);
                     }
                     totalRead += Convert.ToUInt32(read);
-                    if (size < (totalRead + Convert.ToUInt32(chunk)))
-                        chunkSize = Convert.ToInt32(size - totalRead);
-                    buffer = new byte[chunk];
-                } while (totalRead < size);
-                destStream.Close();
+                } while (read > 0);
+                destStream.SetEndOfStream();
             }, null, TaskCreationOptions.AttachedToParent);
         }
 

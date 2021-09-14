@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services
             this._maxChunk = maxChunk;
         }
 
-        public BlockingStream(ulong contentRequestLength, int maxChunk = 100) : this(maxChunk)
+        public BlockingStream(ulong? contentRequestLength, int maxChunk = 100) : this(maxChunk)
         {
             this.contentRequestLength = contentRequestLength;
 
