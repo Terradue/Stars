@@ -48,14 +48,26 @@ namespace Terradue.Stars.Services.Router
                 }
                 catch { }
             }
-            if (!string.IsNullOrEmpty(requestUri.UserInfo) && requestUri.UserInfo == "preauth")
+            else if (!string.IsNullOrEmpty(requestUri.UserInfo) && requestUri.UserInfo == "preauth")
             {
                 request.PreAuthenticate = true;
             }
-            if (credentials?.GetCredential(requestUri, "Basic") != null)
+            // If no credentials provided
+            if (!request.PreAuthenticate)
             {
-                request.PreAuthenticate = true;
-                SetBasicAuthHeader(request, credentials?.GetCredential(requestUri, "Basic"));
+                // Let's check there is a credential recorded to be reused
+                UriBuilder uriBuilder = new UriBuilder(requestUri);
+                try
+                {
+                    if (string.IsNullOrEmpty(uriBuilder.UserName))
+                        uriBuilder.UserName = "preauth";
+                    if (credentials?.GetCredential(uriBuilder.Uri, "Basic") != null)
+                    {
+                        request.PreAuthenticate = true;
+                        SetBasicAuthHeader(request, credentials?.GetCredential(uriBuilder.Uri, "Basic"));
+                    }
+                }
+                catch { }
             }
             if (request is FtpWebRequest && request.Proxy == null && WebRequest.DefaultWebProxy != null)
             {

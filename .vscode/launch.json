@@ -82,7 +82,7 @@
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {
@@ -206,7 +206,7 @@
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {
@@ -215,10 +215,10 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
-                "-v",
                 "copy",
+                "-v",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200624T090133_20200624T090433_20200624T105644_0180_040_221_2700_LN2_O_NR_004",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&start=2020-03-06&bbox=-5.801%2C14.009%2C-3.076%2C16.215&pt=SL_2_LST___&od=DESCENDING",
@@ -229,7 +229,7 @@
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false,
             "logging": {
                 "moduleLoad": false
@@ -241,7 +241,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -250,12 +250,11 @@
                 "4",
                 "--harvest",
                 "--output",
-                "../tmp/stars",
-                "--allow-ordering"
+                "../tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false,
             "logging": {
                 "moduleLoad": false
@@ -590,15 +589,15 @@
             }
         },
         {
-            "name": "Copy and extract tar.gz aset",
+            "name": "Copy and extract tar.gz asset",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-796/acquisitions/796-CNSA-GF2-urn_ogc_def_EOP_CNSA_GF2PMS5383354/796-CNSA-GF2-urn_ogc_def_EOP_CNSA_GF2PMS5383354.json",
+                "https://supervisor.disasterscharter.org/api/calls/841/acquisitions/calibratedDatasets/WV02N06_536666E001_6287502021031000000000MS00-calibrated.json",
                 "-v",
                 "-r",
                 "4",
@@ -606,12 +605,10 @@
                 "/tmp/charter"
             ],
             "env": {
-                "STARS_URL_FIND": "https?://supervisor.charter.uat.esaportal.eu/catalog",
-                "STARS_URL_REPLACE": "http://acceptance-supervisor-catalog-stac.cpe/catalog",
             },
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false,
             "logging": {
                 "moduleLoad": false
