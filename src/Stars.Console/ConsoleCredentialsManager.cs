@@ -23,9 +23,17 @@ namespace Terradue.Stars.Console.Operations
         {
             var authority = uri.GetLeftPart(UriPartial.Authority);
             if (string.IsNullOrEmpty(authority)) { authority = "/"; }
+            NetworkCredential cred = null;
             Uri uriCut = new Uri(authority);
-            NetworkCredential cred = base.GetCredential(uriCut, authType);
-            if (cred == null && authority.Length > 2)
+            try
+            {
+                UriBuilder uriCutBuilder = new UriBuilder(uriCut);
+                uriCutBuilder.UserName = null;
+                uriCutBuilder.Password = null;
+                cred = base.GetCredential(uriCutBuilder.Uri, authType);
+            }
+            catch { }
+            if (cred == null && authority.Length > 2 && uri.UserInfo != "preauth")
             {
                 if (!console.IsInputRedirected)
                 {
