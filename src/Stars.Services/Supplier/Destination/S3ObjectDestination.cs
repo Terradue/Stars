@@ -14,6 +14,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
     {
         private readonly Uri s3Uri;
 
+        private readonly char[] WRONG_FILENAME_STARTING_CHAR = new char[] { ' ', '.', '-', '$', '&' };
+
         private S3ObjectDestination(Uri s3Uri)
         {
             if (!s3Uri.Scheme.Equals("s3", StringComparison.CurrentCultureIgnoreCase))
@@ -45,6 +47,10 @@ namespace Terradue.Stars.Services.Supplier.Destination
             string filename = Path.GetFileName(origin.Uri.IsAbsoluteUri ? origin.Uri.LocalPath : origin.Uri.ToString());
             if (origin.ContentDisposition != null && !string.IsNullOrEmpty(origin.ContentDisposition.FileName))
                 filename = origin.ContentDisposition.FileName;
+
+            // to avoid wrong filename such as '$value'
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Item)
+                filename = (subroute as IItem).Id + ".zip";
 
             // if the relPath requested is null, we will build one from the origin route to the new one
             if (relPathFix == null)
