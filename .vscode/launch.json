@@ -647,6 +647,38 @@
             }
         },
         {
+            "name": "Copy cesnet",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "args": [
+                "copy",
+                "https://s3.cl2.du.cesnet.cz/vo_t2_geohazards:java/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174.json",
+                "-v",
+                "-r",
+                "4",
+                "-aa",
+                // "-rel",
+                "--output",
+                "/tmp/stars"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            "env": {
+                // "AWS__Profile": "scw",
+                // "AWS__ServiceURL": "https://s3.pl-waw.scw.cloud",
+                // "AWS__Region": "pl-waw",
+                // "AWS__AuthenticationRegion": "pl-waw",
+            },
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

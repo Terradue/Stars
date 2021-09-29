@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.S3;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
     public class S3ObjectDestination : IDestination
     {
         private readonly Uri s3Uri;
+
+        private readonly char[] WRONG_FILENAME_STARTING_CHAR = new char[] { ' ', '.', '-', '$', '&' };
 
         private S3ObjectDestination(Uri s3Uri)
         {
@@ -45,6 +48,10 @@ namespace Terradue.Stars.Services.Supplier.Destination
             string filename = Path.GetFileName(origin.Uri.IsAbsoluteUri ? origin.Uri.LocalPath : origin.Uri.ToString());
             if (origin.ContentDisposition != null && !string.IsNullOrEmpty(origin.ContentDisposition.FileName))
                 filename = origin.ContentDisposition.FileName;
+
+            // to avoid wrong filename such as '$value'
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && origin.ResourceType == ResourceType.Item)
+                filename = (origin as IItem).Id + ".zip";
 
             // if the relPath requested is null, we will build one from the origin route to the new one
             if (relPathFix == null)
