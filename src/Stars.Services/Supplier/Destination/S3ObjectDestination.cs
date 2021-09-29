@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.S3;
 using System.Threading.Tasks;
@@ -49,8 +50,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 filename = origin.ContentDisposition.FileName;
 
             // to avoid wrong filename such as '$value'
-            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Item)
-                filename = (subroute as IItem).Id + ".zip";
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && origin.ResourceType == ResourceType.Item)
+                filename = (origin as IItem).Id + ".zip";
 
             // if the relPath requested is null, we will build one from the origin route to the new one
             if (relPathFix == null)
