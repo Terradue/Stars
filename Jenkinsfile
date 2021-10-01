@@ -92,6 +92,7 @@ pipeline {
           def descriptor = readDescriptor()
           sh "mv ${starsrpm[0].path} ."
           def mType=getTypeOfVersion(env.BRANCH_NAME)
+          docker.pull('centos:7')
           def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--build-arg STARS_RPM=${starsrpm[0].name} .")
           testsuite.tag("${mType}latest")
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
