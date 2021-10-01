@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
-    <Version>0.9.41</Version>
+    <Version>0.9.42</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <AssemblyName>Stars</AssemblyName>
@@ -35,7 +35,7 @@
   <ItemGroup>
     <LinuxFolder Include="/etc/stars" RemoveOnUninstall="true"/>
   </ItemGroup>
-  <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel-x64')) OR $(RuntimeIdentifier.StartsWith('centos.7-x64')) OR $(RuntimeIdentifier.StartsWith('rhel-x64')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('ol'))">
+  <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('ol'))">
     <RpmDotNetDependency Include="libstdc++" Version=""/>
     <RpmDotNetDependency Include="libunwind" Version=""/>
     <RpmDotNetDependency Include="libicu" Version=""/>
