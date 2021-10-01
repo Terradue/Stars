@@ -38,7 +38,7 @@ pipeline {
             sh "dotnet tool restore"
             // sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel.6-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f net5.0 --version-suffix '${env.RELEASE}' src/Stars.Console/Terradue.Stars.Console.csproj"
-            // sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel-x64 -f net5.0 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             // sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.18.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             // sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.19.04-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
             // sh "dotnet deb -c ${env.CONFIGURATION} -r debian.9-x64 -f netcoreapp3.1 --version-suffix ${env.RELEASE} src/Stars.Console/Terradue.Stars.Console.csproj"
@@ -88,10 +88,12 @@ pipeline {
       steps {
         script {
           unstash name: 'stars-packages'
-          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.centos.7-x64.rpm")
+          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.rhel-x64.rpm")
           def descriptor = readDescriptor()
           sh "mv ${starsrpm[0].path} ."
           def mType=getTypeOfVersion(env.BRANCH_NAME)
+          def baseImage = docker.image('centos:8')
+          baseImage.pull()
           def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--build-arg STARS_RPM=${starsrpm[0].name} .")
           testsuite.tag("${mType}latest")
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
