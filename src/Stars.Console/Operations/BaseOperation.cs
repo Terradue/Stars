@@ -90,13 +90,13 @@ namespace Terradue.Stars.Console.Operations
             // Add Configuration
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
-            builder.AddNewtonsoftJsonFile("/etc/Stars/appsettings.json", optional: true, reloadOnChange: true);
+            builder.AddNewtonsoftJsonFile("/etc/Stars/appsettings.json", optional: true);
             if (Directory.Exists("/etc/Stars/conf.d"))
             {
                 foreach (var yamlFilename in Directory.EnumerateFiles("/etc/Stars/conf.d", "*.json", SearchOption.TopDirectoryOnly))
                     builder.AddNewtonsoftJsonFile(yamlFilename);
             }
-            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true, reloadOnChange: true)
+            builder.AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true)
                    .AddNewtonsoftJsonFile("appsettings.json", optional: true);
 
             //only add secrets in development
