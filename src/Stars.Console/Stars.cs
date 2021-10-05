@@ -5,6 +5,7 @@ using Terradue.Stars.Console.Operations;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Net;
+using System.Reflection;
 
 namespace Terradue.Stars.Console
 {
@@ -20,23 +21,29 @@ namespace Terradue.Stars.Console
     {
         public static IConfigurationRoot Configuration { get; set; }
 
-        public static async Task<int> Main(string[] args)
+        public static int Main(string[] args)
         {
             CommandLineApplication<StarsApp> app = CreateApplication(PhysicalConsole.Singleton);
 
             try
             {
-                await PhysicalConsole.Singleton.Out.WriteLineAsync(app.GetVersionText().Replace("\n", "/").TrimEnd('/'));
-                return await app.ExecuteAsync(args);
+                PhysicalConsole.Singleton.Out.WriteLine(app.GetVersionText().Replace("\n", "/").TrimEnd('/'));
+                return app.Execute(args);
             }
             catch (CommandParsingException cpe)
             {
                 return PrintErrorAndUsage(cpe.Command, cpe.Message);
             }
+            catch (TargetInvocationException e)
+            {
+                PhysicalConsole.Singleton.Error.WriteLine(e.InnerException.Message);
+                PhysicalConsole.Singleton.Error.WriteLine(e.InnerException.StackTrace);
+                return 1;
+            }
             catch (Exception e)
             {
-                await PhysicalConsole.Singleton.Error.WriteLineAsync(e.Message);
-                await PhysicalConsole.Singleton.Error.WriteLineAsync(e.StackTrace);
+                PhysicalConsole.Singleton.Error.WriteLine(e.Message);
+                PhysicalConsole.Singleton.Error.WriteLine(e.StackTrace);
                 return 1;
             }
         }

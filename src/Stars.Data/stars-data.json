@@ -1,7 +1,7 @@
 {
   "Plugins": {
     "Terradue": {
-      "Assembly": "Terradue.Stars.Data.dll",
+      "Assembly": "Terradue.Stars.Data",
       "Suppliers": {
         "ONDA": {
           "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",

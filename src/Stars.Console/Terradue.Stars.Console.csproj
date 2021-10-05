@@ -10,14 +10,13 @@
     <UserSecretsId>f195eead-6dad-49d2-ad76-d9dbf6662371</UserSecretsId>
     <RuntimeIdentifiers>win-x64;linux-x64;osx-x64;centos.7-x64</RuntimeIdentifiers>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest">
+    <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always">
       <LinuxPath>/etc/Stars/appsettings.json</LinuxPath>
     </Content>
-    <Content Include="../Stars.Data/stars-data.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest">
-      <LinuxPath>/etc/Stars/conf.d/stars-data.json</LinuxPath>
-    </Content>
+    <!-- <Content Include="stars-data.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" /> -->
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />

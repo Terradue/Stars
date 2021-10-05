@@ -41,11 +41,8 @@
     <ProjectReference Include="../../../../Components/systems/Stars/src/Stars.Interface/Terradue.Stars.Interface.csproj" />
     <ProjectReference Include="../../../../Components/systems/Stars/src/Stars.Geometry/Terradue.Stars.Geometry.csproj" /> -->
     <!-- <ProjectReference Include="../../../../Components/sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" /> -->
-
     <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj" />
-
     <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />
-
     <ProjectReference Include="..\Stars.Geometry\Terradue.Stars.Geometry.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +50,8 @@
     <None Include="..\..\docs\logo\Stars_logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="stars-data.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest"></Content>
+    <Content Include="stars-data.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always">
+      <!-- <ExcludeFromSingleFile>true</ExcludeFromSingleFile> -->
+    </Content>
   </ItemGroup>
 </Project>

@@ -52,7 +52,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             IAsset manifestAsset = GetManifestAsset(item);
 
             string identifier = null;
-            Console.Out.WriteLine(item.Id);
             Match match = Regex.Match(manifestAsset.Uri.ToString(), @"(.*\/)*(?'identifier'S(1|2|3)[^\.\/]{10,})(\.\w+)*(\/.*)*");
             if (match.Success)
                 identifier = match.Groups["identifier"].Value;

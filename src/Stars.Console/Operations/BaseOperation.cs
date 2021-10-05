@@ -10,6 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Services;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -18,8 +21,8 @@ namespace Terradue.Stars.Console.Operations
         [Option]
         public static bool Verbose { get; set; }
 
-        [Option("-conf|--config-file", "Config file to use", CommandOptionType.SingleOrNoValue)]
-        public string ConfigFile { get; set; }
+        [Option("-conf|--config-file", "Config file to use", CommandOptionType.MultipleValue)]
+        public string[] ConfigFiles { get; set; }
 
         [Option("-k|--skip-certificate-validation", "Skip SSL certificate verfification for endpoints", CommandOptionType.NoValue)]
         public bool SkipSsl { get; set; }
@@ -43,6 +46,13 @@ namespace Terradue.Stars.Console.Operations
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
             return ValidationResult.Success;
+        }
+
+        private string GetBasePath()
+        {
+
+            using var processModule = Process.GetCurrentProcess().MainModule;
+                return Path.GetDirectoryName(processModule?.FileName);
         }
 
         public async Task<int> OnExecuteAsync()
@@ -91,6 +101,9 @@ namespace Terradue.Stars.Console.Operations
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
             builder.AddNewtonsoftJsonFile("/etc/Stars/appsettings.json", optional: true);
+            foreach (var jsonFilename in Directory.EnumerateFiles(GetBasePath(), "stars-*.json", SearchOption.TopDirectoryOnly))
+                    builder.AddNewtonsoftJsonFile(jsonFilename);
+
             if (Directory.Exists("/etc/Stars/conf.d"))
             {
                 foreach (var yamlFilename in Directory.EnumerateFiles("/etc/Stars/conf.d", "*.json", SearchOption.TopDirectoryOnly))
@@ -102,20 +115,28 @@ namespace Terradue.Stars.Console.Operations
             //only add secrets in development
             if (isDevelopment)
             {
+                var binPath = Path.GetDirectoryName((new System.Uri(Assembly.GetExecutingAssembly().Location)).AbsolutePath);
+                foreach (var jsonFilename in Directory.EnumerateFiles(binPath, "stars-*.json", SearchOption.TopDirectoryOnly))
+                    builder.AddNewtonsoftJsonFile(jsonFilename);
                 builder.AddNewtonsoftJsonFile("appsettings.Development.json", optional: true);
-                builder.AddNewtonsoftJsonFile("stars-data.json", optional: true);
                 builder.AddUserSecrets<StarsApp>();
             }
             builder.AddEnvironmentVariables();
 
-            if (!string.IsNullOrEmpty(ConfigFile))
+            if (ConfigFiles != null && ConfigFiles.Count() > 0)
             {
-                if (!File.Exists(ConfigFile))
-                    throw new FileNotFoundException(ConfigFile);
-                builder.AddNewtonsoftJsonFile(ConfigFile, optional: true);
+                foreach (var file in ConfigFiles)
+                {
+                    var fi = new FileInfo(file);
+                    if (!fi.Exists)
+                        throw new FileNotFoundException(fi.FullName);
+                    builder.AddNewtonsoftJsonFile(fi.FullName, optional: true);
+                }
             }
 
             Configuration = builder.Build();
+
+
 
             collection.AddSingleton<IConfigurationRoot>(Configuration);
 
@@ -132,12 +153,7 @@ namespace Terradue.Stars.Console.Operations
             });
             collection.LoadConfiguredStarsPlugin((assemblyPath) =>
             {
-                if (!File.Exists(assemblyPath))
-                {
-                    logger.LogWarning("No assembly file at {0}", assemblyPath);
-                }
-                logger.LogDebug("Loading plugins from {0}", assemblyPath);
-                return new PluginLoadContext(assemblyPath, AssemblyLoadContext.Default);
+                return AssemblyLoadContext.Default;
             });
             // Use also the console for the credentials
             collection.AddSingleton<ConsoleUserSettings, ConsoleUserSettings>();
