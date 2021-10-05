@@ -31,7 +31,7 @@ namespace Stars.Console.Tests
             var console = new TestConsole(_output);
             var app = StarsApp.CreateApplication(console);
             Assert.Equal(0, app.Execute("plugins"));
-            Assert.Contains("Stars " + typeof(StarsApp).Assembly.GetName().Version.ToString(3), console.Output.ToString());
+            Assert.Contains("Stars\n" + typeof(StarsApp).Assembly.GetName().Version.ToString(3), console.Output.ToString());
         }
     }
 }

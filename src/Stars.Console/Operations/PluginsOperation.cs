@@ -22,15 +22,16 @@ namespace Terradue.Stars.Console.Operations
     [Command(Name = "plugins", Description = "Manage the plugins")]
     internal class PluginsOperation : BaseOperation
     {
+        private readonly CommandLineApplication app;
 
-
-        public PluginsOperation(IConsole console): base(console)
+        public PluginsOperation(IConsole console, CommandLineApplication app): base(console)
         {
-            
+            this.app = app;
         }
 
         protected override async Task ExecuteAsync()
         {
+           app.Parent.ShowVersion();
             _console.Out.WriteLine($"Loaded plugins");
             _console.Out.WriteLine($"--------------");
             var routersManager = ServiceProvider.GetService<RoutersManager>();
