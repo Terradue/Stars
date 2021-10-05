@@ -134,7 +134,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
         private async Task<List<ProductMetaData>> DeserializeProductMetadataList(List<IAsset> medatafileList)
         {
             List<ProductMetaData> productMetadataList = new List<ProductMetaData>();
-            foreach (var metadataFile in medatafileList)
+            foreach (var metadataFile in medatafileList.OrderBy(m => m.Uri.ToString()))
             {
                 logger.LogDebug("Metadata file is {0}", metadataFile.Uri);
 

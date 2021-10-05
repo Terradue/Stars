@@ -72,7 +72,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public override double GetGroundSampleDistance()
         {
-            return GetGroundSampleDistance(GetProductType(), GetInstrumentMode());
+            return GetGroundSampleDistance(GetProductType(), GetInstrumentMode(), GetResolution());
+        }
+
+        private char GetResolution()
+        {
+            return item.Id.ToUpper()[10];
         }
 
         public string GetInstrumentMode()
@@ -105,19 +110,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             return null;
         }
 
-        private double GetGroundSampleDistance(string pt, string mode)
+        private double GetGroundSampleDistance(string pt, string mode, char res)
         {
             if (pt == "RAW") return 0;
             if (pt == "GRD")
             {
-                if (item.Id.ToLower()[10] == 'f' && mode == "SM") return 9;
-                if (item.Id.ToLower()[10] == 'h')
+                if (res == 'F' && mode == "SM") return 9;
+                if (res == 'H')
                 {
                     if (mode == "SM") return 23;
                     if (mode == "IW") return 22;
                     if (mode == "EW") return 50;
                 }
-                if (item.Id.ToLower()[10] == 'm')
+                if (res == 'M')
                 {
                     if (mode == "WV") return 25;
                     return 40;
