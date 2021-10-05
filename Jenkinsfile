@@ -38,6 +38,7 @@ pipeline {
             }
             sh "dotnet tool restore"
             sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
@@ -65,7 +66,7 @@ pipeline {
       agent { node { label 'artifactory' } }
       steps {
         echo 'Deploying'
-        unstash name: 'stars-rpms'
+        unstash name: 'stars-packages'
         script {
             // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
             def server = Artifactory.server "repository.terradue.com"
@@ -84,7 +85,7 @@ pipeline {
     stage('Build & Publish Docker') {
       steps {
         script {
-          unstash name: 'stars-packages'
+          unstash name: 'stars-rpms'
           def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.linux-x64.rpm")
           def descriptor = readDescriptor()
           sh "mv ${starsrpm[0].path} ."
