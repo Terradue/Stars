@@ -45,7 +45,7 @@ namespace Terradue.Data.Test
             Collection.AddLogging();
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
-            var configFile = new FileInfo(Path.Join(@"../../../../Stars.Data", "appsettings.json"));
+            var configFile = new FileInfo(Path.Join(@"../../../../Stars.Data", "stars-data.json"));
             configFile.OpenRead();
             builder.AddNewtonsoftJsonFile(configFile.FullName, optional: false, reloadOnChange: false);
             configFile = new FileInfo(Path.Join(@"../../../", "testsettings.json"));

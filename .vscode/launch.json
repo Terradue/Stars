@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -23,7 +23,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "--yoda"
             ],
@@ -38,9 +38,24 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "-h"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Display Plugins",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
+            "args": [
+                "plugins"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -53,7 +68,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -72,7 +87,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "-v",
                 "list",
@@ -91,7 +106,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -114,7 +129,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200624T090133_20200624T090433_20200624T105644_0180_040_221_2700_LN2_O_NR_004",
@@ -134,7 +149,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "-v",
                 "list",
@@ -156,7 +171,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -175,7 +190,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -266,7 +281,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -290,7 +305,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -314,7 +329,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -339,7 +354,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -364,7 +379,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -388,7 +403,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -412,7 +427,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "https://catalog.charter.uat.esaportal.eu//charter/cat/charterdataset/search?format=atom&uid=call100_AB0009e5_001_MUL_L1T",
@@ -436,7 +451,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -460,7 +475,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -482,7 +497,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -506,7 +521,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -530,7 +545,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -569,7 +584,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "https://localhost:5001/api/calls/100/acquisitions/datasets/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720.json",
@@ -620,7 +635,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "file:///home/emathot/charter/httpsource.json",
@@ -652,7 +667,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "https://s3.cl2.du.cesnet.cz/vo_t2_geohazards:java/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174.json",

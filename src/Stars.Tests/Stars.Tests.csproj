@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest"/>
+    <Content Include="testsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest"/>
   </ItemGroup>
 
 </Project>

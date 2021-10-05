@@ -38,7 +38,7 @@ namespace Stars.Tests
         public IConfiguration GetApplicationConfiguration()
         {
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true)
+                .AddJsonFile("testsettings.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 
