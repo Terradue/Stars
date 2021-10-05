@@ -31,7 +31,7 @@ namespace Terradue.Stars.Console.Operations
 
         protected override async Task ExecuteAsync()
         {
-         //   app.Parent.ShowVersion();
+            _console.Out.WriteLine(app.Parent.GetVersionText());
             _console.Out.WriteLine($"Loaded plugins");
             _console.Out.WriteLine($"--------------");
             var routersManager = ServiceProvider.GetService<RoutersManager>();

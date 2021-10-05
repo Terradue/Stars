@@ -44,8 +44,6 @@ namespace Terradue.Stars.Services.Plugins
                     assembly = loadContext.LoadFromAssemblyName(new AssemblyName(pluginsOption.Value.Assembly));
                 }
 
-                Console.Out.WriteLine(assembly.GetName());
-
                 if (pluginsOption.Value.Routers != null)
                     RegisterConfiguredPlugins<IRouter>(pluginsOption.Value.Routers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IPluginOption), collection, assembly);
                 if (pluginsOption.Value.Suppliers != null)
