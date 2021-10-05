@@ -60,10 +60,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 identifier = item.Id;
             identifier += suffix;
 
-            Console.Out.WriteLine(manifestAsset.Uri.ToString());
-            Console.Out.WriteLine(match.Groups["identifier"].Value);
-            Console.Out.WriteLine(identifier);
-
             XFDUType manifest = await ReadManifest(manifestAsset);
 
             SentinelSafeStacFactory stacFactory = CreateSafeStacFactory(manifest, item, identifier);
