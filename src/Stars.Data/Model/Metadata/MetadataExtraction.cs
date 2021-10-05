@@ -53,7 +53,7 @@ namespace Terradue.Stars.Data.Model.Metadata
 
         internal IAsset FindFirstAssetFromFileNameRegex(IAssetsContainer assetsContainer, string pattern)
         {
-            return assetsContainer.Assets.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value).Values.FirstOrDefault(a =>
+            return assetsContainer.Assets.OrderBy(kvp => kvp.Key, StringComparer.InvariantCultureIgnoreCase).ToDictionary(kvp => kvp.Key, kvp => kvp.Value).Values.FirstOrDefault(a =>
             {
                 return Regex.IsMatch(Path.GetFileName(a.Uri.ToString()), pattern);
             });
