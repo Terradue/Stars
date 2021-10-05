@@ -38,10 +38,7 @@ pipeline {
             }
             sh "dotnet tool restore"
             sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r rhel-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.18.04-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r ubuntu.19.04-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r debian.9-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
@@ -88,7 +85,7 @@ pipeline {
       steps {
         script {
           unstash name: 'stars-packages'
-          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.rhel-x64.rpm")
+          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.linux-x64.rpm")
           def descriptor = readDescriptor()
           sh "mv ${starsrpm[0].path} ."
           def mType=getTypeOfVersion(env.BRANCH_NAME)
