@@ -1,0 +1,97 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CBERS_4_AWFI_20201031_003_075_L2_BAND13",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          105.149248,
+          18.27768
+        ],
+        [
+          115.095171,
+          18.323501
+        ],
+        [
+          115.344841,
+          26.550512
+        ],
+        [
+          104.793931,
+          26.481481
+        ],
+        [
+          105.149248,
+          18.27768
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2020-10-31T03:15:42.830809Z",
+    "end_datetime": "2020-10-31T03:17:37.001437Z",
+    "datetime": "2020-10-31T03:16:39.935702Z",
+    "created": "2020-11-01T03:40:45.332637Z",
+    "platform": "cbers-4",
+    "mission": "cbers-4",
+    "instruments": [
+      "awfi"
+    ],
+    "gsd": 64.0,
+    "title": "cbers-4 L2 31/10/2020 03:16:39",
+    "eo:bands": [
+      {
+        "name": "band-13",
+        "common_name": "nir",
+        "center_wavelength": 0.83
+      }
+    ],
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 3075,
+    "view:sun_azimuth": 156.063,
+    "view:sun_elevation": 49.7395,
+    "processing:level": "L2"
+  },
+  "bbox": [
+    104.793931,
+    18.27768,
+    115.344841,
+    26.550512
+  ],
+  "assets": {
+    "band-13": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4_AWFI_20201031_003_075_L2_BAND13/CBERS_4_AWFI_20201031_003_075_L2_BAND13.tif",
+      "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND13.tif",
+      "eo:bands": [
+        {
+          "name": "band-13",
+          "common_name": "nir",
+          "center_wavelength": 0.83
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CBERS_4_AWFI_20201031_003_075_L2_BAND13/CBERS_4_AWFI_20201031_003_075_L2_BAND13.xml",
+      "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND13.xml"
+    }
+  },
+  "links": []
+}

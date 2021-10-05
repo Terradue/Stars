@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- version 0.1 (2011.10.04)-->
+<!-- reference : 20110413 - K3-D0-620-001 Level Product Attributes F.00.pdf -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Defined Auxiliary Root Element-->
+  <xs:element name="Auxiliary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="General" minOccurs="1" maxOccurs="1" />
+        <xs:element ref="Metadata" minOccurs="1" maxOccurs="1"/>
+        <xs:element ref="Image" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Defined General Element-->
+  <xs:element name="General">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Satellite" type ="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="Sensor" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="OrbitNumber" type="xs:int" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="OrbitDirection" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="PassID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ProductLevel" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ImageFormat" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ImagingMode" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="Projection" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Type" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="Parameter" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EllipsoidType" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ResamplingMethod" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="DesignBitsPerPixel" type="xs:int" minOccurs="1" maxOccurs="1"/>
+        <xs:element name ="DynamicRange" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="DesignMinimum" type="xs:int" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="DesignMaximum" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="BrowseImage" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="BrowseImageFileName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="BrowseImageSize" type="SIZE" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ThumbnailImage" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ThumbnailImageFileName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="ThumbnailImageSize" type="SIZE" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ApplyMTFC" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ApplyPODPAD" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ApplyOODOPAD" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ApplyPixelBurst" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ApplyAttitudeBias" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ApplyRNUC" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="CreateDate" type="DATETIME" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="AverageHeight" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="ProductID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="PMSVersionNo" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Defined Metadata Element-->
+  <xs:element name="Metadata">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MetadataBlock" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Time" type="DATETIME" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="Position" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="X" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Y" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Z" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Velocity" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="VX" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="VY" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="VZ" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Attitude" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="R" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="P" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Y" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="SunAngle" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Azimuth" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Elevation" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Defined Image Element-->
+  <xs:element name ="Image">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="PAN" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="MS1" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="MS2" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="MS3" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="MS4" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="PS1" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="PS2" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="PS3" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="PS4" type="ImageChannel" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+    
+  </xs:element>
+
+  <!--Defined Channel of Image-->
+  <xs:complexType name="ImageChannel">
+    <xs:sequence>
+      <xs:element name="ImageFileName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="TIL" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="BANDID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="numTiles" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="tileSizeX" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="tileSizeY" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="tileUnits" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="tileOverlap" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="TILE" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="FileName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="ULColOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="ULRowOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="URColOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="URRowOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LRColOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LRRowOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LLColOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LLRowOffset" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="ULLon" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="ULLat" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="URLon" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="URLat" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LRLon" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LRLat" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LLLon" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="LLLat" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+         </xs:complexType>   
+      </xs:element>
+      <xs:element name="ImageLevel" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="ImageColor" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="ImagingTime">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ImagingStartTime" type="IMAGETIME" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImagingCenterTime" type="IMAGETIME" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImagingEndTime" type="IMAGETIME" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImagingDuration" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="LineScanTime" type="xs:double" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ImageSize" type="SIZE" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="ImagingCoordinates" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ImageCoordCenter" minOccurs="1" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Column" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                  <xs:element name="Row" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ImageGeogCenter" type="LATLONG" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImageGeogTL" type="LATLONG" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImageGeogTC" type="LATLONG" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImageGeogTR" type="LATLONG" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImageGeogBL" type="LATLONG" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImageGeogBC" type="LATLONG" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="ImageGeogBR" type="LATLONG" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Angle" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Roll" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Pitch" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Yaw" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Offnadir" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Incidence" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Azimuth" type="xs:double" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CloudCover" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Average" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Section" minOccurs="0" maxOccurs="8">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Cloud" type ="xs:int" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+              <xs:attribute name="id" type="xs:int" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name ="DNRange" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="MinimumDN" type="xs:int" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="MaximumDN" type="xs:int" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CollectedGSD" minOccurs="1" maxOccurs="1">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="Column" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Row" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+      </xs:element>
+      <xs:element name="ImageGSD" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Column" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Row" type="xs:double" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SatellitePosition" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Altitude" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="SSPLatitude" type="xs:double" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="SSPLongitude" type="xs:double" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ImageQuality" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="Bandwidth" type="xs:int" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="RadianceConversion" minOccurs="1" maxOccurs="1">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Gain" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="Offset" type="xs:string" minOccurs="1" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="FocalLength" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="CCDAlignment" type="xs:string" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!--Defined Custom Type-->
+  <xs:simpleType name="DATETIME">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{4}\d{1,2}\d{1,2}\d{1,2}\d{1,2}\d{1,2}.\d{1,10}"/>
+    </xs:restriction>
+  </xs:simpleType>
+      
+  <xs:complexType name="IMAGETIME">
+    <xs:sequence>
+      <xs:element name="UTC" type="DATETIME" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="JulianDay" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="JulianFraction" type="xs:double" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="LATLONG">
+    <xs:sequence>
+      <xs:element name="Latitude" type="xs:double" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="Longitude" type="xs:double" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SIZE">
+    <xs:sequence>
+      <xs:element name="Width" type="xs:int" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="Height" type="xs:int" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

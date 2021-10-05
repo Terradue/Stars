@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask xmlns:hma="http://earth.esa.int/hma" xmlns:gml="http://www.opengis.net/gml" gml:id="SNW_SPOT6_PMS_202012141415240_ORT_5588528101_MSK" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/gml gml.xsd http://earth.esa.int/hma hma-1.1.xsd http://www.w3.org/1999/xlink xlinks.xsd">
+
+  <gml:name>Snow mask for product id SPOT6_PMS_202012141415240_ORT_5588528101</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="32719 WGS84/UTM 19S (S. hemisphere - 72W to 66W)">
+      <gml:lowerCorner>398612.25 6284804.25</gml:lowerCorner>
+      <gml:upperCorner>409451.25 6296739.75</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="SNOW-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SNOW</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32719 WGS84/UTM 19S (S. hemisphere - 72W to 66W)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>400225.5 6284805 399984 6284863.5 399963 6284874 399781.5 6285057 399765 6285078 399672 6285366 398613 6296401.5 398611.5 6296425.5 398634 6296593.5 405235.5 6296646 405406.5 6296644.5 408928.5 6296671.5 409450.5 6286024.5 409450.5 6285985.5 409399.5 6285693 409392 6285670.5 409215 6285436.5 409188 6285421.5 408948 6285330 400543.5 6284823 400225.5 6284805</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <GroundOverlay>
+    <name>K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png</name>
+    <color>ffffffff</color>
+    <Icon>
+      <href>K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png</href>
+      <viewBoundScale>0.75</viewBoundScale>
+    </Icon>
+    <gx:LatLonQuad>
+      <coordinates>
+			118.8367197,-2.7095529,170.311 118.8933329,-2.7094652,359.079 118.8932482,-2.6543986,55.204 118.8366375,-2.6544844,169.428
+		</coordinates>
+    </gx:LatLonQuad>
+  </GroundOverlay>
+</kml>

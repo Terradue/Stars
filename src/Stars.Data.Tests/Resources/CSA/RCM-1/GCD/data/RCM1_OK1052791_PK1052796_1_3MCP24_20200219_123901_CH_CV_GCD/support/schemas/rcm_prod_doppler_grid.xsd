@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_doppler_grid.xsd@@/main/5 ( Pitt: 37359 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    19-Nov-2016   Consolidated schema files
+J. Chiang     21-Jul-2017   Updates for RCM-SP-53-0419 Issue 2/4
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:rcm_prod="rcmGsProductSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_geodeticCoordinate.xsd"/>
+	<xsd:element name="DopplerAnomalyGrid">
+		<xsd:annotation>
+			<xsd:documentation> 
+      RCM Doppler Anomaly Grid
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="DopplerAnomalyGridCell" type="rcm_prod:DopplerAnomalyGridCellDataStore" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>
+              Elements of the Doppler Anomaly Grid
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="DopplerAnomalyGridCellDataStore">
+		<xsd:sequence>
+			<xsd:element name="geodeticCellCentre" type="rcm_prod:geodeticCoordinate">
+				<xsd:annotation>
+					<xsd:documentation>Geodetic coordinates at the center of the cell</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="geometryDopplerCentroid">
+				<xsd:annotation>
+					<xsd:documentation>Doppler centroid frequency from geometry (unit = Hz)
+          </xsd:documentation>
+				</xsd:annotation>
+			  <xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="estimatedDopplerCentroid">
+				<xsd:annotation>
+					<xsd:documentation> Doppler centroid frequency adaptively estimated from the signal data (unit = Hz) 
+          </xsd:documentation>
+				</xsd:annotation>
+			  <xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>				
+			</xsd:element>
+			<xsd:element name="estimatedDopplerCentroidQuality" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>Quality of Doppler centroid estimate which is measured as the reciprocal of the scaled RMS difference between the measured Look-Power-Ratio (LPR) and the theoretical LPR. A high/low value means the associated Doppler estimate is more/less reliable respectively. The measure is dimensionless.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="cellSlantRangeTime">
+				<xsd:annotation>
+					<xsd:documentation>2-way slant range time corresponding to geodeticCellCentre (units = s)
+          </xsd:documentation>
+				</xsd:annotation>
+			  <xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>				
+			</xsd:element>
+			<xsd:element name="cellAzimuthTime" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>Azimuth UTC time corresponding to geodeticCellCentre
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>				
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

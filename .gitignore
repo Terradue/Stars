@@ -363,3 +363,4 @@ out/
 src/catalog.json
 src/tmp/
 tmp/
+src/MSBuild_Logs/

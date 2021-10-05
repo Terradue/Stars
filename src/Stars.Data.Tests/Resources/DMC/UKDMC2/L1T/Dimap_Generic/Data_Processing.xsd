@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:include schemaLocation="Processing_Parameter.xsd"/>
+	<xsd:element id="Data_Processing" name="Data_Processing" type="t_Data_Processing">
+		<xsd:annotation>
+			<xsd:documentation source="Data_Processing">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Data_Processing" name="t_Data_Processing">
+		<xsd:sequence>
+			<xsd:element ref="GEOMETRIC_PROCESSING"/>
+			<xsd:element minOccurs="0" ref="RADIOMETRIC_PROCESSING"/>
+			<xsd:element minOccurs="0" ref="SPECTRAL_PROCESSING"/>
+			<xsd:element minOccurs="0" ref="THEMATIC_PROCESSING"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="Processing_Parameter"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element id="GEOMETRIC_PROCESSING" name="GEOMETRIC_PROCESSING" type="t_GEOMETRIC_PROCESSING">
+		<xsd:annotation>
+			<xsd:documentation source="GEOMETRIC_PROCESSING">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_GEOMETRIC_PROCESSING" name="t_GEOMETRIC_PROCESSING">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="RADIOMETRIC_PROCESSING" name="RADIOMETRIC_PROCESSING" type="t_RADIOMETRIC_PROCESSING">
+		<xsd:annotation>
+			<xsd:documentation source="RADIOMETRIC_PROCESSING">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_RADIOMETRIC_PROCESSING" name="t_RADIOMETRIC_PROCESSING">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="THEMATIC_PROCESSING" name="THEMATIC_PROCESSING" type="t_THEMATIC_PROCESSING">
+		<xsd:annotation>
+			<xsd:documentation source="THEMATIC_PROCESSING">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_THEMATIC_PROCESSING" name="t_THEMATIC_PROCESSING">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="SPECTRAL_PROCESSING" name="SPECTRAL_PROCESSING" type="t_SPECTRAL_PROCESSING">
+		<xsd:annotation>
+			<xsd:documentation source="SPECTRAL_PROCESSING">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_SPECTRAL_PROCESSING" name="t_SPECTRAL_PROCESSING">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+</xsd:schema>

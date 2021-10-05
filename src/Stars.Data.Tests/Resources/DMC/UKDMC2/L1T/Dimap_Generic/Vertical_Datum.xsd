@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Vertical_Datum" name="Vertical_Datum" type="t_Vertical_Datum">
+		<xsd:annotation>
+			<xsd:documentation source="Vertical_Datum"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Vertical_Datum" name="t_Vertical_Datum">
+		<xsd:all>
+			<xsd:element ref="VERTICAL_DATUM_TYPE"/>
+			<xsd:element ref="VERTICAL_DATUM_NAME"/>
+			<xsd:element minOccurs="0" ref="VERTICAL_DATUM_CODE"/>
+			<xsd:element minOccurs="0" ref="VERTICAL_DATUM_OFFSET"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="VERTICAL_DATUM_TYPE" name="VERTICAL_DATUM_TYPE" type="t_VERTICAL_DATUM_TYPE">
+		<xsd:annotation>
+			<xsd:documentation source="VERTICAL_DATUM_TYPE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_VERTICAL_DATUM_TYPE" name="t_VERTICAL_DATUM_TYPE">
+		<xsd:restriction base="Vertical_Datum_Types"/>
+	</xsd:simpleType>
+	<xsd:element id="VERTICAL_DATUM_NAME" name="VERTICAL_DATUM_NAME" type="t_VERTICAL_DATUM_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="VERTICAL_DATUM_NAME"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_VERTICAL_DATUM_NAME" name="t_VERTICAL_DATUM_NAME">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="VERTICAL_DATUM_CODE" name="VERTICAL_DATUM_CODE" type="t_VERTICAL_DATUM_CODE">
+		<xsd:annotation>
+			<xsd:documentation source="VERTICAL_DATUM_CODE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_VERTICAL_DATUM_CODE" name="t_VERTICAL_DATUM_CODE">
+		<xsd:restriction base="Code"/>
+	</xsd:simpleType>
+	<xsd:element id="VERTICAL_DATUM_OFFSET" name="VERTICAL_DATUM_OFFSET" type="t_VERTICAL_DATUM_OFFSET">
+		<xsd:annotation>
+			<xsd:documentation source="VERTICAL_DATUM_OFFSET"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_VERTICAL_DATUM_OFFSET" name="t_VERTICAL_DATUM_OFFSET">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_VERTICAL_DATUM_OFFSET_Linear_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_VERTICAL_DATUM_OFFSET_Linear_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="FT"/>
+			<xsd:enumeration value="FTUS"/>
+			<xsd:enumeration value="FTCLA"/>
+			<xsd:enumeration value="LKCLA"/>
+			<xsd:enumeration value="LKBEN"/>
+			<xsd:enumeration value="CHBEN"/>
+			<xsd:enumeration value="CHSEAR"/>
+			<xsd:enumeration value="YDSEAR"/>
+			<xsd:enumeration value="YDIND"/>
+			<xsd:enumeration value="FTSEAR"/>
+			<xsd:enumeration value="FM"/>
+			<xsd:enumeration value="NM"/>
+			<xsd:enumeration value="CM"/>
+			<xsd:enumeration value="KM"/>
+			<xsd:enumeration value="FTIND"/>
+			<xsd:enumeration value="SFT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

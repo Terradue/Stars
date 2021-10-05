@@ -1,0 +1,2860 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2020 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_product.xsd@@/main/22 ( Pitt: 37906 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    22-May-2016   Consolidated schema files
+E. Jenkins    11-Aug-2016   Updates for RCM-SP-53-0419 Issue 2/2
+J. Padda      24-Aug-2016   Further updates for RCM-SP-53-0419 Issue 2/2
+C. Vigneron   19-Oct-2016   Further updates for RCM-SP-53-0419 Issue 2/2
+C. Vigneron   28-Oct-2016   Update timeOfDopplerRateEstimate description
+C. Vigneron   08-Nov-2016   Further updates for RCM-SP-53-0419 Issue 2/2
+C. Vigneron   18-Jan-2017   Update burst numbering for RCM-SP-53-0419 Issue 2/3
+C. Vigneron   08-Mar-2017   Further updates for RCM-SP-53-0419 Issue 2/3
+J. Chiang     21-Jul-2017   Updates for RCM-SP-53-0419 Issue 2/4
+C. Vigneron   10-Aug-2017   Further updates for RCM-SP-53-0419 Issue 2/4
+Y. Yang       10-Nov-2017   Further updates for RCM-SP-53-0419 Issue 2/5
+Y. Yang       19-Dec-2019   Updates for RCM-SP-53-0419 Issue 2/6
+Y. Yang       21-Jan-2020   Updates for RCM-SP-53-0419 Phase E1 CCRGS
+A. Wong       14-Oct-2020   Updates for Private Area Feature AWR22
+J. Kuo        21-Oct-2020   Updates for RCM-SP-53-0419 Issue 2/7
+
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:rcm_prod="rcmGsProductSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_identifiers.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_dataTypes.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_lists.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_units.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_geodeticCoordinate.xsd"/>
+	<xsd:complexType name="prfInformationDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Pulse Repetition Frequency Information Data Store.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="rawLine" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>The first line of the ingested raw data corresponding to this PRF change.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pulseRepetitionFrequency">
+				<xsd:annotation>
+					<xsd:documentation>Transmitted pulse repetition frequency (units = Hz).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:prfType">
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+		<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="optional"/>
+		<xsd:attribute name="burst" type="xsd:integer" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="radarParametersDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Radar Parameters Data Store. Information describing the 
+      characteristics of the sensor used to acquire the data
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="acquisitionType" type="rcm_prod:acquisitionIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Type of data acquisition (Beam mode type)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="beams" type="rcm_prod:beamList">
+				<xsd:annotation>
+					<xsd:documentation>Radar beams used to produce this product. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="polarizations" type="rcm_prod:polarizationIdentifiersList">
+				<xsd:annotation>
+					<xsd:documentation>Polarizations present in the raw data used to produce this product</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pulses" type="rcm_prod:pulseIdentifiers" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Radar Pulses used to produce this product, for each beam</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pulsesReceivedPerDwell" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Number of valid pulses received and recorded per dwell (one per beam). Acquired burst parameter for ScanSAR and Dual HH-VV modes only. Beam attribute values are same as those used in the beams list.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:receivedPulsesPerDwellType">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="numberOfPulseIntervalsPerDwell" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Number of pulse intervals per dwell (one per beam). Acquired burst parameter for ScanSAR and Dual HH-VV modes only. Beam attribute values are same as those used in the beams list.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:priPerDwellType">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="burstDelay" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The delay inserted by the satellite after each pass through a beam sequence when executing a ScanSAR image. Present for ScanSAR only. (units = us)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="us"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="rank" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Rank, one entry per beam. The number of transmitted pulse repetition intervals between transmission and reception for each beam.
+Beam attribute values are same as those used in the beams list.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:rankType">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="settableGain" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Gain values used on the instrument. 
+          Gain values will be specified either in terms of polarization
+           or wing, not both. Beam attribute values are same as those used 
+            in the beams list. (units = dB). Wing can be either fore or aft.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="radarCenterFrequency">
+				<xsd:annotation>
+					<xsd:documentation>Center frequency of the instrument.	(units = Hz)
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="prfInformation" type="rcm_prod:prfInformationDataStore" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Transmitted pulse repetition frequency information.
+Beam attribute values are same as those used in the beams list. 
+Pole and burst attributes are only included for ScanSAR modes and identify the record in which the PRF changes.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pulseLength" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Time duration of the pulse for each beam. (units = s) 
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:pulseDurationType">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="pulseBandwidth" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Bandwidth of the pulse for each beam. (units = Hz) 
+Beam attribute values are same as those used in the beams list.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:pulseBandwidthType">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="samplingWindowStartTimeFirstRawLine" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Sampling window start time for the first line of the raw data ingested. Time between start of transmission of pulse and opening of receive window. (units = s)
+Use two attributes (pole and beam) to identify each record.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="samplingWindowStartTimeLastRawLine" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Sampling window start time of the last line of the raw data ingested. Time between start of transmission of pulse and opening of receive window. (units = s)
+Use two attributes (pole and beam) to identify each record.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="numberOfSwstChanges" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Number of sampling window start time (SWST) changes in the raw data used to process this scene. Multiple entries for ScanSAR (one per beam) and Stripmap Dual HH-VV (one per polarization).   	
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:integer">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="antennaPointing" type="rcm_prod:antennaPointingIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Antenna pointing direction (always set to “Right” for RCM)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="adcSamplingRate" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Sampling rate of the radar analog to digital converter for the pulse, for each beam (units = Hz)
+Beam attribute values are same as those used in the beams list.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:rangeSamplingRateType">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="zeroDopplerSteeringFlag" type="rcm_prod:zeroDopplerSteeringFlagIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Indicate if zero-Doppler steering is used.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="satOrientationRefFrame" type="rcm_prod:satOrientationRefFrameIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Indicate what satellite orientation reference frame is used)		</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rawBitsPerSample" type="rcm_prod:rawBitsPerSampleIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>BAQ encoding level</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="samplesPerEchoLine" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Number of samples per echo line for each beam. Used to determine sample window length (one per beam). </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:unsignedLong">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="numPRIsPerPointingStep" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Number of transmitted pulse repetition intervals per antenna azimuth pointing step during a Spotlight acquisition.  This value applies to all pointing steps except the last one, which may have fewer PRIs.
+Present for Spotlight mode only. 
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="totalNumberOfPointingSteps" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Total number of antenna azimuth pointing steps during a Spotlight acquisition.  Always an odd number.  
+Present for Spotlight mode only.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stepSizeInAntennaPointing" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Step size in antenna azimuth pointing angle (units = deg)  
+Present for Spotlight mode only.
+		</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="steppedReceiveMode" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, stepped receive was used in acquiring the data for this image.		</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="rawDataAnalysisDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Raw Data Analysis Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="bias" minOccurs="2" maxOccurs="2">
+				<xsd:annotation>
+					<xsd:documentation>Measured mean of the raw data after BAQ decoding (one per data stream, i.e., real and imaginary).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="dataStream" type="rcm_prod:dataStreamIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="standardDeviation" minOccurs="2" maxOccurs="2">
+				<xsd:annotation>
+					<xsd:documentation>Standard deviation of the raw data after BAQ decoding (one per data stream, i.e., real and imaginary).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="dataStream" type="rcm_prod:dataStreamIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="gainImbalance" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Ratio of variances of real and imaginary channels
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="phaseOrthogonality">
+				<xsd:annotation>
+					<xsd:documentation>Phase Orthogonality (quadrature departure) (units = deg) 
+A positive value represents positive I and Q axes less than 90 degrees apart.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="rawDataHistogram" minOccurs="2" maxOccurs="2">
+				<xsd:annotation>
+					<xsd:documentation>Histogram of the raw data after BAQ decoding (one per data stream, i.e., real and imaginary).</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:histogramList">
+							<xsd:attribute name="dataStream" type="rcm_prod:dataStreamIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+		<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="rawDataAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Describes characteristics of the raw SAR data
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numberOfInputDataGaps" type="xsd:unsignedLong">
+				<xsd:annotation>
+					<xsd:documentation>Number of gaps detected in the raw data used to produce this product. A gap is defined as a predetermined number of range lines. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="gapSize" type="xsd:unsignedLong">
+				<xsd:annotation>
+					<xsd:documentation>Predetermined minimum number of range lines that defines a gap; consecutive missing lines less than this minimum are recorded in numberOfMissingLines. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numberOfMissingLines" minOccurs="1" maxOccurs="4">
+				<xsd:annotation>
+					<xsd:documentation>Number of missing lines (not including gaps) detected in the raw data used to produce this product (one per polarization). 
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:unsignedLong">
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="rawDataAnalysis" type="rcm_prod:rawDataAnalysisDataStore" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Results from raw data analysis.  (one per  polarization per beam)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="stateVectorDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+		State Vector Data Store. Earth Centered Rotating (ECR) coordinates
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="timeStamp" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>Date/time stamp of current state vector
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="xPosition">
+				<xsd:annotation>
+					<xsd:documentation>(units = m)
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="yPosition">
+				<xsd:annotation>
+					<xsd:documentation>(units = m)
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="zPosition">
+				<xsd:annotation>
+					<xsd:documentation>(units = m)
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="xVelocity">
+				<xsd:annotation>
+					<xsd:documentation>(units = m/s)
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:velocityUnits" use="required" fixed="m/s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="yVelocity">
+				<xsd:annotation>
+					<xsd:documentation>(units = m/s)
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:velocityUnits" use="required" fixed="m/s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="zVelocity">
+				<xsd:annotation>
+					<xsd:documentation>(units = m/s)
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:velocityUnits" use="required" fixed="m/s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="orbitInformationDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Orbit Information Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="passDirection" type="rcm_prod:passDirectionIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Direction of satellite pass defined at the start of the imaging acquisition activity 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="orbitDataSource" type="rcm_prod:orbitDataSourceIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Source of orbit data: Note: in the case where the input orbit data source was either requested (in the case of Product Generation) or configured (in the case of Catalogue and Systematic Processing) as "Downlinked", and where PGS Ingest determined that at least one Downlinked State Vector was deemed unreliable and fell back to the corresponding either Definitive (if available) or Predicted State Vector (for that azimuth time), this field is then set to the fall back source of either "Definitive" (if available) or "Predicted". 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="withinOrbitTube" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>True if the spacecraft was predicted to be within the orbit tube at the time of imaging</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="orbitDataFileName" type="xsd:anyURI">
+				<xsd:annotation>
+					<xsd:documentation>Name of orbit data file used during processing.  If orbitDataSource = Downlinked, this file was only used for initial framing of the data.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stateVector" type="rcm_prod:stateVectorDataStore" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>State vector entries
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="attitudeAnglesDataStore">
+		<xsd:annotation>
+			<xsd:documentation>Attitude Angles Data Store. The attitude of the spacecraft is defined by its rotation from a state with the mechanical build axes initially parallel to the flight axes (Please refer to Figure 7 3 in RCM-SP-53-0419). During imaging, the spacecraft is rolled about the XF axis, then pitched about the YF axis, then yawed about the ZF axis. The roll, pitch and yaw attitude angles are defined according to the right-hand rule. They have positive values when they represent a rotation that appears clockwise when looking in the positive direction of the axis, and negative values when the rotation appears counter-clockwise.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="timeStamp" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>
+Date/time stamp of current attitude information
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="yaw">
+				<xsd:annotation>
+					<xsd:documentation>Sensor yaw angle (units = deg)			</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="roll">
+				<xsd:annotation>
+					<xsd:documentation>Sensor roll angle (units = deg)			</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="pitch">
+				<xsd:annotation>
+					<xsd:documentation>Sensor pitch angle (units = deg)			</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="attitudeInformationDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Attitude Information Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="attitudeDataSource" type="rcm_prod:attitudeSourceIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>
+            Source of attitude data used for processing
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="attitudeOffsetsApplied" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>
+            True if attitude offsets from the Payload Characterization Parameters file were 
+	    applied prior to use of attitude data.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="attitudeAngles" type="rcm_prod:attitudeAnglesDataStore" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+            Attitude angles used during processing.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="orbitAndAttitudeDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Orbit And Attitude Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="orbitInformation" type="rcm_prod:orbitInformationDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Spacecraft orbit information used for processing
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="attitudeInformation" type="rcm_prod:attitudeInformationDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Spacecraft attitude data used for processing
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="sourceAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Source Attributes Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="satellite" type="rcm_prod:satelliteIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sensor" type="rcm_prod:sensorIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="polarizationDataMode" type="rcm_prod:polarizationModeIdentifier">
+				<xsd:annotation>
+					<xsd:documentation>The polarization type of the imagery data </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="downlinkSegmentId" type="rcm_prod:downlinkSegmentIdType">
+				<xsd:annotation>
+					<xsd:documentation>Downlink segment ID </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="inputDatasetFacilityId" type="rcm_prod:inputDataSetFacilityNameType">
+				<xsd:annotation>
+					<xsd:documentation>Name of the facility from which the raw data was received</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="beamMode" type="rcm_prod:beamModeIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>The Beam Mode type. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="beamModeDefinitionId" type="rcm_prod:beamModeDefinitionIdType">
+				<xsd:annotation>
+					<xsd:documentation>Uniquely identifies this Beam Mode within the entire system.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="beamModeVersion" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Identifier for the version of the Beam Mode used to acquire this downlink segment.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="beamModeMnemonic" type="rcm_prod:beamModeMnemonicType">
+				<xsd:annotation>
+					<xsd:documentation>Beam mode mnemonic (a mnemonic which uniquely identifies the satellite imaging configuration, corresponding to the Beam Mode Definition ID).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rawDataStartTime" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>Date/time stamp of first raw data line used during the processing 	</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="radarParameters" type="rcm_prod:radarParametersDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Information describing the characteristics of the sensor used to acquire the data. 		</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rawDataAttributes" type="rcm_prod:rawDataAttributesDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Statistics and other analysis on the raw data. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="orbitAndAttitude" type="rcm_prod:orbitAndAttitudeDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Information on the satellite orbit and attitude</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="generalProcessingInformationDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      General Processing Information Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="productType" type="rcm_prod:productTypeIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>The type of product</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="polarizationsInProduct" type="rcm_prod:polarizationIdentifiersList">
+				<xsd:annotation>
+					<xsd:documentation>List of all polarizations included in the product</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="processingFacility" type="rcm_prod:processingFacilityNameType">
+				<xsd:annotation>
+					<xsd:documentation>Unique (across the mission) identifier of a Processing Facility 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="processingTime" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>
+            Date/time at which processing was performed
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="softwareVersion" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Version of software used to process the data
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="processingMode" type="rcm_prod:processingModeIdentifiers" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> 
+            The mode in which the data was processed into an Image Product. Only applicable for Ad Hoc Image Products.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="processingPriority" type="rcm_prod:processingPriorityIdentifiers" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> 
+            The priority with which the data was processed into an Image Product. Not applicable if processingMode = "NRT" or "Expedited".
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="windowDataStore">
+		<xsd:annotation>
+			<xsd:documentation>
+      Window Data Store  
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="windowName" type="rcm_prod:windowNameIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>
+            Name of window
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="windowCoefficient" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>
+            Window coefficient
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="sarProcessingInformationDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      SAR Processing Information Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="lutApplied" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Output scaling LUT applied during processing 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="perPolarizationScaling" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, a polarization dependent application LUT has been applied for each polarization channel. Otherwise the same application LUT has been applied for all polarization channels.
+Not applicable to lookupTable = "Unity*" or if dataType = "Floating-Point". For MLC off-diagonal element channel, its application LUT is always derived from the application LUT applied to the other two diagonal element channels.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="atmosphericCorrection" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, atmospheric correction has been applied.
+If false, either not applicable or has not been applied.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="elevationPatternCorrection" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, antenna elevation pattern correction has been applied. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rangeSpreadingLossCorrection" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, range spreading loss correction has been applied. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pulseDependentGainCorrection" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, pulse dependent gain correction has been applied. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spotlightRadiometricCorrection" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If true, spotlight radiometric correction has been applied.  Spotlight mode only.  
+                                        </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="noiseSubtractionPerformed" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If true, the approximate expected mean instrument noise level has been subtracted from the imagery. Applicable only for ScanSAR GRD and ScanSAR GCD products.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="receiverSettableGainCorrection" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, receiver settable gain has been applied during processing. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rawDataCorrection" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, raw data correction has been applied. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bistaticCorrectionApplied" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, a bistatic correction has been applied (to account for the satellite’s change of position between transmitting and receiving a pulse).
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rangeReferenceFunctionSource" type="rcm_prod:rangeReferenceFunctionSourceIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Source of range reference function for this product. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="interPolarizationCorrection" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If true, inter-polarization correction has been applied.  Only present for quad polarization SLC or GRC products.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="atmosphericPropagationDelay">
+				<xsd:annotation>
+					<xsd:documentation>Applied propagation (range) delay attributable to the atmosphere. (units = us)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="us"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="tecMapFileUsed" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifies the TecMap filename which is used to estimate the TEC value for atmospheric correction. 
+Applicable when atmosphericCorrection flag is set to true and subject to the availability of TecMap file corresponding to the date of data acquisition from the International Global Navigation Satellite Systems Service online access portal. Otherwise, tecMapFile is set to the empty string and ‘estimatedTecValue’ in the next row is set to zero.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="estimatedTecValue" type="xsd:double" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The estimated total electron content (units = TECU) used for atmospheric propagation delay calculation.
+Applicable when atmosphericCorrection flag is set to true. The value is set to zero if the TecMap file is not available, i.e., when tecFileUsed = ‘ ’.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txRxCorrCentreElevAngle" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Nominal elevation angle of the beam centre (units = deg), used as origin in the Transmit and Receive Correction amplitude and phase polynomials below. 
+Applicable to quad polarization SLC products only and included if “interPolarizationCorrection” is set to true.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="txCorrAmplitude11" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (1,1) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txCorrAmplitude12" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (1,2) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order. 
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txCorrAmplitude21" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (2,1) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order. 
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txCorrAmplitude22" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (2,2) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txCorrPhase11" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees of element (1,1) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative totxRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+         </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txCorrPhase12" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees of element (1,2) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txCorrPhase21" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees of element (2,1) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="txCorrPhase22" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees of element (2,2) in transmit correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrAmplitude11" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (1,1) in receive correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrAmplitude12" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (1,2) in receive correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrAmplitude21" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (2,1) in receive correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrAmplitude22" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Amplitude of element (2,2) in receive correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrPhase11" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees of element (1,1) in receive correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrPhase12" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees of element (1,2) in receive correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrPhase21" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees of element (2,1) in receive correction matrix given as a list of coefficients of a polynomial in elevation angle (in degrees) relative to txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order.
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rxCorrPhase22" type="rcm_prod:interPoleCorrectionCoefficientList" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Phase in degrees  of element (2,2) in receive correction matrix given as a list of up to 5 coefficients of a polynomial in elevation angle (in degrees) relative to  txRxCorrCentreElevAngle. The order of the polynomial coefficients is from constant term to the highest order. 
+Applicable to quad polarization SLC or GRC products only and included if “interPolarizationCorrection” is set to true.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerSource" type="rcm_prod:dopplerSourceIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>The source of the Doppler centroid coefficients that has been used to process this product. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="estimatedRollAngleUsed" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>If true, estimated roll angle has been used. 
+Applicable to ScanSAR modes only. Always false for single beam and Spotlight products.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="estimatedRollAngle" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Roll angle estimated by the processor. 
+Only included if  “estimatedRollAngleUsed” is set to true.  (units = deg)
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="radiometricSmoothingPerformed" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If true, radiometric smoothing was performed.  Only present for ScanSAR.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="zeroDopplerTimeFirstLine" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>Zero Doppler date/time of the very first (top) line of the image data among all IPDFs in the product. Note that this time is the same for all polarizations in the product.
+For GCD and GCC products, this applies to intermediate image prior to geocoding.
+If north-south flipping has occurred, this value refers to the first line after the flip.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="zeroDopplerTimeLastLine" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>Zero Doppler date/time of the very last (bottom) line of the image data among all IPDFs in the product. Note that this time is the same for all polarizations in the product.
+For GCD and GCC products, this applies to the intermediate image prior to geocoding.
+If north-south flipping has occurred, this value refers to the last line after the flip.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numberOfLinesProcessed" maxOccurs="4">
+				<xsd:annotation>
+					<xsd:documentation>Number of input raw data echo lines processed for each polarization. Echo lines are acquired at the rate of one per transmitted pulse, per received polarization.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:integer">
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="numberOfRangeLooks" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Number of looks used in range processing 
+For ScanSAR beam mode products where the number of range looks varies by beam (i.e., perBeamNumberOfRange LooksUsed is true), this is the maximum value across all beams.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rangeLookBandwidth">
+				<xsd:annotation>
+					<xsd:documentation>Full bandwidth processed per range look. (units = Hz)
+For ScanSAR beam mode products where the number of range looks varies by beam (i.e., perBeamNumberOfRange LooksUsed is true), this is the maximum value across all beams.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="totalProcessedRangeBandwidth">
+				<xsd:annotation>
+					<xsd:documentation>Total bandwidth used during range processing. (units = Hz)
+For ScanSAR beam mode products where the number of range looks varies by beam (i.e., perBeamNumberOfRange LooksUsed is true), this is the maximum value across all beams.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="perBeamNumberOfRangeLooksUsed" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>If true, the number of range looks has been applied to each of the ScanSAR beams in the beam list varies by beam.
+Applicable only for ScanSAR product types processed with a different number of rangelooks for each ScanSAR beam.
+   </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="perBeamNumberOfRangeLooks" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Number of range looks used in range processing for each of the ScanSAR beams in the beam list.
+Provided only if perBeamNumberOfRangeLooksUsed is true.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:integer">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="perBeamRangeLookBandwidths" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Full bandwidth processed per range look for each of the ScanSAR beams in the beam list.  (units = Hz)
+Provided only if perBeamNumberOfRangeLooksUsed is true.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="perBeamTotalProcessedRangeBandwidths" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Total bandwidth used during range processing for each of the ScanSAR beams in the beam list.  (units = Hz)
+Provided only if perBeamNumberOfRangeLooksUsed is true.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="numberOfAzimuthLooks" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Number of azimuth looks.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="scalarLookWeights" type="rcm_prod:lookWeightList" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> Scalar weightings used in azimuth look summation, one value per look. 
+Applicable only for Stripmap Non-Dual-HH-VV. Applied in processing only if azimuth antenna pattern compensation correction disabled by PGS configuration.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="azimuthLookBandwidth" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>For Continuous Stripmap products: processed bandwidth per azimuth look. 
+For Spotlight, ScanSAR and Dual HH-VV  products: azimuth bandwidth of each target in the scene (beam dependent for ScanSAR). (units = Hz)				
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="totalProcessedAzimuthBandwidth" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>For Continuous Stripmap products: the total processed azimuth bandwidth. 
+For Spotlight, ScanSAR and Dual HH-VV  products: totalProcessedAzimuthBandwidth is equal to azimuthLookBandwidth. (units = Hz)
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+							<xsd:attribute name="units" type="rcm_prod:frequencyUnits" use="required" fixed="Hz"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="azimuthWindow" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Windowing parameters used for azimuth processing, for each beam.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="rcm_prod:windowDataStore">
+							<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="rangeWindow" type="rcm_prod:windowDataStore">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Windowing parameters used for range processing
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="satelliteHeight">
+				<xsd:annotation>
+					<xsd:documentation>Satellite height above the reference ellipsoid computed by processor at scene center. (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="chirpQualityDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Chirp Quality Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="replicaQualityValid" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation>False = unable to reconstruct chirp during processing or the quality is below acceptable levels when chirp reconstruction was requested. True = able to reconstruct all chirps or chirp reconstruction not requested (nominal chirp used) and all quality measures were acceptable </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="crossCorrelationWidth" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation> 
+            3-dB pulse width of chirp replica cross-correlation function between reconstructed chirp and nominal chirp (units = the original acquired slant range samples derivable from adcSamplingRate)
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sideLobeLevel">
+				<xsd:annotation>
+					<xsd:documentation> 
+            First side lobe level of chirp replica cross-correlation function 
+	    between reconstructed chirp and nominal chirp (units = dB)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="integratedSideLobeRatio">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Integrated Side-Lobe Ratio of chirp replica cross-correlation 
+	    function between reconstructed chirp and nominal chirp (units = dB)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="crossCorrelationPeakLoc" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Cross correlation peak location. (units = the original acquired slant range samples derivable from adcSamplingRate)
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="chirpDataStore">
+		<xsd:annotation>
+			<xsd:documentation>Chirp Data Store</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="chirpQuality" type="rcm_prod:chirpQualityDataStore"/>
+			<xsd:element name="chirpPower">
+				<xsd:annotation>
+					<xsd:documentation>Replica energy value calculated during processing (units = dB)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="amplitudeCoefficients" type="rcm_prod:coefficientsList">
+				<xsd:annotation>
+					<xsd:documentation>
+            List of range chirp amplitude coefficients (-, s^-1, s^-2, s^-3, ...)
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="phaseCoefficients" type="rcm_prod:coefficientsList">
+				<xsd:annotation>
+					<xsd:documentation>
+            List of range chirp phase coefficients (cycles, Hz, Hz/s, Hz/s^2, ...)
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+		<xsd:attribute name="pulse" type="rcm_prod:pulseIdentifiers" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="slantRangeToGroundRangeDataStore">
+		<xsd:annotation>
+			<xsd:documentation>Slant Range to Ground Range Conversion Data Store 
+Each sample represents a point (as opposed to the top left corner of an area). For GCC and GCD products, these fields apply to intermediate ground range samples prior to geocoding.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="zeroDopplerAzimuthTime" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation>Zero Doppler date/time at which this entry applies</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="slantRangeTimeToFirstRangeSample">
+				<xsd:annotation>
+					<xsd:documentation>2-way slant range time to first range sample (the first pixel of a range line)
+					for this entry (units = s)
+For all products except ScanSAR SLC products, this first range sample means the nearest range sample of the range line of the image.
+For ScanSAR SLC products, this first range sample means the nearest range sample of the range line among all images of all beams.
+					</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="groundRangeOrigin">
+				<xsd:annotation>
+					<xsd:documentation>Ground range reference position GR0 (see equation definition below). (units = m)
+Always set to ‘0.0’ for RCM.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="groundToSlantRangeCoefficients" type="rcm_prod:coefficientsList">
+				<xsd:annotation>
+					<xsd:documentation>List of polynomial coefficients for converting ground range to slant range in a ground range products (or from relative image range to slant range in a SLC product or an MLC product).
+Provided as n coefficients, n less than or equal to 12, s0, s1, sn-1, where: Slant Range (units = m) = s0 + s1(R - GR0) + ... + sn-1(R-GR0)^(n-1);
+R is the ground range distance from the nearest-range image sample in a ground range product (or slant range distance from the nearest-range image sample in a SLC product or an MLC product).
+GR0 is the groundRangeOrigin.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="hyperFitPhaseErrorCorrDataStore">
+		<xsd:annotation>
+			<xsd:documentation> Hyperbolic Fit Phase Error Correction Data Store (Spotlight only).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="midAcquisitionTime" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation> 
+						Date/Time of Mid-Acquisition
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hyperFitPhaseErrorCorrCoefficients" type="rcm_prod:coefficientsList">
+				<xsd:annotation>
+					<xsd:documentation>
+						List of coefficients of the hyperbolic fit phase error correction polynomial:
+						h0,h1,h2,h3,... where
+						Hyperbolic Fit Phase Error Correction = h0 + h1(AT) + h2(AT)^2 + h3(AT)^3 + .... and AT is the azimuthal (slow) time in seconds with respect to the mid-acquisition time. (Units of h0, h1, h2, h3, ... are radians*sec^0, radians*sec^-1, radians*sec^-2, radians*sec^-3, ...)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="imageGenerationParametersDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Image Generation Parameters Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="generalProcessingInformation" type="rcm_prod:generalProcessingInformationDataStore">
+				<xsd:annotation>
+					<xsd:documentation> 
+            General information relating to processing location, date and software version
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="sarProcessingInformation" type="rcm_prod:sarProcessingInformationDataStore">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Detailed information describing the SAR processing parameters
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerAnomalyFileName" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of the Doppler Anomaly Grid File See Section 7.4.2.6 for the format of this file.
+Refer to Table 4 10 for the applicability of this file.
+				</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="chirp" type="rcm_prod:chirpDataStore" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Describes the chirp parameters derived from the calibration pulses. One entry per polarization per beam. One attribute ‘pulse’ help to identify each chirp by its ‘pulseId’ which maps to the values of the ‘pulses’ entry in Radar Parameters.
+For ScanSAR the order of the entries is from near range to far range
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="slantRangeToGroundRange" type="rcm_prod:slantRangeToGroundRangeDataStore" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Slant Range to Ground Range conversion information
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hyperFitPhaseErrorCorr" type="rcm_prod:hyperFitPhaseErrorCorrDataStore" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Describes the Hyperbolic Fit Phase Error Correction at the time indicated in the record.  Spotlight Mode only.	</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dynamicProcessingParameterFile" type="xsd:anyURI" minOccurs="5" maxOccurs="6">
+				<xsd:annotation>
+					<xsd:documentation>Names of Dynamic Processing Parameter files used during processing. The PCP Spotlight Set file is only applicable to Spotlight mode.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="imageCoordinate">
+		<xsd:annotation>
+			<xsd:documentation>
+      Image Coordinate Data Store. Each image coordinate represents a point (as opposed to the top left corner of an area). 
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="line" type="xsd:double" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+            Image line (row) number starting from zero at the top of the image
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixel" type="xsd:double" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>
+           Image pixel (column) number starting from zero for the leftmost image pixel  
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="imageTiePoint">
+		<xsd:annotation>
+			<xsd:documentation>Image Tie-Point Data Store</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="imageCoordinate" type="rcm_prod:imageCoordinate">
+				<xsd:annotation>
+					<xsd:documentation>Image coordinates of this tie point. Image coordinates (line and pixel) </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="geodeticCoordinate" type="rcm_prod:geodeticCoordinate">
+				<xsd:annotation>
+					<xsd:documentation>Estimated geodetic coordinates of this tie point in the reference ellipsoid coordinate system. Errors on these estimates include ground range projection errors arising from the difference between the given terrain height and the true terrain height above the ellipsoid. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="geolocationGridDataStore">
+		<xsd:annotation>
+			<xsd:documentation> Geolocation Grid Datastore</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="imageTiePoint" type="rcm_prod:imageTiePoint" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>The estimated geodetic coordinates for a 2D grid of points.
+For all products except ScanSAR SLC the 2D grid includes the image corner pixels and points at regular intervals in between.
+For ScanSAR SLC products, the 2D grid is a subset of the COPG and fully covers all processed bursts. The 4 tie-points required to set the GeoTIFF tag ModelTiepointTag for each burst IPDF can be derived from this attribute via interpolation. 
+.  
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="rationalFunctionsDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Rational Functions Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="biasError">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Non-time varying 1-sigma error estimate for 
+            correlated images measured in meters (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="randomError">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Time varying 1-sigma error estimate for correlated 
+            images measured in meters. (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="lineFitQuality" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Indicates the quality of the line rational function 
+            fit. This value is the RMS line error
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixelFitQuality" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Indicates the quality of the pixel rational function 
+            fit. This value is the RMS pixel error
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lineOffset" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Offset used, in conjunction with Scale, to linearly transform line values to range of [-1.0,1.0] 
+The lineOffset is the offset measured against the origin of the COPG 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixelOffset" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Offset used, in conjunction with Scale, to linearly transform pixel values to range of [-1.0,1.0] 
+The pixelOffset is the offset measured against the origin of the COPG.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="latitudeOffset">
+				<xsd:annotation>
+					<xsd:documentation>Offset used, in conjunction with Scale, to linearly transform latitude values to range of [-1.0,1.0] (units = deg)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="longitudeOffset">
+				<xsd:annotation>
+					<xsd:documentation>Offset used, in conjunction with Scale, to linearly transform longitude values to range of [-1.0,1.0] (units = deg)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="heightOffset">
+				<xsd:annotation>
+					<xsd:documentation>Offset used, in conjunction with Scale, to linearly transform height values to range of [-1.0,1.0] (units = m above reference ellipsoid)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="lineScale" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Scale used, in conjunction with Offset, to linearly transform line values to range of [-1.0,1.0] </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixelScale" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Scale used, in conjunction with Offset, to linearly transform pixel values to range of [-1.0,1.0] </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="latitudeScale" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>Scale used, in conjunction with Offset, to linearly transform latitude values to range of [-1.0,1.0] </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="longitudeScale" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>Scale used, in conjunction with Offset, to linearly transform longitude values to range of [-1.0,1.0] </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="heightScale" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>Scale used, in conjunction with Offset, to linearly transform height values to range of [-1.0,1.0] </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lineNumeratorCoefficients" type="rcm_prod:rationalFunctionCoefficientList">
+				<xsd:annotation>
+					<xsd:documentation>Coefficients representing the polynomial in the numerator of the rational function mapping latitude, longitude and height to line. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lineDenominatorCoefficients" type="rcm_prod:rationalFunctionCoefficientList">
+				<xsd:annotation>
+					<xsd:documentation>Coefficients representing the polynomial in the denominator of the rational function mapping latitude longitude and height to line. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixelNumeratorCoefficients" type="rcm_prod:rationalFunctionCoefficientList">
+				<xsd:annotation>
+					<xsd:documentation>Coefficients representing the polynomial in the numerator of the rational function mapping latitude, longitude and height to pixel</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixelDenominatorCoefficients" type="rcm_prod:rationalFunctionCoefficientList">
+				<xsd:annotation>
+					<xsd:documentation>Coefficients representing the polynomial in the denominator of the rational function mapping latitude, longitude and height to pixel</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="nspProjectionParametersDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      NSP Projection Data Store. To support ARC, LCC, STPL, for which
+      not all the following entries are required.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="mapOriginFalseEasting" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> 
+            (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="mapOriginFalseNorthing" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> 
+            (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="centerOfProjectionLongitude" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> 
+            (units = deg)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="centerOfProjectionLatitude" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> 
+            (units = deg)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="standardParallels1" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> 
+            (units = deg)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="standardParallels2" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> 
+            (units = deg)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="zone" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Range 0 to 65535. Applicable for STPL
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:minInclusive value="0"/>
+						<xsd:maxInclusive value="65535"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="utmProjectionParametersDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      UTM Projection Data Store
+    	</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="utmZone" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation> Range from 1 to 60 (applicable to UTM only)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:integer">
+						<xsd:minInclusive value="1"/>
+						<xsd:maxInclusive value="60"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="hemisphere" type="rcm_prod:hemisphereIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Northern or Southern. Required for UTM and UPS
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="mapOriginFalseEasting" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>For UTM, set to ‘500000’; For UPS, set to ‘2000000’ (units = m)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="mapOriginFalseNorthing" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>For UTM, if Hemisphere = "S", set to "10000000", otherwise set to "0"; For UPS, set to "2000000" (units = m)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="mapCoordinate">
+		<xsd:annotation>
+			<xsd:documentation>
+      Map Co-ordinate Data Store  
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="northing">
+				<xsd:annotation>
+					<xsd:documentation>
+	    (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="easting">
+				<xsd:annotation>
+					<xsd:documentation>
+	    (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="mapTiePoint">
+		<xsd:annotation>
+			<xsd:documentation>
+      Map Tie-Point Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="mapCoordinate" type="rcm_prod:mapCoordinate">
+				<xsd:annotation>
+					<xsd:documentation>Map coordinates (northing and easting) 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="geodeticCoordinate" type="rcm_prod:geodeticCoordinate">
+				<xsd:annotation>
+					<xsd:documentation>Geodetic coordinates (latitude, longitude, height)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="mapCornersDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Map Corners Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="upperLeftCorner" type="rcm_prod:mapTiePoint">
+				<xsd:annotation>
+					<xsd:documentation>
+            Co-ordinates of upper left corner of product
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="upperRightCorner" type="rcm_prod:mapTiePoint">
+				<xsd:annotation>
+					<xsd:documentation>
+            Co-ordinates of upper right corner of product
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lowerRightCorner" type="rcm_prod:mapTiePoint">
+				<xsd:annotation>
+					<xsd:documentation>
+            Co-ordinates of lower right corner of product
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lowerLeftCorner" type="rcm_prod:mapTiePoint">
+				<xsd:annotation>
+					<xsd:documentation>
+            Co-ordinates of lower left corner of product
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="mapProjectionDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Map Projection Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="mapProjectionDescriptor" type="rcm_prod:mapProjectionDescriptorIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Map Projection used during geocoding. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="mapProjectionOrientation">
+				<xsd:annotation>
+					<xsd:documentation>Map Projection Orientation (units = deg). The orientation angle is measured clockwise from the map x axis to the image pixel axis. For an orientation angle of zero, the x and pixel axes are parallel and the y and line axes are opposed.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="productOrientation" type="rcm_prod:productOrientationIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Image Orientation of the product </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="resamplingKernel" type="rcm_prod:resamplingKernelIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Resampling kernel used during geocoding to map projection
+Note: This applies to SAR data resampling only. Interpolation of DEM data during geocoding (if applicable) is always bilinear.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="elevationCorrection" type="rcm_prod:elevationCorrectionIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>
+            Elevation Correction Method used during geocoding
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="baseElevation" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Base Elevation used during geocoding. Provided only when elevationCorrection = “Base” (units = m)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="satelliteHeading">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Satellite ground track heading in degrees east of North (units = deg)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:choice>
+				<xsd:element name="utmProjectionParameters" type="rcm_prod:utmProjectionParametersDataStore">
+					<xsd:annotation>
+						<xsd:documentation>Universal Transverse Mercator Projection (UTM). UTM Grid (or coordinate system) makes use of the Universal Polar Stereographic (UPS) NORTH projection, north of 84N, the UPS SOUTH projection, south of 80S, and one of 120 UTM projections elsewhere.  Note that the two polar projections are azimuthal, while the other ones are cylindrical.
+Present when Universal Transverse Mercator Projection is used. 
+Note: one of utmProjectionParameters and nspProjectionParameters must be present.
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="nspProjectionParameters" type="rcm_prod:nspProjectionParametersDataStore">
+					<xsd:annotation>
+						<xsd:documentation>National Systems Projection (any others)
+Present when National Systems Projection is used. 
+Note: one of utmProjectionParameters and nspProjectionParameters must be present.
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:element name="positioningInformation" type="rcm_prod:mapCornersDataStore">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Corner positioning of output image
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ellipsoidParametersDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Ellipsoid Parameters Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ellipsoidName" type="rcm_prod:ellipsoidNameIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>
+            Name of ellipsoid used to process this product. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="semiMajorAxis">
+				<xsd:annotation>
+					<xsd:documentation>
+            Semi-major axis of the ellipsoid (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="semiMinorAxis">
+				<xsd:annotation>
+					<xsd:documentation>
+            Semi-minor axis of the ellipsoid (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="datumShiftParameters">
+				<xsd:annotation>
+					<xsd:documentation>
+            Datum shift parameter referenced to Greenwich: dx.
+            Datum shift parameter perpendicular to Greenwich: dy.
+            Datum shift parameter direction of rotation axis: dz
+	    (units = m)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:datumShiftParametersList">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="geodeticTerrainHeight">
+				<xsd:annotation>
+					<xsd:documentation>Estimated terrain height used as base elevation for geometric calculations and radiometric corrections during processing (units = m above reference ellipsoid). For GCD and GCC products with DEM corrections, this applies before geocoding and does not necessarily represent the elevations used to geocode the final image data.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="geographicInformationDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Geographic Information Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ellipsoidParameters" type="rcm_prod:ellipsoidParametersDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Parameters of the Earth Ellipsoid used for georeferencing of the image.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="geolocationGrid" type="rcm_prod:geolocationGridDataStore" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>A grid of tie points is included that relates the line/pixel positions in the image to latitude/longitude. Not included for geocoded products (GCD, GCC).
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rationalFunctions" type="rcm_prod:rationalFunctionsDataStore" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Rational function geopositioning models for non-geocoded products. The rational functions provide a simplified mechanism for geo-positioning pixels in the image. They are computed from image tie points and are included for convenience only. Not included for geocoded products (GCD, GCC).
+For ScanSAR SLC, the rationalFunctions spans the range extent covered by the full product.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="mapProjection" type="rcm_prod:mapProjectionDataStore" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Map Projections available for geocoded products (GCD, GCC) only 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="rasterAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Raster Attributes Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="sampleType" type="rcm_prod:sampleTypeIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation> Indicates the type of the sample</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dataType" type="rcm_prod:dataTypeIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation> Indicates the value type of the sample   </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bitsPerSample" maxOccurs="2">
+				<xsd:annotation>
+					<xsd:documentation>2 entries for complex data
+1 entry for magnitude detected data
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:unsignedLong">
+							<xsd:attribute name="dataStream" type="rcm_prod:dataStreamIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="sampledPixelSpacing">
+				<xsd:annotation>
+					<xsd:documentation>Sampled pixel spacing (units = m).
+For GCD and GCC products, this applies to intermediate ground range image data prior to geocoding.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="sampledLineSpacing">
+				<xsd:annotation>
+					<xsd:documentation>Sampled line spacing calculated at middle range (units = m)
+For GCD and GCC products, this applies to intermediate ground range image data prior to geocoding.
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="sampledPixelSpacingTime">
+				<xsd:annotation>
+					<xsd:documentation>Sampled pixel spacing (units = s)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="sampledLineSpacingTime">
+				<xsd:annotation>
+					<xsd:documentation>Sampled line spacing (units = s)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="lineTimeOrdering" type="rcm_prod:timeOrderingIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether line numbers (i.e., azimuth) increase or decrease with azimuth time. 
+For GCD and GCC products, this applies to intermediate ground range image data prior to geocoding.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixelTimeOrdering" type="rcm_prod:timeOrderingIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>Indicates whether pixel number (i.e., range) increases or decreases with range time. 
+For GCD and GCC products, this applies to intermediate ground range image data prior to geocoding.
+	  </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="imageReferenceAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Image Reference Attributes Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="productFormat" type="rcm_prod:productFormatIdentifiers"/>
+			<xsd:element name="outputMediaInterleaving" type="rcm_prod:outputMediaInterleavingIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>The interleaving method used in image files
+Set to "BSQ" for GeoTIFF format
+Set to "BSQ" for NITF format with a single polarization detected data in the IPDF(s).
+Set to "BIP" for NITF format with either multiple polarizations in the IPDF(s) or single polarization complex data in the IPDF(s).
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lookupTableFileName" minOccurs="0" maxOccurs="12">
+				<xsd:annotation>
+					<xsd:documentation>Name of LUT Files 
+The format of the LUT files is described in Section7.5. 
+Not available for geocoded (GCD or GCC) products. 
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:anyURI">
+							<xsd:attribute name="sarCalibrationType" type="rcm_prod:sarCalibrationTypeIdentifiers" use="required"/>
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="incidenceAngleFileName" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of Incidence Angles File 
+The applicability of Incidence Angle File is described in Section 4.6 and the content of an Incidence Angles file is described in Section 7.6.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="noiseLevelFileName" minOccurs="0" maxOccurs="4">
+				<xsd:annotation>
+					<xsd:documentation>Name of Noise Level Files 
+The applicability of Noise Level Files is described in Section 4.7 and the content of a Noise Level File is described in Section 7.7.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:anyURI">
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="compactPoleGainImbalanceFileName" type="xsd:anyURI" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of Compact Pol Gain Imbalance File
+The applicability of Compact Pol Gain Imbalance File is described in Section 4.8 and the content of a Compact Pol Gain Imbalance File is described in Section 7.8.
+</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="rasterAttributes" type="rcm_prod:rasterAttributesDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Raster attributes describing image sample type, line/pixel spacing and etc. on the image, Applicable equally to all polarizations. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="geographicInformation" type="rcm_prod:geographicInformationDataStore">
+				<xsd:annotation>
+					<xsd:documentation>Geographic information on the image. Applicable equally to all polarizations.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="burstAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation>
+      Burst Attributes Data Store
+Describes the position of an image burst within a GRD ScanSAR or Stripmap Dual HH-VV GRD image or within a ScanSAR MLC image.  Note that all line and pixel values in this data store refer to the final image (after it has been flipped, if necessary, as per Table 4 7).
+One attribute, beam, which specifies the beam to which the burstAttributesDataStore entry applies.
+One attribute, burst, that specifies the bursts number (starting at 0) to which the burstAttributesDataStore entry applies. Numbering of bursts is in the order of their acquisition within a polarization channel (refer to Figure 7-4 and Figure 7-5 for an illustration of the burst numbering convention). Applicable to ScanSAR and Dual HH-VV only.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="topLeftLine" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Line number (starting at 0) of the top-left pixel of the image burst in the final products.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="topLeftPixel" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Pixel number (starting at 0) of the top-left pixel of the image burst in the final products. 
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bottomRightLine" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Line number (starting at 0) of the bottom-right pixel of the image burst in the final products. 
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="bottomRightPixel" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Pixel number (starting at 0) of the bottom-right pixel of the image burst in the final products.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="burst" type="xsd:integer" use="required"/>
+		<xsd:attribute name="beam" type="rcm_prod:beamList" use="required"/>
+	</xsd:complexType>
+	<xsd:complexType name="imageAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation>Image Attributes Data Store
+One attribute sampleType indicating the sample type (e.g., sampleType="Magnitude Detected " or “Complex”)
+One attribute burst that specifies the burst number (starting at 0) to which the imageAttributesDataStore entry applies. Numbering of bursts is in the order of their acquisition. Applicable to ScanSAR SLC only.
+One attribute beam, which specifies the beam to which the imageAttributesDataStore entry applies. Applicable to ScanSAR SLC, Single Beam and Spotlight.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ipdf" maxOccurs="4">
+				<xsd:annotation>
+					<xsd:documentation>File names for full resolution IPDFs. For GeoTIFF format, one entry per pole; For NITF 2.1 format, only one entry. One attribute pole indicating the polarization type (e.g., pole="HH "). For the complex IPDF of MLC product, pole is set to "XC".</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:anyURI">
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="optional"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="pixelOffset" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Offset of the first (left) range sample of the image with respect to the range origin of the COPG, expressed in range samples.
+In the case of GCD/GCC products, offset of the first (left) range sample of the image (COPG not applicable).
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lineOffset" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Offset of the first (top) line in the image with respect to the azimuth origin of the COPG, expressed in lines.
+In the case of GCD/GCC products, offset of the first (top) line in the image (COPG not applicable).
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numLines" type="xsd:unsignedLong">
+				<xsd:annotation>
+					<xsd:documentation>Number of lines in the image </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="samplesPerLine" type="xsd:unsignedLong">
+				<xsd:annotation>
+					<xsd:documentation>Number of samples (pixels) per line of imagery including any blackfilled samples </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="incAngNearRng">
+				<xsd:annotation>
+					<xsd:documentation>Incidence angle at near range, measured at mid-azimuth position of the image data. (units = deg) 
+For GCC and GCD products, this applies to intermediate ground range image data prior to geocoding.
+If Left-Right flipping has occurred, this value refers to the last pixel of the range line after the flip.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="incAngFarRng">
+				<xsd:annotation>
+					<xsd:documentation>Incidence angle at far range at mid-azimuth position of the image data. (units = deg)
+For GCC and GCD products, this applies to intermediate ground range image data prior to geocoding.
+If Left-Right flipping has occurred, this value refers to the first pixel of the range line after the flip.
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="slantRangeNearEdge">
+				<xsd:annotation>
+					<xsd:documentation>Slant range to near edge closest to the satellite, measured at mid-azimuth position of the image data. (units = m)
+For GCC and GCD products, this applies to intermediate ground range image data prior to geocoding. 
+If Left-Right flipping has occurred, this value refers to the last pixel of the range line after the flip.
+            </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="slantRangeFarEdge">
+				<xsd:annotation>
+					<xsd:documentation>Slant range to far edge furthest from the satellite, measured at mid-azimuth position of the image data. (units = m)
+For GCC and GCD products, this applies to intermediate ground range image data prior to geocoding.
+If Left-Right flipping has occurred, this value refers to the first pixel of the range line after the flip.
+            </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="mean" maxOccurs="4">
+				<xsd:annotation>
+					<xsd:documentation>Mean value of output pixels, one entry per pole.
+For detected product, each entry only has one value for its magnitude.
+For complex product, each entry has two values (real, imag) for its real and imagery parts respectively. One attribute pole indicating the polarization type (e.g., pole="HH"). For the complex IPDF of MLC product, pole is set to "XC".
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:doubleListType">
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="sigma" maxOccurs="4">
+				<xsd:annotation>
+					<xsd:documentation>Standard deviation of output pixels, one entry per pole.
+For detected product, each entry only has one value for its magnitude.
+For complex product, each entry has two values (real, imag) for its real and imagery parts respectively. One attribute pole indicating the polarization type (e.g., pole="HH"). For the complex IPDF of MLC product, pole is set to "XC".
+</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:doubleListType">
+							<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="sampleType" type="rcm_prod:sampleTypeIdentifiers" use="required"/>
+		<xsd:attribute name="beam" type="rcm_prod:beamList" use="optional"/>
+		<xsd:attribute name="burst" type="xsd:integer" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="sceneAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation>
+      Scene Attributes Data Store.
+    	  </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numberOfEntries" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+              Number of entries in imageAttributes.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imageAttributes" type="rcm_prod:imageAttributesDataStore" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+              Image attributes. Provides characteristics for the content of all the IPDFs in the product. Applicable to all polarizations in the product.
+              1.  For ScanSAR SLC products, one imageAttributes element per imaged burst.
+              2.  For MLC, there are two imageAttributes element. One imageAttributes element is for the two detected IPDFs, the other imageAttributes element is for the complex IPDF for the off-diagonal element channel.
+              3.  For all other products, a single imageAttributes element for the entire product.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="burstMapDataStore">
+		<xsd:annotation>
+			<xsd:documentation>
+      Burst Map Data Store
+      One attribute pole that specifies the polarization to which burstMapDataStore applies. Applicable to Dual HH-VV products only.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numberOfEntries" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+              Total number of ScanSAR or Stripmap Dual HH-VV image bursts over all beams for the specified polarization.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numberOfBeams" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+              The number of beams in the beam list.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="burstAttributes" type="rcm_prod:burstAttributesDataStore" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+              A list of burst attributes to describe the position of each image burst within the GRD or MLC image.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="dopplerCentroidEstimateDataStore">
+		<xsd:annotation>
+			<xsd:documentation>
+      Doppler Centroid Estimate Data Store.
+1.  For Scansar and Stripmap Dual HH-VV, valid over the range extent of the burst specified by the burst XML attribute.
+2.  For all other modes, valid over the entire range extent of the image
+The range of validity is derivable from:
+1.  The Burst Attributes of the same burst, for ScanSAR, Stripmap Dual HH-VV GRD products and ScanSAR MLC products (see Table 7 45).
+2.  The Image Attributes, for all other products (see Table 7 43).
+One attribute, burst, that specifies the burst number (starting at 0) to which the dopplerCentroidDataStore entry applies. Numbering of bursts is in the order of their acquisition. Applicable to Scansar and Stripmap Dual HH-VV only.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="timeOfDopplerCentroidEstimate" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Zero-Doppler time of the Doppler centroid estimate
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerAmbiguity" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+            Doppler ambiguity number used during processing
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerCentroidReferenceTime">
+				<xsd:annotation>
+					<xsd:documentation>2-way slant range time (t0) used as reference in Doppler centroid polynomial calculation. (units = s)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dopplerCentroidCoefficients" type="rcm_prod:coefficientsList">
+				<xsd:annotation>
+					<xsd:documentation>List of up to 5 Doppler centroid polynomial coefficients d0, d1, d2, d3, and d4 as a function of slant range time tSR: where: the Doppler Centroid frequency (units = Hz) used in processing = d0 + d1(tSR-t0) + d2(tSR-t0)^2 + d3(tSR-t0)^3 + d4(tSR-t0)^4, and tSR is slant range time. </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerCentroidConfidence">
+				<xsd:annotation>
+					<xsd:documentation> 
+            Doppler centroid confidence estimate.
+            Range from 0.0 (no confidence) to 1.0 (highest confidence)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:double">
+						<xsd:minInclusive value="0.0"/>
+						<xsd:maxInclusive value="1.0"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="burst" type="xsd:integer" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="dopplerCentroidDataStore">
+		<xsd:annotation>
+			<xsd:documentation>
+      Doppler Centroid Data Store
+One attribute, pole, that specifies the polarization to which dopplerCentroidDataStore applies. Applies to Dual HH-VV products only.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numberOfEstimates" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+            Number of dopplerCentroidEstimate entries.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerCentroidEstimate" type="rcm_prod:dopplerCentroidEstimateDataStore" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+              Doppler centroid estimate.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="dopplerRateEstimateDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Doppler Rate Data Store.
+One attribute, burst, that specifies the burst number (starting at 0) to which the dopplerRateEstimateDataStore entry applies. Numbering of bursts is in the order of their acquisition. Applicable to Scansar and Strimap Dual HH-VV only.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="timeOfDopplerRateEstimate" type="rcm_prod:utcTimeType">
+				<xsd:annotation>
+					<xsd:documentation> 
+          Date/time of the Doppler rate estimate.
+For ScanSAR SLC products, must coincide with the burst center time (at start of transmit) that was used during processing.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerRateReferenceTime">
+				<xsd:annotation>
+					<xsd:documentation>2-way slant range time (t0) used as reference in Doppler rate polynomial calculation. (units = s)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:timeUnits" use="required" fixed="s"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="dopplerRateCoefficients" type="rcm_prod:coefficientsList">
+				<xsd:annotation>
+					<xsd:documentation>List of up to 5 coefficients (r0 to r4) of a polynomial that defines the Doppler frequency rate, Ka, as a function of slant range time, t:
+Ka(t)= r0 + r1*(t- t0) + r2*(t-t0)^2 + r3*(t-t0)^3 + r4*(t-t0)^4. (units = Hz/s)
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="burst" type="xsd:integer" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="dopplerRateDataStore">
+		<xsd:annotation>
+			<xsd:documentation>
+      Doppler Rate Data Store.
+One attribute, pole, that specifies the polarization to which dopplerRateDataStore applies. This attribute is applicable to Dual HH-VV products only.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="numberOfEstimates" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+            Number of dopplerCentroidEstimate entries.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dopplerRateEstimate" type="rcm_prod:dopplerRateEstimateDataStore" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+              Doppler rate estimate. One attribute, burst, that specifies the burst number (starting at 0) to which the dopplerRateEstimateDataStore entry applies. Numbering of bursts is in the order of their acquisition. This attribute is only aApplicable to Scansar and Strimap Dual HH-VV and Scansar only.
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="pole" type="rcm_prod:polarizationIdentifiers" use="optional"/>
+	</xsd:complexType>
+	<xsd:complexType name="securityAttributesDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Security Attributes Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="securityClassification" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation> 
+                      "CAN SECRET" for products generated in a "Classified enclave. "Non classifié / Unclassified" for products generated elsewhere.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="specialHandlingRequired" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> 
+                      "true" for products which need special handling, either scene extent intersects some sensitive private area or Special handling flag processing failed.
+“false” otherwise.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="specialHandlingInstructions" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> 
+                      Provides special handling instructions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="product">
+		<xsd:annotation>
+			<xsd:documentation> 
+      RCM Product. (c) COPYRIGHT MacDonald Dettwiler and 
+	Associates Ltd., 2020 All Rights Reserved
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="productId">
+					<xsd:annotation>
+						<xsd:documentation>
+              Unique identifier. (Possible characters: 0-9A-Za-z._-) 
+            </xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:minLength value="1"/>
+							<xsd:maxLength value="116"/>
+							<xsd:pattern value="[0-9A-Za-z_\.\-]+"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="productAnnotation" type="xsd:string" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>Free text (as indicated by Order Client). Not present for Systematic Image Products.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="productApplication" type="xsd:string" minOccurs="0" maxOccurs="10">
+					<xsd:annotation>
+						<xsd:documentation>The applications for which the Science Data Acquisition was intended to be used.  There may be more than one application identified if this Acquisition was shared between multiple Orders (as indicated by Order Client). 
+
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="documentIdentifier" type="xsd:string">
+					<xsd:annotation>
+						<xsd:documentation>Identifies the document and version number which describes this product format, i.e., the name and version of this document.
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="securityAttributes" type="rcm_prod:securityAttributesDataStore">
+					<xsd:annotation>
+						<xsd:documentation>Information related to security attributes assigned to the product.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="sourceAttributes" type="rcm_prod:sourceAttributesDataStore">
+					<xsd:annotation>
+						<xsd:documentation>Source (instrument) attributes. Information describing the sensor characteristics, raw data and satellite orbit and attitude.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="imageGenerationParameters" type="rcm_prod:imageGenerationParametersDataStore">
+					<xsd:annotation>
+						<xsd:documentation>Image generation parameters. Information related to SAR processing, chirp, chirp quality, and conversion from slant range to ground range. </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="imageReferenceAttributes" type="rcm_prod:imageReferenceAttributesDataStore">
+					<xsd:annotation>
+						<xsd:documentation>Image Reference Attributes. Information related to the Image Products's raster attributes, the geographic information, and other attributes which are common for all IPDF types.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="sceneAttributes" type="rcm_prod:sceneAttributesDataStore">
+					<xsd:annotation>
+						<xsd:documentation>Scene attributes. Describes all the IPDFs  in the product, obtained from processing the entire acquired scene. It applies to all polarizations in the product.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="grdBurstMap" type="rcm_prod:burstMapDataStore" minOccurs="0" maxOccurs="2">
+					<xsd:annotation>
+						<xsd:documentation>GRD burst map attributes. Applicable only to Stripmap Dual HH-VV and ScanSAR GRD products.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="mlcBurstMap" type="rcm_prod:burstMapDataStore" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation>MLC burst map attributes. Applicable only to MLC products.
+One entry, valid for all polarizations in the product.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="dopplerCentroid" type="rcm_prod:dopplerCentroidDataStore" minOccurs="1" maxOccurs="2">
+					<xsd:annotation>
+						<xsd:documentation>Doppler centroid parameters for the entire scene.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="dopplerRate" type="rcm_prod:dopplerRateDataStore" minOccurs="1" maxOccurs="2">
+					<xsd:annotation>
+						<xsd:documentation>Doppler rate parameters for the entire scene.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name="copyright" type="xsd:string" use="required"/>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

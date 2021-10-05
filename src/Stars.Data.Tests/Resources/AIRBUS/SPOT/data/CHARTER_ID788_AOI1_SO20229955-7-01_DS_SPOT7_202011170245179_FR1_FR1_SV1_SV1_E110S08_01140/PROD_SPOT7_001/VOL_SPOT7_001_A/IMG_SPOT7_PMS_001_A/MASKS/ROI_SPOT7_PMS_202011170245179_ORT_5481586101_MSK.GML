@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask xmlns:hma="http://earth.esa.int/hma" xmlns:gml="http://www.opengis.net/gml" gml:id="ROI_SPOT7_PMS_202011170245179_ORT_5481586101_MSK" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/gml gml.xsd http://earth.esa.int/hma hma-1.1.xsd http://www.w3.org/1999/xlink xlinks.xsd">
+
+  <gml:name>Area of interest mask for product id SPOT7_PMS_202011170245179_ORT_5481586101</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+      <gml:lowerCorner>427461.75 9153186.75</gml:lowerCorner>
+      <gml:upperCorner>450008.25 9178298.25</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="REGION_OF_INTEREST-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">REGION_OF_INTEREST</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449254.4375 9177596 449269.4375 9177587 449445.59375 9177409 449454.40625 9177394 449522.84375 9177152 449524.15625 9177143 450007.5 9153807 450007.5 9153724 449943.46875 9153468 449934.28125 9153451 449745.96875 9153262 449729.75 9153253 449476.3125 9153189 449361.1875 9153189 428116.78125 9153606 428107.875 9153607 427862.03125 9153677 427846.71875 9153686 427667.21875 9153868 427658.3125 9153884 427592.28125 9154131 427591.09375 9154140 427462.5 9177689 427462.5 9177761 427463.3125 9177767 427531.96875 9178024 427541.3125 9178040 427730.46875 9178225 427746.625 9178234 428004.1875 9178297 428013.53125 9178298 438508.4375 9177984 449003.9375 9177668 449012.75 9177667 449254.4375 9177596</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

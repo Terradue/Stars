@@ -26,11 +26,11 @@ namespace Terradue.Stars.Console.Operations
 
         protected static StarsConsoleReporter logger;
 
-        protected IConsole console;
+        protected IConsole _console;
 
-        public BaseOperation()
+        public BaseOperation(IConsole console)
         {
-            console = PhysicalConsole.Singleton;
+            this._console = console;
         }
 
         protected IServiceProvider ServiceProvider { get; private set; }
@@ -59,7 +59,7 @@ namespace Terradue.Stars.Console.Operations
             }
             catch (CommandParsingException cpe)
             {
-                return Program.PrintErrorAndUsage(cpe.Command, cpe.Message);
+                return StarsApp.PrintErrorAndUsage(cpe.Command, cpe.Message);
             }
             finally
             {
@@ -74,7 +74,7 @@ namespace Terradue.Stars.Console.Operations
         private ServiceCollection RegisterServices()
         {
 
-            logger = new StarsConsoleReporter(PhysicalConsole.Singleton, Verbose);
+            logger = new StarsConsoleReporter(_console, Verbose);
 
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
             //Determines the working environment as IHostingEnvironment is unavailable in a console app
@@ -84,7 +84,7 @@ namespace Terradue.Stars.Console.Operations
             var collection = new ServiceCollection();
 
             // Add logging
-            collection.AddLogging(c => c.AddProvider(new StarsConsoleLoggerProvider(PhysicalConsole.Singleton, Verbose))
+            collection.AddLogging(c => c.AddProvider(new StarsConsoleLoggerProvider(_console, Verbose))
                         .AddFilter(logLevel => logLevel > LogLevel.Debug || Verbose));
 
             // Add Configuration
@@ -103,7 +103,7 @@ namespace Terradue.Stars.Console.Operations
             if (isDevelopment)
             {
                 builder.AddNewtonsoftJsonFile("appsettings.Development.json", optional: true);
-                builder.AddUserSecrets<Program>();
+                builder.AddUserSecrets<StarsApp>();
             }
             builder.AddEnvironmentVariables();
 
@@ -119,7 +119,7 @@ namespace Terradue.Stars.Console.Operations
             collection.AddSingleton<IConfigurationRoot>(Configuration);
 
             // Add the command line services
-            collection.AddSingleton<IConsole>(PhysicalConsole.Singleton);
+            collection.AddSingleton<IConsole>(_console);
             collection.AddSingleton<ILogger>(logger);
 
             // Add Stars Services

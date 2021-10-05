@@ -1,0 +1,183 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "KV3_16300_16298_01_3NP2_20_ORT",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -65.1144754481282,
+          -19.1992005243514
+        ],
+        [
+          -65.1337174808101,
+          -19.1062529485793
+        ],
+        [
+          -65.1338978956999,
+          -19.1062843799899
+        ],
+        [
+          -65.1524583386333,
+          -19.018267248002
+        ],
+        [
+          -65.1525665694643,
+          -19.0182862386485
+        ],
+        [
+          -65.1707648210572,
+          -18.9305635335288
+        ],
+        [
+          -65.1709671920145,
+          -18.9305995387728
+        ],
+        [
+          -65.1890122722752,
+          -18.8428804401266
+        ],
+        [
+          -65.1891930498915,
+          -18.8429124554719
+        ],
+        [
+          -65.2073130204314,
+          -18.7551797689487
+        ],
+        [
+          -65.2074936295303,
+          -18.7552116961291
+        ],
+        [
+          -65.2260113761575,
+          -18.6673061190318
+        ],
+        [
+          -65.4173902651187,
+          -18.701485064752
+        ],
+        [
+          -65.3984786203564,
+          -18.7948725834263
+        ],
+        [
+          -65.3983669341649,
+          -18.79485270354
+        ],
+        [
+          -65.3800498391899,
+          -18.8825867320093
+        ],
+        [
+          -65.3799804397692,
+          -18.8825743533514
+        ],
+        [
+          -65.3616571917804,
+          -18.970297808152
+        ],
+        [
+          -65.3615521048514,
+          -18.9702790172397
+        ],
+        [
+          -65.3443953896143,
+          -19.0578190940624
+        ],
+        [
+          -65.3442223458288,
+          -19.0577885206494
+        ],
+        [
+          -65.3260508063013,
+          -19.1455286926317
+        ],
+        [
+          -65.3259564645122,
+          -19.1455120879927
+        ],
+        [
+          -65.3080627911653,
+          -19.2332742255331
+        ],
+        [
+          -65.1144754481282,
+          -19.1992005243514
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-01-09T15:54:00.0000000Z",
+    "mission": "kanopus-v",
+    "platform": "kanopus-v",
+    "constellation": "kanopus-v",
+    "instruments": [
+      "mss-pss"
+    ],
+    "proj:epsg": 32620,
+    "processing:level": "L2B",
+    "title": "Kanopus-V MSS-PSS L2B 09/01/2021 15:54:00"
+  },
+  "bbox": [
+    -65.4173902651187,
+    -19.2332742255331,
+    -65.1144754481282,
+    -18.6673061190318
+  ],
+  "assets": {
+    "mss": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/KV3_16300_16298_01_3NP2_20_OR/Kanopus-V3_BOLIVIA_09012021_MSS/Kanopus-V3_BOLIVIA_09012021_MSS_product.tiff",
+      "filename": "Kanopus-V3_BOLIVIA_09012021_MSS/Kanopus-V3_BOLIVIA_09012021_MSS_product.tiff",
+      "eo:bands": [
+        {
+          "name": "blue",
+          "common_name": "blue",
+          "description": "blue"
+        },
+        {
+          "name": "green",
+          "common_name": "green",
+          "description": "green"
+        },
+        {
+          "name": "red",
+          "common_name": "red",
+          "description": "red"
+        },
+        {
+          "name": "nir",
+          "common_name": "nir",
+          "description": "nir"
+        }
+      ]
+    },
+    "pan": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/KV3_16300_16298_01_3NP2_20_OR/Kanopus-V3_BOLIVIA_09012021_PSS/Kanopus-V3_BOLIVIA_09012021_PSS_product.tiff",
+      "filename": "Kanopus-V3_BOLIVIA_09012021_PSS/Kanopus-V3_BOLIVIA_09012021_PSS_product.tiff",
+      "eo:bands": [
+        {
+          "name": "pan",
+          "common_name": "pan",
+          "description": "pan"
+        }
+      ]
+    }
+  },
+  "links": []
+}

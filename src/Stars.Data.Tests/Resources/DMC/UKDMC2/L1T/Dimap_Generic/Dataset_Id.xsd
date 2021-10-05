@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Dataset_Id" name="Dataset_Id" type="t_Dataset_Id">
+		<xsd:annotation>
+			<xsd:documentation source="Dataset_Id"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Dataset_Id" name="t_Dataset_Id">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" ref="DATASET_INDEX"/>
+			<xsd:element minOccurs="0" ref="DATASET_SERIES"/>
+			<xsd:element minOccurs="0" ref="DATASET_NAME"/>
+			<xsd:element minOccurs="0" ref="DATASET_LOCATION"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="COUNTRY_NAME"/>
+			<xsd:element maxOccurs="unbounded" minOccurs="0" ref="COUNTRY_CODE"/>
+			<xsd:element minOccurs="0" ref="COPYRIGHT"/>
+			<xsd:element minOccurs="0" ref="DATASET_TN_PATH"/>
+			<xsd:element minOccurs="0" ref="DATASET_QL_PATH"/>
+			<xsd:element minOccurs="0" ref="DATASET_TN_FORMAT"/>
+			<xsd:element minOccurs="0" ref="DATASET_QL_FORMAT"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element id="DATASET_NAME" name="DATASET_NAME" type="t_DATASET_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_NAME"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATASET_NAME" name="t_DATASET_NAME">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="COPYRIGHT" name="COPYRIGHT" type="t_COPYRIGHT">
+		<xsd:annotation>
+			<xsd:documentation source="COPYRIGHT"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_COPYRIGHT" name="t_COPYRIGHT">
+		<xsd:complexContent>
+			<xsd:extension base="Text"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="COUNTRY_NAME" name="COUNTRY_NAME" type="t_COUNTRY_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="COUNTRY_NAME"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_COUNTRY_NAME" name="t_COUNTRY_NAME">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="COUNTRY_CODE" name="COUNTRY_CODE" type="t_COUNTRY_CODE">
+		<xsd:annotation>
+			<xsd:documentation source="COUNTRY_CODE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_COUNTRY_CODE" name="t_COUNTRY_CODE">
+		<xsd:restriction base="Country_Codes"/>
+	</xsd:simpleType>
+	<xsd:element id="DATASET_LOCATION" name="DATASET_LOCATION" type="t_DATASET_LOCATION">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_LOCATION"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATASET_LOCATION" name="t_DATASET_LOCATION">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="DATASET_SERIES" name="DATASET_SERIES" type="t_DATASET_SERIES">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_SERIES"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="t_DATASET_SERIES">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="DATASET_INDEX" name="DATASET_INDEX" type="t_DATASET_INDEX">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_INDEX"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATASET_INDEX" name="t_DATASET_INDEX">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="DATASET_TN_PATH" name="DATASET_TN_PATH" type="t_DATASET_TN_PATH">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_TN_PATH"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_DATASET_TN_PATH" name="t_DATASET_TN_PATH">
+		<xsd:complexContent>
+			<xsd:extension base="URI"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="DATASET_TN_FORMAT" name="DATASET_TN_FORMAT" type="t_DATASET_TN_FORMAT">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_TN_FORMAT"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_DATASET_TN_FORMAT" name="t_DATASET_TN_FORMAT">
+		<xsd:complexContent>
+			<xsd:restriction base="QL_Formats"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="DATASET_QL_PATH" name="DATASET_QL_PATH" type="t_DATASET_QL_PATH">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_QL_PATH"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_DATASET_QL_PATH" name="t_DATASET_QL_PATH">
+		<xsd:complexContent>
+			<xsd:extension base="URI"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="DATASET_QL_FORMAT" name="DATASET_QL_FORMAT" type="t_DATASET_QL_FORMAT">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_QL_FORMAT"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_DATASET_QL_FORMAT" name="t_DATASET_QL_FORMAT">
+		<xsd:complexContent>
+			<xsd:restriction base="QL_Formats"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

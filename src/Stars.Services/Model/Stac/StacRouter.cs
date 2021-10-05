@@ -25,7 +25,7 @@ namespace Terradue.Stars.Services.Model.Stac
         public int Priority { get; set; }
         public string Key { get => "Stac"; set { } }
 
-        public string Label => "Stac";
+        public string Label => "Stac Native Router";
 
         public ICredentials Credentials => credentials;
 

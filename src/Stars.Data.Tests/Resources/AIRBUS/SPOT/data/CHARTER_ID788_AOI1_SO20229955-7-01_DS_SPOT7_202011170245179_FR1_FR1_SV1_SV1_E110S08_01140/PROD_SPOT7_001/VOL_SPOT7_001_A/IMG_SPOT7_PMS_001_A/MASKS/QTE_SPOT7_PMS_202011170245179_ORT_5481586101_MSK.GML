@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask xmlns:hma="http://earth.esa.int/hma" xmlns:gml="http://www.opengis.net/gml" gml:id="QTE_SPOT7_PMS_202011170245179_ORT_5481586101_MSK" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/gml gml.xsd http://earth.esa.int/hma hma-1.1.xsd http://www.w3.org/1999/xlink xlinks.xsd">
+
+  <gml:name>QT mask for product id SPOT7_PMS_202011170245179_ORT_5481586101</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+      <gml:lowerCorner>427461.75 9153186.75</gml:lowerCorner>
+      <gml:upperCorner>450008.25 9178298.25</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers/>
+
+</hma:Mask>

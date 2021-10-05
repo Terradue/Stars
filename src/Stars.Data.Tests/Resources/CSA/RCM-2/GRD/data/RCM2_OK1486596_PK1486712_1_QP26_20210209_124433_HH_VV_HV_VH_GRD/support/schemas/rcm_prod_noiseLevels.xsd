@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_noiseLevels.xsd@@/main/11 ( Pitt: 37906 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    22-May-2016   Consolidated schema files
+E. Jenkins    11-Aug-2016   Updates for RCM-SP-53-0419 Issue 2/2
+C. Vigneron   28-Oct-2016   Update stepSize description 
+C. Vigneron   08-Mar-2017   Updates for RCM-SP-53-0419 Issue 2/3
+J. Chiang     31-Jul-2017   Updates for RCM-SP-53-0419 Issue 2/4
+J. Kuo        21-Oct-2020   Updates for RCM-SP-53-0419 Issue 2/7
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:rcm_prod="rcmGsProductSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_units.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_identifiers.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_lists.xsd"/>
+	<xsd:group name="referenceNoiseLevelCommon">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Reference Noise Level Common Elements
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="sarCalibrationType" type="rcm_prod:sarCalibrationTypeIdentifiers">
+				<xsd:annotation>
+					<xsd:documentation>"Beta Nought", "Sigma Nought", or "Gamma".
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="pixelFirstNoiseValue" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Pixel number corresponding to first noise value.
+The pixel is indexed from the leftmost range sample of the full range line and starts with '0' with respect to the range start of the COPG. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stepSize" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Number of range pixels between noiseLevelValues entries. The sign of stepSize (positive or negative) depends on pixelTimeOrdering which indicates the samples increase or decrease with range time order.
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numberOfValues" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Number of entries in noiseLevelValues. 
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="noiseLevelValues">
+				<xsd:annotation>
+					<xsd:documentation>Estimated noise level values as a function of georeferenced image pixel position in range.  (units = dB)
+          				</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:noiseLevelValuesList">
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="referenceNoiseLevelDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Per Beam Reference Noise Level Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:group ref="rcm_prod:referenceNoiseLevelCommon"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="perBeamReferenceNoiseLevelDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Per Beam Reference Noise Level Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="beam" type="rcm_prod:beamList">
+				<xsd:annotation>
+					<xsd:documentation>Beam for this record. Values are same as those used in the beam list.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:group ref="rcm_prod:referenceNoiseLevelCommon"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="azimuthNoiseLevelScalingDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Azimuth Noise Level Scaling Factors Data Store
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="beam" type="rcm_prod:beamList">
+				<xsd:annotation>
+					<xsd:documentation>Beam for this record. Values are same as those used in the beam list.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="lineFirstNoiseScalingValue" type="xsd:integer" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Line number corresponding to first noise scaling value.
+The line is indexed from the first range line of the image from 0 to N-1. Applicable only for Spotlight products.
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="stepSize" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>Number of lines between noiseLevelScalingValues entries indicated by the absolute value of stepSize
+The sign of stepSize (positive or negative) depends on lineTimeOrdering which indicates the samples increase or decrease with azimuth time order. 
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="numberOfNoiseLevelScalingValues" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+            Number of entries in list
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="noiseLevelScalingValues">
+				<xsd:annotation>
+					<xsd:documentation>Scaling factors representing the azimuth dependence of the noise level at the mid-range point of an image burst (or, for Spotlight mode, at the mid-range point of an image) (units = dB). 
+These scaling factors are not necessarily symmetric and are approximately centered about the middle of image burst (or image) in azimuth. </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:noiseLevelValuesList">
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="noiseLevels">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Noise level information.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="referenceNoiseLevel" type="rcm_prod:referenceNoiseLevelDataStore" minOccurs="0" maxOccurs="3">
+					<xsd:annotation>
+						<xsd:documentation>Estimated mean image noise levels as a function of georeferenced image pixel in range. One vector for beta nought, sigma nought, and gamma respectively. This field applies to all products except ScanSAR SLC products.
+For ScanSAR GRD products, if noise subtraction was performed, the beta-nought vector represents a first order approximation to the range dependent reference noise level that was used in the noise subtraction.
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="perBeamReferenceNoiseLevel" type="rcm_prod:perBeamReferenceNoiseLevelDataStore" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Estimated mean image noise levels as a function of georeferenced image pixel in range per beam. One vector for beta nought, sigma nought, and gamma respectively per beam.
+For each beam, the beta-noulgt vector represents a first order approximation of the range dependent reference noise level.
+This field is present only for ScanSAR SLC, ScanSAR MLC and ScanSAR GRD products.
+
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="azimuthNoiseLevelScaling" type="rcm_prod:azimuthNoiseLevelScalingDataStore" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>For each beam, the estimated azimuth dependent scaling factors to be applied to the range dependent reference noise level.
+This field is present only for Spotlight and single burst-mode products (ScanSAR and Single Beam Dual HH-VV Polarization mode). Note that for the Burst azimuth 2-look modes, the azimuth scaling is a constant vector due to the Bamler radiometric correction method.
+For ScanSAR GRD products, If noise subtraction was performed, these represent a first order approximation to the azimuth dependent scaling factors that were applied. 
+Note:
+1) The noise values are defined at the mid-range point of the image (SL) or the burst at the middle cycle (Burst Mode GRD, ScanSAR MLC) while during the application of the noise subtraction for Burst Mode GRD, the processor actually uses azimuth dependent scaling factors that vary slowly with range.
+2) The geometrical center of the reported azimuth noise level scaling factor is approximately aligned to the geometrical centre of a burst in azimuth.
+
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

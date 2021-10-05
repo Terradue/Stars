@@ -1,0 +1,1084 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask xmlns:hma="http://earth.esa.int/hma" xmlns:gml="http://www.opengis.net/gml" gml:id="SLT_SPOT7_PMS_202011170245179_ORT_5481586101_MSK" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/gml gml.xsd http://earth.esa.int/hma hma-1.1.xsd http://www.w3.org/1999/xlink xlinks.xsd">
+
+  <gml:name>Saturation and associated ghosts mask for product id SPOT7_PMS_202011170245179_ORT_5481586101</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+      <gml:lowerCorner>427461.75 9153186.75</gml:lowerCorner>
+      <gml:upperCorner>450008.25 9178298.25</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437557.5 9158378 437457 9158445 437419.5 9158553 437454 9158655 437544 9158716 437664 9158712 437761.5 9158644 437800.5 9158547 437802 9158538 437769 9158436 437676 9158374 437557.5 9158378</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-1">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437439 9158166 437391 9158132 437320.5 9158134 437271 9158170 437253 9158222 437266.5 9158280 437316 9158314 437386.5 9158312 437431.5 9158280 437437.5 9158271 437455.5 9158222 437445 9158190 437439 9158166</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-2">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448749 9157634 448721.15625 9157615 448686.15625 9157615 448655.84375 9157633 448643.5625 9157663 448654.40625 9157693 448683.21875 9157712 448719.5625 9157712 448748.375 9157693 448759.4375 9157664 448749 9157634</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-3">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449045.59375 9157387 448932.09375 9157313 448789.1875 9157312 448673.9375 9157385 448626 9157504 448665.78125 9157624 448779.25 9157698 448924.3125 9157698 449039.90625 9157625 449086.59375 9157506 449045.59375 9157387</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-4">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448369.59375 9157260 448316 9157227 448251.875 9157226 448198.59375 9157259 448176.6875 9157313 448194.53125 9157367 448246.4375 9157401 448312.46875 9157401 448366.09375 9157368 448389.0625 9157314 448369.59375 9157260</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-5">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>443800.9375 9157658 443771.8125 9157639 443735.4375 9157638 443704.9375 9157657 443692.71875 9157688 443702.6875 9157720 443731.1875 9157739 443767.84375 9157739 443798.71875 9157720 443811.3125 9157689 443800.9375 9157658</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-6">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442076.1875 9158465 442045.8125 9158444 442006.3125 9158444 441974.21875 9158464 441961.8125 9158497 441972.96875 9158531 442003.625 9158551 442042.5 9158552 442075.1875 9158531 442087.125 9158498 442076.1875 9158465</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-7">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441930.25 9158633 441903.21875 9158615 441869.21875 9158615 441841.3125 9158633 441829.65625 9158661 441838 9158690 441864.0625 9158709 441897.8125 9158709 441926.6875 9158691 441939.3125 9158662 441930.25 9158633</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-8">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449039.40625 9168939 449011.03125 9168921 448975.09375 9168921 448946.3125 9168939 448935.40625 9168967 448946.375 9168996 448974.71875 9169014 449011.0625 9169014 449039.9375 9168997 449050.46875 9168968 449039.40625 9168939</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-9">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448875.59375 9175814 448847.15625 9175796 448810.5625 9175796 448780.65625 9175814 448769.15625 9175844 448780.8125 9175874 448809.78125 9175893 448846.34375 9175893 448875.34375 9175875 448886.28125 9175845 448875.59375 9175814</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-10">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448669.96875 9175875 448640.15625 9175856 448604.6875 9175856 448576.625 9175874 448566.15625 9175904 448576.375 9175934 448604.34375 9175952 448639.65625 9175952 448668.84375 9175934 448680.8125 9175904 448669.96875 9175875</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B0-11">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B0</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436792.40625 9158898 436722.40625 9158853 436636.125 9158855 436563.3125 9158903 436534.84375 9158979 436558.625 9159054 436626.5 9159098 436713.625 9159096 436785.71875 9159048 436817.09375 9158972 436792.40625 9158898</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437824.5 9158301 437799 9158284 437766 9158286 437745 9158210 437740.5 9158205 437574 9158098 437362.5 9158103 437199 9158222 437125.5 9158408 437175 9158592 437341.5 9158703 437520 9158698 437544 9158716 437661 9158714 437755.5 9158650 437763 9158642 437802 9158542 437775 9158451 437797.5 9158396 437796 9158385 437821.5 9158370 437832 9158350 437836.5 9158331 437829 9158312 437824.5 9158301</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-1">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441952.71875 9158609 441917.1875 9158586 441874.03125 9158586 441838.21875 9158609 441823.78125 9158645 441834.65625 9158682 441867.78125 9158706 441911.125 9158706 441947.96875 9158683 441964.3125 9158646 441952.71875 9158609</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-2">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442107.09375 9158465 442070.71875 9158440 442023.34375 9158439 441984.1875 9158464 441969.09375 9158504 441982.5625 9158544 442019.0625 9158569 442066.96875 9158569 442106.59375 9158545 442121.09375 9158505 442107.09375 9158465</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-3">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448296.34375 9157594 448256.34375 9157568 448206.28125 9157568 448163.53125 9157594 448147.875 9157635 448163.15625 9157676 448202.4375 9157702 448252.3125 9157702 448294.0625 9157676 448310.5 9157635 448296.34375 9157594</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-4">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448414.71875 9157241 448349.28125 9157200 448269.125 9157199 448203.5625 9157240 448176.78125 9157307 448198.78125 9157374 448263.46875 9157415 448345.1875 9157416 448412.1875 9157374 448437.65625 9157308 448414.71875 9157241</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-5">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449098.1875 9157372 448964.28125 9157286 448798.0625 9157285 448662.90625 9157371 448606.78125 9157510 448653.6875 9157649 448788.53125 9157735 448956.90625 9157736 449091.625 9157651 449146.3125 9157512 449098.1875 9157372</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-6">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449045.59375 9157387 448932.09375 9157313 448789.1875 9157312 448673.9375 9157385 448626 9157504 448665.78125 9157624 448779.25 9157698 448924.3125 9157698 449039.90625 9157625 449086.59375 9157506 449045.59375 9157387</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-7">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448369.59375 9157260 448316 9157227 448251.875 9157226 448198.59375 9157259 448176.6875 9157313 448194.53125 9157367 448246.4375 9157401 448312.46875 9157401 448366.09375 9157368 448389.0625 9157314 448369.59375 9157260</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-8">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>443800.9375 9157658 443771.8125 9157639 443735.4375 9157638 443704.9375 9157657 443692.71875 9157688 443702.6875 9157720 443731.1875 9157739 443767.84375 9157739 443798.71875 9157720 443811.3125 9157689 443800.9375 9157658</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-9">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442076.1875 9158465 442045.8125 9158444 442006.3125 9158444 441974.21875 9158464 441961.8125 9158497 441972.96875 9158531 442003.625 9158551 442042.5 9158552 442075.1875 9158531 442087.125 9158498 442076.1875 9158465</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-10">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441930.25 9158633 441903.21875 9158615 441869.21875 9158615 441841.3125 9158633 441829.65625 9158661 441838 9158690 441864.0625 9158709 441897.8125 9158709 441926.6875 9158691 441939.3125 9158662 441930.25 9158633</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-11">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449039.40625 9168939 449011.03125 9168921 448975.09375 9168921 448946.3125 9168939 448935.40625 9168967 448946.375 9168996 448974.71875 9169014 449011.0625 9169014 449039.9375 9168997 449050.46875 9168968 449039.40625 9168939</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-12">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448875.59375 9175814 448847.15625 9175796 448810.5625 9175796 448780.65625 9175814 448769.15625 9175844 448780.8125 9175874 448809.78125 9175893 448846.34375 9175893 448875.34375 9175875 448886.28125 9175845 448875.59375 9175814</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-13">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448669.96875 9175875 448640.15625 9175856 448604.6875 9175856 448576.625 9175874 448566.15625 9175904 448576.375 9175934 448604.34375 9175952 448639.65625 9175952 448668.84375 9175934 448680.8125 9175904 448669.96875 9175875</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-14">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>435039.3125 9175650 435005.25 9175626 434967.84375 9175626 434936.5625 9175652 434927.46875 9175693 434944.125 9175733 434980.96875 9175757 435028.53125 9175756 435062.28125 9175730 435063.65625 9175690 435039.3125 9175650</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-15">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436852.09375 9158815 436728.96875 9158733 436570.03125 9158737 436435.71875 9158825 436380.9375 9158965 436424.09375 9159102 436550.40625 9159184 436707.84375 9159181 436843.6875 9159092 436896.65625 9158952 436852.09375 9158815</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B1-16">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B1</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436792.40625 9158898 436722.40625 9158853 436636.125 9158855 436563.3125 9158903 436534.84375 9158979 436558.625 9159054 436626.5 9159098 436713.625 9159096 436785.71875 9159048 436817.09375 9158972 436792.40625 9158898</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437439 9158166 437422.5 9158156 437415 9158127 437344.5 9158079 437251.5 9158082 437187 9158132 437163 9158212 437185.5 9158289 437241 9158332 437245.5 9158336 437335.5 9158334 437364 9158313 437386.5 9158312 437434.5 9158277 437455.5 9158222 437445 9158190 437439 9158166</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-1">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437566.5 9158348 437458.5 9158421 437419.5 9158528 437422.5 9158544 437419.5 9158553 437454 9158655 437544 9158716 437661 9158714 437670 9158706 437680.5 9158706 437785.5 9158632 437829 9158522 437793 9158410 437695.5 9158344 437566.5 9158348</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-2">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442079.46875 9158462 442051.53125 9158443 442015.15625 9158443 441985.4375 9158461 441973.9375 9158492 441984.4375 9158522 442012.90625 9158541 442048.875 9158542 442078.40625 9158523 442089.40625 9158493 442079.46875 9158462</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-3">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448788.71875 9157627 448738.03125 9157595 448676.34375 9157594 448623.09375 9157627 448602.15625 9157679 448620.84375 9157732 448670.1875 9157765 448736.625 9157765 448787.71875 9157732 448806.90625 9157680 448788.71875 9157627</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-4">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449135.65625 9157544 449089.0625 9157514 449031.53125 9157514 448984.46875 9157543 448965.0625 9157591 448982.09375 9157639 449027.96875 9157669 449086.03125 9157670 449134.15625 9157640 449153.5 9157592 449135.65625 9157544</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-5">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448953.375 9157325 448884.46875 9157280 448797.71875 9157279 448727.65625 9157324 448701.03125 9157396 448724.6875 9157468 448791.4375 9157513 448879.4375 9157513 448950.15625 9157469 448978.59375 9157397 448953.375 9157325</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-6">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448379.21875 9157253 448326.09375 9157220 448263.09375 9157220 448210.625 9157252 448189.15625 9157305 448206.9375 9157358 448257.28125 9157391 448322.90625 9157392 448375.5625 9157359 448397.875 9157306 448379.21875 9157253</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-7">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448967.90625 9157178 448937.25 9157158 448897.15625 9157158 448865.15625 9157178 448852.96875 9157210 448864.40625 9157243 448896.03125 9157263 448934.84375 9157263 448966.65625 9157243 448979.34375 9157211 448967.90625 9157178</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-8">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449045.59375 9157387 448932.09375 9157313 448789.1875 9157312 448673.9375 9157385 448626 9157504 448665.78125 9157624 448779.25 9157698 448924.3125 9157698 449039.90625 9157625 449086.59375 9157506 449045.59375 9157387</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-9">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448369.59375 9157260 448316 9157227 448251.875 9157226 448198.59375 9157259 448176.6875 9157313 448194.53125 9157367 448246.4375 9157401 448312.46875 9157401 448366.09375 9157368 448389.0625 9157314 448369.59375 9157260</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-10">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>443800.9375 9157658 443771.8125 9157639 443735.4375 9157638 443704.9375 9157657 443692.71875 9157688 443702.6875 9157720 443731.1875 9157739 443767.84375 9157739 443798.71875 9157720 443811.3125 9157689 443800.9375 9157658</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-11">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442076.1875 9158465 442045.8125 9158444 442006.3125 9158444 441974.21875 9158464 441961.8125 9158497 441972.96875 9158531 442003.625 9158551 442042.5 9158552 442075.1875 9158531 442087.125 9158498 442076.1875 9158465</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-12">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441930.25 9158633 441903.21875 9158615 441869.21875 9158615 441841.3125 9158633 441829.65625 9158661 441838 9158690 441864.0625 9158709 441897.8125 9158709 441926.6875 9158691 441939.3125 9158662 441930.25 9158633</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-13">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449039.40625 9168939 449011.03125 9168921 448975.09375 9168921 448946.3125 9168939 448935.40625 9168967 448946.375 9168996 448974.71875 9169014 449011.0625 9169014 449039.9375 9168997 449050.46875 9168968 449039.40625 9168939</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-14">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448875.59375 9175814 448847.15625 9175796 448810.5625 9175796 448780.65625 9175814 448769.15625 9175844 448780.8125 9175874 448809.78125 9175893 448846.34375 9175893 448875.34375 9175875 448886.28125 9175845 448875.59375 9175814</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-15">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448669.96875 9175875 448640.15625 9175856 448604.6875 9175856 448576.625 9175874 448566.15625 9175904 448576.375 9175934 448604.34375 9175952 448639.65625 9175952 448668.84375 9175934 448680.8125 9175904 448669.96875 9175875</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-16">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>435021.21875 9175678 434994.875 9175661 434967.1875 9175661 434944.1875 9175680 434938.34375 9175709 434950.09375 9175738 434976.5625 9175755 435011 9175754 435036.65625 9175736 435039.375 9175706 435021.21875 9175678</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-17">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436552.1875 9158996 436523.21875 9158977 436486.0625 9158978 436454.03125 9158999 436441 9159032 436452.09375 9159064 436482.96875 9159083 436520.4375 9159082 436550.15625 9159062 436562.75 9159029 436552.1875 9158996</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-18">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436821.71875 9158901 436735.4375 9158846 436629.0625 9158849 436539.53125 9158908 436505.3125 9159001 436534.71875 9159093 436617.0625 9159148 436723.65625 9159145 436812.96875 9159086 436849.03125 9158993 436821.71875 9158901</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-19">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436808.78125 9158685 436778.15625 9158664 436738.84375 9158665 436706.28125 9158687 436693.28125 9158721 436703.625 9158755 436733.6875 9158775 436773.0625 9158774 436805.5 9158752 436819.625 9158718 436808.78125 9158685</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B2-20">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B2</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436792.40625 9158898 436722.40625 9158853 436636.125 9158855 436563.3125 9158903 436534.84375 9158979 436558.625 9159054 436626.5 9159098 436713.625 9159096 436785.71875 9159048 436817.09375 9158972 436792.40625 9158898</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437794.5 9158115 437590.5 9157980 437323.5 9157988 437125.5 9158134 437035.5 9158360 437034 9158366 437098.5 9158589 437301 9158727 437551.5 9158721 437562 9158720 437566.5 9158715 437661 9158714 437761.5 9158644 437800.5 9158547 437802 9158538 437796 9158520 437865 9158348 437862 9158328 437829 9158228 437794.5 9158115</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-1">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437824.5 9158766 437784 9158794 437769 9158828 437766 9158840 437779.5 9158878 437817 9158906 437869.5 9158904 437910 9158872 437925 9158834 437913 9158792 437874 9158764 437824.5 9158766</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-2">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>438136.5 9157689 438075 9157732 438054 9157792 438064.5 9157836 438073.5 9157863 438130.5 9157900 438211.5 9157898 438273 9157857 438295.5 9157802 438298.5 9157788 438274.5 9157725 438213 9157688 438136.5 9157689</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-3">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>438433.5 9157772 438405 9157791 438399 9157800 438390 9157824 438399 9157858 438432 9157882 438474 9157881 438505.5 9157858 438517.5 9157826 438511.5 9157806 438504 9157790 438474 9157772 438433.5 9157772</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-4">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>443925.1875 9159536 443810.15625 9159458 443658.625 9159457 443537.53125 9159533 443486.46875 9159658 443526.8125 9159782 443644.46875 9159860 443798.78125 9159861 443919.40625 9159785 443969.59375 9159661 443925.1875 9159536</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-5">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442130.34375 9158490 442038.09375 9158428 441922.15625 9158427 441825.40625 9158488 441785.40625 9158587 441816.625 9158687 441908.0625 9158749 442025.75 9158750 442122.875 9158689 442164.4375 9158590 442130.34375 9158490</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-6">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441593.34375 9158432 441558.625 9158408 441514.03125 9158407 441476.375 9158431 441460.59375 9158469 441471.71875 9158508 441507 9158532 441552.1875 9158532 441589.875 9158509 441605.59375 9158470 441593.34375 9158432</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-7">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448417.15625 9158419 448332.59375 9158364 448223.65625 9158363 448134.75 9158418 448100.6875 9158507 448133 9158596 448218.28125 9158652 448327.9375 9158652 448416.125 9158597 448449 9158508 448417.15625 9158419</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-8">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442034.75 9158312 442005.625 9158292 441969.96875 9158291 441941.4375 9158311 441929.75 9158342 441938.15625 9158374 441965.59375 9158394 442002.0625 9158394 442033.09375 9158375 442045.46875 9158343 442034.75 9158312</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-9">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442714.40625 9158256 442678.375 9158232 442626.5 9158232 442586.65625 9158256 442571.75 9158294 442589.53125 9158332 442632.28125 9158356 442674.34375 9158356 442708.25 9158333 442723.90625 9158295 442714.40625 9158256</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-10">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>443047.25 9158221 443009.03125 9158196 442963.21875 9158196 442924.34375 9158220 442908.15625 9158259 442921.5625 9158299 442960.03125 9158323 443005.34375 9158324 443043.375 9158300 443060.5 9158260 443047.25 9158221</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-11">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441182.5 9158164 441128.5625 9158127 441057.8125 9158127 441001.25 9158163 440977.84375 9158222 440995.59375 9158282 441050.34375 9158319 441118.5625 9158320 441175.125 9158284 441199.375 9158224 441182.5 9158164</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-12">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448075.3125 9158134 448038.4375 9158111 447991.34375 9158111 447953.46875 9158134 447939.3125 9158172 447952.9375 9158210 447989.5 9158233 448035.5 9158233 448073.875 9158210 448088.71875 9158172 448075.3125 9158134</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-13">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449037.84375 9157949 448986.59375 9157914 448921.375 9157914 448866.1875 9157948 448845.9375 9158003 448861.90625 9158059 448915.09375 9158093 448981.78125 9158094 449036.28125 9158060 449058.875 9158004 449037.84375 9157949</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-14">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448340.53125 9157721 448255.96875 9157666 448149.25 9157666 448063.0625 9157719 448027.40625 9157807 448059.96875 9157895 448141.34375 9157949 448248.53125 9157950 448336.0625 9157896 448371.96875 9157808 448340.53125 9157721</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-15">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449131.84375 9157360 448981.28125 9157263 448794.46875 9157262 448641.96875 9157358 448579.25 9157514 448632.03125 9157671 448785.21875 9157768 448972.90625 9157769 449125.09375 9157673 449186.4375 9157517 449131.84375 9157360</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-16">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448463.0625 9157131 448367.3125 9157071 448253.71875 9157070 448157.40625 9157130 448119.84375 9157226 448154.6875 9157322 448246.09375 9157382 448363.875 9157383 448459.125 9157323 448496.03125 9157227 448463.0625 9157131</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-17">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449045.59375 9157387 448932.09375 9157313 448789.1875 9157312 448673.9375 9157385 448626 9157504 448665.78125 9157624 448779.25 9157698 448924.3125 9157698 449039.90625 9157625 449086.59375 9157506 449045.59375 9157387</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-18">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448369.59375 9157260 448316 9157227 448251.875 9157226 448198.59375 9157259 448176.6875 9157313 448194.53125 9157367 448246.4375 9157401 448312.46875 9157401 448366.09375 9157368 448389.0625 9157314 448369.59375 9157260</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-19">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>443800.9375 9157658 443771.8125 9157639 443735.4375 9157638 443704.9375 9157657 443692.71875 9157688 443702.6875 9157720 443731.1875 9157739 443767.84375 9157739 443798.71875 9157720 443811.3125 9157689 443800.9375 9157658</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-20">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442076.1875 9158465 442045.8125 9158444 442006.3125 9158444 441974.21875 9158464 441961.8125 9158497 441972.96875 9158531 442003.625 9158551 442042.5 9158552 442075.1875 9158531 442087.125 9158498 442076.1875 9158465</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-21">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441930.25 9158633 441903.21875 9158615 441869.21875 9158615 441841.3125 9158633 441829.65625 9158661 441838 9158690 441864.0625 9158709 441897.8125 9158709 441926.6875 9158691 441939.3125 9158662 441930.25 9158633</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-22">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449039.40625 9168939 449011.03125 9168921 448975.09375 9168921 448946.3125 9168939 448935.40625 9168967 448946.375 9168996 448974.71875 9169014 449011.0625 9169014 449039.9375 9168997 449050.46875 9168968 449039.40625 9168939</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-23">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448875.59375 9175814 448847.15625 9175796 448810.5625 9175796 448780.65625 9175814 448769.15625 9175844 448780.8125 9175874 448809.78125 9175893 448846.34375 9175893 448875.34375 9175875 448886.28125 9175845 448875.59375 9175814</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-24">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448669.96875 9175875 448640.15625 9175856 448604.6875 9175856 448576.625 9175874 448566.15625 9175904 448576.375 9175934 448604.34375 9175952 448639.65625 9175952 448668.84375 9175934 448680.8125 9175904 448669.96875 9175875</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-25">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>434352.40625 9175563 434279.09375 9175514 434190.34375 9175516 434118.5625 9175568 434098.6875 9175651 434131.65625 9175732 434192.15625 9175781 434280.59375 9175779 434350.75 9175727 434369.78125 9175645 434352.40625 9175563</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-26">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>434023.15625 9175492 433997.03125 9175473 433962.15625 9175474 433933.8125 9175494 433924.15625 9175525 433936.03125 9175557 433963.375 9175576 433996.125 9175575 434022.1875 9175555 434032.375 9175523 434023.15625 9175492</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-27">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>435055.75 9175515 434983.9375 9175456 434886.21875 9175458 434806.375 9175520 434771.875 9175619 434791.03125 9175716 434867.25 9175775 434981.53125 9175772 435068.25 9175710 435071.375 9175612 435055.75 9175515</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-28">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>433693.625 9174732 433666.3125 9174712 433628 9174713 433595.875 9174734 433586.09375 9174768 433601.125 9174800 433634.21875 9174820 433670.34375 9174819 433695.59375 9174798 433702.90625 9174765 433693.625 9174732</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-29">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>433548.46875 9174471 433522.40625 9174454 433492.375 9174454 433469.125 9174473 433461.84375 9174501 433472.28125 9174530 433497.25 9174547 433528.375 9174546 433552.875 9174528 433560.625 9174499 433548.46875 9174471</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-30">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>433394.125 9173601 433359.3125 9173576 433311.53125 9173577 433277.6875 9173603 433270.25 9173644 433286.46875 9173684 433320.78125 9173709 433358.34375 9173708 433387.875 9173682 433403.125 9173641 433394.125 9173601</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-31">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437056.15625 9160724 437022.21875 9160697 436981.53125 9160698 436944.28125 9160726 436926.28125 9160772 436938.125 9160816 436966.0625 9160844 437002.53125 9160843 437043.625 9160814 437065.6875 9160768 437056.15625 9160724</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-32">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>433768.21875 9160496 433729.59375 9160473 433682.09375 9160474 433644.25 9160499 433629.65625 9160539 433643.0625 9160579 433678.65625 9160603 433723.1875 9160602 433760.46875 9160576 433777.40625 9160536 433768.21875 9160496</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-33">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436257.71875 9158604 436207.6875 9158570 436141.21875 9158571 436086.46875 9158608 436063.96875 9158665 436083.34375 9158721 436135.3125 9158755 436200.71875 9158753 436255.09375 9158717 436276.4375 9158660 436257.71875 9158604</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-34">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436910.25 9158697 436740.84375 9158585 436521.71875 9158590 436339.96875 9158711 436265.375 9158901 436324.34375 9159088 436500.46875 9159200 436714.375 9159195 436898.46875 9159074 436969.28125 9158884 436910.25 9158697</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-35">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436029.09375 9158302 435997.125 9158280 435955.90625 9158281 435921.96875 9158304 435908.625 9158341 435919.9375 9158377 435951.0625 9158398 435991.59375 9158397 436025.53125 9158374 436040.03125 9158338 436029.09375 9158302</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-36">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436456.75 9158267 436425.1875 9158247 436384.65625 9158248 436353.375 9158270 436340.875 9158304 436351.875 9158337 436382.46875 9158357 436421.6875 9158356 436453.75 9158334 436467.71875 9158300 436456.75 9158267</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-37">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>435002.5625 9153932 434967.625 9153910 434923.4375 9153911 434886.53125 9153935 434871.40625 9153973 434884.0625 9154010 434919.0625 9154032 434963.9375 9154031 435000.28125 9154007 435014.65625 9153969 435002.5625 9153932</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="SATURATION_AND_GHOSTS_B3-38">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">SATURATION_AND_GHOSTS_B3</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436792.40625 9158898 436722.40625 9158853 436636.125 9158855 436563.3125 9158903 436534.84375 9158979 436558.625 9159054 436626.5 9159098 436713.625 9159096 436785.71875 9159048 436817.09375 9158972 436792.40625 9158898</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

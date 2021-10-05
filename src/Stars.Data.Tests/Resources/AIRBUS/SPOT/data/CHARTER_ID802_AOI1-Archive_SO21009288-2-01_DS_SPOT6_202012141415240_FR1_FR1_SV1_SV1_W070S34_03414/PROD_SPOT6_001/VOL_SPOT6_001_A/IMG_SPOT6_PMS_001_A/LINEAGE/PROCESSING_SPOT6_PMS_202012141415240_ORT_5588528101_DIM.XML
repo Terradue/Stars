@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<Dimap_Document xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="processing.xsd" version="2.12">
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.12">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>S6_ORTHO</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>PROCESSING</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Coordinate_Reference_System>
+    <Temporal_CRS>
+      <TEMPORAL_CRS_NAME>UTC</TEMPORAL_CRS_NAME>
+    </Temporal_CRS>
+  </Coordinate_Reference_System>
+  <Processing_Step_List>
+    <Processing_Step>
+      <PROCESSING_LEVEL>L1</PROCESSING_LEVEL>
+      <TIME>2021-02-08T07:46:18.000000</TIME>
+      <SOFTWARE version="2.18.2">AstroTerra Imaging</SOFTWARE>
+    </Processing_Step>
+    <Processing_Step>
+      <PROCESSING_LEVEL>L1</PROCESSING_LEVEL>
+      <TIME>2021-02-08T07:53:38.00Z</TIME>
+      <SOFTWARE version="PFS_7.2 release 2 []">Pixel Factory Subsystem</SOFTWARE>
+    </Processing_Step>
+  </Processing_Step_List>
+  <Processing_Parameter_List>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>INVENTORY</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT6_INVENTORY_2012-09-09T09:50:00.000_9</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>GEOMETRY</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT6_GEOMETRY_2015-03-24T13:35:00.000_20</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>RADIOMETRY</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT6_RADIOMETRY_2020-05-25T00:00:00.000_56</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>PRODUCTION</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT6_PRODUCTION_2012-09-09T13:10:00.000_18</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>DECOMPRESSION</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT6_DECOMPRESSION_2012-01-01T00:00:00.000_001</PARAMETER_ID>
+    </Processing_Parameter>
+  </Processing_Parameter_List>
+</Dimap_Document>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <name>kmlproduct</name>
+  <Document>
+    <name>Product</name>
+    <Style id="transPoly">
+      <LineStyle>
+        <width>0.1</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>8864ff64</color>
+      </PolyStyle>
+    </Style>
+    <Style id="sn_shaded_dot">
+      <IconStyle>
+        <color>ff00ffff</color>
+        <scale>1.2</scale>
+        <Icon>
+          <href>http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="sh_shaded_dot">
+      <IconStyle>
+        <color>ff00ffff</color>
+        <scale>1.4</scale>
+        <Icon>
+          <href>http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <StyleMap id="msn_shaded_dot">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#sn_shaded_dot</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#sh_shaded_dot</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>Scene Rectangle</name>
+      <Placemark>
+        <name>ALOS2146686640-170209</name>
+        <description><![CDATA[<br/> <table border="1" cellspacing="0" cellpadding="2" bordercolor="C0C0C0" ><tr><td>Satellite</td><td>ALOS2</td></tr><tr><td>Sensor</td><td>PALSAR-2</td></tr><tr><td>Scene ID</td><td>ALOS2146686640-170209</td></tr><tr><td>Product ID</td><td>FBDR1.5GUA</td></tr><tr><td>Observation Date</td><td>2017-02-09</td></tr><tr><td>Path No</td><td>32</td></tr><tr><td>Frame(center)</td><td>6640</td></tr><tr><td>SceneShift</td><td>0</td></tr><tr><td>Offnadir Angle</td><td>28.6</td></tr><tr><td>Scene Time(Center)</td><td>05:11:03.457</td></tr><tr><td>Scene Time(Start)</td><td>05:10:58.457</td></tr><tr><td>Scene Time(End)</td><td>05:11:08.457</td></tr><tr><td>Lat/Long(center)</td><td>-27.157/-70.209</td></tr><tr><td>Lat/Long(Left Upper)</td><td>-26.935/-70.663</td></tr><tr><td>Lat/Long(Right Upper)</td><td>-26.776/-69.947</td></tr><tr><td>Lat/Long(Left Lower)</td><td>-27.543/-70.501</td></tr><tr><td>Lat/Long(Right Lower)</td><td>-27.384/-69.781</td></tr></table>]]></description>
+        <Snippet maxLines="2"/>
+        <visibility>1</visibility>
+        <styleUrl>#transPoly</styleUrl>
+        <Polygon>
+          <tessellate>1</tessellate>
+          <altitudeMode>clampToGround</altitudeMode>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>-70.663,-26.935,0.0 -70.501,-27.543,0.0 -69.781,-27.384,0.0 -69.947,-26.776,0.0 -70.663,-26.935,0.0 </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Scene Center</name>
+      <Placemark>
+        <name>ALOS2146686640-170209</name>
+        <description></description>
+        <Snippet maxLines="2"/>
+        <styleUrl>#msn_shaded_dot</styleUrl>
+        <Point>
+          <altitudeMode>clampToGround</altitudeMode>
+          <coordinates>-70.209,-27.157,4000.0</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

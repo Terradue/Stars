@@ -20,6 +20,8 @@ namespace Terradue.Stars.Services.Translator
         public int Priority { get; set; }
         public string Key { get => "StacLinkTranslator"; set { } }
 
+        public string Label => "STAC alternate link finder";
+
         public StacLinkTranslator(ILogger<StacLinkTranslator> logger, ICredentials credentials)
         {
             this.logger = logger;

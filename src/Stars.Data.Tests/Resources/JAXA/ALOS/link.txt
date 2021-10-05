@@ -1,0 +1,2 @@
+Test (meta-)data downloaded from here:
+ftp://ftp.eorc.jaxa.jp/cdroms/EORC-082/palsar/

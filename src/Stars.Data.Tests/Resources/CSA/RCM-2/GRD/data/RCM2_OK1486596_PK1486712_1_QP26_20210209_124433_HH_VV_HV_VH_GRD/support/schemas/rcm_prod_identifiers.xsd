@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by Cam Pearce (MacDonald Detwiller and Associates) -->
+<!--=========================================================================
+Filename      : rcm_prod_identifiers.xsd@@/main/8 ( Pitt: 37906 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Common enumerated type definitions for Product Metadata and Ground Segment
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    11-Aug-2016   Updates for RCM-SP-53-0419 Issue 2/2
+J. Chiang     21-Jul-2017   Updates for RCM-SP-53-0419 Issue 2/4
+Y. Yang       19-Dec-2019   Updates for RCM-SP-53-0419 Issue 2/6
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:annotation>
+		<xsd:documentation>Common enumerated type definitions for RCM Product Metadata and Ground Segment         </xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="acquisitionIdentifiers">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Medium Resolution 50m"/>
+			<xsd:enumeration value="Low Resolution 100m"/>
+			<xsd:enumeration value="Medium Resolution 30m"/>
+			<xsd:enumeration value="Medium Resolution 16m"/>
+			<xsd:enumeration value="High Resolution 5m"/>
+			<xsd:enumeration value="Very High Resolution 3m"/>
+			<xsd:enumeration value="Low Noise"/>
+			<xsd:enumeration value="Ship Detection"/>
+			<xsd:enumeration value="Quad-Polarization"/>
+			<xsd:enumeration value="Spotlight"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="antennaPointingIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Right"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="attitudeSourceIdentifiers">
+		<xsd:annotation>
+			<xsd:documentation/>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Downlink"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="dataStreamIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Real"/>
+			<xsd:enumeration value="Imaginary"/>
+			<xsd:enumeration value="Magnitude"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="beamModeIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Low Resolution 100m"/>
+			<xsd:enumeration value="Medium Resolution 50m"/>
+			<xsd:enumeration value="Medium Resolution 30m"/>
+			<xsd:enumeration value="Medium Resolution 16m"/>
+			<xsd:enumeration value="High Resolution 5m"/>
+			<xsd:enumeration value="Very High Resolution 3m"/>
+			<xsd:enumeration value="Low Noise"/>
+			<xsd:enumeration value="Ship Detection"/>
+			<xsd:enumeration value="Quad-Polarization"/>
+			<xsd:enumeration value="Spotlight"/>
+			<xsd:enumeration value="Non-Imaging Calibration"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="dataTypeIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Integer"/>
+			<xsd:enumeration value="Floating-Point"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="dopplerSourceIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Adaptive Analysis"/>
+			<xsd:enumeration value="Orbit and Attitude"/>
+			<xsd:enumeration value="Adaptive Analysis-2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="elevationCorrectionIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Base"/>
+			<xsd:enumeration value="Coarse DEM"/>
+			<xsd:enumeration value="Fine DEM"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ellipsoidNameIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AIRY 1830"/>
+			<xsd:enumeration value="AIRY 1849"/>
+			<xsd:enumeration value="AUSTRALIAN 1965"/>
+			<xsd:enumeration value="BESSEL 1841"/>
+			<xsd:enumeration value="BESSEL MODIFIED"/>
+			<xsd:enumeration value="BESSEL 1841 NAMIBIA"/>
+			<xsd:enumeration value="CLARKE 1858"/>
+			<xsd:enumeration value="CLARKE 1866"/>
+			<xsd:enumeration value="CLARKE 1866 MICHIGAN"/>
+			<xsd:enumeration value="CLARKE 1880 FOOT"/>
+			<xsd:enumeration value="CLARKE 1880 ARC"/>
+			<xsd:enumeration value="CLARKE 1880 BENOIT"/>
+			<xsd:enumeration value="CLARKE 1880 IGN"/>
+			<xsd:enumeration value="CLARKE 1880 RGS"/>
+			<xsd:enumeration value="CLARKE 1880 SGA 1922"/>
+			<xsd:enumeration value="EVEREST 1830 1937"/>
+			<xsd:enumeration value="EVEREST 1830 1967"/>
+			<xsd:enumeration value="EVEREST 1830 1975"/>
+			<xsd:enumeration value="EVEREST 1830 MODIFIED"/>
+			<xsd:enumeration value="GEM 10C"/>
+			<xsd:enumeration value="GRS 1980"/>
+			<xsd:enumeration value="HELMERT 1906"/>
+			<xsd:enumeration value="INDONESIAN 1974"/>
+			<xsd:enumeration value="INTERNATIONAL 1924"/>
+			<xsd:enumeration value="INTERNATIONAL 1967"/>
+			<xsd:enumeration value="KRASSOWSKY 1940"/>
+			<xsd:enumeration value="NWL 9D"/>
+			<xsd:enumeration value="NWL 10D"/>
+			<xsd:enumeration value="OSU 86F"/>
+			<xsd:enumeration value="OSU 91A"/>
+			<xsd:enumeration value="PLESSIS 1817"/>
+			<xsd:enumeration value="STRUVE 1860"/>
+			<xsd:enumeration value="WAR OFFICE"/>
+			<xsd:enumeration value="WGS 1984"/>
+			<xsd:enumeration value="NAD83"/>
+			<xsd:enumeration value="NAD27"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="hemisphereIdentifiers">
+		<xsd:annotation>
+			<xsd:documentation> N for Northern, S for Southern</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="N"/>
+			<xsd:enumeration value="S"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="sarCalibrationTypeIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Beta Nought"/>
+			<xsd:enumeration value="Sigma Nought"/>
+			<xsd:enumeration value="Gamma"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="mapProjectionDescriptorIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ARC"/>
+			<xsd:enumeration value="LCC"/>
+			<xsd:enumeration value="STPL"/>
+			<xsd:enumeration value="UTM"/>
+			<xsd:enumeration value="UPS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="orbitDataSourceIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Predicted"/>
+			<xsd:enumeration value="Definitive"/>
+			<xsd:enumeration value="Downlinked"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="outputMediaInterleavingIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BSQ"/>
+			<xsd:enumeration value="BIP"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="passDirectionIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Ascending"/>
+			<xsd:enumeration value="Descending"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="polarizationIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="HH"/>
+			<xsd:enumeration value="VV"/>
+			<xsd:enumeration value="HV"/>
+			<xsd:enumeration value="VH"/>
+			<xsd:enumeration value="CH"/>
+			<xsd:enumeration value="CV"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="polarizationModeIdentifier">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Single"/>
+			<xsd:enumeration value="Dual Co/Cross"/>
+			<xsd:enumeration value="Compact"/>
+			<xsd:enumeration value="Dual HH-VV"/>
+			<xsd:enumeration value="Quad"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="productFormatIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="GeoTIFF"/>
+			<xsd:enumeration value="NITF 2.1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="productOrientationIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Satellite"/>
+			<xsd:enumeration value="Map North"/>
+			<xsd:enumeration value="True North"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="productTypeIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="SLC"/>
+			<xsd:enumeration value="GRD"/>
+			<xsd:enumeration value="GRC"/>
+			<xsd:enumeration value="GCD"/>
+			<xsd:enumeration value="GCC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="pulseIdentifiers">
+		<xsd:annotation>
+			<xsd:documentation>String identifying pulse on the given spacecraft, which is unique within this spacecraft.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="rangeReferenceFunctionSourceIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Nominal Chirp"/>
+			<xsd:enumeration value="Extracted Chirp Replica"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="resamplingKernelIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NN"/>
+			<xsd:enumeration value="CC"/>
+			<xsd:enumeration value="DS8"/>
+			<xsd:enumeration value="DS16"/>
+			<xsd:enumeration value="KD16"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="rawBitsPerSampleIdentifiers">
+		<xsd:annotation>
+			<xsd:documentation>BAQ rate for Raw Data Quantization (bits per sample: 1,2,3,4 or 8)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+			<xsd:enumeration value="4"/>
+			<xsd:enumeration value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="satelliteIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="RCM-1"/>
+			<xsd:enumeration value="RCM-2"/>
+			<xsd:enumeration value="RCM-3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="sampleTypeIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Complex"/>
+			<xsd:enumeration value="Magnitude Detected"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="satOrientationRefFrameIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Geocentric"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="sensorIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="https://stac-extensions.github.io/sar/v1.0.0/schema.json"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="timeOrderingIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Increasing"/>
+			<xsd:enumeration value="Decreasing"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="windowNameIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Kaiser"/>
+			<xsd:enumeration value="Hamming"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="zeroDopplerSteeringFlagIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ZeroDopplerSteeringOn"/>
+			<xsd:enumeration value="ZeroDopplerSteeringOff"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="processingModeIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Standard"/>
+			<xsd:enumeration value="Expedited"/>
+			<xsd:enumeration value="NRT"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="processingPriorityIdentifiers">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Low"/>
+			<xsd:enumeration value="Medium"/>
+			<xsd:enumeration value="High"/>			
+		</xsd:restriction>
+	</xsd:simpleType>	
+</xsd:schema>

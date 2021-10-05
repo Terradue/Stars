@@ -1,0 +1,116 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "ALOS2337294000-200821-UBSL1.5GUD",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          57.477,
+          -20.217
+        ],
+        [
+          57.348,
+          -20.829
+        ],
+        [
+          57.89,
+          -20.926
+        ],
+        [
+          58.016,
+          -20.315
+        ],
+        [
+          57.477,
+          -20.217
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-08-21T08:10:56Z",
+    "start_datetime": "2020-08-21T08:10:51Z",
+    "end_datetime": "2020-08-21T08:11:01Z",
+    "created": "2020-08-21T10:09:51Z",
+    "platform": "alos-2",
+    "constellation": "alos-2",
+    "mission": "alos-2",
+    "instruments": [
+      "palsar-2"
+    ],
+    "title": "ALOS-2 PALSAR-2 UBS L1.5 HH 21/08/2020 08:10:56",
+    "sat:absolute_orbit": 33729,
+    "sat:relative_orbit": 33729,
+    "sat:orbit_state": "descending",
+    "sar:instrument_mode": "UBS",
+    "sar:frequency_band": "L",
+    "sar:polarizations": [
+      "HH"
+    ],
+    "sar:product_type": "UBS",
+    "sar:observation_direction": "left",
+    "view:off_nadir": 28.8,
+    "processing:level": "L1.5",
+    "product_type": "UBS"
+  },
+  "bbox": [
+    57.348,
+    -20.926,
+    58.016,
+    -20.217
+  ],
+  "assets": {
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata summary file",
+      "href": "data/ALOS2337294000-200821/summary.txt",
+      "filename": "summary.txt"
+    },
+    "amplitude-hh": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "GeoTIFF data file",
+      "href": "data/ALOS2337294000-200821/IMG-HH-ALOS2337294000-200821-UBSL1.5GUD.tif",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "IMG-HH-ALOS2337294000-200821-UBSL1.5GUD.tif"
+    },
+    "lut-hh": {
+      "type": "text/plain",
+      "roles": [
+        "data"
+      ],
+      "title": "Pixel value to Sigma Naught Conversion factors",
+      "href": "data/ALOS2337294000-200821/LUT-HH-ALOS2337294000-200821-UBSL1.5GUD.txt",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "LUT-HH-ALOS2337294000-200821-UBSL1.5GUD.txt"
+    },
+    "kml": {
+      "type": "application/vnd.google-earth.kml+xml",
+      "roles": [
+        "data",
+        "geometry"
+      ],
+      "title": "Geometry (KML)",
+      "href": "data/ALOS2337294000-200821/ALOS2337294000-200821_UBSL1.5GUD.kml",
+      "filename": "ALOS2337294000-200821_UBSL1.5GUD.kml"
+    }
+  },
+  "links": []
+}

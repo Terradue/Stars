@@ -1,0 +1,189 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -5.730959,
+          14.953436
+        ],
+        [
+          -3.431006,
+          15.388663
+        ],
+        [
+          -3.136116,
+          13.880572
+        ],
+        [
+          -5.419919,
+          13.441674
+        ],
+        [
+          -5.730959,
+          14.953436
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2016-08-22T18:28:23.368922Z",
+    "start_datetime": "2016-08-22T18:28:23.368922Z",
+    "end_datetime": "2016-08-22T18:28:48.368201Z",
+    "created": "2016-08-23T00:38:22Z",
+    "platform": "sentinel-1a",
+    "constellation": "sentinel-1",
+    "mission": "sentinel-1",
+    "instruments": [
+      "c-sar"
+    ],
+    "sat:orbit_state": "ascending",
+    "sat:anx_datetime": "2016-08-22T18:24:52.513706Z",
+    "sat:absolute_orbit": 12717,
+    "sat:relative_orbit": 45,
+    "sat:platform_international_designator": "2014-016A",
+    "processing:level": "L1",
+    "processing:lineage": "GRD Post Processing",
+    "processing:facility": "Copernicus S1 Core Ground Segment - DPA",
+    "processing:software": {
+      "Sentinel-1 IPF": "002.71"
+    },
+    "title": "Sentinel-1A GRD VV/VH 45 22/08/2016 18:28:23",
+    "sar:instrument_mode": "IW",
+    "sar:frequency_band": "C",
+    "sar:polarizations": [
+      "VV",
+      "VH"
+    ],
+    "sar:product_type": "GRD",
+    "gsd": 22.0
+  },
+  "bbox": [
+    -5.730959,
+    13.441674,
+    -3.136116,
+    15.388663
+  ],
+  "assets": {
+    "amplitude-vv-iw-001": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "title": "IW VV Amplitude pixel values",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
+      "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "annotation-vv-iw-001": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VV IW 001",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "amplitude-vh-iw-002": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "title": "IW VH Amplitude pixel values",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.tiff",
+      "filename": "annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.tiff",
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "annotation-vh-iw-002": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VH IW 002",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "filename": "annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "calibration-vv-iw-001": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VV IW",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "filename": "annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "calibration-vh-iw-002": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VH IW",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/calibration-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "filename": "annotation/calibration/calibration-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "noise-vh-iw-002": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VH IW",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/noise-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "filename": "annotation/calibration/noise-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "noise-vv-iw-001": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VV IW",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/noise-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "filename": "annotation/calibration/noise-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "manifest": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "SAFE Manifest",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/manifest.safe",
+      "filename": "manifest.safe"
+    }
+  },
+  "links": []
+}

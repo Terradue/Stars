@@ -1,0 +1,141 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "ALOS2146686640-170209-FBDR1.5GUA",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -70.663,
+          -26.935
+        ],
+        [
+          -70.501,
+          -27.543
+        ],
+        [
+          -69.781,
+          -27.384
+        ],
+        [
+          -69.947,
+          -26.776
+        ],
+        [
+          -70.663,
+          -26.935
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2017-02-09T05:11:03Z",
+    "start_datetime": "2017-02-09T05:10:58Z",
+    "end_datetime": "2017-02-09T05:11:08Z",
+    "created": "2017-05-17T03:27:00Z",
+    "platform": "alos-2",
+    "constellation": "alos-2",
+    "mission": "alos-2",
+    "instruments": [
+      "palsar-2"
+    ],
+    "title": "ALOS-2 PALSAR-2 FBD L1.5 HH/HV 09/02/2017 05:11:03",
+    "sat:absolute_orbit": 14668,
+    "sat:relative_orbit": 14668,
+    "sat:orbit_state": "ascending",
+    "sar:instrument_mode": "FBD",
+    "sar:frequency_band": "L",
+    "sar:polarizations": [
+      "HH",
+      "HV"
+    ],
+    "sar:product_type": "FBD",
+    "sar:observation_direction": "right",
+    "view:off_nadir": 28.6,
+    "processing:level": "L1.5",
+    "product_type": "FBD"
+  },
+  "bbox": [
+    -70.663,
+    -27.543,
+    -69.781,
+    -26.776
+  ],
+  "assets": {
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata summary file",
+      "href": "data/ALOS2146686640-170209/summary.txt",
+      "filename": "summary.txt"
+    },
+    "amplitude-hh": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "GeoTIFF data file",
+      "href": "data/ALOS2146686640-170209/IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif"
+    },
+    "lut-hh": {
+      "type": "text/plain",
+      "roles": [
+        "data"
+      ],
+      "title": "Pixel value to Sigma Naught Conversion factors",
+      "href": "data/ALOS2146686640-170209/LUT-HH-ALOS2146686640-170209-FBDR1.5GUA.txt",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "LUT-HH-ALOS2146686640-170209-FBDR1.5GUA.txt"
+    },
+    "amplitude-hv": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "GeoTIFF data file",
+      "href": "data/ALOS2146686640-170209/IMG-HV-ALOS2146686640-170209-FBDR1.5GUA.tif",
+      "sar:polarizations": [
+        "HV"
+      ],
+      "filename": "IMG-HV-ALOS2146686640-170209-FBDR1.5GUA.tif"
+    },
+    "lut-hv": {
+      "type": "text/plain",
+      "roles": [
+        "data"
+      ],
+      "title": "Pixel value to Sigma Naught Conversion factors",
+      "href": "data/ALOS2146686640-170209/LUT-HV-ALOS2146686640-170209-FBDR1.5GUA.txt",
+      "sar:polarizations": [
+        "HV"
+      ],
+      "filename": "LUT-HV-ALOS2146686640-170209-FBDR1.5GUA.txt"
+    },
+    "kml": {
+      "type": "application/vnd.google-earth.kml+xml",
+      "roles": [
+        "data",
+        "geometry"
+      ],
+      "title": "Geometry (KML)",
+      "href": "data/ALOS2146686640-170209/ALOS2146686640-170209_FBDR1.5GUA.kml",
+      "filename": "ALOS2146686640-170209_FBDR1.5GUA.kml"
+    }
+  },
+  "links": []
+}

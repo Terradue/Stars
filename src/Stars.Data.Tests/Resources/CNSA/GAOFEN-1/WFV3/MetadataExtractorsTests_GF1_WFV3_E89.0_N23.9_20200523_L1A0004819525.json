@@ -1,0 +1,161 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          87.8577,
+          23.1154
+        ],
+        [
+          89.6848,
+          22.7438
+        ],
+        [
+          90.154,
+          24.6393
+        ],
+        [
+          88.2994,
+          25.0142
+        ],
+        [
+          87.8577,
+          23.1154
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-05-23T13:02:53Z",
+    "start_datetime": "2020-05-23T13:02:53Z",
+    "end_datetime": "2020-05-23T13:03:24Z",
+    "created": "2020-05-23T23:52:34Z",
+    "platform": "gaofen-1",
+    "constellation": "gaofen-1",
+    "mission": "gaofen-1",
+    "instruments": [
+      "wfv3"
+    ],
+    "gsd": 16.0,
+    "eo:cloud_cover": 0.38,
+    "sat:absolute_orbit": 38136,
+    "sat:relative_orbit": 38136,
+    "sat:orbit_state": "descending",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 0.0,
+    "view:sun_azimuth": 100.742,
+    "view:sun_elevation": 13.7242,
+    "processing:level": "L1A",
+    "product_type": "PAN_MS_L1A",
+    "title": "Gaofen-1 WFV3 L1A 05/23/2020 13:02:53"
+  },
+  "bbox": [
+    87.8577,
+    22.7438,
+    90.154,
+    25.0142
+  ],
+  "assets": {
+    "MSS-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525_thumb.jpg",
+      "filename": "GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525_thumb.jpg"
+    },
+    "MSS-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.jpg",
+      "filename": "GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.jpg"
+    },
+    "MSS-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.rpb",
+      "filename": "GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.rpb"
+    },
+    "MSS": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.tiff",
+      "filename": "GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.tiff",
+      "gsd": 16,
+      "eo:bands": [
+        {
+          "name": "B01",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1979.535,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "B02",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "solar_illumination": 1808.804,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "B03",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1524.958,
+          "full_width_half_max": 0.06
+        },
+        {
+          "name": "B04",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "solar_illumination": 1069.152,
+          "full_width_half_max": 0.12
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.1556,
+          "offset": 12.28
+        },
+        {
+          "scale": 0.17,
+          "offset": -7.9336
+        },
+        {
+          "scale": 0.1392,
+          "offset": -7.031
+        },
+        {
+          "scale": 0.1354,
+          "offset": -4.3578
+        }
+      ]
+    },
+    "MSS-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525/GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.xml",
+      "filename": "GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525.xml"
+    }
+  },
+  "links": []
+}

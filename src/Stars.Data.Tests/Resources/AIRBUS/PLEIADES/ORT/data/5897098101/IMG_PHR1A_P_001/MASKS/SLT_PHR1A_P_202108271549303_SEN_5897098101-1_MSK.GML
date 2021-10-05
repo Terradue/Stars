@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<phr:OverIlluminationMask gml:id="DS_PHR1A_202108271549303_FR1_PX_W074N18_0509_00822_imgslt_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:phr="http://hma.cnes.fr/phr" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <gml:name>OverIllumination mask from data-strip DS_PHR1A_202108271549303_FR1_PX_W074N18_0509_00822</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:derivedCRSType:OGC:1.0:image">
+      <gml:lowerCorner>1 1</gml:lowerCorner>
+      <gml:upperCorner>32824 15169</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <phr:maskMembers/>
+
+</phr:OverIlluminationMask>

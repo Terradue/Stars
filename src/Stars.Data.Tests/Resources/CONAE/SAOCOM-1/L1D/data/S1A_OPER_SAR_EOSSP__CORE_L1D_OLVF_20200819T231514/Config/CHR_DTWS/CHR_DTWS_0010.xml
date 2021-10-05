@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AresysXmlDoc xmlns:at="aresysTypes">
+   <NumberOfChannels>1</NumberOfChannels>
+   <VersionNumber>2.1</VersionNumber>
+   <Description>Aresys XML metadata file</Description>
+   <Channel Number="1" Total="1">
+      <RasterInfo>
+         <FileName>CHR_DTWS_0010</FileName>
+         <Lines>1</Lines>
+         <Samples>870</Samples>
+         <HeaderOffsetBytes>0</HeaderOffsetBytes>
+         <RowPrefixBytes>0</RowPrefixBytes>
+         <ByteOrder>LITTLEENDIAN</ByteOrder>
+         <CellType>FLOAT_COMPLEX</CellType>
+         <LinesStep unit="s">0</LinesStep>
+         <SamplesStep unit="s">3.3333333333e-08</SamplesStep>
+         <LinesStart unit="s">0</LinesStart>
+         <SamplesStart unit="s">0</SamplesStart>
+      </RasterInfo>
+      <SwathInfo>
+         <Swath>DTWS4</Swath>
+         <SwathAcquisitionOrder>0</SwathAcquisitionOrder>
+         <Polarization>H/V</Polarization>
+         <Rank>0</Rank>
+         <RangeDelayBias>0</RangeDelayBias>
+         <AcquisitionStartTime>01-JAN-1985 00:00:00.000000</AcquisitionStartTime>
+         <AzimuthSteeringRateReferenceTime unit="s">0</AzimuthSteeringRateReferenceTime>
+         <AzimuthSteeringRatePol>
+            <val N="1">0</val>
+            <val N="2">0</val>
+            <val N="3">0</val>
+         </AzimuthSteeringRatePol>
+         <AcquisitionPRF>0</AcquisitionPRF>
+         <EchoesPerBurst>0</EchoesPerBurst>
+      </SwathInfo>
+      <Pulse>
+         <Direction>DOWN</Direction>
+         <PulseLength unit="s">2.7000000000e-05</PulseLength>
+         <Bandwidth unit="Hz">2.440000e+07</Bandwidth>
+         <PulseEnergy unit="j">2.927475e+04</PulseEnergy>
+         <PulseSamplingRate unit="Hz">3.000000e+07</PulseSamplingRate>
+         <PulseStartFrequency unit="Hz">1.220000e+07</PulseStartFrequency>
+         <PulseStartPhase unit="rad">0.000000e+00</PulseStartPhase>
+      </Pulse>
+   </Channel>
+</AresysXmlDoc>

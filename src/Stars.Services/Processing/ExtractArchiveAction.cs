@@ -28,6 +28,8 @@ namespace Terradue.Stars.Services.Processing
 
         public ProcessingType ProcessingType => ProcessingType.ArchiveExtractor;
 
+        public string Label => "Archive Extractor (ZIP, TAR GZ, GZIP)";
+
         public ExtractArchiveAction(IOptions<ExtractArchiveOptions> options, DestinationManager destinationManager, CarrierManager carrierManager, ILogger<ExtractArchiveAction> logger)
         {
             this.options = options;

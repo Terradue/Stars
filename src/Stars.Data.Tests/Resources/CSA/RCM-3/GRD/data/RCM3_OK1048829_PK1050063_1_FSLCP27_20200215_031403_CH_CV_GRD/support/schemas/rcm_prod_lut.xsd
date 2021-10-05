@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_lut.xsd@@/main/6 ( Pitt: 36700 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    19-Nov-2016   Consolidated schema files
+C. Vigneron   28-Oct-2016   Updated stepSize description
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:rcm_prod="rcmGsProductSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_lists.xsd"/>
+	<xsd:element name="lut">
+		<xsd:annotation>
+			<xsd:documentation>LUTs allow one to convert the digital numbers found in the output product to sigma-nought, beta-nought, or gamma values (depending on which LUT is used) by applying a constant offset and range dependent gain to the SAR imagery.    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="pixelFirstLutValue" type="xsd:integer">
+					<xsd:annotation>
+						<xsd:documentation>Pixel number corresponding to the first value of the gains list. 
+The pixel is indexed from the leftmost range sample of the full range line and starts with ‘0’ with respect to the range start of the COPG. 
+</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="stepSize" type="xsd:integer">
+					<xsd:annotation>
+						<xsd:documentation>Number of range pixels between gains entries. The sign of stepSize (positive or negative) depends on pixelTimeOrdering which indicates the samples increase or decrease with range time order. </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="numberOfValues" type="xsd:integer">
+					<xsd:annotation>
+						<xsd:documentation>Number of entries in gains. </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="offset" type="xsd:double">
+					<xsd:annotation>
+						<xsd:documentation>Constant offset (B)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="gains" type="rcm_prod:gainList">
+					<xsd:annotation>
+						<xsd:documentation>Range dependent gain list (A) (linear amplitude scale factors)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:include schemaLocation="Ellipsoid_Parameters.xsd"/>
+	<xsd:element id="Ellipsoid" name="Ellipsoid" type="t_Ellipsoid">
+		<xsd:annotation>
+			<xsd:documentation source="Ellipsoid"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Ellipsoid" name="t_Ellipsoid">
+		<xsd:all>
+			<xsd:element minOccurs="0" ref="ELLIPSOID_NAME"/>
+			<xsd:element minOccurs="0" ref="ELLIPSOID_CODE"/>
+			<xsd:element minOccurs="0" ref="Ellipsoid_Parameters">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Ellipsoid"/>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="ELLIPSOID_NAME" name="ELLIPSOID_NAME" type="t_ELLIPSOID_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="ELLIPSOID_NAME"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_ELLIPSOID_NAME" name="t_ELLIPSOID_NAME">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="ELLIPSOID_CODE" name="ELLIPSOID_CODE" type="t_ELLIPSOID_CODE">
+		<xsd:annotation>
+			<xsd:documentation source="ELLIPSOID_CODE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_ELLIPSOID_CODE" name="t_ELLIPSOID_CODE">
+		<xsd:restriction base="Code"/>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Vertex" name="Vertex" type="t_Vertex">
+		<xsd:annotation>
+			<xsd:documentation source="Vertex"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Vertex" name="t_Vertex">
+		<xsd:all>
+			<xsd:element minOccurs="0" ref="FRAME_LON">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Vertex"/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="FRAME_LAT">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Vertex"/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="FRAME_X">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Vertex"/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="FRAME_Y">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Vertex"/>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="FRAME_LON" name="FRAME_LON" type="t_FRAME_LON">
+		<xsd:annotation>
+			<xsd:documentation source="FRAME_LON"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_FRAME_LON" name="t_FRAME_LON">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_FRAME_LON_Angular_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_FRAME_LON_Angular_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="DEG"/>
+			<xsd:enumeration value="DMS"/>
+			<xsd:enumeration value="MNT"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="GON"/>
+			<xsd:enumeration value="RAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="FRAME_LAT" name="FRAME_LAT" type="t_FRAME_LAT">
+		<xsd:annotation>
+			<xsd:documentation source="FRAME_LAT"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_FRAME_LAT" name="t_FRAME_LAT">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_FRAME_LAT_Angular_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_FRAME_LAT_Angular_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="DEG"/>
+			<xsd:enumeration value="DMS"/>
+			<xsd:enumeration value="MNT"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="GON"/>
+			<xsd:enumeration value="RAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="FRAME_X" name="FRAME_X" type="t_FRAME_X">
+		<xsd:annotation>
+			<xsd:documentation source="FRAME_X"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_FRAME_X" name="t_FRAME_X">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_FRAME_X_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_FRAME_X_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="FT"/>
+			<xsd:enumeration value="FTUS"/>
+			<xsd:enumeration value="FTCLA"/>
+			<xsd:enumeration value="LKCLA"/>
+			<xsd:enumeration value="LKBEN"/>
+			<xsd:enumeration value="CHBEN"/>
+			<xsd:enumeration value="CHSEAR"/>
+			<xsd:enumeration value="YDSEAR"/>
+			<xsd:enumeration value="YDIND"/>
+			<xsd:enumeration value="FTSEAR"/>
+			<xsd:enumeration value="FM"/>
+			<xsd:enumeration value="NM"/>
+			<xsd:enumeration value="CM"/>
+			<xsd:enumeration value="KM"/>
+			<xsd:enumeration value="FTIND"/>
+			<xsd:enumeration value="SFT"/>
+			<xsd:enumeration value="DEG"/>
+			<xsd:enumeration value="DMS"/>
+			<xsd:enumeration value="MNT"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="GON"/>
+			<xsd:enumeration value="RAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="FRAME_Y" name="FRAME_Y" type="t_FRAME_Y">
+		<xsd:annotation>
+			<xsd:documentation source="FRAME_Y"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_FRAME_Y" name="t_FRAME_Y">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_FRAME_Y_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_FRAME_Y_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="FT"/>
+			<xsd:enumeration value="FTUS"/>
+			<xsd:enumeration value="FTCLA"/>
+			<xsd:enumeration value="LKCLA"/>
+			<xsd:enumeration value="LKBEN"/>
+			<xsd:enumeration value="CHBEN"/>
+			<xsd:enumeration value="CHSEAR"/>
+			<xsd:enumeration value="YDSEAR"/>
+			<xsd:enumeration value="YDIND"/>
+			<xsd:enumeration value="FTSEAR"/>
+			<xsd:enumeration value="FM"/>
+			<xsd:enumeration value="NM"/>
+			<xsd:enumeration value="CM"/>
+			<xsd:enumeration value="KM"/>
+			<xsd:enumeration value="FTIND"/>
+			<xsd:enumeration value="SFT"/>
+			<xsd:enumeration value="DEG"/>
+			<xsd:enumeration value="DMS"/>
+			<xsd:enumeration value="MNT"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="GON"/>
+			<xsd:enumeration value="RAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<kml xmlns:gx="http://www.google.com/kml/ext/2.2">
+
+  <GroundOverlay>
+    <name>GTC-ACQID0000211284-A-TW--0000000000-M</name>
+    <drawOrder>4</drawOrder>
+    <Icon>
+      <href>gtc-acqId0000211284-a-tw--0000000000-m.png</href>
+      <viewBoundScale>0.75</viewBoundScale>
+    </Icon>
+    <gx:LatLonQuad>
+      <coordinates>123.830498,46.131338 129.868520,46.245079 129.963886,51.466787 123.266368,51.330269</coordinates>
+    </gx:LatLonQuad>
+  </GroundOverlay>
+
+</kml>

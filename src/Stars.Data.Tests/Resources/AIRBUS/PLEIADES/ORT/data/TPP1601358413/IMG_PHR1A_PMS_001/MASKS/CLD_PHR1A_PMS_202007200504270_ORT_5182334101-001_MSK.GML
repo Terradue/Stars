@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask gml:id="DS_PHR1A_202007200504270_FR1_PX_E089N26_0903_00862_imgncn_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <gml:name>Cloud mask from data-strip DS_PHR1A_202007200504270_FR1_PX_E089N26_0903_00862</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.3:32645">
+      <gml:lowerCorner>763637.75 2886209.25</gml:lowerCorner>
+      <gml:upperCorner>775838.75 2895392.25</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="cloud-0-DS_PHR1A_202007200503501_FR1_PX_E089N26_0903_00772-0">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32645">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>764142.5 2895392.5 775214 2895234.5 775460.5 2895159 775641.5 2894959.5 775711 2894687.5 775711.5 2894674 775839 2886773 775775 2886491 775591.5 2886284.5 775339.5 2886209 764142.5 2886221.5 763892 2886296.5 763708 2886500.5 763640.5 2886778.5 763637.5 2894840 763705 2895118 763713 2895127 763890.5 2895321 764142.5 2895392.5</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

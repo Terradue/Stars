@@ -1,0 +1,197 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          122.173,
+          9.00556
+        ],
+        [
+          123.896,
+          8.64724
+        ],
+        [
+          124.248,
+          10.3055
+        ],
+        [
+          122.517,
+          10.665
+        ],
+        [
+          122.173,
+          9.00556
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2021-02-25T01:04:26.966443Z",
+    "end_datetime": "2021-02-25T01:04:54.058773Z",
+    "datetime": "2021-02-25T01:04:26.966443Z",
+    "created": "2021-02-26T13:32:29.161434Z",
+    "platform": "vrss-1",
+    "mission": "vrss-1",
+    "instruments": [
+      "wmc-1"
+    ],
+    "gsd": 16.0,
+    "title": "VRSS-1 WMC-1 L2B 25/02/2021 01:04:26",
+    "sat:absolute_orbit": 45345,
+    "proj:epsg": 32651,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 51N\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM51N\", AUTHORITY[\"EPSG\", \"32651\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 123], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 0], AUTHORITY[\"EPSG\", \"32651\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 1.775957,
+    "view:sun_azimuth": 113.788,
+    "view:sun_elevation": 45.355,
+    "processing:level": "L2B"
+  },
+  "bbox": [
+    122.173,
+    8.64724,
+    124.248,
+    10.665
+  ],
+  "assets": {
+    "band-1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_1.tif",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_1.tif",
+      "raster:bands": [
+        {
+          "scale": 0.208620186089206,
+          "offset": 17.27792381190804
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-1",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1946.099976
+        }
+      ]
+    },
+    "band-2": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_2.tif",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_2.tif",
+      "raster:bands": [
+        {
+          "scale": 0.2057443831783392,
+          "offset": 10.278989177845444
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-2",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "solar_illumination": 1848.0
+        }
+      ]
+    },
+    "band-3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_3.tif",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_3.tif",
+      "raster:bands": [
+        {
+          "scale": 0.18550466544233588,
+          "offset": 0.3246331645240878
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-3",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1547.400024
+        }
+      ]
+    },
+    "band-4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_4.tif",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_4.tif",
+      "raster:bands": [
+        {
+          "scale": 0.2285087518851972,
+          "offset": -5.456788766509757
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-4",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "solar_illumination": 1071.400024
+        }
+      ]
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "title": "Browse image",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732.jpg",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732.jpg"
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Thumbnail image",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_THUMB.jpg",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_THUMB.jpg"
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732.xml",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732.xml"
+    },
+    "metadata-addition": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Additional metadata",
+      "href": "data/a5_21022679000025/VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_ADDITION.xml",
+      "filename": "VRSS-1_WMC-1_0560_0174_20210225_L2B_226131337732_ADDITION.xml"
+    }
+  },
+  "links": []
+}

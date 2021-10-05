@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!--=========================================================================
+Filename      : rcm_prod_mapOverlay.xsd@@/main/2 ( Pitt: 36219 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:complexType name="kmlType">
+		<xsd:sequence>
+			<xsd:element name="Document" type="xsd:anyType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="kml" type="kmlType"/>
+</xsd:schema>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:include schemaLocation="Data_File.xsd"/>
+	<xsd:element id="Data_Access" name="Data_Access" type="t_Data_Access">
+		<xsd:annotation>
+			<xsd:documentation source="Data_Access"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Data_Access" name="t_Data_Access">
+		<xsd:sequence>
+			<xsd:element ref="DATA_FILE_FORMAT"/>
+			<xsd:element minOccurs="0" ref="DATA_FILE_FORMAT_DESC">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Data_Access"/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="DATA_FILE_ORGANISATION"/>
+			<xsd:element minOccurs="0" ref="SUPER_TILE_SIZE"/>
+			<xsd:element minOccurs="0" ref="PYRAMID_DEPTH"/>
+			<xsd:element maxOccurs="unbounded" ref="Data_File"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element id="DATA_FILE_FORMAT" name="DATA_FILE_FORMAT" type="t_DATA_FILE_FORMAT">
+		<xsd:annotation>
+			<xsd:documentation source="DATA_FILE_FORMAT"/>
+		</xsd:annotation>
+	</xsd:element>
+	
+	<xsd:complexType id="t_DATA_FILE_FORMAT" name="t_DATA_FILE_FORMAT">
+		<xsd:simpleContent>
+			<xsd:restriction base="String_Version">
+				<xsd:enumeration value="DTED"/>
+				<xsd:enumeration value="RAW"/>
+				<xsd:enumeration value="TIFF"/>
+				<xsd:enumeration value="GEOTIFF"/>
+				<xsd:enumeration value="JFIF"/>
+				<xsd:enumeration value="GIF"/>
+				<xsd:enumeration value="BMP"/>
+				<xsd:enumeration value="PPM"/>
+				<xsd:enumeration value="PGM"/>
+				<xsd:enumeration value="PNG"/>
+				<xsd:enumeration value="ECW"/>
+				<xsd:enumeration value="SID"/>
+				<xsd:enumeration value="JP2"/>
+				<xsd:enumeration value="DXF"/>
+				<xsd:enumeration value="DGN"/>
+				<xsd:enumeration value="DLG"/>
+				<xsd:enumeration value="BNA"/>
+				<xsd:enumeration value="ODYSSEY"/>
+				<xsd:enumeration value="MIF"/>
+				<xsd:enumeration value="SHP"/>
+				<xsd:enumeration value="GENERATE"/>
+				<xsd:enumeration value="MOSS"/>
+				<xsd:enumeration value="IGES"/>
+				<xsd:enumeration value="VPF"/>
+				<xsd:enumeration value="GML"/>
+				<xsd:enumeration value="SVG"/>
+				<xsd:enumeration value="OTHER"/>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	
+	<xsd:element id="DATA_FILE_FORMAT_DESC" name="DATA_FILE_FORMAT_DESC" type="t_DATA_FILE_FORMAT_DESC">
+		<xsd:annotation>
+			<xsd:documentation source="DATA_FILE_FORMAT_DESC"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATA_FILE_FORMAT_DESC" name="t_DATA_FILE_FORMAT_DESC">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="DATA_FILE_ORGANISATION" name="DATA_FILE_ORGANISATION" type="t_DATA_FILE_ORGANISATION">
+		<xsd:annotation>
+			<xsd:documentation source="DATA_FILE_ORGANISATION"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATA_FILE_ORGANISATION" name="t_DATA_FILE_ORGANISATION">
+		<xsd:restriction base="DF_Organisation"/>
+	</xsd:simpleType>
+	<xsd:element id="SUPER_TILE_SIZE" name="SUPER_TILE_SIZE" type="t_SUPER_TILE_SIZE">
+		<xsd:annotation>
+			<xsd:documentation source="SUPER_TILE_SIZE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_SUPER_TILE_SIZE" name="t_SUPER_TILE_SIZE">
+		<xsd:restriction base="PositiveInt"/>
+	</xsd:simpleType>
+	<xsd:element id="PYRAMID_DEPTH" name="PYRAMID_DEPTH" type="t_PYRAMID_DEPTH">
+		<xsd:annotation>
+			<xsd:documentation source="PYRAMID_DEPTH"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_PYRAMID_DEPTH" name="t_PYRAMID_DEPTH">
+		<xsd:restriction base="PositiveInt"/>
+	</xsd:simpleType>
+</xsd:schema>

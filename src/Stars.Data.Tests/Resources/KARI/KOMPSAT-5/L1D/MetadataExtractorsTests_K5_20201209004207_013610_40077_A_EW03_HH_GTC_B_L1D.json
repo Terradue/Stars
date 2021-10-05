@@ -1,0 +1,151 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          79.50241975393065,
+          8.59975693815049
+        ],
+        [
+          80.62101975411012,
+          8.60248389641262
+        ],
+        [
+          80.62206588155189,
+          7.473625964706724
+        ],
+        [
+          79.50655188174176,
+          7.471261077900979
+        ],
+        [
+          79.50241975393065,
+          8.59975693815049
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-12-09T00:42:07Z",
+    "start_datetime": "2020-12-09T00:42:07Z",
+    "end_datetime": "2020-12-09T00:42:40Z",
+    "created": "2020-12-10T00:25:58Z",
+    "platform": "kompsat-5",
+    "mission": "kompsat-5",
+    "instruments": [
+      "cosi"
+    ],
+    "gsd": 20.0,
+    "title": "Kompsat-5 cosi GTC HH 09/12/2020 00:42:07",
+    "sat:absolute_orbit": 40077,
+    "sat:orbit_state": "ascending",
+    "sar:instrument_mode": "WS",
+    "sar:frequency_band": "X",
+    "sar:polarizations": [
+      "HH"
+    ],
+    "sar:product_type": "GTC",
+    "sar:observation_direction": "right",
+    "sar:center_frequency": 9.66,
+    "sar:resolution_range": 16.43536290851652,
+    "sar:resolution_azimuth": 19.73025599745934,
+    "sar:pixel_spacing_range": 12.5,
+    "sar:pixel_spacing_azimuth": 12.5,
+    "sar:looks_range": 7.0,
+    "sar:looks_azimuth": 1.0,
+    "sar:looks_equivalent_number": 4.047619342803955,
+    "proj:epsg": 32744,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 44S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM44S\", AUTHORITY[\"EPSG\", \"32744\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 81], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32744\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:incidence_angle": 42.1731115020784,
+    "view:off_nadir": 38.43367964029312,
+    "processing:level": "L1D"
+  },
+  "bbox": [
+    79.50241975393065,
+    7.471261077900979,
+    80.62206588155189,
+    8.60248389641262
+  ],
+  "assets": {
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_Aux.xml",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_Aux.xml"
+    },
+    "gim": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_GIM.tif",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_GIM.tif"
+    },
+    "overview-worldfile": {
+      "type": "application/octet-stream",
+      "roles": [
+        "overview-worldfile"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.pgw",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.pgw"
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.png",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.png"
+    },
+    "browse-worldfile": {
+      "type": "application/octet-stream",
+      "roles": [
+        "overview-worldfile"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jgw",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jgw"
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_th.jpg",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_th.jpg"
+    },
+    "amplitude-hh": {
+      "type": "image/tiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D.tif",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D.tif",
+      "sar:polarizations": [
+        "HH"
+      ]
+    },
+    "browse": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jpg",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jpg"
+    }
+  },
+  "links": []
+}

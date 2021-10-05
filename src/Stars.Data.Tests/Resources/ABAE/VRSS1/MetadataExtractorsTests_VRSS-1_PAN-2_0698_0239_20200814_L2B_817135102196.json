@@ -1,0 +1,128 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          57.6293,
+          -20.5726
+        ],
+        [
+          57.9681,
+          -20.6398
+        ],
+        [
+          58.0389,
+          -20.3448
+        ],
+        [
+          57.7008,
+          -20.2778
+        ],
+        [
+          57.6293,
+          -20.5726
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2020-08-14T05:16:59.381451Z",
+    "end_datetime": "2020-08-14T05:17:04.232018Z",
+    "datetime": "2020-08-14T05:16:59.381451Z",
+    "created": "2020-08-17T14:01:37.159767Z",
+    "platform": "vrss-1",
+    "mission": "vrss-1",
+    "instruments": [
+      "pan-2"
+    ],
+    "gsd": 2.5,
+    "title": "VRSS-1 PAN-2 L2B 14/08/2020 05:16:59",
+    "sat:absolute_orbit": 42475,
+    "proj:epsg": 32740,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 40S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM40S\", AUTHORITY[\"EPSG\", \"32740\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32740\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 21.270622,
+    "view:sun_azimuth": 54.033,
+    "view:sun_elevation": 35.387,
+    "processing:level": "L2B"
+  },
+  "bbox": [
+    57.6293,
+    -20.6398,
+    58.0389,
+    -20.2778
+  ],
+  "assets": {
+    "pan": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.tif",
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.tif",
+      "raster:bands": [
+        {
+          "scale": 0.19545756616238613,
+          "offset": -7.728392361518313
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "pan",
+          "common_name": "pan",
+          "center_wavelength": 0.675,
+          "solar_illumination": 1368.769287
+        }
+      ]
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "title": "Browse image",
+      "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.jpg",
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.jpg"
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Thumbnail image",
+      "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_THUMB.jpg",
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_THUMB.jpg"
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.xml",
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.xml"
+    },
+    "metadata-addition": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Additional metadata",
+      "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_ADDITION.xml",
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_ADDITION.xml"
+    }
+  },
+  "links": []
+}

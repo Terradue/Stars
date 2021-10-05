@@ -1,0 +1,209 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          120.033,
+          -0.098092
+        ],
+        [
+          120.239,
+          -0.140917
+        ],
+        [
+          120.281,
+          0.0656321
+        ],
+        [
+          120.076,
+          0.108454
+        ],
+        [
+          120.033,
+          -0.098092
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-10-02T10:54:21Z",
+    "start_datetime": "2018-10-02T10:54:21Z",
+    "end_datetime": "2018-10-02T10:54:24Z",
+    "created": "2018-10-02T13:54:34Z",
+    "platform": "gaofen-2",
+    "constellation": "gaofen-2",
+    "mission": "gaofen-2",
+    "instruments": [
+      "pms2"
+    ],
+    "gsd": 0.81,
+    "eo:cloud_cover": 0.01,
+    "sat:absolute_orbit": 22271,
+    "sat:relative_orbit": 22271,
+    "sat:orbit_state": "descending",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 0.0,
+    "view:sun_azimuth": 104.564,
+    "view:sun_elevation": 14.05,
+    "processing:level": "L1A",
+    "product_type": "PAN_MS_L1A",
+    "title": "Gaofen-2 PMS2 L1A 10/02/2018 10:54:21"
+  },
+  "bbox": [
+    120.033,
+    -0.140917,
+    120.281,
+    0.108454
+  ],
+  "assets": {
+    "MSS-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2_thumb.jpg",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2_thumb.jpg"
+    },
+    "MSS-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.rpb",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.rpb"
+    },
+    "MSS": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.tiff",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.tiff",
+      "gsd": 3.24,
+      "eo:bands": [
+        {
+          "name": "B01",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1967.309,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "B02",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "solar_illumination": 1822.157,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "B03",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1524.103,
+          "full_width_half_max": 0.06
+        },
+        {
+          "name": "B04",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "solar_illumination": 1067.72,
+          "full_width_half_max": 0.12
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.1748,
+          "offset": -0.593
+        },
+        {
+          "scale": 0.1817,
+          "offset": -0.2717
+        },
+        {
+          "scale": 0.1741,
+          "offset": -0.2717
+        },
+        {
+          "scale": 0.1975,
+          "offset": -0.2773
+        }
+      ]
+    },
+    "MSS-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.xml",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.xml"
+    },
+    "PAN-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2_thumb.jpg",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2_thumb.jpg"
+    },
+    "PAN-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.jpg",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.jpg"
+    },
+    "PAN-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.rpb",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.rpb"
+    },
+    "PAN": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.tiff",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.tiff",
+      "gsd": 0.81,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "common_name": "pan",
+          "center_wavelength": 0.67,
+          "solar_illumination": 1363.494,
+          "full_width_half_max": 0.44
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.1823,
+          "offset": 0.1654
+        }
+      ]
+    },
+    "PAN-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.xml",
+      "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.xml"
+    }
+  },
+  "links": []
+}

@@ -1,62 +1,65 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>net5.0</TargetFrameworks>
     <Version>0.9.42</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
     <AssemblyName>Stars</AssemblyName>
     <UserSecretsId>f195eead-6dad-49d2-ad76-d9dbf6662371</UserSecretsId>
-    <RuntimeIdentifiers>win7-x64;win10-x64;osx-x64;linux-x64;centos.7-x64;rhel-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest">
-      <LinuxPath>/etc/stars/appsettings.json</LinuxPath>
+      <LinuxPath>/etc/Stars/appsettings.json</LinuxPath>
+    </Content>
+    <Content Include="../Stars.Data/appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest">
+      <LinuxPath>/etc/Stars/conf.d/terradue.json</LinuxPath>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.*"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.*"/>
-    <PackageReference Include="NetEscapades.Configuration.Yaml" Version="2.0.1"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="3.1.*"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.*"/>
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.*"/>
-    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.*"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.*"/>
-    <PackageReference Include="YamlDotNet" Version="8.1.2"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.*"/>
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.*" />
+    <PackageReference Include="YamlDotNet" Version="8.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.*" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj"/>
-    <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj"/>
+    <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />
+    <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj" />
+    <ProjectReference Include="..\Stars.Data\Terradue.Stars.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <LinuxFolder Include="/etc/stars" RemoveOnUninstall="true"/>
+    <LinuxFolder Include="/etc/Stars" RemoveOnUninstall="true" />
   </ItemGroup>
   <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel')) OR $(RuntimeIdentifier.StartsWith('fedora')) OR $(RuntimeIdentifier.StartsWith('ol'))">
-    <RpmDotNetDependency Include="libstdc++" Version=""/>
-    <RpmDotNetDependency Include="libunwind" Version=""/>
-    <RpmDotNetDependency Include="libicu" Version=""/>
+    <RpmDotNetDependency Include="libstdc++" Version="" />
+    <RpmDotNetDependency Include="libunwind" Version="" />
+    <RpmDotNetDependency Include="libicu" Version="" />
   </ItemGroup>
   <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('rhel-x64')) OR $(RuntimeIdentifier.StartsWith('fedora'))">
-    <RpmDotNetDependency Include="compat-openssl10" Version=""/>
+    <RpmDotNetDependency Include="compat-openssl10" Version="" />
   </ItemGroup>
   <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('ol'))">
-    <RpmDotNetDependency Include="openssl-libs" Version=""/>
+    <RpmDotNetDependency Include="openssl-libs" Version="" />
   </ItemGroup>
   <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('centos'))">
-    <RpmDotNetDependency Include="libcurl" Version=""/>
-    <RpmDotNetDependency Include="openssl-libs" Version=""/>
-    <RpmDotNetDependency Include="krb5-libs" Version=""/>
-    <RpmDotNetDependency Include="libicu" Version=""/>
-    <RpmDotNetDependency Include="zlib" Version=""/>
-    <RpmDotNetDependency Include="libunwind" Version="" Condition="'$(TargetFramework)'=='netcoreapp2.0'"/>
-    <RpmDotNetDependency Include="libuuid" Version="" Condition="'$(TargetFramework)'=='netcoreapp2.0'"/>
+    <RpmDotNetDependency Include="libcurl" Version="" />
+    <RpmDotNetDependency Include="openssl-libs" Version="" />
+    <RpmDotNetDependency Include="krb5-libs" Version="" />
+    <RpmDotNetDependency Include="libicu" Version="" />
+    <RpmDotNetDependency Include="zlib" Version="" />
+    <RpmDotNetDependency Include="libunwind" Version="" Condition="'$(TargetFramework)'=='netcoreapp2.0'" />
+    <RpmDotNetDependency Include="libuuid" Version="" Condition="'$(TargetFramework)'=='netcoreapp2.0'" />
   </ItemGroup>
-  <Target Name="PackageZip" DependsOnTargets="CreateZip" Outputs="$(ZipPath)"/>
-  <Target Name="PackageTarball" DependsOnTargets="CreateTarball" Outputs="$(TarballPath)"/>
-  <Target Name="PackageDebian" DependsOnTargets="CreateDeb" Outputs="$(DebPath)"/>
-  <Target Name="PackageRpm" DependsOnTargets="CreateRpm" Outputs="$(RpmPath)"/>
+  <Target Name="PackageZip" DependsOnTargets="CreateZip" Outputs="$(ZipPath)" />
+  <Target Name="PackageTarball" DependsOnTargets="CreateTarball" Outputs="$(TarballPath)" />
+  <Target Name="PackageDebian" DependsOnTargets="CreateDeb" Outputs="$(DebPath)" />
+  <Target Name="PackageRpm" DependsOnTargets="CreateRpm" Outputs="$(RpmPath)" />
 </Project>

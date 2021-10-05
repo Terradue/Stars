@@ -1,0 +1,112 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "WV01S00_854583E119_9147222018100200000000PN00",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.8263311,
+          -0.939026
+        ],
+        [
+          120.0073202,
+          -0.939026
+        ],
+        [
+          120.0073202,
+          -0.7711705
+        ],
+        [
+          119.8263311,
+          -0.7711705
+        ],
+        [
+          119.8263311,
+          -0.939026
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "platform": "worldview-1",
+    "constellation": "worldview-1",
+    "mission": "worldview-1",
+    "instruments": [
+      "pan"
+    ],
+    "gsd": 4.79504953E-06,
+    "datetime": "2018-10-02T05:36:04Z",
+    "created": "2018-10-02T05:36:04Z",
+    "eo:cloud_cover": 0.479,
+    "view:sun_azimuth": 263.8,
+    "view:sun_elevation": 63.3,
+    "processing:level": "LV1B",
+    "title": "Worldview-1 PAN LV1B 02/10/2018 05:36:04"
+  },
+  "bbox": [
+    119.8263311,
+    -0.939026,
+    120.0073202,
+    -0.7711705
+  ],
+  "assets": {
+    "manifest": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/WV01S00_854583E119_9147222018100200000000PN00_GR000000001/vendor_metadata/18OCT02053604-P1BS-502544562030_01_P007.XML",
+      "filename": "vendor_metadata/18OCT02053604-P1BS-502544562030_01_P007.XML"
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/WV01S00_854583E119_9147222018100200000000PN00_GR000000001/WV01S00_854583E119_9147222018100200000000PN00_BR000000001.jpg",
+      "filename": "WV01S00_854583E119_9147222018100200000000PN00_BR000000001.jpg"
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/WV01S00_854583E119_9147222018100200000000PN00_GR000000001/WV01S00_854583E119_9147222018100200000000PN00_DR000000001.txt",
+      "filename": "WV01S00_854583E119_9147222018100200000000PN00_DR000000001.txt"
+    },
+    "pan": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/WV01S00_854583E119_9147222018100200000000PN00_GR000000001/WV01S00_854583E119_9147222018100200000000PN00_GR000000001.tif",
+      "filename": "WV01S00_854583E119_9147222018100200000000PN00_GR000000001.tif",
+      "gsd": 4.79504953E-06,
+      "eo:bands": [
+        {
+          "name": "pan",
+          "common_name": "pan",
+          "center_wavelength": 0.6322,
+          "solar_illumination": 1478.62,
+          "full_width_half_max": 0.1423
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.1717509217204301,
+          "offset": -1.824
+        }
+      ]
+    }
+  },
+  "links": []
+}

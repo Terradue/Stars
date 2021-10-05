@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_geodeticCoordinate.xsd@@/main/4 ( Pitt: 36585 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    19-Nov-2016   Consolidated schema files
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:rcm_prod="rcmGsProductSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_dataTypes.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_units.xsd"/>
+	<xsd:complexType name="geodeticCoordinate">
+		<xsd:annotation>
+			<xsd:documentation>
+      Geodetic Co-ordinate Data Store  
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="latitude">
+				<xsd:annotation>
+					<xsd:documentation>
+            Geodetic lattitude (units = deg)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="longitude">
+				<xsd:annotation>
+					<xsd:documentation>
+            Geodetic longitude (units = deg)
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="height">
+				<xsd:annotation>
+					<xsd:documentation>Geodetic height above reference ellipsoid (units = m)</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="xsd:double">
+							<xsd:attribute name="units" type="rcm_prod:distanceUnits" use="required" fixed="m"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
