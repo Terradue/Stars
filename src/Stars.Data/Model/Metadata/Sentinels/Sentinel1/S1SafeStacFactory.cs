@@ -110,14 +110,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             if (pt == "RAW") return 0;
             if (pt == "GRD")
             {
-                if (item.Id[10] == 'f' && mode == "SM") return 9;
-                if (item.Id[10] == 'h')
+                if (item.Id.ToLower()[10] == 'f' && mode == "SM") return 9;
+                if (item.Id.ToLower()[10] == 'h')
                 {
                     if (mode == "SM") return 23;
                     if (mode == "IW") return 22;
                     if (mode == "EW") return 50;
                 }
-                if (item.Id[10] == 'm')
+                if (item.Id.ToLower()[10] == 'm')
                 {
                     if (mode == "WV") return 25;
                     return 40;
