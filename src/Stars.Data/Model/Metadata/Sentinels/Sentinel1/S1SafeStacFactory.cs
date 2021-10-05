@@ -72,6 +72,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public override double GetGroundSampleDistance()
         {
+            Console.Out.WriteLine("{0} {1} {2}", GetProductType(), GetInstrumentMode(), GetResolution());
             return GetGroundSampleDistance(GetProductType(), GetInstrumentMode(), GetResolution());
         }
 
