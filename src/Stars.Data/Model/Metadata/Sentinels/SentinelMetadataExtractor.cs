@@ -34,7 +34,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 IAsset manifestAsset = GetManifestAsset(item);
                 XFDUType manifest = ReadManifest(manifestAsset).GetAwaiter().GetResult();
                 string identifier = null;
-                Match match = Regex.Match(manifestAsset.Uri.ToString(), @"(.*\/)*(?'identifier'S(1|2|3)[^\.\/]*)(\.\w+)*(\/.*)*");
+                Match match = Regex.Match(manifestAsset.Uri.ToString(), @"(.*\/)*(?'identifier'S(1|2|3)[^\.\/]{10,})(\.\w+)*(\/.*)*");
                 if (match.Success)
                     identifier = match.Groups["identifier"].Value;
                 else return false;
@@ -52,14 +52,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             IAsset manifestAsset = GetManifestAsset(item);
 
             string identifier = null;
-
+            Console.Out.WriteLine(item.Id);
             Match match = Regex.Match(manifestAsset.Uri.ToString(), @"(.*\/)*(?'identifier'S(1|2|3)[^\.\/]{10,})(\.\w+)*(\/.*)*");
             if (match.Success)
                 identifier = match.Groups["identifier"].Value;
             else
                 identifier = item.Id;
-
             identifier += suffix;
+
+            Console.Out.WriteLine(manifestAsset.Uri.ToString());
+            Console.Out.WriteLine(match.Groups["identifier"].Value);
+            Console.Out.WriteLine(identifier);
 
             XFDUType manifest = await ReadManifest(manifestAsset);
 

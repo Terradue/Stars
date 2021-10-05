@@ -77,7 +77,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         private char GetResolution()
         {
-            Console.Out.WriteLine(item.Id);
+            
             return item.Id.ToUpper()[10];
         }
 
