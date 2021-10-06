@@ -45,6 +45,7 @@ pipeline {
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-exe', includes: 'src/Stars.Console/bin/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
+            stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/publish/Stars/*.zip'
             archiveArtifacts artifacts: 'src/Stars.Console/bin/linux**/publish/Stars,src/Stars.Console/bin/linux**/publish/*.json,src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
           }
         }
@@ -114,6 +115,7 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
           unstash name: 'stars-exe'
+          unstash name: 'stars-zips'
           sh "go get github.com/github-release/github-release"
           // echo "Deleting release from github before creating new one"
           // sh "github-release delete --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL}"
@@ -123,6 +125,7 @@ pipeline {
 
           echo "Uploading the artifacts into github"
           sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-linux-x64-${env.VERSION_TOOL} --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
+          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-linux-x64-${env.VERSION_TOOL}.zip --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars/Stars.*.linux-x64.zip"
         }
       }
         
