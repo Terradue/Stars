@@ -124,8 +124,8 @@ pipeline {
           sh "github-release release --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name 'Stars v${env.VERSION_TOOL}'"
 
           echo "Uploading the artifacts into github"
-          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-linux-x64-${env.VERSION_TOOL} --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
-          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-linux-x64-${env.VERSION_TOOL}.zip --file src/Stars.Console/bin/Release/net5.0/linux-x64/Stars.*.linux-x64.zip"
+          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-${env.VERSION_TOOL}-linux-x64 --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
+          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-${env.VERSION_TOOL}-linux-x64.zip --file src/Stars.Console/bin/Release/net5.0/linux-x64/Stars.*.linux-x64.zip"
         }
       }
         
