@@ -8,7 +8,7 @@
     <VersionSuffix>beta.1</VersionSuffix>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <NoWarn>NU1603</NoWarn>
-    <PackageId>Terradue.Stars.Data</PackageId>
+    <PackageId>Terradue.Data.Stars</PackageId>
     <PackageTags>STAC;OpenSearch;Terradue;Geo;Json</PackageTags>
     <PackageIcon>Stars_logo.png</PackageIcon>
     <IncludeSymbols>true</IncludeSymbols>
