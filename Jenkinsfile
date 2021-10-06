@@ -44,8 +44,8 @@ pipeline {
             sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
-            stash name: 'stars-exe', includes: 'src/Stars.Console/bin/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
-            stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/publish/Stars/*.zip'
+            stash name: 'stars-exe', includes: 'src/Stars.Console/bin/*/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
+            stash name: 'stars-zips', includes: 'src/Stars.Console/bin/*/linux**/publish/Stars/*.zip'
             archiveArtifacts artifacts: 'src/Stars.Console/bin/linux**/publish/Stars,src/Stars.Console/bin/linux**/publish/*.json,src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
           }
         }
