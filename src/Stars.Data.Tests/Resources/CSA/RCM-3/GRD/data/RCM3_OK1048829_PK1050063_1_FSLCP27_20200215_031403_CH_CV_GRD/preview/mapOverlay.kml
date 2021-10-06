@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<kml xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../support/schemas/rcm_prod_mapOverlay.xsd">
+	<Document>
+		<Style id="redLinePoly">
+			<LineStyle>
+				<color>ff0000ff</color>
+			</LineStyle>
+			<PolyStyle>
+				<fill>0</fill>
+				</PolyStyle>
+		</Style>
+		<Style id="normalIcon">
+			<IconStyle>
+				<scale>1.0</scale>
+				<Icon>
+					<href>http://maps.google.com/mapfiles/kml/paddle/wht-blank.png</href>
+				</Icon>
+			</IconStyle>
+			<BalloonStyle>
+				<text>$[description]</text>
+			</BalloonStyle>
+		</Style>
+		<Style id="highlightIcon">
+			<IconStyle>
+				<scale>1.3</scale>
+				<Icon>
+					<href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href>
+				</Icon>
+			</IconStyle>
+			<BalloonStyle>
+				<text>$[description]</text>
+			</BalloonStyle>
+		</Style>
+		<StyleMap id="iconStyleMap">
+			<Pair>
+				<key>normal</key>
+				<styleUrl>#normalIcon</styleUrl>
+			</Pair>
+			<Pair>
+				<key>highlight</key>
+				<styleUrl>#highlightIcon</styleUrl>
+			</Pair>
+		</StyleMap>
+		<Folder>
+			<name>RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD</name>
+			<Placemark>
+				<name>1050063_1</name>
+				<description>
+<![CDATA[<table>
+<tr>
+<td align="right"><b>Software Version: </b></td>
+<td>RCM PGS 6.25</td>
+</tr>
+<tr>
+<td align="right"><b>Satellite: </b></td>
+<td>RCM-3</td>
+</tr>
+<tr>
+<td align="right"><b>Product Type: </b></td>
+<td>GRD</td>
+</tr>
+<tr>
+<td align="right"><b>Downlink Segment Id: </b></td>
+<td>138370_155863</td>
+</tr>
+<tr>
+<td align="right"><b>Start Time: </b></td>
+<td>2020-02-15T03:14:03.070000Z</td>
+</tr>
+<tr>
+<td align="right"><b>Beam Mode: </b></td>
+<td>Spotlight</td>
+</tr>
+<tr>
+<td align="right"><b>Polarization: </b></td>
+<td>CH CV</td>
+</tr>
+<tr>
+<td align="right"><b>Pass Direction: </b></td>
+<td>Descending</td>
+</tr>
+<tr>
+<td align="right"><b>Near Range Incidence Angle: </b></td>
+<td>43.275608</td>
+</tr>
+<tr>
+<td align="right"><b>Far Range Incidence Angle: </b></td>
+<td>44.498665</td>
+</tr>
+<tr>
+<td align="right"><b>Area Covered: </b></td>
+<td>6.50km x 20.00km</td>
+</tr>
+<tr>
+<td align="right"><b>Centre Coordinate: </b></td>
+<td>S1.2695, E36.8820</td>
+</tr>
+</table>]]>
+				</description>
+				<LookAt>
+					<longitude>36.882048897632</longitude>
+					<latitude>-1.269487639517</latitude>
+					<range>75000</range>
+				</LookAt>
+				<Point>
+					<coordinates>36.882048897632,-1.269487639517</coordinates>
+				</Point>
+				<styleUrl>#iconStyleMap</styleUrl>
+			</Placemark>
+			<Placemark>
+				<name>Polygon Outline</name>
+				<MultiGeometry>
+					<Polygon>
+						<outerBoundaryIs>
+							<LinearRing>
+								<coordinates>36.788234180166,-1.279994868841 36.964149229510,-1.316542624883 36.975861335508,-1.258970020457 36.799950935118,-1.222437185983 36.788234180166,-1.279994868841</coordinates>
+							</LinearRing>
+						</outerBoundaryIs>
+					</Polygon>
+				</MultiGeometry>
+				<styleUrl>#redLinePoly</styleUrl>
+			</Placemark>
+			<GroundOverlay>
+				<name>Browse Image Overlay</name>
+					<Icon>
+						<href>productOverview.png</href>
+					</Icon>
+					<altitudeMode>clampToGround</altitudeMode>
+					<gx:LatLonQuad>
+						<coordinates>36.788234180166,-1.279994868841 36.964149229510,-1.316542624883 36.975861335508,-1.258970020457 36.799950935118,-1.222437185983</coordinates>
+					</gx:LatLonQuad>
+			</GroundOverlay>
+		</Folder>
+	</Document>
+</kml>

@@ -1,0 +1,98 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CBERS_4_PAN5M_20190510_027_076_L2_BAND1",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          86.048944,
+          20.962762
+        ],
+        [
+          86.876579,
+          20.96537
+        ],
+        [
+          86.875599,
+          22.118965
+        ],
+        [
+          86.0414,
+          22.116199
+        ],
+        [
+          86.048944,
+          20.962762
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2019-05-10T04:30:58.682154Z",
+    "end_datetime": "2019-05-10T04:31:16.634084Z",
+    "datetime": "2019-05-10T04:31:07.658174Z",
+    "created": "2019-05-11T03:08:40.261628Z",
+    "platform": "cbers-4",
+    "mission": "cbers-4",
+    "instruments": [
+      "pan5m"
+    ],
+    "gsd": 5.0,
+    "title": "cbers-4 L2 10/05/2019 04:31:07",
+    "eo:bands": [
+      {
+        "name": "band-1",
+        "common_name": "pan",
+        "center_wavelength": 0.68
+      }
+    ],
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 27076,
+    "view:off_nadir": 17.163,
+    "view:sun_azimuth": 95.7266,
+    "view:sun_elevation": 66.525,
+    "processing:level": "L2"
+  },
+  "bbox": [
+    86.0414,
+    20.962762,
+    86.876579,
+    22.118965
+  ],
+  "assets": {
+    "band-1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4_PAN5M_20190510_027_076_L2_BAND1/CBERS_4_PAN5M_20190510_027_076_L2_BAND1.tif",
+      "filename": "CBERS_4_PAN5M_20190510_027_076_L2_BAND1.tif",
+      "eo:bands": [
+        {
+          "name": "band-1",
+          "common_name": "pan",
+          "center_wavelength": 0.68
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CBERS_4_PAN5M_20190510_027_076_L2_BAND1/CBERS_4_PAN5M_20190510_027_076_L2_BAND1.xml",
+      "filename": "CBERS_4_PAN5M_20190510_027_076_L2_BAND1.xml"
+    }
+  },
+  "links": []
+}

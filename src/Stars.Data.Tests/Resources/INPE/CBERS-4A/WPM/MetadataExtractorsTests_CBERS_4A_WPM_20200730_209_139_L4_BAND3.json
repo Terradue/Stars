@@ -1,0 +1,97 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CBERS_4A_WPM_20200730_209_139_L4_BAND3",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -51.684164,
+          -21.171632
+        ],
+        [
+          -50.58998,
+          -21.172519
+        ],
+        [
+          -50.592796,
+          -20.118295
+        ],
+        [
+          -51.679465,
+          -20.117457
+        ],
+        [
+          -51.684164,
+          -21.171632
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2020-07-30T13:51:17.286563Z",
+    "end_datetime": "2020-07-30T13:51:31.009148Z",
+    "datetime": "2020-07-30T13:51:24.147711Z",
+    "created": "2020-07-31T04:49:26.04152Z",
+    "platform": "cbers-4a",
+    "mission": "cbers-4a",
+    "instruments": [
+      "wpm"
+    ],
+    "gsd": 8.0,
+    "title": "cbers-4a L4 30/07/2020 13:51:24",
+    "eo:bands": [
+      {
+        "name": "band-3",
+        "common_name": "red",
+        "center_wavelength": 0.66
+      }
+    ],
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 209139,
+    "view:sun_azimuth": 32.9813,
+    "view:sun_elevation": 44.3386,
+    "processing:level": "L4"
+  },
+  "bbox": [
+    -51.684164,
+    -21.172519,
+    -50.58998,
+    -20.117457
+  ],
+  "assets": {
+    "band-3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4A_WPM_20200730_209_139_L4_BAND3/CBERS_4A_WPM_20200730_209_139_L4_BAND3.tif",
+      "filename": "CBERS_4A_WPM_20200730_209_139_L4_BAND3.tif",
+      "eo:bands": [
+        {
+          "name": "band-3",
+          "common_name": "red",
+          "center_wavelength": 0.66
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CBERS_4A_WPM_20200730_209_139_L4_BAND3/CBERS_4A_WPM_20200730_209_139_L4_BAND3.xml",
+      "filename": "CBERS_4A_WPM_20200730_209_139_L4_BAND3.xml"
+    }
+  },
+  "links": []
+}

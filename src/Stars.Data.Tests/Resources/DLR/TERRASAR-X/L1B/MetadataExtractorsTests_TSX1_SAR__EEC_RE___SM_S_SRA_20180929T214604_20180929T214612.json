@@ -1,0 +1,115 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.6944699378598,
+          -0.5186170440521
+        ],
+        [
+          119.59287743075,
+          -1.0221940790858
+        ],
+        [
+          119.8906075496204,
+          -1.0817838270979
+        ],
+        [
+          119.9766692459304,
+          -0.57491157644
+        ],
+        [
+          119.6944699378598,
+          -0.5186170440521
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-09-29T21:46:04.680000Z",
+    "start_datetime": "2018-09-29T21:46:04.680000Z",
+    "end_datetime": "2018-09-29T21:46:12.679858Z",
+    "created": "2018-10-01T14:35:38.000000Z",
+    "platform": "tsx-1",
+    "constellation": "tsx-1",
+    "mission": "tsx-1",
+    "instruments": [
+      "x-sar"
+    ],
+    "gsd": 6.3235365317422,
+    "title": "TSX-1 SAR EEC SM 164 HH 2018-09-29T21:46:04.680000Z",
+    "sat:absolute_orbit": 62622,
+    "sat:relative_orbit": 164,
+    "sat:orbit_state": "descending",
+    "sat:platform_international_designator": "2019-038D",
+    "view:sun_azimuth": 191.1412,
+    "view:incidence_angle": 42.727318884274624,
+    "sar:instrument_mode": "SM",
+    "sar:frequency_band": "X",
+    "sar:polarizations": [
+      "HH"
+    ],
+    "sar:product_type": "EEC",
+    "sar:observation_direction": "right",
+    "sar:center_frequency": 9649998358.0,
+    "processing:level": "L1B"
+  },
+  "bbox": [
+    119.59287743075,
+    -1.0817838270979,
+    119.9766692459304,
+    -0.5186170440521
+  ],
+  "assets": {
+    "amplitude-hh": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/IMAGEDATA/IMAGE_HH_SRA_strip_013.tif",
+      "filename": "TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/IMAGEDATA/IMAGE_HH_SRA_strip_013.tif",
+      "gsd": 6.3235365317422,
+      "sar:polarizations": [
+        "HH"
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/iif/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/L1B_iif.xml",
+      "filename": "iif/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/L1B_iif.xml"
+    },
+    "product-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612.xml",
+      "filename": "TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612.xml"
+    },
+    "overview": {
+      "type": "image/tiff",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/PREVIEW/COMPOSITE_QL.tif",
+      "filename": "TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20180929T214604_20180929T214612/PREVIEW/COMPOSITE_QL.tif"
+    }
+  },
+  "links": []
+}

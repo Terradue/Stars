@@ -1,0 +1,97 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CBERS_4_MUX_20201031_003_073_L2_BAND6",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          109.799364,
+          23.533745
+        ],
+        [
+          111.238462,
+          23.538194
+        ],
+        [
+          111.240835,
+          24.809358
+        ],
+        [
+          109.787418,
+          24.804638
+        ],
+        [
+          109.799364,
+          23.533745
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2020-10-31T03:16:01.968242Z",
+    "end_datetime": "2020-10-31T03:16:19.763179Z",
+    "datetime": "2020-10-31T03:16:10.854295Z",
+    "created": "2020-11-01T03:27:00.279915Z",
+    "platform": "cbers-4",
+    "mission": "cbers-4",
+    "instruments": [
+      "mux"
+    ],
+    "gsd": 20.0,
+    "title": "cbers-4 L2 31/10/2020 03:16:10",
+    "eo:bands": [
+      {
+        "name": "band-6",
+        "common_name": "green",
+        "center_wavelength": 0.555
+      }
+    ],
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 3073,
+    "view:sun_azimuth": 156.11,
+    "view:sun_elevation": 48.4771,
+    "processing:level": "L2"
+  },
+  "bbox": [
+    109.787418,
+    23.533745,
+    111.240835,
+    24.809358
+  ],
+  "assets": {
+    "band-6": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4_MUX_20201031_003_073_L2_BAND6/CBERS_4_MUX_20201031_003_073_L2_BAND6.tif",
+      "filename": "CBERS_4_MUX_20201031_003_073_L2_BAND6.tif",
+      "eo:bands": [
+        {
+          "name": "band-6",
+          "common_name": "green",
+          "center_wavelength": 0.555
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CBERS_4_MUX_20201031_003_073_L2_BAND6/CBERS_4_MUX_20201031_003_073_L2_BAND6.xml",
+      "filename": "CBERS_4_MUX_20201031_003_073_L2_BAND6.xml"
+    }
+  },
+  "links": []
+}

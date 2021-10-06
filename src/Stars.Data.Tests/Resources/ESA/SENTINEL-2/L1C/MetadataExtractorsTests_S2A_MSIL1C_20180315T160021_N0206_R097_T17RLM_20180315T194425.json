@@ -1,0 +1,493 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -83.05143193762544,
+          28.912653887310096
+        ],
+        [
+          -81.92539078020556,
+          28.92510258614215
+        ],
+        [
+          -81.9168096844268,
+          27.93409630069409
+        ],
+        [
+          -83.0324218944781,
+          27.92214908733191
+        ],
+        [
+          -83.05143193762544,
+          28.912653887310096
+        ],
+        [
+          -83.05143193762544,
+          28.912653887310096
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-03-15T16:00:21.026Z",
+    "created": "2018-03-15T19:44:25Z",
+    "platform": "sentinel-2a",
+    "constellation": "sentinel-2",
+    "mission": "sentinel-2",
+    "instruments": [
+      "msi"
+    ],
+    "gsd": 10.0,
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 14251,
+    "sat:relative_orbit": 97,
+    "sat:platform_international_designator": "2015-000A",
+    "processing:level": "L1C",
+    "processing:lineage": "Generation of Level-1C User Product",
+    "title": "Sentinel-2A MSI L1C 15/03/2018 16:00:21"
+  },
+  "bbox": [
+    -83.05143193762544,
+    27.92214908733191,
+    -81.9168096844268,
+    28.92510258614215
+  ],
+  "assets": {
+    "mtd": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/MTD_MSIL1C.xml",
+      "filename": "MTD_MSIL1C.xml"
+    },
+    "B01": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "coastal 443nm TOA 60",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B01.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B01.jp2",
+      "gsd": 60.0,
+      "eo:bands": [
+        {
+          "name": "coastal",
+          "description": "coastal 443nm TOA 60",
+          "common_name": "coastal",
+          "center_wavelength": 0.4427,
+          "solar_illumination": 1884.69
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 60.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B02": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "blue 492nm TOA 10",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B02.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B02.jp2",
+      "gsd": 10.0,
+      "eo:bands": [
+        {
+          "name": "blue",
+          "description": "blue 492nm TOA 10",
+          "common_name": "blue",
+          "center_wavelength": 0.4924,
+          "solar_illumination": 1959.72
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 10.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B03": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "green 560nm TOA 10",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B03.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B03.jp2",
+      "gsd": 10.0,
+      "eo:bands": [
+        {
+          "name": "green",
+          "description": "green 560nm TOA 10",
+          "common_name": "green",
+          "center_wavelength": 0.5598,
+          "solar_illumination": 1823.24
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 10.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B04": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "red 665nm TOA 10",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B04.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B04.jp2",
+      "gsd": 10.0,
+      "eo:bands": [
+        {
+          "name": "red",
+          "description": "red 665nm TOA 10",
+          "common_name": "red",
+          "center_wavelength": 0.6646,
+          "solar_illumination": 1512.06
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 10.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B05": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "rededge 704nm TOA 20",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B05.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B05.jp2",
+      "gsd": 20.0,
+      "eo:bands": [
+        {
+          "name": "rededge70",
+          "description": "rededge 704nm TOA 20",
+          "common_name": "rededge",
+          "center_wavelength": 0.7041000000000001,
+          "solar_illumination": 1424.64
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 20.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B06": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "rededge 740nm TOA 20",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B06.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B06.jp2",
+      "gsd": 20.0,
+      "eo:bands": [
+        {
+          "name": "rededge74",
+          "description": "rededge 740nm TOA 20",
+          "common_name": "rededge",
+          "center_wavelength": 0.7405,
+          "solar_illumination": 1287.61
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 20.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B07": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "rededge 783nm TOA 20",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B07.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B07.jp2",
+      "gsd": 20.0,
+      "eo:bands": [
+        {
+          "name": "rededge78",
+          "description": "rededge 783nm TOA 20",
+          "common_name": "rededge",
+          "center_wavelength": 0.7827999999999999,
+          "solar_illumination": 1162.08
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 20.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B08": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "nir 833nm TOA 10",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B08.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B08.jp2",
+      "gsd": 10.0,
+      "eo:bands": [
+        {
+          "name": "nir",
+          "description": "nir 833nm TOA 10",
+          "common_name": "nir",
+          "center_wavelength": 0.8328,
+          "solar_illumination": 1041.63
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 10.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B09": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "nir09 945nm TOA 60",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B09.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B09.jp2",
+      "gsd": 60.0,
+      "eo:bands": [
+        {
+          "name": "nir09",
+          "description": "nir09 945nm TOA 60",
+          "common_name": "nir09",
+          "center_wavelength": 0.9451,
+          "solar_illumination": 812.92
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 60.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B10": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "cirrus 1374nm TOA 60",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B10.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B10.jp2",
+      "gsd": 60.0,
+      "eo:bands": [
+        {
+          "name": "cirrus",
+          "description": "cirrus 1374nm TOA 60",
+          "common_name": "cirrus",
+          "center_wavelength": 1.3735,
+          "solar_illumination": 367.15
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 60.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B11": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "swir16 1614nm TOA 20",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B11.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B11.jp2",
+      "gsd": 20.0,
+      "eo:bands": [
+        {
+          "name": "swir16",
+          "description": "swir16 1614nm TOA 20",
+          "common_name": "swir16",
+          "center_wavelength": 1.6137000000000001,
+          "solar_illumination": 245.59
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 20.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B12": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "swir22 2202nm TOA 20",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B12.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B12.jp2",
+      "gsd": 20.0,
+      "eo:bands": [
+        {
+          "name": "swir22",
+          "description": "swir22 2202nm TOA 20",
+          "common_name": "swir22",
+          "center_wavelength": 2.2024,
+          "solar_illumination": 85.25
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 20.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "B8A": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "nir08 865nm TOA 20",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B8A.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_B8A.jp2",
+      "gsd": 20.0,
+      "eo:bands": [
+        {
+          "name": "nir08",
+          "description": "nir08 865nm TOA 20",
+          "common_name": "nir08",
+          "center_wavelength": 0.8647,
+          "solar_illumination": 955.32
+        }
+      ],
+      "raster:bands": [
+        {
+          "nodata": 0.0,
+          "spatial_resolution": 20.0,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 10000.0
+          }
+        }
+      ]
+    },
+    "PVI": {
+      "type": "image/jp2",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/QI_DATA/T17RLM_20180315T160021_PVI.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/QI_DATA/T17RLM_20180315T160021_PVI.jp2"
+    },
+    "TCI": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_TCI.jp2",
+      "filename": "GRANULE/L1C_T17RLM_A014251_20180315T160647/IMG_DATA/T17RLM_20180315T160021_TCI.jp2"
+    },
+    "manifest": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "SAFE Manifest",
+      "href": "data/S2A_MSIL1C_20180315T160021_N0206_R097_T17RLM_20180315T194425.SAFE/manifest.safe",
+      "filename": "manifest.safe"
+    }
+  },
+  "links": []
+}

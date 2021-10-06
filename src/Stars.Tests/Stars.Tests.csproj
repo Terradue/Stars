@@ -11,11 +11,20 @@
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.*"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.*"/>
+    <PackageReference Include="Xunit.DependencyInjection" Version="7.1.0"/>
+    <PackageReference Include="Xunit.DependencyInjection.Logging" Version="2.1.0"/>
+    <PackageReference Include="DotNet.Testcontainers" Version="1.4.0"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj" />
     <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="testsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="PreserveNewest"/>
   </ItemGroup>
 
 </Project>

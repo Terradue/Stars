@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xfdu:XFDU xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xfdu="urn:ccsds:schema:xfdu:1" xsi:schemaLocation="urn:ccsds:schema:xfdu:1 ./support/schemas/rcm_prod_manifest.xsd">
+	<informationPackageMap>
+		<xfdu:contentUnit unitType="RCM Product Information Package" textInfo="RCM GCD Product">
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlicense_pdf"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_product_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_geodeticCoordinate_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_lists_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_identifiers_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_units_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproduct_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_compactPoleGainImb_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_units_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_lists_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_identifiers_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDcompactPolGainImbalance_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD1052796_1_CH_tif"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD1052796_1_CV_tif"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_mapOverlay_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDmapOverlay_kml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductPreview_html"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductOverview_tif"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductOverview_png"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlogo_png"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDreadme_txt"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlabel_txt"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDclassification_txt"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_product_xslt"/>
+			</xfdu:contentUnit>
+		</xfdu:contentUnit>
+	</informationPackageMap>
+	<metadataSection>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlicense_pdfMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlicense_pdf"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproduct_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproduct_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDcompactPolGainImbalance_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDcompactPolGainImbalance_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDmapOverlay_kmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDmapOverlay_kml"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductPreview_htmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductPreview_html"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlogo_pngMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlogo_png"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDreadme_txtMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDreadme_txt"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlabel_txtMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlabel_txt"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDclassification_txtMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDclassification_txt"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_product_xsltMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_product_xslt"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_dataTypes_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_dataTypes.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_doppler_grid_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_doppler_grid.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_geodeticCoordinate_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_geodeticCoordinate.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_identifiers_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_identifiers.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_incidenceAngles_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_incidenceAngles.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_compactPoleGainImb_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_compactPoleGainImb.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_lists_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_lists.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_lut_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_lut.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_manifest_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_manifest.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_mapOverlay_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_mapOverlay.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_noiseLevels_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_noiseLevels.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_product_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_product.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_units_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_units.xsd"/>
+		</metadataObject>
+	</metadataSection>
+	<dataObjectSection>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlicense_pdf">
+			<byteStream mimeType="application/pdf" size="168079">
+				<fileLocation locatorType="URL" href="license.pdf"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproduct_xml" repID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_product_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_geodeticCoordinate_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_lists_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_identifiers_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_units_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="39597">
+				<fileLocation locatorType="URL" href="metadata/product.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDcompactPolGainImbalance_xml" repID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_compactPoleGainImb_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_units_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_lists_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_identifiers_xsdSchema RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="5470">
+				<fileLocation locatorType="URL" href="metadata/calibration/compactPolGainImbalance.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD1052796_1_CH_tif">
+			<byteStream mimeType="application/octet-stream" size="2525084192">
+				<fileLocation locatorType="URL" href="imagery/1052796_1_CH.tif"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD1052796_1_CV_tif">
+			<byteStream mimeType="application/octet-stream" size="2525084192">
+				<fileLocation locatorType="URL" href="imagery/1052796_1_CV.tif"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDmapOverlay_kml" repID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_mapOverlay_xsdSchema">
+			<byteStream mimeType="text/xml" size="3523">
+				<fileLocation locatorType="URL" href="preview/mapOverlay.kml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductPreview_html">
+			<byteStream mimeType="text/html" size="2752">
+				<fileLocation locatorType="URL" href="preview/productPreview.html"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductOverview_tif">
+			<byteStream mimeType="application/octet-stream" size="1082079">
+				<fileLocation locatorType="URL" href="preview/productOverview.tif"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDproductOverview_png">
+			<byteStream mimeType="application/octet-stream" size="657637">
+				<fileLocation locatorType="URL" href="preview/productOverview.png"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlogo_png">
+			<byteStream mimeType="image/png" size="15064">
+				<fileLocation locatorType="URL" href="preview/icons/logo.png"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDreadme_txt">
+			<byteStream mimeType="text/plain" size="35">
+				<fileLocation locatorType="URL" href="support/readme.txt"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDlabel_txt">
+			<byteStream mimeType="text/plain" size="195">
+				<fileLocation locatorType="URL" href="support/label.txt"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDclassification_txt">
+			<byteStream mimeType="text/plain" size="55">
+				<fileLocation locatorType="URL" href="support/classification.txt"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCDrcm_prod_product_xslt">
+			<byteStream mimeType="text/xml" size="3567">
+				<fileLocation locatorType="URL" href="support/rcm_prod_product.xslt"/>
+			</byteStream>
+		</dataObject>
+	</dataObjectSection>
+</xfdu:XFDU>

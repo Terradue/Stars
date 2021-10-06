@@ -1,0 +1,161 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HHHV_L20005379609",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -65.649846,
+          -18.956382
+        ],
+        [
+          -65.153227,
+          -19.075238
+        ],
+        [
+          -65.016435,
+          -18.543952
+        ],
+        [
+          -65.511387,
+          -18.425655
+        ],
+        [
+          -65.649846,
+          -18.956382
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-01-07T09:54:49.286464Z",
+    "start_datetime": "2021-01-07T09:54:49.286464Z",
+    "end_datetime": "2021-01-07T09:54:58.238015Z",
+    "created": "2021-01-08T13:49:16Z",
+    "platform": "gf-3",
+    "constellation": "gf-3",
+    "mission": "gf-3",
+    "instruments": [
+      "SAR"
+    ],
+    "sar:instrument_mode": "FSI",
+    "sar:frequency_band": "C",
+    "sar:polarizations": [
+      "HH",
+      "HV"
+    ],
+    "sar:product_type": "SLP",
+    "sar:observation_direction": "right",
+    "sar:pixel_spacing_range": 2.5,
+    "sar:pixel_spacing_azimuth": 2.5,
+    "sar:looks_range": 1.0,
+    "sar:looks_azimuth": 1.0,
+    "sat:absolute_orbit": 23228,
+    "sat:orbit_state": "descending",
+    "view:off_nadir": 32.2,
+    "view:incidence_angle": 35.280714,
+    "processing:level": "L2",
+    "product_type": "SLP",
+    "proj:epsg": null,
+    "proj:wkt2": "GEOCCS[\"WGS84 Geocentric\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], AXIS[\"X\", OTHER], AXIS[\"Y\", OTHER], AXIS[\"Z\", OTHER]]",
+    "title": "Gf-3 SAR L2 01/07/2021 09:54:49"
+  },
+  "bbox": [
+    -65.649846,
+    -19.075238,
+    -65.016435,
+    -18.425655
+  ],
+  "assets": {
+    "overview-hh": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.jpg",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.jpg"
+    },
+    "thumbnail-hh": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.thumb.jpg",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.thumb.jpg"
+    },
+    "amplitude-hh": {
+      "type": "image/tiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.tiff",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "HH:qualify": 997.1026,
+      "HH:calibration_constant": 24.46,
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.tiff"
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HHHV_L20005379609.meta.xml",
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HHHV_L20005379609.meta.xml"
+    },
+    "overview-hv": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.jpg",
+      "sar:polarizations": [
+        "HV"
+      ],
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.jpg"
+    },
+    "thumbnail-hv": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.thumb.jpg",
+      "sar:polarizations": [
+        "HV"
+      ],
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.thumb.jpg"
+    },
+    "amplitude-hv": {
+      "type": "image/tiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.tiff",
+      "sar:polarizations": [
+        "HV"
+      ],
+      "HV:qualify": 466.574951,
+      "HV:calibration_constant": 24.53,
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.tiff"
+    }
+  },
+  "links": []
+}

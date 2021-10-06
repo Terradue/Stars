@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 2 U (http://www.xmlspy.com) by Cam Pearce (MacDonald Detwiller and Associates) -->
+<!--=========================================================================
+Filename      : rcm_prod_units.xsd@@/main/3 ( Pitt: 36219 )
+Project       : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Common simple type definitions for Product Metadata and Ground Segment
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+=========================================================================-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:annotation>
+		<xsd:documentation>Common type definitions for units attributes in RCM Product Metadata and Ground Segment         </xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="angularUnits">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="deg"/>
+			<xsd:enumeration value="rad"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="angularVelocityUnits">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="deg/s"/>
+			<xsd:enumeration value="rad/s"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="distanceUnits">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="mm"/>
+			<xsd:enumeration value="cm"/>
+			<xsd:enumeration value="m"/>
+			<xsd:enumeration value="km"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="frequencyUnits">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Hz"/>
+			<xsd:enumeration value="kHz"/>
+			<xsd:enumeration value="MHz"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="powerUnits">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="dB"/>
+			<xsd:enumeration value="W/m^2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="tecUnit">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="10^16/m^2"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="timeUnits">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="s"/>
+			<xsd:enumeration value="ms"/>
+			<xsd:enumeration value="us"/>
+			<xsd:enumeration value="ns"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="velocityUnits">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="m/s"/>
+			<xsd:enumeration value="km/s"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

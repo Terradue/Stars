@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Component" name="Component" type="t_Component">
+		<xsd:annotation>
+			<xsd:documentation source="Component">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Component" name="t_Component">
+		<xsd:all>
+			<xsd:element minOccurs="0" ref="COMPONENT_TITLE"/>
+			<xsd:element minOccurs="0" ref="COMPONENT_CONTENT"/>
+			<xsd:element ref="COMPONENT_TYPE"/>
+			<xsd:element ref="COMPONENT_PATH"/>
+			<xsd:element minOccurs="0" ref="COMPONENT_TN_PATH"/>
+			<xsd:element minOccurs="0" ref="COMPONENT_TN_FORMAT">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Component">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="COMPONENT_TITLE" name="COMPONENT_TITLE" type="t_COMPONENT_TITLE">
+		<xsd:annotation>
+			<xsd:documentation source="COMPONENT_TITLE">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_COMPONENT_TITLE" name="t_COMPONENT_TITLE">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="COMPONENT_CONTENT" name="COMPONENT_CONTENT" type="t_COMPONENT_CONTENT">
+		<xsd:annotation>
+			<xsd:documentation source="COMPONENT_CONTENT">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_COMPONENT_CONTENT" name="t_COMPONENT_CONTENT"><xsd:complexContent>
+			<xsd:extension base="Text">
+			</xsd:extension></xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="COMPONENT_TYPE" name="COMPONENT_TYPE" type="t_COMPONENT_TYPE">
+		<xsd:annotation>
+			<xsd:documentation source="COMPONENT_TYPE">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_COMPONENT_TYPE" name="t_COMPONENT_TYPE">
+		<xsd:restriction base="Component_Types"/>
+	</xsd:simpleType>
+	<xsd:element id="COMPONENT_PATH" name="COMPONENT_PATH" type="t_COMPONENT_PATH">
+		<xsd:annotation>
+			<xsd:documentation source="COMPONENT_PATH">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_COMPONENT_PATH" name="t_COMPONENT_PATH">
+		<xsd:complexContent>
+			<xsd:extension base="URI"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="COMPONENT_TN_PATH" name="COMPONENT_TN_PATH" type="t_COMPONENT_TN_PATH">
+		<xsd:annotation>
+			<xsd:documentation source="COMPONENT_TN_PATH">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_COMPONENT_TN_PATH" name="t_COMPONENT_TN_PATH">
+		<xsd:complexContent>
+			<xsd:extension base="URI"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="COMPONENT_TN_FORMAT" name="COMPONENT_TN_FORMAT" type="t_COMPONENT_TN_FORMAT">
+		<xsd:annotation>
+			<xsd:documentation source="COMPONENT_TN_FORMAT">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_COMPONENT_TN_FORMAT" name="t_COMPONENT_TN_FORMAT">
+		<xsd:simpleContent>
+			<xsd:restriction base="QL_Formats">
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,160 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.694166666667,
+          0.310000000000001
+        ],
+        [
+          120.01,
+          0.310000000000001
+        ],
+        [
+          120.01,
+          -0.344166666666665
+        ],
+        [
+          119.694166666667,
+          -0.344166666666665
+        ],
+        [
+          119.694166666667,
+          0.310000000000001
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2019-11-08T09:50:27.048Z",
+    "created": "2020-03-04T23:12:48Z",
+    "platform": "saocom-1a",
+    "mission": "saocom-1",
+    "instruments": [
+      "sao1a"
+    ],
+    "gsd": 50.0,
+    "title": "Saocom-1A SAO1A GEC VV/VH/HH/HV 08/11/2019 09:50:27",
+    "sat:orbit_state": "descending",
+    "proj:epsg": 32652,
+    "view:off_nadir": 32.0,
+    "view:incidence_angle": 36.8,
+    "sar:instrument_mode": "SM",
+    "sar:frequency_band": "L",
+    "sar:polarizations": [
+      "VV",
+      "VH",
+      "HH",
+      "HV"
+    ],
+    "sar:product_type": "GEC",
+    "sar:observation_direction": "right",
+    "sar:center_frequency": 12.75,
+    "sar:pixel_spacing_range": 7.8813165010144,
+    "sar:pixel_spacing_azimuth": 7.90792504787554,
+    "sar:looks_equivalent_number": 3.0,
+    "sar:resolution_range": 10.0,
+    "sar:resolution_azimuth": 10.0,
+    "processing:level": "L1C"
+  },
+  "bbox": [
+    119.694166666667,
+    -0.344166666666665,
+    120.01,
+    0.310000000000001
+  ],
+  "assets": {
+    "metadata-vv": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-vv-h.xml",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-vv-h.xml"
+    },
+    "amplitude-vv": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-vv-h",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-vv-h",
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "metadata-vh": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-vh-h.xml",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-vh-h.xml"
+    },
+    "amplitude-vh": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-vh-h",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-vh-h",
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "metadata-hh": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-hh-h.xml",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-hh-h.xml"
+    },
+    "amplitude-hh": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-hh-h",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-hh-h",
+      "sar:polarizations": [
+        "HH"
+      ]
+    },
+    "metadata-hv": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-hv-h.xml",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-hv-h.xml"
+    },
+    "amplitude-hv": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1C_OLF_20200304T225242/Data/gec-acqId0000077325-a-sm2-0000000000-hv-h",
+      "filename": "Data/gec-acqId0000077325-a-sm2-0000000000-hv-h",
+      "sar:polarizations": [
+        "HV"
+      ]
+    }
+  },
+  "links": []
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="GROUND_PAS.xsd">
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.0">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>S7_ORTHO</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>GROUND</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Source_Identification>
+    <SOURCE_ID>R3D</SOURCE_ID>
+    <SOURCE_TYPE>ORTHOIMAGE</SOURCE_TYPE>
+    <SOURCE_NAME>Reference3D PAS ORTHO Layer</SOURCE_NAME>
+    <SOURCE_DESCRIPTION>One square degre MOSAIC post at 1/12th of the DTED2 DEM sampling</SOURCE_DESCRIPTION>
+  </Source_Identification>
+  <Source_Content>
+    <SOURCE_LOCATION>S08E110</SOURCE_LOCATION>
+  </Source_Content>
+  <Source_Information>
+    <Producer_Information>
+      <PRODUCER_NAME>IGN - AIRBUS DS GEO</PRODUCER_NAME>
+      <PRODUCER_URL href="http://www.geo-airbusds.com"/>
+      <PRODUCER_ADDRESS>5 rue des Satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</PRODUCER_ADDRESS>
+    </Producer_Information>
+  </Source_Information>
+  <Coordinate_Reference_System>
+    <Geodetic_CRS>
+      <GEODETIC_CRS_TYPE>GEOGRAPHIC2D</GEODETIC_CRS_TYPE>
+      <GEODETIC_CRS_NAME>WGS 84</GEODETIC_CRS_NAME>
+      <GEODETIC_CRS_CODE>urn:ogc:def:crs:EPSG::4326</GEODETIC_CRS_CODE>
+    </Geodetic_CRS>
+  </Coordinate_Reference_System>
+  <Processing_Information>
+    <PROCESSING_LEVEL>ORTHO</PROCESSING_LEVEL>
+    <Adjustment_Method>
+      <GROUND_ADJUSTMENT>MATCHING</GROUND_ADJUSTMENT>
+    </Adjustment_Method>
+  </Processing_Information>
+  <Quality_Assessment>
+    <Planimetric_Accuracy_Measurement>
+      <QUALITY_TABLES>DTED</QUALITY_TABLES>
+      <MEASURE_NAME>Absolute Horizontal Accuracy</MEASURE_NAME>
+      <MEASURE_ID>AHA</MEASURE_ID>
+      <MEASURE_TYPE>SPECIFICATION</MEASURE_TYPE>
+      <MEASURE_UNIT>M</MEASURE_UNIT>
+      <MEASURE_CITATION version="5.3">Reference3D Product Description</MEASURE_CITATION>
+      <Quality_Values>
+        <ACCURACY_CE90>8</ACCURACY_CE90>
+      </Quality_Values>
+    </Planimetric_Accuracy_Measurement>
+  </Quality_Assessment>
+</Dimap_Document>

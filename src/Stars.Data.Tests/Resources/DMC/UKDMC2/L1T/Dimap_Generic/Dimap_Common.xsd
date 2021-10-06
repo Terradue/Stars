@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+	</xsd:annotation>
+	<xsd:simpleType name="k_Dimap_Version">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="1.0"/>
+			<xsd:enumeration value="1.1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="k_DIMAP">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DIMAP"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="URI">
+		<xsd:sequence/>
+		<xsd:attribute name="href" type="xsd:anyURI" use="required"/>
+	</xsd:complexType>
+	<xsd:simpleType name="Integer">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:complexType mixed="true" name="Text">
+		<xsd:sequence>
+			<xsd:any maxOccurs="unbounded" minOccurs="0" processContents="skip"/>
+		</xsd:sequence>
+		<xsd:anyAttribute namespace="http://www.w3.org/1999/xhtml ##local" processContents="skip"/>
+	</xsd:complexType>
+	<xsd:simpleType name="String">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="Code">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Za-z]+:[0-9A-Za-z_]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Date">
+		<xsd:restriction base="xsd:date">
+			<xsd:pattern value="\d\d\d\d-\d\d-\d\d"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Time">
+		<xsd:restriction base="xsd:time">
+			<xsd:pattern value="\d\d:\d\d:\d\d\.?\d*"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateTime">
+		<xsd:restriction base="xsd:dateTime"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateOrDateTime">
+		<xsd:union memberTypes="Date DateTime"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PositiveInt">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PositiveOrNullInt">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Byte">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Byte_Order">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="I"/>
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="INTEL"/>
+			<xsd:enumeration value="MOTOROLA"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Data_Types">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BYTE"/>
+			<xsd:enumeration value="SHORT"/>
+			<xsd:enumeration value="LONG"/>
+			<xsd:enumeration value="SBYTE"/>
+			<xsd:enumeration value="SSHORT"/>
+			<xsd:enumeration value="SLONG"/>
+			<xsd:enumeration value="FLOAT"/>
+			<xsd:enumeration value="DOUBLE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="String_Version">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="version" type="xsd:string" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="QL_Formats">
+		<xsd:simpleContent>
+			<xsd:restriction base="String_Version">
+				<xsd:enumeration value="JFIF"/>
+				<xsd:enumeration value="JPEG"/>
+				<xsd:enumeration value="JP2"/>
+				<xsd:enumeration value="GIF"/>
+				<xsd:enumeration value="TIFF"/>
+				<xsd:enumeration value="GEOTIFF"/>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="Country_Codes">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z][A-Z]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Horizontal_CS_Types">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PROJECTED"/>
+			<xsd:enumeration value="GEOGRAPHIC"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Vertical_CS_Types">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="HEIGHT"/>
+			<xsd:enumeration value="DEPTH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="Attribute_Formats">
+		<xsd:simpleContent>
+			<xsd:restriction base="String_Version">
+				<xsd:enumeration value="DBF"/>
+				<xsd:enumeration value="MDB"/>
+				<xsd:enumeration value="XLS"/>
+				<xsd:enumeration value="DIF"/>
+				<xsd:enumeration value="SYLK"/>
+				<xsd:enumeration value="MID"/>
+				<xsd:enumeration value="OTHER"/>
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="Component_Types">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DIMAP"/>
+			<xsd:enumeration value="ENCAPSULATED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DF_Organisation">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BAND_COMPOSITE"/>
+			<xsd:enumeration value="BAND_SEPARATE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Raster_CS_Types">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="POINT"/>
+			<xsd:enumeration value="CELL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Pixel_Origins">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Vertical_Datum_Types">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ELLIPSOIDAL"/>
+			<xsd:enumeration value="GEOIDAL"/>
+			<xsd:enumeration value="OTHER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Cardinal_Points">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="EAST"/>
+			<xsd:enumeration value="NORTH"/>
+			<xsd:enumeration value="WEST"/>
+			<xsd:enumeration value="SOUTH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Bands_Layout">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BIL"/>
+			<xsd:enumeration value="BSQ"/>
+			<xsd:enumeration value="BIP"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="Degree_Elt">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_Degree_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_Degree_Unit">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DEG"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="Real">
+		<xsd:restriction base="xsd:double"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ZeroOne">
+		<xsd:restriction base="xsd:double">
+			<xsd:minInclusive value="0.0"/>
+			<xsd:maxInclusive value="1.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- element BAND_INDEX used in several different Groups, so its definition is shared here -->
+	<xsd:element id="BAND_INDEX" name="BAND_INDEX" type="t_BAND_INDEX">
+		<xsd:annotation>
+			<xsd:documentation source="BAND_INDEX"/>
+			<xsd:appinfo source="BAND_INDEX"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_BAND_INDEX" name="t_BAND_INDEX">
+		<xsd:simpleContent>
+			<xsd:extension base="PositiveInt"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+</xsd:schema>

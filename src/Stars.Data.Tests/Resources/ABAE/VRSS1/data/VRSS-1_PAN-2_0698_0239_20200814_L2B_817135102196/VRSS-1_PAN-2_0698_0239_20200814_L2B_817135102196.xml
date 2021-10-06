@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<productMeta>
+	<OrganizationName>Bolivarian Agency for Space Activities (ABAE)</OrganizationName>
+	<!--FileInformation-->
+	<RawdataFileName/>
+	<L0DataFileName/>
+	<imageName>VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.tif</imageName>
+	<browseName>VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.jpg</browseName>
+	<thumbName>VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_THUMB.jpg</thumbName>
+	<productDate>2020 08 17 14:01:37.159767</productDate>
+	<!--IdentifierCodes-->
+	<productId>2260038</productId>
+	<satelliteId>VRSS-1</satelliteId>
+	<sensorId>PAN-2</sensorId>
+	<recStationId>FGS-1</recStationId>
+	<sceneId>2258301</sceneId>
+	<orbitId>42475</orbitId>
+	<RawdataID/>
+	<L0DataID>128160</L0DataID>
+	<sceneSerialNo>0</sceneSerialNo>
+	<!--Coordinates Type="Geographic" Units="Degrees"-->
+	<dataUpperLeftLat>-20.277800</dataUpperLeftLat>
+	<dataUpperLeftLong>57.700800</dataUpperLeftLong>
+	<dataUpperRightLat>-20.344800</dataUpperRightLat>
+	<dataUpperRightLong>58.038900</dataUpperRightLong>
+	<dataLowerLeftLat>-20.572600</dataLowerLeftLat>
+	<dataLowerLeftLong>57.629300</dataLowerLeftLong>
+	<dataLowerRightLat>-20.639800</dataLowerRightLat>
+	<dataLowerRightLong>57.968100</dataLowerRightLong>
+	<productUpperLeftLat>-20.277962</productUpperLeftLat>
+	<productUpperLeftLong>57.631343</productUpperLeftLong>
+	<productUpperRightLat>-20.276035</productUpperRightLat>
+	<productUpperRightLong>58.036276</productUpperRightLong>
+	<productLowerLeftLat>-20.640574</productLowerLeftLat>
+	<productLowerLeftLong>57.632827</productLowerLeftLong>
+	<productLowerRightLat>-20.638609</productLowerRightLat>
+	<productLowerRightLong>58.038711</productLowerRightLong>
+	<!--Coordinates Type="UTM" Units="Meters"-->
+	<dataUpperLeftX>573466.192455</dataUpperLeftX>
+	<dataUpperLeftY>7757633.037000</dataUpperLeftY>
+	<dataUpperRightX>608214.225182</dataUpperRightX>
+	<dataUpperRightY>7750139.404472</dataUpperRightY>
+	<dataLowerLeftX>565926.086126</dataLowerLeftX>
+	<dataLowerLeftY>7724997.273108</dataLowerLeftY>
+	<dataLowerRightX>600676.259724</dataLowerRightX>
+	<dataLowerRightY>7717501.889092</dataLowerRightY>
+	<productUpperLeftX>565926.086126</productUpperLeftX>
+	<productUpperLeftY>7757633.037000</productUpperLeftY>
+	<productUpperRightX>608214.225182</productUpperRightX>
+	<productUpperRightY>7757633.037000</productUpperRightY>
+	<productLowerLeftX>565926.086126</productLowerLeftX>
+	<productLowerLeftY>7717501.889092</productLowerLeftY>
+	<productLowerRightX>608214.225182</productLowerRightX>
+	<productLowerRightY>7717501.889092</productLowerRightY>
+	<!--SceneInformation-->
+	<dataSize>16916,16053</dataSize>
+	<sceneCenterLat>-20.458500</sceneCenterLat>
+	<sceneCenterLong>57.837000</sceneCenterLong>
+	<sceneStartLine/>
+	<sceneStopLine/>
+	<Scene_imagingStartTime>2020 08 14 05:16:59.381451</Scene_imagingStartTime>
+	<Scene_imagingStopTime>2020 08 14 05:17:04.232018</Scene_imagingStopTime>
+	<scenePath>698</scenePath>
+	<sceneRow>239</sceneRow>
+	<scenePathBias>A</scenePathBias>
+	<sceneRowBias>1</sceneRowBias>
+	<sceneCount>1</sceneCount>
+	<sceneShift>0</sceneShift>
+	<!--Processing-->
+	<direction/>
+	<lostFrameNum/>
+	<lineTimeDataStatus/>
+	<mtfcPro>No</mtfcPro>
+	<resampleTechnique>BL</resampleTechnique>
+	<productLevel>LEVEL2B</productLevel>
+	<DeadPixel/>
+	<!--ReferenceSystem-->
+	<earthModel>WGS_84</earthModel>
+	<mapProjection>UTM</mapProjection>
+	<Zone_Number>40S</Zone_Number>
+	<!--ContentInformation-->
+	<productType>Standard</productType>
+	<quality Range="0-9">9</quality>
+	<sunElevation Units="Degrees">35.387</sunElevation>
+	<sunAzimuth Units="Degrees">54.033</sunAzimuth>
+	<cloudCoverage Units="Percent">1</cloudCoverage>
+	<bands/>
+	<!--InstrumentDescription. Notes: The field of mirrorOffNadir in VRSS-1 images is invalid, so give it "NULL" value!-->
+	<gain/>
+	<intergralLevel/>
+	<instrumentMode>imaging</instrumentMode>
+	<sensorGSD>2.500000</sensorGSD>
+	<mirrorOffNadir>NULL</mirrorOffNadir>
+	<!--CalibrationParameters-->
+	<SolarIrradiance Band="1" Units="Watt/m2/micron">1368.769287</SolarIrradiance>
+	<ab_calibra_param>
+		<K>5.116200</K>
+		<B>39.540001</B>
+	</ab_calibra_param>
+	<!--PlatformDescription. Notes: These fields like Satellite_Altitude, satZenithAngle, satAzimuthAngle, satOffNadir are invalid, so give them "NULL" values!-->
+	<Satellite_Altitude>NULL</Satellite_Altitude>
+	<satZenithAngle>NULL</satZenithAngle>
+	<satAzimuthAngle>NULL</satAzimuthAngle>
+	<satOffNadir>-21.270622</satOffNadir>
+	<satPath>692</satPath>
+	<satRow>240</satRow>
+	<ephemerisData>GPS</ephemerisData>
+	<attitudeData>StarsensorAtt</attitudeData>
+	<attDataStatus/>
+	<gpsDataStatus/>
+	<dataFormatDes>GEOTIFF</dataFormatDes>
+	<Linkage>www.abae.gob.ve</Linkage>
+</productMeta>

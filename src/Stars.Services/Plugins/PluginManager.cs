@@ -37,10 +37,12 @@ namespace Terradue.Stars.Services.Plugins
             foreach (var pluginsOption in options.Value)
             {
                 AssemblyLoadContext loadContext = AssemblyLoadContext.Default;
-                if (pluginsOption.Value.Assembly != null && loadContextProvider != null)
-                    loadContext = loadContextProvider(pluginsOption.Value.Assembly);
+                Assembly assembly = Assembly.GetExecutingAssembly();
 
-                var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginsOption.Value.Assembly)));
+                if (pluginsOption.Value.Assembly != null && loadContextProvider != null){
+                    loadContext = loadContextProvider(pluginsOption.Value.Assembly);
+                    assembly = loadContext.LoadFromAssemblyName(new AssemblyName(pluginsOption.Value.Assembly));
+                }
 
                 if (pluginsOption.Value.Routers != null)
                     RegisterConfiguredPlugins<IRouter>(pluginsOption.Value.Routers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IPluginOption), collection, assembly);

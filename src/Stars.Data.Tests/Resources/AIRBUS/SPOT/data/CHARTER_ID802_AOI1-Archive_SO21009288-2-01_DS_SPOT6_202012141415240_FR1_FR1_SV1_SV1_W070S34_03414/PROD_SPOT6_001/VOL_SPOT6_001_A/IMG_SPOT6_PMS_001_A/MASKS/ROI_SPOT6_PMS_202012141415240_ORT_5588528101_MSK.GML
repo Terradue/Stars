@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask xmlns:hma="http://earth.esa.int/hma" xmlns:gml="http://www.opengis.net/gml" gml:id="ROI_SPOT6_PMS_202012141415240_ORT_5588528101_MSK" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/gml gml.xsd http://earth.esa.int/hma hma-1.1.xsd http://www.w3.org/1999/xlink xlinks.xsd">
+
+  <gml:name>Area of interest mask for product id SPOT6_PMS_202012141415240_ORT_5588528101</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="32719 WGS84/UTM 19S (S. hemisphere - 72W to 66W)">
+      <gml:lowerCorner>398612.25 6284804.25</gml:lowerCorner>
+      <gml:upperCorner>409451.25 6296739.75</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="REGION_OF_INTEREST-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">REGION_OF_INTEREST</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32719 WGS84/UTM 19S (S. hemisphere - 72W to 66W)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>398613 6296410 398613 6296432.5 398641.84375 6296649 398676.25 6296679.5 406464.375 6296740.5 408910.1875 6296740.5 408925.4375 6296726 409450.5 6286008.5 409450.5 6285989 409397.46875 6285685.5 409391 6285670.5 409217.53125 6285439.5 409202.15625 6285428 408955.1875 6285332.5 408944.65625 6285330 400258.84375 6284806.5 400221.53125 6284806.5 399979.34375 6284865.5 399962.71875 6284875 399771.625 6285068.5 399763.1875 6285082.5 399718.53125 6285222 399673.90625 6285361 399672.375 6285368 398613 6296410</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

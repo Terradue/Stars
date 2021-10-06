@@ -25,6 +25,8 @@ namespace Terradue.Stars.Services.Supplier
 
         public string Id => "Native";
 
+        public string Label => "Native Supplier (self resource)";
+
         public Task<IResource> SearchFor(IResource resource)
         {
             return Task.FromResult<IResource>(resource);

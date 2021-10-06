@@ -1,0 +1,182 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "ORT_SPOT6_20201214_141524100_000",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -70.0910667149,
+          -33.4639928229
+        ],
+        [
+          -69.9744572782,
+          -33.4649643575
+        ],
+        [
+          -69.9756648849,
+          -33.5725889202
+        ],
+        [
+          -70.0924187648,
+          -33.5716134362
+        ],
+        [
+          -70.0910667149,
+          -33.4639928229
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-12-14T14:15:24Z",
+    "created": "2021-02-08T07:53:38Z",
+    "platform": "spot-6",
+    "constellation": "spot",
+    "mission": "spot-6",
+    "instruments": [
+      "spot-6"
+    ],
+    "gsd": 2.18954101002,
+    "title": "SPOT-6 SPOT-6 RASTER_ORTHO 14/12/2020 14:15:24",
+    "sat:platform_international_designator": "2012-047A",
+    "view:azimuth": 97.0084129578,
+    "view:sun_azimuth": 80.1163909962,
+    "view:sun_elevation": 57.8723496178,
+    "view:incidence_angle": 3.96468986801,
+    "processing:level": "ORTHO/BASIC",
+    "processing:software": {
+      "IMF": "6"
+    }
+  },
+  "bbox": [
+    -70.0924187648,
+    -33.5725889202,
+    -69.9744572782,
+    -33.4639928229
+  ],
+  "assets": {
+    "PMS-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PMS Ortho R1 C1",
+      "href": "data/CHARTER_ID802_AOI1-Archive_SO21009288-2-01_DS_SPOT6_202012141415240_FR1_FR1_SV1_SV1_W070S34_03414/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/IMG_SPOT6_PMS_202012141415240_ORT_5588528101_R1C1.JP2",
+      "filename": "PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/IMG_SPOT6_PMS_202012141415240_ORT_5588528101_R1C1.JP2",
+      "eo:bands": [
+        {
+          "name": "B2",
+          "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1540.494123
+        },
+        {
+          "name": "B1",
+          "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1826.087443
+        },
+        {
+          "name": "B0",
+          "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1982.671954
+        },
+        {
+          "name": "B3",
+          "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1094.747446
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09671179883945842,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1091703056768559,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1349527665317139,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.07204610951008646,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PMS"
+    },
+    "PMS-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/CHARTER_ID802_AOI1-Archive_SO21009288-2-01_DS_SPOT6_202012141415240_FR1_FR1_SV1_SV1_W070S34_03414/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/IMG_SPOT6_PMS_202012141415240_ORT_5588528101_R1C1.J2W",
+      "filename": "PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/IMG_SPOT6_PMS_202012141415240_ORT_5588528101_R1C1.J2W"
+    },
+    "metadata-PMS": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CHARTER_ID802_AOI1-Archive_SO21009288-2-01_DS_SPOT6_202012141415240_FR1_FR1_SV1_SV1_W070S34_03414/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/DIM_SPOT6_PMS_202012141415240_ORT_5588528101.XML",
+      "filename": "PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/DIM_SPOT6_PMS_202012141415240_ORT_5588528101.XML"
+    },
+    "overview-PMS": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/CHARTER_ID802_AOI1-Archive_SO21009288-2-01_DS_SPOT6_202012141415240_FR1_FR1_SV1_SV1_W070S34_03414/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/PREVIEW_SPOT6_PMS_202012141415240_ORT_5588528101.JPG",
+      "filename": "PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/PREVIEW_SPOT6_PMS_202012141415240_ORT_5588528101.JPG"
+    },
+    "thumbnail-PMS": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/CHARTER_ID802_AOI1-Archive_SO21009288-2-01_DS_SPOT6_202012141415240_FR1_FR1_SV1_SV1_W070S34_03414/PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/ICON_SPOT6_PMS_202012141415240_ORT_5588528101.JPG",
+      "filename": "PROD_SPOT6_001/VOL_SPOT6_001_A/IMG_SPOT6_PMS_001_A/ICON_SPOT6_PMS_202012141415240_ORT_5588528101.JPG"
+    }
+  },
+  "links": []
+}

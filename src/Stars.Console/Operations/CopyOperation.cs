@@ -90,7 +90,7 @@ namespace Terradue.Stars.Console.Operations
         private int recursivity = 1;
         private string output = "file://" + Directory.GetCurrentDirectory();
 
-        public CopyOperation()
+        public CopyOperation(IConsole console): base(console)
         {
 
         }

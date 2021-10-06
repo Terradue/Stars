@@ -1,0 +1,249 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -74.1156326523845,
+          18.40803674675459
+        ],
+        [
+          -73.92375489894782,
+          18.40704705242644
+        ],
+        [
+          -73.92457003538351,
+          18.2753188251567
+        ],
+        [
+          -74.11630251379661,
+          18.27630094878313
+        ],
+        [
+          -74.1156326523845,
+          18.40803674675459
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-08-20T15:53:33Z",
+    "created": "2021-08-20T17:51:20.552Z",
+    "platform": "pleiades-1a",
+    "constellation": "pleiades",
+    "mission": "pleiades-1a",
+    "instruments": [
+      "phr-1a"
+    ],
+    "gsd": 0.834515168114971,
+    "title": "Pleiades-1A PHR-1A RASTER_ORTHO 20/08/2021 15:53:33",
+    "sat:platform_international_designator": "2011-076F",
+    "proj:epsg": 32618,
+    "view:azimuth": 179.9455089743216,
+    "view:sun_azimuth": 108.237106325676,
+    "view:sun_elevation": 72.90977891380352,
+    "view:incidence_angle": 35.11860443705005,
+    "processing:level": "ORTHO/BASIC",
+    "processing:software": {
+      "DRS-MM V2.9": "V2.9"
+    }
+  },
+  "bbox": [
+    -74.11630251379661,
+    18.2753188251567,
+    -73.92375489894782,
+    18.40803674675459
+  ],
+  "assets": {
+    "P-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic P Ortho R1 C1",
+      "href": "data/5888578101/IMG_PHR1A_P_001/IMG_PHR1A_P_202108201553330_ORT_5888578101-1_R1C1.JP2",
+      "filename": "IMG_PHR1A_P_001/IMG_PHR1A_P_202108201553330_ORT_5888578101-1_R1C1.JP2",
+      "eo:bands": [
+        {
+          "name": "P",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "pan",
+          "solar_illumination": 1549.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08733624454148473,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "P"
+    },
+    "P-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/5888578101/IMG_PHR1A_P_001/IMG_PHR1A_P_202108201553330_ORT_5888578101-1_R1C1.J2W",
+      "filename": "IMG_PHR1A_P_001/IMG_PHR1A_P_202108201553330_ORT_5888578101-1_R1C1.J2W"
+    },
+    "metadata-P": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/5888578101/IMG_PHR1A_P_001/DIM_PHR1A_P_202108201553330_ORT_5888578101-1.XML",
+      "filename": "IMG_PHR1A_P_001/DIM_PHR1A_P_202108201553330_ORT_5888578101-1.XML"
+    },
+    "overview-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/5888578101/IMG_PHR1A_P_001/PREVIEW_PHR1A_P_202108201553330_ORT_5888578101-1.JPG",
+      "filename": "IMG_PHR1A_P_001/PREVIEW_PHR1A_P_202108201553330_ORT_5888578101-1.JPG"
+    },
+    "thumbnail-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/5888578101/IMG_PHR1A_P_001/ICON_PHR1A_P_202108201553330_ORT_5888578101-1.JPG",
+      "filename": "IMG_PHR1A_P_001/ICON_PHR1A_P_202108201553330_ORT_5888578101-1.JPG"
+    },
+    "MS-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS Ortho R1 C1",
+      "href": "data/5888578101/IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108201553330_ORT_5888578101-2_R1C1.JP2",
+      "filename": "IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108201553330_ORT_5888578101-2_R1C1.JP2",
+      "eo:bands": [
+        {
+          "name": "B2",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1594.0
+        },
+        {
+          "name": "B1",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1831.0
+        },
+        {
+          "name": "B0",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1915.0
+        },
+        {
+          "name": "B3",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10050251256281408,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11248593925759279,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11299435028248588,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.06561679790026247,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS"
+    },
+    "MS-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/5888578101/IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108201553330_ORT_5888578101-2_R1C1.J2W",
+      "filename": "IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108201553330_ORT_5888578101-2_R1C1.J2W"
+    },
+    "metadata-MS": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/5888578101/IMG_PHR1A_MS_002/DIM_PHR1A_MS_202108201553330_ORT_5888578101-2.XML",
+      "filename": "IMG_PHR1A_MS_002/DIM_PHR1A_MS_202108201553330_ORT_5888578101-2.XML"
+    },
+    "overview-MS": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/5888578101/IMG_PHR1A_MS_002/PREVIEW_PHR1A_MS_202108201553330_ORT_5888578101-2.JPG",
+      "filename": "IMG_PHR1A_MS_002/PREVIEW_PHR1A_MS_202108201553330_ORT_5888578101-2.JPG"
+    },
+    "thumbnail-MS": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/5888578101/IMG_PHR1A_MS_002/ICON_PHR1A_MS_202108201553330_ORT_5888578101-2.JPG",
+      "filename": "IMG_PHR1A_MS_002/ICON_PHR1A_MS_202108201553330_ORT_5888578101-2.JPG"
+    }
+  },
+  "links": []
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Ellipsoid_Parameters" name="Ellipsoid_Parameters" type="t_Ellipsoid_Parameters">
+		<xsd:annotation>
+			<xsd:documentation source="Ellipsoid_Parameters"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Ellipsoid_Parameters" name="t_Ellipsoid_Parameters">
+		<xsd:sequence>
+			<xsd:element ref="ELLIPSOID_MAJOR_AXIS"/>
+			<xsd:choice>
+				<xsd:element ref="ELLIPSOID_MINOR_AXIS"/>
+				<xsd:element ref="ELLIPSOID_INVERSE_FLATTENING"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element id="ELLIPSOID_MAJOR_AXIS" name="ELLIPSOID_MAJOR_AXIS" type="t_ELLIPSOID_MAJOR_AXIS">
+		<xsd:annotation>
+			<xsd:documentation source="ELLIPSOID_MAJOR_AXIS"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_ELLIPSOID_MAJOR_AXIS" name="t_ELLIPSOID_MAJOR_AXIS">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_ELLIPSOID_MAJOR_AXIS_Linear_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_ELLIPSOID_MAJOR_AXIS_Linear_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="FT"/>
+			<xsd:enumeration value="FTUS"/>
+			<xsd:enumeration value="FTCLA"/>
+			<xsd:enumeration value="LKCLA"/>
+			<xsd:enumeration value="LKBEN"/>
+			<xsd:enumeration value="CHBEN"/>
+			<xsd:enumeration value="CHSEAR"/>
+			<xsd:enumeration value="YDSEAR"/>
+			<xsd:enumeration value="YDIND"/>
+			<xsd:enumeration value="FTSEAR"/>
+			<xsd:enumeration value="FM"/>
+			<xsd:enumeration value="NM"/>
+			<xsd:enumeration value="CM"/>
+			<xsd:enumeration value="KM"/>
+			<xsd:enumeration value="FTIND"/>
+			<xsd:enumeration value="SFT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="ELLIPSOID_MINOR_AXIS" name="ELLIPSOID_MINOR_AXIS" type="t_ELLIPSOID_MINOR_AXIS">
+		<xsd:annotation>
+			<xsd:documentation source="ELLIPSOID_MINOR_AXIS"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_ELLIPSOID_MINOR_AXIS" name="t_ELLIPSOID_MINOR_AXIS">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_ELLIPSOID_MINOR_AXIS_Linear_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_ELLIPSOID_MINOR_AXIS_Linear_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="FT"/>
+			<xsd:enumeration value="FTUS"/>
+			<xsd:enumeration value="FTCLA"/>
+			<xsd:enumeration value="LKCLA"/>
+			<xsd:enumeration value="LKBEN"/>
+			<xsd:enumeration value="CHBEN"/>
+			<xsd:enumeration value="CHSEAR"/>
+			<xsd:enumeration value="YDSEAR"/>
+			<xsd:enumeration value="YDIND"/>
+			<xsd:enumeration value="FTSEAR"/>
+			<xsd:enumeration value="FM"/>
+			<xsd:enumeration value="NM"/>
+			<xsd:enumeration value="CM"/>
+			<xsd:enumeration value="KM"/>
+			<xsd:enumeration value="FTIND"/>
+			<xsd:enumeration value="SFT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="ELLIPSOID_INVERSE_FLATTENING" name="ELLIPSOID_INVERSE_FLATTENING" type="t_ELLIPSOID_INVERSE_FLATTENING">
+		<xsd:annotation>
+			<xsd:documentation source="ELLIPSOID_INVERSE_FLATTENING"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_ELLIPSOID_INVERSE_FLATTENING" name="t_ELLIPSOID_INVERSE_FLATTENING">
+		<xsd:restriction base="Real"/>
+	</xsd:simpleType>
+</xsd:schema>

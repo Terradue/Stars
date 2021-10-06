@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Coordinate_Axis" name="Coordinate_Axis" type="t_Coordinate_Axis">
+		<xsd:annotation>
+			<xsd:documentation source="Coordinate_Axis">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Coordinate_Axis" name="t_Coordinate_Axis">
+		<xsd:all>
+			<xsd:element ref="AXIS1_NAME"/>
+			<xsd:element ref="AXIS1_ORIENTATION"/>
+			<xsd:element ref="AXIS2_NAME"/>
+			<xsd:element ref="AXIS2_ORIENTATION"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="AXIS1_NAME" name="AXIS1_NAME" type="t_AXIS1_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="AXIS1_NAME">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_AXIS1_NAME" name="t_AXIS1_NAME">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="AXIS1_ORIENTATION" name="AXIS1_ORIENTATION" type="t_AXIS1_ORIENTATION">
+		<xsd:annotation>
+			<xsd:documentation source="AXIS1_ORIENTATION">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_AXIS1_ORIENTATION" name="t_AXIS1_ORIENTATION">
+		<xsd:restriction base="Cardinal_Points">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="AXIS2_NAME" name="AXIS2_NAME" type="t_AXIS2_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="AXIS2_NAME">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_AXIS2_NAME" name="t_AXIS2_NAME">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="AXIS2_ORIENTATION" name="AXIS2_ORIENTATION" type="t_AXIS2_ORIENTATION">
+		<xsd:annotation>
+			<xsd:documentation source="AXIS2_ORIENTATION">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_AXIS2_ORIENTATION" name="t_AXIS2_ORIENTATION">
+		<xsd:restriction base="Cardinal_Points">
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

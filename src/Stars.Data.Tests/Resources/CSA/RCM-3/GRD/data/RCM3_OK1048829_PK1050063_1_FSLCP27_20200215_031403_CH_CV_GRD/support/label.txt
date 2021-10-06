@@ -1,0 +1,5 @@
+Product Id:            1050063_1
+Acquisition Date/Time: 2020-02-15T03:14:03.070000Z
+Creation Date/Time:    2020-02-15T14:12:42.000000Z
+
+RCM Data and Products (c) CSA, 2020 - All Rights Reserved.

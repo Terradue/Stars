@@ -1,0 +1,151 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "IRSR2_STUC00GTD_GEOREF_202601121",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.583772,
+          -0.452897
+        ],
+        [
+          120.224142,
+          -0.452634
+        ],
+        [
+          120.056059,
+          -1.203918
+        ],
+        [
+          119.416071,
+          -1.204582
+        ],
+        [
+          119.583772,
+          -0.452897
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-10-02T02:28:28.043361Z",
+    "created": "2020-01-14T16:11:49Z",
+    "platform": "resourcesat-2",
+    "constellation": "resourcesat-2",
+    "mission": "resourcesat-2",
+    "instruments": [
+      "l4fx"
+    ],
+    "sat:absolute_orbit": 38674,
+    "sat:orbit_state": "descending",
+    "proj:epsg": 32750,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 50S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM50S\", AUTHORITY[\"EPSG\", \"32750\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 117], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32750\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:sun_azimuth": 97.79845,
+    "view:sun_elevation": 69.402093,
+    "processing:level": "STD",
+    "title": "Resourcesat-2 L4FX STD 02/10/2018 02:28:28"
+  },
+  "bbox": [
+    119.416071,
+    -1.204582,
+    120.224142,
+    -0.452634
+  ],
+  "assets": {
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/20260121/202601121.jpg",
+      "filename": "202601121.jpg"
+    },
+    "geodata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/20260121/ACC_REP.txt",
+      "filename": "ACC_REP.txt"
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/20260121/BAND_META.txt",
+      "filename": "BAND_META.txt"
+    },
+    "green": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/20260121/BAND2.tif",
+      "filename": "BAND2.tif",
+      "raster:bands": [
+        {
+          "scale": 0.05078125
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "green",
+          "common_name": "green",
+          "solar_illumination": 181.89
+        }
+      ]
+    },
+    "red": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/20260121/BAND3.tif",
+      "filename": "BAND3.tif",
+      "raster:bands": [
+        {
+          "scale": 0.0458984375
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "red",
+          "common_name": "red",
+          "solar_illumination": 156.96
+        }
+      ]
+    },
+    "nir": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/20260121/BAND4.tif",
+      "filename": "BAND4.tif",
+      "raster:bands": [
+        {
+          "scale": 0.03076171875
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "nir",
+          "common_name": "nir",
+          "solar_illumination": 110.48
+        }
+      ]
+    }
+  },
+  "links": []
+}

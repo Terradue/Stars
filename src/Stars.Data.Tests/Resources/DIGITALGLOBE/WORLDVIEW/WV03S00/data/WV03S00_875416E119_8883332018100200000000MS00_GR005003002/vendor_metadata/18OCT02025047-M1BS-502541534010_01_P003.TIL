@@ -1,0 +1,26 @@
+bandId = "Multi";
+numTiles = 1;
+tileSizeX = 11264;
+tileSizeY = 13312;
+tileUnits = "Pixels";
+tileOverlap = 0;
+BEGIN_GROUP = TILE_1
+	filename = "18OCT02025047-M1BS-502541534010_01_P003.NTF";
+	ULColOffset = 0;
+	ULRowOffset = 0;
+	URColOffset = 11263;
+	URRowOffset = 0;
+	LRColOffset = 11263;
+	LRRowOffset = 13311;
+	LLColOffset = 0;
+	LLRowOffset = 13311;
+	ULLon =    119.82944000;
+	ULLat =     -0.80262674;
+	URLon =    119.94726296;
+	URLat =     -0.80240847;
+	LRLon =    119.94723815;
+	LRLat =     -0.94830696;
+	LLLon =    119.82948925;
+	LLLat =     -0.94831071;
+END_GROUP = TILE_1
+END;

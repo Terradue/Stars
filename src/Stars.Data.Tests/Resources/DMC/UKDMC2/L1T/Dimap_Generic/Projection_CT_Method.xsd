@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:include schemaLocation="Projection_Parameters.xsd"/>
+	<xsd:element id="Projection_CT_Method" name="Projection_CT_Method" type="t_Projection_CT_Method">
+		<xsd:annotation>
+			<xsd:documentation source="Projection_CT_Method">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Projection_CT_Method" name="t_Projection_CT_Method">
+		<xsd:all>
+			<xsd:element ref="PROJECTION_CT_NAME"/>
+			<xsd:element minOccurs="0" ref="PROJECTION_CT_CODE"/>
+			<xsd:element minOccurs="0" ref="Projection_Parameters">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Projection_CT_Method">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="PROJECTION_CT_NAME" name="PROJECTION_CT_NAME" type="t_PROJECTION_CT_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="PROJECTION_CT_NAME">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_PROJECTION_CT_NAME" name="t_PROJECTION_CT_NAME">
+		<xsd:simpleContent>
+			<xsd:extension base="String"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element id="PROJECTION_CT_CODE" name="PROJECTION_CT_CODE" type="t_PROJECTION_CT_CODE">
+		<xsd:annotation>
+			<xsd:documentation source="PROJECTION_CT_CODE">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_PROJECTION_CT_CODE" name="t_PROJECTION_CT_CODE">
+		<xsd:restriction base="Code">
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

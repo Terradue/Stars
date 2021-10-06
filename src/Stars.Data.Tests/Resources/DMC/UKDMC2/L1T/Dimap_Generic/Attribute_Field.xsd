@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Attribute_Field" name="Attribute_Field" type="t_Attribute_Field">
+		<xsd:annotation>
+			<xsd:documentation source="Attribute_Field">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Attribute_Field" name="t_Attribute_Field">
+		<xsd:all>
+			<xsd:element ref="ATTRIBUTE_FIELD_NAME"/>
+			<xsd:element minOccurs="0" ref="ATTRIBUTE_FIELD_DESC"/>
+			<xsd:element minOccurs="0" ref="ATTRIBUTE_FIELD_TYPE"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="ATTRIBUTE_FIELD_NAME" name="ATTRIBUTE_FIELD_NAME" type="t_ATTRIBUTE_FIELD_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="ATTRIBUTE_FIELD_NAME">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_ATTRIBUTE_FIELD_NAME" name="t_ATTRIBUTE_FIELD_NAME">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="ATTRIBUTE_FIELD_DESC" name="ATTRIBUTE_FIELD_DESC" type="t_ATTRIBUTE_FIELD_DESC">
+		<xsd:annotation>
+			<xsd:documentation source="ATTRIBUTE_FIELD_DESC">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_ATTRIBUTE_FIELD_DESC" name="t_ATTRIBUTE_FIELD_DESC">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="ATTRIBUTE_FIELD_TYPE" name="ATTRIBUTE_FIELD_TYPE" type="t_ATTRIBUTE_FIELD_TYPE">
+		<xsd:annotation>
+			<xsd:documentation source="ATTRIBUTE_FIELD_TYPE">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_ATTRIBUTE_FIELD_TYPE" name="t_ATTRIBUTE_FIELD_TYPE">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

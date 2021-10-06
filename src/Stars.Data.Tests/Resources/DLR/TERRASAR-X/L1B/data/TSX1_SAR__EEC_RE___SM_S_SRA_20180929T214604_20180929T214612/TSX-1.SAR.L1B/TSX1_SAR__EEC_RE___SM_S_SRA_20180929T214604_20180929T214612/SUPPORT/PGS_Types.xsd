@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Thomas Fritz (MF-BW) -->
+<!-- CHANGE HISTORY 
+date - author: changes
+Version 1.1
+16.12.2004 - D. Schulze: version control introduced
+Version 1.2
+26.01.2005 - D. Schulze: encoding changed to ISO 8859-1
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xs:element name="chirpSlope">
+		<xs:annotation>
+			<xs:documentation>[Up/Down/UpDown] chirp slope</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:NMTOKEN">
+				<xs:enumeration value="UP"/>
+				<xs:enumeration value="DOWN"/>
+				<xs:enumeration value="UPDOWN"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:simpleType name="latitudeDegType">
+		<xs:restriction base="xs:float">
+			<xs:minInclusive value="-90"/>
+			<xs:maxInclusive value="90"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="longitudeDegType">
+		<xs:restriction base="xs:float">
+			<xs:minInclusive value="-180"/>
+			<xs:maxInclusive value="180"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="dblComplex">
+		<xs:sequence>
+			<xs:element name="amplitude" type="xs:double"/>
+			<xs:element name="phase" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="floatPolynom">
+		<xs:sequence>
+			<xs:element name="validityRangeMin" type="xs:float"/>
+			<xs:element name="validityRangeMax" type="xs:float"/>
+			<xs:element name="referencePoint" type="xs:float"/>
+			<xs:element name="polynomialDegree" type="xs:unsignedInt"/>
+			<xs:element name="coefficient" maxOccurs="256">
+				<xs:annotation>
+					<xs:documentation>e.g.: 
+a0 * x^0 + a1* x^1 + ... + an*x^n
+a0, a1, ..., an = coefficient
+0, 1, ..., n = attribute exponent
+n= polynomialDegree</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:float">
+							<xs:attribute name="exponent" type="xs:unsignedInt"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dblPolynom">
+		<xs:sequence>
+			<xs:element name="validityRangeMin" type="xs:double"/>
+			<xs:element name="validityRangeMax" type="xs:double"/>
+			<xs:element name="referencePoint" type="xs:double"/>
+			<xs:element name="polynomialDegree" type="xs:unsignedInt"/>
+			<xs:element name="coefficient" minOccurs="0" maxOccurs="256">
+				<xs:annotation>
+					<xs:documentation>e.g.: 
+a0 * x^0 + a1* x^1 + ... + an*x^n
+a0, a1, ..., an = coefficient
+0, 1, ..., n = attribute exponent
+n= polynomialDegree</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:double">
+							<xs:attribute name="exponent" type="xs:unsignedInt"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dblVector">
+		<xs:annotation>
+			<xs:documentation>x, y, z</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="x" type="xs:double"/>
+			<xs:element name="y" type="xs:double"/>
+			<xs:element name="z" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="floatVector">
+		<xs:annotation>
+			<xs:documentation>x, y, z</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="x" type="xs:float"/>
+			<xs:element name="y" type="xs:float"/>
+			<xs:element name="z" type="xs:float"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="qualityLimitsType">
+		<xs:sequence>
+			<xs:element name="expected" type="xs:float"/>
+			<xs:element name="minimum" type="xs:float"/>
+			<xs:element name="maximum" type="xs:float"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="file">
+		<xs:annotation>
+			<xs:documentation>pointer to product components</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="location">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="host" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Host defaults to: . </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="path" type="xs:string"/>
+							<xs:element name="filename" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="size" type="xs:long"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="polLayer">
+		<xs:annotation>
+			<xs:documentation>HH, HV, ...</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="HH"/>
+				<xs:enumeration value="HV"/>
+				<xs:enumeration value="VH"/>
+				<xs:enumeration value="VV"/>
+				<xs:enumeration value="UNDEFINED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="antennaReceiveConfiguration">
+		<xs:annotation>
+			<xs:documentation>SRA | DRA</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:NMTOKENS">
+				<xs:enumeration value="SRA"/>
+				<xs:enumeration value="DRA"/>
+				<xs:enumeration value="UNDEFINED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="lookDirection">
+		<xs:annotation>
+			<xs:documentation>left | right</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:NMTOKEN">
+				<xs:enumeration value="LEFT"/>
+				<xs:enumeration value="RIGHT"/>
+				<xs:enumeration value="UNDEFINED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="imagingMode">
+		<xs:annotation>
+			<xs:documentation>SM, SC, HS, SL, ST</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:NMTOKENS">
+				<xs:enumeration value="SM"/>
+				<xs:enumeration value="SL"/>
+				<xs:enumeration value="SC"/>
+				<xs:enumeration value="HS"/>
+				<xs:enumeration value="ST"/>
+				<xs:enumeration value="UNDEFINED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="polarisationMode">
+		<xs:annotation>
+			<xs:documentation>single | dual | twin | quad</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:NMTOKENS">
+				<xs:enumeration value="SINGLE"/>
+				<xs:enumeration value="DUAL"/>
+				<xs:enumeration value="TWIN"/>
+				<xs:enumeration value="QUAD"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+</xs:schema>

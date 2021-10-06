@@ -1,0 +1,10 @@
+copyrightText = "(C) COPYRIGHT 2017 DigitalGlobe, Inc., Longmont CO USA 80503.  DigitalGlobe and the DigitalGlobe logos are trademarks of DigitalGlobe, Inc. The use and/or dissemination of this data and/or of any product in any way derived there from are restricted. Unauthorized use and/or dissemination is prohibited.";
+version = "28.3";
+intro = "Thank you for ordering from DigitalGlobe! This directory contains both an Imagery Product and the corresponding Image Support Data(ISD) files that fulfill your order. The naming convention for the image is <acquisition time>-<product info>-<product id>.<format extension>";
+BEGIN_GROUP = PRODUCT_1
+	XMLFilename = "16AUG31104614-S3DS-056956784010_01_P001.XML";
+	licenseTxtFilename = "BASE.TXT";
+	IMFFilename = "16AUG31104614-S3DS-056956784010_01_P001.IMD";
+	tilFilename = "16AUG31104614-S3DS-056956784010_01_P001.TIL";
+END_GROUP = PRODUCT_1
+END;

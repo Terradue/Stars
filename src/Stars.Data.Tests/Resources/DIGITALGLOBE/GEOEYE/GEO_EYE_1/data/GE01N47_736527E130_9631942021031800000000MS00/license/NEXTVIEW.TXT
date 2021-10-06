@@ -1,0 +1,22 @@
+The NextView End User License Agreement
+
+1. General Terms
+
+a. This clause applies to all unprocessed sensor data and requirements-compliant processed imagery, imagery services, imagery-derived products and imagery support data licensed under this contract. No other clauses related to intellectual property or data rights of any sort shall have any effect related to the unprocessed sensor data and requirements-compliant processed imagery, imagery services, imagery-derived products and imagery support data delivered under this contract.
+b. All license rights for use of the unprocessed sensor data and requirements-compliant processed imagery, imagery services, imagery-derived products and imagery support data provided to the United State Government (USG) purchased under this contract are in perpetuity.
+c. Licensed users may generate an unlimited number of hardcopies and softcopies of the unprocessed sensor data and requirements-compliant processed imagery, imagery services, imagery-derived products, and imagery support data for their use.
+d. Licensed users may generate any derived product from the licensed unprocessed sensor data; and requirements-compliant processed imagery, imagery services, imagery-derived products, and imagery support data.
+e. Unprocessed sensor data and requirements-compliant processed imagery, imagery services, imagery-derived products and imagery support data licensed under this contract have no restrictions on use and distribution, but shall contain the copyright markings.
+
+2. Licensed Users
+
+a. The imagery may be used by the USG (including, all branches, departments, agencies, and offices).
+b. The USG may provide the imagery to the following organizations:
+ State governments
+ Local governments
+ Foreign governments and inter-governmental organizations
+ Non-governmental organizations (NGOs) and other non-profit organizations
+c. In consideration for the flexibility afforded to the USG by allowing unprocessed sensor data and requirements-compliant processed imagery, imagery services, imagery-derived products, and imagery support data to be shared, the USG shall use its reasonable best efforts to minimize the effects on commercial sales. Acquisition and dissemination of imagery and imagery products collected within the United States shall be restricted in accordance with law and regulation.
+
+07 March 2019
+*****END NEXTVIEW LICENSE*****

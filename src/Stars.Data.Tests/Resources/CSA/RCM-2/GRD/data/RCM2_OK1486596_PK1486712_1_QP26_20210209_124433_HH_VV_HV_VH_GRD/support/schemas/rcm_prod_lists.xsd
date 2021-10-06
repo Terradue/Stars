@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_lists.xsd@@/main/5 ( Pitt: 37461 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    20-Sep-2016   Increase max coefficients to 13 for Burst Mode
+Y. Yajun      07-Nov-2017   Add compactImbValuesList
+
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:rcm_prod="rcmGsProductSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_identifiers.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_dataTypes.xsd"/>
+	<!--  note that maxLength = "unbounded" is an invalid constraining facet 
+       therefore, we leave it out, which has the same effect 
+  -->
+	<xsd:annotation>
+		<xsd:documentation> 
+      Collections of lists
+    </xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="beamList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of beams whose entries are stringListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:stringListType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="coefficientsList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of coefficients whose entries are doubleListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="13"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="datumShiftParametersList">
+		<xsd:annotation>
+			<xsd:documentation>The format is (dx, dy, dz), (units = m):
+ECEF coordinates
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:length value="3"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="histogramList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of histograms whose entries are integerListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:integerListType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="gainList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of gains whose entries are doubleListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="interPoleCorrectionCoefficientList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of inter-polarization correction coefficients whose entries are doubleListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="compactPoleCorrectionCoefficientList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of compact polarization correction coefficients whose entries are doubleListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="5"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="lookWeightList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of look weights whose entries are doubleListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="polarizationIdentifiersList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list type whose entries are polarizationIdentifiers.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:polarizationIdentifiersListType">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="4"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="pulseList">
+		<xsd:annotation>
+			<xsd:documentation>ScanSAR pulse changes over beam.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:pulseListType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="rationalFunctionCoefficientList">
+		<xsd:annotation>
+			<xsd:documentation>The order of the coefficients is the same as found in Document R-4</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:length value="20"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="noiseLevelValuesList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of noise level values whose entries are doubleListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="compactImbValuesList">
+		<xsd:annotation>
+			<xsd:documentation>This is a declaration of a list of compact pole gain/phase values whose entries are doubleListType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="rcm_prod:doubleListType">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="stringListType">
+		<xsd:annotation>
+			<xsd:documentation> 
+      This is a declaration of a list type whose entries are strings
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="doubleListType">
+		<xsd:annotation>
+			<xsd:documentation> 
+      This is a declaration of a list type whose entries are doubles
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="xsd:double"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="integerListType">
+		<xsd:annotation>
+			<xsd:documentation> 
+      This is a declaration of a list type whose entries are integers
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="pulseListType">
+		<xsd:annotation>
+			<xsd:documentation> 
+      This is a declaration of a list type whose entries are pulseIdentifiers
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="rcm_prod:pulseIdentifiers"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="polarizationIdentifiersListType">
+		<xsd:annotation>
+			<xsd:documentation> 
+      This is a declaration of a list type whose entries are polarizationIdentifiers
+    </xsd:documentation>
+		</xsd:annotation>
+		<xsd:list itemType="rcm_prod:polarizationIdentifiers"/>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?xml-stylesheet href="./LIBRARY/VOL_STYLE.XSL" type="text/xsl"?>
+<Dimap_Document xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="SPOT_vol.xsd" version="2.12">
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.12">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>VOLUME</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>SINGLE_VOLUME</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Dataset_Identification>
+    <DATASET_NAME>SPOT Volume Description</DATASET_NAME>
+    <DATASET_ID>A</DATASET_ID>
+  </Dataset_Identification>
+  <Product_Information>
+    <Producer_Information>
+      <PRODUCER_NAME>AIRBUS DS</PRODUCER_NAME>
+      <PRODUCER_URL href="http://www.geo-airbusds.com"></PRODUCER_URL>
+      <PRODUCER_CONTACT>sales@airbus.com</PRODUCER_CONTACT>
+      <PRODUCER_ADDRESS>5 rue des satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</PRODUCER_ADDRESS>
+    </Producer_Information>
+    <Distributor_Information>
+      <DISTRIBUTOR_NAME>AIRBUS DS</DISTRIBUTOR_NAME>
+      <DISTRIBUTOR_URL href="http://www.geo-airbusds.com"></DISTRIBUTOR_URL>
+      <DISTRIBUTOR_CONTACT>sales@airbus.com</DISTRIBUTOR_CONTACT>
+      <DISTRIBUTOR_ADDRESS>5 rue des satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</DISTRIBUTOR_ADDRESS>
+    </Distributor_Information>
+    <Delivery_Identification>
+      <PRODUCTION_DATE>2021-02-08T07:53:38.00Z</PRODUCTION_DATE>
+      <JOB_ID>5588528101</JOB_ID>
+      <PRODUCT_CODE></PRODUCT_CODE>
+      <PRODUCT_TYPE>NA</PRODUCT_TYPE>
+      <PRODUCT_INFO>SPOT</PRODUCT_INFO>
+      <Order_Identification>
+        <CUSTOMER_REFERENCE>C100037</CUSTOMER_REFERENCE>
+        <INTERNAL_REFERENCE>SPOT_PRO_5588528101_20210208074013723_1_1</INTERNAL_REFERENCE>
+        <COMMERCIAL_REFERENCE>SO21009288</COMMERCIAL_REFERENCE>
+        <COMMERCIAL_ITEM>2</COMMERCIAL_ITEM>
+        <COMMENT>17-0236-02-0056/CHARTE_End2 - Cdes Auto</COMMENT>
+      </Order_Identification>
+    </Delivery_Identification>
+  </Product_Information>
+  <Dataset_Content>
+    <Dataset_Components>
+      <Component>
+        <COMPONENT_TITLE>Digital Documentation about DIMAP format</COMPONENT_TITLE>
+        <COMPONENT_TYPE>ENCAPSULATED</COMPONENT_TYPE>
+        <COMPONENT_PATH href="http://www.geo-airbusds.com/en/3030-pleiades-and-spot-6-7-format-delivery"/>
+        <COMPONENT_TN_PATH href="LOGO.JPG"/>
+        <COMPONENT_TN_FORMAT>image/jpeg</COMPONENT_TN_FORMAT>
+      </Component>
+      <Component>
+        <COMPONENT_TITLE>ORTHO PMS ORT_SPOT6_20201214_141524100_000</COMPONENT_TITLE>
+        <COMPONENT_TYPE>DIMAP</COMPONENT_TYPE>
+        <COMPONENT_PATH href="IMG_SPOT6_PMS_001_A/DIM_SPOT6_PMS_202012141415240_ORT_5588528101.XML"/>
+        <COMPONENT_TN_PATH href="IMG_SPOT6_PMS_001_A/ICON_SPOT6_PMS_202012141415240_ORT_5588528101.JPG"/>
+        <COMPONENT_TN_FORMAT>image/jpeg</COMPONENT_TN_FORMAT>
+      </Component>
+    </Dataset_Components>
+  </Dataset_Content>
+</Dimap_Document>

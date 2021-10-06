@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                -->
+<!-- $RCSfile: iif.xsd,v $          -->
+<!--                                -->
+<!-- $Revision: 1.1.2.1 $               -->
+<!-- $Date: 2010/03/09 16:28:43 $   -->
+<!--                                -->
+<!-- Copyright DLR 1998-2006        -->
+<!--                                -->
+<!-- edited by Bernhard Buckl (DLR DFD-IT) -->
+
+<xs:schema targetNamespace="http://www.caf.dlr.de/dims/pl/iif" xmlns="http://www.caf.dlr.de/dims/pl/iif" xmlns:tf="http://www.caf.dlr.de/dims/pl/tf" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:import namespace="http://www.caf.dlr.de/dims/pl/tf" schemaLocation="tf.xsd"/>
+	<xs:element name="IIF">
+		<xs:annotation>
+			<xs:documentation>Root element. Unique  item/administration/id required</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item" type="itemType" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Item composed of metadata and files</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="itemadminid" xmlns:i="http://www.caf.dlr.de/dims/pl/iif">
+			<xs:selector xpath="i:item/i:administration"/>
+			<xs:field xpath="i:id"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="account" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>FTP account used to tranfer file from/to the client host</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="action" type="actionEnum" default="INSERT">
+		<xs:annotation>
+			<xs:documentation>INSERT: insert item (default)
+rejected if item already exists
+UPDATE: modify existing item
+INSERT_UPDATE: insert if not existing, else update
+GET: get item</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="location" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Target archive location of the item</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="auxiliary" type="refIdType">
+		<xs:annotation>
+			<xs:documentation>Reference to auxiliary items.
+Auxiliary products are usually referenced with their logical identifier. Example: $((lid://TheAuxProductType//dims/op/pl/dfd//the/aux/logical/id))</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="availability" type="availabilityEnum">
+		<xs:annotation>
+			<xs:documentation>Item availability status: EXISTING,
+PROPAGATED,
+PRELIMINARY,
+PROCURABLE or
+ERRONEOUS</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="bottom" type="xs:decimal"/>
+	<xs:element name="bytesPerUnit" type="xs:positiveInteger"/>
+	<xs:element name="centerTime" type="utcTimeType">
+		<xs:annotation>
+			<xs:documentation>UTC date and  time at coverage center</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="creator" type="refIdType">
+		<xs:annotation>
+			<xs:documentation>Reference to processing system
+The processing system must be registered at PL and is identified by mission, name and version. Example: $((lid://ProcessingSystem//dims/op/pl/dfd//SRTM1/InSAR/1.0))</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="descriptor" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Full item descriptor containing type, unique id, responsible service and logical identification in compact form.  Not mandatory on item insertion. Example: TSX1..L0:/dims_nz_pl_dfd_12345/dims_op_pl_dfd_/mission:TSX1,sensor:X-SAR,code:L0,utcStartTime:2006-09-11T12:12:34.007/</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="eastBoundingCoordinate" type="xs:decimal">
+		<xs:annotation>
+			<xs:documentation>dec. degrees</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="eventTime" type="xs:dateTime"/>
+	<xs:element name="expirationDate" type="utcTimeType">
+		<xs:annotation>
+			<xs:documentation>Date and time when the item expires and can be removed. Applicable only if permanency is TEMPORARY</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="group" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Equivalent with domain in DIMS Access Control</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="groupRights" type="permissionEnum"/>
+	<xs:element name="host" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Name or IP address of the client host files are transferred from/to</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="id" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Unique identifier of the item. Usually of the form (rid://…) for item insertion to allow local referencing by other items in the same IIF</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="implicitVersion" type="booleanString" default="false">
+		<xs:annotation>
+			<xs:documentation>true: create copy before UPDATE,
+false: update the Original (default)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="includedPoles">
+		<xs:annotation>
+			<xs:documentation>N or S</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="N"/>
+				<xs:enumeration value="S"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="isGlobal" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>true if geolocation spans the whole sphere, else false</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="latitude">
+		<xs:annotation>
+			<xs:documentation>dec. degrees: between -90 and 90 (inclusive)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:minInclusive value="-90"/>
+				<xs:maxInclusive value="90"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="longitude" type="xs:decimal">
+		<xs:annotation>
+			<xs:documentation>dec. degrees</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="mid" type="xs:decimal"/>
+	<xs:element name="name">
+		<xs:annotation>
+			<xs:documentation>Individual name of component. Useful if there are several components of the same component type, usually part of the component identifier but stored with the item.
+Max. 100 characters</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="100"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="northBoundingCoordinate">
+		<xs:annotation>
+			<xs:documentation>dec. degrees: between -90 and 90 (inclusive)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:minInclusive value="-90"/>
+				<xs:maxInclusive value="90"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="owner" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>DIMS Access Control name of the owner of the item</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ownerRights" type="permissionEnum"/>
+	<xs:element name="password" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Password used for FTP transfer to/from client host. Not recommended, account/password are usually configured at PL</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="path" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Path of the file on the client host</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="permanency" type="permanencyEnum">
+		<xs:annotation>
+			<xs:documentation>TEMPORARY or PERMANENT.
+PERMANENT means long-term archiving, TEMPORARY means the item will be destroyed after expirationDate </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="predecessor" type="refIdType">
+		<xs:annotation>
+			<xs:documentation>Reference to processing input items</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="quality" type="qualityEnum">
+		<xs:annotation>
+			<xs:documentation>APPROVED,
+NOT_APPROVED,
+WAIT_FOR_APPROVAL,
+AUTO_APPROVED,
+OPERATOR_APPROVED,
+LIMITED_APPROVAL,
+REJECTED,
+WAIT_FOR_CORRECTION or
+PARTS_UNPROCESSIBLE.
+Flag indicating if quality check has been performed on item.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="radius">
+		<xs:annotation>
+			<xs:documentation>Radius in meters less than or equal to 2000000</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:maxInclusive value="2000000"/>
+				<xs:minInclusive value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ref" type="refIdType">
+		<xs:annotation>
+			<xs:documentation>Reference to the component.
+If components are described in the same IIF, local references can be used, e.g. $((rid://MyComponent)).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="reliability" type="string20">
+		<xs:annotation>
+			<xs:documentation>E.g.: REAL or TEST.
+Reliability status of the item used to distinguish e.g. different mission/processing phases like testing, validation, calibration, operations, reprocessing etc</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="revision">
+		<xs:annotation>
+			<xs:documentation>Revision of the item used to distinguish variations of the same item, e.g. in case of reprocessing.
+Syntax: n{.n}* followed by text without dots or whitespace where n is a non-negative integer</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="\d+(\.\d+)*[^\.\s]*"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="role" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Mandatory if type is unspecified.
+Short name of the component, convention: part in component type name which is appended with "-" (dash) to the product type name</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="site">
+		<xs:annotation>
+			<xs:documentation>Site/facility where the item has been created.
+Max length 255</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="southBoundingCoordinate">
+		<xs:annotation>
+			<xs:documentation>dec. degrees: between -90 and 90 (inclusive)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:decimal">
+				<xs:minInclusive value="-90"/>
+				<xs:maxInclusive value="90"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="sphere">
+		<xs:annotation>
+			<xs:documentation>Earth, earth</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="Earth"/>
+				<xs:enumeration value="earth"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="startTime" type="utcTimeType">
+		<xs:annotation>
+			<xs:documentation>ISO 8601 format: YYYY-MM-DDTHH:MM:SS.FFF</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="stopTime" type="utcTimeType">
+		<xs:annotation>
+			<xs:documentation>ISO 8601 format: YYYY-MM-DDTHH:MM:SS.FFF</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="time" type="utcTimeType">
+		<xs:annotation>
+			<xs:documentation>ISO 8601 format: YYYY-MM-DDTHH:MM:SS.FFF</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="top" type="xs:decimal"/>
+	<xs:element name="transfer" type="transferEnum" default="COPY">
+		<xs:annotation>
+			<xs:documentation>Way how the PL shall handle files.
+COPY: copy files (default)
+MOVE: move files (only archive internal)
+REGISTER: don't touch files, only register their location (to take over a new archive location)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="type" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Item type name</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="unit" type="informationUnitEnum">
+		<xs:annotation>
+			<xs:documentation>Byte or KB or MB or GB or TB</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="updateItem" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Reference to item to be updated, if a specific implicit version of the item and not the newest implicit version (default) shall be updated</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!--xs:element name="updateItem">
+		<xs:annotation>
+			<xs:documentation>Reference to item to be updated, if a specific implicit version of the item and not the newest implicit version (default) shall be updated</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="\([cul]id://.*\)"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element-->
+	<xs:element name="utcTime" type="utcTimeType">
+		<xs:annotation>
+			<xs:documentation>ISO 8601 format: YYYY-MM-DDTHH:MM:SS.FFF</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="value" type="xs:nonNegativeInteger"/>
+	<xs:element name="westBoundingCoordinate" type="xs:decimal">
+		<xs:annotation>
+			<xs:documentation>dec. degrees</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="worldRights" type="permissionEnum"/>
+	<xs:complexType name="administrationType">
+		<xs:annotation>
+			<xs:documentation>Administrative information about the item for identification, access control and storage</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="id"/>
+			<xs:element ref="descriptor" minOccurs="0"/>
+			<xs:element ref="type"/>
+			<xs:element name="keys" type="terminalFeatureType">
+				<xs:annotation>
+					<xs:documentation>Logical identifying parameters, list of individual item parameters uniquely identifying an item of that type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="owner"/>
+			<xs:element ref="group" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="permission" type="permissionType">
+				<xs:annotation>
+					<xs:documentation>VIEW or READ or WRITE or DELETE for all children</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="location" minOccurs="0"/>
+			<xs:element ref="permanency"/>
+			<xs:element ref="expirationDate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="altitudeCoverageType">
+		<xs:all>
+			<xs:element ref="top"/>
+			<xs:element ref="mid" minOccurs="0"/>
+			<xs:element ref="bottom"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="boundingBoxType">
+		<xs:sequence>
+			<xs:element ref="westBoundingCoordinate"/>
+			<xs:element ref="southBoundingCoordinate"/>
+			<xs:element ref="eastBoundingCoordinate"/>
+			<xs:element ref="northBoundingCoordinate"/>
+			<xs:element ref="includedPoles" minOccurs="0" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="boundingCircleType">
+		<xs:all>
+			<xs:element name="center" type="pointType">
+				<xs:annotation>
+					<xs:documentation>Centre point</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="radius"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="boundingPolygonType">
+		<xs:sequence>
+			<xs:element name="point" type="pointType" minOccurs="3" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="commandOptionType">
+		<xs:all>
+			<xs:element ref="action"/>
+			<xs:element ref="eventTime" minOccurs="0"/>
+			<xs:element ref="updateItem" minOccurs="0"/>
+			<xs:element ref="implicitVersion" minOccurs="0"/>
+			<xs:element ref="transfer"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="componentType">
+		<xs:all>
+			<xs:element ref="role" minOccurs="0"/>
+			<xs:element ref="ref"/>
+			<xs:element ref="name" minOccurs="0"/>
+			<xs:element name="type" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Full type name of the component. Applicable for command option GET only.
+If present, role is optional</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="componentsType">
+		<xs:sequence>
+			<xs:element name="component" type="componentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="creationType">
+		<xs:all>
+			<xs:element ref="creator" minOccurs="0"/>
+			<xs:element ref="time" minOccurs="0"/>
+			<xs:element ref="site" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="featureType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="feature">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="featureType">
+							<xs:attribute name="key" type="xs:string" use="required">
+								<xs:annotation>
+									<xs:documentation>name of the metadata parameter or association</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="dynType" type="xs:string" use="optional"/>
+							<xs:attribute name="lid" type="xs:string" use="optional"/>
+							<xs:attribute name="targetName" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="tf:feature"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="fileType">
+		<xs:all>
+			<xs:element name="location" type="locationType">
+				<xs:annotation>
+					<xs:documentation>Location of the file at the client</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="size" type="sizeType"/>
+			<xs:element name="options" type="terminalFeatureType" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="fileInformationType">
+		<xs:sequence>
+			<xs:element name="file" type="fileType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="itemType">
+		<xs:all>
+			<xs:element name="administration" type="administrationType"/>
+			<xs:element name="commandOption" type="commandOptionType"/>
+			<xs:element name="fileInformation" type="fileInformationType">
+				<xs:annotation>
+					<xs:documentation>Information about the files of the item at client side</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="components" type="componentsType"/>
+			<xs:element name="parameters" type="parametersType">
+				<xs:annotation>
+					<xs:documentation>Metadata parameters common to all items</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="specificParameters" type="featureType">
+				<xs:annotation>
+					<xs:documentation>Metadata parameters individual to the item type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="locationType">
+		<xs:all>
+			<xs:element ref="host"/>
+			<xs:element ref="account" minOccurs="0"/>
+			<xs:element ref="path"/>
+			<xs:element ref="name"/>
+			<xs:element ref="password" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="parametersType">
+		<xs:sequence>
+			<xs:element ref="availability"/>
+			<xs:element ref="reliability"/>
+			<xs:element ref="quality"/>
+			<xs:element ref="revision" minOccurs="0"/>
+			<xs:element ref="sphere" minOccurs="0"/>
+			<xs:element name="spatialCoverage" type="spatialCoverageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mandatory if applicaple (product, primary, browse)
+At least one of the children is mandatory, based on WGS 84</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="altitudeCoverage" type="altitudeCoverageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mandatory if applicaple (product, primary, browse)
+Meters above WGS 84 ellipsoid</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="temporalCoverage" type="temporalCoverageType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mandatory if applicaple (product, primary, browse)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="creation" type="creationType" minOccurs="0"/>
+			<xs:element ref="predecessor" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="auxiliary" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="permissionType">
+		<xs:sequence>
+			<xs:element ref="ownerRights" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="groupRights" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="worldRights" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="pointType">
+		<xs:all>
+			<xs:element ref="longitude"/>
+			<xs:element ref="latitude"/>
+			<xs:element ref="utcTime" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="sizeType">
+		<xs:all>
+			<xs:element ref="value"/>
+			<xs:element ref="unit"/>
+			<xs:element ref="bytesPerUnit"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="spatialCoverageType">
+		<xs:all>
+			<xs:element name="boundingBox" type="boundingBoxType" minOccurs="0"/>
+			<xs:element name="boundingCircle" type="boundingCircleType" minOccurs="0"/>
+			<xs:element name="string" type="stringType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For open strings like rivers, streets or single points</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="boundingPolygon" type="boundingPolygonType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Enclosed area at the left of points
+(looking from outside the sphere),
+first point != last point</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="isGlobal" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="stringType">
+		<xs:sequence>
+			<xs:element name="point" type="pointType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="temporalCoverageType">
+		<xs:all>
+			<xs:element ref="startTime"/>
+			<xs:element ref="centerTime" minOccurs="0"/>
+			<xs:element ref="stopTime"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="terminalFeatureType">
+		<xs:sequence>
+			<xs:element ref="tf:feature" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="actionEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INSERT"/>
+			<xs:enumeration value="INSERT_UPDATE"/>
+			<xs:enumeration value="UPDATE"/>
+			<xs:enumeration value="GET"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="availabilityEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EXISTING"/>
+			<xs:enumeration value="PROPAGATED"/>
+			<xs:enumeration value="PRELIMINARY"/>
+			<xs:enumeration value="PROCURABLE"/>
+			<xs:enumeration value="ERRONEOUS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="booleanString">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="true"/>
+			<xs:enumeration value="false"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="informationUnitEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Byte"/>
+			<xs:enumeration value="KB"/>
+			<xs:enumeration value="MB"/>
+			<xs:enumeration value="GB"/>
+			<xs:enumeration value="TB"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="permanencyEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TEMPORARY"/>
+			<xs:enumeration value="PERMANENT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="permissionEnum">
+		<xs:annotation>
+			<xs:documentation>VIEW: permission to see item existence, including logical identification, basic metadata and quicklook data.
+READ: permission to see full metadata and to retrieve the full item.
+WRITE: permission to modify the item.
+DELETE: permission to destroy the item
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="https://stac-extensions.github.io/view/v1.0.0/schema.json"/>
+			<xs:enumeration value="READ"/>
+			<xs:enumeration value="WRITE"/>
+			<xs:enumeration value="DELETE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="qualityEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="APPROVED"/>
+			<xs:enumeration value="NOT_APPROVED"/>
+			<xs:enumeration value="WAIT_FOR_APPROVAL"/>
+			<xs:enumeration value="AUTO_APPROVED"/>
+			<xs:enumeration value="OPERATOR_APPROVED"/>
+			<xs:enumeration value="LIMITED_APPROVAL"/>
+			<xs:enumeration value="REJECTED"/>
+			<xs:enumeration value="WAIT_FOR_CORRECTION"/>
+			<xs:enumeration value="PARTS_UNPROCESSIBLE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="refIdType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<!--xs:simpleType name="refIdType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="$\(\([rcul]id://.*\)\)"/>
+		</xs:restriction>
+	</xs:simpleType-->
+	<xs:simpleType name="string20">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="transferEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="COPY"/>
+			<xs:enumeration value="MOVE"/>
+			<xs:enumeration value="REGISTER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="utcTimeType">
+		<xs:union memberTypes="xs:date xs:dateTime"/>
+	</xs:simpleType>
+</xs:schema>

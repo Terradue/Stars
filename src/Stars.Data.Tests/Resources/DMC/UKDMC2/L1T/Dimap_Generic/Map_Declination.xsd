@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Map_Declination" name="Map_Declination" type="t_Map_Declination">
+		<xsd:annotation>
+			<xsd:documentation source="Map_Declination"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Map_Declination" name="t_Map_Declination">
+		<xsd:all>
+			<xsd:element minOccurs="0" ref="GRID_DECLINATION"/>
+			<xsd:element minOccurs="0" ref="MAGNETIC_DECLINATION"/>
+			<xsd:element minOccurs="0" ref="MAGNETIC_DECLINATION_DATE"/>
+			<xsd:element minOccurs="0" ref="MAGNETIC_DECL_ANNUAL_CHANGE"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="GRID_DECLINATION" name="GRID_DECLINATION" type="t_GRID_DECLINATION">
+		<xsd:annotation>
+			<xsd:documentation source="GRID_DECLINATION"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_GRID_DECLINATION" name="t_GRID_DECLINATION">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_GRID_DECLINATION_Angular_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_GRID_DECLINATION_Angular_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="DEG"/>
+			<xsd:enumeration value="DMS"/>
+			<xsd:enumeration value="GON"/>
+			<xsd:enumeration value="MNT"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="RAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="MAGNETIC_DECLINATION" name="MAGNETIC_DECLINATION" type="t_MAGNETIC_DECLINATION">
+		<xsd:annotation>
+			<xsd:documentation source="MAGNETIC_DECLINATION"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_MAGNETIC_DECLINATION" name="t_MAGNETIC_DECLINATION">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_MAGNETIC_DECLINATION_Angular_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_MAGNETIC_DECLINATION_Angular_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="DEG"/>
+			<xsd:enumeration value="DMS"/>
+			<xsd:enumeration value="GON"/>
+			<xsd:enumeration value="MNT"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="RAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="MAGNETIC_DECLINATION_DATE" name="MAGNETIC_DECLINATION_DATE" type="t_MAGNETIC_DECLINATION_DATE">
+		<xsd:annotation>
+			<xsd:documentation source="MAGNETIC_DECLINATION_DATE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_MAGNETIC_DECLINATION_DATE" name="t_MAGNETIC_DECLINATION_DATE">
+		<xsd:restriction base="Date"/>
+	</xsd:simpleType>
+	<xsd:element id="MAGNETIC_DECL_ANNUAL_CHANGE" name="MAGNETIC_DECL_ANNUAL_CHANGE" type="t_MAGNETIC_DECL_ANNUAL_CHANGE">
+		<xsd:annotation>
+			<xsd:documentation source="MAGNETIC_DECL_ANNUAL_CHANGE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_MAGNETIC_DECL_ANNUAL_CHANGE" name="t_MAGNETIC_DECL_ANNUAL_CHANGE">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:double">
+				<xsd:attribute name="unit" type="k_MAGNETIC_DECL_ANNUAL_CHANGE_Angular_Unit"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="k_MAGNETIC_DECL_ANNUAL_CHANGE_Angular_Unit">
+		<xsd:restriction base="String">
+			<xsd:enumeration value="DEG"/>
+			<xsd:enumeration value="DMS"/>
+			<xsd:enumeration value="GON"/>
+			<xsd:enumeration value="MNT"/>
+			<xsd:enumeration value="SEC"/>
+			<xsd:enumeration value="RAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
