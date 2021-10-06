@@ -45,7 +45,7 @@ pipeline {
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-exe', includes: 'src/Stars.Console/bin/**/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
-            stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/linux**/publish/Stars/*.zip'
+            stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/linux**/*.zip'
             archiveArtifacts artifacts: 'src/Stars.Console/bin/linux**/publish/Stars,src/Stars.Console/bin/linux**/publish/*.json,src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
           }
         }
