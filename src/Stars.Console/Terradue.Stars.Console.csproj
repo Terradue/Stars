@@ -11,6 +11,7 @@
     <RuntimeIdentifiers>win-x64;linux-x64;osx-x64;centos.7-x64</RuntimeIdentifiers>
     <InvariantGlobalization>true</InvariantGlobalization>
     <DebugType>embedded</DebugType>
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always">
