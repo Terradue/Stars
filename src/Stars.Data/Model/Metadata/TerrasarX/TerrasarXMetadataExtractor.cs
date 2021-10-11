@@ -244,7 +244,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
                                                   GetProductType(metadata),
                                                   metadata.setup.orderInfo.imagingMode,                     //SM
                                                   metadata.productInfo.missionInfo.relOrbit, //164
-                                                  string.Join('/', GetPolarizations(metadata)),
+                                                  string.Join("/", GetPolarizations(metadata)),
                                                   metadata.productInfo.sceneInfo.start.timeUTC.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.ffffffZ")));
 
             //TSX-1 SAR L1B SM 164 HH 2018-09-29T21:46:04.680000

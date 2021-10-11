@@ -19,6 +19,7 @@ using Stac.Extensions.Sat;
 using Stac.Extensions.View;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
 
@@ -149,7 +150,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         private void AddAsset(StacItem stacItem, JavaProperties metadata, IAsset asset)
         {
             string filename = Path.GetFileName(asset.Uri.ToString());
-            if (filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture)){
+            if (filename.ToLower().EndsWith(".jpg")){
                 if (stacItem.Assets.TryAdd("overview",
                     StacAsset.CreateOverviewAsset(stacItem, asset.Uri, new System.Net.Mime.ContentType(MimeTypes.GetMimeType(filename))))){
                         stacItem.Assets["overview"].Properties.AddRange(asset.Properties);

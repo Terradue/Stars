@@ -30,7 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         {
             XFDUType xfdu = await base.ReadManifest(manifestAsset);
             if (xfdu.informationPackageMap.contentUnit[0].textInfo.StartsWith("Sentinel-2", true, CultureInfo.InstalledUICulture)
-                && xfdu.informationPackageMap.contentUnit[0].textInfo.Contains("Level-1C", StringComparison.InvariantCultureIgnoreCase))
+                && xfdu.informationPackageMap.contentUnit[0].textInfo.ToLower().Contains("level-1c"))
             {
                 return xfdu;
             }

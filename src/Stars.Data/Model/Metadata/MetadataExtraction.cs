@@ -92,7 +92,7 @@ namespace Terradue.Stars.Data.Model.Metadata
                 styled = char.ToUpper(v[0]) + v.Substring(1);
 
             if (styled.Contains("-"))
-                styled = styled.Split('-')[0] + "-" + string.Join('-', styled.Split('-').Skip(1).Select(s => s.ToUpper()));
+                styled = styled.Split('-')[0] + "-" + string.Join("-", styled.Split('-').Skip(1).Select(s => s.ToUpper()));
 
             return styled;
         }

@@ -18,6 +18,7 @@ using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 {

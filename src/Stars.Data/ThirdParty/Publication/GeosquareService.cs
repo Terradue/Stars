@@ -77,7 +77,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             {
                 var hashedBytes = algorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
                 string hash = BitConverter.ToString(hashedBytes).ToLower();
-                return KeyValuePair.Create<string, string>(string.Join("", hash.Split('-').Take(4)), hash.Replace("-", ""));
+                return new KeyValuePair<string, string>(string.Join("", hash.Split('-').Take(4)), hash.Replace("-", ""));
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -11,6 +12,16 @@ namespace Terradue.Stars.Services
 {
     public static class StarsExtensions
     {
+        public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, TValue value)
+        {
+            if (!dict.ContainsKey(key))
+            {
+                dict.Add(key, value);
+                return true;
+            }
+            return false;
+        }
+
         public static string CleanIdentifier(this string strIn)
         {
             if (string.IsNullOrEmpty(strIn))

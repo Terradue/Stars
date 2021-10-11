@@ -22,6 +22,7 @@ using Terradue.Stars.Services.Plugins;
 using Stac.Extensions.Raster;
 using Humanizer;
 using Newtonsoft.Json.Linq;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
 {

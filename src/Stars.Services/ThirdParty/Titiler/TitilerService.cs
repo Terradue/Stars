@@ -124,8 +124,8 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             return new Uri(this.Uri,
                 string.Format("/stac/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?url={0}&assets={1}&rescale={2}&color_formula=&resampling_method=average",
                     finalItemUri,
-                    string.Join(',', overviewAssets.Keys.Take(3)),
-                    string.Join(',', GetScale(overviewAssets.Values.First())),
+                    string.Join(",", overviewAssets.Keys.Take(3)),
+                    string.Join(",", GetScale(overviewAssets.Values.First())),
                     GetColorFormula(overviewAssets)
                     ));
         }

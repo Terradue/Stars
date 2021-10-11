@@ -163,7 +163,7 @@ namespace Terradue.Stars.Services.Router
             if (request is FileWebRequest)
             {
                 DirectoryInfo dir = new DirectoryInfo(request.RequestUri.LocalPath);
-                return dir.GetFiles("*", new EnumerationOptions() { RecurseSubdirectories = true }).Select(f =>
+                return dir.GetFiles("*", SearchOption.AllDirectories).Select(f =>
                         WebRoute.Create(new Uri("file://" + f.FullName), Convert.ToUInt64(f.Length)));
             }
             if (request is FtpWebRequest) throw new NotImplementedException();

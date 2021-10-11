@@ -332,7 +332,7 @@ namespace Terradue.Stars.Console.Operations
             }
             catch (Exception e)
             {
-                logger.Error(string.Format("Exception creating initial routes [{0}] : {1}", string.Join(',', Inputs), e.Message));
+                logger.Error(string.Format("Exception creating initial routes [{0}] : {1}", string.Join(",", Inputs), e.Message));
                 throw e;
             }
             List<StacNode> stacNodes = new List<StacNode>();

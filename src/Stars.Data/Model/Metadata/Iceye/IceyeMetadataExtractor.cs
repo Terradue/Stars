@@ -205,7 +205,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
                                                   StylePlatform(properties.GetProperty<string>("platform")),
                                                   metadata.product_type,
                                                   metadata.product_level,
-                                                  string.Join('/', GetPolarizations(metadata)),
+                                                  string.Join("/", GetPolarizations(metadata)),
                                                   properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
         }
 

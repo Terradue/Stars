@@ -55,7 +55,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         internal virtual StacItem CreateStacItem(KanopusVMetadata metadata)
         {
-            var items = metadata.GetString("<PASP_ROOT>/cDataFileName").Split("_", StringSplitOptions.RemoveEmptyEntries);
+            var items = metadata.GetString("<PASP_ROOT>/cDataFileName").Split('_');
             string identifier = string.Join("_", items.Take(7));
             StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), GetCommonMetadata(metadata));
             AddProjStacExtension(metadata, stacItem);
@@ -152,7 +152,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(KanopusVMetadata metadata)
         {
             List<GeoJSON.Net.Geometry.Position> positions = new List<Position>();
-            for (int i = 0; i < metadata.GetString("<Polygon>/bLat").Split(",").Length; i++)
+            for (int i = 0; i < metadata.GetString("<Polygon>/bLat").Split(',').Length; i++)
             {
                 positions.Add(new GeoJSON.Net.Geometry.Position(
                     metadata.GetDouble("<Polygon>/bLat")[i],
@@ -189,7 +189,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 for (int i = 0; i < numberOfChannels; i++)
                 {
-                    channelValues = Array.ConvertAll((metadata.GetString("<Ch" + (i + 1) + ">/bSpectralZone").Split(",")), (Double.Parse));
+                    channelValues = Array.ConvertAll((metadata.GetString("<Ch" + (i + 1) + ">/bSpectralZone").Split(',')), (Double.Parse));
                     mean = channelValues.Sum() / channelValues.Length;
 
                     if (mean < 0.69 && mean > 0.63)
@@ -306,11 +306,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
                         if (line.Trim().StartsWith("</")) { continue; }
                         if (properties.ContainsKey(key))
                         {
-                            properties[key].Add(line.Split("=")[0].Trim(), line.Split("=")[1].Trim().Replace("\"", ""));
+                            properties[key].Add(line.Split('=')[0].Trim(), line.Split('=')[1].Trim().Replace("\"", ""));
                         }
                         if (!properties.ContainsKey(key))
                         {
-                            properties.Add(key, new Dictionary<string, string> { { line.Split("=")[0].Trim(), line.Split("=")[1].Trim().Replace("\"", "") } });
+                            properties.Add(key, new Dictionary<string, string> { { line.Split('=')[0].Trim(), line.Split('=')[1].Trim().Replace("\"", "") } });
                         }
                     }
                 }
@@ -318,7 +318,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         }
         public string GetString(string key, bool throwIfMissing = true)
         {
-            string[] keys = key.Split("/");
+            string[] keys = key.Split('/');
             if (properties[keys[0]].ContainsKey(keys[1]))
             {
                 return properties[keys[0]][keys[1]];
@@ -329,7 +329,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         public long GetLong(string key, bool throwIfMissing = true)
         {
-            string[] keys = key.Split("/");
+            string[] keys = key.Split('/');
             if (properties[keys[0]].ContainsKey(keys[1]))
             {
                 if (long.TryParse(properties[keys[0]][keys[1]], out long value))
@@ -343,10 +343,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         public double[] GetDouble(string key, bool throwIfMissing = true)
         {
-            string[] keys = key.Split("/");
+            string[] keys = key.Split('/');
             if (properties[keys[0]].ContainsKey(keys[1]))
             {
-                double[] value = Array.ConvertAll(properties[keys[0]][keys[1]].Split(","), (Double.Parse));
+                double[] value = Array.ConvertAll(properties[keys[0]][keys[1]].Split(','), (Double.Parse));
                 return value;
             }
             if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
