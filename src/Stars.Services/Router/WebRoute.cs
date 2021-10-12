@@ -89,6 +89,8 @@ namespace Terradue.Stars.Services.Router
             request.Headers.Set("User-Agent", "Stars/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
             if (credentials != null)
                 request.Credentials = credentials;
+            if ( request is FileWebRequest && !File.Exists((request as FileWebRequest).RequestUri.AbsolutePath) )
+                throw new FileNotFoundException("File not found: " + (request as FileWebRequest).RequestUri.AbsolutePath, (request as FileWebRequest).RequestUri.AbsolutePath);
             return request;
         }
 
@@ -163,7 +165,7 @@ namespace Terradue.Stars.Services.Router
             if (request is FileWebRequest)
             {
                 DirectoryInfo dir = new DirectoryInfo(request.RequestUri.LocalPath);
-                return dir.GetFiles("*", new EnumerationOptions() { RecurseSubdirectories = true }).Select(f =>
+                return dir.GetFiles("*", SearchOption.AllDirectories).Select(f =>
                         WebRoute.Create(new Uri("file://" + f.FullName), Convert.ToUInt64(f.Length)));
             }
             if (request is FtpWebRequest) throw new NotImplementedException();

@@ -130,7 +130,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
                 stacItem.Assets.Add("amplitude-v", GetAmplitudeAsset(stacItem, asset, "data", new string[] { "VV" }));
             if (filename.EndsWith("_CH.tif", true, CultureInfo.InvariantCulture))
                 stacItem.Assets.Add("amplitude-h", GetAmplitudeAsset(stacItem, asset, "data", new string[] { "HH" }));
-            if (asset.Uri.ToString().Contains("calibration/", StringComparison.InvariantCultureIgnoreCase))
+            if (asset.Uri.ToString().Contains("calibration/"))
                 stacItem.Assets.Add("calibration-" + Path.GetFileNameWithoutExtension(filename), GetGenericAsset(stacItem, asset, "metadata"));
         }
 
@@ -368,7 +368,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
         {
             return string.Format("{0} {1} {2}", StylePlatform(properties.GetProperty<string>("platform")),
                                                   GetProductType(auxiliary),
-                                                  string.Join('/', GetPolarizations(auxiliary))
+                                                  string.Join("/", GetPolarizations(auxiliary))
                                                   );
         }
 
@@ -376,8 +376,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
         {
 
             var cString = kml.Document.Folder.GroundOverlay.LatLonQuad.Coordinates;
-            var cStringArray = cString.Split(" ");
-            var coords = cStringArray.Select(item => item.Split(","));
+            var cStringArray = cString.Split(' ');
+            var coords = cStringArray.Select(item => item.Split(','));
 
             var p0lat = double.Parse(coords.ElementAt(0)[1]);
             var p0lon = double.Parse(coords.ElementAt(0)[0]);

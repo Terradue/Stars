@@ -50,7 +50,7 @@ namespace Terradue.Stars.Services.Processing
         internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
         {
             var blockingStream = GetStream(asset);
-            string name = asset.ContentDisposition.FileName.Replace(".gz", "", true, System.Globalization.CultureInfo.InvariantCulture);
+            string name = asset.ContentDisposition.FileName.Replace(".gz", "");
 
             GzipEntryAsset gzipEntryAsset = new GzipEntryAsset(name, blockingStream);
 

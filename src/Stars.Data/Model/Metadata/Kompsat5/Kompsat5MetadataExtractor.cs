@@ -137,7 +137,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             {
                 var pols = GetPolarizations(auxiliary);
                 var tifkey = "amplitude";
-                if (pols != null && pols.Count() > 0) tifkey += "-" + string.Join('-', pols).ToLower();
+                if (pols != null && pols.Count() > 0) tifkey += "-" + string.Join("-", pols).ToLower();
                 var tifasset = GetGenericAsset(stacItem, asset, "data");
                 tifasset.Roles.Add("amplitude");
                 tifasset.SetProperty("sar:polarizations", pols);
@@ -485,7 +485,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
                                                   StylePlatform(properties.GetProperty<string>("platform")),
                                                   string.Join(",", properties.GetProperty<string[]>("instruments")),
                                                   GetProductType(auxiliary),
-                                                  string.Join('/', GetPolarizations(auxiliary)),
+                                                  string.Join("/", GetPolarizations(auxiliary)),
                                                   properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
         }
 
@@ -494,10 +494,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             var mbi = GetBeamImageObject(auxiliary);
             if (mbi != null)
             {
-                var tlgc = mbi.TopLeftGeodeticCoordinates.Split(",");
-                var trgc = mbi.TopRightGeodeticCoordinates.Split(",");
-                var blgc = mbi.BottomLeftGeodeticCoordinates.Split(",");
-                var brgc = mbi.BottomRightGeodeticCoordinates.Split(",");
+                var tlgc = mbi.TopLeftGeodeticCoordinates.Split(',');
+                var trgc = mbi.TopRightGeodeticCoordinates.Split(',');
+                var blgc = mbi.BottomLeftGeodeticCoordinates.Split(',');
+                var brgc = mbi.BottomRightGeodeticCoordinates.Split(',');
                 GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                     new GeoJSON.Net.Geometry.Position[5]{
                         new GeoJSON.Net.Geometry.Position(tlgc[0],tlgc[1]),

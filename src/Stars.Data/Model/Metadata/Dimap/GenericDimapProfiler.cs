@@ -32,7 +32,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             try
             {
-                if (dataFile.DATA_FILE_PATH.href.Contains("pan", StringComparison.InvariantCultureIgnoreCase))
+                if (dataFile.DATA_FILE_PATH.href.Contains("pan"))
                     return "pan";
             }
             catch { }

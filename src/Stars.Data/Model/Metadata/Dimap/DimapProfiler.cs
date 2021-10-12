@@ -133,7 +133,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             try
             {
-                return long.Parse(Dimap.Coordinate_Reference_System.Horizontal_CS.Projection.PROJECTION_CODE.Replace("EPSG:", "", true, CultureInfo.InvariantCulture));
+                return long.Parse(Dimap.Coordinate_Reference_System.Horizontal_CS.Projection.PROJECTION_CODE.Replace("EPSG:", ""));
             }
             catch { }
             return 0;
@@ -236,7 +236,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 switch (bandInfo.PHYSICAL_UNIT)
                 {
                     case "W/m2/sr/m-6":
-                        eoBandObjects.Add(GetEoBandObject(bandInfo, string.Join(' ', labels)));
+                        eoBandObjects.Add(GetEoBandObject(bandInfo, string.Join(" ", labels)));
                         break;
                 }
             }

@@ -288,13 +288,13 @@ namespace Terradue.Stars.Data.Model.Atom
                 {
                     eop.procedure.Eop21EarthObservationEquipment.instrument = new InstrumentPropertyType();
                     eop.procedure.Eop21EarthObservationEquipment.instrument.Instrument = new InstrumentType();
-                    eop.procedure.Eop21EarthObservationEquipment.instrument.Instrument.shortName = string.Join(',', instruments);
+                    eop.procedure.Eop21EarthObservationEquipment.instrument.Instrument.shortName = string.Join(",", instruments);
                 }
                 if (instrument_types != null && instrument_types.Count() > 0)
                 {
                     eop.procedure.Eop21EarthObservationEquipment.sensor = new SensorPropertyType();
                     eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor = new SensorType();
-                    eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType = string.Join(',', instrument_types);
+                    eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType = string.Join(",", instrument_types);
                     try
                     {
                         eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.resolution = new ServiceModel.Ogc.Gml321.MeasureType()

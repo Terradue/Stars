@@ -380,7 +380,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
                     properties["Ext_OrbitDirection"] = identifierMatch.Groups["orbitdir"].Value == "A" ? "ASCENDING" : "DESCENDING";
 
                     // Polarization(s), combined by slash(es) if multiple
-                    properties["Ext_Polarizations"] = String.Join('/', polarizations);
+                    properties["Ext_Polarizations"] = String.Join("/", polarizations);
 
                     Match siteMatch = siteRegex.Match(properties["Odi_SiteDateTime"]);
                     if (siteMatch.Success)

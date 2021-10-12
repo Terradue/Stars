@@ -55,7 +55,7 @@ namespace Terradue.Stars.Services.Model.Atom
             {
                 properties.Remove("description");
                 var summary = item.Summary.Text;
-                if (item.Summary.Type.Contains("html", StringComparison.InvariantCultureIgnoreCase))
+                if (item.Summary.Type.ToLower().Contains("html"))
                 {
                     var converter = new Html2Markdown.Converter();
                     summary = converter.Convert(item.Summary.Text);

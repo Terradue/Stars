@@ -46,7 +46,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
         {
             return string.Format("{0} {1} {2} {3}", StylePlatform(properties.GetProperty<string>("platform")),
                                                   GetProductType(),
-                                                  string.Join('/', GetPolarizations()),
+                                                  string.Join("/", GetPolarizations()),
                                                   properties.GetProperty<int>("sat:relative_orbit")
                                                   );
         }

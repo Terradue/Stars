@@ -16,6 +16,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Raster;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Data.Model.Metadata.Gaofen
 {
@@ -187,7 +188,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
         private void AddAsset(StacItem stacItem, string satelliteId, IAsset asset)
         {
             string filename = Path.GetFileName(asset.Uri.ToString());
-            string sensorName = filename.Split("_")[1];
+            string sensorName = filename.Split('_')[1];
             // thumbnail
             if (filename.EndsWith("-MSS1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2_thumb.jpg", true, CultureInfo.InvariantCulture)

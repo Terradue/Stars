@@ -18,6 +18,7 @@ using Stac.Extensions.View;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap

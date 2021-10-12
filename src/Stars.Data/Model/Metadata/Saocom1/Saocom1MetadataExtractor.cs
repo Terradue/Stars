@@ -171,10 +171,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             sar.FrequencyBand = SarCommonFrequencyBandName.L;
             sar.PixelSpacingRange = Math.Abs(double.Parse(metadata.Channel[0].RasterInfo.LinesStep.Text));
             sar.PixelSpacingAzimuth = double.Parse(metadata.Channel[0].RasterInfo.SamplesStep.Text);
-            sar.InstrumentMode = fileName.Split("-")[3].ToUpper().Substring(0,2);
+            sar.InstrumentMode = fileName.Split('-')[3].ToUpper().Substring(0,2);
             sar.LooksEquivalentNumber = 3;
 
-            string acquisitionMode = fileName.Split("-")[3].ToUpper().Substring(0,2);
+            string acquisitionMode = fileName.Split('-')[3].ToUpper().Substring(0,2);
             int resolutionRange;
             int resolutionAzimuth;
             switch (acquisitionMode) {
@@ -236,7 +236,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                                                   StylePlatform(properties.GetProperty<string>("platform")),
                                                   metadata.Channel[0].DataSetInfo.SensorName,
                                                   GetProductType(metadata),
-                                                  string.Join('/', GetPolarizations(item)),
+                                                  string.Join("/", GetPolarizations(item)),
                                                   properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
         }
 
@@ -319,7 +319,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 if (!node.Descendants(nValue).FirstOrDefault().Value.Contains("AN"))
                 {
                     var nameField = node.Descendants(nName).FirstOrDefault().Value;
-                    char processingLevelChar = nameField.Split("L1")[1][0];
+                    char processingLevelChar = nameField.Substring(nameField.IndexOf("L1"))[2];
 
                     if (nameField.Contains("L1") && minimumChar.CompareTo(processingLevelChar) < 0)
                     {

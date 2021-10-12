@@ -76,8 +76,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 else
                     relPath = Path.GetDirectoryName(origin.Uri.ToString());
             }
-            var newFilePath = Path.Join(relPath, filename);
-            Uri newUri = new Uri(string.Format("s3:/" + Path.GetFullPath(Path.Join(
+            var newFilePath = Path.Combine(relPath, filename);
+            Uri newUri = new Uri(string.Format("s3:/" + Path.GetFullPath(Path.Combine(
                                                "/" + S3UriParser.GetBucketName(s3Uri),
                                                Path.GetDirectoryName(S3UriParser.GetKey(s3Uri)),
                                                newFilePath))));
