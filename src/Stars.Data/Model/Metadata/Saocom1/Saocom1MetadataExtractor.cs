@@ -319,7 +319,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 if (!node.Descendants(nValue).FirstOrDefault().Value.Contains("AN"))
                 {
                     var nameField = node.Descendants(nName).FirstOrDefault().Value;
-                    char processingLevelChar = nameField.Substring(nameField.IndexOf("L1")-1).Last();
+                    char processingLevelChar = nameField.Substring(nameField.IndexOf("L1"))[2];
 
                     if (nameField.Contains("L1") && minimumChar.CompareTo(processingLevelChar) < 0)
                     {
