@@ -89,6 +89,8 @@ namespace Terradue.Stars.Services.Router
             request.Headers.Set("User-Agent", "Stars/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
             if (credentials != null)
                 request.Credentials = credentials;
+            if ( request is FileWebRequest && !File.Exists((request as FileWebRequest).RequestUri.AbsolutePath) )
+                throw new FileNotFoundException("File not found: " + (request as FileWebRequest).RequestUri.AbsolutePath, (request as FileWebRequest).RequestUri.AbsolutePath);
             return request;
         }
 

@@ -8,9 +8,11 @@ using System.Collections.Generic;
 using Terradue.Stars.Geometry.Atom;
 using Terradue.Stars.Interface;
 using System.Net;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Data.Translators
 {
+    [PluginPriority(5)]
     public class AtomToStacTranslator : ITranslator
     {
         private AtomRouter atomRouter;
@@ -18,9 +20,11 @@ namespace Terradue.Stars.Data.Translators
         public AtomToStacTranslator(ICredentials credentials)
         {
             this.atomRouter = new AtomRouter(credentials);
+            Key = "AtomToStacTranslator";
         }
 
         public int Priority { get; set; }
+
         public string Key { get; set; }
 
         public string Label => "ATOM to STAC";
