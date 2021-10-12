@@ -16,5 +16,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stars.Data\Terradue.Stars.Data.csproj" />
+    <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj" />
+    <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />
+    <ProjectReference Include="..\Stars.Geometry\Terradue.Stars.Geometry.csproj" />
   </ItemGroup>
 </Project>
