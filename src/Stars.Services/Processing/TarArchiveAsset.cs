@@ -63,7 +63,12 @@ namespace Terradue.Stars.Services.Processing
             var assetDeliveries = carrierManager.GetSingleDeliveryQuotations(tarEntryAsset, archiveAssetDestination);
             logger.LogDebug(tarEntryAsset.Name);
             var assetExtracted = await assetDeliveries.First().Carrier.Deliver(assetDeliveries.First());
-            return new GenericAsset(assetExtracted, tarEntryAsset.Name, new string[] { "data" });
+            var entryAsset = new GenericAsset(assetExtracted, tarEntryAsset.Name, new string[] { "data" });
+            if (assetDeliveries.First().Route is IAsset)
+            {
+                entryAsset.MergeProperties((assetDeliveries.First().Route as IAsset).Properties);
+            }
+            return entryAsset;
         }
 
 

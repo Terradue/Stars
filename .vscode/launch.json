@@ -639,14 +639,15 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
-                "file:///home/emathot/charter/httpsource.json",
+                "s3://cpe-production-catalog/calls/call-844/acquisitions/844-DLR-TANDEM_X-urn_ogc_def_EOP_DLR_C475_N158_A_SL_spot_106_R_2021-10-03T11_33_23_301626Z/844-DLR-TANDEM_X-urn_ogc_def_EOP_DLR_C475_N158_A_SL_spot_106_R_2021-10-03T11_33_23_301626Z.json",
                 "-v",
                 "-r",
                 "4",
                 "-aa",
                 // "-rel",
+                "--harvest",
                 "--output",
-                "s3://cpe-production-catalog/test/manu/"
+                "file:///tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
             "env": {
