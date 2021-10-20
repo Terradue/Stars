@@ -647,7 +647,7 @@
                 // "-rel",
                 "--harvest",
                 "--output",
-                "file:///tmp/stars"
+                "s3://cpe-production-catalog/"
             ],
             "cwd": "${workspaceFolder}/src",
             "env": {
