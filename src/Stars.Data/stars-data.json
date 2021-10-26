@@ -35,9 +35,9 @@
         }
       },
       "Translators": {
-        "AtomToStac": {
-          "Type": "Terradue.Stars.Data.Translators.AtomToStacTranslator"
-        }
+        // "AtomToStac": {
+        //   "Type": "Terradue.Stars.Data.Translators.AtomToStacTranslator"
+        // }
       },
       "Processings": {
         "KOMPSAT-3": {

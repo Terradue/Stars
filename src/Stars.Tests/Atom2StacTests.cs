@@ -47,7 +47,7 @@ namespace Stars.Tests
         {
             var routersManager = serviceProvider.GetService<RoutersManager>();
             var translatorManager = serviceProvider.GetService<TranslatorManager>();
-            var route = WebRoute.Create(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=terradue"));
+            var route = WebRoute.Create(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=[terradue]"));
             var router = routersManager.GetRouter(route);
             var resource = await router.Route(route);
             while (resource is ICatalog)
@@ -61,6 +61,7 @@ namespace Stars.Tests
             }
             var stacItemNode = await translatorManager.Translate<StacItemNode>(resource);
             Assert.Equal("S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A", stacItemNode.StacItem.Id);
+            Assert.Equal(2, stacItemNode.StacItem.Assets.Count);
         }
     }
 }
