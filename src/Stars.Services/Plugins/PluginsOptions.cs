@@ -43,11 +43,10 @@ namespace Terradue.Stars.Services.Plugins
     {
         public PluginOption()
         {
-            Priority = 50;
         }
 
         public string Type { get; set; }
-        public int Priority { get; set; }
+        public int? Priority { get; set; }
     }
 
     public class SupplierPluginOption : PluginOption

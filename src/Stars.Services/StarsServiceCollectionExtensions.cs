@@ -122,8 +122,9 @@ namespace Terradue.Stars.Services
             services.AddTransient<AssetService, AssetService>();
             // Processing Service
             services.AddTransient<ProcessingService, ProcessingService>();
-            services.AddTransient<ITranslator, StacLinkTranslator>();
-            services.AddTransient<ITranslator, DefaultStacTranslator>();
+
+            services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(StacLinkTranslator)));
+            services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(DefaultStacTranslator)));
 
             return services;
 
