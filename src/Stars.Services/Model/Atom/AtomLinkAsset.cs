@@ -53,7 +53,23 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public ResourceType ResourceType => ResourceType.Asset;
 
-        public IReadOnlyList<string> Roles => new string[] { link.RelationshipType };
+        public IReadOnlyList<string> Roles
+        {
+            get
+            {
+                List<string> roles = new List<string>() { link.RelationshipType };
+                switch(link.RelationshipType)
+                {
+                    case "enclosure":
+                        roles.Add("data");
+                        break;
+                    case "icon":
+                        roles.Add("thumbnail");
+                        break;
+                }
+                return roles;
+            }
+        }
 
         public ContentDisposition ContentDisposition => webRoute.ContentDisposition;
 

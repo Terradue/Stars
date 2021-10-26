@@ -62,6 +62,8 @@ namespace Stars.Tests
             var stacItemNode = await translatorManager.Translate<StacItemNode>(resource);
             Assert.Equal("S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A", stacItemNode.StacItem.Id);
             Assert.Equal(2, stacItemNode.StacItem.Assets.Count);
+            Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("data")).Count());
+            Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("thumbnail")).Count());
         }
     }
 }
