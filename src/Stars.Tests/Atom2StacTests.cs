@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Stac;
 using Terradue.OpenSearch.Result;
 using Terradue.Stars.Data.Translators;
 using Terradue.Stars.Interface;
@@ -64,6 +65,7 @@ namespace Stars.Tests
             Assert.Equal(2, stacItemNode.StacItem.Assets.Count);
             Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("data")).Count());
             Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("thumbnail")).Count());
+            Assert.Equal("radar", stacItemNode.StacItem.GetProperty("sensor_type"));
         }
     }
 }

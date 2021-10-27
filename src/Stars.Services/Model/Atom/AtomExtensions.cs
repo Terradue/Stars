@@ -138,17 +138,44 @@ namespace Terradue.Stars.Services.Model.Atom
 
             }
 
+            // sensor type
+            var sensorType = item.FindSensorType();
+            if (!string.IsNullOrEmpty(sensorType))
+            {
+                properties.Remove("sensor_type");
+                properties.Add("sensor_type", sensorType);
+            }
+
             // instruments
             var instrumentName = item.FindInstrumentShortName();
             if (!string.IsNullOrEmpty(instrumentName))
             {
-                if (instrumentName == "SAR") instrumentName = "c-sar";
+                if (platformname.StartsWith("sentinel-1") && instrumentName == "SAR") instrumentName = "c-sar";
                 instrumentName = instrumentName.ToLower();
                 properties.Remove("instruments");
                 properties.Add("instruments", new string[] { instrumentName });
             }
 
-            // TODO gsd
+            // gsd
+            var gsd = item.FindSensorResolution();
+            if (gsd > 0)
+            {
+                properties.Remove("gsd");
+                properties.Add("gsd", gsd);
+            }
+        }
+
+        public static string FindSensorType(this AtomItem item)
+        {
+            try
+            {
+                var eo = item.GetEarthObservationProfile();
+                return eo.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType.ToLower();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static IGeometryObject FindGeometry(this AtomItem item)
