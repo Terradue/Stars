@@ -41,6 +41,7 @@ namespace Stars.Tests
             var stacNode = translatorManager.Translate<StacItemNode>(item).GetAwaiter().GetResult();
             var stacItem = stacNode.StacItem;
             Assert.Equal("S2B_MSIL1C_20210303T095029_N0209_R079_T33SWB_20210303T105137", stacItem.Id);
+            Assert.Equal("optical", stacItem.GetProperty("sensor_type"));
         }
 
         [Fact]
