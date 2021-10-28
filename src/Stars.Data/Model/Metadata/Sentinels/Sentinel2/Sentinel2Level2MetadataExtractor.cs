@@ -80,7 +80,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
                 stacItem.Assets.Add(bandId, stacAsset);
                 return bandId;
             }
-            string res = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_').Last();
+            string res = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_')[3];
             var spectralInfo = level2AUserProduct.General_Info.Product_Image_Characteristics.Spectral_Information_List.FirstOrDefault(si => si.physicalBand.ToString() == bandId.Replace("B0", "B"));
             if (spectralInfo != null)
             {
