@@ -242,10 +242,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
                         new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString())), "Metadata file"));
             stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
             var overviewAsset = FindFirstAssetFromFileNameRegex(item, @".*QUICKLOOK.*\.png");
-            stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
-                        new ContentType(MimeTypes.GetMimeType(overviewAsset.Uri.ToString()))));
-            stacItem.Assets["overview"].Properties.AddRange(overviewAsset.Properties);
-
+            if (overviewAsset != null)
+            {
+                stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
+                            new ContentType(MimeTypes.GetMimeType(overviewAsset.Uri.ToString()))));
+                stacItem.Assets["overview"].Properties.AddRange(overviewAsset.Properties);
+            }
         }
 
         private void AddBandAsset(StacItem stacItem, IAsset bandAsset, Schemas.Metadata metadata)

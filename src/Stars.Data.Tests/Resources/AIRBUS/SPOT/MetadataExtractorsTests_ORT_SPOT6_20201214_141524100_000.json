@@ -45,6 +45,7 @@
     "instruments": [
       "spot-6"
     ],
+    "sensor_type": "optical",
     "gsd": 2.18954101002,
     "title": "SPOT-6 SPOT-6 RASTER_ORTHO 14/12/2020 14:15:24",
     "sat:platform_international_designator": "2012-047A",

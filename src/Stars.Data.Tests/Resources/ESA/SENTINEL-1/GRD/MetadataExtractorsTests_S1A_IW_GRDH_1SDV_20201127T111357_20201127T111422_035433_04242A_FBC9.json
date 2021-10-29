@@ -45,6 +45,7 @@
     "instruments": [
       "c-sar"
     ],
+    "gsd": 22.0,
     "sat:orbit_state": "descending",
     "sat:anx_datetime": "2020-11-27T10:28:02.663187Z",
     "sat:absolute_orbit": 35433,
@@ -63,8 +64,7 @@
       "VV",
       "VH"
     ],
-    "sar:product_type": "GRD",
-    "gsd": 22.0
+    "sar:product_type": "GRD"
   },
   "bbox": [
     -82.307686,

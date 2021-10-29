@@ -45,6 +45,7 @@
     "instruments": [
       "c-sar"
     ],
+    "gsd": 22.0,
     "sat:orbit_state": "ascending",
     "sat:anx_datetime": "2016-08-22T18:24:52.513706Z",
     "sat:absolute_orbit": 12717,
@@ -63,8 +64,7 @@
       "VV",
       "VH"
     ],
-    "sar:product_type": "GRD",
-    "gsd": 22.0
+    "sar:product_type": "GRD"
   },
   "bbox": [
     -5.730959,
