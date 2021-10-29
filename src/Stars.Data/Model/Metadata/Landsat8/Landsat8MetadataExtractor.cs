@@ -382,6 +382,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             properties.Remove("instruments");
             properties.Add("instruments", Array.ConvertAll(auxiliary.Instruments, i => i.ToLower()));
 
+            properties["sensor_type"] = "optical";
+
             // GSD            
             properties.Remove("gsd");
             properties.Add("gsd", auxiliary.GSD);

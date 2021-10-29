@@ -47,6 +47,7 @@
     "instruments": [
       "wfv3"
     ],
+    "sensor_type": "optical",
     "gsd": 16.0,
     "eo:cloud_cover": 0.38,
     "sat:absolute_orbit": 38136,

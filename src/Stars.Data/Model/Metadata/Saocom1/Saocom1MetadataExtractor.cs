@@ -250,6 +250,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             properties.Remove("instruments");
 
             properties.Add("instruments", new string[] { metadata.Channel[0].DataSetInfo.SensorName.ToLower() });
+
+            properties.Remove("sensor_type");
+            properties.Add("sensor_type", "radar");
+
             properties.Remove("gsd");
             properties.Add("gsd", GetGroundSampleDistance(metadata));
         }

@@ -174,6 +174,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             properties.Remove("instruments");
             properties.Add("instruments", dimapProfiler.GetInstruments().Select(i => i.ToLower()).ToArray());
 
+            properties["sensor_type"] = dimapProfiler.GetSensorMode();
+
             properties.Remove("gsd");
             properties.Add("gsd", dimapProfiler.GetResolution());
         }

@@ -46,6 +46,7 @@
     "instruments": [
       "l4fx"
     ],
+    "sensor_type": "optical",
     "sat:absolute_orbit": 38674,
     "sat:orbit_state": "descending",
     "proj:epsg": 32750,

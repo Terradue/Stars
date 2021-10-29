@@ -46,6 +46,7 @@
     "instruments": [
       "l3"
     ],
+    "sensor_type": "optical",
     "sat:absolute_orbit": 14598,
     "sat:orbit_state": "descending",
     "proj:epsg": 32721,

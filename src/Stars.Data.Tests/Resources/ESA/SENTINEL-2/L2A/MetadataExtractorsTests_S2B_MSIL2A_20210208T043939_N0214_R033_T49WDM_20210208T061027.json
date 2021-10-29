@@ -68,6 +68,7 @@
     "instruments": [
       "msi"
     ],
+    "sensor_type": "optical",
     "gsd": 10.0,
     "sat:orbit_state": "descending",
     "sat:absolute_orbit": 20508,

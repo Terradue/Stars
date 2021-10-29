@@ -47,6 +47,7 @@
     "instruments": [
       "SAR"
     ],
+    "sensor_type": "radar",
     "sar:instrument_mode": "FSI",
     "sar:frequency_band": "C",
     "sar:polarizations": [

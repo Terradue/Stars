@@ -177,5 +177,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             }
             return null;
         }
+
+        protected override string GetSensorType(metadataObjectType platformMetadata)
+        {
+            return "radar";
+        }
     }
 }

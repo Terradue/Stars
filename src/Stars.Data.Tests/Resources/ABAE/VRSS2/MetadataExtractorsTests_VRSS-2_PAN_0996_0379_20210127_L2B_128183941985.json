@@ -47,6 +47,7 @@
     "instruments": [
       "pan"
     ],
+    "sensor_type": "optical",
     "gsd": 1.0,
     "title": "VRSS-2 PAN L2B 27/01/2021 02:20:09",
     "sat:absolute_orbit": 17788,

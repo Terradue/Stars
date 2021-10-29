@@ -1,0 +1,104 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "ICEYE_X7_GRD_SM_154171_20211027T183203",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          102.8713421479924,
+          16.575560762631188
+        ],
+        [
+          102.46530036816395,
+          16.652938069357596
+        ],
+        [
+          102.34619575760252,
+          16.067117341347043
+        ],
+        [
+          102.74950252100076,
+          15.99000691386517
+        ],
+        [
+          102.8713421479924,
+          16.575560762631188
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-10-27T18:32:03.611924Z",
+    "start_datetime": "2021-10-27T18:32:03.611924Z",
+    "end_datetime": "2021-10-27T18:32:13.607838Z",
+    "created": "2021-10-28T08:30:21Z",
+    "platform": "iceye-x7",
+    "constellation": "iceye",
+    "mission": "iceye",
+    "instruments": [
+      "x-sar"
+    ],
+    "sensor_type": "radar",
+    "gsd": 3.0,
+    "title": "Iceye-X7 Stripmap GRD VV 27/10/2021 18:32:03",
+    "sat:absolute_orbit": 12652,
+    "sat:relative_orbit": 12652,
+    "sat:orbit_state": "descending",
+    "sat:platform_international_designator": "2019-038D",
+    "proj:epsg": null,
+    "proj:wkt2": "GEOCCS[\"WGS84 Geocentric\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], AXIS[\"X\", OTHER], AXIS[\"Y\", OTHER], AXIS[\"Z\", OTHER]]",
+    "view:off_nadir": 15.57,
+    "view:incidence_angle": 17.02742328957619,
+    "sar:instrument_mode": "Stripmap",
+    "sar:frequency_band": "X",
+    "sar:polarizations": [
+      "VV"
+    ],
+    "sar:product_type": "GRD",
+    "sar:observation_direction": "right",
+    "processing:level": "L1C",
+    "processing:software": {
+      "ICEYE": "ICEYE_P_1.43"
+    }
+  },
+  "bbox": [
+    102.34619575760252,
+    15.99000691386517,
+    102.8713421479924,
+    16.652938069357596
+  ],
+  "assets": {
+    "amplitude-vv": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/ICEYE_X7_GRD_SM_154171_20211027T183203/ICEYE_X7_GRD_SM_154171_20211027T183203.tif",
+      "filename": "ICEYE_X7_GRD_SM_154171_20211027T183203.tif",
+      "gsd": 2.5,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/ICEYE_X7_GRD_SM_154171_20211027T183203/ICEYE_X7_GRD_SM_154171_20211027T183203.xml",
+      "filename": "ICEYE_X7_GRD_SM_154171_20211027T183203.xml"
+    }
+  },
+  "links": []
+}

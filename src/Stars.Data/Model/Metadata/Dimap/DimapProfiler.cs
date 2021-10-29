@@ -243,6 +243,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             return eoBandObjects;
         }
 
+        internal abstract string GetSensorMode();
+
         private List<RasterBand> GetRasterBandObjects(Schemas.t_Spectral_Band_Info[] spectralBandInfos, Schemas.t_Raster_Encoding raster_Encoding)
         {
             List<RasterBand> rasterBandObjects = new List<RasterBand>();

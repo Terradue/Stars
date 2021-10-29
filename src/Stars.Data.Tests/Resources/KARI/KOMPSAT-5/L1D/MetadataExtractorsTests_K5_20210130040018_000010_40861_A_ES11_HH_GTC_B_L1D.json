@@ -46,6 +46,7 @@
     "instruments": [
       "cosi"
     ],
+    "sensor_type": "radar",
     "gsd": 3.0,
     "title": "Kompsat-5 cosi GTC HH 30/01/2021 04:00:18",
     "sat:absolute_orbit": 40861,

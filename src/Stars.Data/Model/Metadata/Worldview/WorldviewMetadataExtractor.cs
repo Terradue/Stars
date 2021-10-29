@@ -539,6 +539,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
                 properties.Remove("instruments");
                 properties.Add("instruments", new string[] { instrumentName });
             }
+            properties["sensor_type"] = "optical";
 
             // GSD
             var gsd = double.Parse(metadata["PIXEL_SIZE_X"]);

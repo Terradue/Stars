@@ -43,6 +43,7 @@
     "instruments": [
       "pan"
     ],
+    "sensor_type": "optical",
     "gsd": 0.390625,
     "view:azimuth": 191.79635279,
     "view:incidence_angle": 15.74005824,

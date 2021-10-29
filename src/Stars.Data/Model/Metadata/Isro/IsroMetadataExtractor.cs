@@ -334,6 +334,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
                 properties.Remove("instruments");
                 properties.Add("instruments", new string[] { instrumentName });
             }
+            properties["sensor_type"] = "optical";
 
             double gsd = 0;
             double.TryParse(metadata["PlannedGSD"], out gsd);

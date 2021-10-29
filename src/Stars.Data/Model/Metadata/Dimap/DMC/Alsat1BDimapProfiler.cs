@@ -54,5 +54,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
         {
             return "dmc";
         }
+
+        internal override string GetSensorMode()
+        {
+            return "optical";
+        }
     }
 }

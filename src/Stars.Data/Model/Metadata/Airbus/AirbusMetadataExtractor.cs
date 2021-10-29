@@ -221,6 +221,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             properties.Remove("instruments");
             properties.Add("instruments", dimapProfiler.GetInstruments().Select(i => i.ToLower()).ToArray());
 
+            properties.Remove("sensor_type");
+            properties.Add("sensor_type", "optical");
+
             properties.Remove("gsd");
             properties.Add("gsd", dimapProfiler.GetResolution());
         }

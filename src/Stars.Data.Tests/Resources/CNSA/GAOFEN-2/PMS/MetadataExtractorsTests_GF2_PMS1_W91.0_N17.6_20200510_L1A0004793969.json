@@ -47,6 +47,7 @@
     "instruments": [
       "pms1"
     ],
+    "sensor_type": "optical",
     "gsd": 0.81,
     "eo:cloud_cover": 0.02,
     "sat:absolute_orbit": 30951,

@@ -43,6 +43,7 @@
     "instruments": [
       "sar"
     ],
+    "sensor_type": "radar",
     "title": "Rcm-1 GCD HH/VV",
     "sat:orbit_state": "descending",
     "sar:instrument_mode": "",

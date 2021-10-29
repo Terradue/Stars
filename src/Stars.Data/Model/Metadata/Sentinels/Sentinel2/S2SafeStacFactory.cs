@@ -80,5 +80,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
                                                   properties.GetProperty<string[]>("instruments").First().ToUpper(),
                                                   properties.GetProperty<string>("processing:level").ToUpper());
         }
+
+        protected override string GetSensorType(metadataObjectType platformMetadata)
+        {
+            return "optical";
+        }
     }
 }

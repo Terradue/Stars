@@ -146,6 +146,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             properties.Add("constellation", "kanopus-v");
             properties.Remove("instruments");
             properties.Add("instruments", new string[] { "mss-pss" });
+            properties["sensor_type"] = "optical";
         }
 
 

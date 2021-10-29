@@ -287,6 +287,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
                 properties.Remove("instruments");
                 properties.Add("instruments", new string[] { instrumentName });
             }
+            properties["sensor_type"] = "optical";
 
             var gsd = auxiliary.Images.FirstOrDefault(i => i.Key.StartsWith("P")).Value.ImageGSD.Column;
             if (gsd != 0)

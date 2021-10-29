@@ -44,6 +44,7 @@
     "instruments": [
       "sao1a"
     ],
+    "sensor_type": "radar",
     "gsd": 50.0,
     "title": "Saocom-1A SAO1A GTC VV/VH 19/08/2020 21:17:26",
     "sat:orbit_state": "ascending",

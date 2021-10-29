@@ -42,6 +42,7 @@
     "instruments": [
       "sar"
     ],
+    "sensor_type": "radar",
     "gsd": 9.0,
     "title": "Rcm-2 GRD HH/HV/VH/VV",
     "sat:orbit_state": "ascending",

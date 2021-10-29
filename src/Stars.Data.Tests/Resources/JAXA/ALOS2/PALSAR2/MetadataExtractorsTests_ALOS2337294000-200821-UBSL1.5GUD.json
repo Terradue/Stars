@@ -46,6 +46,7 @@
     "instruments": [
       "palsar-2"
     ],
+    "sensor_type": "radar",
     "title": "ALOS-2 PALSAR-2 UBS L1.5 HH 21/08/2020 08:10:56",
     "sat:absolute_orbit": 33729,
     "sat:relative_orbit": 33729,

@@ -161,6 +161,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
             properties.Remove("instruments");
             properties.Add("instruments", new string[] { metadata.nav.SelectSingleNode("/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:instrument/eop:Instrument/eop:shortName", metadata.nsmgr).Value.ToLower() });
 
+            properties["sensor_type"] = "optical";
+
             properties.Remove("gsd");
             properties.Add("gsd", Double.Parse(metadata.nav.SelectSingleNode("/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:sensor/ps:Sensor/eop:resolution", metadata.nsmgr).Value));
         }

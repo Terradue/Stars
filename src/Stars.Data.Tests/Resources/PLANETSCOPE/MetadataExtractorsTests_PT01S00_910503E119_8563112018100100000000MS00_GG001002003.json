@@ -46,6 +46,7 @@
     "instruments": [
       "ps2"
     ],
+    "sensor_type": "optical",
     "gsd": 3.0,
     "sat:orbit_state": "descending",
     "sat:absolute_orbit": 1736074,

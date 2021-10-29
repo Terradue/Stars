@@ -46,6 +46,7 @@
     "instruments": [
       "phr-1b"
     ],
+    "sensor_type": "optical",
     "gsd": 0.852344698487864,
     "title": "Pleiades-1B PHR-1B RASTER_ORTHO 06/11/2019 08:05:33",
     "sat:platform_international_designator": "2012-068A",

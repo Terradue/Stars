@@ -47,6 +47,7 @@
     "instruments": [
       "wmc-1"
     ],
+    "sensor_type": "optical",
     "gsd": 16.0,
     "title": "VRSS-1 WMC-1 L2B 25/02/2021 01:04:26",
     "sat:absolute_orbit": 45345,

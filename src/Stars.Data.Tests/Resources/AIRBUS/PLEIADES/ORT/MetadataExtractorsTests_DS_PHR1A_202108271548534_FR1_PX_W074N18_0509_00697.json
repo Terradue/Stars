@@ -45,6 +45,7 @@
     "instruments": [
       "phr-1a"
     ],
+    "sensor_type": "optical",
     "gsd": 0.7782904385595207,
     "title": "Pleiades-1A PHR-1A RASTER_SENSOR 27/08/2021 15:49:30",
     "sat:platform_international_designator": "2011-076F",

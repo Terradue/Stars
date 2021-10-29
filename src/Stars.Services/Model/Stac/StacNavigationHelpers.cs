@@ -52,16 +52,24 @@ namespace Stars.Services.Model.Stac
             return GetItemsAsync(stacObject, baseUri, stacRouter).GetAwaiter().GetResult();
         }
 
-        public static async Task<IDictionary<Uri, StacItem>> GetItemsAsync(this IStacObject stacObject, Uri baseUri, StacRouter stacRouter)
+        public static async Task<IDictionary<Uri, StacItem>> GetItemsAsync(this IStacObject stacObject, Uri baseUri, StacRouter stacRouter, bool throwOnError = false)
         {
             Dictionary<Uri, StacItem> items = new Dictionary<Uri, StacItem>();
             foreach (var itemLink in stacObject.Links.Where(l => !string.IsNullOrEmpty(l.RelationshipType) && l.RelationshipType == "item"))
             {
-                Uri linkUri = itemLink.Uri;
-                if (!linkUri.IsAbsoluteUri && baseUri.IsAbsoluteUri)
-                    linkUri = new Uri(baseUri, itemLink.Uri);
-                items.Remove(linkUri);
-                items.Add(linkUri, await itemLink.CreateStacObject(baseUri, stacRouter.Credentials) as StacItem);
+                try
+                {
+                    Uri linkUri = itemLink.Uri;
+                    if (!linkUri.IsAbsoluteUri && baseUri.IsAbsoluteUri)
+                        linkUri = new Uri(baseUri, itemLink.Uri);
+                    items.Remove(linkUri);
+                    items.Add(linkUri, await itemLink.CreateStacObject(baseUri, stacRouter.Credentials) as StacItem);
+                }
+                catch (Exception e)
+                {
+                    if (throwOnError)
+                        throw e;
+                }
             }
             return items;
         }
