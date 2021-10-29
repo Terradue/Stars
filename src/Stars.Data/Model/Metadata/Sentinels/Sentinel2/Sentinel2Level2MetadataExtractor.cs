@@ -68,10 +68,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level2A_User_Product level2AUserProduct)
         {
+            
+            // checking if the jp2 is a MSK, if yes skip.
+            string msk = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_')[0];
+            if (msk == "MSK") {
+                return String.Empty;
+            }
+            
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri,
                 new System.Net.Mime.ContentType("image/jp2")
             );
             stacAsset.Properties.AddRange(bandAsset.Properties);
+            
             string bandId = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_')[2];
             if (bandId == "PVI")
             {
@@ -80,6 +88,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
                 stacItem.Assets.Add(bandId, stacAsset);
                 return bandId;
             }
+            
             string res = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_')[3];
             var spectralInfo = level2AUserProduct.General_Info.Product_Image_Characteristics.Spectral_Information_List.FirstOrDefault(si => si.physicalBand.ToString() == bandId.Replace("B0", "B"));
             if (spectralInfo != null)
