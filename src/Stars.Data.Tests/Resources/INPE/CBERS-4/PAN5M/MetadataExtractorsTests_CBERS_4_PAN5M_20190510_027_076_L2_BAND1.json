@@ -45,6 +45,7 @@
     "instruments": [
       "pan5m"
     ],
+    "sensor_type": "optical",
     "gsd": 5.0,
     "title": "cbers-4 L2 10/05/2019 04:31:07",
     "eo:bands": [

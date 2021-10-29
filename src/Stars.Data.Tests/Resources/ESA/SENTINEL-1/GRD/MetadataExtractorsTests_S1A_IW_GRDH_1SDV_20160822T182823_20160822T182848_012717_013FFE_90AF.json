@@ -45,6 +45,7 @@
     "instruments": [
       "c-sar"
     ],
+    "sensor_type": "radar",
     "gsd": 22.0,
     "sat:orbit_state": "ascending",
     "sat:anx_datetime": "2016-08-22T18:24:52.513706Z",

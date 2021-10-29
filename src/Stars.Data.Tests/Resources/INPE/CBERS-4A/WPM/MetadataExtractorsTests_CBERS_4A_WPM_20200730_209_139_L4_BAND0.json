@@ -45,6 +45,7 @@
     "instruments": [
       "wpm"
     ],
+    "sensor_type": "optical",
     "gsd": 2.0,
     "title": "cbers-4a L4 30/07/2020 13:51:24",
     "eo:bands": [

@@ -47,6 +47,7 @@
     "instruments": [
       "mss-2"
     ],
+    "sensor_type": "optical",
     "gsd": 10.0,
     "title": "VRSS-1 MSS-2 L2B 14/08/2020 05:16:55",
     "sat:absolute_orbit": 42475,

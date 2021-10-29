@@ -45,6 +45,7 @@
     "instruments": [
       "c-sar"
     ],
+    "sensor_type": "radar",
     "gsd": 22.0,
     "sat:orbit_state": "descending",
     "sat:anx_datetime": "2020-11-27T10:28:02.663187Z",

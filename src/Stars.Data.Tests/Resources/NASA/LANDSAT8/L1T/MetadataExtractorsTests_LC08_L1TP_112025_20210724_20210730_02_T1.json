@@ -46,6 +46,7 @@
       "oli",
       "tirs"
     ],
+    "sensor_type": "optical",
     "gsd": 15.0,
     "eo:cloud_cover": 35.38,
     "sat:absolute_orbit": 112,

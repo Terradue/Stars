@@ -161,6 +161,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
             properties.Remove("instruments");
             properties.Add("instruments", new string[] { "palsar-2" });
 
+            properties.Remove("sensor_type");
+            properties.Add("sensor_type", "radar");
+
         }
 
         private void FillBasicsProperties(Alos2Metadata metadata, IDictionary<String, object> properties)

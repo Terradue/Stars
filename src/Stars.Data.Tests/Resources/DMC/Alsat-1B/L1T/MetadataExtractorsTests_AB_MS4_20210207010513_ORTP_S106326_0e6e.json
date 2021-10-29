@@ -52,6 +52,7 @@
     "instruments": [
       "alite"
     ],
+    "sensor_type": "optical",
     "gsd": 24.0,
     "title": "Alsat-1B ALITE  07/02/2021 01:05:13",
     "sat:orbit_state": "ascending",

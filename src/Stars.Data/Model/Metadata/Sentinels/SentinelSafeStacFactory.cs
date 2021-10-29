@@ -322,6 +322,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 properties.Add("instruments", new string[] { instrumentName });
             }
 
+            var sensor_type = GetSensorType(platformMetadata);
+
+            if (!string.IsNullOrEmpty(sensor_type))
+            {
+                properties.Remove("sensor_type");
+                properties.Add("sensor_type", sensor_type);
+            }
+
             double gsd = GetGroundSampleDistance();
             if (gsd != 0)
             {
@@ -330,6 +338,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             }
         }
 
+        protected abstract string GetSensorType(metadataObjectType platformMetadata);
         public abstract double GetGroundSampleDistance();
 
         public virtual string GetInstrumentName(metadataObjectType platformMetadata)

@@ -446,6 +446,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
                 properties.Add("instruments", new string[] { instrumentName });
             }
 
+            properties.Remove("sensor_type");
+            properties.Add("sensor_type", "radar");
+
             //var gsd1 = double.Parse(productMetadata.ImageGSD);
         }
     }

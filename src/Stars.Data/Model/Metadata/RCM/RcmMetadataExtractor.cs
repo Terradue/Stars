@@ -329,6 +329,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             properties.Remove("instruments");
             properties.Add("instruments", new string[] { auxiliary.SourceAttributes.Sensor.ToLower() });
 
+            properties.Remove("sensor_type");
+            properties.Add("sensor_type", "radar");
+
             double gsd = GetResolution(auxiliary);
 
             if (gsd != 0)

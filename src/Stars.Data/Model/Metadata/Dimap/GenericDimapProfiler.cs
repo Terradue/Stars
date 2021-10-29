@@ -102,5 +102,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
             return rasterBandObject;
         }
+
+        internal override string GetSensorMode()
+        {
+            return null;
+        }
     }
 }

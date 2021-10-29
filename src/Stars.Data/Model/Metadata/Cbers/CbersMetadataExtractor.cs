@@ -290,6 +290,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             properties["platform"] = String.Format("{0}-{1}", satellite.name, satellite.number).ToLower();
             properties["mission"] = properties["platform"];
             properties["instruments"] = new string[] { satellite.instrument.Value.ToLower() };
+            properties["sensor_type"] = "optical";
             if (Double.TryParse(image.verticalPixelSize, out double gsd))
             {
                 properties["gsd"] = gsd;

@@ -55,6 +55,7 @@
     "instruments": [
       "aeiss"
     ],
+    "sensor_type": "optical",
     "gsd": 0.7,
     "eo:cloud_cover": 0.0,
     "sat:absolute_orbit": 23243,

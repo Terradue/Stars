@@ -44,6 +44,7 @@
     "instruments": [
       "sao1a"
     ],
+    "sensor_type": "radar",
     "gsd": 50.0,
     "title": "Saocom-1A SAO1A GEC VV/VH/HH/HV 08/11/2019 09:50:27",
     "sat:orbit_state": "descending",

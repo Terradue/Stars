@@ -200,6 +200,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             properties["platform"] = metadata.satelliteId.ToLower();
             properties["mission"] = metadata.satelliteId.ToLower();
             properties["instruments"] = new string[] { metadata.sensorId.ToLower() };
+            properties["sensor_type"] = "optical";
             if (Double.TryParse(metadata.sensorGSD, out double gsd))
             {
                 properties["gsd"] = gsd;

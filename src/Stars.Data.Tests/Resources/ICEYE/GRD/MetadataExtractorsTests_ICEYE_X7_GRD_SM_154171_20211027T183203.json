@@ -47,6 +47,7 @@
     "instruments": [
       "x-sar"
     ],
+    "sensor_type": "radar",
     "gsd": 3.0,
     "title": "Iceye-X7 Stripmap GRD VV 27/10/2021 18:32:03",
     "sat:absolute_orbit": 12652,

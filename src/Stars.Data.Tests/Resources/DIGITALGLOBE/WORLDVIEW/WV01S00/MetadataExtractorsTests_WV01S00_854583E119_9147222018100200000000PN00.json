@@ -42,6 +42,7 @@
     "instruments": [
       "pan"
     ],
+    "sensor_type": "optical",
     "gsd": 4.79504953E-06,
     "datetime": "2018-10-02T05:36:04Z",
     "created": "2018-10-02T05:36:04Z",

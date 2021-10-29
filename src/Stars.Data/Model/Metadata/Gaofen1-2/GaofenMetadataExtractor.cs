@@ -819,6 +819,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 properties.Add("instruments", new string[] { instrumentName });
             }
 
+            properties["sensor_type"] = "optical";
+
             properties.Remove("gsd");
             properties.Add("gsd", gsd);
         }

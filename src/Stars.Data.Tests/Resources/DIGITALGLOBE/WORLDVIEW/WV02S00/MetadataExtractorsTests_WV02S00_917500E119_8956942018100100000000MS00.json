@@ -42,6 +42,7 @@
     "instruments": [
       "msi"
     ],
+    "sensor_type": "optical",
     "gsd": 3.1932043651E-05,
     "datetime": "2018-10-01T02:26:04Z",
     "created": "2018-10-01T02:26:04Z",

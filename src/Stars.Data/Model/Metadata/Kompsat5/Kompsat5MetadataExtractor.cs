@@ -401,6 +401,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             properties.Remove("instruments");
             properties.Add("instruments", new string[] { Kompsat5MetadataExtraction.INSTRUMENT });
 
+            properties.Remove("sensor_type");
+            properties.Add("sensor_type", "radar");
+
             double gsd = 0;
             switch (auxiliary.Root.AcquisitionMode)
             {
