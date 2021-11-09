@@ -16,6 +16,8 @@ namespace Stars.Tests
             WebRoute route = WebRoute.Create(new Uri("file://" + Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json")));
             StacRouter router = new StacRouter(null); 
             Assert.True(router.CanRoute(route));
+            route = WebRoute.Create(new Uri(Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json")));
+            Assert.True(router.CanRoute(route));
         }
     }
 }

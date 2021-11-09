@@ -1,0 +1,22 @@
+{
+  "ADES_STAGEIN_AWS_ACCESS_KEY_ID": "test",
+  "ADES_STAGEIN_AWS_SECRET_ACCESS_KEY": "test",
+  "ADES_STAGEIN_AWS_SERVICEURL": "http://data.cloudferro.com",
+  "ADES_STAGEOUT_AWS_ACCESS_KEY_ID": "demo-user-bob+ae7c09d4-a",
+  "ADES_STAGEOUT_AWS_REGION": "RegionOne",
+  "ADES_STAGEOUT_AWS_SECRET_ACCESS_KEY": "demo-user-bob+9a2d9bf2-2",
+  "ADES_STAGEOUT_AWS_SERVICEURL": "https://cf2.cloudferro.com:8080",
+  "ADES_STAGEOUT_OUTPUT": "s3://ada6b03cde1846678c9ac78dfb4067c6:demo-user-bob/wf-cf7025c4-38c3-11ec-9083-7a428dfc12bf",
+  "input_reference": [
+    "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2B_36RTT_20191205_0_L2A"
+  ],
+  "s_expression": [
+    "nbr:(/ (- B05 B02) (+ B05 B02))"
+  ],
+  "workflow": "snuggs",
+  "process": "wf-9bb17bce-3cb6-11ec-9070-0a580a82049a",
+  "result_directory": {
+    "class": "Directory",
+    "path": "/tmp/1gde__yy/"
+  }
+}
