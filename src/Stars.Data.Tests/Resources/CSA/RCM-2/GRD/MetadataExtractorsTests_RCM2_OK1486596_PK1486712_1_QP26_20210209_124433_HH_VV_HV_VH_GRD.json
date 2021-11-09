@@ -78,7 +78,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/manifest.safe",
-      "filename": "manifest.safe"
+      "filename": "manifest.safe",
+      "file:size": 40246
     },
     "overview": {
       "type": "image/png",
@@ -86,7 +87,8 @@
         "overview"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/preview/productOverview.png",
-      "filename": "preview/productOverview.png"
+      "filename": "preview/productOverview.png",
+      "file:size": 0
     },
     "metadata": {
       "type": "application/xml",
@@ -94,7 +96,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/product.xml",
-      "filename": "metadata/product.xml"
+      "filename": "metadata/product.xml",
+      "file:size": 155806
     },
     "amplitude-hh": {
       "type": "image/tiff",
@@ -103,6 +106,7 @@
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/imagery/1486712_1_HH.tif",
       "filename": "imagery/1486712_1_HH.tif",
+      "file:size": 0,
       "polarization": [
         "HH"
       ]
@@ -114,6 +118,7 @@
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/imagery/1486712_1_VV.tif",
       "filename": "imagery/1486712_1_VV.tif",
+      "file:size": 0,
       "polarization": [
         "VV"
       ]
@@ -125,6 +130,7 @@
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/imagery/1486712_1_VH.tif",
       "filename": "imagery/1486712_1_VH.tif",
+      "file:size": 0,
       "polarization": [
         "VH"
       ]
@@ -136,6 +142,7 @@
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/imagery/1486712_1_HV.tif",
       "filename": "imagery/1486712_1_HV.tif",
+      "file:size": 0,
       "polarization": [
         "HV"
       ]
@@ -146,7 +153,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/noiseLevels_HV.xml",
-      "filename": "metadata/calibration/noiseLevels_HV.xml"
+      "filename": "metadata/calibration/noiseLevels_HV.xml",
+      "file:size": 7947
     },
     "calibration-lutGamma_HV": {
       "type": "application/xml",
@@ -154,7 +162,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutGamma_HV.xml",
-      "filename": "metadata/calibration/lutGamma_HV.xml"
+      "filename": "metadata/calibration/lutGamma_HV.xml",
+      "file:size": 203609
     },
     "calibration-noiseLevels_VH": {
       "type": "application/xml",
@@ -162,7 +171,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/noiseLevels_VH.xml",
-      "filename": "metadata/calibration/noiseLevels_VH.xml"
+      "filename": "metadata/calibration/noiseLevels_VH.xml",
+      "file:size": 7947
     },
     "calibration-incidenceAngles": {
       "type": "application/xml",
@@ -170,7 +180,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/incidenceAngles.xml",
-      "filename": "metadata/calibration/incidenceAngles.xml"
+      "filename": "metadata/calibration/incidenceAngles.xml",
+      "file:size": 480754
     },
     "calibration-lutSigma_VH": {
       "type": "application/xml",
@@ -178,7 +189,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutSigma_VH.xml",
-      "filename": "metadata/calibration/lutSigma_VH.xml"
+      "filename": "metadata/calibration/lutSigma_VH.xml",
+      "file:size": 203609
     },
     "calibration-lutGamma_VH": {
       "type": "application/xml",
@@ -186,7 +198,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutGamma_VH.xml",
-      "filename": "metadata/calibration/lutGamma_VH.xml"
+      "filename": "metadata/calibration/lutGamma_VH.xml",
+      "file:size": 203609
     },
     "calibration-lutBeta_VV": {
       "type": "application/xml",
@@ -194,7 +207,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutBeta_VV.xml",
-      "filename": "metadata/calibration/lutBeta_VV.xml"
+      "filename": "metadata/calibration/lutBeta_VV.xml",
+      "file:size": 203609
     },
     "calibration-lutSigma_HV": {
       "type": "application/xml",
@@ -202,7 +216,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutSigma_HV.xml",
-      "filename": "metadata/calibration/lutSigma_HV.xml"
+      "filename": "metadata/calibration/lutSigma_HV.xml",
+      "file:size": 203609
     },
     "calibration-lutSigma_HH": {
       "type": "application/xml",
@@ -210,7 +225,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutSigma_HH.xml",
-      "filename": "metadata/calibration/lutSigma_HH.xml"
+      "filename": "metadata/calibration/lutSigma_HH.xml",
+      "file:size": 203609
     },
     "calibration-noiseLevels_VV": {
       "type": "application/xml",
@@ -218,7 +234,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/noiseLevels_VV.xml",
-      "filename": "metadata/calibration/noiseLevels_VV.xml"
+      "filename": "metadata/calibration/noiseLevels_VV.xml",
+      "file:size": 7947
     },
     "calibration-lutBeta_VH": {
       "type": "application/xml",
@@ -226,7 +243,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutBeta_VH.xml",
-      "filename": "metadata/calibration/lutBeta_VH.xml"
+      "filename": "metadata/calibration/lutBeta_VH.xml",
+      "file:size": 203609
     },
     "calibration-noiseLevels_HH": {
       "type": "application/xml",
@@ -234,7 +252,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/noiseLevels_HH.xml",
-      "filename": "metadata/calibration/noiseLevels_HH.xml"
+      "filename": "metadata/calibration/noiseLevels_HH.xml",
+      "file:size": 7947
     },
     "calibration-lutSigma_VV": {
       "type": "application/xml",
@@ -242,7 +261,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutSigma_VV.xml",
-      "filename": "metadata/calibration/lutSigma_VV.xml"
+      "filename": "metadata/calibration/lutSigma_VV.xml",
+      "file:size": 203609
     },
     "calibration-lutGamma_VV": {
       "type": "application/xml",
@@ -250,7 +270,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutGamma_VV.xml",
-      "filename": "metadata/calibration/lutGamma_VV.xml"
+      "filename": "metadata/calibration/lutGamma_VV.xml",
+      "file:size": 203609
     },
     "calibration-lutBeta_HV": {
       "type": "application/xml",
@@ -258,7 +279,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutBeta_HV.xml",
-      "filename": "metadata/calibration/lutBeta_HV.xml"
+      "filename": "metadata/calibration/lutBeta_HV.xml",
+      "file:size": 203609
     },
     "calibration-lutBeta_HH": {
       "type": "application/xml",
@@ -266,7 +288,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutBeta_HH.xml",
-      "filename": "metadata/calibration/lutBeta_HH.xml"
+      "filename": "metadata/calibration/lutBeta_HH.xml",
+      "file:size": 203609
     },
     "calibration-lutGamma_HH": {
       "type": "application/xml",
@@ -274,7 +297,8 @@
         "metadata"
       ],
       "href": "data/RCM2_OK1486596_PK1486712_1_QP26_20210209_124433_HH_VV_HV_VH_GRD/metadata/calibration/lutGamma_HH.xml",
-      "filename": "metadata/calibration/lutGamma_HH.xml"
+      "filename": "metadata/calibration/lutGamma_HH.xml",
+      "file:size": 203609
     }
   },
   "links": []

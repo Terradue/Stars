@@ -88,7 +88,8 @@
         "overview"
       ],
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_br.jpg",
-      "filename": "K3_20201221013934_45861_11950876_L1G_br.jpg"
+      "filename": "K3_20201221013934_45861_11950876_L1G_br.jpg",
+      "file:size": 199763
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -96,7 +97,8 @@
         "thumbnail"
       ],
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_th.jpg",
-      "filename": "K3_20201221013934_45861_11950876_L1G_th.jpg"
+      "filename": "K3_20201221013934_45861_11950876_L1G_th.jpg",
+      "file:size": 5853
     },
     "metadata": {
       "type": "application/xml",
@@ -104,7 +106,8 @@
         "metadata"
       ],
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_Aux.xml",
-      "filename": "K3_20201221013934_45861_11950876_L1G_Aux.xml"
+      "filename": "K3_20201221013934_45861_11950876_L1G_Aux.xml",
+      "file:size": 25679
     },
     "PS1": {
       "type": "image/tiff",
@@ -114,6 +117,7 @@
       "title": "Blue 700nm radiance",
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_PB.tiff",
       "filename": "K3_20201221013934_45861_11950876_L1G_PB.tiff",
+      "file:size": 1,
       "gsd": 0.7,
       "eo:cloud_cover": 0.0,
       "raster:bands": [
@@ -143,6 +147,7 @@
       "title": "Green 800nm radiance",
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_PG.tiff",
       "filename": "K3_20201221013934_45861_11950876_L1G_PG.tiff",
+      "file:size": 1,
       "gsd": 0.7,
       "eo:cloud_cover": 0.0,
       "raster:bands": [
@@ -172,6 +177,7 @@
       "title": "Red 600nm radiance",
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_PR.tiff",
       "filename": "K3_20201221013934_45861_11950876_L1G_PR.tiff",
+      "file:size": 1,
       "gsd": 0.7,
       "eo:cloud_cover": 0.0,
       "raster:bands": [
@@ -201,6 +207,7 @@
       "title": "Near Infrared 1400nm radiance",
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_PN.tiff",
       "filename": "K3_20201221013934_45861_11950876_L1G_PN.tiff",
+      "file:size": 1,
       "gsd": 0.7,
       "eo:cloud_cover": 0.0,
       "raster:bands": [

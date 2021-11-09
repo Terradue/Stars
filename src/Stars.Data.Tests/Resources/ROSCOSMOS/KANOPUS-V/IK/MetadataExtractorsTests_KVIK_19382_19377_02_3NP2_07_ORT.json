@@ -253,6 +253,7 @@
       ],
       "href": "data/KVIK_19382_19377_02_3NP2_07_ORT/Kanopus-V-IK_MSS_19377_02_Bolivia_10012021/Kanopus-V-IK_MSS_19377_02_Bolivia_10012021.tiff",
       "filename": "Kanopus-V-IK_MSS_19377_02_Bolivia_10012021/Kanopus-V-IK_MSS_19377_02_Bolivia_10012021.tiff",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "blue",
@@ -283,6 +284,7 @@
       ],
       "href": "data/KVIK_19382_19377_02_3NP2_07_ORT/Kanopus-V-IK_PSS_19377_02_Bolivia_10012021/Kanopus-V-IK_PSS_19377_02_Bolivia_10012021.tiff",
       "filename": "Kanopus-V-IK_PSS_19377_02_Bolivia_10012021/Kanopus-V-IK_PSS_19377_02_Bolivia_10012021.tiff",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "pan",

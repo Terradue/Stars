@@ -80,7 +80,8 @@
         "metadata"
       ],
       "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1D_OLVF_20200819T231514/Data/gtc-acqId0000211284-a-tw--0000000000-vv-m.xml",
-      "filename": "Data/gtc-acqId0000211284-a-tw--0000000000-vv-m.xml"
+      "filename": "Data/gtc-acqId0000211284-a-tw--0000000000-vv-m.xml",
+      "file:size": 40804
     },
     "amplitude-vv": {
       "type": "image/tiff; application=geotiff",
@@ -90,6 +91,7 @@
       ],
       "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1D_OLVF_20200819T231514/Data/gtc-acqId0000211284-a-tw--0000000000-vv-m",
       "filename": "Data/gtc-acqId0000211284-a-tw--0000000000-vv-m",
+      "file:size": 0,
       "sar:polarizations": [
         "VV"
       ]
@@ -100,7 +102,8 @@
         "metadata"
       ],
       "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1D_OLVF_20200819T231514/Data/gtc-acqId0000211284-a-tw--0000000000-vh-m.xml",
-      "filename": "Data/gtc-acqId0000211284-a-tw--0000000000-vh-m.xml"
+      "filename": "Data/gtc-acqId0000211284-a-tw--0000000000-vh-m.xml",
+      "file:size": 40804
     },
     "amplitude-vh": {
       "type": "image/tiff; application=geotiff",
@@ -110,6 +113,7 @@
       ],
       "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1D_OLVF_20200819T231514/Data/gtc-acqId0000211284-a-tw--0000000000-vh-m",
       "filename": "Data/gtc-acqId0000211284-a-tw--0000000000-vh-m",
+      "file:size": 0,
       "sar:polarizations": [
         "VH"
       ]
@@ -120,7 +124,8 @@
         "overview"
       ],
       "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1D_OLVF_20200819T231514/Images/gtc-acqId0000211284-a-tw--0000000000-m.png",
-      "filename": "Images/gtc-acqId0000211284-a-tw--0000000000-m.png"
+      "filename": "Images/gtc-acqId0000211284-a-tw--0000000000-m.png",
+      "file:size": 0
     }
   },
   "links": []

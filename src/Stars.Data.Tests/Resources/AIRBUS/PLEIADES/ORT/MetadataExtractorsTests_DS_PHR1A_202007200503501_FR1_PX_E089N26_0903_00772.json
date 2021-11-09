@@ -76,6 +76,7 @@
       "title": "Band Composite Basic PMS Ortho R1 C1",
       "href": "data/TPP1601358413/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202007200504270_ORT_5182334101-001_R1C1.JP2",
       "filename": "IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202007200504270_ORT_5182334101-001_R1C1.JP2",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "B2",
@@ -153,7 +154,8 @@
         "world-file"
       ],
       "href": "data/TPP1601358413/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202007200504270_ORT_5182334101-001_R1C1.J2W",
-      "filename": "IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202007200504270_ORT_5182334101-001_R1C1.J2W"
+      "filename": "IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202007200504270_ORT_5182334101-001_R1C1.J2W",
+      "file:size": 35
     },
     "metadata-PMS": {
       "type": "application/xml",
@@ -162,7 +164,8 @@
       ],
       "title": "Metadata file",
       "href": "data/TPP1601358413/IMG_PHR1A_PMS_001/DIM_PHR1A_PMS_202007200504270_ORT_5182334101-001.XML",
-      "filename": "IMG_PHR1A_PMS_001/DIM_PHR1A_PMS_202007200504270_ORT_5182334101-001.XML"
+      "filename": "IMG_PHR1A_PMS_001/DIM_PHR1A_PMS_202007200504270_ORT_5182334101-001.XML",
+      "file:size": 61271
     },
     "overview-PMS": {
       "type": "image/jpeg",
@@ -170,7 +173,8 @@
         "overview"
       ],
       "href": "data/TPP1601358413/IMG_PHR1A_PMS_001/PREVIEW_PHR1A_PMS_202007200504270_ORT_5182334101-001.JPG",
-      "filename": "IMG_PHR1A_PMS_001/PREVIEW_PHR1A_PMS_202007200504270_ORT_5182334101-001.JPG"
+      "filename": "IMG_PHR1A_PMS_001/PREVIEW_PHR1A_PMS_202007200504270_ORT_5182334101-001.JPG",
+      "file:size": 35391
     },
     "thumbnail-PMS": {
       "type": "image/jpeg",
@@ -178,7 +182,8 @@
         "thumbnail"
       ],
       "href": "data/TPP1601358413/IMG_PHR1A_PMS_001/ICON_PHR1A_PMS_202007200504270_ORT_5182334101-001.JPG",
-      "filename": "IMG_PHR1A_PMS_001/ICON_PHR1A_PMS_202007200504270_ORT_5182334101-001.JPG"
+      "filename": "IMG_PHR1A_PMS_001/ICON_PHR1A_PMS_202007200504270_ORT_5182334101-001.JPG",
+      "file:size": 4500
     }
   },
   "links": []

@@ -85,6 +85,7 @@
       ],
       "href": "data/ICEYE_X7_GRD_SM_154171_20211027T183203/ICEYE_X7_GRD_SM_154171_20211027T183203.tif",
       "filename": "ICEYE_X7_GRD_SM_154171_20211027T183203.tif",
+      "file:size": 1,
       "gsd": 2.5,
       "sar:polarizations": [
         "VV"
@@ -97,7 +98,8 @@
       ],
       "title": "Metadata file",
       "href": "data/ICEYE_X7_GRD_SM_154171_20211027T183203/ICEYE_X7_GRD_SM_154171_20211027T183203.xml",
-      "filename": "ICEYE_X7_GRD_SM_154171_20211027T183203.xml"
+      "filename": "ICEYE_X7_GRD_SM_154171_20211027T183203.xml",
+      "file:size": 28226
     }
   },
   "links": []

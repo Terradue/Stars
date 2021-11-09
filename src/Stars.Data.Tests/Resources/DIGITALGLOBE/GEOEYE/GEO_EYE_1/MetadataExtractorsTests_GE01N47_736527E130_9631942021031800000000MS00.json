@@ -65,7 +65,8 @@
         "overview"
       ],
       "href": "data/GE01N47_736527E130_9631942021031800000000MS00/GE01N47_736527E130_9631942021031800000000MS00_BU003002001.jpg",
-      "filename": "GE01N47_736527E130_9631942021031800000000MS00_BU003002001.jpg"
+      "filename": "GE01N47_736527E130_9631942021031800000000MS00_BU003002001.jpg",
+      "file:size": 155840
     },
     "metadata": {
       "type": "text/plain",
@@ -73,7 +74,8 @@
         "metadata"
       ],
       "href": "data/GE01N47_736527E130_9631942021031800000000MS00/GE01N47_736527E130_9631942021031800000000MS00_DU003002001.txt",
-      "filename": "GE01N47_736527E130_9631942021031800000000MS00_DU003002001.txt"
+      "filename": "GE01N47_736527E130_9631942021031800000000MS00_DU003002001.txt",
+      "file:size": 1948
     },
     "bluegreenrednir": {
       "type": "image/tiff",
@@ -83,6 +85,7 @@
       ],
       "href": "data/GE01N47_736527E130_9631942021031800000000MS00/GE01N47_736527E130_9631942021031800000000MS00_GU003002001.tif",
       "filename": "GE01N47_736527E130_9631942021031800000000MS00_GU003002001.tif",
+      "file:size": 1,
       "gsd": 2.0,
       "eo:bands": [
         {
@@ -139,7 +142,8 @@
         "metadata"
       ],
       "href": "data/GE01N47_736527E130_9631942021031800000000MS00/vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.RPB",
-      "filename": "vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.RPB"
+      "filename": "vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.RPB",
+      "file:size": 1862
     },
     "manifest": {
       "type": "application/xml",
@@ -147,7 +151,8 @@
         "metadata"
       ],
       "href": "data/GE01N47_736527E130_9631942021031800000000MS00/vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.XML",
-      "filename": "vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.XML"
+      "filename": "vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.XML",
+      "file:size": 1155720
     }
   },
   "links": []

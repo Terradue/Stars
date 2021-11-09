@@ -86,7 +86,8 @@
       "sar:polarizations": [
         "HH"
       ],
-      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.jpg"
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.jpg",
+      "file:size": 2298440
     },
     "thumbnail-hh": {
       "type": "image/jpeg",
@@ -97,7 +98,8 @@
       "sar:polarizations": [
         "HH"
       ],
-      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.thumb.jpg"
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.thumb.jpg",
+      "file:size": 55842
     },
     "amplitude-hh": {
       "type": "image/tiff",
@@ -111,7 +113,8 @@
       ],
       "HH:qualify": 997.1026,
       "HH:calibration_constant": 24.46,
-      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.tiff"
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HH_L20005379609.tiff",
+      "file:size": 0
     },
     "metadata": {
       "type": "application/xml",
@@ -119,7 +122,8 @@
         "metadata"
       ],
       "href": "data/GF3FSI5379609/GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HHHV_L20005379609.meta.xml",
-      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HHHV_L20005379609.meta.xml"
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HHHV_L20005379609.meta.xml",
+      "file:size": 172477
     },
     "overview-hv": {
       "type": "image/jpeg",
@@ -130,7 +134,8 @@
       "sar:polarizations": [
         "HV"
       ],
-      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.jpg"
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.jpg",
+      "file:size": 2215629
     },
     "thumbnail-hv": {
       "type": "image/jpeg",
@@ -141,7 +146,8 @@
       "sar:polarizations": [
         "HV"
       ],
-      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.thumb.jpg"
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.thumb.jpg",
+      "file:size": 53183
     },
     "amplitude-hv": {
       "type": "image/tiff",
@@ -155,7 +161,8 @@
       ],
       "HV:qualify": 466.574951,
       "HV:calibration_constant": 24.53,
-      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.tiff"
+      "filename": "GF3_SAY_FSI_023228_W65.3_S18.7_20210107_L2_HV_L20005379609.tiff",
+      "file:size": 0
     }
   },
   "links": []

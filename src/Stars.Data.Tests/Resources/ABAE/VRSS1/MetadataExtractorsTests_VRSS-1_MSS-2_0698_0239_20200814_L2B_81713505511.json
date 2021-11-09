@@ -73,6 +73,7 @@
       "title": "Image file",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_1.tif",
       "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_1.tif",
+      "file:size": 1,
       "raster:bands": [
         {
           "scale": 0.2264185119775393,
@@ -96,6 +97,7 @@
       "title": "Image file",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_2.tif",
       "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_2.tif",
+      "file:size": 1,
       "raster:bands": [
         {
           "scale": 0.2041733022989914,
@@ -119,6 +121,7 @@
       "title": "Image file",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_3.tif",
       "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_3.tif",
+      "file:size": 1,
       "raster:bands": [
         {
           "scale": 0.1825517077712262,
@@ -142,6 +145,7 @@
       "title": "Image file",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_4.tif",
       "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_4.tif",
+      "file:size": 1,
       "raster:bands": [
         {
           "scale": 0.251426847358761,
@@ -164,7 +168,8 @@
       ],
       "title": "Browse image",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.jpg",
-      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.jpg"
+      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.jpg",
+      "file:size": 245933
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -173,7 +178,8 @@
       ],
       "title": "Thumbnail image",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_THUMB.jpg",
-      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_THUMB.jpg"
+      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_THUMB.jpg",
+      "file:size": 9800
     },
     "metadata": {
       "type": "application/xml",
@@ -182,7 +188,8 @@
       ],
       "title": "Metadata file",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.xml",
-      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.xml"
+      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.xml",
+      "file:size": 5343
     },
     "metadata-addition": {
       "type": "application/xml",
@@ -191,7 +198,8 @@
       ],
       "title": "Additional metadata",
       "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_ADDITION.xml",
-      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_ADDITION.xml"
+      "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_ADDITION.xml",
+      "file:size": 30261
     }
   },
   "links": []

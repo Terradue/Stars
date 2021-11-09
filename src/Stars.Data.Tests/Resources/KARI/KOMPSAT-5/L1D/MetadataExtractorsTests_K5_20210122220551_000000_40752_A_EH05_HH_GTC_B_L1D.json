@@ -83,7 +83,8 @@
         "overview"
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jpg",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jpg"
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jpg",
+      "file:size": 1578306
     },
     "metadata": {
       "type": "application/xml",
@@ -91,7 +92,8 @@
         "metadata"
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_Aux.xml",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_Aux.xml"
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_Aux.xml",
+      "file:size": 59965
     },
     "overview": {
       "type": "image/png",
@@ -99,7 +101,8 @@
         "overview"
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png"
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png",
+      "file:size": 1
     },
     "overview-worldfile": {
       "type": "application/octet-stream",
@@ -107,7 +110,8 @@
         "overview-worldfile"
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.pgw",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.pgw"
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.pgw",
+      "file:size": 226
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -115,7 +119,8 @@
         "thumbnail"
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_th.jpg",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_th.jpg"
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_th.jpg",
+      "file:size": 6550
     },
     "browse-worldfile": {
       "type": "application/octet-stream",
@@ -123,7 +128,8 @@
         "overview-worldfile"
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jgw",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jgw"
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jgw",
+      "file:size": 226
     },
     "gim": {
       "type": "image/tiff",
@@ -131,7 +137,8 @@
         "data"
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_GIM.tif",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_GIM.tif"
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_GIM.tif",
+      "file:size": 1
     },
     "amplitude-hh": {
       "type": "image/tiff",
@@ -141,6 +148,7 @@
       ],
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D.tif",
       "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D.tif",
+      "file:size": 1,
       "sar:polarizations": [
         "HH"
       ]

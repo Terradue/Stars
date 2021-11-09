@@ -74,6 +74,7 @@
       "title": "Band Composite Basic P Sensor R1 C1",
       "href": "data/5897098101/IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.JP2",
       "filename": "IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.JP2",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "P",
@@ -103,7 +104,8 @@
         "world-file"
       ],
       "href": "data/5897098101/IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.J2W",
-      "filename": "IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.J2W"
+      "filename": "IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.J2W",
+      "file:size": 128
     },
     "metadata-P": {
       "type": "application/xml",
@@ -112,7 +114,8 @@
       ],
       "title": "Metadata file",
       "href": "data/5897098101/IMG_PHR1A_P_001/DIM_PHR1A_P_202108271549303_SEN_5897098101-1.XML",
-      "filename": "IMG_PHR1A_P_001/DIM_PHR1A_P_202108271549303_SEN_5897098101-1.XML"
+      "filename": "IMG_PHR1A_P_001/DIM_PHR1A_P_202108271549303_SEN_5897098101-1.XML",
+      "file:size": 52601
     },
     "overview-P": {
       "type": "image/jpeg",
@@ -120,7 +123,8 @@
         "overview"
       ],
       "href": "data/5897098101/IMG_PHR1A_P_001/PREVIEW_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
-      "filename": "IMG_PHR1A_P_001/PREVIEW_PHR1A_P_202108271549303_SEN_5897098101-1.JPG"
+      "filename": "IMG_PHR1A_P_001/PREVIEW_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
+      "file:size": 114687
     },
     "thumbnail-P": {
       "type": "image/jpeg",
@@ -128,7 +132,8 @@
         "thumbnail"
       ],
       "href": "data/5897098101/IMG_PHR1A_P_001/ICON_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
-      "filename": "IMG_PHR1A_P_001/ICON_PHR1A_P_202108271549303_SEN_5897098101-1.JPG"
+      "filename": "IMG_PHR1A_P_001/ICON_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
+      "file:size": 5936
     },
     "MS-R1C1": {
       "type": "image/jp2",
@@ -139,6 +144,7 @@
       "title": "Band Composite Basic MS Sensor R1 C1",
       "href": "data/5897098101/IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.JP2",
       "filename": "IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.JP2",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "B2",
@@ -216,7 +222,8 @@
         "world-file"
       ],
       "href": "data/5897098101/IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.J2W",
-      "filename": "IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.J2W"
+      "filename": "IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.J2W",
+      "file:size": 128
     },
     "metadata-MS": {
       "type": "application/xml",
@@ -225,7 +232,8 @@
       ],
       "title": "Metadata file",
       "href": "data/5897098101/IMG_PHR1A_MS_002/DIM_PHR1A_MS_202108271549303_SEN_5897098101-2.XML",
-      "filename": "IMG_PHR1A_MS_002/DIM_PHR1A_MS_202108271549303_SEN_5897098101-2.XML"
+      "filename": "IMG_PHR1A_MS_002/DIM_PHR1A_MS_202108271549303_SEN_5897098101-2.XML",
+      "file:size": 110157
     },
     "overview-MS": {
       "type": "image/jpeg",
@@ -233,7 +241,8 @@
         "overview"
       ],
       "href": "data/5897098101/IMG_PHR1A_MS_002/PREVIEW_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
-      "filename": "IMG_PHR1A_MS_002/PREVIEW_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG"
+      "filename": "IMG_PHR1A_MS_002/PREVIEW_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
+      "file:size": 134370
     },
     "thumbnail-MS": {
       "type": "image/jpeg",
@@ -241,7 +250,8 @@
         "thumbnail"
       ],
       "href": "data/5897098101/IMG_PHR1A_MS_002/ICON_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
-      "filename": "IMG_PHR1A_MS_002/ICON_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG"
+      "filename": "IMG_PHR1A_MS_002/ICON_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
+      "file:size": 7206
     }
   },
   "links": []

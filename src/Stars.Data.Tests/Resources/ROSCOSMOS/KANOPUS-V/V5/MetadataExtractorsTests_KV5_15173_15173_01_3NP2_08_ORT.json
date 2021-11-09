@@ -373,6 +373,7 @@
       ],
       "href": "data/KV5_PSS_MSS_15173_01_Sudan_210921/KV5_MSS_15173_01_Sudan_210921.tiff",
       "filename": "KV5_MSS_15173_01_Sudan_210921.tiff",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "blue",
@@ -403,6 +404,7 @@
       ],
       "href": "data/KV5_PSS_MSS_15173_01_Sudan_210921/KV5_PSS_15173_01_Sudan_210921.tiff",
       "filename": "KV5_PSS_15173_01_Sudan_210921.tiff",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "pan",

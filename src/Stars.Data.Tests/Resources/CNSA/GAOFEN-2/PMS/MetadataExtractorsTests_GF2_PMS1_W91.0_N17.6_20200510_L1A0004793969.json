@@ -74,7 +74,8 @@
         "thumbnail"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1_thumb.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1_thumb.jpg"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1_thumb.jpg",
+      "file:size": 19325
     },
     "MSS-overview": {
       "type": "image/jpeg",
@@ -82,7 +83,8 @@
         "overview"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.jpg"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.jpg",
+      "file:size": 377356
     },
     "MSS-rpb": {
       "type": "application/octet-stream",
@@ -90,7 +92,8 @@
         "metadata"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.rpb",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.rpb"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.rpb",
+      "file:size": 2714
     },
     "MSS": {
       "type": "image/tiff",
@@ -99,6 +102,7 @@
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
       "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
+      "file:size": 1,
       "gsd": 3.24,
       "eo:bands": [
         {
@@ -155,7 +159,8 @@
         "metadata"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml",
+      "file:size": 2519
     },
     "PAN-thumbnail": {
       "type": "image/jpeg",
@@ -163,7 +168,8 @@
         "thumbnail"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1_thumb.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1_thumb.jpg"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1_thumb.jpg",
+      "file:size": 20414
     },
     "PAN-overview": {
       "type": "image/jpeg",
@@ -171,7 +177,8 @@
         "overview"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.jpg"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.jpg",
+      "file:size": 1581212
     },
     "PAN-rpb": {
       "type": "application/octet-stream",
@@ -179,7 +186,8 @@
         "metadata"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.rpb",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.rpb"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.rpb",
+      "file:size": 2717
     },
     "PAN": {
       "type": "image/tiff",
@@ -188,6 +196,7 @@
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
       "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
+      "file:size": 1,
       "gsd": 0.81,
       "eo:bands": [
         {
@@ -211,7 +220,8 @@
         "metadata"
       ],
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.xml",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.xml"
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.xml",
+      "file:size": 2498
     }
   },
   "links": []

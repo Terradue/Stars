@@ -78,6 +78,7 @@
       "title": "Composite Scaled Radiance Orthorectified ",
       "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T.tif",
       "filename": "U200a421_000000_015499_p_L1T.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "NIR",
@@ -126,7 +127,8 @@
       ],
       "title": "Metadata file",
       "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T.dim",
-      "filename": "U200a421_000000_015499_p_L1T.dim"
+      "filename": "U200a421_000000_015499_p_L1T.dim",
+      "file:size": 16614
     },
     "overview": {
       "type": "image/jpeg",
@@ -134,7 +136,8 @@
         "overview"
       ],
       "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T_browse.jpg",
-      "filename": "U200a421_000000_015499_p_L1T_browse.jpg"
+      "filename": "U200a421_000000_015499_p_L1T_browse.jpg",
+      "file:size": 0
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -142,7 +145,8 @@
         "thumbnail"
       ],
       "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T_thumb.jpg",
-      "filename": "U200a421_000000_015499_p_L1T_thumb.jpg"
+      "filename": "U200a421_000000_015499_p_L1T_thumb.jpg",
+      "file:size": 1380
     }
   },
   "links": []

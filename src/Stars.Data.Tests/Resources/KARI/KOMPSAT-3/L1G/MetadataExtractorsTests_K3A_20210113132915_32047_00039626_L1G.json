@@ -87,7 +87,8 @@
         "metadata"
       ],
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_Aux.xml",
-      "filename": "K3A_20210113132915_32047_00039626_L1G_Aux.xml"
+      "filename": "K3A_20210113132915_32047_00039626_L1G_Aux.xml",
+      "file:size": 56911
     },
     "overview": {
       "type": "image/jpeg",
@@ -95,7 +96,8 @@
         "overview"
       ],
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_br.jpg",
-      "filename": "K3A_20210113132915_32047_00039626_L1G_br.jpg"
+      "filename": "K3A_20210113132915_32047_00039626_L1G_br.jpg",
+      "file:size": 236600
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -103,7 +105,8 @@
         "thumbnail"
       ],
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_th.jpg",
-      "filename": "K3A_20210113132915_32047_00039626_L1G_th.jpg"
+      "filename": "K3A_20210113132915_32047_00039626_L1G_th.jpg",
+      "file:size": 5471
     },
     "PAN": {
       "type": "image/tiff",
@@ -113,6 +116,7 @@
       "title": "Pan 675nm radiance",
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_P.tif",
       "filename": "K3A_20210113132915_32047_00039626_L1G_P.tif",
+      "file:size": 0,
       "gsd": 0.55,
       "eo:bands": [
         {
@@ -130,6 +134,7 @@
       "title": "Blue 4850nm radiance",
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_B.tif",
       "filename": "K3A_20210113132915_32047_00039626_L1G_B.tif",
+      "file:size": 0,
       "gsd": 2.2,
       "raster:bands": [
         {
@@ -154,6 +159,7 @@
       "title": "Green 5600nm radiance",
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_G.tif",
       "filename": "K3A_20210113132915_32047_00039626_L1G_G.tif",
+      "file:size": 0,
       "gsd": 2.2,
       "raster:bands": [
         {
@@ -178,6 +184,7 @@
       "title": "Red 6600nm radiance",
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_R.tif",
       "filename": "K3A_20210113132915_32047_00039626_L1G_R.tif",
+      "file:size": 0,
       "gsd": 2.2,
       "raster:bands": [
         {
@@ -202,6 +209,7 @@
       "title": "Near Infrared 8300nm radiance",
       "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_N.tif",
       "filename": "K3A_20210113132915_32047_00039626_L1G_N.tif",
+      "file:size": 0,
       "gsd": 2.2,
       "raster:bands": [
         {

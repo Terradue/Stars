@@ -44,6 +44,7 @@ namespace Terradue.Data.Test
             {
                 Dictionary<string, object> props = new Dictionary<string, object>();
                 props.Add("filename", folderUri.MakeRelativeUri(new Uri(fileInfo.FullName)).ToString());
+                props.Add("file:size", fileInfo.Length);
                 return props;
             }
         }

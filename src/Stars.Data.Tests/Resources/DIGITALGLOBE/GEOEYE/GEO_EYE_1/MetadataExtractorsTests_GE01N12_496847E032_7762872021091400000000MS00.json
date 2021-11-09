@@ -65,7 +65,8 @@
         "overview"
       ],
       "href": "data/GE01N12_496847E032_7762872021091400000000MS00_BU001002003/GE01N12_496847E032_7762872021091400000000MS00_BU001002003.jpg",
-      "filename": "GE01N12_496847E032_7762872021091400000000MS00_BU001002003.jpg"
+      "filename": "GE01N12_496847E032_7762872021091400000000MS00_BU001002003.jpg",
+      "file:size": 122378
     },
     "metadata": {
       "type": "text/plain",
@@ -73,7 +74,8 @@
         "metadata"
       ],
       "href": "data/GE01N12_496847E032_7762872021091400000000MS00_BU001002003/GE01N12_496847E032_7762872021091400000000MS00_DU001002003.txt",
-      "filename": "GE01N12_496847E032_7762872021091400000000MS00_DU001002003.txt"
+      "filename": "GE01N12_496847E032_7762872021091400000000MS00_DU001002003.txt",
+      "file:size": 1941
     },
     "bluegreenrednir": {
       "type": "image/tiff",
@@ -83,6 +85,7 @@
       ],
       "href": "data/GE01N12_496847E032_7762872021091400000000MS00_BU001002003/GE01N12_496847E032_7762872021091400000000MS00_GU001002003.TIF",
       "filename": "GE01N12_496847E032_7762872021091400000000MS00_GU001002003.TIF",
+      "file:size": 1,
       "gsd": 2.0,
       "eo:bands": [
         {
@@ -139,7 +142,8 @@
         "metadata"
       ],
       "href": "data/GE01N12_496847E032_7762872021091400000000MS00_BU001002003/vendor_metadata/21SEP14082709-M1BS-014379587010_01_P001.RPB",
-      "filename": "vendor_metadata/21SEP14082709-M1BS-014379587010_01_P001.RPB"
+      "filename": "vendor_metadata/21SEP14082709-M1BS-014379587010_01_P001.RPB",
+      "file:size": 1
     },
     "manifest": {
       "type": "application/xml",
@@ -147,7 +151,8 @@
         "metadata"
       ],
       "href": "data/GE01N12_496847E032_7762872021091400000000MS00_BU001002003/vendor_metadata/21SEP14082709-M1BS-014379587010_01_P001.XML",
-      "filename": "vendor_metadata/21SEP14082709-M1BS-014379587010_01_P001.XML"
+      "filename": "vendor_metadata/21SEP14082709-M1BS-014379587010_01_P001.XML",
+      "file:size": 1085390
     }
   },
   "links": []

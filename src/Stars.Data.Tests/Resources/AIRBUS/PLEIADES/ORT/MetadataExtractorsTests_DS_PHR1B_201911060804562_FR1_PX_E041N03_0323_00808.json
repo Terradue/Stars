@@ -76,6 +76,7 @@
       "title": "Band Composite Basic P Ortho R1 C1",
       "href": "data/TPP1601261554/IMG_PHR1B_P_001/IMG_PHR1B_P_201911060805331_ORT_4596933101-001_R1C1.JP2",
       "filename": "IMG_PHR1B_P_001/IMG_PHR1B_P_201911060805331_ORT_4596933101-001_R1C1.JP2",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "P",
@@ -105,7 +106,8 @@
         "world-file"
       ],
       "href": "data/TPP1601261554/IMG_PHR1B_P_001/IMG_PHR1B_P_201911060805331_ORT_4596933101-001_R1C1.J2W",
-      "filename": "IMG_PHR1B_P_001/IMG_PHR1B_P_201911060805331_ORT_4596933101-001_R1C1.J2W"
+      "filename": "IMG_PHR1B_P_001/IMG_PHR1B_P_201911060805331_ORT_4596933101-001_R1C1.J2W",
+      "file:size": 34
     },
     "metadata-P": {
       "type": "application/xml",
@@ -114,7 +116,8 @@
       ],
       "title": "Metadata file",
       "href": "data/TPP1601261554/IMG_PHR1B_P_001/DIM_PHR1B_P_201911060805331_ORT_4596933101-001.XML",
-      "filename": "IMG_PHR1B_P_001/DIM_PHR1B_P_201911060805331_ORT_4596933101-001.XML"
+      "filename": "IMG_PHR1B_P_001/DIM_PHR1B_P_201911060805331_ORT_4596933101-001.XML",
+      "file:size": 27807
     },
     "overview-P": {
       "type": "image/jpeg",
@@ -122,7 +125,8 @@
         "overview"
       ],
       "href": "data/TPP1601261554/IMG_PHR1B_P_001/PREVIEW_PHR1B_P_201911060805331_ORT_4596933101-001.JPG",
-      "filename": "IMG_PHR1B_P_001/PREVIEW_PHR1B_P_201911060805331_ORT_4596933101-001.JPG"
+      "filename": "IMG_PHR1B_P_001/PREVIEW_PHR1B_P_201911060805331_ORT_4596933101-001.JPG",
+      "file:size": 13886
     },
     "thumbnail-P": {
       "type": "image/jpeg",
@@ -130,7 +134,8 @@
         "thumbnail"
       ],
       "href": "data/TPP1601261554/IMG_PHR1B_P_001/ICON_PHR1B_P_201911060805331_ORT_4596933101-001.JPG",
-      "filename": "IMG_PHR1B_P_001/ICON_PHR1B_P_201911060805331_ORT_4596933101-001.JPG"
+      "filename": "IMG_PHR1B_P_001/ICON_PHR1B_P_201911060805331_ORT_4596933101-001.JPG",
+      "file:size": 2487
     },
     "MS-R1C1": {
       "type": "image/jp2",
@@ -141,6 +146,7 @@
       "title": "Band Composite Basic MS Ortho R1 C1",
       "href": "data/TPP1601261554/IMG_PHR1B_MS_002/IMG_PHR1B_MS_201911060805331_ORT_4596933101-002_R1C1.JP2",
       "filename": "IMG_PHR1B_MS_002/IMG_PHR1B_MS_201911060805331_ORT_4596933101-002_R1C1.JP2",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "B2",
@@ -218,7 +224,8 @@
         "world-file"
       ],
       "href": "data/TPP1601261554/IMG_PHR1B_MS_002/IMG_PHR1B_MS_201911060805331_ORT_4596933101-002_R1C1.J2W",
-      "filename": "IMG_PHR1B_MS_002/IMG_PHR1B_MS_201911060805331_ORT_4596933101-002_R1C1.J2W"
+      "filename": "IMG_PHR1B_MS_002/IMG_PHR1B_MS_201911060805331_ORT_4596933101-002_R1C1.J2W",
+      "file:size": 34
     },
     "metadata-MS": {
       "type": "application/xml",
@@ -227,7 +234,8 @@
       ],
       "title": "Metadata file",
       "href": "data/TPP1601261554/IMG_PHR1B_MS_002/DIM_PHR1B_MS_201911060805331_ORT_4596933101-002.XML",
-      "filename": "IMG_PHR1B_MS_002/DIM_PHR1B_MS_201911060805331_ORT_4596933101-002.XML"
+      "filename": "IMG_PHR1B_MS_002/DIM_PHR1B_MS_201911060805331_ORT_4596933101-002.XML",
+      "file:size": 57051
     },
     "overview-MS": {
       "type": "image/jpeg",
@@ -235,7 +243,8 @@
         "overview"
       ],
       "href": "data/TPP1601261554/IMG_PHR1B_MS_002/PREVIEW_PHR1B_MS_201911060805331_ORT_4596933101-002.JPG",
-      "filename": "IMG_PHR1B_MS_002/PREVIEW_PHR1B_MS_201911060805331_ORT_4596933101-002.JPG"
+      "filename": "IMG_PHR1B_MS_002/PREVIEW_PHR1B_MS_201911060805331_ORT_4596933101-002.JPG",
+      "file:size": 15042
     },
     "thumbnail-MS": {
       "type": "image/jpeg",
@@ -243,7 +252,8 @@
         "thumbnail"
       ],
       "href": "data/TPP1601261554/IMG_PHR1B_MS_002/ICON_PHR1B_MS_201911060805331_ORT_4596933101-002.JPG",
-      "filename": "IMG_PHR1B_MS_002/ICON_PHR1B_MS_201911060805331_ORT_4596933101-002.JPG"
+      "filename": "IMG_PHR1B_MS_002/ICON_PHR1B_MS_201911060805331_ORT_4596933101-002.JPG",
+      "file:size": 2596
     }
   },
   "links": []

@@ -81,6 +81,7 @@
       "title": "Image file",
       "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND15/CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND15.tif",
       "filename": "CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND15.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "band-15-left",
@@ -97,6 +98,7 @@
       "title": "Image file",
       "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND15/CBERS_4A_WFI_20200801_221_156_L4_RIGHT_BAND15.tif",
       "filename": "CBERS_4A_WFI_20200801_221_156_L4_RIGHT_BAND15.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "band-15-right",
@@ -112,7 +114,8 @@
       ],
       "title": "Metadata file",
       "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND15/CBERS_4A_WFI_20200801_221_156_L4_BAND15.xml",
-      "filename": "CBERS_4A_WFI_20200801_221_156_L4_BAND15.xml"
+      "filename": "CBERS_4A_WFI_20200801_221_156_L4_BAND15.xml",
+      "file:size": 154085
     }
   },
   "links": []

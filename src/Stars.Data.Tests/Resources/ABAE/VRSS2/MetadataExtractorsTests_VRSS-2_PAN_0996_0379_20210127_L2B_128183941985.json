@@ -73,6 +73,7 @@
       "title": "Image file",
       "href": "data/PAN/a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.tif",
       "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.tif",
+      "file:size": 0,
       "raster:bands": [
         {
           "scale": 0.30564215416590257,
@@ -95,7 +96,8 @@
       ],
       "title": "Browse image",
       "href": "data/PAN/a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.jpg",
-      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.jpg"
+      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.jpg",
+      "file:size": 0
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -104,7 +106,8 @@
       ],
       "title": "Thumbnail image",
       "href": "data/PAN/a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985_THUMB.jpg",
-      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985_THUMB.jpg"
+      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985_THUMB.jpg",
+      "file:size": 0
     },
     "metadata": {
       "type": "application/xml",
@@ -113,7 +116,8 @@
       ],
       "title": "Metadata file",
       "href": "data/PAN/a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.xml",
-      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.xml"
+      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985.xml",
+      "file:size": 5481
     },
     "metadata-addition": {
       "type": "application/xml",
@@ -122,7 +126,8 @@
       ],
       "title": "Additional metadata",
       "href": "data/PAN/a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985_ADDITION.xml",
-      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985_ADDITION.xml"
+      "filename": "a3_21012879000032/VRSS-2_PAN_0996_0379_20210127_L2B_128183941985_ADDITION.xml",
+      "file:size": 1
     }
   },
   "links": []

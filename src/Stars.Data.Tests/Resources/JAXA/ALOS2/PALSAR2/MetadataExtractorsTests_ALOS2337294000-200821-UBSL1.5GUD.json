@@ -76,7 +76,8 @@
       ],
       "title": "Metadata summary file",
       "href": "data/ALOS2337294000-200821/summary.txt",
-      "filename": "summary.txt"
+      "filename": "summary.txt",
+      "file:size": 2119
     },
     "amplitude-hh": {
       "type": "image/tiff; application=geotiff",
@@ -88,7 +89,8 @@
       "sar:polarizations": [
         "HH"
       ],
-      "filename": "IMG-HH-ALOS2337294000-200821-UBSL1.5GUD.tif"
+      "filename": "IMG-HH-ALOS2337294000-200821-UBSL1.5GUD.tif",
+      "file:size": 0
     },
     "lut-hh": {
       "type": "text/plain",
@@ -100,7 +102,8 @@
       "sar:polarizations": [
         "HH"
       ],
-      "filename": "LUT-HH-ALOS2337294000-200821-UBSL1.5GUD.txt"
+      "filename": "LUT-HH-ALOS2337294000-200821-UBSL1.5GUD.txt",
+      "file:size": 643195
     },
     "kml": {
       "type": "application/vnd.google-earth.kml+xml",
@@ -110,7 +113,8 @@
       ],
       "title": "Geometry (KML)",
       "href": "data/ALOS2337294000-200821/ALOS2337294000-200821_UBSL1.5GUD.kml",
-      "filename": "ALOS2337294000-200821_UBSL1.5GUD.kml"
+      "filename": "ALOS2337294000-200821_UBSL1.5GUD.kml",
+      "file:size": 3097
     }
   },
   "links": []

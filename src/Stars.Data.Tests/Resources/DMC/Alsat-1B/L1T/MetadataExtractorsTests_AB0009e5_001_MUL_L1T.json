@@ -78,6 +78,7 @@
       "title": "Composite Scaled Radiance Orthorectified ",
       "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T.tif",
       "filename": "AB0009e5_001_MUL_L1T.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
@@ -138,7 +139,8 @@
       ],
       "title": "Metadata file",
       "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T.dim",
-      "filename": "AB0009e5_001_MUL_L1T.dim"
+      "filename": "AB0009e5_001_MUL_L1T.dim",
+      "file:size": 17530
     },
     "overview": {
       "type": "image/jpeg",
@@ -146,7 +148,8 @@
         "overview"
       ],
       "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T_browse.jpg",
-      "filename": "AB0009e5_001_MUL_L1T_browse.jpg"
+      "filename": "AB0009e5_001_MUL_L1T_browse.jpg",
+      "file:size": 0
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -154,7 +157,8 @@
         "thumbnail"
       ],
       "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T_thumb.jpg",
-      "filename": "AB0009e5_001_MUL_L1T_thumb.jpg"
+      "filename": "AB0009e5_001_MUL_L1T_thumb.jpg",
+      "file:size": 0
     }
   },
   "links": []

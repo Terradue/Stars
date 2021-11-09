@@ -77,6 +77,7 @@
       "title": "Image file",
       "href": "data/CBERS_4_PAN10M_20190510_027_076_L2_BAND4/CBERS_4_PAN10M_20190510_027_076_L2_BAND4.tif",
       "filename": "CBERS_4_PAN10M_20190510_027_076_L2_BAND4.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "band-4",
@@ -92,7 +93,8 @@
       ],
       "title": "Metadata file",
       "href": "data/CBERS_4_PAN10M_20190510_027_076_L2_BAND4/CBERS_4_PAN10M_20190510_027_076_L2_BAND4.xml",
-      "filename": "CBERS_4_PAN10M_20190510_027_076_L2_BAND4.xml"
+      "filename": "CBERS_4_PAN10M_20190510_027_076_L2_BAND4.xml",
+      "file:size": 22032
     }
   },
   "links": []
