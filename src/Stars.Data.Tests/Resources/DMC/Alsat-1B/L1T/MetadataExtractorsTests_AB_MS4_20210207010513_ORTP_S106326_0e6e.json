@@ -81,6 +81,7 @@
       "title": "Composite Scaled Radiance Orthorectified ",
       "href": "data/a3_21012879000031/AB_MS4_20210207010513_ORTP_S106326_0e6e.tif",
       "filename": "AB_MS4_20210207010513_ORTP_S106326_0e6e.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
@@ -141,7 +142,8 @@
       ],
       "title": "Metadata file",
       "href": "data/a3_21012879000031/DIM_AB_MS4_20210207010513_ORTP_S106326_0e6e_Meta.xml",
-      "filename": "DIM_AB_MS4_20210207010513_ORTP_S106326_0e6e_Meta.xml"
+      "filename": "DIM_AB_MS4_20210207010513_ORTP_S106326_0e6e_Meta.xml",
+      "file:size": 19288
     }
   },
   "links": []

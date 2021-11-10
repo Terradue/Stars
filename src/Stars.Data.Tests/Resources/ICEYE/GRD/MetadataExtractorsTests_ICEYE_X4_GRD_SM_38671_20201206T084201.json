@@ -85,6 +85,7 @@
       ],
       "href": "data/ICEYE_X4_GRD_SM_38671_20201206T084201/ICEYE_X4_GRD_SM_38671_20201206T084201.tif",
       "filename": "ICEYE_X4_GRD_SM_38671_20201206T084201.tif",
+      "file:size": 0,
       "gsd": 2.5,
       "sar:polarizations": [
         "VV"
@@ -97,7 +98,8 @@
       ],
       "title": "Metadata file",
       "href": "data/ICEYE_X4_GRD_SM_38671_20201206T084201/ICEYE_X4_GRD_SM_38671_20201206T084201.xml",
-      "filename": "ICEYE_X4_GRD_SM_38671_20201206T084201.xml"
+      "filename": "ICEYE_X4_GRD_SM_38671_20201206T084201.xml",
+      "file:size": 77595
     },
     "overview": {
       "type": "image/png",
@@ -105,7 +107,8 @@
         "overview"
       ],
       "href": "data/ICEYE_X4_GRD_SM_38671_20201206T084201/ICEYE_X4_QUICKLOOK_SM_38671_20201206T084201.png",
-      "filename": "ICEYE_X4_QUICKLOOK_SM_38671_20201206T084201.png"
+      "filename": "ICEYE_X4_QUICKLOOK_SM_38671_20201206T084201.png",
+      "file:size": 0
     }
   },
   "links": []

@@ -141,6 +141,7 @@
       ],
       "href": "data/KV3_16300_16298_01_3NP2_20_OR/Kanopus-V3_BOLIVIA_09012021_MSS/Kanopus-V3_BOLIVIA_09012021_MSS_product.tiff",
       "filename": "Kanopus-V3_BOLIVIA_09012021_MSS/Kanopus-V3_BOLIVIA_09012021_MSS_product.tiff",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "blue",
@@ -171,6 +172,7 @@
       ],
       "href": "data/KV3_16300_16298_01_3NP2_20_OR/Kanopus-V3_BOLIVIA_09012021_PSS/Kanopus-V3_BOLIVIA_09012021_PSS_product.tiff",
       "filename": "Kanopus-V3_BOLIVIA_09012021_PSS/Kanopus-V3_BOLIVIA_09012021_PSS_product.tiff",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "pan",

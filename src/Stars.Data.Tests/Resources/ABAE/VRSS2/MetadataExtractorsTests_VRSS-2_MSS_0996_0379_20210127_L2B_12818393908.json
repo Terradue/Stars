@@ -73,6 +73,7 @@
       "title": "Image file",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_1.tif",
       "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_1.tif",
+      "file:size": 0,
       "raster:bands": [
         {
           "scale": 0.43653825166430205,
@@ -96,6 +97,7 @@
       "title": "Image file",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_2.tif",
       "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_2.tif",
+      "file:size": 0,
       "raster:bands": [
         {
           "scale": 0.3030119386703836,
@@ -119,6 +121,7 @@
       "title": "Image file",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_3.tif",
       "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_3.tif",
+      "file:size": 0,
       "raster:bands": [
         {
           "scale": 0.33321115590949985,
@@ -142,6 +145,7 @@
       "title": "Image file",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_4.tif",
       "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_4.tif",
+      "file:size": 0,
       "raster:bands": [
         {
           "scale": 0.2583245072460024,
@@ -164,7 +168,8 @@
       ],
       "title": "Browse image",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.jpg",
-      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.jpg"
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.jpg",
+      "file:size": 0
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -173,7 +178,8 @@
       ],
       "title": "Thumbnail image",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_THUMB.jpg",
-      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_THUMB.jpg"
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_THUMB.jpg",
+      "file:size": 0
     },
     "metadata": {
       "type": "application/xml",
@@ -182,7 +188,8 @@
       ],
       "title": "Metadata file",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.xml",
-      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.xml"
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.xml",
+      "file:size": 6129
     },
     "metadata-addition": {
       "type": "application/xml",
@@ -191,7 +198,8 @@
       ],
       "title": "Additional metadata",
       "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_ADDITION.xml",
-      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_ADDITION.xml"
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_ADDITION.xml",
+      "file:size": 2408024
     }
   },
   "links": []

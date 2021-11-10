@@ -78,7 +78,8 @@
         "metadata"
       ],
       "href": "data/RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD/manifest.safe",
-      "filename": "manifest.safe"
+      "filename": "manifest.safe",
+      "file:size": 15063
     },
     "overview": {
       "type": "image/png",
@@ -86,7 +87,8 @@
         "overview"
       ],
       "href": "data/RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD/preview/productOverview.png",
-      "filename": "preview/productOverview.png"
+      "filename": "preview/productOverview.png",
+      "file:size": 0
     },
     "metadata": {
       "type": "application/xml",
@@ -94,7 +96,8 @@
         "metadata"
       ],
       "href": "data/RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD/metadata/product.xml",
-      "filename": "metadata/product.xml"
+      "filename": "metadata/product.xml",
+      "file:size": 40120
     },
     "amplitude-h": {
       "type": "image/tiff",
@@ -103,6 +106,7 @@
       ],
       "href": "data/RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD/imagery/1052796_1_CH.tif",
       "filename": "imagery/1052796_1_CH.tif",
+      "file:size": 0,
       "polarization": [
         "HH"
       ]
@@ -114,6 +118,7 @@
       ],
       "href": "data/RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD/imagery/1052796_1_CV.tif",
       "filename": "imagery/1052796_1_CV.tif",
+      "file:size": 0,
       "polarization": [
         "VV"
       ]
@@ -124,7 +129,8 @@
         "metadata"
       ],
       "href": "data/RCM1_OK1052791_PK1052796_1_3MCP24_20200219_123901_CH_CV_GCD/metadata/calibration/compactPolGainImbalance.xml",
-      "filename": "metadata/calibration/compactPolGainImbalance.xml"
+      "filename": "metadata/calibration/compactPolGainImbalance.xml",
+      "file:size": 5489
     }
   },
   "links": []

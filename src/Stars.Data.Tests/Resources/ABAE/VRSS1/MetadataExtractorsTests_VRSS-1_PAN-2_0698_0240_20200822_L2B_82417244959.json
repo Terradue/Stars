@@ -73,6 +73,7 @@
       "title": "Image file",
       "href": "data/a5_20082465000041/VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.tif",
       "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.tif",
+      "file:size": 1,
       "raster:bands": [
         {
           "scale": 0.19545756616238613,
@@ -95,7 +96,8 @@
       ],
       "title": "Browse image",
       "href": "data/a5_20082465000041/VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.jpg",
-      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.jpg"
+      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.jpg",
+      "file:size": 476605
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -104,7 +106,8 @@
       ],
       "title": "Thumbnail image",
       "href": "data/a5_20082465000041/VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959_THUMB.jpg",
-      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959_THUMB.jpg"
+      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959_THUMB.jpg",
+      "file:size": 16018
     },
     "metadata": {
       "type": "application/xml",
@@ -113,7 +116,8 @@
       ],
       "title": "Metadata file",
       "href": "data/a5_20082465000041/VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.xml",
-      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.xml"
+      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959.xml",
+      "file:size": 4692
     },
     "metadata-addition": {
       "type": "application/xml",
@@ -122,7 +126,8 @@
       ],
       "title": "Additional metadata",
       "href": "data/a5_20082465000041/VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959_ADDITION.xml",
-      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959_ADDITION.xml"
+      "filename": "VRSS-1_PAN-2_0698_0240_20200822_L2B_82417244959_ADDITION.xml",
+      "file:size": 30406
     }
   },
   "links": []

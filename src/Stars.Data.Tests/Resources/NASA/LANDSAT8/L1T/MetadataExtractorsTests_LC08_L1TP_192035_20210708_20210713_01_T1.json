@@ -83,6 +83,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B01.TIF",
       "filename": "LS081920352021070800000000MS00_B01.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -100,6 +101,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B02.TIF",
       "filename": "LS081920352021070800000000MS00_B02.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -117,6 +119,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B03.TIF",
       "filename": "LS081920352021070800000000MS00_B03.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -134,6 +137,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B04.TIF",
       "filename": "LS081920352021070800000000MS00_B04.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -151,6 +155,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B05.TIF",
       "filename": "LS081920352021070800000000MS00_B05.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -168,6 +173,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B06.TIF",
       "filename": "LS081920352021070800000000MS00_B06.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -185,6 +191,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B07.TIF",
       "filename": "LS081920352021070800000000MS00_B07.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -202,6 +209,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B08.TIF",
       "filename": "LS081920352021070800000000MS00_B08.TIF",
+      "file:size": 1,
       "gsd": 15.0,
       "eo:bands": [
         {
@@ -219,6 +227,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B09.TIF",
       "filename": "LS081920352021070800000000MS00_B09.TIF",
+      "file:size": 1,
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -236,6 +245,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B10.TIF",
       "filename": "LS081920352021070800000000MS00_B10.TIF",
+      "file:size": 1,
       "gsd": 100.0,
       "eo:bands": [
         {
@@ -253,6 +263,7 @@
       ],
       "href": "data/LS081920352021072400000000MS00/LS081920352021070800000000MS00_B11.TIF",
       "filename": "LS081920352021070800000000MS00_B11.TIF",
+      "file:size": 1,
       "gsd": 100.0,
       "eo:bands": [
         {
@@ -269,7 +280,8 @@
         "metadata"
       ],
       "href": "data/LS081920352021072400000000MS00/vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_ANG.txt",
-      "filename": "vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_ANG.txt"
+      "filename": "vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_ANG.txt",
+      "file:size": 117248
     },
     "BQA": {
       "type": "image/tiff",
@@ -277,7 +289,8 @@
         "BQA"
       ],
       "href": "data/LS081920352021072400000000MS00/vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_BQA.TIF",
-      "filename": "vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_BQA.TIF"
+      "filename": "vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_BQA.TIF",
+      "file:size": 1
     },
     "metadata": {
       "type": "text/plain",
@@ -285,7 +298,8 @@
         "metadata"
       ],
       "href": "data/LS081920352021072400000000MS00/vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_MTL.txt",
-      "filename": "vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_MTL.txt"
+      "filename": "vendor_metadata/LC08_L1TP_192035_20210708_20210713_01_T1_MTL.txt",
+      "file:size": 8695
     }
   },
   "links": [

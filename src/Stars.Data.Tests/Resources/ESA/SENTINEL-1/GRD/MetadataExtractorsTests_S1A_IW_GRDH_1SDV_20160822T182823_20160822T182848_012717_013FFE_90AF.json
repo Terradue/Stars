@@ -83,6 +83,7 @@
       "title": "IW VV Amplitude pixel values",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
       "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
+      "file:size": 0,
       "sar:polarizations": [
         "VV"
       ]
@@ -95,6 +96,7 @@
       "title": "Annotation VV IW 001",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
       "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "file:size": 1571711,
       "sar:polarizations": [
         "VV"
       ]
@@ -108,6 +110,7 @@
       "title": "IW VH Amplitude pixel values",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.tiff",
       "filename": "annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.tiff",
+      "file:size": 0,
       "sar:polarizations": [
         "VH"
       ]
@@ -120,6 +123,7 @@
       "title": "Annotation VH IW 002",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
       "filename": "annotation/s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "file:size": 1571680,
       "sar:polarizations": [
         "VH"
       ]
@@ -133,6 +137,7 @@
       "title": "Calibration VV IW",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
       "filename": "annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "file:size": 989778,
       "sar:polarizations": [
         "VV"
       ]
@@ -146,6 +151,7 @@
       "title": "Calibration VH IW",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/calibration-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
       "filename": "annotation/calibration/calibration-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "file:size": 989778,
       "sar:polarizations": [
         "VH"
       ]
@@ -159,6 +165,7 @@
       "title": "Noise VH IW",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/noise-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
       "filename": "annotation/calibration/noise-s1a-iw-grd-vh-20160822t182823-20160822t182848-012717-013ffe-002.xml",
+      "file:size": 323398,
       "sar:polarizations": [
         "VH"
       ]
@@ -172,6 +179,7 @@
       "title": "Noise VV IW",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/noise-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
       "filename": "annotation/calibration/noise-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "file:size": 323398,
       "sar:polarizations": [
         "VV"
       ]
@@ -183,7 +191,8 @@
       ],
       "title": "SAFE Manifest",
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/manifest.safe",
-      "filename": "manifest.safe"
+      "filename": "manifest.safe",
+      "file:size": 21781
     }
   },
   "links": []

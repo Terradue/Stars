@@ -1,0 +1,146 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "PT01S00_842547E119_8697242018100100000000MS00_GG001002003",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.749003733,
+          -0.782842043003
+        ],
+        [
+          119.990422256,
+          -0.782842043003
+        ],
+        [
+          119.990422256,
+          -0.902255498348
+        ],
+        [
+          119.749003733,
+          -0.902255498348
+        ],
+        [
+          119.749003733,
+          -0.782842043003
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-10-01T01:54:33+00:00",
+    "start_datetime": "2018-10-01T01:54:33+00:00",
+    "end_datetime": "2018-10-01T01:54:33+00:00",
+    "mission": "planetscope",
+    "platform": "planetscope",
+    "instruments": [
+      "ps2"
+    ],
+    "sensor_type": "optical",
+    "gsd": 3.0,
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 1736074,
+    "view:sun_elevation": 60.99449,
+    "view:sun_azimuth": 94.82318,
+    "view:incidence_angle": 0.1531593,
+    "view:off_nadir": 0.1102388,
+    "proj:epsg": 32750,
+    "processing:level": "L3B",
+    "title": "Planetscope PS2 L3B 01/10/2018 01:54:33"
+  },
+  "bbox": [
+    119.749003733,
+    -0.902255498348,
+    119.990422256,
+    -0.782842043003
+  ],
+  "assets": {
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/L3B/PT01S00_842547E119_8697242018100100000000MS00_GG001002003/PT01S00_842547E119_8697242018100100000000MS00_BG001002003.jpg",
+      "filename": "PT01S00_842547E119_8697242018100100000000MS00_GG001002003/PT01S00_842547E119_8697242018100100000000MS00_BG001002003.jpg",
+      "file:size": 38126
+    },
+    "data": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/L3B/PT01S00_842547E119_8697242018100100000000MS00_GG001002003/PT01S00_842547E119_8697242018100100000000MS00_GG001002003.tif",
+      "filename": "PT01S00_842547E119_8697242018100100000000MS00_GG001002003/PT01S00_842547E119_8697242018100100000000MS00_GG001002003.tif",
+      "file:size": 1,
+      "raster:bands": [
+        {
+          "scale": 1.85074513929E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 1.96236732904E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 2.18499248607E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 3.30920389986E-05,
+          "radiometric_scale": 0.01
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "blue",
+          "description": "blue 485nm TOA",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1997.46
+        },
+        {
+          "name": "green",
+          "description": "green 545nm TOA",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "solar_illumination": 1832.09
+        },
+        {
+          "name": "red",
+          "description": "red 630nm TOA",
+          "common_name": "red",
+          "center_wavelength": 0.63,
+          "solar_illumination": 1631.38
+        },
+        {
+          "name": "nir",
+          "description": "nir 820nm TOA",
+          "common_name": "nir",
+          "center_wavelength": 0.82,
+          "solar_illumination": 1066.31
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/L3B/PT01S00_842547E119_8697242018100100000000MS00_GG001002003/vendor_metadata/20181001_015433_1027_3B_AnalyticMS_metadata.xml",
+      "filename": "PT01S00_842547E119_8697242018100100000000MS00_GG001002003/vendor_metadata/20181001_015433_1027_3B_AnalyticMS_metadata.xml",
+      "file:size": 10420
+    }
+  },
+  "links": []
+}

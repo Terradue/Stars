@@ -63,7 +63,8 @@
         "metadata"
       ],
       "href": "data/203660031/203660031_P_MET.TXT",
-      "filename": "203660031_P_MET.TXT"
+      "filename": "203660031_P_MET.TXT",
+      "file:size": 2209
     },
     "geodata": {
       "type": "text/plain",
@@ -71,7 +72,8 @@
         "metadata"
       ],
       "href": "data/203660031/203660031_P_RPC.TXT",
-      "filename": "203660031_P_RPC.TXT"
+      "filename": "203660031_P_RPC.TXT",
+      "file:size": 3628
     },
     "pan": {
       "type": "image/tiff",
@@ -80,6 +82,7 @@
       ],
       "href": "data/203660031/203660031_P.tif",
       "filename": "203660031_P.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "pan",
@@ -93,7 +96,8 @@
         "overview"
       ],
       "href": "data/203660031/BANDP.jpg",
-      "filename": "BANDP.jpg"
+      "filename": "BANDP.jpg",
+      "file:size": 0
     }
   },
   "links": []

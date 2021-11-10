@@ -76,6 +76,7 @@
       "title": "Image file",
       "href": "data/CBERS_4_MUX_20201031_003_073_L2_BAND6/CBERS_4_MUX_20201031_003_073_L2_BAND6.tif",
       "filename": "CBERS_4_MUX_20201031_003_073_L2_BAND6.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "band-6",
@@ -91,7 +92,8 @@
       ],
       "title": "Metadata file",
       "href": "data/CBERS_4_MUX_20201031_003_073_L2_BAND6/CBERS_4_MUX_20201031_003_073_L2_BAND6.xml",
-      "filename": "CBERS_4_MUX_20201031_003_073_L2_BAND6.xml"
+      "filename": "CBERS_4_MUX_20201031_003_073_L2_BAND6.xml",
+      "file:size": 21774
     }
   },
   "links": []

@@ -82,7 +82,8 @@
         "metadata"
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-vv-m.xml",
-      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-vv-m.xml"
+      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-vv-m.xml",
+      "file:size": 22691
     },
     "amplitude-vv": {
       "type": "image/tiff; application=geotiff",
@@ -92,6 +93,7 @@
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-vv-m",
       "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-vv-m",
+      "file:size": 1,
       "sar:polarizations": [
         "VV"
       ]
@@ -102,7 +104,8 @@
         "metadata"
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-vh-m.xml",
-      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-vh-m.xml"
+      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-vh-m.xml",
+      "file:size": 22692
     },
     "amplitude-vh": {
       "type": "image/tiff; application=geotiff",
@@ -112,6 +115,7 @@
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-vh-m",
       "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-vh-m",
+      "file:size": 1,
       "sar:polarizations": [
         "VH"
       ]
@@ -122,7 +126,8 @@
         "metadata"
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-hh-m.xml",
-      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-hh-m.xml"
+      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-hh-m.xml",
+      "file:size": 22690
     },
     "amplitude-hh": {
       "type": "image/tiff; application=geotiff",
@@ -132,6 +137,7 @@
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-hh-m",
       "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-hh-m",
+      "file:size": 1,
       "sar:polarizations": [
         "HH"
       ]
@@ -142,7 +148,8 @@
         "metadata"
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-hv-m.xml",
-      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-hv-m.xml"
+      "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-hv-m.xml",
+      "file:size": 22692
     },
     "amplitude-hv": {
       "type": "image/tiff; application=geotiff",
@@ -152,6 +159,7 @@
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Data/gtc-acqId0000304132-a-tna-0000000000-hv-m",
       "filename": "Data/gtc-acqId0000304132-a-tna-0000000000-hv-m",
+      "file:size": 1,
       "sar:polarizations": [
         "HV"
       ]
@@ -162,7 +170,8 @@
         "overview"
       ],
       "href": "data/Cal801_EOL1DSARSAO1A1431505-product/Images/gtc-acqId0000304132-a-tna-0000000000-m.png",
-      "filename": "Images/gtc-acqId0000304132-a-tna-0000000000-m.png"
+      "filename": "Images/gtc-acqId0000304132-a-tna-0000000000-m.png",
+      "file:size": 529640
     }
   },
   "links": []

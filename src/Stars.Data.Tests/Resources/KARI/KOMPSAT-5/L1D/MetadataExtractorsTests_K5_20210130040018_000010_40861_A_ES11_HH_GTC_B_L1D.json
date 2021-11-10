@@ -85,7 +85,8 @@
         "overview-worldfile"
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_br.jgw",
-      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_br.jgw"
+      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_br.jgw",
+      "file:size": 226
     },
     "overview-worldfile": {
       "type": "application/octet-stream",
@@ -93,7 +94,8 @@
         "overview-worldfile"
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_QL.pgw",
-      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_QL.pgw"
+      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_QL.pgw",
+      "file:size": 226
     },
     "browse": {
       "type": "image/jpeg",
@@ -101,7 +103,8 @@
         "overview"
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_br.jpg",
-      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_br.jpg"
+      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_br.jpg",
+      "file:size": 819898
     },
     "metadata": {
       "type": "application/xml",
@@ -109,7 +112,8 @@
         "metadata"
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_Aux.xml",
-      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_Aux.xml"
+      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_Aux.xml",
+      "file:size": 56019
     },
     "amplitude-hh": {
       "type": "image/tiff",
@@ -119,6 +123,7 @@
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D.tif",
       "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D.tif",
+      "file:size": 1,
       "sar:polarizations": [
         "HH"
       ]
@@ -129,7 +134,8 @@
         "thumbnail"
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_th.jpg",
-      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_th.jpg"
+      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_th.jpg",
+      "file:size": 5280
     },
     "overview": {
       "type": "image/png",
@@ -137,7 +143,8 @@
         "overview"
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_QL.png",
-      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_QL.png"
+      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_QL.png",
+      "file:size": 2443165
     },
     "gim": {
       "type": "image/tiff",
@@ -145,7 +152,8 @@
         "data"
       ],
       "href": "data/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D/K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_GIM.tif",
-      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_GIM.tif"
+      "filename": "K5_20210130040018_000010_40861_A_ES11_HH_GTC_B_L1D_GIM.tif",
+      "file:size": 1
     }
   },
   "links": []

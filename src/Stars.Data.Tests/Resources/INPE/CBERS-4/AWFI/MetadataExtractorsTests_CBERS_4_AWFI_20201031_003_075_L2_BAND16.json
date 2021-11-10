@@ -76,6 +76,7 @@
       "title": "Image file",
       "href": "data/CBERS_4_AWFI_20201031_003_075_L2_BAND16/CBERS_4_AWFI_20201031_003_075_L2_BAND16.tif",
       "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND16.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "band-16",
@@ -91,7 +92,8 @@
       ],
       "title": "Metadata file",
       "href": "data/CBERS_4_AWFI_20201031_003_075_L2_BAND16/CBERS_4_AWFI_20201031_003_075_L2_BAND16.xml",
-      "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND16.xml"
+      "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND16.xml",
+      "file:size": 83912
     }
   },
   "links": []

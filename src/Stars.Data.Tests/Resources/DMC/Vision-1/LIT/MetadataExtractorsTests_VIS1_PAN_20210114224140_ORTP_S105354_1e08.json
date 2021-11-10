@@ -85,6 +85,7 @@
       "title": "Composite Scaled Radiance Orthorectified ",
       "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
       "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "PAN",
@@ -109,7 +110,8 @@
       ],
       "title": "Metadata file",
       "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/DIM_VIS1_PAN_20210114224140_ORTP_S105354_1e08_Meta.xml",
-      "filename": "DIM_VIS1_PAN_20210114224140_ORTP_S105354_1e08_Meta.xml"
+      "filename": "DIM_VIS1_PAN_20210114224140_ORTP_S105354_1e08_Meta.xml",
+      "file:size": 17117
     },
     "overview": {
       "type": "image/tiff",
@@ -117,7 +119,8 @@
         "overview"
       ],
       "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08_Preview.tif",
-      "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08_Preview.tif"
+      "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08_Preview.tif",
+      "file:size": 0
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -125,7 +128,8 @@
         "thumbnail"
       ],
       "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08_Icon.jpg",
-      "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08_Icon.jpg"
+      "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08_Icon.jpg",
+      "file:size": 0
     }
   },
   "links": []

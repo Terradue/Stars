@@ -76,6 +76,7 @@
       "title": "Band Composite Basic PMS Ortho R1 C1",
       "href": "data/5881313101/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202108151541301_ORT_5881313101_R1C1.JP2",
       "filename": "IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202108151541301_ORT_5881313101_R1C1.JP2",
+      "file:size": 1,
       "eo:bands": [
         {
           "name": "B2",
@@ -153,7 +154,8 @@
         "world-file"
       ],
       "href": "data/5881313101/IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202108151541301_ORT_5881313101_R1C1.J2W",
-      "filename": "IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202108151541301_ORT_5881313101_R1C1.J2W"
+      "filename": "IMG_PHR1A_PMS_001/IMG_PHR1A_PMS_202108151541301_ORT_5881313101_R1C1.J2W",
+      "file:size": 121
     },
     "metadata-PMS": {
       "type": "application/xml",
@@ -162,7 +164,8 @@
       ],
       "title": "Metadata file",
       "href": "data/5881313101/IMG_PHR1A_PMS_001/DIM_PHR1A_PMS_202108151541301_ORT_5881313101.XML",
-      "filename": "IMG_PHR1A_PMS_001/DIM_PHR1A_PMS_202108151541301_ORT_5881313101.XML"
+      "filename": "IMG_PHR1A_PMS_001/DIM_PHR1A_PMS_202108151541301_ORT_5881313101.XML",
+      "file:size": 104818
     },
     "overview-PMS": {
       "type": "image/jpeg",
@@ -170,7 +173,8 @@
         "overview"
       ],
       "href": "data/5881313101/IMG_PHR1A_PMS_001/PREVIEW_PHR1A_PMS_202108151541301_ORT_5881313101.JPG",
-      "filename": "IMG_PHR1A_PMS_001/PREVIEW_PHR1A_PMS_202108151541301_ORT_5881313101.JPG"
+      "filename": "IMG_PHR1A_PMS_001/PREVIEW_PHR1A_PMS_202108151541301_ORT_5881313101.JPG",
+      "file:size": 148175
     },
     "thumbnail-PMS": {
       "type": "image/jpeg",
@@ -178,7 +182,8 @@
         "thumbnail"
       ],
       "href": "data/5881313101/IMG_PHR1A_PMS_001/ICON_PHR1A_PMS_202108151541301_ORT_5881313101.JPG",
-      "filename": "IMG_PHR1A_PMS_001/ICON_PHR1A_PMS_202108151541301_ORT_5881313101.JPG"
+      "filename": "IMG_PHR1A_PMS_001/ICON_PHR1A_PMS_202108151541301_ORT_5881313101.JPG",
+      "file:size": 16836
     }
   },
   "links": []

@@ -77,7 +77,8 @@
       ],
       "title": "Metadata summary file",
       "href": "data/ALOS2146686640-170209/summary.txt",
-      "filename": "summary.txt"
+      "filename": "summary.txt",
+      "file:size": 2272
     },
     "amplitude-hh": {
       "type": "image/tiff; application=geotiff",
@@ -89,7 +90,8 @@
       "sar:polarizations": [
         "HH"
       ],
-      "filename": "IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif"
+      "filename": "IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif",
+      "file:size": 0
     },
     "lut-hh": {
       "type": "text/plain",
@@ -101,7 +103,8 @@
       "sar:polarizations": [
         "HH"
       ],
-      "filename": "LUT-HH-ALOS2146686640-170209-FBDR1.5GUA.txt"
+      "filename": "LUT-HH-ALOS2146686640-170209-FBDR1.5GUA.txt",
+      "file:size": 323403
     },
     "amplitude-hv": {
       "type": "image/tiff; application=geotiff",
@@ -113,7 +116,8 @@
       "sar:polarizations": [
         "HV"
       ],
-      "filename": "IMG-HV-ALOS2146686640-170209-FBDR1.5GUA.tif"
+      "filename": "IMG-HV-ALOS2146686640-170209-FBDR1.5GUA.tif",
+      "file:size": 0
     },
     "lut-hv": {
       "type": "text/plain",
@@ -125,7 +129,8 @@
       "sar:polarizations": [
         "HV"
       ],
-      "filename": "LUT-HV-ALOS2146686640-170209-FBDR1.5GUA.txt"
+      "filename": "LUT-HV-ALOS2146686640-170209-FBDR1.5GUA.txt",
+      "file:size": 323403
     },
     "kml": {
       "type": "application/vnd.google-earth.kml+xml",
@@ -135,7 +140,8 @@
       ],
       "title": "Geometry (KML)",
       "href": "data/ALOS2146686640-170209/ALOS2146686640-170209_FBDR1.5GUA.kml",
-      "filename": "ALOS2146686640-170209_FBDR1.5GUA.kml"
+      "filename": "ALOS2146686640-170209_FBDR1.5GUA.kml",
+      "file:size": 3110
     }
   },
   "links": []

@@ -73,6 +73,7 @@
       "title": "Image file",
       "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.tif",
       "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.tif",
+      "file:size": 1,
       "raster:bands": [
         {
           "scale": 0.19545756616238613,
@@ -95,7 +96,8 @@
       ],
       "title": "Browse image",
       "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.jpg",
-      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.jpg"
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.jpg",
+      "file:size": 256657
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -104,7 +106,8 @@
       ],
       "title": "Thumbnail image",
       "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_THUMB.jpg",
-      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_THUMB.jpg"
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_THUMB.jpg",
+      "file:size": 7954
     },
     "metadata": {
       "type": "application/xml",
@@ -113,7 +116,8 @@
       ],
       "title": "Metadata file",
       "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.xml",
-      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.xml"
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196.xml",
+      "file:size": 4695
     },
     "metadata-addition": {
       "type": "application/xml",
@@ -122,7 +126,8 @@
       ],
       "title": "Additional metadata",
       "href": "data/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196/VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_ADDITION.xml",
-      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_ADDITION.xml"
+      "filename": "VRSS-1_PAN-2_0698_0239_20200814_L2B_817135102196_ADDITION.xml",
+      "file:size": 30409
     }
   },
   "links": []
