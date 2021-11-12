@@ -1,5 +1,5 @@
 pipeline {
-  agent docker
+  agent { node { label 'docker' } }
   environment {
       VERSION_LIB = getVersionFromCsProj('src/Stars.Services/Terradue.Stars.Services.csproj')
       VERSION_TOOL = getVersionFromCsProj('src/Stars.Console/Terradue.Stars.Console.csproj')
