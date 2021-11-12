@@ -12,6 +12,7 @@ using Terradue.Stars.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Terradue.Stars.Services.Store;
 
 namespace Terradue.Data.Test.Harvesters
 {
@@ -32,7 +33,6 @@ namespace Terradue.Data.Test.Harvesters
         [Theory, MemberData("TestData", DisableDiscoveryEnumeration = true)]         public async void TestExtractors(string key, string datadir, MetadataExtraction extractor)
         {
             StacRouter stacRouter = new StacRouter(null);
-
             TestItem testNode = new TestItem(datadir);
             IResource route = new ContainerNode(testNode, new Dictionary<string, IAsset>(testNode.Assets), "");
             IDestination destination = LocalFileDestination.Create("out/", route);
@@ -56,6 +56,7 @@ namespace Terradue.Data.Test.Harvesters
                 StacItem stacItem = stacItemNode.StacObject as StacItem;
                 Assert.NotNull(stacItem);
                 stacItem.Properties.Remove("updated");
+                stacItemNode.MakeAssetUriRelative();
                 CheckAssetLocalPath(stacItem, key);
                 var actualJson = StacConvert.Serialize(stacItem, new Newtonsoft.Json.JsonSerializerSettings()
                     {

@@ -5,6 +5,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -56,6 +57,12 @@ namespace Terradue.Stars.Services.Supplier
                 properties.Remove(key);
                 properties.Add(key, props[key]);
             }
+        }
+
+        public async Task CacheHeaders(bool force = false)
+        {
+            if ( route is WebRoute )
+                await (route as WebRoute).CacheHeadersAsync(force);
         }
     }
 }

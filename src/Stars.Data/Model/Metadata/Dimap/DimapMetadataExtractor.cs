@@ -77,7 +77,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
             // AddEoBandPropertyInItem(stacItem);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem);
+            return StacItemNode.Create(stacItem, item.Uri);;
         }
 
         private void AddEoBandPropertyInItem(StacItem stacItem)

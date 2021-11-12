@@ -70,5 +70,10 @@ namespace Terradue.Stars.Services.Processing
         {
             throw new NotImplementedException();
         }
+
+        public Task CacheHeaders(bool force = false)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

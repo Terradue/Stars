@@ -88,7 +88,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             // AddEoBandPropertyInItem(stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem);
+            return StacItemNode.Create(stacItem, item.Uri);;
 
         }
 

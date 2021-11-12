@@ -93,7 +93,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             var mergedItems = stacItemNodes.OfType<StacItemNode>().GroupBy<StacItemNode, string, StacItemNode>(item => item.Id,
                 (id, items) => new StacItemNode(
-                                        StacItemMerger.Merge(items.Select(i => i.StacItem)), items.First().Uri
+                                        StacItemMerger.Merge(items), items.First().Uri
                                         ))
                                         .ToList();
 
@@ -114,7 +114,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                    return link;
                }).ToList()).ToList()));
 
-            return StacCatalogNode.CreateUnlocatedNode(catalog);
+            return StacCatalogNode.Create(catalog, item.Uri);
         }
 
         internal StacItemNode ExtractMetadata(IItem item,
@@ -128,7 +128,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             // AddEoBandPropertyInItem(stacItem);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem);
+            return StacItemNode.Create(stacItem, item.Uri) as StacItemNode;
         }
 
         private void AddEoBandPropertyInItem(StacItem stacItem)

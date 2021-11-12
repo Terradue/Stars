@@ -77,7 +77,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             // AddEoBandPropertyInItem(stacItem);
             FillBasicsProperties(auxiliary, stacItem.Properties);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem); ;
+            return StacItemNode.Create(stacItem, item.Uri);; ;
 
         }
 

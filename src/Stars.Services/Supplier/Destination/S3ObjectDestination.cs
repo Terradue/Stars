@@ -26,10 +26,12 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public string BucketName => S3UriParser.GetBucketName(s3Uri);
 
-        public static S3ObjectDestination Create(string s3UriStr, IResource route)
+        public static S3ObjectDestination Create(string s3UriStr, IResource route = null)
         {
             Uri s3Uri = new Uri(s3UriStr);
-            return (S3ObjectDestination)(new S3ObjectDestination(s3Uri)).To(route);
+            var dest = new S3ObjectDestination(s3Uri);
+            if ( route != null) dest = (S3ObjectDestination)dest.To(route);
+            return dest;
         }
 
         public Uri Uri => s3Uri;
@@ -75,6 +77,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 }
                 else
                     relPath = Path.GetDirectoryName(origin.Uri.ToString());
+                if (relPath == null || relPath.StartsWith(".."))
+                    relPath = relPathFix ?? "";
             }
             string newFilePath = filename;
             if ( !string.IsNullOrEmpty(relPath) )

@@ -28,7 +28,7 @@ namespace Terradue.Data.Test
 
         public IReadOnlyList<string> Roles => new string[1] { "data" };
 
-        public Uri Uri => itemUri.MakeRelativeUri(new Uri(fileInfo.FullName));
+        public Uri Uri => new Uri(fileInfo.FullName);
 
         public ContentType ContentType => new ContentType("application/octet-stream");
 
@@ -47,6 +47,11 @@ namespace Terradue.Data.Test
                 props.Add("file:size", fileInfo.Length);
                 return props;
             }
+        }
+
+        public Task CacheHeaders(bool force = false)
+        {
+            return Task.CompletedTask;
         }
 
         public IStreamable GetStreamable()

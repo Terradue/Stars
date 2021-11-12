@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Stac;
@@ -12,25 +13,47 @@ namespace Terradue.Stars.Services
 
         public static void MergeAssets(this StacItem stacItem, IAssetsContainer assetContainer, bool removeIfNotInContainer = false)
         {
-            if ( removeIfNotInContainer )
+            if (removeIfNotInContainer)
                 stacItem.Assets.Clear();
             foreach (var asset in assetContainer.Assets)
             {
-                if (stacItem.Assets.ContainsKey(asset.Key) )
+                if (stacItem.Assets.ContainsKey(asset.Key))
                 {
                     stacItem.Assets.Remove(asset.Key);
                 }
-                stacItem.Assets.Add(asset.Key, asset.Value.CreateStacAsset(stacItem));
+                // we must pass the previous parent url to make the asset uri absolute
+                stacItem.Assets.Add(asset.Key, asset.Value.CreateAbsoluteStacAsset(stacItem, assetContainer.Uri));
             }
         }
 
-        public static StacAsset CreateStacAsset(this IAsset asset, StacItem stacItem)
+        public static StacAsset CreateAbsoluteStacAsset(this IAsset asset, StacItem stacItem, Uri parentUrl)
         {
-            if (asset is StacAssetAsset) return new StacAsset((asset as StacAssetAsset).StacAsset, stacItem);
-            var stacAsset = new StacAsset(stacItem, asset.Uri, asset.Roles, asset.Title, asset.ContentType);
-            stacAsset.Properties.AddRange(asset.Properties);
-            stacAsset.FileExtension().Size = asset.ContentLength;
-            return stacAsset;
+            StacAsset newAsset = null;
+            if (asset is StacAssetAsset)
+                newAsset = new StacAsset((asset as StacAssetAsset).StacAsset, stacItem);
+            else
+            {
+                newAsset = new StacAsset(stacItem, asset.Uri, asset.Roles, asset.Title, asset.ContentType);
+                newAsset.Properties.AddRange(asset.Properties);
+                newAsset.FileExtension().Size = asset.ContentLength;
+            }
+            if (!newAsset.Uri.IsAbsoluteUri)
+                newAsset.Uri = new Uri(parentUrl, asset.Uri);
+            return newAsset;
+        }
+
+        public static void MakeAssetUriRelative(this StacItemNode stacItemNode)
+        {
+            foreach (var asset in stacItemNode.StacItem.Assets)
+            {
+                if (!asset.Value.Uri.IsAbsoluteUri) continue;
+                var relativeUri = stacItemNode.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (!relativeUri.IsAbsoluteUri)
+                {
+                    asset.Value.Uri = relativeUri;
+                    continue;
+                }
+            }
         }
 
         public static void UpdateLinks(this IStacCatalog catalogNode, IEnumerable<IResource> resources)

@@ -55,6 +55,11 @@ namespace Terradue.Stars.Services.Processing
 
         public bool CanBeRanged => false;
 
+        public Task CacheHeaders(bool force = false)
+        {
+            return Task.CompletedTask;
+        }
+
         public IStreamable GetStreamable()
         {
             return this;
