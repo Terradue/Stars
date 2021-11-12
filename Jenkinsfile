@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent docker
   environment {
       VERSION_LIB = getVersionFromCsProj('src/Stars.Services/Terradue.Stars.Services.csproj')
       VERSION_TOOL = getVersionFromCsProj('src/Stars.Console/Terradue.Stars.Console.csproj')
@@ -13,14 +13,11 @@ pipeline {
       agent { 
           docker { 
               image 'mcr.microsoft.com/dotnet/sdk:5.0-buster-slim'
+              args '-v /var/run/docker.sock:/var/run/docker.sock'
           } 
       }
       environment {
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
-        AWS_ACCESS_KEY_ID = "localkey"
-        AWS_SECRET_ACCESS_KEY = "localsecret"
-        AWS_DEFAULT_REGION = "eu-central-1"
-        LocalStack__Enabled = "false"
       }
       stages {
         stage("Build & Test") {
@@ -28,13 +25,7 @@ pipeline {
             echo "Build .NET application"
             sh "dotnet restore src/"
             sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
-            script {
-              docker.image('localstack/localstack').withRun('-e "DEFAULT_REGION=eu-central-1" -e "SERVICES=s3" -e "AWS_ACCESS_KEY_ID=localkey" -e "AWS_SECRET_ACCESS_KEY=localsecret" -e "DEBUG=1"') { c ->
-                withEnv(['AWS__ServiceURL=${c.id}']) {
-                  sh "dotnet test  src/"
-                }
-              }
-            }
+            sh "dotnet test  src/"
           }
         }
         stage("Make CLI packages"){
