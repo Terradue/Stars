@@ -22,7 +22,7 @@ namespace Stars.Tests
                 .WithCleanUp(true)
                 .WithOutputConsumer(Consume.RedirectStdoutAndStderrToConsole())
                 .WithEnvironment("DEFAULT_REGION", "eu-central-1")
-                .WithEnvironment("SERVICES", "s3")
+                .WithEnvironment("SERVICES", "APIGATEWAY, S3")
                 .WithEnvironment("DOCKER_HOST", "unix:///var/run/docker.sock")
                 .WithEnvironment("DEBUG", "1")
                 .WithPortBinding(4566, 4566);
