@@ -13,7 +13,7 @@ pipeline {
       agent { 
           docker { 
               image 'mcr.microsoft.com/dotnet/sdk:5.0-buster-slim'
-              args '-v /var/run/docker.sock:/var/run/docker.sock'
+              args '-v /var/run/docker.sock:/var/run/docker.sock --group-add 2057'
           } 
       }
       environment {
@@ -24,8 +24,8 @@ pipeline {
           steps {
             echo "Build .NET application"
             sh "dotnet restore src/"
-            sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
-            sh "dotnet test  src/"
+            sh "dotnet build -c ${env.CONFIGURATION} --no-restore src/"
+            sh "dotnet test src/"
           }
         }
         stage("Make CLI packages"){
@@ -49,6 +49,8 @@ pipeline {
             stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/linux**/*.zip'
             archiveArtifacts artifacts: 'src/Stars.Console/bin/linux**/publish/Stars,src/Stars.Console/bin/linux**/publish/*.json,src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
           }
+
+
         }
         stage('Publish NuGet') {
           when{
