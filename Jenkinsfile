@@ -81,6 +81,7 @@ pipeline {
             AWS_ACCESS_KEY_ID="localkey"
             AWS_SECRET_ACCESS_KEY="localsecret"
             DEBUG="1"
+          }
           steps {
             script {
               sh test
