@@ -22,6 +22,8 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             if (stacObject == null)
                 throw new ArgumentNullException("stacObject");
+            if (!uri.IsAbsoluteUri)
+                throw new ArgumentException("STAC uri must be an absolute uri");
             this.stacObject = stacObject;
             this.credentials = credentials;
             this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;

@@ -15,7 +15,7 @@ namespace Terradue.Stars.Services.Supplier
             get
             {
                 var af = new AssetFilters();
-                af.Add(new UriAssetFilter(new Regex(@"^(?:[a-z]+:)?//")));
+                af.Add(new UriAssetFilter(new Regex(@"(^(?:[a-z0-9]+:)?\/\/|^\/[a-zA-Z0-9-_]+)")));
                 return af;
             }
         }

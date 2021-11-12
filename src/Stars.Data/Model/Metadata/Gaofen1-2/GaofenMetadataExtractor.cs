@@ -91,7 +91,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
             // AddEoBandPropertyInItem(stacItem);
             FillBasicsProperties(productMetadataList[0], stacItem.Properties);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem);
+            return StacItemNode.Create(stacItem, item.Uri);;
         }
 
 

@@ -152,8 +152,8 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
-                "-v",
                 "list",
+                "-v",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
                 "-r",
                 "2"
@@ -399,7 +399,7 @@
             }
         },
         {
-            "name": "Copy OpenSearch single Sentinel1 GRD FTP",
+            "name": "Copy OpenSearch single Sentinel1 GRD to local",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",

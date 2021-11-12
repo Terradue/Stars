@@ -98,5 +98,10 @@ namespace Terradue.Stars.Services.Supplier
         {
             throw new NotImplementedException();
         }
+
+        public Task CacheHeaders(bool force = false)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

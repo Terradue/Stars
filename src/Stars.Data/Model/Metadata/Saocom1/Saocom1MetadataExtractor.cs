@@ -64,7 +64,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             StacItem stacItem = CreateStacItem(metadata, item);
             await AddAssets(stacItem, item, metadata);
 
-            var stacNode = StacItemNode.CreateUnlocatedNode(stacItem);
+            var stacNode = StacItemNode.Create(stacItem, item.Uri);
 
             return stacNode;
         }

@@ -97,6 +97,7 @@ namespace Terradue.Stars.Services.Router
         public async Task<Stream> GetStreamAsync()
         {
             var response = await request.CloneRequest(request.RequestUri).GetResponseAsync();
+            cachedResponse = new CachedWebResponse(response);
             return response.GetResponseStream();
         }
 
@@ -266,15 +267,7 @@ namespace Terradue.Stars.Services.Router
             }
         }
 
-        public WebHeaderCollection CachedHeaders
-        {
-            get
-            {
-                if (cachedResponse == null)
-                    CacheResponse().GetAwaiter().GetResult();
-                return cachedResponse?.Headers;
-            }
-        }
+        public WebHeaderCollection CachedHeaders => cachedResponse == null ? new WebHeaderCollection() : cachedResponse.Headers;
 
         public bool IsFolder
         {
@@ -317,8 +310,9 @@ namespace Terradue.Stars.Services.Router
 
         }
 
-        private async Task CacheResponse()
+        public async Task CacheHeadersAsync(bool force = false)
         {
+            if ( cachedResponse != null && !force) return;
             var cacheRequest = request.CloneRequest(request.RequestUri);
             var response = await cacheRequest.GetResponseAsync();
             cachedResponse = new CachedWebResponse(response);
@@ -344,6 +338,7 @@ namespace Terradue.Stars.Services.Router
                 (rangedRequest as S3WebRequest).Method = S3RequestMethods.DownloadRangedObject;
             }
             var response = await rangedRequest.GetResponseAsync();
+            cachedResponse = new CachedWebResponse(response);
             var stream = response.GetResponseStream();
             if (rangedRequest is FileWebRequest)
             {

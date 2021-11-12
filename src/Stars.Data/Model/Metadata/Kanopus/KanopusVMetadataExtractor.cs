@@ -49,7 +49,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem);
+            return StacItemNode.Create(stacItem, item.Uri);;
         }
 
 

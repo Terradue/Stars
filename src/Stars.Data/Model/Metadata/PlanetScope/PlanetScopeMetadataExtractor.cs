@@ -55,7 +55,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
             StacItem stacItem = CreateStacItem(metadata, item);
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem);
+            return StacItemNode.Create(stacItem, item.Uri);;
         }
 
 
