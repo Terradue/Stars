@@ -86,6 +86,7 @@ pipeline {
               sh test
             }
           }
+        }
       }
     }
     stage('Publish Artifacts') {
