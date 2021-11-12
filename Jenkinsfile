@@ -28,9 +28,11 @@ pipeline {
             echo "Build .NET application"
             sh "dotnet restore src/"
             sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
-            docker.image('localstack/localstack').withRun('-e "DEFAULT_REGION=eu-central-1" -e "SERVICES=s3" -e "AWS_ACCESS_KEY_ID=localkey" -e "AWS_SECRET_ACCESS_KEY=localsecret" -e "DEBUG=1"') { c ->
-              withEnv(['AWS__ServiceURL=${c.id}']) {
-                sh "dotnet test  src/"
+            script {
+              docker.image('localstack/localstack').withRun('-e "DEFAULT_REGION=eu-central-1" -e "SERVICES=s3" -e "AWS_ACCESS_KEY_ID=localkey" -e "AWS_SECRET_ACCESS_KEY=localsecret" -e "DEBUG=1"') { c ->
+                withEnv(['AWS__ServiceURL=${c.id}']) {
+                  sh "dotnet test  src/"
+                }
               }
             }
           }
