@@ -9,8 +9,8 @@ pipeline {
       GITHUB_REPO = 'Stars'
   }
   stages {
-    stage('Build')
-      parallel{
+    stage('Build') {
+      parallel {
         stage('.Net Core') {
           agent { 
               docker { 
