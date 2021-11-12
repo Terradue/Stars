@@ -14,7 +14,8 @@
         "LogLevel": {
             "Default": "Debug",
             "Microsoft": "Warning",
-            "Microsoft.Hosting.Lifetime": "Information"
+            "Microsoft.Hosting.Lifetime": "Information",
+            "Terradue": "Debug"
         }
     },
     "Serilog": {

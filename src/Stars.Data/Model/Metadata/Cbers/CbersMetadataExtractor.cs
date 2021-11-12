@@ -102,7 +102,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             AddProcessingStacExtension(metadata, stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.CreateUnlocatedNode(stacItem);
+            return StacItemNode.Create(stacItem, item.Uri);;
         }
 
         internal virtual StacItem CreateStacItem(Schemas.Metadata metadata, Dictionary<string, string> bands)

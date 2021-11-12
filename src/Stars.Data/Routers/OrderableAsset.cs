@@ -61,6 +61,11 @@ namespace Terradue.Stars.Data.Routers
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
+        public Task CacheHeaders(bool force = false)
+        {
+            return Task.CompletedTask;
+        }
+
         public IStreamable GetStreamable()
         {
             return null;

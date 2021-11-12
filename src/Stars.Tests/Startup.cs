@@ -1,12 +1,13 @@
+using System;
 using System.IO;
 using System.Runtime.Loader;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Services;
+using Xunit;
 using Xunit.DependencyInjection;
 using Xunit.DependencyInjection.Logging;
 
@@ -37,9 +38,10 @@ namespace Stars.Tests
             services.LoadConfiguredStarsPlugin(_ => AssemblyLoadContext.Default);
         }
 
-        public void Configure(ILoggerFactory loggerfactory, ITestOutputHelperAccessor accessor)
+        public void Configure(IServiceProvider provider, ILoggerFactory loggerFactory, ITestOutputHelperAccessor accessor)
         {
-            loggerfactory.AddProvider(new XunitTestOutputLoggerProvider(accessor));
+            Assert.NotNull(accessor);
+            loggerFactory.AddProvider(new XunitTestOutputLoggerProvider(accessor, delegate { return true; }));
         }
 
         public IConfiguration GetApplicationConfiguration()
@@ -47,7 +49,7 @@ namespace Stars.Tests
             var configFile = new FileInfo(Path.Join(@"../../../../Stars.Data", "stars-data.json"));
             configFile.OpenRead();
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("testsettings.json", optional: true)
+                .AddNewtonsoftJsonFile("testsettings.json", optional: true)
                 .AddNewtonsoftJsonFile(configFile.FullName, optional: false, reloadOnChange: false)
                 .AddEnvironmentVariables()
                 .Build();

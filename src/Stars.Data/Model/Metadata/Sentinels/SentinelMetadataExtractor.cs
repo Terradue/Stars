@@ -67,7 +67,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 
             // AddEoBandPropertyInItem(stacItem);
 
-            var stacNode = StacItemNode.CreateUnlocatedNode(stacItem);
+            var stacNode = StacItemNode.Create(stacItem, item.Uri);
 
             return stacNode;
         }

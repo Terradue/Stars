@@ -62,5 +62,10 @@ namespace Terradue.Stars.Data.Routers
         {
             throw new NotImplementedException();
         }
+
+        public Task CacheHeaders(bool force = false)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

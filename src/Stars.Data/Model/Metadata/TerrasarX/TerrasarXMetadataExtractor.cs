@@ -64,7 +64,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             // Add assets
             AddAssets(stacItem, item, metadata);
 
-            var stacNode = StacItemNode.CreateUnlocatedNode(stacItem);
+            var stacNode = StacItemNode.Create(stacItem, item.Uri);
 
             return stacNode;
         }

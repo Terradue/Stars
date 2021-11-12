@@ -101,5 +101,10 @@ namespace Terradue.Stars.Services.Model.Atom
 
             return assets;
         }
+
+        public async Task CacheHeaders(bool force = false)
+        {
+            await webRoute.CacheHeadersAsync(force);
+        }
     }
 }
