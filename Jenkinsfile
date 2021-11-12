@@ -9,58 +9,83 @@ pipeline {
       GITHUB_REPO = 'Stars'
   }
   stages {
-    stage('.Net Core') {
-      agent { 
-          docker { 
-              image 'mcr.microsoft.com/dotnet/sdk:5.0-buster-slim'
-          } 
-      }
-      environment {
-        DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
-      }
-      stages {
-        stage("Build & Test") {
-          steps {
-            echo "Build .NET application"
-            sh "dotnet restore src/"
-            sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
-            sh "dotnet test  src/"
+    stage('Build')
+      parallel{
+        stage('.Net Core') {
+          agent { 
+              docker { 
+                  image 'mcr.microsoft.com/dotnet/sdk:5.0-buster-slim'
+              } 
+          }
+          environment {
+            DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+            AWS_ACCESS_KEY_ID = "localkey"
+            AWS_SECRET_ACCESS_KEY = "localsecret"
+            AWS_DEFAULT_REGION = "eu-central-1"
+            LocalStack__Enabled = "false"
+          }
+          stages {
+            stage("Build & Test") {
+              steps {
+                echo "Build .NET application"
+                sh "dotnet restore src/"
+                sh "dotnet build -c ${env.CONFIGURATION} --no-restore  src/"
+                sh "dotnet test  src/"
+              }
+            }
+            stage("Make CLI packages"){
+              steps {
+                script {
+                  def sdf = sh(returnStdout: true, script: 'date -u +%Y%m%dT%H%M%S').trim()
+                  if (env.BRANCH_NAME == 'master') 
+                    env.DOTNET_ARGS = ""
+                  else
+                    env.DOTNET_ARGS = "--version-suffix SNAPSHOT" + sdf
+                }
+                sh "dotnet tool restore"
+                sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+                sh "dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+                sh "dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+                sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+                sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
+                stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
+                stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
+                stash name: 'stars-exe', includes: 'src/Stars.Console/bin/**/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
+                stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/linux**/*.zip'
+                archiveArtifacts artifacts: 'src/Stars.Console/bin/linux**/publish/Stars,src/Stars.Console/bin/linux**/publish/*.json,src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
+              }
+            }
+            stage('Publish NuGet') {
+              when{
+                branch 'master'
+              }
+              steps {
+                withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
+                  sh "dotnet pack src/Stars.Services -c ${env.CONFIGURATION} --include-symbols -o publish"
+                  sh "dotnet pack src/Stars.Data -c ${env.CONFIGURATION} --include-symbols -o publish"
+                  sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
+                }
+              }
+            }
           }
         }
-        stage("Make CLI packages"){
+        stage("LocalStack") {
+          agent {
+            docker { 
+              image 'localstack/localstack'
+            } 
+          }
+          environment {
+            DEFAULT_REGION="eu-central-1"
+            SERVICES="s3"
+            AWS_ACCESS_KEY_ID="localkey"
+            AWS_SECRET_ACCESS_KEY="localsecret"
+            DEBUG="1"
           steps {
             script {
-              def sdf = sh(returnStdout: true, script: 'date -u +%Y%m%dT%H%M%S').trim()
-              if (env.BRANCH_NAME == 'master') 
-                env.DOTNET_ARGS = ""
-              else
-                env.DOTNET_ARGS = "--version-suffix SNAPSHOT" + sdf
-            }
-            sh "dotnet tool restore"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r centos.7-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
-            stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
-            stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
-            stash name: 'stars-exe', includes: 'src/Stars.Console/bin/**/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
-            stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/linux**/*.zip'
-            archiveArtifacts artifacts: 'src/Stars.Console/bin/linux**/publish/Stars,src/Stars.Console/bin/linux**/publish/*.json,src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
-          }
-        }
-        stage('Publish NuGet') {
-          when{
-            branch 'master'
-          }
-          steps {
-            withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
-              sh "dotnet pack src/Stars.Services -c ${env.CONFIGURATION} --include-symbols -o publish"
-              sh "dotnet pack src/Stars.Data -c ${env.CONFIGURATION} --include-symbols -o publish"
-              sh "dotnet nuget push publish/*.nupkg --skip-duplicate -k $NUGET_TOKEN -s https://api.nuget.org/v3/index.json"
+              sh test
             }
           }
-        }
       }
     }
     stage('Publish Artifacts') {
