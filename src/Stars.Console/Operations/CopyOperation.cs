@@ -22,6 +22,7 @@ using Terradue.Stars.Services.Store;
 using System.Net;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -211,26 +212,26 @@ namespace Terradue.Stars.Console.Operations
                     stacItemNode = sourceItemNode as StacItemNode;
                 }
 
-                IEnumerator<ISupplier> suppliers = InitSuppliersEnumerator(sourceItemNode, supplierFilters);
+                PluginList<ISupplier> suppliers = InitSuppliersEnumerator(sourceItemNode, supplierFilters);
 
                 // 2. Try each of them until one provide the resource
-                while (suppliers.MoveNext())
+                foreach (var supplier in suppliers)
                 {
                     IResource supplierNode = null;
                     try
                     {
-                        logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, sourceItemNode.Uri.ToString()));
-                        supplierNode = await suppliers.Current.SearchFor(sourceItemNode);
+                        logger.Output(string.Format("[{0}] Searching for {1}", supplier.Value.Id, sourceItemNode.Uri.ToString()));
+                        supplierNode = await supplier.Value.SearchFor(sourceItemNode);
                         if (supplierNode == null && !(supplierNode is IAssetsContainer))
                         {
-                            logger.Output(string.Format("[{0}] --> no supply possible", suppliers.Current.Id));
+                            logger.Output(string.Format("[{0}] --> no supply possible", supplier.Value.Id));
                             continue;
                         }
-                        logger.Output(string.Format("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType));
+                        logger.Output(string.Format("[{0}] resource found at {1} [{2}]", supplier.Value.Id, supplierNode.Uri, supplierNode.ContentType));
                     }
                     catch (Exception e)
                     {
-                        logger.Warn(string.Format("[{0}] Exception searching for {1}: {2}", suppliers.Current.Id, sourceItemNode.Uri.ToString(), e.Message));
+                        logger.Warn(string.Format("[{0}] Exception searching for {1}: {2}", supplier.Value.Id, sourceItemNode.Uri.ToString(), e.Message));
                         logger.Verbose(e.StackTrace);
                         continue;
                     }
@@ -304,12 +305,12 @@ namespace Terradue.Stars.Console.Operations
             return assetFilters;
         }
 
-        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
+        private PluginList<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
         {
             if (route is IItem)
-                return supplierManager.GetSuppliers(filters).GetEnumerator();
+                return supplierManager.GetSuppliers(filters);
 
-            return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
+            return new PluginList<ISupplier>(new ISupplier[1] { new NativeSupplier(carrierManager) });
         }
 
         protected override async Task ExecuteAsync()

@@ -10,6 +10,7 @@ using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Microsoft.Extensions.Options;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -19,24 +20,18 @@ namespace Terradue.Stars.Services.Supplier
         {
         }
 
-        public IEnumerable<ISupplier> GetSuppliers(SupplierFilters supplierFilters = null)
+        public PluginList<ISupplier> GetSuppliers(SupplierFilters supplierFilters = null)
         {
-            if (supplierFilters == null) return Plugins.Values;
-            List<ISupplier> suppliers = new List<ISupplier>(Plugins.Values);
+            var suppliers = GetPlugins();
 
-            if (supplierFilters.IncludeIds != null)
+            if (supplierFilters?.IncludeIds != null)
             {
-                foreach (var supplierId in supplierFilters.IncludeIds)
-                {
-                    if (suppliers.FirstOrDefault(supplier => supplierId == supplier.Key) == null)
-                        throw new KeyNotFoundException(string.Format("Supplier {0} not found!", supplierId));
-                }
-                suppliers = suppliers.Where(supplier => supplierFilters.IncludeIds.IsNullOrEmpty() ? true : supplierFilters.IncludeIds.Contains(supplier.Key, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                suppliers = new PluginList<ISupplier>(suppliers.Where(s => supplierFilters.IncludeIds.Contains(s.Key)));
             }
 
-            if (supplierFilters.ExcludeIds != null)
+            if (supplierFilters?.ExcludeIds != null)
             {
-                suppliers = suppliers.Where(supplier => supplierFilters.ExcludeIds.IsNullOrEmpty() ? true : !supplierFilters.ExcludeIds.Contains(supplier.Key, StringComparer.InvariantCultureIgnoreCase)).ToList();
+                suppliers = new PluginList<ISupplier>(suppliers.Where(s => !supplierFilters.ExcludeIds.Contains(s.Key)));
             }
 
             return suppliers;

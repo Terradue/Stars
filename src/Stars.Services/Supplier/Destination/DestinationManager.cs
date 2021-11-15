@@ -19,7 +19,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public async Task<IDestination> CreateDestination(string output, IResource route)
         {
-            foreach (var guide in Plugins.Where(r => r.Value.CanGuide(output, route)))
+            foreach (var guide in GetPlugins().Where(r => r.Value.CanGuide(output, route)))
             {
                 var destination = await guide.Value.Guide(output, route);
                 if (destination != null)

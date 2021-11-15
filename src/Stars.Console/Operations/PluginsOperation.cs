@@ -36,25 +36,25 @@ namespace Terradue.Stars.Console.Operations
             _console.Out.WriteLine($"--------------");
             var routersManager = ServiceProvider.GetService<RoutersManager>();
             _console.Out.WriteLine($"* Routers:");
-            routersManager.Plugins.ToList().ForEach(p =>
+            routersManager.GetPlugins().ToList().ForEach(p =>
             {
                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });
             var suppliersManager = ServiceProvider.GetService<SupplierManager>();
             _console.Out.WriteLine($"* Suppliers:");
-            suppliersManager.Plugins.ToList().ForEach(p =>
+            suppliersManager.GetPlugins().ToList().ForEach(p =>
             {
                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });
             var translatorManager = ServiceProvider.GetService<TranslatorManager>();
             _console.Out.WriteLine($"* Translators:");
-            translatorManager.Plugins.ToList().ForEach(p =>
+            translatorManager.GetPlugins().ToList().ForEach(p =>
             {
                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });
             var processingManager = ServiceProvider.GetService<ProcessingManager>();
             _console.Out.WriteLine($"* Processings:");
-            processingManager.Plugins.ToList().ForEach(p =>
+            processingManager.GetPlugins().ToList().ForEach(p =>
             {
                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });

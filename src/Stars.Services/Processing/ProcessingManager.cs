@@ -16,7 +16,7 @@ namespace Terradue.Stars.Services.Processing
         }
 
         public IEnumerable<IProcessing> GetProcessings(ProcessingType processingType){
-            return Plugins.Values.Where(p => p.ProcessingType == processingType);
+            return GetPlugins().Values.Where(p => p.ProcessingType == processingType);
         }
 
         
