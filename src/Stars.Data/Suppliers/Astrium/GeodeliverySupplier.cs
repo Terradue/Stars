@@ -38,7 +38,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
 
         public string Label => "Astrium Geodelivery (FTP)";
 
-        public async Task<IResource> SearchFor(IResource node)
+        public async Task<IResource> SearchFor(IResource node, string identifierRegex = null)
         {
             // TEMP skipping catalog for the moment
             if (!(node is IItem)) return null;
