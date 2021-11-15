@@ -95,7 +95,7 @@ namespace Terradue.Stars.Data.Suppliers
                         {
                             case "id":
                             case "uid":
-                                parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", identifier);
+                                parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", groups[groupName].Value);
                                 break;
                             default:
                                 parameters.Set(groupName, groups[groupName].Value);
