@@ -10,7 +10,7 @@ namespace Terradue.Stars.Interface.Supplier
         string Id { get; }
         string Label { get; }
 
-        Task<IResource> SearchFor(IResource item);
+        Task<IResource> SearchFor(IResource item, string identifierRegex = null);
 
         Task<IOrder> Order(IOrderable orderableRoute);
     }

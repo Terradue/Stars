@@ -1,24 +1,17 @@
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
-using Stac;
-using Stac;
-using Terradue.Stars.Interface.Router;
-
-using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Data.Routers;
 using Terradue.OpenSearch;
 using Terradue.OpenSearch.Engine;
 using Terradue.OpenSearch.Result;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Model.Stac;
-using Microsoft.Extensions.Configuration;
-using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface;
+using System.Text.RegularExpressions;
 
 namespace Terradue.Stars.Data.Suppliers
 {
@@ -46,12 +39,12 @@ namespace Terradue.Stars.Data.Suppliers
 
         public virtual string Label => "Generic data supplier for OpenSearch interfaces";
 
-        public virtual async Task<IResource> SearchFor(IResource node)
+        public virtual async Task<IResource> SearchFor(IResource node, string identifierRegex = null)
         {
-            return (IResource)new OpenSearchResultItemRoutable((await Query(node)).Items.FirstOrDefault(), new Uri("os://" + openSearchable.Identifier), logger);
+            return (IResource)new OpenSearchResultItemRoutable((await Query(node, identifierRegex)).Items.FirstOrDefault(), new Uri("os://" + openSearchable.Identifier), logger);
         }
 
-        public virtual async Task<IOpenSearchResultCollection> Query(IResource node)
+        public virtual async Task<IOpenSearchResultCollection> Query(IResource node, string identifierRegex = null)
         {
             // TEMP skipping catalog for the moment
             if (!(node is IItem)) return null;
@@ -63,11 +56,11 @@ namespace Terradue.Stars.Data.Suppliers
 
             if (stacNode == null)
             {
-                results = await OpenSearchQuery(node);
+                results = await OpenSearchQuery(node, identifierRegex);
             }
             else
             {
-                results = await OpenSearchQuery(stacNode);
+                results = await OpenSearchQuery(stacNode, identifierRegex);
             }
 
             if (results == null || results.Count == 0)
@@ -76,20 +69,42 @@ namespace Terradue.Stars.Data.Suppliers
             return results;
         }
 
-        protected virtual async Task<IOpenSearchResultCollection> OpenSearchQuery(IResource node)
+        protected virtual async Task<IOpenSearchResultCollection> OpenSearchQuery(IResource node, string identifierRegex = null)
         {
             if (!(node is IItem)) return null;
-            NameValueCollection nvc = CreateOpenSearchParametersFromItem(node as IItem);
+            NameValueCollection nvc = CreateOpenSearchParametersFromItem(node as IItem, identifierRegex);
             if (nvc == null) return null;
 
             return await Task.Run<AtomFeed>(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
         }
 
-        private NameValueCollection CreateOpenSearchParametersFromItem(IItem item)
+        private NameValueCollection CreateOpenSearchParametersFromItem(IItem item, string identifierRegex = null)
         {
             string identifier = item.Id;
-
             NameValueCollection parameters = new NameValueCollection();
+            if (identifierRegex != null)
+            {
+                Regex regex = new Regex(identifierRegex);
+                var match = regex.Match(identifier);
+                if (match.Success)
+                {
+                    GroupCollection groups = match.Groups;
+                    foreach (string groupName in regex.GetGroupNames())
+                    {
+                        switch (groupName)
+                        {
+                            case "id":
+                            case "uid":
+                                parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", identifier);
+                                break;
+                            default:
+                                parameters.Set(groupName, groups[groupName].Value);
+                                break;
+                        }
+                    }
+                    return parameters;
+                }
+            }
 
             parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", identifier);
 

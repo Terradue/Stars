@@ -109,9 +109,9 @@ namespace Terradue.Stars.Data.Suppliers
             return new NetworkCredential(credentials["Username"], credentials["Password"]);
         }
 
-        public override async Task<IResource> SearchFor(IResource node)
+        public override async Task<IResource> SearchFor(IResource node, string identifierRegex = null)
         {
-            var result = await Query(node);
+            var result = await Query(node, identifierRegex);
             if (result == null) return null;
 
             Uri sourceUri = wrapper.Settings.ServiceUrl;
