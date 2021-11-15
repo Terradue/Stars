@@ -55,6 +55,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 catch (Exception e)
                 {
                     logger.LogDebug("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
+                    logger.LogDebug(e.StackTrace);
                     assetsExceptions.Add(asset.Key, e);
                 }
             }
