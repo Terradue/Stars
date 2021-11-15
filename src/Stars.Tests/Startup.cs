@@ -42,6 +42,10 @@ namespace Stars.Tests
         {
             Assert.NotNull(accessor);
             loggerFactory.AddProvider(new XunitTestOutputLoggerProvider(accessor, delegate { return true; }));
+
+            ILogger<Startup> logger = provider.GetService<ILogger<Startup>>();
+            var root = (IConfigurationRoot)Configuration;
+            logger.LogInformation(root.GetDebugView());
         }
 
         public IConfiguration GetApplicationConfiguration()
