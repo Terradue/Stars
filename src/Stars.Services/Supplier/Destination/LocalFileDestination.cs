@@ -48,7 +48,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
             // we identify the filename
             string filename = Path.GetFileName(subroute.Uri.IsAbsoluteUri ? subroute.Uri.LocalPath : subroute.Uri.ToString());
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
-                filename = Path.GetFileName(subroute.ContentDisposition.FileName);
+                filename = subroute.ContentDisposition.FileName;
 
             // to avoid wrong filename such as '$value'
             if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset){
