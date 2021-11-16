@@ -5,7 +5,7 @@
         "Region": "eu-central-1",
         "AccessKey": "localkey",
         "SecretKey": "localsecret",
-        "ServiceURL": "http://localhost:4566"
+        "ServiceURL": "http://localstack:4566"
     },
     "LocalStack": {
         "Enabled": true

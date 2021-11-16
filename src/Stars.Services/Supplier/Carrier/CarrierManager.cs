@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -24,7 +25,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return GetPlugins().Where(r => r.Value.CanDeliver(route, destination)).Select(r => r.Value);
         }
 
-        public IDeliveryQuotation GetAssetsDeliveryQuotations(IAssetsContainer assetsContainer, IDestination destination)
+        public async Task<IDeliveryQuotation> GetAssetsDeliveryQuotationsAsync(IAssetsContainer assetsContainer, IDestination destination)
         {
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
             Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
@@ -34,7 +35,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 try
                 {
                     var length = asset.Value.ContentLength;
-                    asset.Value.CacheHeaders();
+                    await asset.Value.CacheHeaders();
                     length = asset.Value.ContentLength;
                     string relPath = null;
                     if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)

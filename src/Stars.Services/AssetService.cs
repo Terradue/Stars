@@ -49,7 +49,7 @@ namespace Terradue.Stars.Services
 
             logger.LogDebug("Importing {0} assets to {1}", assetsContainer.Assets.Count(), destination);
 
-            IDeliveryQuotation deliveryQuotation = QuoteAssetsDelivery(assetsContainer, destination, assetsFilters);
+            IDeliveryQuotation deliveryQuotation = await QuoteAssetsDeliveryAsync(assetsContainer, destination, assetsFilters);
             AssetImportReport report = new AssetImportReport(deliveryQuotation, destination);
 
             logger.LogDebug("Delivery quotation for {0} assets ({1} exceptions)", deliveryQuotation.AssetsDeliveryQuotes.Count, deliveryQuotation.AssetsExceptions.Count);
@@ -166,10 +166,10 @@ namespace Terradue.Stars.Services
             return assetDeleteReport;
         }
 
-        private IDeliveryQuotation QuoteAssetsDelivery(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters)
+        private async Task<IDeliveryQuotation> QuoteAssetsDeliveryAsync(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters)
         {
             FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(assetsContainer, assetFilters);
-            return carrierManager.GetAssetsDeliveryQuotations(filteredAssetContainer, destination);
+            return await carrierManager.GetAssetsDeliveryQuotationsAsync(filteredAssetContainer, destination);
         }
     }
 }

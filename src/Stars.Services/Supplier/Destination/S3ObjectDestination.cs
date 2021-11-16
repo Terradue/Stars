@@ -52,7 +52,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 filename = origin.ContentDisposition.FileName;
 
             // to avoid wrong filename such as '$value'
-            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && origin.ResourceType == ResourceType.Item)
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && origin.ResourceType == ResourceType.Asset)
                 filename = (origin as IItem).Id + ".zip";
 
             // if the relPath requested is null, we will build one from the origin route to the new one
