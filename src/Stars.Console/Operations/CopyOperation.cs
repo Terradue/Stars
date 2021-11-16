@@ -42,7 +42,7 @@ namespace Terradue.Stars.Console.Operations
         public string Output { get => output; set => output = value; }
 
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
-        public bool AllowOrdering { get; set; }
+        public bool AllowOrdering { get; set; } = false;
 
         [Option("-xa|--extract-archive", "Extract archive files (default to true)", CommandOptionType.SingleValue)]
         public bool ExtractArchives { get; set; } = true;
@@ -91,7 +91,7 @@ namespace Terradue.Stars.Console.Operations
         private int recursivity = 1;
         private string output = "file://" + Directory.GetCurrentDirectory();
 
-        public CopyOperation(IConsole console): base(console)
+        public CopyOperation(IConsole console) : base(console)
         {
 
         }
@@ -141,6 +141,8 @@ namespace Terradue.Stars.Console.Operations
 
         private CopyOperationState PrepareNewRoute(IResource parentRoute, IResource newRoute, IEnumerable<IResource> siblings, object state)
         {
+            if (newRoute is WebRoute)
+                (newRoute as WebRoute).CacheHeadersAsync().GetAwaiter().GetResult();
             if (state == null)
             {
                 return new CopyOperationState(1, storeService, storeService.RootCatalogDestination);
@@ -275,7 +277,7 @@ namespace Terradue.Stars.Console.Operations
         private AssetFilters CreateAssetFiltersFromOptions()
         {
             AssetFilters assetFilters = new AssetFilters();
-            if ( AssetsFilters == null )
+            if (AssetsFilters == null)
                 return assetFilters;
             Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
             foreach (var assetName in AssetsFilters)

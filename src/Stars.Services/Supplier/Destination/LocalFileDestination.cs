@@ -48,11 +48,15 @@ namespace Terradue.Stars.Services.Supplier.Destination
             // we identify the filename
             string filename = Path.GetFileName(subroute.Uri.IsAbsoluteUri ? subroute.Uri.LocalPath : subroute.Uri.ToString());
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
-                filename = subroute.ContentDisposition.FileName;
+                filename = Path.GetFileName(subroute.ContentDisposition.FileName);
 
             // to avoid wrong filename such as '$value'
-            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Item)
-                filename = (subroute as IItem).Id + ".zip";
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset){
+                if ( resource != null && resource.ResourceType == ResourceType.Item)
+                    filename = (resource as IItem).Id + ".zip";
+                else
+                    filename = "asset.zip";
+            }
 
             // if the relPath requested is null, we will build one from the origin route to the new one
             if (relPathFix == null)

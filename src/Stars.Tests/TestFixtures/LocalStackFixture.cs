@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
-using DotNet.Testcontainers.Containers.Builders;
-using DotNet.Testcontainers.Containers.Modules;
-using DotNet.Testcontainers.Containers.OutputConsumers;
+using Docker.DotNet.Models;
+using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Containers;
+using DotNet.Testcontainers.Network;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -14,9 +16,20 @@ namespace Stars.Tests
     {
         private readonly TestcontainersContainer _localStackContainer;
         private readonly IOptions<LocalStackOptions> options;
+        private readonly string _networkName;
+        private readonly IDockerNetwork _network;
 
         public LocalStackFixture(IOptions<LocalStackOptions> options, Amazon.Extensions.NETCore.Setup.AWSOptions awsOptions)
         {
+            _networkName = Guid.NewGuid().ToString();
+            var networkLabel = Guid.NewGuid().ToString();
+
+            // When
+            _network = new TestcontainersNetworkBuilder()
+              .WithName(_networkName)
+              .WithLabel("label", networkLabel)
+              .Build();
+
             var localStackBuilder = new TestcontainersBuilder<TestcontainersContainer>()
                 .WithImage("localstack/localstack")
                 .WithCleanUp(true)
@@ -25,7 +38,9 @@ namespace Stars.Tests
                 .WithEnvironment("SERVICES", "s3")
                 .WithEnvironment("DOCKER_HOST", "unix:///var/run/docker.sock")
                 .WithEnvironment("DEBUG", "1")
-                .WithPortBinding(4566, 4566);
+                .WithPortBinding(4566, 4566)
+                .WithNetwork(_network)
+                .WithName("localstack");
 
             if (awsOptions != null)
             {
@@ -42,14 +57,18 @@ namespace Stars.Tests
         }
         public async Task InitializeAsync()
         {
-            if (options.Value.Enabled)
+            if (options.Value.Enabled){
+                await _network.CreateAsync();
                 await _localStackContainer.StartAsync();
+            }
         }
 
         public async Task DisposeAsync()
         {
-            if (options.Value.Enabled)
+            if (options.Value.Enabled){
                 await _localStackContainer.StopAsync();
+                await _network.DeleteAsync();
+            }
         }
     }
 }
