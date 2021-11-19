@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Services;
+using Terradue.Stars.Services.Supplier.Carrier;
 using Xunit;
 using Xunit.DependencyInjection;
 using Xunit.DependencyInjection.Logging;
@@ -32,6 +33,7 @@ namespace Stars.Tests
             awsOptions.Credentials = awsCredentials;
             services.AddDefaultAWSOptions(awsOptions);
             services.Configure<LocalStackOptions>(Configuration.GetSection("LocalStack"));
+            services.AddSingleton<S3StreamingCarrier, S3StreamingCarrier>();
             services.AddStarsManagedServices((provider, config) => config
                 .UseGlobalConfiguration(Configuration)
             );
