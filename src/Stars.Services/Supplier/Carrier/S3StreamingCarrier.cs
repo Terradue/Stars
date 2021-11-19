@@ -103,30 +103,27 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             try
             {
                 // in case source is also S3
-                if (streamable is WebRoute && (streamable as WebRoute).Request is S3WebRequest)
+                if (streamable is WebRoute)
                 {
-                    S3WebRequest s3CopyWebRequest = (S3WebRequest)(streamable as WebRoute).Request.CloneRequest(streamable.Uri);
-                    s3CopyWebRequest.Method = System.Net.S3.S3RequestMethods.Copy;
-                    s3CopyWebRequest.CopyTo = s3Resource.Uri;
-                    await s3CopyWebRequest.GetResponseAsync().ConfigureAwait(false);
-                    return WebRoute.Create(s3Resource.Uri);
+                    await (streamable as WebRoute).CacheHeadersAsync();
+                    if ((streamable as WebRoute).Request is S3WebRequest)
+                    {
+                        S3WebRequest s3CopyWebRequest = (S3WebRequest)(streamable as WebRoute).Request.CloneRequest(streamable.Uri);
+                        s3CopyWebRequest.Method = System.Net.S3.S3RequestMethods.Copy;
+                        s3CopyWebRequest.CopyTo = s3Resource.Uri;
+                        await s3CopyWebRequest.GetResponseAsync().ConfigureAwait(false);
+                        return WebRoute.Create(s3Resource.Uri);
+                    }
                 }
 
                 // If streamable cannot be ranged, pass by a blocking stream
                 Stream sourceStream = await streamable.GetStreamAsync();
                 int partSize = 10 * 1024 * 1024;
-                try
+                if ((streamable as WebRoute).Request is HttpWebRequest)
                 {
-                    var length = sourceStream.Length;
-                }
-                catch (NotSupportedException)
-                {
-                    if (streamable.ContentLength > 0)
-                    {
-                        var newStream = new BlockingStream(streamable.ContentLength, 10);
-                        StartSourceCopy(sourceStream, newStream, partSize);
-                        sourceStream = newStream;
-                    }
+                    var newStream = new BlockingStream(streamable.ContentLength, 10);
+                    StartSourceCopy(sourceStream, newStream, partSize);
+                    sourceStream = newStream;
                 }
 
                 S3WebRequest s3WebRequest = (S3WebRequest)(s3Resource.Request as S3WebRequest).CloneRequest(s3Resource.Uri);
