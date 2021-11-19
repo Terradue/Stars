@@ -4,7 +4,7 @@ doc: "Run Stars for staging results"
 class: CommandLineTool
 hints:
   DockerRequirement:
-    dockerPull: terradue/stars:1.0.0-beta.21
+    dockerPull: terradue/stars:1.0.0-beta.22
 id: stars
 arguments:
 - copy
