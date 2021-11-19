@@ -21,14 +21,14 @@ namespace Stars.Tests
 
         public LocalStackFixture(IOptions<LocalStackOptions> options, Amazon.Extensions.NETCore.Setup.AWSOptions awsOptions)
         {
-            _networkName = Guid.NewGuid().ToString();
-            var networkLabel = Guid.NewGuid().ToString();
+            // _networkName = Guid.NewGuid().ToString();
+            // var networkLabel = Guid.NewGuid().ToString();
 
-            // When
-            _network = new TestcontainersNetworkBuilder()
-              .WithName(_networkName)
-              .WithLabel("label", networkLabel)
-              .Build();
+            // // When
+            // _network = new TestcontainersNetworkBuilder()
+            //   .WithName(_networkName)
+            //   .WithLabel("label", networkLabel)
+            //   .Build();
 
             var localStackBuilder = new TestcontainersBuilder<TestcontainersContainer>()
                 .WithImage("localstack/localstack")
@@ -39,7 +39,7 @@ namespace Stars.Tests
                 .WithEnvironment("DOCKER_HOST", "unix:///var/run/docker.sock")
                 .WithEnvironment("DEBUG", "1")
                 .WithPortBinding(4566, 4566)
-                .WithNetwork(_network)
+                // .WithNetwork(_network)
                 .WithName("localstack");
 
             if (awsOptions != null)
@@ -58,7 +58,7 @@ namespace Stars.Tests
         public async Task InitializeAsync()
         {
             if (options.Value.Enabled){
-                await _network.CreateAsync();
+                // await _network.CreateAsync();
                 await _localStackContainer.StartAsync();
             }
         }
@@ -67,7 +67,7 @@ namespace Stars.Tests
         {
             if (options.Value.Enabled){
                 await _localStackContainer.StopAsync();
-                await _network.DeleteAsync();
+                // await _network.DeleteAsync();
             }
         }
     }
