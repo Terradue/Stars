@@ -148,7 +148,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 // uploadStream.Close();
                 // S3ObjectWebResponse<PutObjectResponse> s3WebResponse = (S3ObjectWebResponse<PutObjectResponse>)await responseTask;
                 var s3route = WebRoute.Create(s3Resource.Uri);
-                s3route.CachedHeaders();
+                await s3route.CacheHeadersAsync();
                 return s3route;
             }
             catch (WebException we)
