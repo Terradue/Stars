@@ -119,7 +119,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 // If streamable cannot be ranged, pass by a blocking stream
                 Stream sourceStream = await streamable.GetStreamAsync();
                 int partSize = 10 * 1024 * 1024;
-                if ((streamable as WebRoute).Request is HttpWebRequest)
+                if (streamable is WebRoute && (streamable as WebRoute).Request is HttpWebRequest)
                 {
                     var newStream = new BlockingStream(streamable.ContentLength, 10);
                     StartSourceCopy(sourceStream, newStream, partSize);
@@ -147,7 +147,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 // await writingTask;
                 // uploadStream.Close();
                 // S3ObjectWebResponse<PutObjectResponse> s3WebResponse = (S3ObjectWebResponse<PutObjectResponse>)await responseTask;
-                return WebRoute.Create(s3Resource.Uri);
+                var s3route = WebRoute.Create(s3Resource.Uri);
+                s3route.CachedHeaders();
+                return s3route;
             }
             catch (WebException we)
             {
