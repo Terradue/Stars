@@ -26,7 +26,7 @@ namespace Terradue.Stars.Data.Suppliers
         private IDataHubSourceWrapper wrapper;
         private ICredentials credentialsManager;
 
-        public DataHubSourceSupplier(ILogger<DataHubSourceSupplier> logger, TranslatorManager translatorManager, ICredentials credentialsManager, PluginOption pluginOption) : base(logger, translatorManager)
+        public DataHubSourceSupplier(ILogger<DataHubSourceSupplier> logger, TranslatorManager translatorManager, ICredentials credentialsManager, IPluginOption pluginOption) : base(logger, translatorManager)
         {
             Logger4Net.Setup(logger);
             this.credentialsManager = credentialsManager;
