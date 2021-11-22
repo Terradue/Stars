@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -49,6 +50,7 @@
     "eo:cloud_cover": 0.0,
     "view:sun_azimuth": 156.6,
     "view:sun_elevation": 39.1,
+    "proj:epsg": null,
     "processing:level": "LV1B",
     "title": "Geoeye-1 MSI LV1B 18/03/2021 02:12:24"
   },
@@ -87,6 +89,10 @@
       "filename": "GE01N47_736527E130_9631942021031800000000MS00_GU003002001.tif",
       "file:size": 1,
       "gsd": 2.0,
+      "proj:shape": [
+        9216,
+        10240
+      ],
       "eo:bands": [
         {
           "name": "blue",

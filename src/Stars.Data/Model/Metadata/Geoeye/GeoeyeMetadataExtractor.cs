@@ -18,6 +18,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Raster;
 using Terradue.Stars.Services;
+using Stac.Extensions.Projection;
 
 namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 {
@@ -184,6 +185,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
             stacAsset.Roles.Add("dn");
             stacAsset.SetProperty("gsd", double.Parse(metadata["PIXEL_SIZE_X"]));
 
+            stacAsset.ProjectionExtension().Shape = new int[] { isdMetadata.TIL.TILESIZEY, isdMetadata.TIL.TILESIZEX };
+            
             string key = "";
 
             // GEOEYE-1
@@ -204,6 +207,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
                     rasterBandObjects.Add(
                         CreateRasterBandObject(-1.7,
                                                0.923 * (isdMetadata.IMD.BAND_P.ABSCALFACTOR / isdMetadata.IMD.BAND_P.EFFECTIVEBANDWIDTH)));
+                    
                 }
                 if (isdMetadata.IMD.BAND_B != null)
                 {
@@ -408,7 +412,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 
         private void AddProjStacExtension(Isd auxiliary, StacItem stacItem)
         {
-            // TODO
+            var proj = stacItem.ProjectionExtension();
+            proj.Epsg = null;
+
         }
 
 

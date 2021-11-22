@@ -336,9 +336,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 		[XmlElement(ElementName="corner")]
 		public Corner Corner { get; set; }
 		[XmlElement(ElementName="width")]
-		public string Width { get; set; }
+		public int Width { get; set; }
 		[XmlElement(ElementName="height")]
-		public string Height { get; set; }
+		public int Height { get; set; }
 		[XmlElement(ElementName="widthspace")]
 		public string Widthspace { get; set; }
 		[XmlElement(ElementName="heightspace")]

@@ -390,10 +390,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
         [XmlElement(ElementName = "NUMTILES")] public string NUMTILES { get; set; }
 
         [XmlElement(ElementName = "TILESIZEX")]
-        public string TILESIZEX { get; set; }
+        public int TILESIZEX { get; set; }
 
         [XmlElement(ElementName = "TILESIZEY")]
-        public string TILESIZEY { get; set; }
+        public int TILESIZEY { get; set; }
 
         [XmlElement(ElementName = "TILEUNITS")]
         public string TILEUNITS { get; set; }
