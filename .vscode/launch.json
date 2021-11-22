@@ -252,7 +252,7 @@
             }
         },
         {
-            "name": "Copy OpenSearch single Sentinel3",
+            "name": "Copy OpenSearch single Sentinel3 (keep zip)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -261,12 +261,15 @@
             "args": [
                 "copy",
                 "-v",
-                "https://catalog.terradue.com//cos2/series/acquisitions/search?uid=797-ICEYE-ICEYE-X2-Activation-694-Call-797-7",
+                "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3A_SR_1_SRA____20211122T055852_20211122T060852_20211122T064758_0599_079_020______LN3_O_NR_004",
                 "-r",
                 "4",
                 "--harvest",
+                "-afo",
+                "enclosure",
+                "-ka",
                 "--output",
-                "../tmp/stars"
+                "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

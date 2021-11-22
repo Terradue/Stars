@@ -23,6 +23,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using Terradue.Stars.Services.Plugins;
+using Stac;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -59,8 +60,8 @@ namespace Terradue.Stars.Console.Operations
         [Option("-ac|--append-catalog", "Append to existing catalog if one is found", CommandOptionType.NoValue)]
         public bool AppendCatalog { get; set; } = false;
 
-        [Option("-da|--delete-archives", "Delete archives from the catalog when inflated", CommandOptionType.NoValue)]
-        public bool DeleteArchive { get; set; } = false;
+        [Option("-ka|--keep-archives", "Keep archives in the catalog when extracted (default deletes after extraction. may be overriden when using asset-filter-out)", CommandOptionType.NoValue)]
+        public bool KeepArchive { get; set; } = true;
 
         [Option("-rel|--relative", "Make all links relative (and self links removed)", CommandOptionType.NoValue)]
         public bool AllRelative { get; set; } = false;
@@ -76,6 +77,9 @@ namespace Terradue.Stars.Console.Operations
 
         [Option("-af|--asset-filter", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFilters { get; set; }
+
+        [Option("-afo|--asset-filter-out", "Asset filters to match to be included in the Items after the extraction and harvesting (default to all)", CommandOptionType.MultipleValue)]
+        public string[] AssetsFiltersOut { get; set; }
 
         [Option("--empty", "Empty argument", CommandOptionType.NoValue)]
         public bool Empty { get; set; }
@@ -240,7 +244,7 @@ namespace Terradue.Stars.Console.Operations
 
                     if (!SkippAssets)
                     {
-                        AssetFilters assetFilters = CreateAssetFiltersFromOptions();
+                        AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFilters);
                         AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, assetFilters);
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
@@ -269,18 +273,29 @@ namespace Terradue.Stars.Console.Operations
                     stacNode = await processingService.ExtractArchive(stacNode as StacItemNode, destination, storeService);
                 if (Harvest)
                     stacNode = await processingService.ExtractMetadata(stacNode as StacItemNode, destination, storeService);
+
+                if (AssetsFiltersOut != null && AssetsFiltersOut.Count() > 0)
+                {
+                    AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFiltersOut);
+                    FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(stacNode as IItem, assetFilters);
+                    var assets = filteredAssetContainer.Assets.ToDictionary(a => a.Key, a => (a.Value as StacAssetAsset).StacAsset);
+                    (stacNode as StacItemNode).StacItem.Assets.Clear();
+                    (stacNode as StacItemNode).StacItem.Assets.AddRange(assets);
+                    logger.Verbose(string.Format("{0} assets kept: {1}", assets.Count, string.Join(", ", assets.Keys)));
+                    stacNode = await storeService.StoreItemNodeAtDestination(stacNode as StacItemNode, destination);
+                }
             }
 
             return operationState;
         }
 
-        private AssetFilters CreateAssetFiltersFromOptions()
+        private AssetFilters CreateAssetFiltersFromOptions(string[] assetFiltersStr)
         {
             AssetFilters assetFilters = new AssetFilters();
-            if (AssetsFilters == null)
+            if (assetFiltersStr == null)
                 return assetFilters;
             Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
-            foreach (var assetName in AssetsFilters)
+            foreach (var assetName in assetFiltersStr)
             {
                 Match propertyMatch = propertyRegex.Match(assetName);
                 if (propertyMatch.Success)
@@ -396,7 +411,7 @@ namespace Terradue.Stars.Console.Operations
             });
             collection.ConfigureAll<ExtractArchiveOptions>(so =>
             {
-                so.KeepArchive = !DeleteArchive;
+                so.KeepArchive = KeepArchive;
             });
             collection.AddSingleton<StacStoreService, StacStoreService>();
             collection.AddSingleton<StacLinkTranslator, StacLinkTranslator>();
