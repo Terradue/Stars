@@ -65,7 +65,22 @@ namespace Stars.Tests
             System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://unlimited/test.bin");
             s3WebRequest.Method = "GET";
             System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
-            Assert.Equal(new FileInfo(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")).Length, s3WebResponse.ContentLength);            
+            Assert.Equal(new FileInfo(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")).Length, s3WebResponse.ContentLength);
+        }
+
+        [Fact]
+        public async Task ImportHttpStreamabletoS3()
+        {
+            await CreateBucketAsync("s3://http");
+            WebRoute s3Route = WebRoute.Create(new Uri("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
+            BlockingStream stream = new BlockingStream(0, 100);
+            S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
+            var httpRoute = WebRoute.Create(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
+            var newRoute = await s3StreamingCarrier.StreamToS3Object(httpRoute, s3Route);
+            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg");
+            s3WebRequest.Method = "GET";
+            System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
+            Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(s3WebResponse.ContentLength));
         }
     }
 }

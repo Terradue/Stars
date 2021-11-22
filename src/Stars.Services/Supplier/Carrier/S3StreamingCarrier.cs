@@ -120,13 +120,24 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 Stream sourceStream = await streamable.GetStreamAsync();
                 int partSize = 10 * 1024 * 1024;
                 S3WebRequest s3WebRequest = (S3WebRequest)(s3Resource.Request as S3WebRequest).CloneRequest(s3Resource.Uri);
-                if (streamable.ContentLength == 0){
+                bool uploadStream = false;
+                try
+                {
+                    var l = sourceStream.Length;
+                }
+                catch (Exception e)
+                {
+                    logger.LogWarning("Error trying to get size of the node {0} : {1}. Trying upload stream", streamable.Uri, e.Message);
+                    uploadStream = true;
+                }
+                if (streamable.ContentLength == 0 || uploadStream)
+                {
                     S3UploadStream s3UploadStream = new S3UploadStream(s3WebRequest.S3Client, S3UriParser.GetBucketName(s3Resource.Uri), S3UriParser.GetKey(s3Resource.Uri), partSize);
                     await StartSourceCopy(sourceStream, s3UploadStream, partSize);
                 }
                 else
                 {
-                    
+
                     var tx = new TransferUtility(s3WebRequest.S3Client);
                     TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
                     ur.PartSize = partSize;
@@ -137,7 +148,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     ur.ContentType = streamable.ContentType.MediaType;
                     await tx.UploadAsync(ur);
                 }
-
 
                 var s3route = WebRoute.Create(s3Resource.Uri);
                 await s3route.CacheHeadersAsync();
