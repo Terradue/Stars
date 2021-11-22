@@ -6,7 +6,7 @@ using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Services
 {
-    internal class FilteredAssetContainer : IAssetsContainer
+    public class FilteredAssetContainer : IAssetsContainer
     {
         private IAssetsContainer assetsContainer;
         private AssetFilters assetFilters;
