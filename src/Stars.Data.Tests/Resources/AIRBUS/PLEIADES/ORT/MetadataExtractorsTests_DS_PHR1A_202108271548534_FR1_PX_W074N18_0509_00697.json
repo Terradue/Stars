@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
@@ -49,6 +50,11 @@
     "gsd": 0.7782904385595207,
     "title": "Pleiades-1A PHR-1A RASTER_SENSOR 27/08/2021 15:49:30",
     "sat:platform_international_designator": "2011-076F",
+    "proj:epsg": 4326,
+    "proj:shape": [
+      32824,
+      15169
+    ],
     "view:azimuth": 180.0904341251046,
     "view:sun_azimuth": 115.2326875432268,
     "view:sun_elevation": 71.76705923747583,
@@ -95,7 +101,11 @@
           "offset": 0.0
         }
       ],
-      "product_type": "P"
+      "product_type": "P",
+      "proj:shape": [
+        32824,
+        15169
+      ]
     },
     "P-R1C1-wf": {
       "type": "application/octet-stream",
@@ -213,7 +223,11 @@
           "offset": 0.0
         }
       ],
-      "product_type": "MS"
+      "product_type": "MS",
+      "proj:shape": [
+        8207,
+        3792
+      ]
     },
     "MS-R1C1-wf": {
       "type": "application/octet-stream",

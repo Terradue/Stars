@@ -5,6 +5,7 @@ using System.Linq;
 using Humanizer;
 using Stac;
 using Stac.Extensions.Eo;
+using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
 using Terradue.Stars.Data.Model.Metadata.Airbus.Schemas;
 using Terradue.Stars.Interface;
@@ -115,7 +116,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             try
             {
                 if (Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_CODE.Contains("EPSG"))
-                    return int.Parse(Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_NAME);
+                    return int.Parse(Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_NAME.Split(' ').First());
+            }
+            catch { }
+            try
+            {
+                if (Dimap.Coordinate_Reference_System.Geodetic_CRS.CRS_TABLES.Contains("EPSG"))
+                    return int.Parse(Dimap.Coordinate_Reference_System.Geodetic_CRS.GEODETIC_CRS_CODE.Replace("urn:ogc:def:crs:EPSG::", ""));
             }
             catch { }
             return 0;
@@ -196,11 +203,24 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
         }
 
+        internal int[] GetShape()
+        {
+            try
+            {
+                return new int[] { int.Parse(Dimap.Raster_Data.Raster_Dimensions.NCOLS), int.Parse(Dimap.Raster_Data.Raster_Dimensions.NROWS) };
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         internal void CompleteAsset(StacAsset stacAsset, StacItem stacItem)
         {
             List<EoBandObject> eoBandObjects = GetEoBandObjects(Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
                                                                 Dimap.Processing_Information.Product_Settings.Radiometric_Settings);
-            if (eoBandObjects.Count > 0){
+            if (eoBandObjects.Count > 0)
+            {
                 stacAsset.EoExtension().Bands = eoBandObjects.ToArray();
             }
             List<RasterBand> rasterBandObjects = GetRasterBandObjects(Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
@@ -222,6 +242,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 case "SEAMLESS":
                     stacAsset.Roles.Add("visual");
                     break;
+            }
+
+            try
+            {
+                stacAsset.ProjectionExtension().Shape = new int[] { int.Parse(Dimap.Raster_Data.Raster_Dimensions.NCOLS), int.Parse(Dimap.Raster_Data.Raster_Dimensions.NROWS) };
+            }
+            catch
+            {
             }
         }
 

@@ -170,6 +170,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             if (epsg == 0) return;
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.Epsg = epsg;
+            proj.Shape = dimapProfiler.GetShape();
         }
 
         private void AddViewStacExtension(AirbusProfiler dimapProfiler, StacItem stacItem)

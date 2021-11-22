@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
@@ -49,6 +50,11 @@
     "gsd": 2.18954101002,
     "title": "SPOT-6 SPOT-6 RASTER_ORTHO 14/12/2020 14:15:24",
     "sat:platform_international_designator": "2012-047A",
+    "proj:epsg": 32719,
+    "proj:shape": [
+      7226,
+      7957
+    ],
     "view:azimuth": 97.0084129578,
     "view:sun_azimuth": 80.1163909962,
     "view:sun_elevation": 57.8723496178,
@@ -143,7 +149,11 @@
           "offset": 0.0
         }
       ],
-      "product_type": "PMS"
+      "product_type": "PMS",
+      "proj:shape": [
+        7226,
+        7957
+      ]
     },
     "PMS-R1C1-wf": {
       "type": "application/octet-stream",
