@@ -356,6 +356,10 @@
     ],
     "sensor_type": "optical",
     "proj:epsg": 32636,
+    "proj:shape": [
+      5374,
+      18288
+    ],
     "processing:level": "L2B",
     "title": "Kanopus-V MSS-PSS L2B 21/09/2021 09:11:00"
   },

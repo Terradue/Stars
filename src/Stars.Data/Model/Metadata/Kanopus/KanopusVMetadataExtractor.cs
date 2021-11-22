@@ -75,6 +75,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.Epsg = metadata.GetLong("<GeoCoding>/nCoordSystCode");
+            proj.Shape = new int[2] { metadata.GetInt("<Matrix>/nWidth"), metadata.GetInt("<Matrix>/nHeight") };
         }
 
         private void AddProcessingStacExtension(KanopusVMetadata metadata, StacItem stacItem)
@@ -334,6 +335,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             if (properties[keys[0]].ContainsKey(keys[1]))
             {
                 if (long.TryParse(properties[keys[0]][keys[1]], out long value))
+                    return value;
+                else
+                    throw new FormatException(String.Format("Invalid value for key '{0}' (not an int)", key));
+            }
+            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            return 0;
+        }
+
+        public int GetInt(string key, bool throwIfMissing = true)
+        {
+            string[] keys = key.Split('/');
+            if (properties[keys[0]].ContainsKey(keys[1]))
+            {
+                if (int.TryParse(properties[keys[0]][keys[1]], out int value))
                     return value;
                 else
                     throw new FormatException(String.Format("Invalid value for key '{0}' (not an int)", key));
