@@ -57,6 +57,10 @@
     "title": "Vision-1 S-1  14/01/2021 22:41:40",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16160,
+    "proj:shape": [
+      9323,
+      7996
+    ],
     "view:azimuth": 27.12159027368,
     "view:sun_azimuth": 103.418551881,
     "view:sun_elevation": 67.32638745903,

@@ -53,6 +53,10 @@
     "title": "UK-DMC-2 SLIM-6-22 L1T 17/12/2019 23:12:48",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16051,
+    "proj:shape": [
+      17670,
+      17120
+    ],
     "view:azimuth": 0.3413209478422,
     "view:sun_azimuth": 119.1912660753,
     "view:sun_elevation": 15.28536160123,

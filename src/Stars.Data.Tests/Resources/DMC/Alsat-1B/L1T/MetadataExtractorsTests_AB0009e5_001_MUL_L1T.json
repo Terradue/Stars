@@ -53,6 +53,10 @@
     "title": "ALSAT-1B ALITE L1T 14/03/2020 01:26:57",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16050,
+    "proj:shape": [
+      7530,
+      7740
+    ],
     "view:azimuth": 12.16535984524,
     "view:sun_azimuth": 93.79403995855,
     "view:sun_elevation": 49.39520864449,

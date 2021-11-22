@@ -57,6 +57,10 @@
     "title": "Alsat-1B ALITE  07/02/2021 01:05:13",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16150,
+    "proj:shape": [
+      7450,
+      8170
+    ],
     "view:azimuth": 3.357092048319,
     "view:sun_azimuth": 107.5666104274,
     "view:sun_elevation": 41.12889458,

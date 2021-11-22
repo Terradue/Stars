@@ -139,6 +139,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             return 0;
         }
 
+        internal int[] GetShape()
+        {
+            try
+            {
+                return new int[] { int.Parse(Dimap.Raster_Dimensions.NCOLS), int.Parse(Dimap.Raster_Dimensions.NROWS) };
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         internal double GetViewingAngle()
         {
             try
