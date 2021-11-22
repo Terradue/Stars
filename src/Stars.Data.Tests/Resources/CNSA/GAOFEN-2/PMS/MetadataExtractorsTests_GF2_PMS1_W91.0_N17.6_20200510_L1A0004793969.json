@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
@@ -57,6 +58,11 @@
     "view:incidence_angle": 0.0,
     "view:sun_azimuth": 86.6824,
     "view:sun_elevation": 13.5727,
+    "proj:epsg": null,
+    "proj:shape": [
+      7300,
+      6908
+    ],
     "processing:level": "L1A",
     "product_type": "PAN_MS_L1A",
     "title": "Gaofen-2 PMS1 L1A 05/11/2020 01:03:18"
@@ -103,6 +109,10 @@
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
       "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
       "file:size": 1,
+      "proj:shape": [
+        7300,
+        6908
+      ],
       "gsd": 3.24,
       "eo:bands": [
         {
@@ -197,6 +207,10 @@
       "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
       "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
       "file:size": 1,
+      "proj:shape": [
+        29200,
+        27620
+      ],
       "gsd": 0.81,
       "eo:bands": [
         {
