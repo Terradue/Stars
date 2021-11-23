@@ -9,9 +9,11 @@ using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
+using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1;
+using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model.Stac;
 
@@ -20,7 +22,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
     public class Sentinel2Level1MetadataExtractor : Sentinel2MetadataExtractor
     {
         public static XmlSerializer s2L1CProductSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Level1C_User_Product));
-
+        public static XmlSerializer s2L1CProductTileSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile));
 
         public Sentinel2Level1MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger) : base(logger)
         {
@@ -42,6 +44,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             var mtdAsset = FindFirstAssetFromFileNameRegex(item, "MTD_MSIL1C.xml$");
             if (mtdAsset == null)
                 throw new FileNotFoundException("Product metadata file 'MTD_MSIL1C.xml' not found");
+            var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
+            Level1C_Tile mtdTile = null;
+            if (mtdtlAsset != null)
+                mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await mtdtlAsset.GetStreamable().GetStreamAsync());
 
             Level1C_User_Product level1C_User_Product = (Level1C_User_Product)s2L1CProductSerializer.Deserialize(await mtdAsset.GetStreamable().GetStreamAsync());
             StacAsset mtdStacAsset = StacAsset.CreateMetadataAsset(stacItem, mtdAsset.Uri, new ContentType(MimeTypes.GetMimeType(mtdAsset.Uri.ToString())));
@@ -50,14 +56,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, ".jp2$").OrderBy(a => Path.GetFileName(a.Value.Uri.ToString()), StringComparer.InvariantCultureIgnoreCase))
             {
-                AddJp2BandAsset(stacItem, bandAsset.Value, item, level1C_User_Product);
+                AddJp2BandAsset(stacItem, bandAsset.Value, item, level1C_User_Product, mtdTile);
             }
 
             stacItem.Assets.Add("manifest", CreateManifestAsset(stacItem, GetManifestAsset(item)).Value);
 
         }
 
-        private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level1C_User_Product level1CUserProduct)
+        private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level1C_User_Product level1CUserProduct, Level1C_Tile? mtdTile)
         {
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri,
                 new System.Net.Mime.ContentType("image/jp2")
@@ -86,10 +92,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
                 rasterBand.Nodata = 0;
                 rasterBand.Statistics = new Stac.Common.Statistics(0, 10000, null, null, null);
                 rasterBand.SpatialResolution = (double)spectralInfo.RESOLUTION;
+                if ( mtdTile != null ){
+                    
+                    var size =  mtdTile.Geometric_Info.Tile_Geocoding.Size.First(s => s.resolution == spectralInfo.RESOLUTION);
+                    stacAsset.ProjectionExtension().Shape = new int[2] { size.NCOLS, size.NROWS };
+                }
                 stacAsset.RasterExtension().Bands = new RasterBand[1] { rasterBand };
                 stacAsset.Title = eoBandObject.Description = string.Format("{0} {1}nm TOA {2}", GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), spectralInfo.RESOLUTION);
-               
             }
+            
             stacAsset.Roles.Add("reflectance");
             stacItem.Assets.Add(bandId, stacAsset);
 

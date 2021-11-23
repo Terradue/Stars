@@ -2,6 +2,7 @@
   "stac_version": "1.0.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json"
   ],
@@ -58,6 +59,7 @@
     "processing:software": {
       "Sentinel-1 IPF": "002.71"
     },
+    "proj:epsg": null,
     "title": "Sentinel-1A GRD VV/VH 45 22/08/2016 18:28:23",
     "sar:instrument_mode": "IW",
     "sar:frequency_band": "C",
@@ -86,6 +88,11 @@
       "file:size": 0,
       "sar:polarizations": [
         "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25183,
+        16805
       ]
     },
     "annotation-vv-iw-001": {
@@ -113,6 +120,11 @@
       "file:size": 0,
       "sar:polarizations": [
         "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25183,
+        16805
       ]
     },
     "annotation-vh-iw-002": {

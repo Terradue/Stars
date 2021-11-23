@@ -45,9 +45,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         [XmlElement(ElementName = "FileName")]
         public string FileName { get; set; }
         [XmlElement(ElementName = "Lines")]
-        public string Lines { get; set; }
+        public int Lines { get; set; }
         [XmlElement(ElementName = "Samples")]
-        public string Samples { get; set; }
+        public int Samples { get; set; }
         [XmlElement(ElementName = "HeaderOffsetBytes")]
         public string HeaderOffsetBytes { get; set; }
         [XmlElement(ElementName = "RowPrefixBytes")]

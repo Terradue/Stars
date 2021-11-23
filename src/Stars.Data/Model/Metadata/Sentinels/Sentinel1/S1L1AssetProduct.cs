@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Stac;
+using Stac.Extensions.Projection;
 using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S1.Level1.Product;
 using Terradue.Stars.Interface;
 
@@ -60,6 +61,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             stacAsset.Properties.Add("sar:polarizations", new string[1] { GetPolarization() });
             if (GetPixelValueLabel() != null)
                 stacAsset.Roles.Add(GetPixelValueLabel().ToLower());
+            stacAsset.ProjectionExtension().Epsg = null;
+            stacAsset.ProjectionExtension().Shape = new int[2] { Convert.ToInt32(l1Product.imageAnnotation.imageInformation.numberOfSamples.Value), Convert.ToInt32(l1Product.imageAnnotation.imageInformation.numberOfLines.Value) };
 
             return stacAsset;
         }

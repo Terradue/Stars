@@ -48,7 +48,11 @@
     "gsd": 50.0,
     "title": "Saocom-1A SAO1A GTC VV/VH/HH/HV 04/02/2021 04:14:38",
     "sat:orbit_state": "ascending",
-    "proj:epsg": 32652,
+    "proj:epsg": null,
+    "proj:shape": [
+      4817,
+      7672
+    ],
     "view:off_nadir": 32.0,
     "view:incidence_angle": 36.8,
     "sar:instrument_mode": "TN",

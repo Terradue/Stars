@@ -4,27 +4,19 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using GeoJSON.Net.Geometry;
 using Microsoft.Extensions.Logging;
-using ProjNet.CoordinateSystems;
 using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Sat;
 using Stac.Extensions.Sar;
 using Stac.Extensions.View;
-using Stac;
-using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
-using System.Text;
 using System.Xml.Linq;
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {
@@ -108,7 +100,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         private void AddProjStacExtension(SAOCOM_XMLProduct metadata, StacItem stacItem)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            proj.Epsg = 32652;
+            proj.Epsg = null;
+            proj.Shape = new int[2] { metadata.Channel[0].RasterInfo.Samples, metadata.Channel[0].RasterInfo.Lines };
         }
 
         private void AddViewStacExtension(SAOCOM_XMLProduct metadata, StacItem stacItem)
