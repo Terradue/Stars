@@ -68,6 +68,10 @@
     "product_type": "SLP",
     "proj:epsg": null,
     "proj:wkt2": "GEOCCS[\"WGS84 Geocentric\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], AXIS[\"X\", OTHER], AXIS[\"Y\", OTHER], AXIS[\"Z\", OTHER]]",
+    "proj:shape": [
+      26719,
+      28763
+    ],
     "title": "Gf-3 SAR L2 01/07/2021 09:54:49"
   },
   "bbox": [

@@ -14,7 +14,6 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
-using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
@@ -101,6 +100,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.SetCoordinateSystem(ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84);
+            proj.Shape = new int[2]{ metadata.Imageinfo.Width, metadata.Imageinfo.Height };
         }
 
         private void AddSarStacExtension(ProductMetadata metadata, StacItem stacItem)

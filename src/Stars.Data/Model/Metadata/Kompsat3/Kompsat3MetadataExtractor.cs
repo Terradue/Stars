@@ -169,6 +169,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
                                                 double.Parse(image.DNRange?.MaximumDN),
                                                 null, null, null
                                             );
+            stacAsset.ProjectionExtension().Shape = new int[2] { image.ImageSize.Width, image.ImageSize.Height };
             if (bandKey != "PAN")
             {
                 rasterBand.Scale = image.RadianceConversion.Gain;

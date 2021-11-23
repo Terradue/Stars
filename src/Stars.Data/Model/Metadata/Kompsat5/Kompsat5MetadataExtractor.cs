@@ -339,25 +339,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
         private void AddProjStacExtension(Auxiliary auxiliary, StacItem stacItem)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            // switch (auxiliary.Root.EllipsoidDesignator)
-            // {
-            //     case "WGS84":
-            //         switch (auxiliary.Root.ProjectionID)
-            //         {
-            //             case "UNIVERSAL TRANSVERSE MERCATOR":
-            //                 switch (auxiliary.Root.MapProjectionZone)
-            //                 {
-            //                     case 44:
-            //                         proj.Epsg = 32644;
-            //                         break;
-            //                     case -50:
-            //                         proj.Epsg = 32750;
-            //                         break;
-            //                 }
-            //                 break;
-            //         }
-            //         break;
-            // }
 
             switch (auxiliary.Root.ProjectionID)
             {
@@ -368,6 +349,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
                     proj.SetCoordinateSystem(utm);
                     break;
             }
+            proj.Shape = new int[2] { auxiliary.Root.SubSwaths.SubSwath.Sum(s => s.EchoSamplingWindowLength), auxiliary.Root.SubSwaths.SubSwath.Max(s => s.LinesperBurst * s.BurstsperSubswath) };
 
         }
 

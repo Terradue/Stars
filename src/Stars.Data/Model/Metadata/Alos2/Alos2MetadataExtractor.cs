@@ -6,6 +6,7 @@ using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using ProjNet.CoordinateSystems;
 using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
@@ -52,7 +53,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri); ;
         }
 
         internal virtual StacItem CreateStacItem(Alos2Metadata metadata)
@@ -61,7 +62,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
             StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), GetCommonMetadata(metadata));
             AddSatStacExtension(metadata, stacItem);
             AddSarStacExtension(metadata, stacItem);
-            //AddProjStacExtension(metadata, stacItem);
+            AddProjStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
             AddOtherProperties(metadata, stacItem);
@@ -92,7 +93,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
         private void AddProjStacExtension(Alos2Metadata metadata, StacItem stacItem)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            proj.Wkt2 = ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84.WKT;
+            try
+            {
+                int utmZone = metadata.GetInt32("Pds_UTM_ZoneNo");
+                bool north = metadata.GetString("Pds_MapDirection").Contains("MapNorth");
+                ProjectedCoordinateSystem utm = ProjectedCoordinateSystem.WGS84_UTM(utmZone, north);
+                proj.SetCoordinateSystem(utm);
+            }
+            catch { }
+            try
+            {
+                stacItem.ProjectionExtension().Shape = new int[2] { metadata.GetInt32("Pdi_NoOfPixels_0"), metadata.GetInt32("Pdi_NoOfLines_0") };
+            }
+            catch { }
         }
 
         private void AddViewStacExtension(Alos2Metadata metadata, StacItem stacItem)

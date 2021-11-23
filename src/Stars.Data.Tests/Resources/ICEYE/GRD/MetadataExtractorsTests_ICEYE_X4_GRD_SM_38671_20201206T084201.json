@@ -56,6 +56,10 @@
     "sat:platform_international_designator": "2019-038D",
     "proj:epsg": null,
     "proj:wkt2": "GEOCCS[\"WGS84 Geocentric\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], AXIS[\"X\", OTHER], AXIS[\"Y\", OTHER], AXIS[\"Z\", OTHER]]",
+    "proj:shape": [
+      17997,
+      26353
+    ],
     "view:off_nadir": 16.03,
     "view:incidence_angle": 17.59771898867162,
     "sar:instrument_mode": "Stripmap",

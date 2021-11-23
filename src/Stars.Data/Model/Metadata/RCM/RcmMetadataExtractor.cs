@@ -90,7 +90,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
             AddAssets(stacItem, auxiliary, item);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri); ;
 
         }
 
@@ -291,17 +291,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         private void AddProjStacExtension(Product auxiliary, Kml kml, StacItem stacItem)
         {
+            ProjectionStacExtension proj = stacItem.ProjectionExtension();
             try
             {
-
                 int zone = auxiliary.ImageReferenceAttributes.GeographicInformation.mapProjection.utmProjectionParameters.utmZone;
                 bool north = auxiliary.ImageReferenceAttributes.GeographicInformation.mapProjection.utmProjectionParameters.hemisphere == "N";
                 ProjectedCoordinateSystem utm = ProjectedCoordinateSystem.WGS84_UTM(zone, north);
-                ProjectionStacExtension proj = stacItem.ProjectionExtension();
                 proj.SetCoordinateSystem(utm);
             }
-            catch { }
-
+            catch
+            {
+                proj.Epsg = null;
+            }
+            proj.Shape = new int[2] { auxiliary.SceneAttributes.ImageAttributes.SamplesPerLine, auxiliary.SceneAttributes.ImageAttributes.NumLines };
         }
 
         private IDictionary<string, object> GetCommonMetadata(Product auxiliary)

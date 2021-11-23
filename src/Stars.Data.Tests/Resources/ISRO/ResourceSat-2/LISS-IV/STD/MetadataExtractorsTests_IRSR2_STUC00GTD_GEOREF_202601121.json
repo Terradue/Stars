@@ -98,6 +98,10 @@
       "href": "data/20260121/BAND2.tif",
       "filename": "BAND2.tif",
       "file:size": 0,
+      "proj:shape": [
+        18016,
+        16631
+      ],
       "raster:bands": [
         {
           "scale": 0.05078125
@@ -119,6 +123,10 @@
       "href": "data/20260121/BAND3.tif",
       "filename": "BAND3.tif",
       "file:size": 0,
+      "proj:shape": [
+        18016,
+        16631
+      ],
       "raster:bands": [
         {
           "scale": 0.0458984375
@@ -140,6 +148,10 @@
       "href": "data/20260121/BAND4.tif",
       "filename": "BAND4.tif",
       "file:size": 0,
+      "proj:shape": [
+        18016,
+        16631
+      ],
       "raster:bands": [
         {
           "scale": 0.03076171875

@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
@@ -45,6 +46,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 0.390625,
+    "proj:epsg": null,
     "view:azimuth": 191.79635279,
     "view:incidence_angle": 15.74005824,
     "processing:level": "GEO",
@@ -83,6 +85,10 @@
       "href": "data/203660031/203660031_P.tif",
       "filename": "203660031_P.tif",
       "file:size": 0,
+      "proj:shape": [
+        10048,
+        9536
+      ],
       "eo:bands": [
         {
           "name": "pan",

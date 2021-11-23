@@ -39,9 +39,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             StacItem stacItem = new StacItem(Identifier, GetGeometry(), GetCommonMetadata());
             AddSatStacExtension(stacItem);
             AddProcessingStacExtension(stacItem);
+            AddProjectionStacExtension(stacItem);
             FillBasicsProperties(stacItem.Properties);
             return stacItem;
         }
+
+        protected abstract void AddProjectionStacExtension(StacItem stacItem);
 
         private void AddSatStacExtension(StacItem stacItem)
         {

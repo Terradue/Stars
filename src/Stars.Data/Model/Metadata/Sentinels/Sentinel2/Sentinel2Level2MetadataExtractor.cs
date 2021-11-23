@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
+using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level2;
@@ -19,6 +20,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
     public class Sentinel2Level2MetadataExtractor : Sentinel2MetadataExtractor
     {
         public static XmlSerializer s2L2AProductSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level2.Level2A_User_Product));
+        public static XmlSerializer s2L2AProductTileSerializer = new XmlSerializer(typeof(Level2A_Tile));
 
 
         public Sentinel2Level2MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger) : base(logger)
@@ -42,6 +44,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             var mtdAsset = FindFirstAssetFromFileNameRegex(item, "MTD_MSIL2A.xml$");
             if (mtdAsset == null)
                 throw new FileNotFoundException("Product metadata file 'MTD_MSIL2A.xml' not found");
+            var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
+            Level2A_Tile mtdTile = null;
+            if (mtdtlAsset != null)
+                mtdTile = (Level2A_Tile)s2L2AProductTileSerializer.Deserialize(await mtdtlAsset.GetStreamable().GetStreamAsync());
 
             Level2A_User_Product Level2A_User_Product = (Level2A_User_Product)s2L2AProductSerializer.Deserialize(await mtdAsset.GetStreamable().GetStreamAsync());
             StacAsset mtdStacAsset = StacAsset.CreateMetadataAsset(stacItem, mtdAsset.Uri, new ContentType(MimeTypes.GetMimeType(mtdAsset.Uri.ToString())));
@@ -52,7 +58,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             {
                 try
                 {
-                    var bandStacAsset = AddJp2BandAsset(stacItem, bandAsset.Value, item, Level2A_User_Product);
+                    var bandStacAsset = AddJp2BandAsset(stacItem, bandAsset.Value, item, Level2A_User_Product, mtdTile);
 
                 }
                 catch (Exception)
@@ -66,7 +72,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         }
 
-        private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level2A_User_Product level2AUserProduct)
+        private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level2A_User_Product level2AUserProduct, Level2A_Tile? mtdTile)
         {
             
             // checking if the jp2 is a MSK, if yes skip.
@@ -105,6 +111,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
                 rasterBand.Nodata = 0;
                 rasterBand.Statistics = new Stac.Common.Statistics(0, 10000, null, null, null);
                 rasterBand.SpatialResolution = double.Parse(res.TrimEnd('m'));
+                if ( mtdTile != null ){
+                    
+                    var size =  mtdTile.Geometric_Info.Tile_Geocoding.Size.First(s => s.resolution == int.Parse(res.TrimEnd('m')));
+                    stacAsset.ProjectionExtension().Shape = new int[2] { size.NCOLS, size.NROWS };
+                }
                 stacAsset.RasterExtension().Bands = new RasterBand[1] { rasterBand };
                 stacAsset.Title = string.Format("{0} {1}nm BOA {2}", Sentinel2Level1MetadataExtractor.GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), res);
             }

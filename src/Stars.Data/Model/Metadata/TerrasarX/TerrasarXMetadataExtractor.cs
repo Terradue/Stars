@@ -2,29 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Mime;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using GeoJSON.Net.Geometry;
 using Microsoft.Extensions.Logging;
-using ProjNet.CoordinateSystems;
 using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Sat;
 using Stac.Extensions.Sar;
 using Stac.Extensions.View;
-using Stac;
-using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
-using System.Xml.Linq;
+using System.Linq;
 
 namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 {
@@ -74,7 +66,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             string file_name = metadata.generalHeader.fileName.Substring(0, metadata.generalHeader.fileName.Length - 4);
             StacItem stacItem = new StacItem(file_name, GetGeometry(metadata, item), GetCommonMetadata(metadata, item));
             AddSatStacExtension(metadata, stacItem);
-            //AddProjStacExtension(metadata, stacItem);
+            AddProjStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, stacItem);
             AddSarStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
@@ -98,7 +90,9 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
         private void AddProjStacExtension(level1Product metadata, StacItem stacItem)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            proj.Wkt2 = ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84.WKT;
+            proj.Epsg = null;
+            proj.Shape = new int[2] { metadata.productInfo.imageDataInfo.imageRaster.First().numberOfColumns,
+                                      metadata.productInfo.imageDataInfo.imageRaster.First().numberOfRows };
         }
 
         private void AddViewStacExtension(level1Product metadata, StacItem stacItem)

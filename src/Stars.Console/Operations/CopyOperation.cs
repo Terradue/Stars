@@ -60,8 +60,8 @@ namespace Terradue.Stars.Console.Operations
         [Option("-ac|--append-catalog", "Append to existing catalog if one is found", CommandOptionType.NoValue)]
         public bool AppendCatalog { get; set; } = false;
 
-        [Option("-ka|--keep-archives", "Keep archives in the catalog when extracted (default deletes after extraction. may be overriden when using asset-filter-out)", CommandOptionType.NoValue)]
-        public bool KeepArchive { get; set; } = true;
+        [Option("-ka|--keep-all", "Keep all assets in the items when a processing is applied (e.g. default deletes original archive after extraction. may be overriden when using asset-filter-out)", CommandOptionType.NoValue)]
+        public bool KeepAll { get; set; } = true;
 
         [Option("-rel|--relative", "Make all links relative (and self links removed)", CommandOptionType.NoValue)]
         public bool AllRelative { get; set; } = false;
@@ -269,6 +269,7 @@ namespace Terradue.Stars.Console.Operations
             if (node is IItem)
             {
                 ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+                processingService.Parameters.KeepOriginalAssets = KeepAll;
                 if (ExtractArchives)
                     stacNode = await processingService.ExtractArchive(stacNode as StacItemNode, destination, storeService);
                 if (Harvest)
@@ -411,7 +412,7 @@ namespace Terradue.Stars.Console.Operations
             });
             collection.ConfigureAll<ExtractArchiveOptions>(so =>
             {
-                so.KeepArchive = KeepArchive;
+                so.KeepArchive = KeepAll;
             });
             collection.AddSingleton<StacStoreService, StacStoreService>();
             collection.AddSingleton<StacLinkTranslator, StacLinkTranslator>();

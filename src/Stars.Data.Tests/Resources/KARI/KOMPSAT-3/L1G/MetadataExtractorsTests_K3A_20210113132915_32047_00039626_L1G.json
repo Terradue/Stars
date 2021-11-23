@@ -118,6 +118,10 @@
       "filename": "K3A_20210113132915_32047_00039626_L1G_P.tif",
       "file:size": 0,
       "gsd": 0.55,
+      "proj:shape": [
+        31840,
+        31920
+      ],
       "eo:bands": [
         {
           "name": "PAN",
@@ -136,6 +140,10 @@
       "filename": "K3A_20210113132915_32047_00039626_L1G_B.tif",
       "file:size": 0,
       "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
       "raster:bands": [
         {
           "scale": 0.0362,
@@ -161,6 +169,10 @@
       "filename": "K3A_20210113132915_32047_00039626_L1G_G.tif",
       "file:size": 0,
       "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
       "raster:bands": [
         {
           "scale": 0.0249,
@@ -186,6 +198,10 @@
       "filename": "K3A_20210113132915_32047_00039626_L1G_R.tif",
       "file:size": 0,
       "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
       "raster:bands": [
         {
           "scale": 0.0229,
@@ -211,6 +227,10 @@
       "filename": "K3A_20210113132915_32047_00039626_L1G_N.tif",
       "file:size": 0,
       "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
       "raster:bands": [
         {
           "scale": 0.013,

@@ -79,9 +79,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
 
         private string zerodoppler_end_utcField;
 
-        private string number_of_azimuth_samplesField;
+        private int number_of_azimuth_samplesField;
 
-        private string number_of_range_samplesField;
+        private int number_of_range_samplesField;
 
         private string orbit_repeat_cycleField;
 
@@ -409,7 +409,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
 
         /// <remarks/>
 
-        public string number_of_azimuth_samples
+        public int number_of_azimuth_samples
         {
             get
             {
@@ -423,7 +423,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
 
         /// <remarks/>
 
-        public string number_of_range_samples
+        public int number_of_range_samples
         {
             get
             {

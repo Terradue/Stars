@@ -68,6 +68,10 @@
     "sar:looks_equivalent_number": 1.0,
     "proj:epsg": 32636,
     "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 36N\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM36N\", AUTHORITY[\"EPSG\", \"32636\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 33], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 0], AUTHORITY[\"EPSG\", \"32636\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "proj:shape": [
+      19072,
+      21502
+    ],
     "view:incidence_angle": 43.23731173045056,
     "view:off_nadir": 39.02018880844116,
     "processing:level": "L1D"

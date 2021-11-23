@@ -1,16 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using GeoJSON.Net.Geometry;
 using Stac;
-using Stac.Extensions.Eo;
+using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
-using Stac;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
-using Terradue.Stars.Geometry.Gml321;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 {
@@ -84,6 +78,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         protected override string GetSensorType(metadataObjectType platformMetadata)
         {
             return "optical";
+        }
+
+        protected override void AddProjectionStacExtension(StacItem stacItem)
+        {
+            // var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
+            // Level1C_Tile mtdTile = null;
+            // if (mtdtlAsset != null)
+            //     mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await mtdtlAsset.GetStreamable().GetStreamAsync());
+            // stacAsset.ProjectionExtension().Epsg = int.Parse(mtdTile.Geometric_Info.Tile_Geocoding.HORIZONTAL_CS_CODE.Replace("EPSG:", ""));
+            stacItem.ProjectionExtension().Epsg = null;
         }
     }
 }

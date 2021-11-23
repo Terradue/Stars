@@ -402,6 +402,36 @@
             }
         },
         {
+            "name": "Copy OpenSearch single Sentinel1 GRD (ASF)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://catalog.terradue.com//sentinel1/series/GRD/search?format=atom&uid=S1A_IW_GRDH_1SDH_20211123T100735_20211123T100749_040697_04D44B_C75A",
+                "-si",
+                "ASF",
+                "-r",
+                "4",
+                "-ka",
+                "--harvest",
+                "-afo",
+                "download",
+                "--output",
+                "/tmp/stars"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
             "name": "Copy OpenSearch single Sentinel1 GRD to local",
             "type": "coreclr",
             "request": "launch",

@@ -230,6 +230,9 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
                 // bands[index].Properties.Add("reflectance_coeffcient", Double.Parse(BandSpecificMetadata.Current.SelectSingleNode("ps:reflectanceCoefficient", metadata.nsmgr).Value));
                 rasterbands.Add(rasterband);
             }
+            var numRows = int.Parse(metadata.nav.SelectSingleNode("/ps:EarthObservation/gml:resultOf/ps:EarthObservationResult/eop:product/ps:ProductInformation/ps:numRows", metadata.nsmgr).Value.ToString());
+            var numColumns = int.Parse(metadata.nav.SelectSingleNode("/ps:EarthObservation/gml:resultOf/ps:EarthObservationResult/eop:product/ps:ProductInformation/ps:numColumns", metadata.nsmgr).Value.ToString());
+            stacAsset.ProjectionExtension().Shape = new int[2] { numColumns, numRows };
             stacAsset.RasterExtension().Bands = rasterbands.ToArray();
             stacAsset.EoExtension().Bands = bands;
             stacItem.Assets.Add("data", stacAsset);

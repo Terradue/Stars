@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -49,6 +50,7 @@
     "eo:cloud_cover": 0.244,
     "view:sun_azimuth": 96.3,
     "view:sun_elevation": 68.9,
+    "proj:epsg": null,
     "processing:level": "LV1B",
     "title": "Worldview-2 MSI LV1B 01/10/2018 02:26:04"
   },
@@ -96,6 +98,10 @@
       "filename": "WV02S00_917500E119_8956942018100100000000MS00_GR003002001.tif",
       "file:size": 0,
       "gsd": 3.1932043651E-05,
+      "proj:shape": [
+        7168,
+        9216
+      ],
       "eo:bands": [
         {
           "name": "blue",

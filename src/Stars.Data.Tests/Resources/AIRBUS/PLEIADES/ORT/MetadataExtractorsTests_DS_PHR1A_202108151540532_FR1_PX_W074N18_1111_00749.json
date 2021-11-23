@@ -51,6 +51,10 @@
     "title": "Pleiades-1A PHR-1A RASTER_ORTHO 15/08/2021 15:41:30",
     "sat:platform_international_designator": "2011-076F",
     "proj:epsg": 32618,
+    "proj:shape": [
+      16835,
+      17094
+    ],
     "view:azimuth": 179.8796245087998,
     "view:sun_azimuth": 101.0263165278189,
     "view:sun_elevation": 71.26746896645534,
@@ -145,7 +149,11 @@
           "offset": 0.0
         }
       ],
-      "product_type": "PMS"
+      "product_type": "PMS",
+      "proj:shape": [
+        16835,
+        17094
+      ]
     },
     "PMS-R1C1-wf": {
       "type": "application/octet-stream",

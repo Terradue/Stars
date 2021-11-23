@@ -54,7 +54,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
 
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri); ;
         }
 
         internal virtual StacItem CreateStacItem(Schemas.Metadata metadata)
@@ -99,6 +99,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.Epsg = null;
             proj.Wkt2 = ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84.WKT;
+            proj.Shape = new int[2] { metadata.number_of_range_samples, metadata.number_of_azimuth_samples };
         }
 
         private void AddViewStacExtension(Schemas.Metadata metadata, StacItem stacItem)

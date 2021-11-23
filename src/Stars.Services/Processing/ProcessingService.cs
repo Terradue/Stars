@@ -44,7 +44,7 @@ namespace Terradue.Stars.Services.Processing
                     newStacItemNode = processedResource as StacItemNode;
 
                     // Maybe the node is already a stac node
-                    if (newStacItemNode ==null)
+                    if (newStacItemNode == null)
                     {
                         // No? Let's try to translate it to Stac
                         newStacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
@@ -80,6 +80,10 @@ namespace Terradue.Stars.Services.Processing
                     stacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
                     if (stacItemNode == null)
                         throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
+                }
+                if (Parameters.KeepOriginalAssets)
+                {
+                    stacItemNode.StacItem.MergeAssets(itemNode);
                 }
                 newItemNode = await storeService.StoreItemNodeAtDestination(stacItemNode, destination);
             }

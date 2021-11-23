@@ -55,9 +55,9 @@ using System.Xml.Serialization;
 		[XmlElement(ElementName="ImageGSD")]
 		public string ImageGSD { get; set; }
 		[XmlElement(ElementName="WidthInPixels")]
-		public string WidthInPixels { get; set; }
+		public int WidthInPixels { get; set; }
 		[XmlElement(ElementName="HeightInPixels")]
-		public string HeightInPixels { get; set; }
+		public int HeightInPixels { get; set; }
 		[XmlElement(ElementName="WidthInMeters")]
 		public string WidthInMeters { get; set; }
 		[XmlElement(ElementName="HeightInMeters")]

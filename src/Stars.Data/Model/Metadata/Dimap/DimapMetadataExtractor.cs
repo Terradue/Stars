@@ -117,6 +117,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             if (epsg == 0) return;
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.Epsg = epsg;
+            proj.Shape = dimapProfiler.GetShape();
         }
 
         private void AddViewStacExtension(DimapProfiler dimapProfiler, StacItem stacItem)

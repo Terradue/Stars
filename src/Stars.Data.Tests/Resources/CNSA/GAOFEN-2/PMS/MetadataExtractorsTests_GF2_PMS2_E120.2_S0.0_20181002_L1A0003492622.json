@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
@@ -57,6 +58,11 @@
     "view:incidence_angle": 0.0,
     "view:sun_azimuth": 104.564,
     "view:sun_elevation": 14.05,
+    "proj:epsg": null,
+    "proj:shape": [
+      7300,
+      6908
+    ],
     "processing:level": "L1A",
     "product_type": "PAN_MS_L1A",
     "title": "Gaofen-2 PMS2 L1A 10/02/2018 10:54:21"
@@ -94,6 +100,10 @@
       "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.tiff",
       "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-MSS2.tiff",
       "file:size": 0,
+      "proj:shape": [
+        7300,
+        6908
+      ],
       "gsd": 3.24,
       "eo:bands": [
         {
@@ -188,6 +198,10 @@
       "href": "data/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622/GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.tiff",
       "filename": "GF2_PMS2_E120.2_S0.0_20181002_L1A0003492622-PAN2.tiff",
       "file:size": 0,
+      "proj:shape": [
+        29200,
+        27620
+      ],
       "gsd": 0.81,
       "eo:bands": [
         {

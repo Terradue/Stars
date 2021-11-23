@@ -18,6 +18,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Raster;
 using Terradue.Stars.Services;
+using Stac.Extensions.Projection;
 
 namespace Terradue.Stars.Data.Model.Metadata.Worldview
 {
@@ -177,6 +178,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
             stacAsset.Properties.AddRange(asset.Properties);
             stacAsset.Roles.Add("dn");
             stacAsset.SetProperty("gsd", double.Parse(metadata["PIXEL_SIZE_X"]));
+
+            stacAsset.ProjectionExtension().Shape = new int[] { isdMetadata.TIL.TILESIZEY, isdMetadata.TIL.TILESIZEX };
 
             // WORLDVIEW-1
             if (platformNumber == "1")
@@ -598,7 +601,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
 
         private void AddProjStacExtension(Isd auxiliary, StacItem stacItem)
         {
-            // TODO
+           stacItem.ProjectionExtension().Epsg = null;
         }
 
 

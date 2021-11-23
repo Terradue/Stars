@@ -48,7 +48,11 @@
     "gsd": 50.0,
     "title": "Saocom-1A SAO1A GEC VV/VH/HH/HV 08/11/2019 09:50:27",
     "sat:orbit_state": "descending",
-    "proj:epsg": 32652,
+    "proj:epsg": null,
+    "proj:shape": [
+      4463,
+      9199
+    ],
     "view:off_nadir": 32.0,
     "view:incidence_angle": 36.8,
     "sar:instrument_mode": "SM",

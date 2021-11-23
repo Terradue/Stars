@@ -402,6 +402,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
     }
 
+    [XmlRoot(ElementName = "Geodetic_CRS")]
+    public class Geodetic_CRS {
+
+        [XmlElement(ElementName = "CRS_TABLES")]
+        public string CRS_TABLES { get; set; }
+
+        [XmlElement(ElementName = "GEODETIC_CRS_TYPE")]
+        public string GEODETIC_CRS_TYPE { get; set; }
+
+        [XmlElement(ElementName = "GEODETIC_CRS_NAME")]
+        public string GEODETIC_CRS_NAME { get; set; }
+
+        [XmlElement(ElementName = "GEODETIC_CRS_CODE")]
+        public string GEODETIC_CRS_CODE { get; set; }
+
+    }
+
     [XmlRoot(ElementName = "CRS_TABLES")]
     public class CRS_TABLES {
 
@@ -429,6 +446,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
         [XmlElement(ElementName = "Projected_CRS")]
         public Projected_CRS Projected_CRS { get; set; }
+
+        [XmlElement(ElementName = "Geodetic_CRS")]
+        public Geodetic_CRS Geodetic_CRS { get; set; }
 
         [XmlElement(ElementName = "Temporal_CRS")]
         public Temporal_CRS Temporal_CRS { get; set; }

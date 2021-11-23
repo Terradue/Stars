@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json"
   ],
@@ -56,6 +57,7 @@
     "sat:platform_international_designator": "2015-000A",
     "processing:level": "L1C",
     "processing:lineage": "Generation of Level-1C User Product",
+    "proj:epsg": null,
     "title": "Sentinel-2A MSI L1C 15/03/2018 16:00:21"
   },
   "bbox": [
@@ -94,6 +96,10 @@
           "solar_illumination": 1884.69
         }
       ],
+      "proj:shape": [
+        1830,
+        1830
+      ],
       "raster:bands": [
         {
           "nodata": 0.0,
@@ -124,6 +130,10 @@
           "center_wavelength": 0.4924,
           "solar_illumination": 1959.72
         }
+      ],
+      "proj:shape": [
+        10980,
+        10980
       ],
       "raster:bands": [
         {
@@ -156,6 +166,10 @@
           "solar_illumination": 1823.24
         }
       ],
+      "proj:shape": [
+        10980,
+        10980
+      ],
       "raster:bands": [
         {
           "nodata": 0.0,
@@ -186,6 +200,10 @@
           "center_wavelength": 0.6646,
           "solar_illumination": 1512.06
         }
+      ],
+      "proj:shape": [
+        10980,
+        10980
       ],
       "raster:bands": [
         {
@@ -218,6 +236,10 @@
           "solar_illumination": 1424.64
         }
       ],
+      "proj:shape": [
+        5490,
+        5490
+      ],
       "raster:bands": [
         {
           "nodata": 0.0,
@@ -248,6 +270,10 @@
           "center_wavelength": 0.7405,
           "solar_illumination": 1287.61
         }
+      ],
+      "proj:shape": [
+        5490,
+        5490
       ],
       "raster:bands": [
         {
@@ -280,6 +306,10 @@
           "solar_illumination": 1162.08
         }
       ],
+      "proj:shape": [
+        5490,
+        5490
+      ],
       "raster:bands": [
         {
           "nodata": 0.0,
@@ -310,6 +340,10 @@
           "center_wavelength": 0.8328,
           "solar_illumination": 1041.63
         }
+      ],
+      "proj:shape": [
+        10980,
+        10980
       ],
       "raster:bands": [
         {
@@ -342,6 +376,10 @@
           "solar_illumination": 812.92
         }
       ],
+      "proj:shape": [
+        1830,
+        1830
+      ],
       "raster:bands": [
         {
           "nodata": 0.0,
@@ -372,6 +410,10 @@
           "center_wavelength": 1.3735,
           "solar_illumination": 367.15
         }
+      ],
+      "proj:shape": [
+        1830,
+        1830
       ],
       "raster:bands": [
         {
@@ -404,6 +446,10 @@
           "solar_illumination": 245.59
         }
       ],
+      "proj:shape": [
+        5490,
+        5490
+      ],
       "raster:bands": [
         {
           "nodata": 0.0,
@@ -435,6 +481,10 @@
           "solar_illumination": 85.25
         }
       ],
+      "proj:shape": [
+        5490,
+        5490
+      ],
       "raster:bands": [
         {
           "nodata": 0.0,
@@ -465,6 +515,10 @@
           "center_wavelength": 0.8647,
           "solar_illumination": 955.32
         }
+      ],
+      "proj:shape": [
+        5490,
+        5490
       ],
       "raster:bands": [
         {

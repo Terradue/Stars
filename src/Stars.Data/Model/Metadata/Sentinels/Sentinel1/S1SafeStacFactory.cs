@@ -10,6 +10,7 @@ using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Geometry.Gml321;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
+using Stac.Extensions.Projection;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 {
@@ -181,6 +182,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
         protected override string GetSensorType(metadataObjectType platformMetadata)
         {
             return "radar";
+        }
+
+        protected override void AddProjectionStacExtension(StacItem stacItem)
+        {
+            stacItem.ProjectionExtension().Epsg = null;
         }
     }
 }

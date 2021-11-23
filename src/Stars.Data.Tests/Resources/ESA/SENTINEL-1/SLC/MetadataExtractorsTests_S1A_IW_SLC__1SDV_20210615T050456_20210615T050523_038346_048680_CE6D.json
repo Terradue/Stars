@@ -2,6 +2,7 @@
   "stac_version": "1.0.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json"
   ],
@@ -58,6 +59,7 @@
     "processing:software": {
       "Sentinel-1 IPF": "003.31"
     },
+    "proj:epsg": null,
     "title": "Sentinel-1A SLC VV/VH 124 15/06/2021 05:04:56",
     "sar:instrument_mode": "IW",
     "sar:frequency_band": "C",
@@ -86,6 +88,11 @@
       "file:size": 1,
       "sar:polarizations": [
         "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25657,
+        13716
       ]
     },
     "annotation-vh-iw3-003": {
@@ -113,6 +120,11 @@
       "file:size": 1,
       "sar:polarizations": [
         "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        26698,
+        13671
       ]
     },
     "annotation-vv-iw2-005": {
@@ -140,6 +152,11 @@
       "file:size": 1,
       "sar:polarizations": [
         "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        22935,
+        13563
       ]
     },
     "annotation-vh-iw1-001": {
@@ -167,6 +184,11 @@
       "file:size": 1,
       "sar:polarizations": [
         "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        22935,
+        13563
       ]
     },
     "annotation-vv-iw1-004": {
@@ -194,6 +216,11 @@
       "file:size": 1,
       "sar:polarizations": [
         "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        26698,
+        13671
       ]
     },
     "annotation-vh-iw2-002": {
@@ -221,6 +248,11 @@
       "file:size": 1,
       "sar:polarizations": [
         "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25657,
+        13716
       ]
     },
     "annotation-vv-iw3-006": {

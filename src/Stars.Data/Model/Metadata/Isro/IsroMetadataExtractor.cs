@@ -88,7 +88,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             // AddEoBandPropertyInItem(stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri); ;
 
         }
 
@@ -150,28 +150,34 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         private void AddAsset(StacItem stacItem, JavaProperties metadata, IAsset asset)
         {
             string filename = Path.GetFileName(asset.Uri.ToString());
-            if (filename.ToLower().EndsWith(".jpg")){
+            if (filename.ToLower().EndsWith(".jpg"))
+            {
                 if (stacItem.Assets.TryAdd("overview",
-                    StacAsset.CreateOverviewAsset(stacItem, asset.Uri, new System.Net.Mime.ContentType(MimeTypes.GetMimeType(filename))))){
-                        stacItem.Assets["overview"].Properties.AddRange(asset.Properties);
-                    }
+                    StacAsset.CreateOverviewAsset(stacItem, asset.Uri, new System.Net.Mime.ContentType(MimeTypes.GetMimeType(filename)))))
+                {
+                    stacItem.Assets["overview"].Properties.AddRange(asset.Properties);
+                }
             }
-            if (filename.EndsWith("MET.txt", true, CultureInfo.InvariantCulture)){
+            if (filename.EndsWith("MET.txt", true, CultureInfo.InvariantCulture))
+            {
                 stacItem.Assets.Add("metadata",
                     StacAsset.CreateMetadataAsset(stacItem, asset.Uri, new System.Net.Mime.ContentType(MimeTypes.GetMimeType(filename))));
                 stacItem.Assets["metadata"].Properties.AddRange(asset.Properties);
             }
-            if (filename.EndsWith("META.txt", true, CultureInfo.InvariantCulture)){
+            if (filename.EndsWith("META.txt", true, CultureInfo.InvariantCulture))
+            {
                 stacItem.Assets.Add("metadata",
                     StacAsset.CreateMetadataAsset(stacItem, asset.Uri, new System.Net.Mime.ContentType(MimeTypes.GetMimeType(filename))));
                 stacItem.Assets["metadata"].Properties.AddRange(asset.Properties);
             }
-            if (filename.EndsWith("REP.txt", true, CultureInfo.InvariantCulture)){
+            if (filename.EndsWith("REP.txt", true, CultureInfo.InvariantCulture))
+            {
                 stacItem.Assets.Add("geodata",
                     StacAsset.CreateMetadataAsset(stacItem, asset.Uri, new System.Net.Mime.ContentType(MimeTypes.GetMimeType(filename))));
                 stacItem.Assets["geodata"].Properties.AddRange(asset.Properties);
             }
-            if (filename.EndsWith("RPC.txt", true, CultureInfo.InvariantCulture)){
+            if (filename.EndsWith("RPC.txt", true, CultureInfo.InvariantCulture))
+            {
                 stacItem.Assets.Add("geodata",
                     StacAsset.CreateMetadataAsset(stacItem, asset.Uri, new System.Net.Mime.ContentType(MimeTypes.GetMimeType(filename))));
                 stacItem.Assets["geodata"].Properties.AddRange(asset.Properties);
@@ -190,6 +196,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             string filename = Path.GetFileName(asset.Uri.ToString());
             string bandName = "unknown";
             double gain = 0;
+            stacAsset.ProjectionExtension().Shape = new int[2] { int.Parse(metadata["NoPixels"]), int.Parse(metadata["NoScans"]) };
 
             if (filename.EndsWith("BAND2.tif", true, CultureInfo.InvariantCulture))
             {
@@ -226,7 +233,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
                 eoBandObject.SolarIllumination = GetEAI(bandName, metadata);
             }
             stacAsset.EoExtension().Bands = new EoBandObject[1] { eoBandObject };
-            
+
             stacItem.Assets.Add(bandName, stacAsset);
         }
 
@@ -284,13 +291,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         private void AddProjStacExtension(JavaProperties metadata, StacItem stacItem)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            switch (metadata["MapProjection"])
+            switch (metadata["MapProjection"].Trim())
             {
                 case "UTM":
-                    int zone = int.Parse(metadata["ZoneNo"]);
-                    bool north = double.Parse(metadata["ImageULLat"]) > 0;
-                    ProjectedCoordinateSystem utm = ProjectedCoordinateSystem.WGS84_UTM(zone, north);
-                    proj.SetCoordinateSystem(utm);
+                    try
+                    {
+                        int zone = int.Parse(metadata["ZoneNo"]);
+                        bool north = double.Parse(metadata["ImageULLat"]) > 0;
+                        ProjectedCoordinateSystem utm = ProjectedCoordinateSystem.WGS84_UTM(zone, north);
+                        proj.SetCoordinateSystem(utm);
+                    }
+                    catch
+                    {
+                        proj.Epsg = null;
+                    }
                     break;
             }
         }
