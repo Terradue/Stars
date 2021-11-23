@@ -120,6 +120,10 @@
       "file:size": 0,
       "gsd": 0.7,
       "eo:cloud_cover": 0.0,
+      "proj:shape": [
+        30280,
+        28296
+      ],
       "raster:bands": [
         {
           "statistics": {
@@ -147,6 +151,10 @@
       "file:size": 0,
       "gsd": 2.8,
       "eo:cloud_cover": 0.0,
+      "proj:shape": [
+        7570,
+        7074
+      ],
       "raster:bands": [
         {
           "statistics": {
@@ -177,6 +185,10 @@
       "file:size": 0,
       "gsd": 2.8,
       "eo:cloud_cover": 0.0,
+      "proj:shape": [
+        7570,
+        7074
+      ],
       "raster:bands": [
         {
           "statistics": {
@@ -207,6 +219,10 @@
       "file:size": 0,
       "gsd": 2.8,
       "eo:cloud_cover": 0.0,
+      "proj:shape": [
+        7570,
+        7074
+      ],
       "raster:bands": [
         {
           "statistics": {
@@ -237,6 +253,10 @@
       "file:size": 0,
       "gsd": 2.8,
       "eo:cloud_cover": 0.0,
+      "proj:shape": [
+        7570,
+        7074
+      ],
       "raster:bands": [
         {
           "statistics": {
