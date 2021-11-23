@@ -2,6 +2,7 @@
   "stac_version": "1.0.0",
   "stac_extensions": [
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
@@ -53,6 +54,11 @@
     "sat:relative_orbit": 164,
     "sat:orbit_state": "descending",
     "sat:platform_international_designator": "2019-038D",
+    "proj:epsg": null,
+    "proj:shape": [
+      16500,
+      23000
+    ],
     "view:sun_azimuth": 191.1412,
     "view:incidence_angle": 42.727318884274624,
     "sar:instrument_mode": "SM",
