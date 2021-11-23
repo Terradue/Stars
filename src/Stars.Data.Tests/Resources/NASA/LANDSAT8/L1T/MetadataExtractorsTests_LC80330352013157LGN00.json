@@ -84,6 +84,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B1.TIF",
       "filename": "LC80330352013157LGN00_B1.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -102,6 +106,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B10.TIF",
       "filename": "LC80330352013157LGN00_B10.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 100.0,
       "eo:bands": [
         {
@@ -120,6 +128,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B11.TIF",
       "filename": "LC80330352013157LGN00_B11.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 100.0,
       "eo:bands": [
         {
@@ -138,6 +150,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B2.TIF",
       "filename": "LC80330352013157LGN00_B2.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -156,6 +172,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B3.TIF",
       "filename": "LC80330352013157LGN00_B3.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -174,6 +194,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B4.TIF",
       "filename": "LC80330352013157LGN00_B4.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -192,6 +216,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B5.TIF",
       "filename": "LC80330352013157LGN00_B5.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -210,6 +238,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B6.TIF",
       "filename": "LC80330352013157LGN00_B6.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -228,6 +260,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B7.TIF",
       "filename": "LC80330352013157LGN00_B7.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
@@ -246,6 +282,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B8.TIF",
       "filename": "LC80330352013157LGN00_B8.TIF",
       "file:size": 0,
+      "proj:shape": [
+        15261,
+        14881
+      ],
       "gsd": 15.0,
       "eo:bands": [
         {
@@ -264,6 +304,10 @@
       "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B9.TIF",
       "filename": "LC80330352013157LGN00_B9.TIF",
       "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
       "gsd": 30.0,
       "eo:bands": [
         {
