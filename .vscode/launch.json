@@ -402,7 +402,7 @@
             }
         },
         {
-            "name": "Copy OpenSearch single Sentinel1 SLC (ASF)",
+            "name": "Copy OpenSearch single Sentinel1 GRD (ASF)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -411,13 +411,15 @@
             "args": [
                 "copy",
                 "-v",
-                "https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_SLC__1SDV_20210928T234947_20210928T235014_039889_04B83E_F515",
+                "https://catalog.terradue.com//sentinel1/series/GRD/search?format=atom&uid=S1A_IW_GRDH_1SDH_20211123T100735_20211123T100749_040697_04D44B_C75A",
                 "-si",
                 "ASF",
                 "-r",
                 "4",
                 "-ka",
                 "--harvest",
+                "-afo",
+                "download",
                 "--output",
                 "/tmp/stars"
             ],
