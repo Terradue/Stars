@@ -1,6 +1,7 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
@@ -63,6 +64,11 @@
     "sar:pixel_spacing_azimuth": 2.5,
     "sar:looks_range": 1.0,
     "sar:looks_azimuth": 1.0,
+    "proj:epsg": null,
+    "proj:shape": [
+      9238,
+      16798
+    ],
     "view:incidence_angle": 43.09960174560547
   },
   "bbox": [
