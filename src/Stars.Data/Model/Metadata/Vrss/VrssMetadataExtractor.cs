@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using GeoJSON.Net.Geometry;
 using Microsoft.Extensions.Logging;
 using ProjNet.CoordinateSystems;
 using Stac;
@@ -17,12 +15,8 @@ using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
-using Stac;
-using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Raster;
 
@@ -337,6 +331,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             double wavelength = 0;
             EoBandCommonName commonName = new EoBandCommonName();
             bool notFound = false;
+
+            var dataSize = Array.ConvertAll<string, int>(metadata.dataSize.Split(','), a => Int32.Parse(a));
+            stacAsset.ProjectionExtension().Shape = dataSize;
 
             if (type == "PAN")
             {

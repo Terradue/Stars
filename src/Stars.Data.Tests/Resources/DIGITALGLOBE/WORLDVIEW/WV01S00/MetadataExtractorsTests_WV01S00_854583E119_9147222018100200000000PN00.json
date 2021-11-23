@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -49,6 +50,7 @@
     "eo:cloud_cover": 0.479,
     "view:sun_azimuth": 263.8,
     "view:sun_elevation": 63.3,
+    "proj:epsg": null,
     "processing:level": "LV1B",
     "title": "Worldview-1 PAN LV1B 02/10/2018 05:36:04"
   },
@@ -96,6 +98,10 @@
       "filename": "WV01S00_854583E119_9147222018100200000000PN00_GR000000001.tif",
       "file:size": 0,
       "gsd": 4.79504953E-06,
+      "proj:shape": [
+        34816,
+        35840
+      ],
       "eo:bands": [
         {
           "name": "pan",

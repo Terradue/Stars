@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -49,6 +50,7 @@
     "eo:cloud_cover": 0.008,
     "view:sun_azimuth": 100.4,
     "view:sun_elevation": 75.0,
+    "proj:epsg": null,
     "processing:level": "LV1B",
     "title": "Worldview-3 MSI LV1B 02/10/2018 02:50:47"
   },
@@ -96,6 +98,10 @@
       "filename": "WV03S00_875416E119_8883332018100200000000MS00_GR005003002.tif",
       "file:size": 0,
       "gsd": 1.0955904447E-05,
+      "proj:shape": [
+        13312,
+        11264
+      ],
       "eo:bands": [
         {
           "name": "coastal",
