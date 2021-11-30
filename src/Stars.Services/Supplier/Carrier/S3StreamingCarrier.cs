@@ -5,21 +5,13 @@ using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
-using System.Security.AccessControl;
 using System.Net;
 using System.Net.S3;
-using Amazon.S3.Model;
-using System.Threading;
 using Amazon.S3.Transfer;
 using Amazon.Extensions.NETCore.Setup;
-using Amazon.S3;
-using System.Reflection;
-using Amazon.S3.Util;
 using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
