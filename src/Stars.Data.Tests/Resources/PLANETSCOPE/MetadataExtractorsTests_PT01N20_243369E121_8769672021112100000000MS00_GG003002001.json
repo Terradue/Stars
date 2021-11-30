@@ -1,0 +1,150 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "PT01N20_243369E121_8769672021112100000000MS00_GG003002001",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          121.7507255346,
+          20.3014620524
+        ],
+        [
+          122.0033050171,
+          20.3014620524
+        ],
+        [
+          122.0033050171,
+          20.1852995711
+        ],
+        [
+          121.7507255346,
+          20.1852995711
+        ],
+        [
+          121.7507255346,
+          20.3014620524
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-11-21T02:02:56+00:00",
+    "start_datetime": "2021-11-21T02:02:56+00:00",
+    "end_datetime": "2021-11-21T02:02:56+00:00",
+    "mission": "planetscope",
+    "platform": "planetscope",
+    "instruments": [
+      "ps2"
+    ],
+    "sensor_type": "optical",
+    "gsd": 3.0,
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 5114939,
+    "view:sun_elevation": 43.35266,
+    "view:sun_azimuth": 147.943,
+    "view:incidence_angle": 5.413673,
+    "view:off_nadir": 5.00467,
+    "proj:epsg": 32651,
+    "processing:level": "L3B",
+    "title": "Planetscope PS2 L3B 21/11/2021 02:02:56"
+  },
+  "bbox": [
+    121.7507255346,
+    20.1852995711,
+    122.0033050171,
+    20.3014620524
+  ],
+  "assets": {
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/L3B/PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_BG003002001.jpg",
+      "filename": "PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_BG003002001.jpg",
+      "file:size": 1
+    },
+    "data": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/L3B/PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_GG003002001.tif",
+      "filename": "PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_GG003002001.tif",
+      "file:size": 1,
+      "proj:shape": [
+        8801,
+        4338
+      ],
+      "raster:bands": [
+        {
+          "scale": 2.30069895051E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 2.43431761442E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 2.708123545E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 4.07735365759E-05,
+          "radiometric_scale": 0.01
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "blue",
+          "description": "blue 485nm TOA",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1997.46
+        },
+        {
+          "name": "green",
+          "description": "green 545nm TOA",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "solar_illumination": 1832.09
+        },
+        {
+          "name": "red",
+          "description": "red 630nm TOA",
+          "common_name": "red",
+          "center_wavelength": 0.63,
+          "solar_illumination": 1631.38
+        },
+        {
+          "name": "nir",
+          "description": "nir 820nm TOA",
+          "common_name": "nir",
+          "center_wavelength": 0.82,
+          "solar_illumination": 1066.31
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/L3B/PT01N20_243369E121_8769672021112100000000MS00/vendor_metadata/20211121_020256_100c_3B_AnalyticMS_metadata.xml",
+      "filename": "PT01N20_243369E121_8769672021112100000000MS00/vendor_metadata/20211121_020256_100c_3B_AnalyticMS_metadata.xml",
+      "file:size": 10430
+    }
+  },
+  "links": []
+}
