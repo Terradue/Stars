@@ -31,6 +31,8 @@ namespace Terradue.Data.Test.Harvesters
                 if (typeof(MetadataExtraction).IsAssignableFrom(processing.GetType()))
                 {
                     var paths = GetHarvesterResourcePaths();
+                    if (!paths.ContainsKey(processing.Key))
+                        continue;
                     foreach (var path in paths[processing.Key])
                     {
                         foreach (var subdir in Directory.GetDirectories(GetResourceFilePath(path), "data", new EnumerationOptions() { RecurseSubdirectories = true }))
