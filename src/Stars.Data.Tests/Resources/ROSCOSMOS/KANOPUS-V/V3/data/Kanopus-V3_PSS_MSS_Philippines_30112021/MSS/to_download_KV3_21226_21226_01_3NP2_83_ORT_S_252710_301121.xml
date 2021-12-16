@@ -1,0 +1,83 @@
+<sar:EarthObservation xmlns:eop="http://earth.esa.int/eop" xmlns:gml="http://www.opengis.net/gml" xmlns:sar="http://earth.esa.int/sar" version="1.2.2">
+	<gml:metaDataProperty>
+		<eop:EarthObservationMetaData>
+			<eop:identifier>KV3_21226_21226_01_3NP2_83_KANOPUS_V_MSS_PSS_MS</eop:identifier>
+			<eop:parentIdentifier>urn:ogc:def:EOP:ROSCOSMOS</eop:parentIdentifier>
+			<eop:processing>
+				<eop:ProcessingInformation>
+					<eop:processingLevel>L1C</eop:processingLevel>
+					<eop:nativeProductFormat>GeoTiff</eop:nativeProductFormat>
+					<eop:orthorectification>Other</eop:orthorectification>
+				</eop:ProcessingInformation>
+			</eop:processing>
+		</eop:EarthObservationMetaData>
+	</gml:metaDataProperty>
+	<gml:validTime>
+		<gml:TimePeriod>
+			<gml:beginPosition>2021-11-30T06:06:51+0300</gml:beginPosition>
+			<gml:endPosition>2021-11-30T06:08:15+0300</gml:endPosition>
+		</gml:TimePeriod>
+	</gml:validTime>
+	<gml:using>
+		<eop:EarthObservationEquipment>
+			<eop:platform>
+				<eop:Platform>
+					<eop:shortName>KANOPUS_V</eop:shortName>
+					<eop:orbitType />
+				</eop:Platform>
+			</eop:platform>
+			<eop:instrument>
+				<eop:Instrument>
+					<eop:shortName>MSS_PSS</eop:shortName>
+				</eop:Instrument>
+			</eop:instrument>
+			<eop:sensor>
+				<eop:Sensor>
+					<eop:sensorType>OPTICAL</eop:sensorType>
+					<eop:operationalMode />
+				</eop:Sensor>
+			</eop:sensor>
+		</eop:EarthObservationEquipment>
+		<eop:product>
+			<eop:ProductInformation />
+		</eop:product>
+	</gml:using>
+	<gml:target>
+		<eop:Footprint>
+			<gml:multiExtentOf>
+				<gml:MultiSurface srsName="EPSG:4326">
+					<gml:surfaceMembers>
+						<gml:Polygon>
+							<gml:exterior>
+								<gml:LinearRing>
+									<gml:posList>22.9549066694024 121.067192409423 22.9657979195545 122.469359238442 17.1532138442988 122.488563667959 17.145274017612 121.137096256834 22.9549066694024 121.067192409423</gml:posList>
+								</gml:LinearRing>
+							</gml:exterior>
+						</gml:Polygon>
+					</gml:surfaceMembers>
+				</gml:MultiSurface>
+			</gml:multiExtentOf>
+			<gml:centerOf>
+				<gml:Point srsName="EPSG:4326">
+					<gml:pos />
+				</gml:Point>
+			</gml:centerOf>
+		</eop:Footprint>
+	</gml:target>
+	<gml:resultOf>
+		<eop:EarthObservationResult>
+			<eop:browse>
+				<eop:BrowseInformation>
+					<eop:type>THUMBNAIL</eop:type>
+						<eop:referenceSystemIdentifier codeSpace="EPSG">EPSG:4326</eop:referenceSystemIdentifier>
+					<eop:fileName>ICON.JPG</eop:fileName>
+				</eop:BrowseInformation>
+				<eop:BrowseInformation>
+					<eop:type>QUICKLOOK</eop:type>
+						<eop:referenceSystemIdentifier codeSpace="EPSG">EPSG:4326</eop:referenceSystemIdentifier>
+					<eop:fileName>PREVIEW.JPG</eop:fileName>
+				</eop:BrowseInformation>
+			</eop:browse>
+		</eop:EarthObservationResult>
+	</gml:resultOf>
+</sar:EarthObservation>
