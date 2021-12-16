@@ -81,14 +81,14 @@
     35.681708536
   ],
   "assets": {
-    "metadata": {
-      "type": "application/xml",
+    "thumbnail": {
+      "type": "image/jpeg",
       "roles": [
-        "metadata"
+        "thumbnail"
       ],
-      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_Aux.xml",
-      "filename": "K3A_20210113132915_32047_00039626_L1G_Aux.xml",
-      "file:size": 56911
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_th.jpg",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_th.jpg",
+      "file:size": 5471
     },
     "overview": {
       "type": "image/jpeg",
@@ -99,14 +99,14 @@
       "filename": "K3A_20210113132915_32047_00039626_L1G_br.jpg",
       "file:size": 236600
     },
-    "thumbnail": {
-      "type": "image/jpeg",
+    "metadata": {
+      "type": "application/xml",
       "roles": [
-        "thumbnail"
+        "metadata"
       ],
-      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_th.jpg",
-      "filename": "K3A_20210113132915_32047_00039626_L1G_th.jpg",
-      "file:size": 5471
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_Aux.xml",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_Aux.xml",
+      "file:size": 56911
     },
     "PAN": {
       "type": "image/tiff",

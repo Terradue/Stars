@@ -82,15 +82,6 @@
     -16.558193714
   ],
   "assets": {
-    "overview": {
-      "type": "image/jpeg",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_br.jpg",
-      "filename": "K3_20201221013934_45861_11950876_L1G_br.jpg",
-      "file:size": 199763
-    },
     "thumbnail": {
       "type": "image/jpeg",
       "roles": [
@@ -99,6 +90,15 @@
       "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_th.jpg",
       "filename": "K3_20201221013934_45861_11950876_L1G_th.jpg",
       "file:size": 5853
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K3_20201221013934_45861_11950876_L1G/K3_20201221013934_45861_11950876_L1G_br.jpg",
+      "filename": "K3_20201221013934_45861_11950876_L1G_br.jpg",
+      "file:size": 199763
     },
     "metadata": {
       "type": "application/xml",

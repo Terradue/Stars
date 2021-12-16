@@ -81,42 +81,6 @@
     -2.6543985782965276
   ],
   "assets": {
-    "browse": {
-      "type": "image/jpeg",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jpg",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jpg",
-      "file:size": 1578306
-    },
-    "metadata": {
-      "type": "application/xml",
-      "roles": [
-        "metadata"
-      ],
-      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_Aux.xml",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_Aux.xml",
-      "file:size": 59965
-    },
-    "overview": {
-      "type": "image/png",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png",
-      "file:size": 1
-    },
-    "overview-worldfile": {
-      "type": "application/octet-stream",
-      "roles": [
-        "overview-worldfile"
-      ],
-      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.pgw",
-      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.pgw",
-      "file:size": 226
-    },
     "thumbnail": {
       "type": "image/jpeg",
       "roles": [
@@ -135,6 +99,24 @@
       "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jgw",
       "file:size": 226
     },
+    "browse": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jpg",
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_br.jpg",
+      "file:size": 1578306
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png",
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.png",
+      "file:size": 1
+    },
     "gim": {
       "type": "image/tiff",
       "roles": [
@@ -143,6 +125,15 @@
       "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_GIM.tif",
       "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_GIM.tif",
       "file:size": 1
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_Aux.xml",
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_Aux.xml",
+      "file:size": 59965
     },
     "amplitude-hh": {
       "type": "image/tiff",
@@ -156,6 +147,15 @@
       "sar:polarizations": [
         "HH"
       ]
+    },
+    "overview-worldfile": {
+      "type": "application/octet-stream",
+      "roles": [
+        "overview-worldfile"
+      ],
+      "href": "data/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D/K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.pgw",
+      "filename": "K5_20210122220551_000000_40752_A_EH05_HH_GTC_B_L1D_QL.pgw",
+      "file:size": 226
     }
   },
   "links": []

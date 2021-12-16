@@ -102,7 +102,7 @@
         },
         "PLANET": {
           "Type": "Terradue.Stars.Data.Model.Metadata.PlanetScope.PlanetScopeMetadataExtractor"
-        },
+        }
       }
     }
   },

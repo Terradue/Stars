@@ -236,9 +236,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         protected void AddAssets(StacItem stacItem, IItem item, KanopusVMetadata metadata)
         {
             IAsset mssAsset = FindFirstAssetFromFileNameRegex(item, @".*MSS.*\.tiff");
+            IAsset sAsset = FindFirstAssetFromFileNameRegex(item, @".*_S_.*\.tiff");
             if (mssAsset != null)
             {
                 var bandAsset = GetBandAsset(stacItem, "MSS", mssAsset, metadata);
+                stacItem.Assets.Add("mss", bandAsset);
+            } else if (sAsset != null)
+            {
+                var bandAsset = GetBandAsset(stacItem, "MSS", sAsset, metadata);
                 stacItem.Assets.Add("mss", bandAsset);
             }
 
@@ -248,8 +253,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 var bandAsset = GetBandAsset(stacItem, "PAN", pssAsset, metadata);
                 stacItem.Assets.Add("pan", bandAsset);
-            }
-
+            } 
+            
         }
 
         protected virtual IAsset GetMetadataAsset(IItem item)

@@ -25,6 +25,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
     {
         private const string GAOFEN1_PLATFORM_NAME = "Gaofen-1";
         private const string GAOFEN2_PLATFORM_NAME = "Gaofen-2";
+        private const string GAOFEN4_PLATFORM_NAME = "Gaofen-4";
 
         public override string Label => "Gaofen-1/2 High-resolution Imaging Satellite (CNSA) missions product metadata extractor";
 
@@ -370,6 +371,36 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 stacItem.Assets.Add(panBandName, bandAsset);
                 return;
             }
+
+            if (filename.StartsWith("GF4_PMS", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".tiff", true, CultureInfo.InvariantCulture))
+            {
+                var metadataAsset = FindAssetsFromFileNameRegex(assetsContainer, ".*" + filename.Replace(".tiff", ".xml"));
+                ProductMetaData metadata = null;
+                try
+                {
+                    metadata = await DeserializeProductMetadata(metadataAsset.FirstOrDefault().GetStreamable());
+                }
+                catch { }
+                var bandAsset = GetBandAsset(stacItem, null, sensorName, asset, satelliteId, metadata);
+                stacItem.Assets.Add("PMS", bandAsset);
+                return;
+            }
+
+            if (filename.StartsWith("GF4_IRS", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".tiff", true, CultureInfo.InvariantCulture))
+            {
+                var metadataAsset = FindAssetsFromFileNameRegex(assetsContainer, ".*" + filename.Replace(".tiff", ".xml"));
+                ProductMetaData metadata = null;
+                try
+                {
+                    metadata = await DeserializeProductMetadata(metadataAsset.FirstOrDefault().GetStreamable());
+                }
+                catch { }
+                var bandAsset = GetBandAsset(stacItem, null, sensorName, asset, satelliteId, metadata);
+                stacItem.Assets.Add("IRS", bandAsset);
+                return;
+            }
         }
 
 
@@ -659,6 +690,40 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 }
             }
 
+            ////////////
+            // GAOFEN 4
+            else if (satelliteId == "GF4")
+            {
+                if (sensorName == "PMS")
+                {
+                    stacAsset.SetProperty("gsd", 50);
+                    EoBandObject b01EoBandObject =
+                        CreateEoBandObject("B01", EoBandCommonName.blue, 0.4825, 0.07, 1966.811);
+                    EoBandObject b02EoBandObject =
+                        CreateEoBandObject("B02", EoBandCommonName.green, 0.555, 0.07, 1822.607);
+                    EoBandObject b03EoBandObject =
+                        CreateEoBandObject("B03", EoBandCommonName.red, 0.66, 0.06, 1523.189);
+                    EoBandObject b04EoBandObject =
+                        CreateEoBandObject("B04", EoBandCommonName.nir, 0.83, 0.12, 1066.547);
+
+
+                    stacAsset.EoExtension().Bands = new[]
+                        {b01EoBandObject, b02EoBandObject, b03EoBandObject, b04EoBandObject};
+
+                    RasterBand b01RasterBandObject =
+                        CreateRasterBandObject(-0.8765, 0.1585);
+                    RasterBand b02RasterBandObject =
+                        CreateRasterBandObject(-0.9742, 0.1883);
+                    RasterBand b03RasterBandObject =
+                        CreateRasterBandObject(-0.7652, 0.174);
+                    RasterBand b04RasterBandObject =
+                        CreateRasterBandObject(-0.7233, 0.1897);
+                    stacAsset.RasterExtension().Bands = new[]
+                        {b01RasterBandObject, b02RasterBandObject, b03RasterBandObject, b04RasterBandObject};
+
+                }
+            }
+
             return stacAsset;
         }
 
@@ -833,6 +898,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
             else if (productMetadata.SatelliteID == "GF2")
             {
                 platformName = GAOFEN2_PLATFORM_NAME.ToLower();
+            }
+            else if (productMetadata.SatelliteID == "GF4")
+            {
+                platformName = GAOFEN4_PLATFORM_NAME.ToLower();
             }
             else
             {

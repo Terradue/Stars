@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ProductMetaData>
+    <SatelliteID>GF4</SatelliteID>
+    <SensorID>PMI</SensorID>
+    <ReceiveTime>2021-11-21 13:44:21</ReceiveTime>
+    <OrbitID>34580</OrbitID>
+    <ProduceType>STANDARD</ProduceType>
+    <SceneID>540292</SceneID>
+    <ProductID>439105</ProductID>
+    <ProductLevel>LEVEL1A</ProductLevel>
+    <ProductQuality />
+    <ProductQualityReport />
+    <ProductFormat>GEOTIFF</ProductFormat>
+    <ProduceTime>2021-11-21 15:00:50</ProduceTime>
+    <Bands>1,2,3,4,5</Bands>
+    <ScenePath>0</ScenePath>
+    <SceneRow>0</SceneRow>
+    <SatPath>0</SatPath>
+    <SatRow>0</SatRow>
+    <SceneCount>1</SceneCount>
+    <SceneShift>0</SceneShift>
+    <StartTime>2021-11-21 13:44:21</StartTime>
+    <EndTime>2021-11-21 13:44:21</EndTime>
+    <CenterTime>2021-11-21 13:44:21</CenterTime>
+    <ImageGSD>50</ImageGSD>
+    <WidthInPixels>10240</WidthInPixels>
+    <HeightInPixels>10240</HeightInPixels>
+    <WidthInMeters />
+    <HeightInMeters />
+    <CloudPercent>3</CloudPercent>
+    <QualityInfo></QualityInfo>
+    <PixelBits>16</PixelBits>
+    <ValidPixelBits>10</ValidPixelBits>
+    <RollViewingAngle>0</RollViewingAngle>
+    <PitchViewingAngle>0</PitchViewingAngle>
+    <RollSatelliteAngle>1.39987</RollSatelliteAngle>
+    <PitchSatelliteAngle>-4.20047</PitchSatelliteAngle>
+    <YawSatelliteAngle>1.78289e-05</YawSatelliteAngle>
+    <SolarAzimuth>161.663</SolarAzimuth>
+    <SolarZenith>59.7966</SolarZenith>
+    <SatelliteAzimuth>108.022</SatelliteAzimuth>
+    <SatelliteZenith>59.121</SatelliteZenith>
+    <GainMode />
+    <Gain>6.86400,4.59800,5.22300,6.37500,8.68100</Gain>
+    <Bias>2.98600,4.14000,1.43900,3.60500,0.33100</Bias>
+    <IntegrationTime>6,30,20,30,30</IntegrationTime>
+    <IntegrationLevel />
+    <MapProjection />
+    <EarthEllipsoid />
+    <ZoneNo />
+    <ResamplingKernel />
+    <HeightMode />
+    <MtfCorrection>LAB</MtfCorrection>
+    <RelativeCorrectionData></RelativeCorrectionData>
+    <TopLeftLatitude>11.058428</TopLeftLatitude>
+    <TopLeftLongitude>77.661188</TopLeftLongitude>
+    <TopRightLatitude>10.964185</TopRightLatitude>
+    <TopRightLongitude>82.967683</TopRightLongitude>
+    <BottomRightLatitude>6.364699</BottomRightLatitude>
+    <BottomRightLongitude>83.306704</BottomRightLongitude>
+    <BottomLeftLatitude>6.421308</BottomLeftLatitude>
+    <BottomLeftLongitude>78.108613</BottomLeftLongitude>
+    <TopLeftMapX />
+    <TopLeftMapY />
+    <TopRightMapX />
+    <TopRightMapY />
+    <BottomRightMapX />
+    <BottomRightMapY />
+    <BottomLeftMapX />
+    <BottomLeftMapY />
+</ProductMetaData>
