@@ -365,6 +365,6 @@ src/tmp/
 tmp/
 src/MSBuild_Logs/
 
- src/.idea
- src/global.json
+src/.idea
+src/global.json
 
