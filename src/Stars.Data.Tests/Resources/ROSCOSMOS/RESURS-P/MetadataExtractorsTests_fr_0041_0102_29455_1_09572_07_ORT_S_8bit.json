@@ -1,0 +1,119 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "fr_0041_0102_29455_1_09572_07_ORT_S_8bit",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.49722753805555,
+          -0.7190108455555556
+        ],
+        [
+          119.88985905000001,
+          -0.6871761972222222
+        ],
+        [
+          120.08480575444445,
+          0.28728390944444443
+        ],
+        [
+          119.692361445,
+          0.2561626997222222
+        ],
+        [
+          119.49722753805555,
+          -0.7190108455555556
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-09-30T05:11:30.375333Z",
+    "start_datetime": "2018-09-30T05:11:30.375333Z",
+    "end_datetime": "2018-09-30T05:27:33.937333Z",
+    "platform": "resurs-p",
+    "mission": "resurs-p",
+    "instruments": [
+      "geoton"
+    ],
+    "sensor_type": "optical",
+    "gsd": 2.26206660848754,
+    "view:azimuth": 190.91050654972221,
+    "view:sun_azimuth": 98.23604873472222,
+    "view:sun_elevation": 65.14060405111111,
+    "proj:epsg": 32750,
+    "processing:level": "2B",
+    "title": "Resurs-P GEOTON 2B 09/30/2018 05:11:30"
+  },
+  "bbox": [
+    119.49722753805555,
+    -0.7190108455555556,
+    120.08480575444445,
+    0.28728390944444443
+  ],
+  "assets": {
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/Resurs-P_9572-7_Geoton_Indonesia_30092018/fr_0041_0102_29455_1_09572_07_ORT_S_8bit_ql.jpg",
+      "filename": "fr_0041_0102_29455_1_09572_07_ORT_S_8bit_ql.jpg",
+      "file:size": 0
+    },
+    "MSS": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/Resurs-P_9572-7_Geoton_Indonesia_30092018/fr_0041_0102_29455_1_09572_07_ORT_S_8bit.tiff",
+      "filename": "fr_0041_0102_29455_1_09572_07_ORT_S_8bit.tiff",
+      "file:size": 0,
+      "gsd": 2.26206660848754,
+      "eo:bands": [
+        {
+          "name": "channel-1",
+          "common_name": "blue",
+          "center_wavelength": 0.47,
+          "full_width_half_max": 0.08
+        },
+        {
+          "name": "channel-2",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "channel-3",
+          "common_name": "red",
+          "center_wavelength": 0.65,
+          "full_width_half_max": 0.1
+        },
+        {
+          "name": "channel-4",
+          "common_name": "nir",
+          "center_wavelength": 0.8,
+          "full_width_half_max": 0.2
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/Resurs-P_9572-7_Geoton_Indonesia_30092018/fr_0041_0102_29455_1_09572_07_ORT_S_8bit.xml",
+      "filename": "fr_0041_0102_29455_1_09572_07_ORT_S_8bit.xml",
+      "file:size": 4690
+    }
+  },
+  "links": []
+}

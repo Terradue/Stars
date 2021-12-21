@@ -1,0 +1,125 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "fr_0041_0102_29609_1_09725_03_ORT_40_K",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.2932541961111,
+          -0.6276826069444444
+        ],
+        [
+          120.22166149611111,
+          -0.45769949972222224
+        ],
+        [
+          120.42067356166667,
+          0.5099281652777777
+        ],
+        [
+          119.49263328666667,
+          0.3408991833333333
+        ],
+        [
+          119.2932541961111,
+          -0.6276826069444444
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-10-10T04:55:48.253993Z",
+    "start_datetime": "2018-10-10T04:55:48.253993Z",
+    "end_datetime": "2018-10-10T05:52:09.705993Z",
+    "platform": "resurs-p",
+    "mission": "resurs-p",
+    "instruments": [
+      "kshmsa"
+    ],
+    "sensor_type": "optical",
+    "gsd": 10.2889114763716,
+    "view:azimuth": 190.98965385666665,
+    "view:sun_azimuth": 105.24748998722222,
+    "view:sun_elevation": 61.46144606305556,
+    "proj:epsg": 32750,
+    "processing:level": "4B",
+    "title": "Resurs-P KSHMSA 4B 10/10/2018 04:55:48"
+  },
+  "bbox": [
+    119.2932541961111,
+    -0.6276826069444444,
+    120.42067356166667,
+    0.5099281652777777
+  ],
+  "assets": {
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/Resurs-P_9725-3_KShMSA_Indonesia_10102018/fr_0041_0102_29609_1_09725_03_ORT_40_K_ql.jpg",
+      "filename": "fr_0041_0102_29609_1_09725_03_ORT_40_K_ql.jpg",
+      "file:size": 0
+    },
+    "PMS": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/Resurs-P_9725-3_KShMSA_Indonesia_10102018/fr_0041_0102_29609_1_09725_03_ORT_40_K.tiff",
+      "filename": "fr_0041_0102_29609_1_09725_03_ORT_40_K.tiff",
+      "file:size": 0,
+      "gsd": 10.2889114763716,
+      "eo:bands": [
+        {
+          "name": "channel-1",
+          "common_name": "blue",
+          "center_wavelength": 0.505,
+          "full_width_half_max": 0.045
+        },
+        {
+          "name": "channel-2",
+          "common_name": "green",
+          "center_wavelength": 0.565,
+          "full_width_half_max": 0.052
+        },
+        {
+          "name": "channel-3",
+          "common_name": "red",
+          "center_wavelength": 0.65,
+          "full_width_half_max": 0.063
+        },
+        {
+          "name": "channel-4",
+          "common_name": "rededge",
+          "center_wavelength": 0.76,
+          "full_width_half_max": 0.086
+        },
+        {
+          "name": "channel-5",
+          "common_name": "nir",
+          "center_wavelength": 0.845,
+          "full_width_half_max": 0.07
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/Resurs-P_9725-3_KShMSA_Indonesia_10102018/fr_0041_0102_29609_1_09725_03_ORT_40_K.xml",
+      "filename": "fr_0041_0102_29609_1_09725_03_ORT_40_K.xml",
+      "file:size": 4275
+    }
+  },
+  "links": []
+}

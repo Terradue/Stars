@@ -4,7 +4,7 @@
     <ProjectName>Terradue.Stars.Data</ProjectName>
     <Title>Terradue.Stars.Data</Title>
     <Description>Collection of data Plugins for Terradue.Stars</Description>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <!-- <VersionSuffix>beta.26</VersionSuffix> -->
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <NoWarn>NU1603</NoWarn>
@@ -43,13 +43,13 @@
     <ProjectReference Include="../../../../Components/systems/Stars/src/Stars.Interface/Terradue.Stars.Interface.csproj" />
     <ProjectReference Include="../../../../Components/systems/Stars/src/Stars.Geometry/Terradue.Stars.Geometry.csproj" /> -->
     <!-- <ProjectReference Include="../../../../Components/sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" /> -->
-    <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj" >
+    <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj">
       <PrivateAssets>all</PrivateAssets>
     </ProjectReference>
-    <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" >
+    <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj">
       <PrivateAssets>all</PrivateAssets>
     </ProjectReference>
-    <ProjectReference Include="..\Stars.Geometry\Terradue.Stars.Geometry.csproj" >
+    <ProjectReference Include="..\Stars.Geometry\Terradue.Stars.Geometry.csproj">
       <PrivateAssets>all</PrivateAssets>
     </ProjectReference>
   </ItemGroup>
