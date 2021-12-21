@@ -21,7 +21,8 @@
        "CBERS": ["INPE"],
        "KANOPUS-V": ["ROSCOSMOS/KANOPUS-V"],
        "ISRO": ["ISRO"],
-       "PLANET": ["PLANETSCOPE"]
+       "PLANET": ["PLANETSCOPE"],
+      "RESURSP": ["ROSCOSMOS/RESURS-P"]
     }
   }
 }
