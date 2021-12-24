@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE DeliveryAccompanyingSheet SYSTEM "DeliveryAccompanyingSheet.dtd">
+<DeliveryAccompanyingSheet>
+  <Request>
+    <MissionId Datatype="String">CSK</MissionId>
+    <RequestorUserId Datatype="String">ASI_CEOS_SuperSite_CampiFLEGREI_2015</RequestorUserId>
+    <RequestId Datatype="ULONG">1043077</RequestId>
+    <ServiceRequestName Datatype="String">SCS_B</ServiceRequestName>
+
+    <UserRequestName Datatype="String">N_PR_PS_DS_5803_ASI_CEOS_SuperSite_CampiFLEGREI_20</UserRequestName>
+    <Note Datatype="String">N_PR_PS_DS_5803_ASI_CEOS_SuperSite_CampiFLEGREI_20</Note>
+  </Request>
+  <DeliveryTo>
+    <Surname Datatype="String">ASI_CEOS_SuperSite_CampiFLEGREI_2015</Surname>
+    <Name Datatype="String">ASI_CEOS_SuperSite_CampiFLEGREI_2015</Name>
+    <Company Datatype="String">Not Applicable</Company>
+    <Address Datatype="String">Loc Terlecchia</Address>
+    <ZIPCode Datatype="String">75100</ZIPCode>
+    <City Datatype="String">Matera</City>
+    <Country Datatype="String">ITALIA</Country>
+    <Phone Datatype="String">064432654</Phone>
+    <Mode Datatype="String">PUT</Mode>
+  </DeliveryTo>
+  <DeliveryRequestId Datatype="ULONG">1043077</DeliveryRequestId>
+  <DeliveryDateUTC Datatype="String">2021-10-16T06:35:27Z</DeliveryDateUTC>
+  <Product>
+    <ProductId Datatype="String">2102203</ProductId>
+    <UniqueIdentifier Datatype="String">100.1043077.1064174</UniqueIdentifier>
+    <ProductType Datatype="String">SCS_B</ProductType>
+    <ProductFormat Datatype="String">H5</ProductFormat>
+    <FormatVersion Datatype="String">(see ProductSpecificationDocument)</FormatVersion>
+    <ClassificationLevel Datatype="String">unclassified</ClassificationLevel>
+    <SensingStartTime Datatype="String">2021/10/16 04:51:49</SensingStartTime>
+    <SensingStopTime Datatype="String">2021/10/16 04:51:56</SensingStopTime>
+    <ProductTags>
+      <ProductFileName Datatype="String">CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156</ProductFileName>
+      <ProductSpecificationDocument Datatype="String">CSM-UGS-STD-SPE-0048-3.1</ProductSpecificationDocument>
+      <SampleFormat Datatype="String">INT</SampleFormat>
+      <SamplesPerPixel Datatype="String">2</SamplesPerPixel>
+      <BitsPerSample Datatype="String">16</BitsPerSample>
+      <ProcessingCentre Datatype="String">ICUGS</ProcessingCentre>
+      <ProviderId Datatype="String">PM01</ProviderId>
+    </ProductTags>
+  </Product>
+  <Medium>
+    <CreationDate Datatype="String">2021-10-16T06:35:27Z</CreationDate>
+    <Label Datatype="String">sftp20211016_UC_CSK_1043077_20211016045149_1234215</Label>
+  </Medium>
+</DeliveryAccompanyingSheet>
+                                                                       
