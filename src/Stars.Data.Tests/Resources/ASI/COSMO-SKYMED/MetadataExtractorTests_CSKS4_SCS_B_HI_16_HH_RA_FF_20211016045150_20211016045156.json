@@ -1,62 +1,75 @@
 {
     "stac_version": "1.0.0",
     "stac_extensions": [
-      "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
       "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
       "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
-      "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+      "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
       "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
       "https://stac-extensions.github.io/view/v1.0.0/schema.json"
     ],
     "type": "Feature",
-    "id": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511",
+    "id": "CSKS4_SCS_B_HI_ 16_HH_RA_FF_202 11016045150_2021 1016045156",
     "geometry": {
       "type": "Polygon",
       "coordinates": [
         [
           [
-            57.6812,
-            -20.3616
+            40.98266607,
+            13.99538353
           ],
           [
-            58.0196,
-            -20.4282
+            41.03533739,
+            14.46554722
           ],
           [
-            58.0936,
-            -20.1126
+            40.67509338,
+            14.53522681
           ],
           [
-            57.7559,
-            -20.0462
+            40.62228988,
+            14.06767192
           ],
           [
-            57.6812,
-            -20.3616
+            40.98266607,
+            13.99538353
           ]
         ]
       ]
     },
     "properties": {
-      "start_datetime": "2020-08-14T05:16:55.10431Z",
-      "end_datetime": "2020-08-14T05:17:00.305734Z",
-      "datetime": "2020-08-14T05:16:55.10431Z",
-      "created": "2020-08-17T14:07:46.159767Z",
-      "platform": "vrss-1",
-      "mission": "vrss-1",
+      "start_datetime": "2021-10-16T04:51:4 9.654471152Z",
+      "end_datetime": "2021-10-16T04:51:5 6.369924568Z",
+      "datetime": "2021-10-16T04:51:4 9.654471152Z",
+      "created": "2021-10-16T06:27:4 1.000000000Z",
+      "platform": "csk4",
+      "mission": "csk",
       "instruments": [
-        "mss-2"
+        "sar-x"
       ],
-      "sensor_type": "optical",
-      "gsd": 10.0,
-      "title": "VRSS-1 MSS-2 L2B 14/08/2020 05:16:55",
-      "sat:absolute_orbit": 42475,
-      "proj:epsg": 32740,
+      "sensor_type": "radar",
+      "title": "CSKS4_SCS_B_HI_ 16_HH_RA_FF_202 11016045150_2021 1016045156",
+      "sat:orbit_state": "ascending",
+      "proj:epsg": 4326,
       "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 40S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM40S\", AUTHORITY[\"EPSG\", \"32740\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32740\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
-      "view:off_nadir": 21.285824,
-      "view:sun_azimuth": 54.139,
-      "view:sun_elevation": 35.548,
-      "processing:level": "L2B"
+      "view:incidence_angle": [43.11329629, 44.73384502],
+      "sar:observation_direction": "right",
+      "sar:instrument_mode": "HIMAGE",
+      "sar:frequency_band": "X",
+      "sar:center_frequency": 9.6,
+      "sar:polarizations": [
+          "HH"
+      ],
+      "sar:product_type": "SCS_B",
+      "sar:resolution_range": 3,
+      "processing:level": "L1A",
+      "sar:resolution_azimuth": 3,
+      "sar:pixel_spacing_range": 1.5,
+      "sar:pixel_spacing_azimuth": 1.5,
+      "sar:multilook_spacing_range": 5,
+      "sar:multilook_spacing _azimuth": 5,
+      "sar:looks_range": 1,
+      "sar:looks_azimuth": 1,
+      "sar:looks_equivalent_ number": 1
     },
     "bbox": [
       57.6812,
@@ -65,137 +78,18 @@
       -20.0462
     ],
     "assets": {
-      "band-1": {
-        "type": "image/tiff",
+      "image": {
+        "type": "application/x-hdf5",
         "roles": [
           "data"
         ],
         "title": "Image file",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_1.tif",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_1.tif",
-        "file:size": 1,
-        "proj:shape": [
-          4228,
-          4004
-        ],
-        "raster:bands": [
-          {
-            "scale": 0.2264185119775393,
-            "offset": -13.763981569533124
-          }
-        ],
-        "eo:bands": [
-          {
-            "name": "band-1",
-            "common_name": "blue",
-            "center_wavelength": 0.485,
-            "solar_illumination": 1976.417847
-          }
+        "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
+        "filename": "CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
+        "file:size": 0,
+        "sar:polarizations": [
+            "HH"
         ]
-      },
-      "band-2": {
-        "type": "image/tiff",
-        "roles": [
-          "data"
-        ],
-        "title": "Image file",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_2.tif",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_2.tif",
-        "file:size": 1,
-        "proj:shape": [
-          4228,
-          4004
-        ],
-        "raster:bands": [
-          {
-            "scale": 0.2041733022989914,
-            "offset": -7.889256196659725
-          }
-        ],
-        "eo:bands": [
-          {
-            "name": "band-2",
-            "common_name": "green",
-            "center_wavelength": 0.555,
-            "solar_illumination": 1863.542725
-          }
-        ]
-      },
-      "band-3": {
-        "type": "image/tiff",
-        "roles": [
-          "data"
-        ],
-        "title": "Image file",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_3.tif",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_3.tif",
-        "file:size": 1,
-        "proj:shape": [
-          4228,
-          4004
-        ],
-        "raster:bands": [
-          {
-            "scale": 0.1825517077712262,
-            "offset": -6.03698497599445
-          }
-        ],
-        "eo:bands": [
-          {
-            "name": "band-3",
-            "common_name": "red",
-            "center_wavelength": 0.66,
-            "solar_illumination": 1542.293457
-          }
-        ]
-      },
-      "band-4": {
-        "type": "image/tiff",
-        "roles": [
-          "data"
-        ],
-        "title": "Image file",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_4.tif",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_4.tif",
-        "file:size": 1,
-        "proj:shape": [
-          4228,
-          4004
-        ],
-        "raster:bands": [
-          {
-            "scale": 0.251426847358761,
-            "offset": -5.053679631911096
-          }
-        ],
-        "eo:bands": [
-          {
-            "name": "band-4",
-            "common_name": "nir",
-            "center_wavelength": 0.83,
-            "solar_illumination": 1073.072144
-          }
-        ]
-      },
-      "overview": {
-        "type": "image/jpeg",
-        "roles": [
-          "overview"
-        ],
-        "title": "Browse image",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.jpg",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.jpg",
-        "file:size": 245933
-      },
-      "thumbnail": {
-        "type": "image/jpeg",
-        "roles": [
-          "thumbnail"
-        ],
-        "title": "Thumbnail image",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_THUMB.jpg",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_THUMB.jpg",
-        "file:size": 9800
       },
       "metadata": {
         "type": "application/xml",
@@ -203,19 +97,9 @@
           "metadata"
         ],
         "title": "Metadata file",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.xml",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511.xml",
-        "file:size": 5343
-      },
-      "metadata-addition": {
-        "type": "application/xml",
-        "roles": [
-          "metadata"
-        ],
-        "title": "Additional metadata",
-        "href": "data/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511/VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_ADDITION.xml",
-        "filename": "VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_ADDITION.xml",
-        "file:size": 30261
+        "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
+        "filename": "DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
+        "file:size": 6251
       }
     },
     "links": []
