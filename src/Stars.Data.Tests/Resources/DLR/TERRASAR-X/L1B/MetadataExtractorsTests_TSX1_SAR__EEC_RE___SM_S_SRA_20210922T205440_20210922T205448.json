@@ -1,0 +1,126 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          141.0321486721666,
+          -14.9830974345713
+        ],
+        [
+          140.9285790720919,
+          -14.4787021791898
+        ],
+        [
+          140.6320994886167,
+          -14.5392002644268
+        ],
+        [
+          140.73921338624922,
+          -15.0428728400524
+        ],
+        [
+          141.0321486721666,
+          -14.9830974345713
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-09-22T20:54:40.918000Z",
+    "start_datetime": "2021-09-22T20:54:40.918000Z",
+    "end_datetime": "2021-09-22T20:54:48.917858Z",
+    "created": "2021-12-30T17:25:47.000000Z",
+    "platform": "tsx-1",
+    "constellation": "tsx-1",
+    "mission": "tsx-1",
+    "instruments": [
+      "x-sar"
+    ],
+    "sensor_type": "radar",
+    "gsd": 6.0628519619145,
+    "title": "TSX-1 SAR EEC SM 163 HH 2021-09-22T20:54:40.918000Z",
+    "sat:absolute_orbit": 79154,
+    "sat:relative_orbit": 163,
+    "sat:orbit_state": "ascending",
+    "sat:platform_international_designator": "2019-038D",
+    "proj:epsg": null,
+    "proj:shape": [
+      15833,
+      21833
+    ],
+    "view:sun_azimuth": 348.4671,
+    "view:incidence_angle": 26.345356760852496,
+    "sar:instrument_mode": "SM",
+    "sar:frequency_band": "X",
+    "sar:polarizations": [
+      "HH"
+    ],
+    "sar:product_type": "EEC",
+    "sar:observation_direction": "right",
+    "sar:center_frequency": 9649998387.0,
+    "processing:level": "L1B"
+  },
+  "bbox": [
+    140.6320994886167,
+    -15.0428728400524,
+    141.0321486721666,
+    -14.4787021791898
+  ],
+  "assets": {
+    "amplitude-hh": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/IMAGEDATA/IMAGE_HH_SRA_strip_005.tif",
+      "filename": "TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/IMAGEDATA/IMAGE_HH_SRA_strip_005.tif",
+      "file:size": 691538921,
+      "gsd": 6.0628519619145,
+      "sar:polarizations": [
+        "HH"
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/iif/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/L1B_iif.xml",
+      "filename": "iif/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/L1B_iif.xml",
+      "file:size": 3059
+    },
+    "product-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448.xml",
+      "filename": "TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448.xml",
+      "file:size": 297448
+    },
+    "overview": {
+      "type": "image/tiff",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/PREVIEW/COMPOSITE_QL.tif",
+      "filename": "TSX-1.SAR.L1B/TSX1_SAR__EEC_RE___SM_S_SRA_20210922T205440_20210922T205448/PREVIEW/COMPOSITE_QL.tif",
+      "file:size": 16232244
+    }
+  },
+  "links": []
+}
