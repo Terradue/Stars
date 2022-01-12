@@ -79,7 +79,7 @@
       ],
       "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.tiff",
       "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.tiff",
-      "file:size": 2101532,
+      "file:size": 1,
       "proj:shape": [
         1024,
         1024
@@ -92,7 +92,7 @@
       ],
       "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.tiff",
       "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.tiff",
-      "file:size": 1048740204,
+      "file:size": 1,
       "proj:shape": [
         10240,
         10240
