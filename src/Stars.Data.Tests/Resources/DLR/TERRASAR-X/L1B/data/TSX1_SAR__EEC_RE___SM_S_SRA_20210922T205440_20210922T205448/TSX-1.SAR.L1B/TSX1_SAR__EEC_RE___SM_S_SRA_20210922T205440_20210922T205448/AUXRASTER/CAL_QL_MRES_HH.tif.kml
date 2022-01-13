@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:gx="http://www.google.com/kml/ext/2.2">
+<GroundOverlay>
+  <name>DT_6018_CAL_QL_MRES_HH.tif</name>
+  <Icon>
+    <href>CAL_QL_MRES_HH.tif</href>
+    <refreshMode>onInterval</refreshMode>
+    <refreshInterval>86400</refreshInterval>
+    <viewBoundScale>0.75</viewBoundScale>
+  </Icon>
+  <altitude>0</altitude>
+  <altitudeMode>clampToGround</altitudeMode>
+  <gx:LatLonQuad>
+    <coordinates>
+      -39.395421,-15.055467 -38.953489,-15.055807 -38.953615,-14.463603 -39.394352,-14.463277 
+    </coordinates>
+  </gx:LatLonQuad>
+</GroundOverlay>
+</kml>
