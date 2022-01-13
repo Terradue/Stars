@@ -42,14 +42,18 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             IItem item = route as IItem;
             if (item == null) return false;
             try
-            {
+            {   
+                Console.WriteLine("PP-0");
                 IAsset metadataAsset = GetMetadataAsset(item);
+                Console.WriteLine("PP-1");
                 Schemas.Metadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
+                Console.WriteLine("PP-2");
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine("PP-3 {0}", e.Message);
                 return false;
             }
         }
@@ -98,6 +102,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             bottomRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomRight);
             topRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopRight);
             topLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopLeft);
+            System.Console.WriteLine("BOTTOM LEFT: {0},{1}", bottomLeft[0], bottomLeft[1]);
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                 new GeoJSON.Net.Geometry.Position[5]{
                     new GeoJSON.Net.Geometry.Position(bottomLeft[0], bottomLeft[1]),
@@ -124,6 +129,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                 throw new InvalidOperationException(String.Format("Invalid coordinate value: {0}", input));
             }
 
+            System.Console.WriteLine("COORD: {0} -> {1},{2}", input, lat, lon);
             return new double[] { lat, lon };
 
         }
@@ -143,9 +149,14 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
+            Console.WriteLine("PPP-0");
             using (var stream = await metadataAsset.GetStreamable().GetStreamAsync())
             {
-                var reader = XmlReader.Create(stream);
+                Console.WriteLine("PPP-1");
+                XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
+                var reader = XmlReader.Create(stream, settings);
+                
+                Console.WriteLine("PPP-2");
                 logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
 
                 return (Schemas.Metadata)metadataSerializer.Deserialize(reader);
@@ -198,7 +209,8 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         private void FillInstrument(Dictionary<string, object> properties, Schemas.Metadata metadata)
         {
             // platform & constellation
-            properties["platform"] = metadata.ProductDefinitionData.SatelliteId.ToLower();
+            
+            properties["platform"] = metadata.ProductDefinitionData.SatelliteId.ToLower().Replace("csks", "csk");
             properties["mission"] = metadata.ProductInfo.MissionId.ToLower();
             properties["instruments"] = new string[] { "sar-x" };
             properties["sensor_type"] = "radar";
@@ -238,8 +250,8 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
             if (multiLookSpacingRange != null)
             {
-                properties["sar:multilook_spacing_range"] = multiLookSpacingRange.ToString();
-                properties["sar:multilook_spacing_azimuth"] = multiLookSpacingRange.ToString();
+                properties["sar:multilook_spacing_range"] = multiLookSpacingRange;
+                properties["sar:multilook_spacing_azimuth"] = multiLookSpacingRange;
             }
         }
 
@@ -327,7 +339,9 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         private void AddProcessingStacExtension(StacItem stacItem, Schemas.Metadata metadata, Match identifierMatch)
         {
             var proc = stacItem.ProcessingExtension();
-            proc.Level = metadata.ProcessingInfo.ProcessingLevel;
+            string level = metadata.ProcessingInfo.ProcessingLevel;
+            if (level != null) level = level.Replace("Level-", "L");
+            proc.Level = level;
         }
 
 

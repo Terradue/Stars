@@ -1,106 +1,106 @@
 {
-    "stac_version": "1.0.0",
-    "stac_extensions": [
-      "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
-      "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
-      "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
-      "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
-      "https://stac-extensions.github.io/view/v1.0.0/schema.json"
-    ],
-    "type": "Feature",
-    "id": "CSKS4_SCS_B_HI_ 16_HH_RA_FF_202 11016045150_2021 1016045156",
-    "geometry": {
-      "type": "Polygon",
-      "coordinates": [
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
         [
-          [
-            40.98266607,
-            13.99538353
-          ],
-          [
-            41.03533739,
-            14.46554722
-          ],
-          [
-            40.67509338,
-            14.53522681
-          ],
-          [
-            40.62228988,
-            14.06767192
-          ],
-          [
-            40.98266607,
-            13.99538353
-          ]
+          13.99538353,
+          40.98266607
+        ],
+        [
+          14.46554722,
+          41.03533739
+        ],
+        [
+          14.53522681,
+          40.67509338
+        ],
+        [
+          14.06767192,
+          40.62228988
+        ],
+        [
+          13.99538353,
+          40.98266607
         ]
       ]
-    },
-    "properties": {
-      "start_datetime": "2021-10-16T04:51:4 9.654471152Z",
-      "end_datetime": "2021-10-16T04:51:5 6.369924568Z",
-      "datetime": "2021-10-16T04:51:4 9.654471152Z",
-      "created": "2021-10-16T06:27:4 1.000000000Z",
-      "platform": "csk4",
-      "mission": "csk",
-      "instruments": [
-        "sar-x"
+    ]
+  },
+  "properties": {
+    "start_datetime": "2021-10-16T04:51:49.654471152Z",
+    "end_datetime": "2021-10-16T04:51:56.369924568Z",
+    "datetime": "2021-10-16T04:51:49.654471152Z",
+    "created": "2021-10-16T06:27:41.000000000Z",
+    "platform": "csk4",
+    "mission": "csk",
+    "instruments": [
+      "sar-x"
+    ],
+    "sensor_type": "radar",
+    "title": "CSKS4 Level-1A 16/10/2021 04:51:49",
+    "sat:orbit_state": "ascending",
+    "proj:epsg": 4326,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 40S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM40S\", AUTHORITY[\"EPSG\", \"32740\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32740\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:incidence_angle": [43.11329629, 44.73384502],
+    "sar:observation_direction": "right",
+    "sar:instrument_mode": "HIMAGE",
+    "sar:frequency_band": "X",
+    "sar:center_frequency": 9.6,
+    "sar:polarizations": [
+        "HH"
+    ],
+    "sar:product_type": "SCS_B",
+    "sar:resolution_range": 3,
+    "processing:level": "L1A",
+    "sar:resolution_azimuth": 3,
+    "sar:pixel_spacing_range": 1.5,
+    "sar:pixel_spacing_azimuth": 1.5,
+    "sar:multilook_spacing_range": 5,
+    "sar:multilook_spacing_azimuth": 5,
+    "sar:looks_range": 1,
+    "sar:looks_azimuth": 1,
+    "sar:looks_equivalent_number": 1
+  },
+  "bbox": [
+    13.99538353,
+    40.62228988,
+    14.53522681,
+    41.03533739
+  ],
+  "assets": {
+    "image": {
+      "type": "application/x-hdf5",
+      "roles": [
+        "data"
       ],
-      "sensor_type": "radar",
-      "title": "CSKS4_SCS_B_HI_ 16_HH_RA_FF_202 11016045150_2021 1016045156",
-      "sat:orbit_state": "ascending",
-      "proj:epsg": 4326,
-      "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 40S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM40S\", AUTHORITY[\"EPSG\", \"32740\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32740\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
-      "view:incidence_angle": [43.11329629, 44.73384502],
-      "sar:observation_direction": "right",
-      "sar:instrument_mode": "HIMAGE",
-      "sar:frequency_band": "X",
-      "sar:center_frequency": 9.6,
+      "title": "Image file",
+      "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
+      "filename": "CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
+      "file:size": 0,
       "sar:polarizations": [
           "HH"
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
       ],
-      "sar:product_type": "SCS_B",
-      "sar:resolution_range": 3,
-      "processing:level": "L1A",
-      "sar:resolution_azimuth": 3,
-      "sar:pixel_spacing_range": 1.5,
-      "sar:pixel_spacing_azimuth": 1.5,
-      "sar:multilook_spacing_range": 5,
-      "sar:multilook_spacing _azimuth": 5,
-      "sar:looks_range": 1,
-      "sar:looks_azimuth": 1,
-      "sar:looks_equivalent_ number": 1
-    },
-    "bbox": [
-      57.6812,
-      -20.4282,
-      58.0936,
-      -20.0462
-    ],
-    "assets": {
-      "image": {
-        "type": "application/x-hdf5",
-        "roles": [
-          "data"
-        ],
-        "title": "Image file",
-        "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
-        "filename": "CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
-        "file:size": 0,
-        "sar:polarizations": [
-            "HH"
-        ]
-      },
-      "metadata": {
-        "type": "application/xml",
-        "roles": [
-          "metadata"
-        ],
-        "title": "Metadata file",
-        "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
-        "filename": "DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
-        "file:size": 6251
-      }
-    },
-    "links": []
-  }
+      "title": "Metadata file",
+      "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
+      "filename": "DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
+      "file:size": 6251
+    }
+  },
+  "links": []
+}
