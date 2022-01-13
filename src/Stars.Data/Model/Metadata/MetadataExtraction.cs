@@ -59,6 +59,14 @@ namespace Terradue.Stars.Data.Model.Metadata
             });
         }
 
+        internal KeyValuePair<string, IAsset> FindFirstKeyAssetFromFileNameRegex(IAssetsContainer assetsContainer, string pattern)
+        {
+            return assetsContainer.Assets.OrderBy(kvp => kvp.Key, StringComparer.InvariantCultureIgnoreCase).ToDictionary(kvp => kvp.Key, kvp => kvp.Value).FirstOrDefault(a =>
+            {
+                return Regex.IsMatch(Path.GetFileName(a.Value.Uri.ToString()), pattern);
+            });
+        }
+
          internal IEnumerable<IAsset> FindAssetsFromFileNameRegex(IAssetsContainer assetsContainer, string pattern)
         {
             return assetsContainer.Assets.Values.Where(a =>

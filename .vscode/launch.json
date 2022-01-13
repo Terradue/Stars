@@ -402,7 +402,7 @@
             }
         },
         {
-            "name": "Copy OpenSearch single Sentinel1 GRD (ASF)",
+            "name": "Copy OpenSearch single Sentinel1 GRD (conf)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -412,8 +412,7 @@
                 "copy",
                 "-v",
                 "https://catalog.terradue.com//sentinel1/series/GRD/search?format=atom&uid=S1A_IW_GRDH_1SDH_20211123T100735_20211123T100749_040697_04D44B_C75A",
-                "-si",
-                "ASF",
+                "-conf=/tmp/ussersettings.json",
                 "-r",
                 "4",
                 "-ka",

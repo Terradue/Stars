@@ -30,7 +30,8 @@ namespace Terradue.Data.Test.Harvesters
             }
         }
 
-        [Theory, MemberData("TestData", DisableDiscoveryEnumeration = true)]         public async void TestExtractors(string key, string datadir, MetadataExtraction extractor)
+        [Theory, MemberData("TestData", DisableDiscoveryEnumeration = true)]
+        public async void TestExtractors(string key, string datadir, MetadataExtraction extractor)
         {
             StacRouter stacRouter = new StacRouter(null);
             TestItem testNode = new TestItem(datadir);
@@ -59,9 +60,9 @@ namespace Terradue.Data.Test.Harvesters
                 stacItemNode.MakeAssetUriRelative();
                 CheckAssetLocalPath(stacItem, key);
                 var actualJson = StacConvert.Serialize(stacItem, new Newtonsoft.Json.JsonSerializerSettings()
-                    {
-                        Formatting = Formatting.Indented
-                    });
+                {
+                    Formatting = Formatting.Indented
+                });
                 stacValidator.ValidateJson(actualJson);
                 // Dot NOT uncomment unless you are changing the expected JSON
                 // WriteJson(Path.Join(datadir, "../.."), actualJson, stacItem.Id);
@@ -73,7 +74,8 @@ namespace Terradue.Data.Test.Harvesters
 
         private void CheckAssetLocalPath(StacItem stacItem, string key)
         {
-            foreach(var asset in stacItem.Assets){
+            foreach (var asset in stacItem.Assets)
+            {
                 Assert.True(asset.Value.Properties.ContainsKey("filename"), $"[{key}] Asset " + asset.Key + " does not contain filename property");
             }
         }

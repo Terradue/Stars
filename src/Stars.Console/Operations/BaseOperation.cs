@@ -129,7 +129,7 @@ namespace Terradue.Stars.Console.Operations
                 {
                     var fi = new FileInfo(file);
                     if (!fi.Exists)
-                        throw new FileNotFoundException(fi.FullName);
+                        throw new FileNotFoundException("File does not exist", fi.FullName);
                     builder.AddNewtonsoftJsonFile(fi.FullName, optional: true);
                 }
             }
