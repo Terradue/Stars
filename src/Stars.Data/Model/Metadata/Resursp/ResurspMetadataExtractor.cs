@@ -36,6 +36,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             if (metadataFile == null) {
                 return false;
             }
+             // deserialize product medatadata
+            SPP_ROOT productMetadata = DeserializeProductMetadata(metadataFile.GetStreamable()).GetAwaiter().GetResult();
+            if (productMetadata == null) {
+                return false;
+            }
+
             return true;
         }
 

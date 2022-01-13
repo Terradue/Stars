@@ -53,7 +53,7 @@ namespace Terradue.Stars.Services.Router
                 request.PreAuthenticate = true;
             }
             // If no credentials provided
-            if (!(request is FtpWebRequest) && !request.PreAuthenticate)
+            if (!(request is FtpWebRequest) && !(request is FileWebRequest) && !request.PreAuthenticate)
             {
                 // Let's check there is a credential recorded to be reused
                 UriBuilder uriBuilder = new UriBuilder(requestUri);
