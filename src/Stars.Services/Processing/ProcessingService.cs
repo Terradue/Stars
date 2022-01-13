@@ -68,7 +68,14 @@ namespace Terradue.Stars.Services.Processing
             StacNode newItemNode = itemNode;
             foreach (var processing in processingManager.GetProcessings(ProcessingType.MetadataExtractor))
             {
-                if (!processing.CanProcess(newItemNode, destination)) continue;
+                try
+                {
+                    if (!processing.CanProcess(newItemNode, destination)) continue;
+                }
+                catch
+                {
+                    continue;
+                }
                 // Create a new destination for each processing
                 IDestination procDestination = destination.To(itemNode, processing.GetRelativePath(itemNode, destination));
                 var processedResource = await processing.Process(newItemNode, procDestination);
