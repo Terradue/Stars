@@ -61,7 +61,7 @@ namespace Terradue.Stars.Console.Operations
         public bool AppendCatalog { get; set; } = false;
 
         [Option("-ka|--keep-all", "Keep all assets in the items when a processing is applied (e.g. default deletes original archive after extraction. may be overriden when using asset-filter-out)", CommandOptionType.NoValue)]
-        public bool KeepAll { get; set; } = true;
+        public bool KeepAll { get; set; } = false;
 
         [Option("-rel|--relative", "Make all links relative (and self links removed)", CommandOptionType.NoValue)]
         public bool AllRelative { get; set; } = false;
