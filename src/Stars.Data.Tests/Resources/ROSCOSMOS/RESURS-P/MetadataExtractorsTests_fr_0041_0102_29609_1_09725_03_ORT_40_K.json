@@ -36,9 +36,11 @@
     ]
   },
   "properties": {
+    "bit": "12",
     "datetime": "2018-10-10T04:55:48.253993Z",
     "start_datetime": "2018-10-10T04:55:48.253993Z",
     "end_datetime": "2018-10-10T05:52:09.705993Z",
+    "created": "2020-06-25T00:00:00Z",
     "platform": "resurs-p",
     "mission": "resurs-p",
     "instruments": [
@@ -82,32 +84,32 @@
         {
           "name": "channel-1",
           "common_name": "blue",
-          "center_wavelength": 0.505,
-          "full_width_half_max": 0.045
+          "center_wavelength": 0.47,
+          "full_width_half_max": 0.08
         },
         {
           "name": "channel-2",
           "common_name": "green",
-          "center_wavelength": 0.565,
-          "full_width_half_max": 0.052
+          "center_wavelength": 0.545,
+          "full_width_half_max": 0.07
         },
         {
           "name": "channel-3",
           "common_name": "red",
           "center_wavelength": 0.65,
-          "full_width_half_max": 0.063
+          "full_width_half_max": 0.1
         },
         {
           "name": "channel-4",
-          "common_name": "rededge",
-          "center_wavelength": 0.76,
-          "full_width_half_max": 0.086
+          "common_name": "nir",
+          "center_wavelength": 0.8,
+          "full_width_half_max": 0.2
         },
         {
           "name": "channel-5",
-          "common_name": "nir",
-          "center_wavelength": 0.845,
-          "full_width_half_max": 0.07
+          "common_name": "nir08",
+          "center_wavelength": 0.85,
+          "full_width_half_max": 0.1
         }
       ]
     },

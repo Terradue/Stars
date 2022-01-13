@@ -526,7 +526,7 @@
             }
         },
         {
-            "name": "Copy S2 on S3",
+            "name": "Copy S2",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -534,8 +534,10 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
+                "-k",
                 "-v",
-                "https://tamn.snapplanet.io/collections/S2/items/d0f257c7-522c-537c-b911-ee00b5ac863e",
+                "https://catalog.terradue.com/sentinel2/search?uid=S2B_MSIL2A_20200130T004659_N0213_R102_T53HPA_20200130T022348",
+                "--harvest",
                 "-r",
                 "4",
                 "--output",

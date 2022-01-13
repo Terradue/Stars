@@ -15,12 +15,11 @@ using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
-using Stac.Extensions.Sat;
 using Stac.Extensions.View;
-using Terradue.Stars.Data.Model.Metadata.Gaofen;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+// using Catfood.Shapefile;
 
 namespace Terradue.Stars.Data.Model.Metadata.Resursp {
     public class ResurspMetadataExtractor : MetadataExtraction {
@@ -36,6 +35,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             if (metadataFile == null) {
                 return false;
             }
+             // deserialize product medatadata
+            SPP_ROOT productMetadata = DeserializeProductMetadata(metadataFile.GetStreamable()).GetAwaiter().GetResult();
+            if (productMetadata == null) {
+                return false;
+            }
+
             return true;
         }
 
@@ -63,6 +68,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             // deserialize product medatadata
             SPP_ROOT productMetadata = await DeserializeProductMetadata(metadatafile.GetStreamable());
 
+
+            logger.LogDebug("Retrieving the shapefile in the product package");
+            IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");
+            if (shapefile == null) {
+                throw new FileNotFoundException("Unable to find any shapefile asset");
+            }
+
             // retrieving id from filename
             // GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml
             string stacItemId = Path.GetFileNameWithoutExtension(metadatafile.Uri.OriginalString).Split('-')[0];
@@ -71,10 +83,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             double gsd = Double.Parse(productMetadata.Normal.NPixelImg);
 
             // to retrieve the properties, any product metadata is ok
-            var stacItem = GetStacItemWithProperties(productMetadata, stacItemId, gsd);
-            
+            var stacItem = GetStacItemWithProperties(productMetadata, stacItemId, gsd, shapefile);
+
             await AddAssetsAsync(stacItem, item, gsd);
-            
+
             FillBasicsProperties(stacItem.Properties);
 
             return StacItemNode.Create(stacItem, item.Uri);
@@ -82,9 +94,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        private StacItem GetStacItemWithProperties(SPP_ROOT productMetadata, string stacItemId, double gsd) {
+        private StacItem GetStacItemWithProperties(SPP_ROOT productMetadata, string stacItemId, double gsd,
+            IAsset shapefile) {
             // retrieving GeometryObject from metadata
             var geometryObject = GetGeometryObjectFromProductMetadata(productMetadata);
+            
+            // TODO retrieve geometry from shapefile
+            //var geometryObject = GetGeometryObjectFromProductShapefile(shapefile);
 
             // retrieving the common metadata properties (i.e. time and instruments)
             var commonMetadata = GetCommonMetadata(productMetadata, gsd);
@@ -145,14 +161,48 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             return new GeoJSON.Net.Geometry.Polygon(new[] { lineString });
         }
 
+
+        /*
+        / TODO Retrieve geometry from shapefile
+        private IGeometryObject GetGeometryObjectFromProductShapefile(IAsset shapefileAsset) {
+            string shapeFilePath = shapefileAsset.Title;
+            if (!File.Exists(shapeFilePath)) {
+                throw new FileNotFoundException("Unable to find any shapefile asset");
+            }
+
+            // construct shapefile with the path to the .shp file
+            using (Shapefile shapefile = new Shapefile(shapeFilePath)) {
+                // enumerate all shapes
+                Shape shape = shapefile.First();
+
+                ShapePolygon shapePolygon = shape as ShapePolygon;
+                foreach (PointD[] part in shapePolygon.Parts) {
+                    Console.WriteLine("Polygon part:");
+                    foreach (PointD point in part) {
+                        Console.WriteLine("{0}, {1}", point.X, point.Y);
+                    }
+
+                    Console.WriteLine();
+                }
+            }
+
+
+            return null;
+        }*/
+
         private IDictionary<string, object> GetCommonMetadata(SPP_ROOT productMetadata, double gsd) {
             Dictionary<string, object> properties = new Dictionary<string, object>();
+            FillBitProperties(productMetadata, properties);
             FillDateTimeProperties(productMetadata, properties);
             FillInstrument(productMetadata, properties, gsd);
 
             return properties;
         }
 
+        private void FillBitProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties) {
+            properties.Remove("bit");
+            properties.Add("bit",productMetadata.Normal.NBitsPerPixel);
+        }
 
         private void FillDateTimeProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties) {
             CultureInfo provider = CultureInfo.InvariantCulture;
@@ -184,7 +234,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
                 properties.Add("end_datetime", dateInterval.End.ToUniversalTime());
             }
 
-            DateTime.TryParseExact(productMetadata.DDateHeaderFile, format, provider, DateTimeStyles.AssumeUniversal,
+            string dateformat = "dd/MM/yyyy";
+            DateTime.TryParseExact(productMetadata.DDateHeaderFile, dateformat, provider, DateTimeStyles.AssumeUniversal,
                 out var createdDate);
 
             if (createdDate.Ticks != 0) {
@@ -213,13 +264,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
             // instruments
             var instrumentName = "";
-                
-             if(productMetadata.Passport.CDeviceName.ToLower().Equals("geotonp")) {
-                 instrumentName = "geoton";
-             }
-             else {
-                 instrumentName = "kshmsa";
-             }
+
+            if (productMetadata.Passport.CDeviceName.ToLower().Equals("geotonp")) {
+                instrumentName = "geoton";
+            }
+            else {
+                instrumentName = "kshmsa";
+            }
 
             properties.Remove("instruments");
             properties.Add("instruments", new string[] { instrumentName });
@@ -287,7 +338,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
                 }
                 var metadataAsset =
                     FindAssetsFromFileNameRegex(assetsContainer, ".*" + filename.Replace(".tiff", ".xml"));
-                var bandAsset = GetBandAsset(stacItem, asset,gsd);
+                var bandAsset = GetBandAsset(stacItem, asset, gsd);
                 stacItem.Assets.Add(mssBandName, bandAsset);
                 return;
             }
@@ -309,38 +360,40 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             stacAsset.Properties.AddRange(asset.Properties);
             stacAsset.SetProperty("gsd", gsd);
 
-            if (asset.Uri.ToString().Contains("Geoton")) { //geoton
+            if (asset.Uri.ToString().Contains("Geoton")) {
+                //geoton
+                EoBandObject b01EoBandObject =
+                    CreateEoBandObject("channel-1", EoBandCommonName.blue, 0.5045, 0.045);
+                EoBandObject b02EoBandObject =
+                    CreateEoBandObject("channel-2", EoBandCommonName.green, 0.567, 0.052);
+                EoBandObject b03EoBandObject =
+                    CreateEoBandObject("channel-3", EoBandCommonName.red, 0.6475, 0.063);
+                EoBandObject b04EoBandObject =
+                    CreateEoBandObject("channel-4", EoBandCommonName.nir, 0.761, 0.086);
+                stacAsset.EoExtension().Bands = new[]
+                    { b01EoBandObject, b02EoBandObject, b03EoBandObject, b04EoBandObject };
+            }
+            else {
+                //KShMSA
                 EoBandObject b01EoBandObject =
                     CreateEoBandObject("channel-1", EoBandCommonName.blue, 0.47, 0.08);
                 EoBandObject b02EoBandObject =
                     CreateEoBandObject("channel-2", EoBandCommonName.green, 0.545, 0.07);
                 EoBandObject b03EoBandObject =
-                    CreateEoBandObject("channel-3", EoBandCommonName.red, 0.650, 0.1);
+                    CreateEoBandObject("channel-3", EoBandCommonName.red, 0.65, 0.1);
                 EoBandObject b04EoBandObject =
                     CreateEoBandObject("channel-4", EoBandCommonName.nir, 0.8, 0.2);
-                stacAsset.EoExtension().Bands = new[]
-                    { b01EoBandObject, b02EoBandObject, b03EoBandObject, b04EoBandObject };
-            }
-            else { //KShMSA
-                EoBandObject b01EoBandObject =
-                    CreateEoBandObject("channel-1", EoBandCommonName.blue, 0.505, 0.045);
-                EoBandObject b02EoBandObject =
-                    CreateEoBandObject("channel-2", EoBandCommonName.green, 0.565, 0.052);
-                EoBandObject b03EoBandObject =
-                    CreateEoBandObject("channel-3", EoBandCommonName.red, 0.650, 0.063);
-                EoBandObject b04EoBandObject =
-                    CreateEoBandObject("channel-4", EoBandCommonName.rededge, 0.76, 0.086);
                 EoBandObject b05EoBandObject =
-                    CreateEoBandObject("channel-5", EoBandCommonName.nir, 0.845, 0.07);
+                    CreateEoBandObject("channel-5", EoBandCommonName.nir08, 0.85, 0.1);
                 stacAsset.EoExtension().Bands = new[]
-                    { b01EoBandObject, b02EoBandObject, b03EoBandObject, b04EoBandObject , b05EoBandObject };
+                    { b01EoBandObject, b02EoBandObject, b03EoBandObject, b04EoBandObject, b05EoBandObject };
             }
 
             return stacAsset;
         }
 
         private EoBandObject CreateEoBandObject(string name, EoBandCommonName eoBandCommonName, double centerWaveLength,
-            double fullWidthHalfMax, double? eai=null) {
+            double fullWidthHalfMax, double? eai = null) {
             EoBandObject eoBandObject = new EoBandObject(name, eoBandCommonName);
             eoBandObject.Properties.Add("full_width_half_max", fullWidthHalfMax);
             if (eai != null) {
@@ -357,10 +410,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             rasterBandObject.Scale = gain;
             return rasterBandObject;
         }
-        
-        
-        private void FillBasicsProperties(IDictionary<string, object> properties)
-        {
+
+
+        private void FillBasicsProperties(IDictionary<string, object> properties) {
             CultureInfo culture = CultureInfo.InvariantCulture;
             // title
             properties.Remove("title");

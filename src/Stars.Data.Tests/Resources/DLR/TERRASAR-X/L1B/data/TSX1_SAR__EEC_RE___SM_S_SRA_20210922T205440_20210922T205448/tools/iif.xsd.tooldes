@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item fortype="default" path="tools/iif.xsd" typename="tool">
+    <description>The PL schema for item information file.</description>
+</item>

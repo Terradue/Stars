@@ -272,8 +272,8 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             //     Metadata of given XML.
 
             var nodeList = ReadGeometryFile(item).SelectNodes("/IIF/spatialCoverage/boundingPolygon/point");
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
-                new GeoJSON.Net.Geometry.Position[5]{
+
+            var coords = new GeoJSON.Net.Geometry.Position[5]{
 
                     new GeoJSON.Net.Geometry.Position(double.Parse(nodeList[0].SelectSingleNode("latitude").InnerText),
                                                         double.Parse(nodeList[0].SelectSingleNode("longitude").InnerText)),
@@ -289,8 +289,15 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
                     new GeoJSON.Net.Geometry.Position(double.Parse(nodeList[0].SelectSingleNode("latitude").InnerText),
                                                         double.Parse(nodeList[0].SelectSingleNode("longitude").InnerText))
-                }
-            );
+                };
+
+            for (int i = 0 ; i < coords.Length ; i++)
+            {
+                if (coords[i].Longitude > 180)
+                    coords[i] = new GeoJSON.Net.Geometry.Position(coords[i].Latitude, coords[i].Longitude - 180);
+            }
+
+            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(coords);
 
             return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
         }
@@ -317,7 +324,8 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
 
             var metadataProductAsset = GetMetadataAsset(item);      //product-metadata
-            if (metadataProductAsset != null){
+            if (metadataProductAsset != null)
+            {
                 stacItem.Assets.Add("product-metadata", StacAsset.CreateMetadataAsset(stacItem, metadataProductAsset.Uri,
                             new ContentType(MimeTypes.GetMimeType(metadataProductAsset.Uri.ToString())), "Metadata file"));
                 stacItem.Assets["product-metadata"].Properties.AddRange(metadataProductAsset.Properties);
