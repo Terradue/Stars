@@ -108,6 +108,9 @@
         },
         "CSK": {
           "Type": "Terradue.Stars.Data.Model.Metadata.CosmoSkymed.CosmoSkymedMetadataExtractor"
+        },
+        "GDAL": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Gdal.GdalMetadataExtractor"
         }
       }
     }
