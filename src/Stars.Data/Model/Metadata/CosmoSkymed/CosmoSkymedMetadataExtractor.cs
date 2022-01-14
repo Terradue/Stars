@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net.Mime;
@@ -28,6 +29,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         // CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156
         private Regex identifierRegex = new Regex(@"(?'id'CSKS(?'i'\d)_(?'pt'RAW_B|SCS_B|SCS_U|DGM_B|GEC_B|GTC_B)_(?'mode'HI|PP|WR|HR|S2)_(?'swath'..)_(?'pol'HH|VV|HV|VH|CO|CH|CV)_(?'look'L|R)(?'dir'A|D)_.._\d{14}_\d{14})");
         private Regex coordinateRegex = new Regex(@"(?'lat'[^ ]+) (?'lon'[^ ]+)");
+        private static Regex h5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
  
@@ -43,17 +45,13 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             if (item == null) return false;
             try
             {   
-                Console.WriteLine("PP-0");
                 IAsset metadataAsset = GetMetadataAsset(item);
-                Console.WriteLine("PP-1");
                 Schemas.Metadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
-                Console.WriteLine("PP-2");
 
                 return true;
             }
             catch (Exception e)
             {
-                Console.WriteLine("PP-3 {0}", e.Message);
                 return false;
             }
         }
@@ -79,6 +77,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             AddViewStacExtension(stacItem, metadata, identifierMatch);
             AddProcessingStacExtension(stacItem, metadata, identifierMatch);
             FillAdditionalSarProperties(stacItem.Properties, metadata, identifierMatch);
+            FillAdditionalSatProperties(stacItem, item, metadata, identifierMatch);
             //FillBasicsProperties(stacItem.Properties, metadata);
 
             return StacItemNode.Create(stacItem, item.Uri);;
@@ -102,7 +101,6 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             bottomRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomRight);
             topRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopRight);
             topLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopLeft);
-            System.Console.WriteLine("BOTTOM LEFT: {0},{1}", bottomLeft[0], bottomLeft[1]);
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                 new GeoJSON.Net.Geometry.Position[5]{
                     new GeoJSON.Net.Geometry.Position(bottomLeft[0], bottomLeft[1]),
@@ -129,7 +127,6 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                 throw new InvalidOperationException(String.Format("Invalid coordinate value: {0}", input));
             }
 
-            System.Console.WriteLine("COORD: {0} -> {1},{2}", input, lat, lon);
             return new double[] { lat, lon };
 
         }
@@ -149,14 +146,11 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            Console.WriteLine("PPP-0");
             using (var stream = await metadataAsset.GetStreamable().GetStreamAsync())
             {
-                Console.WriteLine("PPP-1");
                 XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
                 var reader = XmlReader.Create(stream, settings);
                 
-                Console.WriteLine("PPP-2");
                 logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
 
                 return (Schemas.Metadata)metadataSerializer.Deserialize(reader);
@@ -263,6 +257,24 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         }
 
 
+        private void FillAdditionalSatProperties(StacItem stacItem, IItem item, Schemas.Metadata metadata, Match identifierMatch)
+        {
+            IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", metadata.ProductInfo.ProductName));
+
+            if (imageAsset == null) return;
+
+            string hdf5File = imageAsset.Uri.AbsolutePath;
+
+            string orbitNumberStr = GetHdf5Value(hdf5File, "Orbit Number");
+            if (orbitNumberStr == null || !Int32.TryParse(orbitNumberStr, out int orbitNumber)) return;
+
+            var sat = stacItem.SatExtension();
+
+            sat.AbsoluteOrbit = orbitNumber;
+            sat.RelativeOrbit = Int32.Parse(identifierMatch.Groups["i"].Value) * 1000 + orbitNumber % 237;
+        }
+
+
         private void AddProjStacExtension(StacItem stacItem, Schemas.Metadata metadata, Match identifierMatch)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
@@ -363,6 +375,10 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", metadata.ProductInfo.ProductName));
             
             stacItem.Assets.Add("image", StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("application/x-hdf5"), "Image file"));
+            stacItem.Assets["image"].Properties.AddRange(imageAsset.Properties);
+            stacItem.Assets["image"].Properties["sar:polarizations"] = new string[] {
+                identifierMatch.Groups["pol"].Value
+            };
             
             IAsset metadataAsset = GetMetadataAsset(item);
             stacItem.Assets.Add("metadata", StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.OriginalString)), "Metadata file"));
@@ -377,6 +393,59 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         }
 
 
+        private string GetHdf5Value(string hdf5File, string attribute) {
+
+            Process h5dumpProcess = new Process();
+            ProcessStartInfo h5dumpStartInfo = new ProcessStartInfo();
+
+
+            h5dumpStartInfo.FileName = "h5dump";
+            h5dumpStartInfo.RedirectStandardError = true;
+            h5dumpStartInfo.RedirectStandardOutput = true;
+            h5dumpStartInfo.UseShellExecute = false;
+            // ncDumpStartInfo.Arguments = @"-c 'ncdump -v lat_01,lon_01 " + ncFile + "'";
+            h5dumpStartInfo.Arguments = String.Format("-a \"Orbit Number\" \"{0}\"", hdf5File);
+            h5dumpProcess.EnableRaisingEvents = true;
+            h5dumpProcess.StartInfo = h5dumpStartInfo;
+
+            string errorMessage = String.Empty;
+            string value = null;
+
+            h5dumpProcess.ErrorDataReceived += new DataReceivedEventHandler(
+                delegate (object sender, DataReceivedEventArgs e) {
+                    if (e.Data == null) return;
+
+                    errorMessage += e.Data;
+                }
+            );
+
+            h5dumpProcess.OutputDataReceived += new DataReceivedEventHandler(
+                delegate (object sender, DataReceivedEventArgs e) {
+                    if (e.Data == null) return;
+
+                    string line = e.Data.Trim();
+                    Match match = h5dumpValueRegex.Match(line);
+                    if (match.Success)
+                    {
+                        value = match.Groups["value"].Value;
+                        return;
+                    }
+                }
+            );
+
+            h5dumpProcess.Start();
+            h5dumpProcess.BeginOutputReadLine();
+            h5dumpProcess.WaitForExit();
+
+            int exitCode = h5dumpProcess.ExitCode;
+
+            //Now we need to see if the process was successful
+            if (exitCode > 0 & !h5dumpProcess.HasExited) {
+                h5dumpProcess.Kill();
+            }
+
+            return value;
+        }
 
     }
 

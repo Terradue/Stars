@@ -37,10 +37,10 @@
     ]
   },
   "properties": {
-    "start_datetime": "2021-10-16T04:51:49.654471152Z",
-    "end_datetime": "2021-10-16T04:51:56.369924568Z",
-    "datetime": "2021-10-16T04:51:49.654471152Z",
-    "created": "2021-10-16T06:27:41.000000000Z",
+    "start_datetime": "2021-10-16T04:51:49.6544712Z",
+    "end_datetime": "2021-10-16T04:51:56.3699246Z",
+    "datetime": "2021-10-16T04:51:49.6544712Z",
+    "created": "2021-10-16T06:27:41Z",
     "platform": "csk4",
     "mission": "csk",
     "instruments": [
@@ -50,8 +50,7 @@
     "title": "CSKS4 Level-1A 16/10/2021 04:51:49",
     "sat:orbit_state": "ascending",
     "proj:epsg": 4326,
-    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 40S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM40S\", AUTHORITY[\"EPSG\", \"32740\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32740\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
-    "view:incidence_angle": [43.11329629, 44.73384502],
+    "view:incidence_angle": 43.11329629,
     "sar:observation_direction": "right",
     "sar:instrument_mode": "HIMAGE",
     "sar:frequency_band": "X",
@@ -69,7 +68,9 @@
     "sar:multilook_spacing_azimuth": 5,
     "sar:looks_range": 1,
     "sar:looks_azimuth": 1,
-    "sar:looks_equivalent_number": 1
+    "sar:looks_equivalent_number": 1,
+    "sat:absolute_orbit": 59204,
+    "sat:relative_orbit": 4191
   },
   "bbox": [
     13.99538353,
@@ -86,7 +87,7 @@
       "title": "Image file",
       "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
       "filename": "CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5",
-      "file:size": 0,
+      "file:size": 912,
       "sar:polarizations": [
           "HH"
       ]
@@ -100,6 +101,16 @@
       "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
       "filename": "DFDN_CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156.h5.xml",
       "file:size": 6251
+    },
+    "metadata-acc": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Accompanying sheet",
+      "href": "data/CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156/DFAS_1043077_CSK_AccompanyingSheet.xml",
+      "filename": "DFAS_1043077_CSK_AccompanyingSheet.xml",
+      "file:size": 2718
     }
   },
   "links": []
