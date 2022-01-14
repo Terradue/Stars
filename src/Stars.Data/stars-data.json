@@ -105,6 +105,9 @@
         },
         "RESURSP": {
           "Type": "Terradue.Stars.Data.Model.Metadata.Resursp.ResurspMetadataExtractor"
+        },
+        "GDAL": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Gdal.GdalMetadataExtractor"
         }
       }
     }

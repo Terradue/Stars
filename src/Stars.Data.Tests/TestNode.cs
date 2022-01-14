@@ -22,7 +22,7 @@ namespace Terradue.Data.Test
 
         public string Label => directory.FullName;
 
-        public string Id => directory.FullName;
+        public string Id => directory.Name;
 
         public bool IsCatalog => false;
 
