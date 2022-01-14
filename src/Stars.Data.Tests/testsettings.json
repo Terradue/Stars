@@ -71,6 +71,9 @@
       "RESURSP": [
         "ROSCOSMOS/RESURS-P"
       ],
+      "CSK": [
+        "ASI/COSMO-SKYMED"
+      ],
       "GDAL": [
         "GDAL"
       ]

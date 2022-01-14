@@ -144,10 +144,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Gdal
                 }
                 catch { }
             }
-            if (item is StacItem)
-                return (item as StacItem).DateTime;
+            // if (item is StacItem)
+                return item.DateTime;
 
-            return new Itenso.TimePeriod.TimeInterval(DateTime.UtcNow);
+            // return new Itenso.TimePeriod.TimeInterval(FileInfo(dataset.GetFileList());
         }
 
         private DateTime? GetCreatedDateTime(Dataset dataset, IItem item)

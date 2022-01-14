@@ -76,7 +76,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             AddProjStacExtension(stacItem, metadata, identifierMatch);
             AddViewStacExtension(stacItem, metadata, identifierMatch);
             AddProcessingStacExtension(stacItem, metadata, identifierMatch);
-            FillAdditionalSarProperties(stacItem.Properties, metadata, identifierMatch);
+            // FillAdditionalSarProperties(stacItem.Properties, metadata, identifierMatch);
             FillAdditionalSatProperties(stacItem, item, metadata, identifierMatch);
             //FillBasicsProperties(stacItem.Properties, metadata);
 

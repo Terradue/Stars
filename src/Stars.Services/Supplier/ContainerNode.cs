@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
+using Itenso.TimePeriod;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
@@ -47,6 +48,8 @@ namespace Terradue.Stars.Services.Supplier
         public bool CanBeRanged => item.CanBeRanged;
 
         public IReadOnlyDictionary<string, IAsset> Assets => new ReadOnlyDictionary<string, IAsset>(assets);
+
+        public ITimePeriod DateTime => item.DateTime;
 
         public IReadOnlyList<IResourceLink> GetLinks()
         {
