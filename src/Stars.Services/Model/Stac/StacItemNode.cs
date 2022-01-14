@@ -5,6 +5,7 @@ using GeoJSON.Net.Geometry;
 using System.Net;
 using Terradue.Stars.Interface;
 using System;
+using Itenso.TimePeriod;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -24,6 +25,8 @@ namespace Terradue.Stars.Services.Model.Stac
         public IDictionary<string, object> Properties => StacItem.Properties;
 
         public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this, credentials));
+
+        public ITimePeriod DateTime => StacItem.DateTime;
 
         public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
         {

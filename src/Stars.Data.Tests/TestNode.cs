@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
+using Itenso.TimePeriod;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
@@ -22,7 +23,7 @@ namespace Terradue.Data.Test
 
         public string Label => directory.FullName;
 
-        public string Id => directory.FullName;
+        public string Id => directory.Name;
 
         public bool IsCatalog => false;
 
@@ -57,6 +58,8 @@ namespace Terradue.Data.Test
                 return assets;
             }
         }
+
+        public ITimePeriod DateTime => new TimeInterval(directory.CreationTime);
 
         public IReadOnlyList<IResourceLink> GetLinks()
         {

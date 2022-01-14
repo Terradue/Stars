@@ -14,6 +14,7 @@ namespace Terradue.Stars.Interface
         string Id { get; }
         IGeometryObject Geometry { get; }
         IDictionary<string, object> Properties { get; }
+        Itenso.TimePeriod.ITimePeriod DateTime { get; }
 
         IReadOnlyList<IResourceLink> GetLinks();
     }

@@ -1,0 +1,52 @@
+{
+  "stac_version": "1.0.0",
+  "type": "Feature",
+  "id": "sample1",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -78.15078944398758,
+          37.77814880791494
+        ],
+        [
+          -78.15078944398758,
+          38.06672349784751
+        ],
+        [
+          -77.73350364995179,
+          38.06672349784751
+        ],
+        [
+          -77.73350364995179,
+          37.77814880791494
+        ],
+        [
+          -78.15078944398758,
+          37.77814880791494
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2022-01-14T10:06:46.2153835Z"
+  },
+  "bbox": [
+    -78.15078944398758,
+    37.77814880791494,
+    -77.73350364995179,
+    38.06672349784751
+  ],
+  "assets": {
+    "/home/emathot/Workspace/Terradue/Components/systems/Stars/src/Stars.Data.Tests/Resources/GDAL/Raster/data/sample1/sample1_valid.tif": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/sample1/sample1_valid.tif",
+      "filename": "sample1_valid.tif"
+    }
+  },
+  "links": []
+}

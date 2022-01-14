@@ -36,14 +36,12 @@ namespace Terradue.Stars.Console
             }
             catch (TargetInvocationException e)
             {
-                PhysicalConsole.Singleton.Error.WriteLine(e.InnerException.Message);
-                PhysicalConsole.Singleton.Error.WriteLine(e.InnerException.StackTrace);
+                PhysicalConsole.Singleton.Error.WriteLine(e.InnerException);
                 return 1;
             }
             catch (Exception e)
             {
-                PhysicalConsole.Singleton.Error.WriteLine(e.Message);
-                PhysicalConsole.Singleton.Error.WriteLine(e.StackTrace);
+                PhysicalConsole.Singleton.Error.WriteLine(e);
                 return 1;
             }
         }
