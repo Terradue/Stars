@@ -6,9 +6,9 @@ RUN yum install -y epel-release unzip procps \
     && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
 
 # Install HDF5 tools
-RUN dnf install 'dnf-command(config-manager)' \
-    && dnf config-manager --set-enabled powertools \
-    && yum update \
+RUN dnf install 'dnf-command(config-manager)' -y \
+    && dnf config-manager -y --set-enabled powertools \
+    && yum update -y \
     && yum install -y hdf5
 
 ARG STARS_RPM
