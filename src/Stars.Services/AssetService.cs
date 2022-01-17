@@ -45,11 +45,16 @@ namespace Terradue.Stars.Services
 
         public async Task<AssetImportReport> ImportAssets(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetsFilters)
         {
-            if (assetsContainer.Assets.Count() == 0) return new AssetImportReport(null, destination);
+            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(assetsContainer, assetsFilters);
 
-            logger.LogDebug("Importing {0} assets to {1}", assetsContainer.Assets.Count(), destination);
+            if (filteredAssetContainer.Assets.Count() == 0) {
+                logger.LogDebug("No asset to import. Check filters: " + assetsFilters.ToString());
+                return new AssetImportReport(null, destination);
+            }
 
-            IDeliveryQuotation deliveryQuotation = await QuoteAssetsDeliveryAsync(assetsContainer, destination, assetsFilters);
+            logger.LogDebug("Importing {0} assets to {1}", filteredAssetContainer.Assets.Count(), destination);
+
+            IDeliveryQuotation deliveryQuotation = await QuoteAssetsDeliveryAsync(filteredAssetContainer, destination, assetsFilters);
             AssetImportReport report = new AssetImportReport(deliveryQuotation, destination);
 
             logger.LogDebug("Delivery quotation for {0} assets ({1} exceptions)", deliveryQuotation.AssetsDeliveryQuotes.Count, deliveryQuotation.AssetsExceptions.Count);
@@ -168,8 +173,7 @@ namespace Terradue.Stars.Services
 
         private async Task<IDeliveryQuotation> QuoteAssetsDeliveryAsync(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters)
         {
-            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(assetsContainer, assetFilters);
-            return await carrierManager.GetAssetsDeliveryQuotationsAsync(filteredAssetContainer, destination);
+            return await carrierManager.GetAssetsDeliveryQuotationsAsync(assetsContainer, destination);
         }
     }
 }
