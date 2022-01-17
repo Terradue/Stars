@@ -71,6 +71,9 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public static StacNode Create(IStacObject stacObject, Uri uri)
         {
+            if (stacObject is StacCollection)
+                return new StacCollectionNode(stacObject as StacCollection, uri);
+
             if (stacObject is IStacCatalog)
                 return new StacCatalogNode(stacObject as IStacCatalog, uri);
 
