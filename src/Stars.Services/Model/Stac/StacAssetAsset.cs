@@ -21,7 +21,7 @@ namespace Terradue.Stars.Services.Model.Stac
         private readonly ICredentials credentials;
         private readonly Uri uri;
 
-        public StacAssetAsset(StacAsset asset, StacItemNode parent, ICredentials credentials = null)
+        public StacAssetAsset(StacAsset asset, IAssetsContainer parent, ICredentials credentials = null)
         {
             this.asset = asset;
             this.credentials = credentials;
