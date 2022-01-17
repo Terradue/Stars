@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:include schemaLocation="Attribute_Field.xsd"/>
+	<xsd:element id="Vector_Attributes" name="Vector_Attributes" type="t_Vector_Attributes">
+		<xsd:annotation>
+			<xsd:documentation source="Vector_Attributes">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Vector_Attributes" name="t_Vector_Attributes">
+		<xsd:sequence>
+			<xsd:element ref="ATTRIBUTE_FILE_PATH"/>
+			<xsd:element ref="ATTRIBUTE_FILE_FORMAT"/>
+			<xsd:element minOccurs="0" ref="ATTRIBUTE_FILE_FORMAT_DESC">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Vector_Attributes">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element maxOccurs="unbounded" ref="Attribute_Field">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element id="ATTRIBUTE_FILE_PATH" name="ATTRIBUTE_FILE_PATH" type="t_ATTRIBUTE_FILE_PATH">
+		<xsd:annotation>
+			<xsd:documentation source="ATTRIBUTE_FILE_PATH">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_ATTRIBUTE_FILE_PATH" name="t_ATTRIBUTE_FILE_PATH">
+		<xsd:complexContent>
+			<xsd:extension base="URI"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="ATTRIBUTE_FILE_FORMAT" name="ATTRIBUTE_FILE_FORMAT" type="t_ATTRIBUTE_FILE_FORMAT">
+		<xsd:annotation>
+			<xsd:documentation source="ATTRIBUTE_FILE_FORMAT">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_ATTRIBUTE_FILE_FORMAT" name="t_ATTRIBUTE_FILE_FORMAT">
+		<xsd:simpleContent>
+			<xsd:restriction base="Attribute_Formats">
+			</xsd:restriction>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element id="ATTRIBUTE_FILE_FORMAT_DESC" name="ATTRIBUTE_FILE_FORMAT_DESC" type="t_ATTRIBUTE_FILE_FORMAT_DESC">
+		<xsd:annotation>
+			<xsd:documentation source="ATTRIBUTE_FILE_FORMAT_DESC">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_ATTRIBUTE_FILE_FORMAT_DESC" name="t_ATTRIBUTE_FILE_FORMAT_DESC">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,154 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "AB_MS4_20210207010513_ORTP_S106326_0e6e",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          118.6626562681,
+          -1.664502257438
+        ],
+        [
+          118.3514756377,
+          -3.162268864003
+        ],
+        [
+          119.6444976001,
+          -3.433230462726
+        ],
+        [
+          119.9434412721,
+          -1.989349701912
+        ],
+        [
+          119.9545802761,
+          -1.935462208494
+        ],
+        [
+          118.6626562681,
+          -1.664502257438
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-02-07T01:05:13Z",
+    "start_datetime": "2021-02-07T01:05:13Z",
+    "end_datetime": "2021-02-07T01:05:59Z",
+    "created": "2021-02-11T00:00:00Z",
+    "platform": "alsat-1b",
+    "constellation": "dmc",
+    "mission": "alsat-1b",
+    "instruments": [
+      "alite"
+    ],
+    "sensor_type": "optical",
+    "gsd": 24.0,
+    "title": "Alsat-1B ALITE  07/02/2021 01:05:13",
+    "sat:orbit_state": "ascending",
+    "proj:epsg": 16150,
+    "proj:shape": [
+      7450,
+      8170
+    ],
+    "view:azimuth": 3.357092048319,
+    "view:sun_azimuth": 107.5666104274,
+    "view:sun_elevation": 41.12889458,
+    "view:incidence_angle": 3.723082388236,
+    "processing:software": {
+      "Keystone": "4.8.8"
+    }
+  },
+  "bbox": [
+    118.3514756377,
+    -3.433230462726,
+    119.9545802761,
+    -1.664502257438
+  ],
+  "assets": {
+    "composite": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Composite Scaled Radiance Orthorectified ",
+      "href": "data/a3_21012879000031/AB_MS4_20210207010513_ORTP_S106326_0e6e.tif",
+      "filename": "AB_MS4_20210207010513_ORTP_S106326_0e6e.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BLUE",
+          "description": "BLUE ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "blue",
+          "solar_illumination": 1982.32
+        },
+        {
+          "name": "GREEN",
+          "description": "GREEN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1822.45
+        },
+        {
+          "name": "RED",
+          "description": "RED ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1538.9
+        },
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 991.02
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/a3_21012879000031/DIM_AB_MS4_20210207010513_ORTP_S106326_0e6e_Meta.xml",
+      "filename": "DIM_AB_MS4_20210207010513_ORTP_S106326_0e6e_Meta.xml",
+      "file:size": 19288
+    }
+  },
+  "links": []
+}

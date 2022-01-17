@@ -1,0 +1,200 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "WV03S00_875416E119_8883332018100200000000MS00",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.8294202,
+          -0.9509931
+        ],
+        [
+          119.9540436,
+          -0.9509931
+        ],
+        [
+          119.9540436,
+          -0.8023762
+        ],
+        [
+          119.8294202,
+          -0.8023762
+        ],
+        [
+          119.8294202,
+          -0.9509931
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "platform": "worldview-3",
+    "constellation": "worldview-3",
+    "mission": "worldview-3",
+    "instruments": [
+      "msi"
+    ],
+    "sensor_type": "optical",
+    "gsd": 1.0955904447E-05,
+    "datetime": "2018-10-02T02:50:47Z",
+    "created": "2018-10-02T02:50:47Z",
+    "eo:cloud_cover": 0.008,
+    "view:sun_azimuth": 100.4,
+    "view:sun_elevation": 75.0,
+    "proj:epsg": null,
+    "processing:level": "LV1B",
+    "title": "Worldview-3 MSI LV1B 02/10/2018 02:50:47"
+  },
+  "bbox": [
+    119.8294202,
+    -0.9509931,
+    119.9540436,
+    -0.8023762
+  ],
+  "assets": {
+    "manifest": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/WV03S00_875416E119_8883332018100200000000MS00_GR005003002/vendor_metadata/18OCT02025047-M1BS-502541534010_01_P003.XML",
+      "filename": "vendor_metadata/18OCT02025047-M1BS-502541534010_01_P003.XML",
+      "file:size": 1085132
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/WV03S00_875416E119_8883332018100200000000MS00_GR005003002/WV03S00_875416E119_8883332018100200000000MS00_BR005003002.jpg",
+      "filename": "WV03S00_875416E119_8883332018100200000000MS00_BR005003002.jpg",
+      "file:size": 147245
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/WV03S00_875416E119_8883332018100200000000MS00_GR005003002/WV03S00_875416E119_8883332018100200000000MS00_DR005003002.txt",
+      "filename": "WV03S00_875416E119_8883332018100200000000MS00_DR005003002.txt",
+      "file:size": 1966
+    },
+    "pms": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/WV03S00_875416E119_8883332018100200000000MS00_GR005003002/WV03S00_875416E119_8883332018100200000000MS00_GR005003002.tif",
+      "filename": "WV03S00_875416E119_8883332018100200000000MS00_GR005003002.tif",
+      "file:size": 0,
+      "gsd": 1.0955904447E-05,
+      "proj:shape": [
+        13312,
+        11264
+      ],
+      "eo:bands": [
+        {
+          "name": "coastal",
+          "common_name": "coastal",
+          "center_wavelength": 0.4274,
+          "solar_illumination": 1757.89,
+          "full_width_half_max": 0.02025
+        },
+        {
+          "name": "blue",
+          "common_name": "blue",
+          "center_wavelength": 0.4819,
+          "solar_illumination": 2004.61,
+          "full_width_half_max": 0.027
+        },
+        {
+          "name": "green",
+          "common_name": "green",
+          "center_wavelength": 0.5471,
+          "solar_illumination": 1830.18,
+          "full_width_half_max": 0.0309
+        },
+        {
+          "name": "yellow",
+          "common_name": "yellow",
+          "center_wavelength": 0.6043,
+          "solar_illumination": 1712.07,
+          "full_width_half_max": 0.01905
+        },
+        {
+          "name": "red",
+          "common_name": "red",
+          "center_wavelength": 0.6601,
+          "solar_illumination": 1535.33,
+          "full_width_half_max": 0.02925
+        },
+        {
+          "name": "rededge",
+          "common_name": "rededge",
+          "center_wavelength": 0.7227,
+          "solar_illumination": 1348.08,
+          "full_width_half_max": 0.01935
+        },
+        {
+          "name": "nir08",
+          "common_name": "nir08",
+          "center_wavelength": 0.824,
+          "solar_illumination": 1055.94,
+          "full_width_half_max": 0.0502
+        },
+        {
+          "name": "nir09",
+          "common_name": "nir09",
+          "center_wavelength": 0.9136,
+          "solar_illumination": 858.77,
+          "full_width_half_max": 0.04445
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.3053251382716049,
+          "offset": -7.154
+        },
+        {
+          "scale": 0.2952998240740741,
+          "offset": -4.189
+        },
+        {
+          "scale": 0.19547024110032363,
+          "offset": -3.287
+        },
+        {
+          "scale": 0.16847243202099735,
+          "offset": -1.816
+        },
+        {
+          "scale": 0.2323827692307692,
+          "offset": -1.35
+        },
+        {
+          "scale": 0.15750803100775193,
+          "offset": -2.617
+        },
+        {
+          "scale": 0.1632682589641434,
+          "offset": -3.752
+        },
+        {
+          "scale": 0.11415591901012372,
+          "offset": -1.507
+        }
+      ]
+    }
+  },
+  "links": []
+}

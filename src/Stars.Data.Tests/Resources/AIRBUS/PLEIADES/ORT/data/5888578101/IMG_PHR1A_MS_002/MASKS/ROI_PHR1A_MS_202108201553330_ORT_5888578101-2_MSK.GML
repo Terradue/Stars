@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask gml:id="DS_PHR1A_202108201553330_FR1_PX_W075N18_1209_01287_imgroi_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <gml:name>RegionOfInterest mask from data-strip DS_PHR1A_202108201553330_FR1_PX_W075N18_1209_01287</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+      <gml:lowerCorner>593407 2020981</gml:lowerCorner>
+      <gml:upperCorner>613675 2035557</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="source_image_footprint-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-0">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">SOURCE_IMAGE_FOOTPRINT</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>606462 2035558 606844 2035558 613108 2035492 613356 2035420 613458 2035314 613458 2035310 613498 2035272 613498 2035268 613536 2035232 613604 2034974 613606 2034832 613676 2021864 613676 2021630 613612 2021374 613432 2021186 613430 2021180 613180 2021108 594192 2020980 594026 2020980 593778 2021048 593594 2021238 593526 2021494 593524 2021542 593406 2034770 593406 2034902 593468 2035154 593474 2035166 593504 2035194 593504 2035198 593652 2035354 593888 2035424 593928 2035428 606462 2035558</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

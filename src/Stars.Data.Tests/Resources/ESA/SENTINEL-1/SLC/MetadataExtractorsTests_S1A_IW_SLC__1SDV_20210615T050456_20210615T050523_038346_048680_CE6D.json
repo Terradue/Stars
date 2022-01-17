@@ -1,0 +1,451 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          15.892963,
+          36.604843
+        ],
+        [
+          13.042048,
+          37.008705
+        ],
+        [
+          13.372476,
+          38.629936
+        ],
+        [
+          16.288712,
+          38.22752
+        ],
+        [
+          15.892963,
+          36.604843
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-06-15T05:04:56.554217Z",
+    "start_datetime": "2021-06-15T05:04:56.554217Z",
+    "end_datetime": "2021-06-15T05:05:23.53956Z",
+    "created": "2021-06-15T07:09:33Z",
+    "platform": "sentinel-1a",
+    "constellation": "sentinel-1",
+    "mission": "sentinel-1",
+    "instruments": [
+      "c-sar"
+    ],
+    "sensor_type": "radar",
+    "gsd": 22.0,
+    "sat:orbit_state": "descending",
+    "sat:anx_datetime": "2021-06-15T04:26:00.402093Z",
+    "sat:absolute_orbit": 38346,
+    "sat:relative_orbit": 124,
+    "sat:platform_international_designator": "2014-016A",
+    "processing:level": "L1",
+    "processing:lineage": "SLC Post Processing",
+    "processing:facility": "Copernicus S1 Core Ground Segment - TLS",
+    "processing:software": {
+      "Sentinel-1 IPF": "003.31"
+    },
+    "proj:epsg": null,
+    "title": "Sentinel-1A SLC VV/VH 124 15/06/2021 05:04:56",
+    "sar:instrument_mode": "IW",
+    "sar:frequency_band": "C",
+    "sar:polarizations": [
+      "VV",
+      "VH"
+    ],
+    "sar:product_type": "SLC"
+  },
+  "bbox": [
+    13.042048,
+    36.604843,
+    16.288712,
+    38.629936
+  ],
+  "assets": {
+    "magnitude-vh-iw3-003": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW3 VH Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25657,
+        13716
+      ]
+    },
+    "annotation-vh-iw3-003": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VH IW3 003",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "file:size": 817793,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "magnitude-vh-iw2-002": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW2 VH Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        26698,
+        13671
+      ]
+    },
+    "annotation-vh-iw2-002": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VH IW2 002",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "file:size": 910459,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "magnitude-vh-iw1-001": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW1 VH Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        22935,
+        13563
+      ]
+    },
+    "annotation-vh-iw1-001": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VH IW1 001",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "file:size": 925305,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "magnitude-vv-iw1-004": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW1 VV Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        22935,
+        13563
+      ]
+    },
+    "annotation-vv-iw1-004": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VV IW1 004",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
+      "file:size": 925357,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "magnitude-vv-iw3-006": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW3 VV Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25657,
+        13716
+      ]
+    },
+    "annotation-vv-iw3-006": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VV IW3 006",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "file:size": 817793,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "magnitude-vv-iw2-005": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW2 VV Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        26698,
+        13671
+      ]
+    },
+    "annotation-vv-iw2-005": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VV IW2 005",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "file:size": 910422,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "calibration-vh-iw3-003": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VH IW3",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "file:size": 1083227,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "calibration-vv-iw2-005": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VV IW2",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "file:size": 1126960,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "calibration-vv-iw3-006": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VV IW3",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "file:size": 1083227,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "calibration-vh-iw1-001": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VH IW1",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "file:size": 968852,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "calibration-vv-iw1-004": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VV IW1",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
+      "file:size": 968852,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "calibration-vh-iw2-002": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VH IW2",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "file:size": 1126960,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "noise-vh-iw1-001": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VH IW1",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "file:size": 134410,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "noise-vh-iw3-003": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VH IW3",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "file:size": 145010,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "noise-vv-iw3-006": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VV IW3",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "file:size": 145010,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "noise-vv-iw1-004": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VV IW1",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
+      "file:size": 134410,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "noise-vv-iw2-005": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VV IW2",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "file:size": 144842,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "noise-vh-iw2-002": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VH IW2",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "file:size": 144842,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "manifest": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "SAFE Manifest",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/manifest.safe",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/manifest.safe",
+      "file:size": 36433
+    }
+  },
+  "links": []
+}

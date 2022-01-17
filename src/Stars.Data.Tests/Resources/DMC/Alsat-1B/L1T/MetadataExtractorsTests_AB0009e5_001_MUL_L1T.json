@@ -1,0 +1,169 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "AB0009e5_001_MUL_L1T",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.4684481755,
+          0.9080075827449
+        ],
+        [
+          119.1754205411,
+          -0.496515017848
+        ],
+        [
+          120.5046560563,
+          -0.7686307234242
+        ],
+        [
+          120.7948807538,
+          0.6352882889512
+        ],
+        [
+          119.4684481755,
+          0.9080075827449
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-03-14T01:26:57Z",
+    "start_datetime": "2020-03-14T01:26:57Z",
+    "end_datetime": "2020-03-14T01:27:20Z",
+    "created": "2020-03-19T00:00:00Z",
+    "platform": "alsat-1b",
+    "constellation": "dmc",
+    "mission": "alsat-1b",
+    "instruments": [
+      "alite"
+    ],
+    "sensor_type": "optical",
+    "gsd": 24.0,
+    "title": "ALSAT-1B ALITE L1T 14/03/2020 01:26:57",
+    "sat:orbit_state": "ascending",
+    "proj:epsg": 16050,
+    "proj:shape": [
+      7530,
+      7740
+    ],
+    "view:azimuth": 12.16535984524,
+    "view:sun_azimuth": 93.79403995855,
+    "view:sun_elevation": 49.39520864449,
+    "view:incidence_angle": 13.48576948212,
+    "processing:level": "L1T",
+    "processing:software": {
+      "Keystone": "4.7.16"
+    }
+  },
+  "bbox": [
+    119.1754205411,
+    -0.7686307234242,
+    120.7948807538,
+    0.9080075827449
+  ],
+  "assets": {
+    "composite": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Composite Scaled Radiance Orthorectified ",
+      "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T.tif",
+      "filename": "AB0009e5_001_MUL_L1T.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BLUE",
+          "description": "BLUE ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "blue",
+          "solar_illumination": 1982.32
+        },
+        {
+          "name": "GREEN",
+          "description": "GREEN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1822.45
+        },
+        {
+          "name": "RED",
+          "description": "RED ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1538.9
+        },
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 991.02
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.02,
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T.dim",
+      "filename": "AB0009e5_001_MUL_L1T.dim",
+      "file:size": 17530
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T_browse.jpg",
+      "filename": "AB0009e5_001_MUL_L1T_browse.jpg",
+      "file:size": 0
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/AB0009e5_001_MUL_L1T/AB0009e5_001_MUL_L1T_thumb.jpg",
+      "filename": "AB0009e5_001_MUL_L1T_thumb.jpg",
+      "file:size": 0
+    }
+  },
+  "links": []
+}

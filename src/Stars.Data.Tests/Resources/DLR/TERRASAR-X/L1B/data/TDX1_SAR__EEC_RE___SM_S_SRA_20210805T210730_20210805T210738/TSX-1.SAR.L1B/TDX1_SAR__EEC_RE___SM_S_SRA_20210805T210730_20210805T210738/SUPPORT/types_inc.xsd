@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- CHANGE HISTORY 
+date - author: changes
+16.12.2004 - D. Schulze: version control introduced
+Version 1.2
+26.01.2005 - D. Schulze: length restricted strings introduced, encoding changed to ISO 8859-1, ScenarioType removed
+-->
+<xs:schema elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.2">
+	<xs:simpleType name="uint16">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxExclusive value="65536"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="uint14">
+		<xs:restriction base="xs:integer">
+			<xs:maxExclusive value="16384"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="int32">
+		<xs:restriction base="xs:integer">
+			<xs:maxExclusive value="2147483648"/>
+			<xs:minInclusive value="-2147483648"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="uint32">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxExclusive value="4294967296"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string32">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string255">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string1024">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string4000">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="coordinatesType">
+		<xs:annotation>
+			<xs:documentation>geographical coordinates</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="lat">
+				<xs:annotation>
+					<xs:documentation>geographical latitude in rad, positive towards north</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:double">
+						<xs:minInclusive value="-1.5707963267948966"/>
+						<xs:maxInclusive value="+1.5707963267948966"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="lon">
+				<xs:annotation>
+					<xs:documentation>geographical longitude in rad, positive towards east</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:double">
+						<xs:minInclusive value="-3.141592653589793"/>
+						<xs:maxInclusive value="+3.141592653589793"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="vector" type="vectorType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="vectorType">
+		<xs:annotation>
+			<xs:documentation>cartesian vector components in an earth fixed greenwhich system</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="x" type="xs:double"/>
+			<xs:element name="y" type="xs:double"/>
+			<xs:element name="z" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="orbitTime">
+		<xs:sequence>
+			<xs:element name="UTC" type="xs:dateTime"/>
+			<xs:element name="phase" type="xs:int"/>
+			<xs:element name="cycle" type="xs:int"/>
+			<xs:element name="cycleSeconds" type="xs:double"/>
+			<xs:element name="orbit" type="xs:unsignedInt"/>
+			<xs:element name="orbitSeconds" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

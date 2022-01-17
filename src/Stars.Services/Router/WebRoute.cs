@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Net.S3;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
@@ -33,7 +34,8 @@ namespace Terradue.Stars.Services.Router
             // URL substitution
             var urlFind = Environment.GetEnvironmentVariable("STARS_URL_FIND");
             var urlReplace = Environment.GetEnvironmentVariable("STARS_URL_REPLACE");
-            if ( !string.IsNullOrEmpty(urlFind) && !string.IsNullOrEmpty(urlReplace) ){
+            if (!string.IsNullOrEmpty(urlFind) && !string.IsNullOrEmpty(urlReplace))
+            {
                 requestUri = new Uri(Regex.Replace(uri.ToString(), urlFind, urlReplace));
             }
             WebRequest request = CreateWebRequest(requestUri, creds);
@@ -46,9 +48,26 @@ namespace Terradue.Stars.Services.Router
                 }
                 catch { }
             }
-            if (!string.IsNullOrEmpty(requestUri.UserInfo) && requestUri.UserInfo == "preauth")
+            else if (!string.IsNullOrEmpty(requestUri.UserInfo) && requestUri.UserInfo == "preauth")
             {
                 request.PreAuthenticate = true;
+            }
+            // If no credentials provided
+            if (!(request is FtpWebRequest) && !(request is FileWebRequest) && !request.PreAuthenticate)
+            {
+                // Let's check there is a credential recorded to be reused
+                UriBuilder uriBuilder = new UriBuilder(requestUri);
+                try
+                {
+                    if (string.IsNullOrEmpty(uriBuilder.UserName))
+                        uriBuilder.UserName = "preauth";
+                    if (credentials?.GetCredential(uriBuilder.Uri, "Basic") != null)
+                    {
+                        request.PreAuthenticate = true;
+                        SetBasicAuthHeader(request, credentials?.GetCredential(uriBuilder.Uri, "Basic"));
+                    }
+                }
+                catch { }
             }
             if (request is FtpWebRequest && request.Proxy == null && WebRequest.DefaultWebProxy != null)
             {
@@ -57,26 +76,28 @@ namespace Terradue.Stars.Services.Router
             return new WebRoute(request, contentLength);
         }
 
+        public static void SetBasicAuthHeader(WebRequest request, NetworkCredential credential)
+        {
+            string authInfo = credential.UserName + ":" + credential.Password;
+            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+            request.Headers["Authorization"] = "Basic " + authInfo;
+        }
+
         private static WebRequest CreateWebRequest(Uri uri, ICredentials credentials = null)
         {
             var request = WebRequest.Create(uri);
-            request.Headers.Set("User-Agent", "Stars/0.0.1");
+            request.Headers.Set("User-Agent", "Stars/" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version);
             if (credentials != null)
                 request.Credentials = credentials;
+            if ( request is FileWebRequest && !File.Exists((request as FileWebRequest).RequestUri.AbsolutePath) )
+                throw new FileNotFoundException("File not found: " + (request as FileWebRequest).RequestUri.AbsolutePath, (request as FileWebRequest).RequestUri.AbsolutePath);
             return request;
         }
 
         public async Task<Stream> GetStreamAsync()
         {
-            if (request is HttpWebRequest && CanBeRanged)
-            {
-                try
-                {
-                    return new SeekableHttpStream(request as HttpWebRequest);
-                }
-                catch { }
-            }
             var response = await request.CloneRequest(request.RequestUri).GetResponseAsync();
+            cachedResponse = new CachedWebResponse(response);
             return response.GetResponseStream();
         }
 
@@ -145,7 +166,7 @@ namespace Terradue.Stars.Services.Router
             if (request is FileWebRequest)
             {
                 DirectoryInfo dir = new DirectoryInfo(request.RequestUri.LocalPath);
-                return dir.GetFiles("*", new EnumerationOptions() { RecurseSubdirectories = true }).Select(f =>
+                return dir.GetFiles("*", SearchOption.AllDirectories).Select(f =>
                         WebRoute.Create(new Uri("file://" + f.FullName), Convert.ToUInt64(f.Length)));
             }
             if (request is FtpWebRequest) throw new NotImplementedException();
@@ -246,15 +267,7 @@ namespace Terradue.Stars.Services.Router
             }
         }
 
-        public WebHeaderCollection CachedHeaders
-        {
-            get
-            {
-                if (cachedResponse == null)
-                    CacheResponse().GetAwaiter().GetResult();
-                return cachedResponse?.Headers;
-            }
-        }
+        public WebHeaderCollection CachedHeaders => cachedResponse == null ? new WebHeaderCollection() : cachedResponse.Headers;
 
         public bool IsFolder
         {
@@ -297,8 +310,9 @@ namespace Terradue.Stars.Services.Router
 
         }
 
-        private async Task CacheResponse()
+        public async Task CacheHeadersAsync(bool force = false)
         {
+            if ( cachedResponse != null && !force) return;
             var cacheRequest = request.CloneRequest(request.RequestUri);
             var response = await cacheRequest.GetResponseAsync();
             cachedResponse = new CachedWebResponse(response);
@@ -319,7 +333,12 @@ namespace Terradue.Stars.Services.Router
             {
                 (rangedRequest as FtpWebRequest).ContentOffset = start;
             }
+            if (rangedRequest is S3WebRequest)
+            {
+                (rangedRequest as S3WebRequest).Method = S3RequestMethods.DownloadRangedObject;
+            }
             var response = await rangedRequest.GetResponseAsync();
+            cachedResponse = new CachedWebResponse(response);
             var stream = response.GetResponseStream();
             if (rangedRequest is FileWebRequest)
             {

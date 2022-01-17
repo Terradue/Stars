@@ -16,11 +16,12 @@ namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacAssetAsset : IAsset
     {
-        private StacAsset asset;
+        private readonly StacAsset asset;
+        private readonly IStreamable _streamable;
         private readonly ICredentials credentials;
         private readonly Uri uri;
 
-        public StacAssetAsset(StacAsset asset, StacItemNode parent, ICredentials credentials = null)
+        public StacAssetAsset(StacAsset asset, IAssetsContainer parent, ICredentials credentials = null)
         {
             this.asset = asset;
             this.credentials = credentials;
@@ -37,6 +38,12 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
                 else this.uri = asset.Uri;
             }
+            if (asset is IStreamable)
+                _streamable = asset as IStreamable;
+            else
+            {
+                _streamable = WebRoute.Create(uri, credentials: credentials);
+            }
         }
 
         public Uri Uri => uri;
@@ -48,7 +55,7 @@ namespace Terradue.Stars.Services.Model.Stac
             get
             {
                 if (asset.FileExtension().Size.HasValue) return asset.FileExtension().Size.Value;
-                var cl = GetStreamable()?.ContentLength;
+                var cl = _streamable?.ContentLength;
                 if (cl.HasValue) return cl.Value;
                 return 0;
             }
@@ -84,7 +91,7 @@ namespace Terradue.Stars.Services.Model.Stac
                 {
                     try
                     {
-                        cd = GetStreamable()?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
+                        cd = _streamable?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
                     }
                     catch { }
                 }
@@ -94,13 +101,15 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 
+        public async Task CacheHeaders(bool force = false)
+        {
+            if ( _streamable is WebRoute )
+                await (_streamable as WebRoute).CacheHeadersAsync(force);
+        }
+
         public IStreamable GetStreamable()
         {
-            if (asset is IStreamable)
-                return asset as IStreamable;
-
-            return WebRoute.Create(uri, credentials: credentials);
-
+            return _streamable;
         }
     }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:include schemaLocation="Horizontal_Datum.xsd"/>
+	<xsd:element id="Geographic_CS" name="Geographic_CS" type="t_Geographic_CS">
+		<xsd:annotation>
+			<xsd:documentation source="Geographic_CS">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Geographic_CS" name="t_Geographic_CS">
+		<xsd:all>
+			<xsd:element ref="GEOGRAPHIC_CS_NAME"/>
+			<xsd:element minOccurs="0" ref="GEOGRAPHIC_CS_CODE"/>
+			<xsd:element minOccurs="0" ref="Horizontal_Datum">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Geographic_CS">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="GEOGRAPHIC_CS_NAME" name="GEOGRAPHIC_CS_NAME" type="t_GEOGRAPHIC_CS_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="GEOGRAPHIC_CS_NAME">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_GEOGRAPHIC_CS_NAME" name="t_GEOGRAPHIC_CS_NAME">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="GEOGRAPHIC_CS_CODE" name="GEOGRAPHIC_CS_CODE" type="t_GEOGRAPHIC_CS_CODE">
+		<xsd:annotation>
+			<xsd:documentation source="GEOGRAPHIC_CS_CODE">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_GEOGRAPHIC_CS_CODE" name="t_GEOGRAPHIC_CS_CODE">
+		<xsd:restriction base="Code">
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

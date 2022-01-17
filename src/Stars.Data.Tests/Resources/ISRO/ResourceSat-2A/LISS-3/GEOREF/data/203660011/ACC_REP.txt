@@ -1,0 +1,23 @@
+		Product Accuracy Report:
+
+ 	SatID     : IRS-R2A
+ 	ProductID : 203660011
+ 	Sensor    : L3
+ 	Subscene  : 
+
+ 	TotalTiepoints:37
+ 	NoTiepointsRejected: 15
+ 	NoGoodTiepoints: 22
+ 	 MeanErrorInPixelDirection:   -0.49929 pixels
+ 	 MeanErrorInScanDirection:   -0.28924 pixels
+ 	 MeanErrorInPixelDirection:  -11.98285 m
+ 	 MeanErrorInScanDirection:   -6.94173 m
+ 	 StdDevInPixelDirection:    0.67091 pixels
+ 	 StdDevInScanDirection:    0.66975 pixels
+ 	 StdDevInPixelDirection:   16.10185 m
+ 	 StdDevInScanDirection:   16.07398 m
+ 	 CoVariance:    0.02924 pixels
+ 	 RMSalongEigenAxes(rmin) :    0.64815 pixels
+ 	 RMSalongEigenAxes(rmax) :    0.69180 pixels
+
+ ------------------ END OF REPORT ----------------

@@ -3,28 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Stac;
+using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public class StacCollectionNode : StacCatalogNode, ICatalog
+    public class StacCollectionNode : StacCatalogNode, ICatalog, IAssetsContainer
     {
         public StacCollectionNode(StacCollection stacCollection, Uri uri, ICredentials credentials = null) : base(stacCollection, uri, credentials)
         {
         }
 
-        public StacCollection StacCollection => stacObject as StacCollection;
+        public IReadOnlyDictionary<string, IAsset> Assets => (stacObject as StacCollection).Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this, credentials));
 
-        public override ResourceType ResourceType => ResourceType.Collection;
-
-        public static StacCollectionNode CreateUnlocatedNode(StacCollection collection)
-        {
-            return new StacCollectionNode(collection, new Uri(collection.Id + ".json", UriKind.Relative));
-        }
-
-        public override object Clone()
-        {
-            return new StacCollectionNode(this.StacCollection.Clone() as StacCollection, new Uri(this.Uri.ToString()), credentials);
-        }
     }
 }

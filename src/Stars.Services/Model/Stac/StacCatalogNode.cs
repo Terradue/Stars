@@ -33,15 +33,5 @@ namespace Terradue.Stars.Services.Model.Stac
                     .Concat(StacCatalog.GetItems(this.Uri, stacRouter).Select(item => new StacItemNode(item.Value, item.Key)))
                     .ToList();
         }
-
-        public static StacCatalogNode CreateUnlocatedNode(StacCatalog catalog)
-        {
-            return new StacCatalogNode(catalog, new Uri(catalog.Id + ".json", UriKind.Relative));
-        }
-
-        public override object Clone()
-        {
-            return new StacCatalogNode(this.StacCatalog, new Uri(this.Uri.ToString()), credentials);
-        }
     }
 }

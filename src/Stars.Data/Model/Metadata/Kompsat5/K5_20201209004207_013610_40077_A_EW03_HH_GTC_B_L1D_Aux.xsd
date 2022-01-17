@@ -1,0 +1,309 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="Auxiliary" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="Auxiliary" msdata:IsDataSet="true" msdata:Locale="en-US">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Root">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="AcquisitionStationID" type="xs:string" minOccurs="0" />
+              <xs:element name="DeliveryMode" type="xs:string" minOccurs="0" />
+              <xs:element name="DownlinkStartUTC" type="xs:string" minOccurs="0" />
+              <xs:element name="DownlinkStopUTC" type="xs:string" minOccurs="0" />
+              <xs:element name="MissionID" type="xs:string" minOccurs="0" />
+              <xs:element name="ProcessingCentre" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductFilename" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductSpecificationDocument" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductType" type="xs:string" minOccurs="0" />
+              <xs:element name="SatelliteID" type="xs:string" minOccurs="0" />
+              <xs:element name="BitsperSample" type="xs:string" minOccurs="0" />
+              <xs:element name="ColumnsOrder" type="xs:string" minOccurs="0" />
+              <xs:element name="ImageLayers" type="xs:string" minOccurs="0" />
+              <xs:element name="ImageScale" type="xs:string" minOccurs="0" />
+              <xs:element name="LinesOrder" type="xs:string" minOccurs="0" />
+              <xs:element name="SampleFormat" type="xs:string" minOccurs="0" />
+              <xs:element name="SamplesperPixel" type="xs:string" minOccurs="0" />
+              <xs:element name="LeapSign" type="xs:string" minOccurs="0" />
+              <xs:element name="LeapUTC" type="xs:string" minOccurs="0" />
+              <xs:element name="OrbitNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="ProgrammedImageID" type="xs:string" minOccurs="0" />
+              <xs:element name="SceneSensingStartUTC" type="xs:string" minOccurs="0" />
+              <xs:element name="SceneSensingStopUTC" type="xs:string" minOccurs="0" />
+              <xs:element name="SelectiveAvailabilityStatus" type="xs:string" minOccurs="0" />
+              <xs:element name="AcquisitionMode" type="xs:string" minOccurs="0" />
+              <xs:element name="AntennaLength" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthBeamwidth" type="xs:string" minOccurs="0" />
+              <xs:element name="LookSide" type="xs:string" minOccurs="0" />
+              <xs:element name="MultiBeamID" type="xs:string" minOccurs="0" />
+              <xs:element name="OriginalBitQuantisation" type="xs:string" minOccurs="0" />
+              <xs:element name="RadarFrequency" type="xs:string" minOccurs="0" />
+              <xs:element name="RadarWavelength" type="xs:string" minOccurs="0" />
+              <xs:element name="SubswathsNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="GeometricConformity" type="xs:string" minOccurs="0" />
+              <xs:element name="GroundRangeGeometricResolution" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthGeometricResolution" type="xs:string" minOccurs="0" />
+              <xs:element name="AttitudeQuaternions" type="xs:string" minOccurs="0" />
+              <xs:element name="AttitudeTimes" type="xs:string" minOccurs="0" />
+              <xs:element name="ECEFSatellitePosition" type="xs:string" minOccurs="0" />
+              <xs:element name="ECEFSatelliteVelocity" type="xs:string" minOccurs="0" />
+              <xs:element name="ECEFSatelliteAcceleration" type="xs:string" minOccurs="0" />
+              <xs:element name="NumberofStateVectors" type="xs:string" minOccurs="0" />
+              <xs:element name="NumberofAttitudedata" type="xs:string" minOccurs="0" />
+              <xs:element name="OrbitDirection" type="xs:string" minOccurs="0" />
+              <xs:element name="PitchAngle" type="xs:string" minOccurs="0" />
+              <xs:element name="PitchRate" type="xs:string" minOccurs="0" />
+              <xs:element name="RollAngle" type="xs:string" minOccurs="0" />
+              <xs:element name="RollRate" type="xs:string" minOccurs="0" />
+              <xs:element name="SatelliteHeight" type="xs:string" minOccurs="0" />
+              <xs:element name="StateVectorsTimes" type="xs:string" minOccurs="0" />
+              <xs:element name="YawAngle" type="xs:string" minOccurs="0" />
+              <xs:element name="YawRate" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthPolynomialReferenceTime" type="xs:string" minOccurs="0" />
+              <xs:element name="CentroidvsAzimuthTimePolynomial" type="xs:string" minOccurs="0" />
+              <xs:element name="CentroidvsRangeTimePolynomial" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerAmbiguityEstimationMethod" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerCentroidEstimationMethod" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerRateEstimationMethod" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerRatevsAzimuthTimePolynomial" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerRatevsRangeTimePolynomial" type="xs:string" minOccurs="0" />
+              <xs:element name="RangePolynomialReferenceTime" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthFocusingWeightingCoefficient" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthFocusingWeightingFunction" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthMultilookingWeightingCoefficient" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthMultilookingWeightingFunction" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthProcessingNumberofLooks" type="xs:string" minOccurs="0" />
+              <xs:element name="ECEFBeamCentreDirectionforProcessing" type="xs:string" minOccurs="0" />
+              <xs:element name="FocusingAlgorithmID" type="xs:string" minOccurs="0" />
+              <xs:element name="InvalidValue" type="xs:string" minOccurs="0" />
+              <xs:element name="L0SoftwareVersion" type="xs:string" minOccurs="0" />
+              <xs:element name="L1ASoftwareVersion" type="xs:string" minOccurs="0" />
+              <xs:element name="L1BSoftwareVersion" type="xs:string" minOccurs="0" />
+              <xs:element name="L1DSoftwareVersion" type="xs:string" minOccurs="0" />
+              <xs:element name="LightSpeed" type="xs:string" minOccurs="0" />
+              <xs:element name="DespeckleTechnique" type="xs:string" minOccurs="0" />
+              <xs:element name="DespeckleDirection" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductErrorFlag" type="xs:string" minOccurs="0" />
+              <xs:element name="ProductGenerationUTC" type="xs:string" minOccurs="0" />
+              <xs:element name="RangeFocusingWeightingCoefficient" type="xs:string" minOccurs="0" />
+              <xs:element name="RangeFocusingWeightingFunction" type="xs:string" minOccurs="0" />
+              <xs:element name="RangeMultilookingWeightingCoefficient" type="xs:string" minOccurs="0" />
+              <xs:element name="RangeMultilookingWeightingFunction" type="xs:string" minOccurs="0" />
+              <xs:element name="RangeProcessingNumberofLooks" type="xs:string" minOccurs="0" />
+              <xs:element name="ReferenceUTC" type="xs:string" minOccurs="0" />
+              <xs:element name="ReplicaReconstructionMethod" type="xs:string" minOccurs="0" />
+              <xs:element name="RescalingFactor" type="xs:string" minOccurs="0" />
+              <xs:element name="DespeckleFilterMovingWindow" type="xs:string" minOccurs="0" />
+              <xs:element name="DespeckleFilter" type="xs:string" minOccurs="0" />
+              <xs:element name="DatumRotation" type="xs:string" minOccurs="0" />
+              <xs:element name="DatumScale" type="xs:string" minOccurs="0" />
+              <xs:element name="DatumShift" type="xs:string" minOccurs="0" />
+              <xs:element name="EllipsoidDesignator" type="xs:string" minOccurs="0" />
+              <xs:element name="EllipsoidSemimajorAxis" type="xs:string" minOccurs="0" />
+              <xs:element name="EllipsoidSemiminorAxis" type="xs:string" minOccurs="0" />
+              <xs:element name="GroundProjectionReferenceSurface" type="xs:string" minOccurs="0" />
+              <xs:element name="MapProjectionCentre" type="xs:string" minOccurs="0" />
+              <xs:element name="MapProjectionScaleFactor" type="xs:string" minOccurs="0" />
+              <xs:element name="MapProjectionZone" type="xs:string" minOccurs="0" />
+              <xs:element name="ProjectionID" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthCoverage" type="xs:string" minOccurs="0" />
+              <xs:element name="CentreEarthRadius" type="xs:string" minOccurs="0" />
+              <xs:element name="GroundRangeCoverage" type="xs:string" minOccurs="0" />
+              <xs:element name="SceneCentreGeodeticCoordinates" type="xs:string" minOccurs="0" />
+              <xs:element name="SceneOrientation" type="xs:string" minOccurs="0" />
+              <xs:element name="TerrainElevationStandardDeviation" type="xs:string" minOccurs="0" />
+              <xs:element name="TerrainMaximumElevation" type="xs:string" minOccurs="0" />
+              <xs:element name="TerrainMeanElevation" type="xs:string" minOccurs="0" />
+              <xs:element name="TerrainMinimumElevation" type="xs:string" minOccurs="0" />
+              <xs:element name="ADCCharacterization" type="xs:string" minOccurs="0" />
+              <xs:element name="ADCCompensation" type="xs:string" minOccurs="0" />
+              <xs:element name="AntennaPatternCompensationReferenceSurface" type="xs:string" minOccurs="0" />
+              <xs:element name="AzimuthAntennaPatternCompensationGeometry" type="xs:string" minOccurs="0" />
+              <xs:element name="CalibrationConstantCompensationFlag" type="xs:string" minOccurs="0" />
+              <xs:element name="IncidenceAngleCompensationGeometry" type="xs:string" minOccurs="0" />
+              <xs:element name="IncidenceAngleCompensationReferenceSurface" type="xs:string" minOccurs="0" />
+              <xs:element name="RangeAntennaPatternCompensationGeometry" type="xs:string" minOccurs="0" />
+              <xs:element name="RangeSpreadingLossCompensationGeometry" type="xs:string" minOccurs="0" />
+              <xs:element name="ReferenceIncidenceAngle" type="xs:string" minOccurs="0" />
+              <xs:element name="ReferenceSlantRange" type="xs:string" minOccurs="0" />
+              <xs:element name="ReferenceSlantRangeExponent" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerAmbiguityConfidenceMeasureThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerAmbiguityThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerCentroidConfidenceMeasureThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerCentroidEstimationAccuracyThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerRateConfidenceMeasureThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerRateEstimationAccuracyThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="ImageOverSaturatedPercentageThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="ImageUnderSaturatedPercentageThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWBiasThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWGainImbalanceThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWIQNormalityThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWMissingLinesperBlockThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWMissingLinesPercentageThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWOverSaturatedPercentageThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWPhaseUniformityThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="RAWUnderSaturatedPercentageThreshold" type="xs:string" minOccurs="0" />
+              <xs:element name="AttitudeProductCategory" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerAmbiguityConfidenceMeasure" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerCentroidConfidenceMeasure" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerCentroidEstimationAccuracy" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerRateConfidenceMeasure" type="xs:string" minOccurs="0" />
+              <xs:element name="DopplerRateEstimationAccuracy" type="xs:string" minOccurs="0" />
+              <xs:element name="OrbitProductCategory" type="xs:string" minOccurs="0" />
+              <xs:element name="SPFMeanIntensityRatio" type="xs:string" minOccurs="0" />
+              <xs:element name="SPFStandardDeviationIntensityRatio" type="xs:string" minOccurs="0" />
+              <xs:element name="SubSwaths" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="SubSwath" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="AntennaBeamCode" type="xs:string" minOccurs="0" msdata:Ordinal="0" />
+                          <xs:element name="AntennaBeamElevation" type="xs:string" minOccurs="0" msdata:Ordinal="1" />
+                          <xs:element name="AzimuthInstrumentGeometricResolution" type="xs:string" minOccurs="0" msdata:Ordinal="2" />
+                          <xs:element name="BeamID" type="xs:string" minOccurs="0" msdata:Ordinal="3" />
+                          <xs:element name="BeamOffNadirAngle" type="xs:string" minOccurs="0" msdata:Ordinal="4" />
+                          <xs:element name="BurstsperSubswath" type="xs:string" minOccurs="0" msdata:Ordinal="5" />
+                          <xs:element name="EchoSamplingWindowLength" type="xs:string" minOccurs="0" msdata:Ordinal="6" />
+                          <xs:element name="GroundRangeInstrumentGeometricResolution" type="xs:string" minOccurs="0" msdata:Ordinal="7" />
+                          <xs:element name="LinesperBurst" type="xs:string" minOccurs="0" msdata:Ordinal="8" />
+                          <xs:element name="PassBandIFFilter" type="xs:string" minOccurs="0" msdata:Ordinal="9" />
+                          <xs:element name="Polarisation" type="xs:string" minOccurs="0" msdata:Ordinal="10" />
+                          <xs:element name="PRF" type="xs:string" minOccurs="0" msdata:Ordinal="11" />
+                          <xs:element name="RangeChirpLength" type="xs:string" minOccurs="0" msdata:Ordinal="12" />
+                          <xs:element name="RangeChirpRate" type="xs:string" minOccurs="0" msdata:Ordinal="13" />
+                          <xs:element name="RangeChirpSamples" type="xs:string" minOccurs="0" msdata:Ordinal="14" />
+                          <xs:element name="Rank" type="xs:string" minOccurs="0" msdata:Ordinal="15" />
+                          <xs:element name="ReferenceDechirpingTime" type="xs:string" minOccurs="0" msdata:Ordinal="16" />
+                          <xs:element name="SamplingRate" type="xs:string" minOccurs="0" msdata:Ordinal="17" />
+                          <xs:element name="SyntheticApertureDuration" type="xs:string" minOccurs="0" msdata:Ordinal="18" />
+                          <xs:element name="AzimuthBandwidthperLook" type="xs:string" minOccurs="0" msdata:Ordinal="19" />
+                          <xs:element name="AzimuthFocusingBandwidth" type="xs:string" minOccurs="0" msdata:Ordinal="20" />
+                          <xs:element name="AzimuthFocusingTransitionBandwidth" type="xs:string" minOccurs="0" msdata:Ordinal="21" />
+                          <xs:element name="AzimuthMultilookingTransitionBandwidth" type="xs:string" minOccurs="0" msdata:Ordinal="22" />
+                          <xs:element name="ECEFBeamPointingforProcessing" type="xs:string" minOccurs="0" msdata:Ordinal="23" />
+                          <xs:element name="RangeBandwidthperLook" type="xs:string" minOccurs="0" msdata:Ordinal="24" />
+                          <xs:element name="RangeFocusingBandwidth" type="xs:string" minOccurs="0" msdata:Ordinal="25" />
+                          <xs:element name="RangeFocusingTransitionBandwidth" type="xs:string" minOccurs="0" msdata:Ordinal="26" />
+                          <xs:element name="RangeMultilookingTransitionBandwidth" type="xs:string" minOccurs="0" msdata:Ordinal="27" />
+                          <xs:element name="RAWStatisticsBlockSize" type="xs:string" minOccurs="0" msdata:Ordinal="28" />
+                          <xs:element name="InternalPower" type="xs:string" minOccurs="0" msdata:Ordinal="29" />
+                          <xs:element name="CentreGeodeticCoordinates" type="xs:string" minOccurs="0" msdata:Ordinal="30" />
+                          <xs:element name="AzimuthAntennaPatternGains" type="xs:string" minOccurs="0" msdata:Ordinal="31" />
+                          <xs:element name="AzimuthAntennaPatternOrigin" type="xs:string" minOccurs="0" msdata:Ordinal="32" />
+                          <xs:element name="AzimuthAntennaPatternResolution" type="xs:string" minOccurs="0" msdata:Ordinal="33" />
+                          <xs:element name="CalibrationConstant" type="xs:string" minOccurs="0" msdata:Ordinal="34" />
+                          <xs:element name="CalibrationConstantEstimationUTC" type="xs:string" minOccurs="0" msdata:Ordinal="35" />
+                          <xs:element name="RangeAntennaPatternGains" type="xs:string" minOccurs="0" msdata:Ordinal="36" />
+                          <xs:element name="RangeAntennaPatternOrigin" type="xs:string" minOccurs="0" msdata:Ordinal="37" />
+                          <xs:element name="RangeAntennaPatternResolution" type="xs:string" minOccurs="0" msdata:Ordinal="38" />
+                          <xs:element name="AlongTrackVector" type="xs:string" minOccurs="0" msdata:Ordinal="39" />
+                          <xs:element name="AzimuthCalibrationFactor" type="xs:string" minOccurs="0" msdata:Ordinal="40" />
+                          <xs:element name="ReferenceInternalPower" type="xs:string" minOccurs="0" msdata:Ordinal="41" />
+                          <xs:element name="DopplerAmbiguity" type="xs:string" minOccurs="0" msdata:Ordinal="42" />
+                          <xs:element name="BurstsPerSubswaths" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="BurstsPerSubswath" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="FinalOnBoardTime" type="xs:string" minOccurs="0" msdata:Ordinal="0" />
+                                      <xs:element name="InitialOnBoardTime" type="xs:string" minOccurs="0" msdata:Ordinal="1" />
+                                      <xs:element name="AzimuthFirstTime" type="xs:string" minOccurs="0" msdata:Ordinal="2" />
+                                      <xs:element name="AzimuthLastTime" type="xs:string" minOccurs="0" msdata:Ordinal="3" />
+                                      <xs:element name="AzimuthRampCode" type="xs:string" minOccurs="0" msdata:Ordinal="4" />
+                                      <xs:element name="AzimuthRampCodeChangeLines" type="xs:string" minOccurs="0" msdata:Ordinal="5" />
+                                      <xs:element name="AzimuthSteering" type="xs:string" minOccurs="0" msdata:Ordinal="6" />
+                                      <xs:element name="ElevationRampCode" type="xs:string" minOccurs="0" msdata:Ordinal="7" />
+                                      <xs:element name="ElevationRampCodeChangeLines" type="xs:string" minOccurs="0" msdata:Ordinal="8" />
+                                      <xs:element name="ElevationSteering" type="xs:string" minOccurs="0" msdata:Ordinal="9" />
+                                      <xs:element name="RangeFirstTimeChangeLines" type="xs:string" minOccurs="0" msdata:Ordinal="10" />
+                                      <xs:element name="RangeFirstTimes" type="xs:string" minOccurs="0" msdata:Ordinal="11" />
+                                      <xs:element name="ReceiverGain" type="xs:string" minOccurs="0" msdata:Ordinal="12" />
+                                      <xs:element name="ReceiverGainChangeLines" type="xs:string" minOccurs="0" msdata:Ordinal="13" />
+                                      <xs:element name="RAWAmbiguousDopplerCentroid" type="xs:string" minOccurs="0" msdata:Ordinal="14" />
+                                      <xs:element name="RAWBias" type="xs:string" minOccurs="0" msdata:Ordinal="15" />
+                                      <xs:element name="RAWGainImbalance" type="xs:string" minOccurs="0" msdata:Ordinal="16" />
+                                      <xs:element name="RAWIQNormality" type="xs:string" minOccurs="0" msdata:Ordinal="17" />
+                                      <xs:element name="RAWMissingBlocksStartLines" type="xs:string" minOccurs="0" msdata:Ordinal="18" />
+                                      <xs:element name="RAWMissingLinesperBlock" type="xs:string" minOccurs="0" msdata:Ordinal="19" />
+                                      <xs:element name="RAWMissingLinesPercentage" type="xs:string" minOccurs="0" msdata:Ordinal="20" />
+                                      <xs:element name="RAWOverSaturatedPercentage" type="xs:string" minOccurs="0" msdata:Ordinal="21" />
+                                      <xs:element name="RAWPhaseUniformity" type="xs:string" minOccurs="0" msdata:Ordinal="22" />
+                                      <xs:element name="RAWStandardDeviation" type="xs:string" minOccurs="0" msdata:Ordinal="23" />
+                                      <xs:element name="RAWUnderSaturatedPercentage" type="xs:string" minOccurs="0" msdata:Ordinal="24" />
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:string" />
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="GIM" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="LayoverPixelValue" type="xs:string" minOccurs="0" />
+                                <xs:element name="ShadowingPixelValue" type="xs:string" minOccurs="0" />
+                                <xs:element name="RescalingFactor" type="xs:string" minOccurs="0" />
+                                <xs:element name="Offset" type="xs:string" minOccurs="0" />
+                                <xs:element name="InvalidValue" type="xs:string" minOccurs="0" />
+                                <xs:element name="LayoverPixelPercentage" type="xs:string" minOccurs="0" />
+                                <xs:element name="ShadowingPixelPercentage" type="xs:string" minOccurs="0" />
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="QLK" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="QuickLookColumnsOrder" type="xs:string" minOccurs="0" />
+                    <xs:element name="QuickLookLinesOrder" type="xs:string" minOccurs="0" />
+                    <xs:element name="QuickLookColumnSpacing" type="xs:string" minOccurs="0" />
+                    <xs:element name="QuickLookLineSpacing" type="xs:string" minOccurs="0" />
+                    <xs:element name="QuickLookProjectionID" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="MBI" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ZeroDopplerAzimuthFirstTime" type="xs:string" minOccurs="0" />
+                    <xs:element name="ZeroDopplerAzimuthLastTime" type="xs:string" minOccurs="0" />
+                    <xs:element name="ZeroDopplerRangeFirstTime" type="xs:string" minOccurs="0" />
+                    <xs:element name="ZeroDopplerRangeLastTime" type="xs:string" minOccurs="0" />
+                    <xs:element name="ColumnSpacing" type="xs:string" minOccurs="0" />
+                    <xs:element name="EquivalentNumberofLooks" type="xs:string" minOccurs="0" />
+                    <xs:element name="LineSpacing" type="xs:string" minOccurs="0" />
+                    <xs:element name="BottomLeftGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="BottomRightGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="FarEarlyGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="FarIncidenceAngle" type="xs:string" minOccurs="0" />
+                    <xs:element name="FarLateGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="FarLookAngle" type="xs:string" minOccurs="0" />
+                    <xs:element name="NearEarlyGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="NearIncidenceAngle" type="xs:string" minOccurs="0" />
+                    <xs:element name="NearLateGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="NearLookAngle" type="xs:string" minOccurs="0" />
+                    <xs:element name="TopLeftGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="TopRightGeodeticCoordinates" type="xs:string" minOccurs="0" />
+                    <xs:element name="ImageMax" type="xs:string" minOccurs="0" />
+                    <xs:element name="ImageMean" type="xs:string" minOccurs="0" />
+                    <xs:element name="ImageMin" type="xs:string" minOccurs="0" />
+                    <xs:element name="ImageOverSaturatedPercentage" type="xs:string" minOccurs="0" />
+                    <xs:element name="ImageStandardDeviation" type="xs:string" minOccurs="0" />
+                    <xs:element name="ImageUnderSaturatedPercentage" type="xs:string" minOccurs="0" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

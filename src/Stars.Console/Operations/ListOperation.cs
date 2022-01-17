@@ -32,7 +32,7 @@ namespace Terradue.Stars.Console.Operations
         private int recursivity = 1;
         private string[] inputs = new string[0];
 
-        public ListOperation()
+        public ListOperation(IConsole console): base(console)
         {
 
         }
@@ -68,35 +68,28 @@ namespace Terradue.Stars.Console.Operations
             return Task.FromResult<object>(new ListOperationState(newPrefix, operationState.Depth + 1));
         }
 
-        public static int OnValidationError(CommandLineApplication command, ValidationResult ve)
-        {
-            PhysicalConsole.Singleton.Error.WriteLine(ve.ErrorMessage);
-            command.ShowHelp();
-            return 1;
-        }
-
         private async Task<object> PrintItem(IItem node, IRouter router, object state)
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
-            console.ForegroundColor = GetColorFromType(node.ResourceType);
-            await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
-            console.ForegroundColor = ConsoleColor.White;
+            _console.ForegroundColor = GetColorFromType(node.ResourceType);
+            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
+            _console.ForegroundColor = ConsoleColor.White;
             await PrintAssets(node, router, operationState.Prefix);
             return state;
         }
 
         private async Task<object> PrintBranchingNode(ICatalog node, IRouter router, object state)
         {
-            console.ForegroundColor = GetColorFromType(node.ResourceType);
+            _console.ForegroundColor = GetColorFromType(node.ResourceType);
             // Print the information about the resource
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
-            await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
+            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
             // await PrintAssets(node, router, operationState.Prefix);
 
             return state;
@@ -108,16 +101,16 @@ namespace Terradue.Stars.Console.Operations
             string resourcePrefix1 = operationState.Prefix;
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
-            console.ForegroundColor = GetColorFromType(route.ResourceType);
-            await console.Out.WriteAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + route.Uri).Truncate(99), route.ContentType));
+            _console.ForegroundColor = GetColorFromType(route.ResourceType);
+            await _console.Out.WriteAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + route.Uri).Truncate(99), route.ContentType));
             if (exception != null)
             {
-                console.ForegroundColor = ConsoleColor.Red;
-                await console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
+                _console.ForegroundColor = ConsoleColor.Red;
+                await _console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
             }
             else
-                await console.Out.WriteLineAsync();
-            console.ForegroundColor = ConsoleColor.White;
+                await _console.Out.WriteLineAsync();
+            _console.ForegroundColor = ConsoleColor.White;
             return state;
         }
 
@@ -151,7 +144,7 @@ namespace Terradue.Stars.Console.Operations
                     else
                         newPrefix += '│';
 
-                    console.ForegroundColor = ConsoleColor.DarkCyan;
+                    _console.ForegroundColor = ConsoleColor.DarkCyan;
                     var assetPrefix = newPrefix + new string('─', 1);
                     if (router != null)
                         assetPrefix = string.Format("[{0}] {1}", router.Label, assetPrefix);
@@ -160,8 +153,8 @@ namespace Terradue.Stars.Console.Operations
                     if ( string.IsNullOrEmpty(title) )
                         title = Path.GetFileName(asset.Uri.ToString());
                     title = string.Format("[{0}] {1}", assets.ElementAt(i).Key, title);
-                    await console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + title).Truncate(99), asset.ContentType));
-                    console.ForegroundColor = ConsoleColor.White;
+                    await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + title).Truncate(99), asset.ContentType));
+                    _console.ForegroundColor = ConsoleColor.White;
                 }
             }
         }

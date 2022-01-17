@@ -1,0 +1,172 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VIS1_MS4_20210114224140_ORTP_S105354_1e08",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          178.287783798,
+          -17.21704575195
+        ],
+        [
+          178.023620909,
+          -17.26580862572
+        ],
+        [
+          178.0414271858,
+          -17.35340412138
+        ],
+        [
+          178.0662679379,
+          -17.46962698733
+        ],
+        [
+          178.3284607826,
+          -17.42112733681
+        ],
+        [
+          178.287783798,
+          -17.21704575195
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-01-14T22:41:40Z",
+    "start_datetime": "2021-01-14T22:41:40Z",
+    "end_datetime": "2021-01-14T22:41:49Z",
+    "created": "2021-01-26T00:00:00Z",
+    "platform": "vision-1",
+    "constellation": "dmc",
+    "mission": "vision-1",
+    "instruments": [
+      "s-1"
+    ],
+    "sensor_type": "optical",
+    "gsd": 4.0,
+    "title": "Vision-1 S-1  14/01/2021 22:41:40",
+    "sat:orbit_state": "ascending",
+    "proj:epsg": 16160,
+    "proj:shape": [
+      9323,
+      7996
+    ],
+    "view:azimuth": 27.12159027368,
+    "view:sun_azimuth": 103.418551881,
+    "view:sun_elevation": 67.32638745903,
+    "view:incidence_angle": 29.84419762114,
+    "processing:software": {
+      "Keystone": "4.8.8"
+    }
+  },
+  "bbox": [
+    178.023620909,
+    -17.46962698733,
+    178.3284607826,
+    -17.21704575195
+  ],
+  "assets": {
+    "composite": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Composite Scaled Radiance Orthorectified ",
+      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/VIS1_MS4_20210114224140_ORTP_S105354_1e08.tif",
+      "filename": "VIS1_MS4_20210114224140_ORTP_S105354_1e08.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BLUE",
+          "description": "BLUE ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "blue",
+          "solar_illumination": 2002.25
+        },
+        {
+          "name": "GREEN",
+          "description": "GREEN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1822.22
+        },
+        {
+          "name": "RED",
+          "description": "RED ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1613.83
+        },
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 948.98
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/DIM_VIS1_MS4_20210114224140_ORTP_S105354_1e08_Meta.xml",
+      "filename": "DIM_VIS1_MS4_20210114224140_ORTP_S105354_1e08_Meta.xml",
+      "file:size": 18869
+    },
+    "overview": {
+      "type": "image/tiff",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/VIS1_MS4_20210114224140_ORTP_S105354_1e08_Preview.tif",
+      "filename": "VIS1_MS4_20210114224140_ORTP_S105354_1e08_Preview.tif",
+      "file:size": 0
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/VIS1_MS4_20210114224140_ORTP_S105354_1e08_Icon.jpg",
+      "filename": "VIS1_MS4_20210114224140_ORTP_S105354_1e08_Icon.jpg",
+      "file:size": 0
+    }
+  },
+  "links": []
+}

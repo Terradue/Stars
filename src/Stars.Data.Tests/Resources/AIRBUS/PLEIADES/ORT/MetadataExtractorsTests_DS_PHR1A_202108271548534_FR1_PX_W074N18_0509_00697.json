@@ -1,0 +1,272 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "DS_PHR1A_202108271548534_FR1_PX_W074N18_0509_00697",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -73.70768762182264,
+          18.39961454628264
+        ],
+        [
+          -73.50809243218286,
+          18.40132618431412
+        ],
+        [
+          -73.51125195647813,
+          18.32499186098955
+        ],
+        [
+          -73.70468874215672,
+          18.32443298397142
+        ],
+        [
+          -73.70768762182264,
+          18.39961454628264
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-08-27T15:49:30.3Z",
+    "created": "2021-08-27T17:46:49.901Z",
+    "platform": "pleiades-1a",
+    "constellation": "pleiades",
+    "mission": "pleiades-1a",
+    "instruments": [
+      "phr-1a"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.7782904385595207,
+    "title": "Pleiades-1A PHR-1A RASTER_SENSOR 27/08/2021 15:49:30",
+    "sat:platform_international_designator": "2011-076F",
+    "proj:epsg": 4326,
+    "proj:shape": [
+      32824,
+      15169
+    ],
+    "view:azimuth": 180.0904341251046,
+    "view:sun_azimuth": 115.2326875432268,
+    "view:sun_elevation": 71.76705923747583,
+    "view:incidence_angle": 28.61590497053497,
+    "processing:level": "SENSOR/BASIC",
+    "processing:software": {
+      "DRS-MM V2.9": "V2.9"
+    }
+  },
+  "bbox": [
+    -73.70768762182264,
+    18.32443298397142,
+    -73.50809243218286,
+    18.40132618431412
+  ],
+  "assets": {
+    "P-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic P Sensor R1 C1",
+      "href": "data/5897098101/IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.JP2",
+      "filename": "IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.JP2",
+      "file:size": 1,
+      "eo:bands": [
+        {
+          "name": "P",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "pan",
+          "solar_illumination": 1549.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08733624454148473,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "P",
+      "proj:shape": [
+        32824,
+        15169
+      ]
+    },
+    "P-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/5897098101/IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.J2W",
+      "filename": "IMG_PHR1A_P_001/IMG_PHR1A_P_202108271549303_SEN_5897098101-1_R1C1.J2W",
+      "file:size": 128
+    },
+    "metadata-P": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/5897098101/IMG_PHR1A_P_001/DIM_PHR1A_P_202108271549303_SEN_5897098101-1.XML",
+      "filename": "IMG_PHR1A_P_001/DIM_PHR1A_P_202108271549303_SEN_5897098101-1.XML",
+      "file:size": 52601
+    },
+    "overview-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/5897098101/IMG_PHR1A_P_001/PREVIEW_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
+      "filename": "IMG_PHR1A_P_001/PREVIEW_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
+      "file:size": 114687
+    },
+    "thumbnail-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/5897098101/IMG_PHR1A_P_001/ICON_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
+      "filename": "IMG_PHR1A_P_001/ICON_PHR1A_P_202108271549303_SEN_5897098101-1.JPG",
+      "file:size": 5936
+    },
+    "MS-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS Sensor R1 C1",
+      "href": "data/5897098101/IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.JP2",
+      "filename": "IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.JP2",
+      "file:size": 1,
+      "eo:bands": [
+        {
+          "name": "B2",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1594.0
+        },
+        {
+          "name": "B1",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1831.0
+        },
+        {
+          "name": "B0",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1915.0
+        },
+        {
+          "name": "B3",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10050251256281408,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11248593925759279,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11299435028248588,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.06561679790026247,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS",
+      "proj:shape": [
+        8207,
+        3792
+      ]
+    },
+    "MS-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/5897098101/IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.J2W",
+      "filename": "IMG_PHR1A_MS_002/IMG_PHR1A_MS_202108271549303_SEN_5897098101-2_R1C1.J2W",
+      "file:size": 128
+    },
+    "metadata-MS": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/5897098101/IMG_PHR1A_MS_002/DIM_PHR1A_MS_202108271549303_SEN_5897098101-2.XML",
+      "filename": "IMG_PHR1A_MS_002/DIM_PHR1A_MS_202108271549303_SEN_5897098101-2.XML",
+      "file:size": 110157
+    },
+    "overview-MS": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/5897098101/IMG_PHR1A_MS_002/PREVIEW_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
+      "filename": "IMG_PHR1A_MS_002/PREVIEW_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
+      "file:size": 134370
+    },
+    "thumbnail-MS": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/5897098101/IMG_PHR1A_MS_002/ICON_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
+      "filename": "IMG_PHR1A_MS_002/ICON_PHR1A_MS_202108271549303_SEN_5897098101-2.JPG",
+      "file:size": 7206
+    }
+  },
+  "links": []
+}

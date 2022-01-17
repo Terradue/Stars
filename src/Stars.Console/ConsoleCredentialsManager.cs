@@ -21,9 +21,19 @@ namespace Terradue.Stars.Console.Operations
 
         public override NetworkCredential GetCredential(Uri uri, string authType)
         {
-            Uri uriCut = new Uri(uri.GetLeftPart(UriPartial.Authority));
-            NetworkCredential cred = base.GetCredential(uriCut, authType);
-            if (cred == null)
+            var authority = uri.GetLeftPart(UriPartial.Authority);
+            if (string.IsNullOrEmpty(authority)) { authority = "/"; }
+            NetworkCredential cred = null;
+            Uri uriCut = new Uri(authority);
+            try
+            {
+                UriBuilder uriCutBuilder = new UriBuilder(uriCut);
+                uriCutBuilder.UserName = null;
+                uriCutBuilder.Password = null;
+                cred = base.GetCredential(uriCutBuilder.Uri, authType);
+            }
+            catch { }
+            if (cred == null && authority.Length > 2 && uri.UserInfo != "preauth")
             {
                 if (!console.IsInputRedirected)
                 {
@@ -66,7 +76,8 @@ namespace Terradue.Stars.Console.Operations
             string usernameLabel = "username";
             string passwordLabel = "password";
 
-            if ( authType.Equals("s3", StringComparison.InvariantCultureIgnoreCase) ){
+            if (authType.Equals("s3", StringComparison.InvariantCultureIgnoreCase))
+            {
                 usernameLabel = "S3 Key Id";
                 passwordLabel = "S3 Secret";
             }
@@ -84,7 +95,7 @@ namespace Terradue.Stars.Console.Operations
                 console.WriteLine("No input. Skipping");
                 return null;
             }
-            console.Write(passwordLabel+ ": ");
+            console.Write(passwordLabel + ": ");
             var pass = string.Empty;
             ConsoleKey key;
             do

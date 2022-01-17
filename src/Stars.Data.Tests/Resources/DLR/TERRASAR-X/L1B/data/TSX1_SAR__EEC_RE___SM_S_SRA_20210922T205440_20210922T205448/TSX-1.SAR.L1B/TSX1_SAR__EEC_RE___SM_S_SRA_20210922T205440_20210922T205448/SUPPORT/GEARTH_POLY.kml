@@ -1,0 +1,46 @@
+<!-- ?xml version="1.0" encoding="UTF-8"? -->
+<kml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Placemark>
+  <name>
+C474_N163_A_SM_strip_005_R_2021-09-22T20:54:40.918000Z
+</name>
+  <LookAt>
+    <longitude>
+-39.1679
+</longitude>
+    <latitude>
+-14.7608
+</latitude>
+    <range>
+250000.0
+</range>
+    <tilt>0</tilt>
+    <heading>0</heading>
+  </LookAt>
+  <Style id="khStyle813">
+    <LineStyle id="khLineStyle817">
+      <color>ffff55ff</color>
+    </LineStyle>
+    <PolyStyle id="khPolyStyle818">
+      <color>7fff55ff</color>
+      <outline>0</outline>
+    </PolyStyle>
+  </Style>
+  <Polygon id="khPolygon820">
+    <extrude>1</extrude>
+    <tessellate>1</tessellate>
+    <altitudeMode>relativeToGround</altitudeMode>
+    <outerBoundaryIs>
+      <LinearRing id="khLinearRing821">
+        <coordinates>
+-38.9679,-1.498309743457129E+01,8000.0 
+-39.0714,-1.447870217918976E+01,8000.0 
+-39.3679,-1.453920026442678E+01,8000.0 
+-39.2608,-1.504287284005236E+01,8000.0 
+-38.9679,-1.498309743457129E+01,8000.0 
+        </coordinates>
+      </LinearRing>
+    </outerBoundaryIs>
+  </Polygon>
+</Placemark>
+</kml>

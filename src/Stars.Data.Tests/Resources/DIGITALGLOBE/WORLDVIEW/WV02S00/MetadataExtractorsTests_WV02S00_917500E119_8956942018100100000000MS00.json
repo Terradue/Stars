@@ -1,0 +1,156 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "WV02S00_917500E119_8956942018100100000000MS00",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.783332,
+          -1.0429011
+        ],
+        [
+          120.0160527,
+          -1.0429011
+        ],
+        [
+          120.0160527,
+          -0.8004411
+        ],
+        [
+          119.783332,
+          -0.8004411
+        ],
+        [
+          119.783332,
+          -1.0429011
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "platform": "worldview-2",
+    "constellation": "worldview-2",
+    "mission": "worldview-2",
+    "instruments": [
+      "msi"
+    ],
+    "sensor_type": "optical",
+    "gsd": 3.1932043651E-05,
+    "datetime": "2018-10-01T02:26:04Z",
+    "created": "2018-10-01T02:26:04Z",
+    "eo:cloud_cover": 0.244,
+    "view:sun_azimuth": 96.3,
+    "view:sun_elevation": 68.9,
+    "proj:epsg": null,
+    "processing:level": "LV1B",
+    "title": "Worldview-2 MSI LV1B 01/10/2018 02:26:04"
+  },
+  "bbox": [
+    119.783332,
+    -1.0429011,
+    120.0160527,
+    -0.8004411
+  ],
+  "assets": {
+    "manifest": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/WV02S00_917500E119_8956942018100100000000MS00_GR003002001/vendor_metadata/18OCT01022604-M1BS-502541638020_01_P003.XML",
+      "filename": "vendor_metadata/18OCT01022604-M1BS-502541638020_01_P003.XML",
+      "file:size": 968751
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/WV02S00_917500E119_8956942018100100000000MS00_GR003002001/WV02S00_917500E119_8956942018100100000000MS00_BR003002001.jpg",
+      "filename": "WV02S00_917500E119_8956942018100100000000MS00_BR003002001.jpg",
+      "file:size": 122346
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/WV02S00_917500E119_8956942018100100000000MS00_GR003002001/WV02S00_917500E119_8956942018100100000000MS00_DR003002001.txt",
+      "filename": "WV02S00_917500E119_8956942018100100000000MS00_DR003002001.txt",
+      "file:size": 1949
+    },
+    "pms": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/WV02S00_917500E119_8956942018100100000000MS00_GR003002001/WV02S00_917500E119_8956942018100100000000MS00_GR003002001.tif",
+      "filename": "WV02S00_917500E119_8956942018100100000000MS00_GR003002001.tif",
+      "file:size": 0,
+      "gsd": 3.1932043651E-05,
+      "proj:shape": [
+        7168,
+        9216
+      ],
+      "eo:bands": [
+        {
+          "name": "blue",
+          "common_name": "blue",
+          "center_wavelength": 0.4779,
+          "solar_illumination": 1974.2416,
+          "full_width_half_max": 0.02715
+        },
+        {
+          "name": "green",
+          "common_name": "green",
+          "center_wavelength": 0.5462,
+          "solar_illumination": 1856.4104,
+          "full_width_half_max": 0.0187
+        },
+        {
+          "name": "red",
+          "common_name": "red",
+          "center_wavelength": 0.6588,
+          "solar_illumination": 1559.4555,
+          "full_width_half_max": 0.0187
+        },
+        {
+          "name": "nir08",
+          "common_name": "nir08",
+          "center_wavelength": 0.8313,
+          "solar_illumination": 1069.7302,
+          "full_width_half_max": 0.0187
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.2972613333333333,
+          "offset": -4.189
+        },
+        {
+          "scale": 0.19640106015873016,
+          "offset": -3.287
+        },
+        {
+          "scale": 0.3048588109756097,
+          "offset": -1.35
+        },
+        {
+          "scale": 0.20363125338725988,
+          "offset": -3.752
+        }
+      ]
+    }
+  },
+  "links": []
+}

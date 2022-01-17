@@ -17,6 +17,7 @@ using Terradue.Stars.Geometry.Atom;
 using System.Net;
 using Terradue.Stars.Interface;
 using Terradue.OpenSearch.Result;
+using Itenso.TimePeriod;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -109,6 +110,8 @@ namespace Terradue.Stars.Services.Model.Atom
                 return assets;
             }
         }
+
+        public ITimePeriod DateTime => new TimeInterval(item.PublishDate.DateTime);
 
         public Task<Stream> GetStreamAsync(long start, long end = -1)
         {

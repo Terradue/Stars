@@ -22,6 +22,8 @@ using Terradue.Stars.Services.Store;
 using System.Net;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
+using Terradue.Stars.Services.Plugins;
+using Stac;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -41,7 +43,7 @@ namespace Terradue.Stars.Console.Operations
         public string Output { get => output; set => output = value; }
 
         [Option("-ao|--allow-ordering", "Allow ordering assets", CommandOptionType.NoValue)]
-        public bool AllowOrdering { get; set; }
+        public bool AllowOrdering { get; set; } = false;
 
         [Option("-xa|--extract-archive", "Extract archive files (default to true)", CommandOptionType.SingleValue)]
         public bool ExtractArchives { get; set; } = true;
@@ -58,8 +60,8 @@ namespace Terradue.Stars.Console.Operations
         [Option("-ac|--append-catalog", "Append to existing catalog if one is found", CommandOptionType.NoValue)]
         public bool AppendCatalog { get; set; } = false;
 
-        [Option("-da|--delete-archives", "Delete archives from the catalog when inflated", CommandOptionType.NoValue)]
-        public bool DeleteArchive { get; set; } = false;
+        [Option("-ka|--keep-all", "Keep all assets in the items when a processing is applied (e.g. default deletes original archive after extraction. may be overriden when using asset-filter-out)", CommandOptionType.NoValue)]
+        public bool KeepAll { get; set; } = false;
 
         [Option("-rel|--relative", "Make all links relative (and self links removed)", CommandOptionType.NoValue)]
         public bool AllRelative { get; set; } = false;
@@ -76,6 +78,9 @@ namespace Terradue.Stars.Console.Operations
         [Option("-af|--asset-filter", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFilters { get; set; }
 
+        [Option("-afo|--asset-filter-out", "Asset filters to match to be included in the Items after the extraction and harvesting (default to all)", CommandOptionType.MultipleValue)]
+        public string[] AssetsFiltersOut { get; set; }
+
         [Option("--empty", "Empty argument", CommandOptionType.NoValue)]
         public bool Empty { get; set; }
 
@@ -90,7 +95,7 @@ namespace Terradue.Stars.Console.Operations
         private int recursivity = 1;
         private string output = "file://" + Directory.GetCurrentDirectory();
 
-        public CopyOperation()
+        public CopyOperation(IConsole console) : base(console)
         {
 
         }
@@ -140,6 +145,8 @@ namespace Terradue.Stars.Console.Operations
 
         private CopyOperationState PrepareNewRoute(IResource parentRoute, IResource newRoute, IEnumerable<IResource> siblings, object state)
         {
+            if (newRoute is WebRoute)
+                (newRoute as WebRoute).CacheHeadersAsync().GetAwaiter().GetResult();
             if (state == null)
             {
                 return new CopyOperationState(1, storeService, storeService.RootCatalogDestination);
@@ -211,33 +218,33 @@ namespace Terradue.Stars.Console.Operations
                     stacItemNode = sourceItemNode as StacItemNode;
                 }
 
-                IEnumerator<ISupplier> suppliers = InitSuppliersEnumerator(sourceItemNode, supplierFilters);
+                PluginList<ISupplier> suppliers = InitSuppliersEnumerator(sourceItemNode, supplierFilters);
 
                 // 2. Try each of them until one provide the resource
-                while (suppliers.MoveNext())
+                foreach (var supplier in suppliers)
                 {
                     IResource supplierNode = null;
                     try
                     {
-                        logger.Output(string.Format("[{0}] Searching for {1}", suppliers.Current.Id, sourceItemNode.Uri.ToString()));
-                        supplierNode = await suppliers.Current.SearchFor(sourceItemNode);
+                        logger.Output(string.Format("[{0}] Searching for {1}", supplier.Value.Id, sourceItemNode.Uri.ToString()));
+                        supplierNode = await supplier.Value.SearchFor(sourceItemNode);
                         if (supplierNode == null && !(supplierNode is IAssetsContainer))
                         {
-                            logger.Output(string.Format("[{0}] --> no supply possible", suppliers.Current.Id));
+                            logger.Output(string.Format("[{0}] --> no supply possible", supplier.Value.Id));
                             continue;
                         }
-                        logger.Output(string.Format("[{0}] resource found at {1} [{2}]", suppliers.Current.Id, supplierNode.Uri, supplierNode.ContentType));
+                        logger.Output(string.Format("[{0}] resource found at {1} [{2}]", supplier.Value.Id, supplierNode.Uri, supplierNode.ContentType));
                     }
                     catch (Exception e)
                     {
-                        logger.Warn(string.Format("[{0}] Exception searching for {1}: {2}", suppliers.Current.Id, sourceItemNode.Uri.ToString(), e.Message));
+                        logger.Warn(string.Format("[{0}] Exception searching for {1}: {2}", supplier.Value.Id, sourceItemNode.Uri.ToString(), e.Message));
                         logger.Verbose(e.StackTrace);
                         continue;
                     }
 
                     if (!SkippAssets)
                     {
-                        AssetFilters assetFilters = CreateAssetFiltersFromOptions();
+                        AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFilters);
                         AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, assetFilters);
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
@@ -262,22 +269,34 @@ namespace Terradue.Stars.Console.Operations
             if (node is IItem)
             {
                 ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+                processingService.Parameters.KeepOriginalAssets = KeepAll;
                 if (ExtractArchives)
                     stacNode = await processingService.ExtractArchive(stacNode as StacItemNode, destination, storeService);
                 if (Harvest)
                     stacNode = await processingService.ExtractMetadata(stacNode as StacItemNode, destination, storeService);
+
+                if (AssetsFiltersOut != null && AssetsFiltersOut.Count() > 0)
+                {
+                    AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFiltersOut);
+                    FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(stacNode as IItem, assetFilters);
+                    var assets = filteredAssetContainer.Assets.ToDictionary(a => a.Key, a => (a.Value as StacAssetAsset).StacAsset);
+                    (stacNode as StacItemNode).StacItem.Assets.Clear();
+                    (stacNode as StacItemNode).StacItem.Assets.AddRange(assets);
+                    logger.Verbose(string.Format("{0} assets kept: {1}", assets.Count, string.Join(", ", assets.Keys)));
+                    stacNode = await storeService.StoreItemNodeAtDestination(stacNode as StacItemNode, destination);
+                }
             }
 
             return operationState;
         }
 
-        private AssetFilters CreateAssetFiltersFromOptions()
+        private AssetFilters CreateAssetFiltersFromOptions(string[] assetFiltersStr)
         {
             AssetFilters assetFilters = new AssetFilters();
-            if ( AssetsFilters == null )
+            if (assetFiltersStr == null)
                 return assetFilters;
             Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
-            foreach (var assetName in AssetsFilters)
+            foreach (var assetName in assetFiltersStr)
             {
                 Match propertyMatch = propertyRegex.Match(assetName);
                 if (propertyMatch.Success)
@@ -304,12 +323,12 @@ namespace Terradue.Stars.Console.Operations
             return assetFilters;
         }
 
-        private IEnumerator<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
+        private PluginList<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
         {
             if (route is IItem)
-                return supplierManager.GetSuppliers(filters).GetEnumerator();
+                return supplierManager.GetSuppliers(filters);
 
-            return new ISupplier[1] { new NativeSupplier(carrierManager) }.ToList().GetEnumerator();
+            return new PluginList<ISupplier>(new ISupplier[1] { new NativeSupplier(carrierManager) });
         }
 
         protected override async Task ExecuteAsync()
@@ -332,7 +351,7 @@ namespace Terradue.Stars.Console.Operations
             }
             catch (Exception e)
             {
-                logger.Error(string.Format("Exception creating initial routes [{0}] : {1}", string.Join(',', Inputs), e.Message));
+                logger.Error(string.Format("Exception creating initial routes [{0}] : {1}", string.Join(",", Inputs), e.Message));
                 throw e;
             }
             List<StacNode> stacNodes = new List<StacNode>();
@@ -393,7 +412,7 @@ namespace Terradue.Stars.Console.Operations
             });
             collection.ConfigureAll<ExtractArchiveOptions>(so =>
             {
-                so.KeepArchive = !DeleteArchive;
+                so.KeepArchive = KeepAll;
             });
             collection.AddSingleton<StacStoreService, StacStoreService>();
             collection.AddSingleton<StacLinkTranslator, StacLinkTranslator>();

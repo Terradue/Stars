@@ -1,0 +1,242 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -91.1291,
+          17.5161
+        ],
+        [
+          -90.8998,
+          17.4683
+        ],
+        [
+          -90.8515,
+          17.6806
+        ],
+        [
+          -91.081,
+          17.7284
+        ],
+        [
+          -91.1291,
+          17.5161
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-05-11T01:03:18Z",
+    "start_datetime": "2020-05-11T01:03:18Z",
+    "end_datetime": "2020-05-11T01:03:21Z",
+    "created": "2020-05-11T06:22:18Z",
+    "platform": "gaofen-2",
+    "constellation": "gaofen-2",
+    "mission": "gaofen-2",
+    "instruments": [
+      "pms1"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.81,
+    "eo:cloud_cover": 0.02,
+    "sat:absolute_orbit": 30951,
+    "sat:relative_orbit": 30951,
+    "sat:orbit_state": "descending",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 0.0,
+    "view:sun_azimuth": 86.6824,
+    "view:sun_elevation": 13.5727,
+    "proj:epsg": null,
+    "proj:shape": [
+      7300,
+      6908
+    ],
+    "processing:level": "L1A",
+    "product_type": "PAN_MS_L1A",
+    "title": "Gaofen-2 PMS1 L1A 05/11/2020 01:03:18"
+  },
+  "bbox": [
+    -91.1291,
+    17.4683,
+    -90.8515,
+    17.7284
+  ],
+  "assets": {
+    "MSS-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1_thumb.jpg",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1_thumb.jpg",
+      "file:size": 19325
+    },
+    "MSS-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.jpg",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.jpg",
+      "file:size": 377356
+    },
+    "MSS-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.rpb",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.rpb",
+      "file:size": 2714
+    },
+    "MSS": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
+      "file:size": 1,
+      "proj:shape": [
+        7300,
+        6908
+      ],
+      "gsd": 3.24,
+      "eo:bands": [
+        {
+          "name": "B01",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1966.811,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "B02",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "solar_illumination": 1822.607,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "B03",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1523.189,
+          "full_width_half_max": 0.06
+        },
+        {
+          "name": "B04",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "solar_illumination": 1066.547,
+          "full_width_half_max": 0.12
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.1585,
+          "offset": -0.8765
+        },
+        {
+          "scale": 0.1883,
+          "offset": -0.9742
+        },
+        {
+          "scale": 0.174,
+          "offset": -0.7652
+        },
+        {
+          "scale": 0.1897,
+          "offset": -0.7233
+        }
+      ]
+    },
+    "MSS-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml",
+      "file:size": 2519
+    },
+    "PAN-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1_thumb.jpg",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1_thumb.jpg",
+      "file:size": 20414
+    },
+    "PAN-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.jpg",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.jpg",
+      "file:size": 1581212
+    },
+    "PAN-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.rpb",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.rpb",
+      "file:size": 2717
+    },
+    "PAN": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
+      "file:size": 1,
+      "proj:shape": [
+        29200,
+        27620
+      ],
+      "gsd": 0.81,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "common_name": "pan",
+          "center_wavelength": 0.67,
+          "solar_illumination": 1361.43,
+          "full_width_half_max": 0.44
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.163,
+          "offset": -0.6077
+        }
+      ]
+    },
+    "PAN-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.xml",
+      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.xml",
+      "file:size": 2498
+    }
+  },
+  "links": []
+}

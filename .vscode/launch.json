@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -23,7 +23,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "--yoda"
             ],
@@ -38,9 +38,25 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "-h"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Display Plugins",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
+            "args": [
+                "plugins",
+                "-v"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -53,7 +69,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -72,7 +88,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "-v",
                 "list",
@@ -82,7 +98,7 @@
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {
@@ -91,7 +107,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -114,7 +130,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200624T090133_20200624T090433_20200624T105644_0180_040_221_2700_LN2_O_NR_004",
@@ -134,10 +150,10 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
-                "-v",
                 "list",
+                "-v",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
                 "-r",
                 "2"
@@ -156,14 +172,13 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
                 "-r",
                 "2",
                 "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2A_30VWN_20200830_0_L2A"
-             
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -176,14 +191,13 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
                 "-r",
                 "2",
                 "https://eod-catalog-svc-prod.astraea.earth"
-                
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -208,7 +222,7 @@
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {
@@ -217,10 +231,10 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
-                "-v",
                 "copy",
+                "-v",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200624T090133_20200624T090433_20200624T105644_0180_040_221_2700_LN2_O_NR_004",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
                 "https://catalog.terradue.com/sentinel3/search?format=atom&start=2020-03-06&bbox=-5.801%2C14.009%2C-3.076%2C16.215&pt=SL_2_LST___&od=DESCENDING",
@@ -231,33 +245,35 @@
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false,
             "logging": {
                 "moduleLoad": false
             }
         },
         {
-            "name": "Copy OpenSearch single Sentinel3",
+            "name": "Copy OpenSearch single Sentinel3 (keep zip)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
-                "https://catalog.terradue.com//cos2/series/acquisitions/search?uid=797-ICEYE-ICEYE-X2-Activation-694-Call-797-7",
+                "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3A_SR_1_SRA____20211122T055852_20211122T060852_20211122T064758_0599_079_020______LN3_O_NR_004",
                 "-r",
                 "4",
                 "--harvest",
+                "-afo",
+                "enclosure",
+                "-ka",
                 "--output",
-                "../tmp/stars",
-                "--allow-ordering"
+                "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false,
             "logging": {
                 "moduleLoad": false
@@ -269,7 +285,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -293,7 +309,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -317,7 +333,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -342,7 +358,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -367,7 +383,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -386,12 +402,41 @@
             }
         },
         {
-            "name": "Copy OpenSearch single Sentinel1 GRD FTP",
+            "name": "Copy OpenSearch single Sentinel1 GRD (conf)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "https://catalog.terradue.com//sentinel1/series/GRD/search?format=atom&uid=S1A_IW_GRDH_1SDH_20211123T100735_20211123T100749_040697_04D44B_C75A",
+                "-conf=/tmp/ussersettings.json",
+                "-r",
+                "4",
+                "-ka",
+                "--harvest",
+                "-afo",
+                "download",
+                "--output",
+                "/tmp/stars"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy OpenSearch single Sentinel1 GRD to local",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -415,7 +460,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "https://catalog.charter.uat.esaportal.eu//charter/cat/charterdataset/search?format=atom&uid=call100_AB0009e5_001_MUL_L1T",
@@ -439,7 +484,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -463,7 +508,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "list",
                 "-v",
@@ -480,16 +525,18 @@
             }
         },
         {
-            "name": "Copy S2 on S3",
+            "name": "Copy S2",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
+                "-k",
                 "-v",
-                "https://tamn.snapplanet.io/collections/S2/items/d0f257c7-522c-537c-b911-ee00b5ac863e",
+                "https://catalog.terradue.com/sentinel2/search?uid=S2B_MSIL2A_20200130T004659_N0213_R102_T53HPA_20200130T022348",
+                "--harvest",
                 "-r",
                 "4",
                 "--output",
@@ -509,7 +556,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -533,7 +580,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
                 "-v",
@@ -567,21 +614,21 @@
             }
         },
         {
-            "name": "Copy eoepca catalog",
+            "name": "Copy local charter item",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
-                "https://catalog.charter.uat.esaportal.eu//charter/cat/[chartercalibrateddataset,%7Bcallid857%7D,mission_worldview_3]/search?format=atom&uid=call857_WV03S00_875416E119_8883332018100200000000MS00-calibrated&do=[terradue]",
+                "https://localhost:5001/api/calls/100/acquisitions/datasets/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720.json",
                 "-v",
+                "-k",
                 "-r",
                 "4",
-                "-k",
                 "--output",
-                "/tmp/eoepca"
+                "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -592,15 +639,15 @@
             }
         },
         {
-            "name": "Copy and extract tar.gz aset",
+            "name": "Copy and extract tar.gz asset",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-796/acquisitions/796-CNSA-GF2-urn_ogc_def_EOP_CNSA_GF2PMS5383354/796-CNSA-GF2-urn_ogc_def_EOP_CNSA_GF2PMS5383354.json",
+                "https://supervisor.disasterscharter.org/api/calls/841/acquisitions/calibratedDatasets/WV02N06_536666E001_6287502021031000000000MS00-calibrated.json",
                 "-v",
                 "-r",
                 "4",
@@ -608,9 +655,100 @@
                 "/tmp/charter"
             ],
             "env": {
-                "STARS_URL_FIND": "https?://supervisor.charter.uat.esaportal.eu/catalog",
-                "STARS_URL_REPLACE": "http://acceptance-supervisor-catalog-stac.cpe/catalog",
             },
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "integratedTerminal",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy charter",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
+            "args": [
+                "copy",
+                "s3://cpe-production-catalog/calls/call-844/acquisitions/844-DLR-TANDEM_X-urn_ogc_def_EOP_DLR_C475_N158_A_SL_spot_106_R_2021-10-03T11_33_23_301626Z/844-DLR-TANDEM_X-urn_ogc_def_EOP_DLR_C475_N158_A_SL_spot_106_R_2021-10-03T11_33_23_301626Z.json",
+                "-v",
+                "-r",
+                "4",
+                "-aa",
+                // "-rel",
+                "--harvest",
+                "--output",
+                "s3://cpe-production-catalog/"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            "env": {
+                "AWS__Profile": "scw",
+                "AWS__ServiceURL": "https://s3.pl-waw.scw.cloud",
+                "AWS__Region": "pl-waw",
+                "AWS__AuthenticationRegion": "pl-waw",
+            },
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy cesnet",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
+            "args": [
+                "copy",
+                "https://s3.cl2.du.cesnet.cz/vo_t2_geohazards:java/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174.json",
+                "-v",
+                "-r",
+                "4",
+                "-aa",
+                // "-rel",
+                "--output",
+                "/tmp/stars"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            "env": {
+                // "AWS__Profile": "scw",
+                // "AWS__ServiceURL": "https://s3.pl-waw.scw.cloud",
+                // "AWS__Region": "pl-waw",
+                // "AWS__AuthenticationRegion": "pl-waw",
+            },
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            }
+        },
+        {
+            "name": "Copy from creodias",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
+            "args": [
+                "copy",
+                "-si",
+                "CREO",
+                "-si",
+                "Native",
+                "-v",
+                "-r",
+                "4",
+                "--output",
+                "/tmp/stars",
+                "https://catalog.terradue.com/sentinel2/search?format=atom&uid=S2A_MSIL2A_20211111T073141_N0301_R049_T36JVQ_20211111T102411"
+            ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
@@ -620,22 +758,20 @@
             }
         },
         {
-            "name": "Copy calibrated",
+            "name": "Copy from element84",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/netcoreapp3.1/Stars.dll",
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.charter.uat.esaportal.eu/catalog/calls/call-100/calibratedDatasets/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720-calibrated/S2A_MSIL1C_20200615T060641_N0209_R134_T45WWS_20200615T080720-calibrated.json",
                 "-v",
-                "-af",
-                "red",
                 "-r",
                 "4",
                 "--output",
-                "/tmp/charter"
+                "/tmp/stars",
+                "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2B_53HPA_20210723_0_L2A"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

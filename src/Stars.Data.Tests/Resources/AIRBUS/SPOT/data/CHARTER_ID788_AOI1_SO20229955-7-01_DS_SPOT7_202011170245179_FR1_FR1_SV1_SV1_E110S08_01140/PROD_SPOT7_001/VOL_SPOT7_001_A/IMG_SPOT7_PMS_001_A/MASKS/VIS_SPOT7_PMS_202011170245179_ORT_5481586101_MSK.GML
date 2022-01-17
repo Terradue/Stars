@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask xmlns:hma="http://earth.esa.int/hma" xmlns:gml="http://www.opengis.net/gml" gml:id="VIS_SPOT7_PMS_202011170245179_ORT_5481586101_MSK" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/gml gml.xsd http://earth.esa.int/hma hma-1.1.xsd http://www.w3.org/1999/xlink xlinks.xsd">
+
+  <gml:name>Hidden parts mask for product id SPOT7_PMS_202011170245179_ORT_5481586101</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+      <gml:lowerCorner>427461.75 9153186.75</gml:lowerCorner>
+      <gml:upperCorner>450008.25 9178298.25</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="VISIBILITY-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440590.5 9163088 440590.5 9163269 440622 9163269 440623.5 9163264 440628 9163232 440628 9163194 440623.5 9163162 440620.5 9163088 440590.5 9163088</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-1">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440590.5 9163306 440590.5 9163329 440622 9163329 440625 9163314 440620.5 9163306 440590.5 9163306</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-2">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440065.5 9163990 440065.5 9164013 440095.5 9164013 440098.5 9164002 440095.5 9163990 440065.5 9163990</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-3">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>438982.5 9163718 438982.5 9163726 439014 9163726 439015.5 9163719 439012.5 9163718 438982.5 9163718</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-4">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440034 9164094 440034 9164154 440065.5 9164154 440082 9164126 440083.5 9164120 440079 9164106 440071.5 9164097 440064 9164094 440034 9164094</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-5">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440931 9166462 440931 9166510 440962.5 9166510 440964 9166468 440961 9166462 440931 9166462</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-6">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440671.5 9166770 440673 9166770 440673 9166768 440671.5 9166768 440671.5 9166770</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-7">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>441364.5 9167456 441364.5 9167524 441394.5 9167524 441394.5 9167538 441426 9167538 441433.5 9167522 441441 9167488 441424.5 9167456 441364.5 9167456</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-8">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440220 9167184 440220 9167259 440250 9167259 440250 9167282 440281.5 9167282 440281.5 9167258 440286 9167250 440284.5 9167210 440280 9167202 440250 9167184 440220 9167184</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-9">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440002.5 9167403 440002.5 9167438 440035.5 9167438 440043 9167432 440037 9167408 440032.5 9167403 440002.5 9167403</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-10">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>439725 9168540 439725 9168546 439756.5 9168546 439755 9168540 439725 9168540</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-11">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437245.5 9168960 437247 9168960 437247 9168958 437245.5 9168958 437245.5 9168960</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-12">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>434637 9174166 434638.5 9174166 434638.5 9174165 434637 9174165 434637 9174166</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-13">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>439137 9175396 439137 9175422 439168.5 9175422 439171.5 9175404 439167 9175396 439137 9175396</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-14">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442167 9177480 442167 9177482 442198.5 9177482 442197 9177480 442167 9177480</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="VISIBILITY-15">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>438117 9177783 438117 9177798 438148.5 9177798 438151.5 9177788 438147 9177783 438117 9177783</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

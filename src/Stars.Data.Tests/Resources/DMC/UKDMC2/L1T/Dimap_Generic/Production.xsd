@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Production" name="Production" type="t_Production">
+		<xsd:annotation>
+			<xsd:documentation source="Production"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Production" name="t_Production">
+		<xsd:all>
+			<xsd:element ref="DATASET_PRODUCER_NAME"/>
+			<xsd:element minOccurs="0" ref="DATASET_PRODUCER_URL"/>
+			<xsd:element minOccurs="0" ref="DATASET_PRODUCTION_DATE"/>
+			<xsd:element ref="PRODUCT_TYPE"/>
+			<xsd:element minOccurs="0" ref="PRODUCT_INFO"/>
+			<xsd:element minOccurs="0" ref="JOB_ID"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="DATASET_PRODUCER_NAME" name="DATASET_PRODUCER_NAME" type="t_DATASET_PRODUCER_NAME">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_PRODUCER_NAME"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATASET_PRODUCER_NAME" name="t_DATASET_PRODUCER_NAME">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="DATASET_PRODUCER_URL" name="DATASET_PRODUCER_URL" type="t_DATASET_PRODUCER_URL">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_PRODUCER_URL"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_DATASET_PRODUCER_URL" name="t_DATASET_PRODUCER_URL">
+		<xsd:complexContent>
+			<xsd:extension base="URI"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="DATASET_PRODUCTION_DATE" name="DATASET_PRODUCTION_DATE" type="t_DATASET_PRODUCTION_DATE">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_PRODUCTION_DATE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATASET_PRODUCTION_DATE" name="t_DATASET_PRODUCTION_DATE">
+		<xsd:restriction base="DateOrDateTime"/>
+	</xsd:simpleType>
+	<xsd:element id="PRODUCT_TYPE" name="PRODUCT_TYPE" type="t_PRODUCT_TYPE">
+		<xsd:annotation>
+			<xsd:documentation source="PRODUCT_TYPE"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_PRODUCT_TYPE" name="t_PRODUCT_TYPE">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+	<xsd:element id="PRODUCT_INFO" name="PRODUCT_INFO" type="t_PRODUCT_INFO">
+		<xsd:annotation>
+			<xsd:documentation source="PRODUCT_INFO"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_PRODUCT_INFO" name="t_PRODUCT_INFO">
+		<xsd:complexContent>
+			<xsd:extension base="Text"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="JOB_ID" name="JOB_ID" type="t_JOB_ID">
+		<xsd:annotation>
+			<xsd:documentation source="JOB_ID"/>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_JOB_ID" name="t_JOB_ID">
+		<xsd:restriction base="String"/>
+	</xsd:simpleType>
+</xsd:schema>

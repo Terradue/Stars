@@ -1,0 +1,347 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://landsat.usgs.gov/stac/landsat-extension/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "LC80330352013157LGN00",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -106.85401,
+          37.03264
+        ],
+        [
+          -104.28029,
+          37.04494
+        ],
+        [
+          -104.29837,
+          35.03275
+        ],
+        [
+          -106.80746,
+          35.02132
+        ],
+        [
+          -106.85401,
+          37.03264
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "created": "2013-06-06T22:09:28Z",
+    "datetime": "2013-06-06T17:40:31.7519495Z",
+    "platform": "landsat-8",
+    "mission": "landsat-8",
+    "instruments": [
+      "oli",
+      "tirs"
+    ],
+    "sensor_type": "optical",
+    "gsd": 15.0,
+    "eo:cloud_cover": 12.55,
+    "sat:absolute_orbit": 33,
+    "sat:relative_orbit": 33,
+    "sat:orbit_state": "descending",
+    "landsat:wrs_type": 2,
+    "landsat:wrs_row": 35,
+    "landsat:wrs_path": 33,
+    "landsat:scene_id": "LC80330352013157LGN00",
+    "landsat:collection_number": null,
+    "landsat:collection_category": null,
+    "landsat:cloud_cover_land": 0.0,
+    "proj:epsg": 32613,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 13N\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM13N\", AUTHORITY[\"EPSG\", \"32613\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", -105], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 0], AUTHORITY[\"EPSG\", \"32613\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 0.0,
+    "view:sun_azimuth": 121.50951213,
+    "view:sun_elevation": 68.15928707,
+    "processing:level": "L1T",
+    "product_type": "L1T",
+    "title": "Landsat-8 OLI TIRS L1T 06/06/2013 17:40:31"
+  },
+  "bbox": [
+    -106.85401,
+    35.02132,
+    -104.28029,
+    37.04494
+  ],
+  "assets": {
+    "B1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B1.TIF",
+      "filename": "LC80330352013157LGN00_B1.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B1",
+          "common_name": "coastal",
+          "center_wavelength": 0.44,
+          "full_width_half_max": 0.02
+        }
+      ]
+    },
+    "B10": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B10.TIF",
+      "filename": "LC80330352013157LGN00_B10.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 100.0,
+      "eo:bands": [
+        {
+          "name": "B10",
+          "common_name": "lwir11",
+          "center_wavelength": 10.9,
+          "full_width_half_max": 0.8
+        }
+      ]
+    },
+    "B11": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B11.TIF",
+      "filename": "LC80330352013157LGN00_B11.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 100.0,
+      "eo:bands": [
+        {
+          "name": "B11",
+          "common_name": "lwir12",
+          "center_wavelength": 12.0,
+          "full_width_half_max": 1.0
+        }
+      ]
+    },
+    "B2": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B2.TIF",
+      "filename": "LC80330352013157LGN00_B2.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B2",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "full_width_half_max": 0.06
+        }
+      ]
+    },
+    "B3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B3.TIF",
+      "filename": "LC80330352013157LGN00_B3.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B3",
+          "common_name": "green",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.06
+        }
+      ]
+    },
+    "B4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B4.TIF",
+      "filename": "LC80330352013157LGN00_B4.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B4",
+          "common_name": "red",
+          "center_wavelength": 0.65,
+          "full_width_half_max": 0.04
+        }
+      ]
+    },
+    "B5": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B5.TIF",
+      "filename": "LC80330352013157LGN00_B5.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B5",
+          "common_name": "nir",
+          "center_wavelength": 0.86,
+          "full_width_half_max": 0.03
+        }
+      ]
+    },
+    "B6": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B6.TIF",
+      "filename": "LC80330352013157LGN00_B6.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B6",
+          "common_name": "swir16",
+          "center_wavelength": 1.6,
+          "full_width_half_max": 0.08
+        }
+      ]
+    },
+    "B7": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B7.TIF",
+      "filename": "LC80330352013157LGN00_B7.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B7",
+          "common_name": "swir22",
+          "center_wavelength": 2.2,
+          "full_width_half_max": 0.2
+        }
+      ]
+    },
+    "B8": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B8.TIF",
+      "filename": "LC80330352013157LGN00_B8.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        15261,
+        14881
+      ],
+      "gsd": 15.0,
+      "eo:bands": [
+        {
+          "name": "B8",
+          "common_name": "pan",
+          "center_wavelength": 0.59,
+          "full_width_half_max": 0.18
+        }
+      ]
+    },
+    "B9": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_B9.TIF",
+      "filename": "LC80330352013157LGN00_B9.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7631,
+        7441
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B9",
+          "common_name": "cirrus",
+          "center_wavelength": 1.37,
+          "full_width_half_max": 0.02
+        }
+      ]
+    },
+    "BQA": {
+      "type": "image/tiff",
+      "roles": [
+        "BQA"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_BQA.TIF",
+      "filename": "LC80330352013157LGN00_BQA.TIF",
+      "file:size": 1
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/LC80330352013157LGN00/LC80330352013157LGN00_MTL.txt",
+      "filename": "LC80330352013157LGN00_MTL.txt",
+      "file:size": 7755
+    }
+  },
+  "links": [
+    {
+      "rel": "collection",
+      "href": "../landsat8.json"
+    }
+  ],
+  "collection": "landsat-c1l1"
+}

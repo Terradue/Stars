@@ -1,0 +1,222 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VRSS-2_MSS_0996_0379_20210127_L2B_12818393908",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          118.964346,
+          -2.311211
+        ],
+        [
+          119.338013,
+          -2.380683
+        ],
+        [
+          119.405166,
+          -2.051536
+        ],
+        [
+          119.033382,
+          -1.982384
+        ],
+        [
+          118.964346,
+          -2.311211
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2021-01-27T02:20:09.142848Z",
+    "end_datetime": "2021-01-27T02:20:14.754697Z",
+    "datetime": "2021-01-27T02:20:09.142848Z",
+    "created": "2021-01-28T18:50:50.161185Z",
+    "platform": "vrss-2",
+    "mission": "vrss-2",
+    "instruments": [
+      "mss"
+    ],
+    "sensor_type": "optical",
+    "gsd": 3.0,
+    "title": "VRSS-2 MSS L2B 27/01/2021 02:20:09",
+    "sat:absolute_orbit": 17788,
+    "proj:epsg": 32750,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 50S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM50S\", AUTHORITY[\"EPSG\", \"32750\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 117], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32750\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 27.046949,
+    "view:sun_azimuth": 235.466,
+    "view:sun_elevation": 59.967,
+    "processing:level": "L2B"
+  },
+  "bbox": [
+    118.964346,
+    -2.380683,
+    119.405166,
+    -1.982384
+  ],
+  "assets": {
+    "band-1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_1.tif",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_1.tif",
+      "file:size": 0,
+      "proj:shape": [
+        16366,
+        14703
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.43653825166430205,
+          "offset": -21.76252319109462
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-1",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1933.640015
+        }
+      ]
+    },
+    "band-2": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_2.tif",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_2.tif",
+      "file:size": 0,
+      "proj:shape": [
+        16366,
+        14703
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.3030119386703836,
+          "offset": -20.124083388885524
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-2",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "solar_illumination": 1847.51001
+        }
+      ]
+    },
+    "band-3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_3.tif",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_3.tif",
+      "file:size": 0,
+      "proj:shape": [
+        16366,
+        14703
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.33321115590949985,
+          "offset": -19.607810469494517
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-3",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1536.420044
+        }
+      ]
+    },
+    "band-4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_4.tif",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_4.tif",
+      "file:size": 0,
+      "proj:shape": [
+        16366,
+        14703
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.2583245072460024,
+          "offset": -11.948154271395726
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-4",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "solar_illumination": 1064.97998
+        }
+      ]
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "title": "Browse image",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.jpg",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.jpg",
+      "file:size": 0
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Thumbnail image",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_THUMB.jpg",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_THUMB.jpg",
+      "file:size": 0
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.xml",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908.xml",
+      "file:size": 6129
+    },
+    "metadata-addition": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Additional metadata",
+      "href": "data/MSS/a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_ADDITION.xml",
+      "filename": "a3_21012879000030/VRSS-2_MSS_0996_0379_20210127_L2B_12818393908_ADDITION.xml",
+      "file:size": 2408024
+    }
+  },
+  "links": []
+}

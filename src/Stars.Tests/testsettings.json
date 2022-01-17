@@ -1,0 +1,35 @@
+{
+    "AllowedHosts": "*",
+    "AWS": {
+        "Profile": "LocalStack",
+        "Region": "eu-central-1",
+        "AccessKey": "localkey",
+        "SecretKey": "localsecret",
+        "ServiceURL": "http://localhost:4566"
+    },
+    "LocalStack": {
+        "Enabled": true
+    },
+    "Logging": {
+        "LogLevel": {
+            "Default": "Debug",
+            "Microsoft": "Warning",
+            "Microsoft.Hosting.Lifetime": "Information",
+            "Terradue": "Debug"
+        }
+    },
+    "Serilog": {
+        "MinimumLevel": "Debug",
+        "Using": [
+            "Serilog.Sinks.File"
+        ],
+        "WriteTo": [
+            {
+                "Name": "File",
+                "Args": {
+                    "Path": "testcontainers.log"
+                }
+            }
+        ]
+    }
+}

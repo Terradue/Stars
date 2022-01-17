@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
+using McMaster.Extensions.CommandLineUtils;
 
 namespace Terradue.Stars.Console
 {
@@ -11,7 +13,16 @@ namespace Terradue.Stars.Console
 
         public PluginLoadContext(string pluginPath, AssemblyLoadContext mainAppAssemblyLoadContext)
         {
-            _resolver = new AssemblyDependencyResolver(pluginPath);
+            // try
+            // {
+            //     _resolver = new AssemblyDependencyResolver(pluginPath);
+            // }
+            // catch (InvalidOperationException e)
+            // {
+            //     string path = Path.GetDirectoryName((new System.Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath);
+            //     PhysicalConsole.Singleton.Out.WriteLine(path);
+            //     _resolver = new AssemblyDependencyResolver(Path.Combine(path, pluginPath));
+            // }
             this.mainAppAssemblyLoadContext = mainAppAssemblyLoadContext;
         }
 

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 sp1 U (http://www.xmlspy.com) by Birgit Schättler (MF-BW) -->
+<!-- CHANGE HISTORY 
+date - author: changes
+16.12.2004 - D. Schulze: version control introduced
+Version 1.2
+26.01.2005 - D. Schulze: length restricted strings introduced
+28.01.2005 - D. Schulze: source and destination changed to string255
+Version 2.0
+12.04.2005 - D. Schulze and B. Schättler: Harmonisation between IOCS data types (string length) and PGS data types (DIMS string length) done. Comments adopted to document Product and Data Conventions.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.2">
+	<xs:simpleType name="string20">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string80">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string128">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string255">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string1024">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="generalHeader">
+		<xs:annotation>
+			<xs:documentation>TS-X Ground Segment General  Header Structure</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="itemName" type="string80">
+					<xs:annotation>
+						<xs:documentation>Contains the name of the exchanged product / data / interface item
+Examples: Orbit Product; Attitude Product; IOCS Aux Product</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="mission" type="string20">
+					<xs:annotation>
+						<xs:documentation>Indicates the mission, for which the product / data file is provided. It is fixecd to "TSX-1" for the first TerraSAR-X satellite </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="source" type="string20">
+					<xs:annotation>
+						<xs:documentation>Specifies the sensor, source or originator for the provided product / data file e.g. MOS, PGS, IOCS</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="destination" type="string20">
+					<xs:annotation>
+						<xs:documentation>Specifies the destination to which the provided product / data file goes, e.g. MOS, PGS, IOCS, GS, User, Multiple</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="generationSystem">
+					<xs:annotation>
+						<xs:documentation>Specifies the system which generated the product / data file, e.g. TMSP</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="string80">
+								<xs:attribute name="version" type="string20" use="required">
+									<xs:annotation>
+										<xs:documentation>Specifies the system version with which the product / data file was generated, e.g. 1.2</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="generationTime" type="xs:dateTime">
+					<xs:annotation>
+						<xs:documentation>Reports the UTC time at which the product / data file was generated or published.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="referenceDocument" type="string255" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Specifies the reference document, in which the product / data item is specified with respect to its content and format, e.g. reference to Station Support Data Specification including issue and revision numbers "TX-GS-DD-3202-1-0" </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="revision" type="string20" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>A handle to distinguish between different project phases (e.g. integration, testing, commissioning phase, operations) in order to separate test data from operational data in the TerraSAR-X Product Library.  Examples: PGS_INTEGRATION, GS_INTEGRATION, COMMISSIONING_PHASE, OPERATION</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="revisionComment" type="string1024" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Remark field for a narrative description of the revision field entry above.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="remark" type="string1024" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Remark field for a further narrative description of the product / data file.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="fileName" type="string128" use="required">
+				<xs:annotation>
+					<xs:documentation>Contains the name of the file in which the product / data / interface item is provided.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fileVersion" type="string20" use="optional">
+				<xs:annotation>
+					<xs:documentation>In case, that the provision of more than one version of the same product / data / interface file is operationally foreseen, the file version gives the current version number. It is incremented by 1 whenever the same file is sent again in an updated form.  The start value is 1.
+</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="status" type="string20" use="optional">
+				<xs:annotation>
+					<xs:documentation>In case, that the provision of more than one version of the same product / data / interface file is operationally foreseen, the status parameter indicates the status of the current file version. It may be PRELIMINARY, if another update is foressen, or FINAL, if the final file version is delivered.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

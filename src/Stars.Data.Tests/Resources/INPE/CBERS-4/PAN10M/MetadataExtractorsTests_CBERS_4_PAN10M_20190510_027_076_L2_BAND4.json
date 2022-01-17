@@ -1,0 +1,101 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CBERS_4_PAN10M_20190510_027_076_L2_BAND4",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          86.040203,
+          20.960906
+        ],
+        [
+          86.868307,
+          20.963557
+        ],
+        [
+          86.867262,
+          22.118054
+        ],
+        [
+          86.032584,
+          22.115243
+        ],
+        [
+          86.040203,
+          20.960906
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2019-05-10T04:31:00.745721Z",
+    "end_datetime": "2019-05-10T04:31:18.695826Z",
+    "datetime": "2019-05-10T04:31:09.719958Z",
+    "created": "2019-05-11T03:05:40.457082Z",
+    "platform": "cbers-4",
+    "mission": "cbers-4",
+    "instruments": [
+      "pan10m"
+    ],
+    "sensor_type": "optical",
+    "gsd": 10.0,
+    "title": "cbers-4 L2 10/05/2019 04:31:09",
+    "eo:bands": [
+      {
+        "name": "band-4",
+        "common_name": "nir",
+        "center_wavelength": 0.83
+      }
+    ],
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 27076,
+    "view:off_nadir": 17.163,
+    "view:sun_azimuth": 95.7233,
+    "view:sun_elevation": 66.525,
+    "processing:level": "L2"
+  },
+  "bbox": [
+    86.032584,
+    20.960906,
+    86.868307,
+    22.118054
+  ],
+  "assets": {
+    "band-4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4_PAN10M_20190510_027_076_L2_BAND4/CBERS_4_PAN10M_20190510_027_076_L2_BAND4.tif",
+      "filename": "CBERS_4_PAN10M_20190510_027_076_L2_BAND4.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "band-4",
+          "common_name": "nir",
+          "center_wavelength": 0.83
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CBERS_4_PAN10M_20190510_027_076_L2_BAND4/CBERS_4_PAN10M_20190510_027_076_L2_BAND4.xml",
+      "filename": "CBERS_4_PAN10M_20190510_027_076_L2_BAND4.xml",
+      "file:size": 22032
+    }
+  },
+  "links": []
+}

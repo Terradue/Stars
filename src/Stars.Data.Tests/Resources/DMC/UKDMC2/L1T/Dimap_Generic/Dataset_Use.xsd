@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Dataset_Use" name="Dataset_Use" type="t_Dataset_Use">
+		<xsd:annotation>
+			<xsd:documentation source="Dataset_Use">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Dataset_Use" name="t_Dataset_Use">
+		<xsd:all>
+			<xsd:element ref="DATASET_CONTENT"/>
+			<xsd:element minOccurs="0" ref="DATASET_COMMENTS"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="DATASET_CONTENT" name="DATASET_CONTENT" type="t_DATASET_CONTENT">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_CONTENT">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_DATASET_CONTENT" name="t_DATASET_CONTENT">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="DATASET_COMMENTS" name="DATASET_COMMENTS" type="Text">
+		<xsd:annotation>
+			<xsd:documentation source="DATASET_COMMENTS">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_DATASET_COMMENTS" name="t_DATASET_COMMENTS"><xsd:complexContent>
+			<xsd:extension base="Text">
+			</xsd:extension></xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

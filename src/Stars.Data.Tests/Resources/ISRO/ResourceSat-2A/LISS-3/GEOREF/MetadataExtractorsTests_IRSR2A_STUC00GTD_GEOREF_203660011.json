@@ -1,0 +1,195 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "IRSR2A_STUC00GTD_GEOREF_203660011",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -58.859946,
+          -18.291733
+        ],
+        [
+          -57.479482,
+          -18.300218
+        ],
+        [
+          -57.847637,
+          -19.862638
+        ],
+        [
+          -59.242109,
+          -19.850572
+        ],
+        [
+          -58.859946,
+          -18.291733
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2019-09-30T14:01:58.106127Z",
+    "created": "2020-06-26T14:19:33Z",
+    "platform": "resourcesat-2a",
+    "constellation": "resourcesat-2",
+    "mission": "resourcesat-2",
+    "instruments": [
+      "l3"
+    ],
+    "sensor_type": "optical",
+    "sat:absolute_orbit": 14598,
+    "sat:orbit_state": "descending",
+    "proj:epsg": 32721,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 21S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM21S\", AUTHORITY[\"EPSG\", \"32721\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", -57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32721\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:sun_azimuth": 59.889207,
+    "view:sun_elevation": 60.335428,
+    "processing:level": "STD",
+    "title": "Resourcesat-2A L3 STD 30/09/2019 14:01:58"
+  },
+  "bbox": [
+    -59.242109,
+    -19.862638,
+    -57.479482,
+    -18.291733
+  ],
+  "assets": {
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/203660011/203660011.jpg",
+      "filename": "203660011.jpg",
+      "file:size": 0
+    },
+    "geodata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/203660011/ACC_REP.txt",
+      "filename": "ACC_REP.txt",
+      "file:size": 702
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/203660011/BAND_META.txt",
+      "filename": "BAND_META.txt",
+      "file:size": 2580
+    },
+    "green": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/203660011/BAND2.tif",
+      "filename": "BAND2.tif",
+      "file:size": 0,
+      "proj:shape": [
+        7673,
+        7211
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.05078125
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "green",
+          "common_name": "green",
+          "solar_illumination": 181.83
+        }
+      ]
+    },
+    "red": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/203660011/BAND3.tif",
+      "filename": "BAND3.tif",
+      "file:size": 0,
+      "proj:shape": [
+        7673,
+        7211
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.0458984375
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "red",
+          "common_name": "red",
+          "solar_illumination": 155.92
+        }
+      ]
+    },
+    "nir": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/203660011/BAND4.tif",
+      "filename": "BAND4.tif",
+      "file:size": 0,
+      "proj:shape": [
+        7673,
+        7211
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.03076171875
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "nir",
+          "common_name": "nir",
+          "solar_illumination": 108.96
+        }
+      ]
+    },
+    "swir16": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/203660011/BAND5.tif",
+      "filename": "BAND5.tif",
+      "file:size": 0,
+      "proj:shape": [
+        7673,
+        7211
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.00732421875
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "swir16",
+          "common_name": "swir16",
+          "solar_illumination": 24.38
+        }
+      ]
+    }
+  },
+  "links": []
+}

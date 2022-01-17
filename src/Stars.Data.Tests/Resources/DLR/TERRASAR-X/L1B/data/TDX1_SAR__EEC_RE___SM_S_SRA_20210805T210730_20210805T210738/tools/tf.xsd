@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--                                -->
+<!-- $RCSfile: tf.xsd,v $           -->
+<!--                                -->
+<!-- $Revision: 1.1.2.1 $               -->
+<!-- $Date: 2010/03/09 16:28:42 $   -->
+<!--                                -->
+<!-- Copyright DLR 2006             -->
+<!-- Edited by Bernhard Buckl (DLR DFD-IT )	-->
+
+<xs:schema targetNamespace="http://www.caf.dlr.de/dims/pl/tf" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.caf.dlr.de/dims/pl/tf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--xs:import namespace="http://www.caf.dlr.de/dims/pl/iif" schemaLocation="iif.xsd"/-->
+	<xs:element name="feature">
+		<xs:annotation>
+			<xs:documentation>In a schema instance specify the namespace in the feature's attribute list (to the left of the key attribute) using the syntax
+xmlns="namespace",
+in our case xmlns="http://www.caf.dlr.de/dims/pl/tf"
+(tf stands for terminal feature)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="key" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>name of the metadata parameter or association</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="dynType" type="xs:string" use="optional"/>
+					<xs:attribute name="lid" type="xs:string" use="optional"/>
+					<xs:attribute name="targetName" type="xs:string" use="optional"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

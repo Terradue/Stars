@@ -37,10 +37,13 @@ namespace Terradue.Stars.Services.Plugins
             foreach (var pluginsOption in options.Value)
             {
                 AssemblyLoadContext loadContext = AssemblyLoadContext.Default;
-                if (pluginsOption.Value.Assembly != null && loadContextProvider != null)
-                    loadContext = loadContextProvider(pluginsOption.Value.Assembly);
+                Assembly assembly = Assembly.GetExecutingAssembly();
 
-                var assembly = loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginsOption.Value.Assembly)));
+                if (pluginsOption.Value.Assembly != null && loadContextProvider != null)
+                {
+                    loadContext = loadContextProvider(pluginsOption.Value.Assembly);
+                    assembly = loadContext.LoadFromAssemblyName(new AssemblyName(pluginsOption.Value.Assembly));
+                }
 
                 if (pluginsOption.Value.Routers != null)
                     RegisterConfiguredPlugins<IRouter>(pluginsOption.Value.Routers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value as IPluginOption), collection, assembly);
@@ -68,14 +71,7 @@ namespace Terradue.Stars.Services.Plugins
                 {
                     Type type = GetTypeFromAssembly(pluginConfig.Value.Type, assembly);
                     if (type == null) throw new DllNotFoundException(string.Format("Plugin {0} of type {1} not found.", pluginConfig.Key, pluginConfig.Value.Type));
-                    int prio = 50;
-                    PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
-                    if (prioAttr != null)
-                    {
-                        prio = prioAttr.Priority;
-                    }
-                    prio = pluginConfig.Value.Priority;
-                    collection.AddTransient(typeof(T), serviceProvider => CreateItem<T>(type, pluginConfig.Value, prio, serviceProvider, pluginConfig.Key));
+                    collection.AddTransient(typeof(T), serviceProvider => CreateConfiguredPlugin<T>(serviceProvider, pluginConfig.Key, pluginConfig.Value, type));
                     logger.LogDebug("Plugin [{0}] injected", pluginConfig.Key);
                 }
                 catch (Exception e)
@@ -83,6 +79,32 @@ namespace Terradue.Stars.Services.Plugins
                     logger.LogWarning("Impossible to load {0} : {1}", pluginConfig.Key, e.Message);
                 }
             }
+        }
+
+        public static T CreateConfiguredPlugin<T>(IServiceProvider serviceProvider, string key, IPluginOption pluginOption, Type type) where T : IPlugin
+        {
+            int prio = 50;
+            PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
+            if (prioAttr != null)
+            {
+                prio = prioAttr.Priority;
+            }
+            if (pluginOption.Priority.HasValue)
+            {
+                prio = pluginOption.Priority.Value;
+            }
+            return CreateItem<T>(type, pluginOption, prio, serviceProvider, key);
+        }
+
+        public static T CreateDefaultPlugin<T>(IServiceProvider serviceProvider, Type type) where T : IPlugin
+        {
+            int prio = 50;
+            PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
+            if (prioAttr != null)
+            {
+                prio = prioAttr.Priority;
+            }
+            return CreateItem<T>(type, null, prio, serviceProvider, null);
         }
 
         private static T CreateItem<T>(Type type, IPluginOption pluginOption, int prio, IServiceProvider serviceProvider, string key) where T : IPlugin
@@ -102,7 +124,8 @@ namespace Terradue.Stars.Services.Plugins
 
             T item = (T)plugin;
             item.Priority = prio;
-            item.Key = key;
+            if (!string.IsNullOrEmpty(key))
+                item.Key = key;
 
             return item;
         }

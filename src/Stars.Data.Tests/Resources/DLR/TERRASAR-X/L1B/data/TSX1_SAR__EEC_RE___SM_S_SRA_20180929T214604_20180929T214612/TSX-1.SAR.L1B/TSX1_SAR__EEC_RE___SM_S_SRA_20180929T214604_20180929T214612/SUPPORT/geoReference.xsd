@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp1 U (http://www.altova.com) by Thomas Fritz (MF-BW) -->
+<!-- CHANGE HISTORY 
+date - author: changes
+Version 1.0 draft
+03.05.2005 - T. Fritz: initial version
+
+Version 1.1
+05.10.2005 - T.Fritz:
+1st official release 
+
+Version 1.2 
+27.03.2005 - T.Fritz:
+
+included optional polynomial azimuthShift in signalPropagationEffects 
+
+elevation angle in grid is optional to allow (off-nominal) NRT processing without attitude data
+
+due to limitations of the instrument and commanding, the range sampling frequency may change in-between ScanSAR swathes. Hence for experimental complex ScanSAR SSC products, the annotated range pixel position is rounded and non-continous. It refers to the position in the current RSF.
+ 
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="generalHeader.xsd"/>
+	<xs:include schemaLocation="PGS_Types.xsd"/>
+	<xs:element name="geoReference">
+		<xs:annotation>
+			<xs:documentation>This XML file contains the meta data related to  geolocation and reference frames of the level 1 processed complex images in slant-range geometry used for e.g. geometric processing parameter calculation, noise projection and calibration. It is also included in projected and geocoded products accompanied by an additional binary mapping grid to reference image positions to times.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="gridSetup">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="gridGenerator" type="string80">
+								<xs:annotation>
+									<xs:documentation>coarse geolocation by TMSP</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="geolocationDEMID" type="string255">
+								<xs:annotation>
+									<xs:documentation>Globe, SRTM7.5, ...
+the geolocation grid maps equally sampled range-azimuth time gridpoints to latitude-longitude points onto a DEM. 
+The sampling density and the accuracy of the DEM have to be sufficient to guarantee the required radiometric accuracy by interpolation between the grid points but the operational geolocalisation is not as precise as the geocoding which may derive the incidence angle map for all samples. 
+The DEM could be a downsampled SRTM DEM in combination with the Globe DEM.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="platformParameterProcessing">
+					<xs:annotation>
+						<xs:documentation>processing of orbit and attitude information for focusing parameter calculation and geolocation</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="orbitAccuracy" type="string20"/>
+							<xs:element name="orbitProcessingTechnique" type="string255">
+								<xs:annotation>
+									<xs:documentation>useded interpolation or approximation technique</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="orbitPolDegree">
+								<xs:annotation>
+									<xs:documentation>useded interpolation polynomial degree</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:int">
+										<xs:maxInclusive value="20"/>
+										<xs:minInclusive value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="orbitDataQualityIndicator" type="xs:float">
+								<xs:annotation>
+									<xs:documentation>gap ratio  0...1</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="attitudeAccuracy" type="string20" minOccurs="0"/>
+							<xs:element name="attitudeProcessingTechnique" type="string255" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>useded interpolation technique</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="attitudePolDegree" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>useded interpolation polynomial degree</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:int">
+										<xs:maxInclusive value="20"/>
+										<xs:minInclusive value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="attitudeDataQualityIndicator" type="xs:float" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>nominal or gaps...</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="referenceFrames">
+					<xs:annotation>
+						<xs:documentation>spatial and temporal references</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="sphere">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="ellipsoidID" type="string20">
+											<xs:annotation>
+												<xs:documentation>WGS84</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="semiMajorAxis" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>6.378e+6 m</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="semiMinorAxis" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>6.357e+6 m</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="datumShift" type="dblVector">
+											<xs:annotation>
+												<xs:documentation>[m] (0,0,0)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="constGM" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>gravitational constant times Earth mass [m^3/s^2]</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="omega" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>Earth rotation angular velocity</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="time">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="refTimeFrame" type="string20">
+											<xs:annotation>
+												<xs:documentation>UTC (USNO)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="diffUTC_GPS" type="xs:float">
+											<xs:annotation>
+												<xs:documentation>seconds at starttime of scene</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="leapSecondFlag">
+											<xs:annotation>
+												<xs:documentation>indicates, if a leap second is contained in this scene</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:int">
+													<xs:minInclusive value="-1"/>
+													<xs:maxInclusive value="1"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="lastLeapSecondUTC" type="xs:dateTime">
+											<xs:annotation>
+												<xs:documentation>UTC time of last leap second at stoptime</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="approxDiffUT1_UTC" type="xs:float">
+											<xs:annotation>
+												<xs:documentation>[sec]
+approx UT1-UTC difference (at begin of orbit file)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="signalPropagationEffects">
+					<xs:annotation>
+						<xs:documentation>annotation of simple tropospheric (dry / wet) and iononspheric models for corrected signal path delay. As default: only one coefficient for a constant total delay is given. Also the (range and frequency dependant) azimuth shifts which result e.g. from the relativistic Doppler effect or instrument timing errors may be annotated here (with only one constant total shift as default). </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="rangeDelay" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>polynomials for the given geometric configuration. In seconds.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="dblPolynom">
+											<xs:attribute name="source" use="required">
+												<xs:annotation>
+													<xs:documentation>iono, atmos, total</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:NMTOKENS">
+														<xs:enumeration value="TOTAL"/>
+														<xs:enumeration value="IONO"/>
+														<xs:enumeration value="ATMOS"/>
+														<xs:enumeration value="UNDEFINED"/>
+														<xs:enumeration value="OTHER"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="modelName" type="string255" use="required"/>
+											<xs:attribute name="modelVersion" type="string80" use="required"/>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="azimuthShift" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>polynomials for the given geometric configuration. In seconds.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="dblPolynom">
+											<xs:attribute name="source" use="required">
+												<xs:annotation>
+													<xs:documentation>relativistic Doppler, timing, total</xs:documentation>
+												</xs:annotation>
+												<xs:simpleType>
+													<xs:restriction base="xs:NMTOKENS">
+														<xs:enumeration value="TOTAL"/>
+														<xs:enumeration value="RELATIVISTIC"/>
+														<xs:enumeration value="TIMING"/>
+														<xs:enumeration value="UNDEFINED"/>
+														<xs:enumeration value="OTHER"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="modelName" type="string255" use="required"/>
+											<xs:attribute name="modelVersion" type="string80" use="required"/>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="geolocationGrid" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>The geolocation grid maps equally sampled range-azimuth time gridpoints to latitude-longitude points onto a DEM (e.g. SRTM resampled to 7.5 arcsec in combination with GLOBE). All georeferencing of the complex product is based on the geolocation grid only. Same grid for all polarisations used.  ScanSAR subswathes refer to the same grid for the complex SSC product. In this case the grid refers to equally sampled deskewed pixel positions in azimuth but to non-continous and rounded, individual range sample positions due to possible RSF changes between the subswathes. The grid may comprise several 100 points.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="beamID" type="string20" minOccurs="0"/>
+							<xs:element name="DRAoffset" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>SRA, DRAFore, DRAAft</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:NMTOKENS">
+										<xs:enumeration value="SRA">
+											<xs:annotation>
+												<xs:documentation>Single Recieve Antenna (nominal)</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="DRAFore">
+											<xs:annotation>
+												<xs:documentation>Dual Recieve Antenna</xs:documentation>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="DRAAft"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="numberOfGridPoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="total" type="xs:int"/>
+										<xs:element name="azimuth" type="xs:int"/>
+										<xs:element name="range" type="xs:int"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="spacingOfGridPoints">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="azimuth" type="xs:float">
+											<xs:annotation>
+												<xs:documentation>[s]</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="range" type="xs:float">
+											<xs:annotation>
+												<xs:documentation>[s]</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="recInterpolTechnique">
+								<xs:annotation>
+									<xs:documentation>recommended interpolation technique</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="azimuth" type="string255"/>
+										<xs:element name="range" type="string255"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="recInterpolPolDegree">
+								<xs:annotation>
+									<xs:documentation>recommended interpolation polynomial degree</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="azimuth" type="xs:int"/>
+										<xs:element name="range" type="xs:int"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="gridReferenceTime">
+								<xs:annotation>
+									<xs:documentation>origin of time coordinate system</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="tReferenceTimeUTC" type="xs:dateTime">
+											<xs:annotation>
+												<xs:documentation>for the t time values in the grid. E.g. the scene azimuth start time.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="tauReferenceTime" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>for the tau range time values in the grid</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="refRow" type="xs:long" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>reference pixel position in an SSC image file row (of the nearest beam). E.g. 1</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="refCol" type="xs:long" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>reference pixel position in an SSC image column. E.g. 1</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="gridPoint" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Given per grid point: range time, azimuth time, range pixel, range line, geodetic coordinates, height, incidence and elevation angle (for radiometric calibration) based on a DEM. 
+The elevation angle is used to derive the antenna pattern correction for the given azimuth time range. 
+The image positions are identified with geographic coordinates by this grid. In ScanSAR SSC products, pixels in consecutive bursts or beams may refer to the same ground position due to the burst-overlap.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="t" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>delta azimuth time</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="tau" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>delta range time</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="lat" type="latitudeDegType">
+											<xs:annotation>
+												<xs:documentation>geographical latitude positive towards north</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="lon" type="longitudeDegType">
+											<xs:annotation>
+												<xs:documentation>geographical longitude positive towards east</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="row" type="xs:long" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>pixel position in an SSC image file row. E.g. range sample in a COSAR file. Given in the range sampling of the current beam up to its farRangeBeamBorderTime.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="col" type="xs:long" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>pixel position in the SSC image column. This is the deskewed azimuth sample position derived from the COSAR annotation (ASRI+index-1). ASRI differs for the individual bursts.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="inc" type="xs:double">
+											<xs:annotation>
+												<xs:documentation>incidence angle</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="elev" type="xs:double" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>elevation angle for Antenna Pattern correction (derived from attitude). Thus optional element in NRT processing.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="height" type="xs:double" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>average height (only for a coarse DEM given)</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="iaz" type="xs:int" use="required">
+										<xs:annotation>
+											<xs:documentation>azimuth index of this grid point</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="irg" type="xs:int" use="required">
+										<xs:annotation>
+											<xs:documentation>range index of this grid point</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="mainAnnotationFileName" type="string1024">
+				<xs:annotation>
+					<xs:documentation>points back to the main product</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

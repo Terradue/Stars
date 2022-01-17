@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask xmlns:hma="http://earth.esa.int/hma" xmlns:gml="http://www.opengis.net/gml" gml:id="CLD_SPOT7_PMS_202011170245179_ORT_5481586101_MSK" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/gml gml.xsd http://earth.esa.int/hma hma-1.1.xsd http://www.w3.org/1999/xlink xlinks.xsd">
+
+  <gml:name>Clouds mask for product id SPOT7_PMS_202011170245179_ORT_5481586101</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+      <gml:lowerCorner>427461.75 9153186.75</gml:lowerCorner>
+      <gml:upperCorner>450008.25 9178298.25</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="CLOUD-0">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>445789.5 9153260 445713 9153346 444054 9153513 444025.5 9153525 443362.5 9153914 443346 9153932 443343 9153968 443413.5 9154347 443427 9154374 444136.5 9154972 443889 9155619 443370 9155622 443320.5 9155625 441718.5 9156261 441702 9156273 441691.5 9156291 441337.5 9157278 440371.5 9157360 440347.5 9157370 439930.5 9157680 439915.5 9157695 439909.5 9157713 439750.5 9159496 439414.5 9160226 438630 9159520 438738 9159412 438738 9159408 439539 9158608 439548 9158592 439548 9158566 439543.5 9158553 438933 9157635 439149 9155949 439149 9155925 439144.5 9155907 439126.5 9155892 438501 9155668 438462 9155660 438429 9155672 437115 9156297 435532.5 9157710 435073.5 9157785 434697 9157412 434680.5 9157402 434656.5 9157402 434650.5 9157406 434637 9157414 434626.5 9157434 434547 9157767 434533.5 9157812 433326 9158730 433300.5 9158752 431754 9161158 430662 9161013 430651.5 9161014 430635 9161025 430398 9161259 430386 9161278 430303.5 9161588 430306.5 9161626 430594.5 9162135 429990 9162576 429970.5 9162596 429966 9162614 429963 9162885 429963 9162934 429970.5 9162957 430285.5 9163420 430300.5 9163434 430311 9163437 430318.5 9163438 430336.5 9163434 430356 9163418 431028 9162604 431044.5 9162590 432408 9163492 433168.5 9164484 433195.5 9164510 433221 9164510 433243.5 9164493 433621.5 9164043 433633.5 9164028 433642.5 9164006 433753.5 9162538 433762.5 9162519 433983 9162176 434565 9162320 434595 9162320 435924 9161926 436125 9162054 435864 9162564 435861 9162596 435870 9162615 435895.5 9162642 436251 9163004 436266 9163012 436282.5 9163012 436291.5 9163011 436312.5 9162992 436813.5 9162304 437266.5 9162230 437643 9162453 437670 9162459 437689.5 9162454 437710.5 9162436 437962.5 9162141 439071 9161984 439122 9162084 438561 9162540 438559.5 9162549 438555 9162554 437826 9163162 437812.5 9163184 437812.5 9163218 438252 9164622 438259.5 9164634 438282 9164644 438304.5 9164649 439746 9165100 440817 9165094 441544.5 9164534 441567 9164510 442048.5 9163130 442473 9163126 442552.5 9163125 442567.5 9163122 442582.5 9163112 442593 9163094 442689 9162788 442690.5 9162756 442681.5 9162740 442665 9162729 442183.5 9162588 442306.5 9161850 442306.5 9161818 442290 9161796 441970.5 9161496 441949.5 9161486 441921 9161488 441072 9161876 440610 9161584 440490 9161392 440790 9161182 441556.5 9160952 444502.5 9162312 444406.5 9162814 444403.5 9162849 444409.5 9162864 444640.5 9163161 444652.5 9163174 444670.5 9163185 444705 9163184 444939 9163112 444975 9163096 444985.5 9163082 444990 9163048 444933 9162590 446122.5 9163092 446146.5 9163098 446173.5 9163092 446191.5 9163077 446868 9162238 447355.5 9162308 447388.5 9162306 447402 9162297 447414 9162278 447414 9162256 447411 9162244 447390 9162224 446569.5 9161622 446541 9161606 445251 9161241 445494 9160743 445498.5 9160724 445438.5 9159954 446032.5 9159342 446043 9159320 446043 9159294 445819.5 9158210 445804.5 9158186 444573 9157262 444555 9157252 444532.5 9157252 444496.5 9157262 443668.5 9157476 443745 9157170 445093.5 9155932 445822.5 9156080 445840.5 9156080 447754.5 9155756 448032 9156014 446541 9156930 446526 9156946 446521.5 9156962 446577 9158223 446967 9159225 446016 9160912 446005.5 9160934 446002.5 9160959 446004 9160968 446014.5 9160984 446422.5 9161290 446448 9161301 447210 9161373 447237 9161372 447253.5 9161362 448476 9160254 449850 9158151 449917.5 9158128 450009 9153729 449968.5 9153566 449965.5 9153564 448954.5 9154646 447558 9154656 446862 9154226 446850 9154218 446848.5 9154214 446916 9153986 447442.5 9154266 447463.5 9154274 447475.5 9154274 448746 9153796 448774.5 9153780 449446.5 9153219 449478 9153192 449478 9153189 449472 9153188 445789.5 9153260</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+          <gml:interior>
+            <gml:LinearRing>
+              <gml:posList>443103 9158829 443067 9158834 441739.5 9159423 442435.5 9159756 443019 9159309 443179.5 9158829 443103 9158829</gml:posList>
+            </gml:LinearRing>
+          </gml:interior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-1">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437248.5 9163866 437230.5 9163860 437209.5 9163864 437191.5 9163884 437029.5 9164186 437020.5 9164210 437022 9164238 437038.5 9164256 437238 9164406 437259 9164414 437281.5 9164408 437298 9164390 437487 9164073 437491.5 9164061 437490 9164034 437476.5 9164019 437445 9164000 437248.5 9163866</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-2">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>437523 9153422 437556 9154218 437560.5 9154250 437959.5 9155026 437989.5 9155060 438286.5 9155346 438304.5 9155355 438324 9155356 438889.5 9155276 438910.5 9155266 438922.5 9155253 439614 9154164 440590.5 9153374 440601 9153362 437523 9153422</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-3">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449096.0625 9177602 449090.6875 9177582 449075.5625 9177568 449054.65625 9177563 448887 9177564 448865.65625 9177569 448849.96875 9177584 448844.21875 9177603 448844.71875 9177673 449003.9375 9177668 449012.75 9177667 449096.34375 9177642 449096.0625 9177602</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-4">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447998.5625 9177083 448014.9375 9177097 448035.96875 9177102 448205.40625 9177101 448226.34375 9177096 448241.96875 9177081 448248.09375 9177062 448247.0625 9176906 448241.34375 9176886 448225.4375 9176872 448204.4375 9176867 448035.5625 9176868 448014.3125 9176874 447999.53125 9176888 447994.34375 9176907 447992.15625 9177063 447998.5625 9177083</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-5">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442520.71875 9170660 442536.6875 9170674 442558.375 9170679 442732.78125 9170678 442755.5 9170673 442772.03125 9170658 442778.0625 9170639 442778.84375 9170483 442776.09375 9170464 442763.21875 9170449 442743.53125 9170444 442567.09375 9170446 442547.03125 9170451 442534.28125 9170465 442530.75 9170485 442515.65625 9170641 442520.71875 9170660</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-6">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447042.03125 9169367 447049.84375 9169384 447065.46875 9169396 447237.90625 9169473 447262.125 9169476 447284.25 9169468 447297.4375 9169450 447382.5 9169215 447383.46875 9169197 447374.9375 9169180 447359.46875 9169168 447188.09375 9169092 447164.625 9169088 447142.09375 9169097 447127.34375 9169115 447043.71875 9169349 447042.03125 9169367</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-7">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>446712 9167655 446721.3125 9167671 446737.125 9167683 446899.5625 9167760 446919.84375 9167764 446940.21875 9167759 446956 9167746 447124.0625 9167511 447130.9375 9167495 447129.71875 9167477 447119.875 9167462 447103.1875 9167453 446847.34375 9167377 446824.96875 9167376 446804.625 9167385 446791.8125 9167402 446711.1875 9167636 446712 9167655</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-8">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>445679.15625 9166329 445685.625 9166346 445701.78125 9166360 445721.875 9166368 446053.40625 9166444 446079.84375 9166442 446101.15625 9166427 446456.96875 9165957 446465.15625 9165936 446459.90625 9165915 446441.9375 9165900 446096.5 9165747 446075.78125 9165743 446054.71875 9165749 446038.8125 9165763 445682.34375 9166312 445679.15625 9166329</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-9">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>446662.40625 9164838 446665.90625 9164859 446681.40625 9164875 447107.71875 9165106 447128.4375 9165111 447149.6875 9165107 447165.875 9165095 447429.4375 9164781 447438.15625 9164761 447433.78125 9164740 447417.90625 9164725 446990.9375 9164494 446972.15625 9164489 446951.625 9164492 446934.625 9164504 446671.90625 9164818 446662.40625 9164838</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-10">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447709.8125 9164114 447704.21875 9164132 447708.375 9164150 448125.53125 9164926 448139.8125 9164941 448397.78125 9165095 448419.40625 9165101 448441.6875 9165097 448458.21875 9165084 448976.4375 9164378 448983.90625 9164349 448901.84375 9163960 448894.3125 9163944 448879.78125 9163933 448375.25 9163702 448353.03125 9163698 448331.5 9163706 447723.46875 9164100 447709.8125 9164114</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-11">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>444843.53125 9164701 444848.90625 9164718 444862.6875 9164732 445126.375 9164886 445149.875 9164892 445173.40625 9164886 445189.5625 9164870 445370.0625 9164557 445373.75 9164539 445367.5 9164521 445353.28125 9164507 445089.9375 9164354 445066.84375 9164347 445043.53125 9164353 445026.8125 9164369 444847.5625 9164682 444843.53125 9164701</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-12">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449702.03125 9162404 449766.6875 9163418 449778.5625 9163442 449807.40625 9163468 449861.6875 9160847 449764.71875 9160882 449744.25 9160896 449736.0625 9160919 449701.96875 9162401 449702.03125 9162404</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-13">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448741.84375 9163505 448750.71875 9163525 448770.40625 9163537 449026.3125 9163613 449046.46875 9163615 449065.3125 9163608 449078.6875 9163593 449166.5625 9163437 449171.09375 9163415 449161.90625 9163395 449142.5625 9163382 448887.25 9163306 448867.875 9163305 448850.0625 9163312 448837 9163326 448746.625 9163483 448741.84375 9163505</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-14">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447135.6875 9163122 447138.875 9163140 447149.96875 9163153 447486.03125 9163385 447505.28125 9163392 447526.375 9163390 447543.75 9163378 447903.5 9162985 447911.59375 9162966 447907.8125 9162946 447893.71875 9162930 447474 9162621 447450.78125 9162613 447425.25 9162618 447407 9162635 447140.78125 9163105 447135.6875 9163122</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-15">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442791.34375 9162466 442806.6875 9162486 443311.8125 9162794 443337.09375 9162800 443362.09375 9162792 443714.71875 9162555 443727.71875 9162541 443733.09375 9162524 443729.5 9162506 443587.65625 9162195 443574.28125 9162179 443551.34375 9162174 442935.34375 9162179 442908.78125 9162186 442891.40625 9162206 442793.21875 9162441 442791.34375 9162466</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-16">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449684.09375 9159285 449692.53125 9159305 449712.4375 9159317 449892.25 9159371 449897.71875 9159107 449827.40625 9159086 449806.09375 9159085 449787.53125 9159092 449774.875 9159106 449689.25 9159263 449684.09375 9159285</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-17">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>444689.15625 9156651 444686.0625 9156669 444692.8125 9156687 445338.875 9157618 445365.6875 9157635 445784.21875 9157709 445804.71875 9157708 445822.5625 9157699 446079 9157463 446087.96875 9157450 446091.28125 9157435 446104.34375 9157045 446099.96875 9157028 446087.84375 9157015 445180.75 9156320 445164.0625 9156312 445145.3125 9156312 445128.03125 9156320 444701.5625 9156635 444689.15625 9156651</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-18">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440373.1875 9156379 440373.0625 9156396 440381.40625 9156412 440396.8125 9156422 440801.28125 9156575 440821.40625 9156577 440840.84375 9156570 440854.96875 9156556 441028.40625 9156243 441033.4375 9156223 441027.375 9156204 441011.875 9156190 440685.75 9156037 440668.15625 9156033 440650.3125 9156037 440636.09375 9156049 440381.9375 9156362 440373.1875 9156379</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-19">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>439600.3125 9154823 439600.34375 9154843 439610.3125 9154860 440325.71875 9155556 440347 9155567 440371.125 9155564 441603.28125 9155094 442322.46875 9155470 442340.59375 9155475 442359.53125 9155471 442375.125 9155460 443062.53125 9154675 443071.78125 9154658 443072.03125 9154640 443063.28125 9154624 442179.90625 9153695 442164.34375 9153685 441506.0625 9153457 441481.71875 9153455 440817.71875 9153616 440797.9375 9153628 439610.625 9154806 439600.3125 9154823</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-20">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442698.125 9153413 442706.0625 9153431 442722.1875 9153442 443377.65625 9153671 443397.03125 9153673 443415.1875 9153667 443428.65625 9153655 443662.0625 9153301 442729.53125 9153319 442700.46875 9153394 442698.125 9153413</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-21">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442697.8125 9153421 442705.875 9153438 442722 9153450 443377.5625 9153679 443396.84375 9153681 443415.0625 9153675 443428.5 9153662 443666.5625 9153301 442731.96875 9153319 442700.15625 9153401 442697.8125 9153421</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-22">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>439600.25 9154830 439600.25 9154850 439610.1875 9154867 440325.78125 9155563 440347.125 9155574 440371.0625 9155572 441603.21875 9155102 442322.15625 9155477 442340.28125 9155482 442359.21875 9155478 442374.90625 9155467 443062.3125 9154682 443071.5 9154666 443071.71875 9154648 443062.84375 9154632 442179.8125 9153703 442164.25 9153693 441505.84375 9153464 441481.53125 9153463 440817.875 9153624 440798.0625 9153635 439610.5625 9154813 439600.25 9154830</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-23">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>440372.90625 9156386 440372.6875 9156404 440380.96875 9156419 440396.5625 9156429 440800.875 9156582 440820.9375 9156585 440840.65625 9156578 440854.6875 9156563 441028.09375 9156250 441033.25 9156230 441027.21875 9156211 441011.8125 9156198 440685.4375 9156044 440667.9375 9156040 440650.15625 9156044 440635.875 9156056 440381.625 9156370 440372.90625 9156386</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-24">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>444689.25 9156658 444686.03125 9156677 444692.75 9156695 445338.71875 9157626 445365.59375 9157642 445784.15625 9157717 445804.65625 9157716 445822.5 9157706 446078.96875 9157470 446088 9157457 446091.1875 9157442 446104.40625 9157052 446100.09375 9157036 446088.03125 9157022 445180.5625 9156327 445163.96875 9156320 445145.15625 9156320 445127.875 9156327 444701.625 9156643 444689.25 9156658</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-25">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449683.75 9159292 449692.46875 9159312 449712.53125 9159324 449892.09375 9159379 449897.5625 9159115 449827.59375 9159094 449806.375 9159092 449787.8125 9159099 449775.15625 9159114 449689 9159270 449683.75 9159292</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-26">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442790.78125 9162473 442806.375 9162493 443311.28125 9162801 443336.6875 9162807 443361.90625 9162799 443714.28125 9162563 443727.3125 9162549 443732.71875 9162531 443729.28125 9162514 443586.03125 9162202 443572.75 9162187 443550.125 9162181 442935 9162186 442908.4375 9162194 442891.03125 9162213 442792.6875 9162448 442790.78125 9162473</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-27">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447135.3125 9163129 447138.40625 9163147 447149.65625 9163161 447485.9375 9163392 447505.125 9163399 447526.1875 9163397 447543.75 9163385 447904.09375 9162992 447912.09375 9162973 447908.25 9162953 447893.96875 9162937 447473.375 9162628 447450.3125 9162620 447424.875 9162625 447406.84375 9162642 447140.46875 9163112 447135.3125 9163129</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-28">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>448741.8125 9163512 448750.71875 9163532 448770.375 9163545 449026.1875 9163621 449046.375 9163622 449065.1875 9163615 449078.5 9163601 449166.46875 9163444 449171.09375 9163422 449161.9375 9163402 449142.46875 9163390 448887.21875 9163314 448867.90625 9163312 448850.03125 9163319 448836.78125 9163334 448746.4375 9163490 448741.8125 9163512</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-29">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449701.9375 9162411 449766.59375 9163425 449778.46875 9163450 449807.21875 9163476 449861.53125 9160854 449764.40625 9160889 449744.03125 9160904 449735.8125 9160926 449701.875 9162409 449701.9375 9162411</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-30">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>444843.8125 9164708 444848.625 9164726 444862.46875 9164739 445126.46875 9164893 445150.03125 9164899 445173.53125 9164894 445189.625 9164878 445370.5 9164564 445374.25 9164546 445367.78125 9164528 445353.4375 9164515 445090.09375 9164361 445066.9375 9164355 445043.4375 9164360 445026.9375 9164376 444847.84375 9164690 444843.8125 9164708</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-31">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447709.3125 9164121 447704.09375 9164139 447708.3125 9164157 448125.40625 9164934 448139.5625 9164948 448397.84375 9165102 448419.59375 9165109 448441.9375 9165105 448458.5 9165091 448976.3125 9164386 448983.625 9164356 448901.75 9163967 448894.1875 9163951 448879.75 9163940 448375.25 9163710 448352.9375 9163706 448331.5 9163713 447723.125 9164108 447709.3125 9164121</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-32">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>446662.0625 9164846 446665.53125 9164867 446681.0625 9164882 447107.8125 9165113 447128.875 9165118 447150.09375 9165115 447166.3125 9165103 447429.0625 9164789 447438.15625 9164769 447433.78125 9164748 447417.8125 9164732 446990.5 9164501 446971.6875 9164496 446951.25 9164500 446934.46875 9164512 446671.59375 9164826 446662.0625 9164846</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-33">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>445680.53125 9166336 445687.71875 9166353 445704.25 9166367 445723.84375 9166375 446053.25 9166451 446079.65625 9166450 446101.03125 9166435 446456.84375 9165964 446464.78125 9165943 446459.59375 9165922 446441.90625 9165908 446095.75 9165754 446075.15625 9165751 446054.125 9165756 446038.78125 9165770 445682.6875 9166319 445680.53125 9166336</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-34">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>446712.65625 9167662 446721.875 9167679 446736.53125 9167690 446899.1875 9167767 446919.5625 9167771 446940 9167766 446955.75 9167754 447124.0625 9167519 447130.9375 9167502 447129.40625 9167484 447119.625 9167469 447103.0625 9167460 446846.96875 9167384 446824.6875 9167383 446804.375 9167392 446791.71875 9167409 446712.46875 9167643 446712.65625 9167662</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-35">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447042.09375 9169375 447050 9169392 447065.59375 9169403 447238.03125 9169480 447262.375 9169484 447284.53125 9169475 447297.6875 9169457 447382.84375 9169223 447383.8125 9169204 447375.28125 9169187 447359.59375 9169176 447188 9169099 447164.5625 9169095 447142 9169104 447127.09375 9169122 447043.78125 9169356 447042.09375 9169375</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-36">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>442520.59375 9170667 442536.75 9170681 442558.59375 9170687 442732.53125 9170685 442755.15625 9170680 442771.75 9170665 442778.0625 9170646 442777.8125 9170490 442775.0625 9170471 442761.9375 9170457 442742.625 9170452 442568.5625 9170453 442548.65625 9170458 442535.15625 9170472 442531.65625 9170492 442515.21875 9170648 442520.59375 9170667</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-37">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>447999.03125 9177090 448015.28125 9177104 448036.15625 9177109 448205.53125 9177108 448226.46875 9177103 448241.96875 9177088 448248.03125 9177069 448247.0625 9176913 448241.46875 9176894 448225.5625 9176880 448204.59375 9176874 448035.65625 9176875 448014.65625 9176881 447999.8125 9176895 447994.5 9176915 447992.375 9177071 447999.03125 9177090</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-38">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>449096.125 9177609 449090.5625 9177590 449075.25 9177575 449054.25 9177570 448886.96875 9177571 448865.65625 9177577 448849.96875 9177591 448844.21875 9177611 448844.6875 9177673 449003.9375 9177668 449012.75 9177667 449096.375 9177642 449096.125 9177609</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-39">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436495.59375 9177557 436504.6875 9177538 436504.21875 9177517 435812.53125 9175909 436494.3125 9175071 436503.5 9175055 436506.4375 9175037 436462.96875 9173788 436457 9173768 435262.875 9172387 435358.4375 9172217 436042.15625 9172584 436059.125 9172588 436078.3125 9172585 436492.40625 9172427 436514.125 9172415 436529.53125 9172397 436535.09375 9172377 435632.96875 9169736 435618.34375 9169718 434983.6875 9169255 434970 9169248 434954.71875 9169247 434026.21875 9169408 434009.4375 9169415 433997.53125 9169429 433993.21875 9169447 433997.75 9169465 434548.3125 9170464 434458.40625 9171698 434460.8125 9171715 434470.9375 9171730 434827.8125 9172036 432583.84375 9171828 432568.0625 9171830 432554.40625 9171839 432119.875 9172231 432113.15625 9172253 431751.875 9174351 430730.40625 9176747 429832.8125 9177052 428827.53125 9176597 428807.9375 9176594 428788.96875 9176601 428775.84375 9176617 428147.84375 9178010 427791.8125 9178245 428004.1875 9178297 428013.53125 9178298 436156.09375 9178054 436495.59375 9177557</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-40">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>428781.1875 9176170 428789.53125 9176190 428807.5625 9176202 429034.78125 9176279 429052.21875 9176281 429068.78125 9176275 429081.15625 9176262 429311.1875 9175872 429317.90625 9175853 429313.4375 9175833 429299.1875 9175819 429280.09375 9175813 428968.5625 9175815 428948.15625 9175821 428933.8125 9175837 428785.3125 9176148 428781.1875 9176170</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-41">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429022.84375 9173774 429038.875 9173788 429820.34375 9174173 429839.6875 9174177 429859.40625 9174170 429873.5 9174155 430268.59375 9173375 430272.9375 9173353 430264.875 9173333 429892.46875 9172868 429868.5 9172855 429487.40625 9172779 429458.96875 9172784 429069.5625 9173019 429056.375 9173033 429049.34375 9173053 429017.09375 9173753 429022.84375 9173774</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-42">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>430661.46875 9174153 430675.8125 9174167 430695 9174173 430857.84375 9174172 430876.90625 9174166 430889.6875 9174152 430892.96875 9174133 430888.21875 9173977 430882.90625 9173958 430868.1875 9173944 430848.28125 9173938 430693.5625 9173939 430674 9173945 430659.75 9173959 430654.1875 9173978 430655.9375 9174134 430661.46875 9174153</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-43">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429593.53125 9172425 429598.34375 9172447 429613.71875 9172462 429935.75 9172616 429956.09375 9172620 429973.53125 9172614 429985.0625 9172598 430141.53125 9172287 430145.625 9172268 430142.25 9172251 430132.15625 9172237 429891.25 9172083 429872.09375 9172076 429852.5625 9172080 429837.84375 9172092 429601.65625 9172404 429593.53125 9172425</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-44">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427546.4375 9170364 427564.4375 9170376 427586.3125 9170376 428135.96875 9170217 428151.96875 9170208 428162.6875 9170193 428165.84375 9170175 428113.1875 9169552 428103.5625 9169529 427634.46875 9169065 427616.1875 9169055 427594.78125 9169056 427576.75 9169067 427509.1875 9169140 427502.78125 9170315 427546.4375 9170364</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-45">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>432143.3125 9153680 430784.90625 9153767 430765.65625 9153773 430751.4375 9153787 430013.15625 9155030 429367.0625 9155418 429349.625 9155441 429178.71875 9155987 429177.875 9156008 429187.5 9156025 429897.65625 9156722 429918.84375 9156732 429943.21875 9156729 430419.78125 9156498 432648.6875 9157102 432669.15625 9157102 432687.78125 9157092 433842.625 9155993 433854.28125 9155973 433853.03125 9155951 433559.90625 9155217 434280 9155074 434328.71875 9156354 434336.34375 9156375 434806.28125 9156995 434822.875 9157008 434844.8125 9157010 434867.1875 9157002 437028.03125 9155350 437038.875 9155335 437042.90625 9155316 437038.15625 9155298 435906 9153513 436217.15625 9153571 436237.15625 9153570 436254.28125 9153560 436379.34375 9153444 432266.8125 9153525 432143.3125 9153680</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-46">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427800.8125 9154569 428266.15625 9154641 428284.125 9154640 428299.53125 9154632 428952.34375 9154082 428964.53125 9154064 428965.1875 9154042 428953.78125 9154023 428452.9375 9153599 428116.78125 9153606 428107.875 9153607 428017.6875 9153633 427721.96875 9153812 427667.21875 9153868 427658.3125 9153884 427592.28125 9154131 427591.09375 9154140 427588 9154706 427800.8125 9154569</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-47">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>434088.5 9168837 434104.625 9168854 434125.40625 9168861 434145.625 9168856 434665 9168543 434679.84375 9168525 434681.59375 9168501 434597.21875 9168112 434589.34375 9168094 434573.9375 9168083 434554.875 9168081 434536.65625 9168090 434154.09375 9168403 434139.53125 9168426 434083 9168815 434088.5 9168837</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-48">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427884.9375 9168707 427893.84375 9168728 427912.96875 9168739 428230.5625 9168815 428250.90625 9168815 428268.90625 9168804 428279.40625 9168787 428361.46875 9168475 428361.625 9168456 428352.28125 9168439 428335.5 9168428 428096.84375 9168352 428077.75 9168351 428060.4375 9168358 428049 9168372 427889.90625 9168684 427884.9375 9168707</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-49">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427746.21875 9166545 427761.40625 9166557 427780.90625 9166561 427799.5 9166554 428038.84375 9166397 428052.59375 9166382 428056.875 9166363 428051.09375 9166344 427814.59375 9165957 427797.1875 9165941 427774 9165938 427753.40625 9165949 427525.375 9166173 427524.9375 9166254 427746.21875 9166545</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-50">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429633.90625 9165969 429639.25 9165986 429651.96875 9165999 430040.71875 9166231 430061.90625 9166236 430083.03125 9166229 430097.28125 9166211 430259.15625 9165821 430262.53125 9165803 430257.46875 9165786 430245 9165773 429853.96875 9165542 429831.65625 9165536 429810.15625 9165543 429795.5625 9165561 429637.03125 9165951 429633.90625 9165969</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-51">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427744.28125 9165662 427747.28125 9165681 427758.9375 9165696 428386.4375 9166160 428410.625 9166168 428433.84375 9166161 428668.75 9166004 428681.5625 9165990 428686.75 9165972 428683 9165954 428452.25 9165488 428440.78125 9165474 428423.46875 9165467 427947.71875 9165392 427925.09375 9165395 427907.6875 9165409 427750.3125 9165644 427744.28125 9165662</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-52">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427988.75 9164029 427993.25 9164047 428005.0625 9164060 428555.875 9164446 428584.34375 9164453 429138.78125 9164372 429151.1875 9164368 429626.25 9164131 429642.625 9164116 429959.84375 9163569 429963.78125 9163546 429954.625 9163525 429327.75 9162750 429312.6875 9162739 428758.8125 9162508 428738.5 9162506 428718.84375 9162513 428705.40625 9162528 427992.53125 9164012 427988.75 9164029</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-53">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427913.96875 9160318 427925.8125 9160298 428013.46875 9159908 428012.4375 9159890 428002.90625 9159874 427987.09375 9159864 427560.6875 9159710 427555.4375 9160669 427913.96875 9160318</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-54">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429842.875 9160765 429856.875 9160779 429876.15625 9160784 430035.53125 9160783 430055.8125 9160778 430071.34375 9160763 430077.28125 9160744 430076.21875 9160588 430071.4375 9160569 430057.4375 9160554 430037.8125 9160549 429877.875 9160550 429858.5 9160556 429844.34375 9160570 429839.0625 9160590 429837.96875 9160745 429842.875 9160765</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-55">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>428656.03125 9159193 428662.09375 9159216 429370.84375 9160302 429383.34375 9160314 429399.90625 9160319 429417.21875 9160317 430524.875 9159925 431934.1875 9160379 431958.5 9160380 431979.5 9160366 432625.65625 9159583 432633.40625 9159566 432813.125 9158786 432812.15625 9158764 432360.5625 9157520 432349 9157504 431945.3125 9157195 431927.6875 9157187 431907.84375 9157188 431890.3125 9157198 430452 9158592 429519.78125 9158218 429494.875 9158217 429473.28125 9158230 428665.4375 9159170 428656.03125 9159193</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-56">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427693.6875 9158606 427703.6875 9158590 427705.1875 9158573 427630.9375 9158028 427625.53125 9158013 427570.40625 9157926 427566.03125 9158730 427693.6875 9158606</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-57">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>430105.375 9157546 430107.28125 9157563 430116.75 9157577 430436.6875 9157886 430454.5625 9157896 430475.0625 9157896 430492.84375 9157886 431142.59375 9157258 431154.40625 9157239 431154.25 9157218 431142 9157200 431121.5 9157192 430404.9375 9157119 430382.21875 9157123 430364.78125 9157138 430111.09375 9157529 430105.375 9157546</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-58">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427722.59375 9157431 427738.09375 9157444 428215.78125 9157675 428234.5625 9157679 428253 9157673 428659.6875 9157437 428674.8125 9157422 428680.96875 9157403 428680.3125 9156858 428676.375 9156841 428664.9375 9156828 427580.9375 9155999 427574.34375 9157209 427722.59375 9157431</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-59">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>428765.5625 9156624 428771.71875 9156645 429085.75 9157111 429099.15625 9157123 429117.5625 9157128 429136.375 9157123 429458 9156966 429475.15625 9156949 429479.9375 9156927 429470.9375 9156905 429002.40625 9156363 428987.71875 9156353 428969.71875 9156350 428952.21875 9156355 428938.6875 9156367 428773.375 9156602 428765.5625 9156624</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-60">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427585.59375 9155172 427599.90625 9155186 427620 9155191 427779.21875 9155190 427799.46875 9155185 427814.75 9155170 427820.8125 9155151 427824.59375 9154995 427819.125 9154976 427804 9154962 427783.28125 9154957 427623.78125 9154958 427603.5 9154963 427588.15625 9154977 427586.5 9154982 427585.46875 9155172 427585.59375 9155172</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-61">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427585.625 9155179 427599.96875 9155193 427619.90625 9155198 427779.1875 9155197 427799.46875 9155192 427814.59375 9155178 427820.65625 9155158 427824.65625 9155002 427819.1875 9154983 427804.125 9154969 427783.46875 9154964 427623.65625 9154965 427603.1875 9154970 427587.9375 9154985 427586.46875 9154990 427585.4375 9155178 427585.625 9155179</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-62">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>428765.3125 9156631 428771.6875 9156653 429085.34375 9157118 429098.78125 9157130 429117.1875 9157135 429136.09375 9157131 429457.9375 9156973 429475.15625 9156957 429479.9375 9156934 429470.90625 9156913 429002.25 9156370 428987.78125 9156360 428969.78125 9156357 428952.25 9156362 428938.5625 9156375 428772.96875 9156609 428765.3125 9156631</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-63">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427722.8125 9157438 427738.15625 9157452 428215.875 9157682 428234.625 9157686 428253.0625 9157680 428659.1875 9157444 428674.4375 9157429 428680.625 9157410 428680.28125 9156865 428676.34375 9156848 428664.9375 9156835 427580.90625 9156006 427574.28125 9157216 427722.8125 9157438</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-64">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>430105.3125 9157553 430107.3125 9157570 430116.90625 9157584 430436.71875 9157894 430454.59375 9157904 430475.03125 9157903 430492.75 9157893 431142.40625 9157266 431154.03125 9157247 431153.9375 9157225 431141.6875 9157208 431121.28125 9157200 430404.65625 9157126 430381.9375 9157130 430364.625 9157145 430111.03125 9157537 430105.3125 9157553</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-65">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427693.65625 9158613 427703.65625 9158598 427705.34375 9158580 427630.78125 9158035 427625.40625 9158020 427570.375 9157933 427566 9158737 427693.65625 9158613</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-66">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>428656 9159200 428662.1875 9159223 429370.9375 9160309 429383.40625 9160321 429399.875 9160327 429417.3125 9160325 430524.71875 9159932 431934.03125 9160387 431958.25 9160387 431979.28125 9160374 432625.90625 9159590 432633.375 9159574 432812.78125 9158793 432812.0625 9158772 432360.1875 9157528 432348.65625 9157511 431945.0625 9157202 431927.5 9157194 431907.5625 9157196 431890.1875 9157205 430452.375 9158599 429519.84375 9158226 429494.84375 9158224 429473.34375 9158237 428665.3125 9159177 428656 9159200</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-67">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429842.71875 9160772 429856.625 9160786 429875.84375 9160791 430035.375 9160790 430055.59375 9160785 430071.03125 9160771 430077.3125 9160751 430076.0625 9160595 430071.3125 9160576 430057.28125 9160562 430037.6875 9160557 429877.9375 9160558 429858.5625 9160563 429844.40625 9160577 429839.09375 9160597 429837.96875 9160753 429842.71875 9160772</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-68">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427913.9375 9160325 427925.65625 9160305 428013.65625 9159915 428012.59375 9159897 428003.15625 9159881 427987.1875 9159871 427560.625 9159717 427555.40625 9160676 427913.9375 9160325</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-69">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427988.78125 9164037 427993.25 9164054 428004.90625 9164067 428556.15625 9164453 428584.375 9164460 429138.8125 9164379 429151.15625 9164375 429626.375 9164139 429642.78125 9164123 429960.125 9163576 429964.125 9163554 429955 9163532 429327.71875 9162757 429312.71875 9162746 428758.9375 9162516 428738.5625 9162513 428718.78125 9162520 428705.375 9162535 427992.59375 9164019 427988.78125 9164037</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-70">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427744.375 9165669 427747 9165689 427758.75 9165704 428386.9375 9166167 428411.09375 9166175 428434.1875 9166168 428668.78125 9166011 428681.5625 9165997 428686.65625 9165979 428682.84375 9165961 428452.03125 9165495 428440.71875 9165481 428423.4375 9165474 427947.65625 9165399 427925.125 9165402 427907.75 9165417 427750.53125 9165651 427744.375 9165669</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-71">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429633.75 9165977 429638.96875 9165994 429651.78125 9166006 430040.625 9166238 430061.84375 9166243 430082.96875 9166236 430097.28125 9166219 430259.03125 9165828 430262.25 9165810 430257.21875 9165793 430244.78125 9165780 429853.90625 9165549 429831.75 9165544 429810 9165551 429795.4375 9165568 429636.90625 9165959 429633.75 9165977</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-72">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427746.15625 9166553 427761.34375 9166565 427780.96875 9166568 427799.5625 9166561 428038.78125 9166404 428052.53125 9166389 428057 9166370 428051.09375 9166352 427814.59375 9165964 427797.25 9165948 427774.03125 9165946 427753.78125 9165957 427525.34375 9166181 427524.90625 9166262 427746.15625 9166553</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-73">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427884.78125 9168714 427893.625 9168735 427912.78125 9168747 428230.6875 9168823 428250.96875 9168822 428268.875 9168812 428279.28125 9168794 428361.40625 9168482 428361.59375 9168463 428352.28125 9168446 428335.5625 9168436 428096.71875 9168359 428077.71875 9168358 428060.59375 9168365 428049.21875 9168379 427889.5 9168692 427884.78125 9168714</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-74">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>434089.78125 9168844 434105.15625 9168862 434126.1875 9168869 434146.40625 9168864 434664.96875 9168550 434680.1875 9168532 434681.875 9168508 434596.84375 9168119 434589.125 9168102 434573.625 9168091 434554.46875 9168089 434536.28125 9168097 434154 9168410 434139.59375 9168433 434084.25 9168823 434089.78125 9168844</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-75">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>432143.15625 9153688 430784.96875 9153774 430765.625 9153780 430751.3125 9153794 430013.09375 9155037 429367.09375 9155426 429349.71875 9155448 429178.53125 9155994 429177.71875 9156015 429187.21875 9156033 429897.46875 9156729 429918.59375 9156740 429942.96875 9156736 430419.375 9156506 432648.625 9157109 432669.15625 9157109 432687.59375 9157099 433842.46875 9156000 433854.03125 9155980 433852.96875 9155958 433559.6875 9155225 434279.84375 9155082 434328.65625 9156361 434336.28125 9156382 434805.9375 9157002 434822.59375 9157015 434844.5 9157017 434866.5 9157009 437027.71875 9155357 437038.5 9155342 437042.5 9155323 437038 9155306 435905.96875 9153521 436217.0625 9153579 436237.21875 9153578 436254.3125 9153568 436387.9375 9153444 432273 9153524 432143.15625 9153688</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-76">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427800.6875 9154576 428266.09375 9154648 428284.1875 9154647 428299.53125 9154639 428952.34375 9154089 428964.375 9154071 428965.03125 9154049 428953.65625 9154031 428444.8125 9153600 428116.78125 9153606 428107.875 9153607 428039.4375 9153626 427704.78125 9153830 427667.21875 9153868 427658.3125 9153884 427592.28125 9154131 427591.09375 9154140 427587.96875 9154713 427800.6875 9154576</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-77">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>427546.375 9170371 427564.34375 9170383 427586.21875 9170383 428135.6875 9170224 428151.59375 9170215 428162.3125 9170200 428165.375 9170182 428112.71875 9169559 428103.1875 9169537 427634.34375 9169072 427616.09375 9169062 427594.78125 9169063 427576.71875 9169075 427509.125 9169148 427502.71875 9170322 427546.375 9170371</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-78">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429593.46875 9172433 429598.53125 9172454 429613.75 9172470 429936.6875 9172623 429956.9375 9172627 429974.3125 9172621 429985.71875 9172606 430142.1875 9172294 430145.40625 9172276 430141.71875 9172258 430131.46875 9172244 429891.25 9172090 429872.25 9172084 429852.75 9172087 429838.15625 9172099 429601.40625 9172412 429593.46875 9172433</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-79">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>430661.65625 9174160 430676.25 9174175 430695.84375 9174180 430858.125 9174179 430877.5625 9174173 430890.3125 9174159 430893.84375 9174140 430888.28125 9173984 430883 9173965 430868.3125 9173951 430848.40625 9173946 430693.3125 9173946 430673.9375 9173952 430659.59375 9173966 430654.0625 9173986 430655.875 9174141 430661.65625 9174160</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-80">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>429023.1875 9173781 429039.1875 9173795 429820.21875 9174180 429839.5625 9174184 429859.1875 9174178 429873.40625 9174162 430268.59375 9173383 430272.71875 9173361 430264.59375 9173340 429891.96875 9172875 429868.40625 9172862 429487.125 9172786 429458.46875 9172791 429070.09375 9173026 429055.90625 9173041 429048.78125 9173060 429017.09375 9173761 429023.1875 9173781</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-81">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>428781.15625 9176177 428789.65625 9176197 428807.6875 9176210 429034.8125 9176286 429052.25 9176288 429068.75 9176282 429081.15625 9176269 429310.6875 9175879 429317.5 9175860 429313.34375 9175840 429299.09375 9175826 429279.9375 9175821 428968.28125 9175822 428948 9175828 428933.75 9175844 428785.28125 9176156 428781.15625 9176177</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="CLOUD-82">
+      <hma:maskType codeSpace="urn:spotimage:ast:maskType">CLOUD</hma:maskType>
+      <gml:extentOf xlink:type="simple">
+        <gml:Polygon srsName="32749 WGS84/UTM 49S (S. hemisphere - 108E to 114E)">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>436494.03125 9177564 436503.8125 9177545 436503.625 9177525 435812.625 9175917 436493.40625 9175078 436502.59375 9175062 436505.53125 9175044 436461.875 9173796 436455.9375 9173775 435262.28125 9172394 435357.1875 9172225 436041.46875 9172591 436057.90625 9172595 436076.25 9172592 436490.875 9172434 436512.5 9172422 436526.8125 9172404 436532.46875 9172384 435633.1875 9169743 435618.8125 9169725 434983.65625 9169262 434970.03125 9169255 434954.75 9169255 434026.0625 9169415 434009.28125 9169422 433997.34375 9169437 433993.21875 9169454 433997.75 9169472 434548.125 9170471 434458.1875 9171705 434460.625 9171723 434470.8125 9171737 434827 9172043 432583.78125 9171835 432567.9375 9171837 432554.1875 9171846 432120.875 9172238 432114.1875 9172260 431752.03125 9174358 430730.3125 9176754 429832.53125 9177059 428827.40625 9176604 428807.71875 9176601 428788.71875 9176608 428775.90625 9176624 428147.0625 9178017 427799.25 9178247 428004.1875 9178297 428013.53125 9178298 436160.5625 9178054 436494.03125 9177564</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

@@ -1,0 +1,157 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "U200a421_000000_015499_p_L1T",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          125.3062132704,
+          15.23102562987
+        ],
+        [
+          122.345820746,
+          14.86938884105
+        ],
+        [
+          122.9974202006,
+          11.83916572868
+        ],
+        [
+          125.9228087702,
+          12.20444482678
+        ],
+        [
+          125.3062132704,
+          15.23102562987
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2019-12-17T23:12:48Z",
+    "start_datetime": "2019-12-17T23:12:48Z",
+    "end_datetime": "2019-12-17T23:13:38Z",
+    "created": "2019-12-19T00:00:00Z",
+    "platform": "uk-dmc-2",
+    "constellation": "dmc",
+    "mission": "uk-dmc-2",
+    "instruments": [
+      "slim-6-22"
+    ],
+    "sensor_type": "optical",
+    "gsd": 22.0,
+    "title": "UK-DMC-2 SLIM-6-22 L1T 17/12/2019 23:12:48",
+    "sat:orbit_state": "ascending",
+    "proj:epsg": 16051,
+    "proj:shape": [
+      17670,
+      17120
+    ],
+    "view:azimuth": 0.3413209478422,
+    "view:sun_azimuth": 119.1912660753,
+    "view:sun_elevation": 15.28536160123,
+    "view:incidence_angle": 14.01553729432,
+    "processing:level": "L1T",
+    "processing:software": {
+      "Keystone": "4.7.16"
+    }
+  },
+  "bbox": [
+    122.345820746,
+    11.83916572868,
+    125.9228087702,
+    15.23102562987
+  ],
+  "assets": {
+    "composite": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Composite Scaled Radiance Orthorectified ",
+      "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T.tif",
+      "filename": "U200a421_000000_015499_p_L1T.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 1032.0
+        },
+        {
+          "name": "Red",
+          "description": "Red ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1537.0
+        },
+        {
+          "name": "Green",
+          "description": "Green ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1808.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint8",
+          "bits_per_sample": 8,
+          "scale": 0.29780634146895,
+          "offset": 3.401283466071499
+        },
+        {
+          "data_type": "uint8",
+          "bits_per_sample": 8,
+          "scale": 0.1736705494743135,
+          "offset": 6.376285553051935
+        },
+        {
+          "data_type": "uint8",
+          "bits_per_sample": 8,
+          "scale": 0.15510930957901198,
+          "offset": 10.18074661820037
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T.dim",
+      "filename": "U200a421_000000_015499_p_L1T.dim",
+      "file:size": 16614
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T_browse.jpg",
+      "filename": "U200a421_000000_015499_p_L1T_browse.jpg",
+      "file:size": 0
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/ORTHO-U2005b3d_030000_045499_s_L1T-20160113-145544/U200a421_000000_015499_p_L1T_thumb.jpg",
+      "filename": "U200a421_000000_015499_p_L1T_thumb.jpg",
+      "file:size": 1380
+    }
+  },
+  "links": []
+}

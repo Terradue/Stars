@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask gml:id="DS_PHR1B_201911060805331_FR1_PX_E041N03_0323_00880_imgsnw_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <gml:name>Snow mask from data-strip DS_PHR1B_201911060805331_FR1_PX_E041N03_0323_00880</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.3:32637">
+      <gml:lowerCorner>740839 429085</gml:lowerCorner>
+      <gml:upperCorner>752239 439881</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers/>
+
+</hma:Mask>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Data_File" name="Data_File" type="t_Data_File">
+		<xsd:annotation>
+			<xsd:documentation source="Data_File">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Data_File" name="t_Data_File">
+		<xsd:all>
+			<xsd:element ref="DATA_FILE_PATH"/>
+			<xsd:element minOccurs="0" ref="BAND_INDEX">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Data_File">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="SUPER_TILE_INDEX_COL">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Data_File">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="SUPER_TILE_INDEX_ROW">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Data_File">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element minOccurs="0" ref="PYRAMID_LEVEL_INDEX">
+				<xsd:annotation>
+					<xsd:appinfo source="t_Data_File">
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="DATA_FILE_PATH" name="DATA_FILE_PATH" type="t_DATA_FILE_PATH">
+		<xsd:annotation>
+			<xsd:documentation source="DATA_FILE_PATH">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_DATA_FILE_PATH" name="t_DATA_FILE_PATH">
+		<xsd:complexContent>
+			<xsd:extension base="URI"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element id="SUPER_TILE_INDEX_COL" name="SUPER_TILE_INDEX_COL" type="t_SUPER_TILE_INDEX_COL">
+		<xsd:annotation>
+			<xsd:documentation source="SUPER_TILE_INDEX_COL">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_SUPER_TILE_INDEX_COL" name="t_SUPER_TILE_INDEX_COL">
+		<xsd:restriction base="PositiveOrNullInt">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="SUPER_TILE_INDEX_ROW" name="SUPER_TILE_INDEX_ROW" type="t_SUPER_TILE_INDEX_ROW">
+		<xsd:annotation>
+			<xsd:documentation source="SUPER_TILE_INDEX_ROW">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_SUPER_TILE_INDEX_ROW" name="t_SUPER_TILE_INDEX_ROW">
+		<xsd:restriction base="PositiveOrNullInt">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="PYRAMID_LEVEL_INDEX" name="PYRAMID_LEVEL_INDEX" type="t_PYRAMID_LEVEL_INDEX">
+		<xsd:annotation>
+			<xsd:documentation source="PYRAMID_LEVEL_INDEX">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_PYRAMID_LEVEL_INDEX" name="t_PYRAMID_LEVEL_INDEX">
+		<xsd:restriction base="PositiveOrNullInt">
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

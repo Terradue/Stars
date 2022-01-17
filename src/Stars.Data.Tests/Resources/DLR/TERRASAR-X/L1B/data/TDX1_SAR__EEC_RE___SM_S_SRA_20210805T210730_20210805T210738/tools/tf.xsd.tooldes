@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item fortype="default" path="tools/tf.xsd" typename="tool">
+    <description>The PL name space schema for item information file.</description>
+</item>

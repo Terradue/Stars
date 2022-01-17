@@ -164,7 +164,7 @@ namespace Terradue.Stars.Services.Store
             if (rootCatalogNode != null)
             {
                 Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
-                var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri));
+                var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri), credentials: credentials);
 
                 return publicResource;
             }
@@ -180,7 +180,8 @@ namespace Terradue.Stars.Services.Store
             IStacObject stacObject = stacNode.StacObject;
             if (stacObject == null) return;
 
-            MakeAllLinksRelative(stacObject, destination);
+            if (storeOptions.AllRelative)
+                MakeAllLinksRelative(stacObject, destination);
 
             foreach (var link in stacObject.Links.Where(l => l.RelationshipType == "self").ToList())
                 stacObject.Links.Remove(link);

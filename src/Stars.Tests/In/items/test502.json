@@ -1,0 +1,87 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/version/v1.0.0/schema.json",
+    "https://terradue.github.io/disaster/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "test505",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.8594666,
+          -0.8980955
+        ],
+        [
+          119.8594666,
+          -0.926931
+        ],
+        [
+          119.889679,
+          -0.926931
+        ],
+        [
+          119.889679,
+          -0.8980955
+        ],
+        [
+          119.8594666,
+          -0.8980955
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "disaster:class": "Acquisition",
+    "cpe:status": {
+      "stage": "notificationImported",
+      "message": "0 assets imported",
+      "link": "https://supervisor.charter.uat.esaportal.eu/hangfire/jobs/details/27162"
+    },
+    "updated": "2021-11-10T15:07:44.7956168Z",
+    "disaster:call_ids": [
+      857
+    ],
+    "datetime": "2021-11-10T15:07:35.599Z",
+    "created": "2021-11-10T15:07:27.1846781Z",
+    "sensor_type": "optical",
+    "disaster:resolution_class": "HR",
+    "platform": "ssat",
+    "instruments": [
+      "ok"
+    ],
+    "title": "SSAT ok HR 10/11/2021 15:07:35",
+    "description": "Name | Value\n---- | -----\nAgency | ****\nSatellite  | **ssat**\nInstruments  | **ok**\nSensor Type  | **optical**\nAcquisition Date  | **10/11/2021 15:07:35**\nResolution  | **HR**\nCOS2 Id  | ****\nLicense  | ****\nCreated  | **10/11/2021 15:07:27**\nUpdated  | **10/11/2021 15:07:27**\n",
+    "version": "2"
+  },
+  "bbox": [
+    119.8594666,
+    -0.926931,
+    119.889679,
+    -0.8980955
+  ],
+  "assets": {
+    "enclosure": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Acquisition Enclosure",
+      "href": "s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif"
+    }
+  },
+  "links": [
+    {
+      "type": "application/geo+json",
+      "rel": "self",
+      "href": "s3://cpe-acceptance-catalog/calls/call-857/acquisitions/test505/test505.json"
+    },
+    {
+      "type": "application/json",
+      "rel": "root",
+      "href": "s3://cpe-acceptance-catalog/catalog.json"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "Plugins": {
+    "Terradue": {
+      "Assembly": "Terradue.Stars.Data",
+      "Suppliers": {
+        "ONDA": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://catalogue.onda-dias.eu/dias-catalogue"
+        },
+        "CREO": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://finder.creodias.eu/resto/api/collections/describe.xml"
+        },
+        "SOBLOO": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://sobloo.eu/api/v1/services/search"
+        },
+        "MUNDI": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://mundiwebservices.com/acdc/catalog/proxy/search"
+        },
+        "AMAZON": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://aws.amazon.com"
+        },
+        "GOOGLE": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://storage.googleapis.com",
+          "projectId": "cdab-282908",
+          "AccountFile": "/home/emathot/Workspace/Terradue/Components/systems/cdab-cli/cdab-282908-8d011fc74cdf.json"
+        },
+        "ASF":{
+          "Type":"Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl":"https://api.daac.asf.alaska.edu"
+        }
+      },
+      "Translators": {
+        // "AtomToStac": {
+        //   "Type": "Terradue.Stars.Data.Translators.AtomToStacTranslator"
+        // }
+      },
+      "Processings": {
+        "KOMPSAT-3": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Kompsat3.Kompsat3MetadataExtraction"
+        },
+        "KOMPSAT-5": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Kompsat5.Kompsat5MetadataExtraction"
+        },
+        "SENTINEL-1": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Sentinel1MetadataExtractor"
+        },
+        "SENTINEL-2": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2.Sentinel2MetadataExtractor"
+        },
+        "ICEYE": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Iceye.IceyeMetadataExtractor"
+        },
+        "TERRASAR-X": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.TerrasarX.TerrasarXMetadataExtractor"
+        },
+        "GAOFEN": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Gaofen.GaofenMetadataExtractor"
+        },
+        "GAOFEN-3": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Gaofen3.Gaofen3MetadataExtractor"
+        },
+        "LANDSAT8": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Landsat8.Landsat8MetadataExtraction"
+        },
+        "DIMAP": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Dimap.DimapMetadataExtractor"
+        },
+        "ALOS2": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Alos2.Alos2MetadataExtractor"
+        },
+        "CONAE": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Saocom1.Saocom1MetadataExtractor"
+        },
+        "RCM": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Rcm.RcmMetadataExtraction"
+        },
+        "AIRBUS": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Airbus.AirbusMetadataExtractor"
+        },
+        "ABAE": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Vrss.VrssMetadataExtractor"
+        },
+        "WORLDVIEW": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Worldview.WorldviewMetadataExtractor"
+        },
+        "GEOEYE": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Geoeye.GeoeyeMetadataExtractor"
+        },
+        "CBERS": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Cbers.CbersMetadataExtractor"
+        },
+        "KANOPUS-V": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Kanopus.KanopusVMetadataExtractor"
+        },
+        "ISRO": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Isro.IsroMetadataExtractor"
+        },
+        "PLANET": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.PlanetScope.PlanetScopeMetadataExtractor"
+        },
+        "RESURSP": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Resursp.ResurspMetadataExtractor"
+        },
+        "CSK": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.CosmoSkymed.CosmoSkymedMetadataExtractor"
+        },
+        "GDAL": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Gdal.GdalMetadataExtractor"
+        }
+      }
+    }
+  },
+  "Translators": {
+    "AtomToStac": {
+      "Type": "Terradue.Stars.Data.Translators.AtomToStacTranslator"
+    }
+  }
+}

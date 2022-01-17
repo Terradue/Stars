@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.ThirdParty.Titiler
@@ -27,22 +28,23 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             {
                 try
                 {
-                    var baseUri = new Uri(kvp.Value.From);
-                    return uri.AbsoluteUri.StartsWith(baseUri.AbsoluteUri);
+                    Regex regex = new Regex(kvp.Value.Pattern);
+                    return regex.IsMatch(uri.ToString());
                 }
                 catch { }
                 return false;
             });
-            if (mapping.Value != null && !string.IsNullOrEmpty(mapping.Value.To)) return new Uri(uri.ToString().Replace(mapping.Value.From, mapping.Value.To));
+            if (mapping.Value != null && !string.IsNullOrEmpty(mapping.Value.Replacement))
+                return new Uri(Regex.Replace(uri.ToString(), mapping.Value.Pattern, mapping.Value.Replacement));
             return uri;
         }
     }
 
     public class UriMap
     {
-        public string From { get; set; }
+        public string Pattern { get; set; }
 
-        public string To { get; set; }
+        public string Replacement { get; set; }
     }
 }
 

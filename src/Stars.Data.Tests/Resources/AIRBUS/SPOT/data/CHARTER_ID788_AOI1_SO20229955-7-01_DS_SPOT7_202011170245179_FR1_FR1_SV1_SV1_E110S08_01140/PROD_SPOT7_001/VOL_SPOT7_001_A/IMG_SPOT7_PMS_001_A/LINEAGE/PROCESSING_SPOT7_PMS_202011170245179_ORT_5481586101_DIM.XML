@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<Dimap_Document xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="processing.xsd" version="2.12">
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.12">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>S7_ORTHO</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>PROCESSING</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Coordinate_Reference_System>
+    <Temporal_CRS>
+      <TEMPORAL_CRS_NAME>UTC</TEMPORAL_CRS_NAME>
+    </Temporal_CRS>
+  </Coordinate_Reference_System>
+  <Processing_Step_List>
+    <Processing_Step>
+      <PROCESSING_LEVEL>L1</PROCESSING_LEVEL>
+      <TIME>2020-11-17T04:19:54.000000</TIME>
+      <SOFTWARE version="02.18_04">AstroTerra Imaging</SOFTWARE>
+    </Processing_Step>
+    <Processing_Step>
+      <PROCESSING_LEVEL>L1</PROCESSING_LEVEL>
+      <TIME>2020-11-17T04:31:53.00Z</TIME>
+      <SOFTWARE version="PFS_7.2 release 2 []">Pixel Factory Subsystem</SOFTWARE>
+    </Processing_Step>
+  </Processing_Step_List>
+  <Processing_Parameter_List>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>INVENTORY</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT7_INVENTORY_2015-05-28T00:00:00.000_3</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>GEOMETRY</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT7_GEOMETRY_2019-10-01T00:00:00.000_8</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>RADIOMETRY</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT7_RADIOMETRY_2020-10-01T00:00:00.000_24</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>PRODUCTION</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT7_PRODUCTION_2014-05-27T12:00:00.000_5</PARAMETER_ID>
+    </Processing_Parameter>
+    <Processing_Parameter>
+      <PARAMETER_TYPE>DECOMPRESSION</PARAMETER_TYPE>
+      <PARAMETER_ID>GIPP_SPOT7_DECOMPRESSION_2014-05-27T12:00:00.000_001</PARAMETER_ID>
+    </Processing_Parameter>
+  </Processing_Parameter_List>
+</Dimap_Document>

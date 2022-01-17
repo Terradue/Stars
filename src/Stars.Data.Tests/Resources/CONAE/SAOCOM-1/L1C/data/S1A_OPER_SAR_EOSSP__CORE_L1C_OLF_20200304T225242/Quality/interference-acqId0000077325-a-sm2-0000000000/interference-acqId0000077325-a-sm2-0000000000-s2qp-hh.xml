@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SAOCOM_XMLProduct xmlns:at="saocomTypes">
+
+  <NumberOfChannels>1</NumberOfChannels>
+
+  <VersionNumber>2.1</VersionNumber>
+
+  <Description></Description>
+
+  <Channel Number="1" Total="1">
+    <RasterInfo>
+      <FileName>iL0RFIMask_0004</FileName>
+      <Lines>17133</Lines>
+      <Samples>4096</Samples>
+      <HeaderOffsetBytes>0</HeaderOffsetBytes>
+      <RowPrefixBytes>0</RowPrefixBytes>
+      <ByteOrder>LITTLEENDIAN</ByteOrder>
+      <CellType>INT8</CellType>
+      <LinesStep unit="s">0.000582411182295</LinesStep>
+      <SamplesStep unit="Hz">14648.4375000059</SamplesStep>
+      <LinesStart unit="Utc">08-NOV-2019 09:50:29.024165143273</LinesStart>
+      <SamplesStart unit="Hz">0.000000000000000000000</SamplesStart>
+      <InvalidSample/>
+      <RasterFormat>INTERNAL_RASTER</RasterFormat>
+    </RasterInfo>
+    <DataSetInfo>
+      <SensorName>SAO1A</SensorName>
+      <Description>Level 0 data</Description>
+      <SenseDate>2019-NOV-08</SenseDate>
+      <AcquisitionMode>STRIPMAP</AcquisitionMode>
+      <ImageType>RFINTERFERENCES MAP</ImageType>
+      <Projection>SLANT RANGE</Projection>
+      <AcquisitionStation>ETT</AcquisitionStation>
+      <ProcessingCenter>L0FSW TEST SITE</ProcessingCenter>
+      <ProcessingDate>04-MAR-2020 22:54:37.870520000000</ProcessingDate>
+      <ProcessingSoftware>SP</ProcessingSoftware>
+      <fc_hz>1275000000</fc_hz>
+      <SideLooking>RIGHT</SideLooking>
+    </DataSetInfo>
+    <SwathInfo>
+      <Swath>QS2</Swath>
+      <SwathAcquisitionOrder>0</SwathAcquisitionOrder>
+      <Polarization>H/H</Polarization>
+      <Rank>15</Rank>
+      <RangeDelayBias>0</RangeDelayBias>
+      <AcquisitionStartTime>08-NOV-2019 09:50:27.048000000000</AcquisitionStartTime>
+      <AzimuthSteeringRateReferenceTime unit="s">0</AzimuthSteeringRateReferenceTime>
+      <AzimuthSteeringRatePol>
+        <val N="1">0</val>
+        <val N="2">0</val>
+        <val N="3">0</val>
+      </AzimuthSteeringRatePol>
+      <AcquisitionPRF>3434</AcquisitionPRF>
+      <EchoesPerBurst>41208</EchoesPerBurst>
+      <RxGain>0</RxGain>
+    </SwathInfo>
+  </Channel>
+
+</SAOCOM_XMLProduct>

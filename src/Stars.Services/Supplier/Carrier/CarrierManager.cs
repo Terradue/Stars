@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -21,10 +23,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         internal IEnumerable<ICarrier> GetCarriers(IResource route, IDestination destination)
         {
-            return Plugins.Where(r => r.Value.CanDeliver(route, destination)).Select(r => r.Value);
+            return GetPlugins().Where(r => r.Value.CanDeliver(route, destination)).Select(r => r.Value);
         }
 
-        public IDeliveryQuotation GetAssetsDeliveryQuotations(IAssetsContainer assetsContainer, IDestination destination)
+        public async Task<IDeliveryQuotation> GetAssetsDeliveryQuotationsAsync(IAssetsContainer assetsContainer, IDestination destination)
         {
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
             Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
@@ -33,6 +35,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             {
                 try
                 {
+                    var length = asset.Value.ContentLength;
+                    await asset.Value.CacheHeaders();
+                    length = asset.Value.ContentLength;
                     string relPath = null;
                     if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
                     {
@@ -41,12 +46,25 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                         if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
                             relPath = Path.GetDirectoryName(relUri.ToString());
                     }
+                    if (asset.Value.ContentDisposition != null && !string.IsNullOrEmpty(asset.Value.ContentDisposition.FileName))
+                    {
+                        if ( asset.Value.ContentDisposition.FileName.Contains("/"))
+                            relPath = "";
+                    }
                     var assetsDeliveryQuotations = GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath));
                     assetsQuotes.Add(asset.Key, assetsDeliveryQuotations);
                 }
+                catch (WebException we)
+                {
+                    logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, we.Message);
+                    if ( we.InnerException != null )
+                        logger.LogWarning(we.InnerException.Message);
+                    assetsExceptions.Add(asset.Key, we);
+                }
                 catch (Exception e)
                 {
-                    logger.LogDebug("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
+                    logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
+                    logger.LogDebug(e.StackTrace);
                     assetsExceptions.Add(asset.Key, e);
                 }
             }
@@ -56,7 +74,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(IResource route, IDestination destination)
         {
             List<IDelivery> quotes = new List<IDelivery>();
-            foreach (var carrier in Plugins.Values)
+
+            foreach (var carrier in GetPlugins().Values)
             {
                 // Check that carrier can deliver
                 if (!carrier.CanDeliver(route, destination)) continue;

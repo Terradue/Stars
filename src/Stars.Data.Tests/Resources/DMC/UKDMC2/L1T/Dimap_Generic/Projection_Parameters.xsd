@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+		<xsd:appinfo source="schema"/>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:include schemaLocation="Projection_Parameter.xsd"/>
+	<xsd:element id="Projection_Parameters" name="Projection_Parameters" type="t_Projection_Parameters">
+		<xsd:annotation>
+			<xsd:documentation source="Projection_Parameters">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Projection_Parameters" name="t_Projection_Parameters">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" ref="Projection_Parameter"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

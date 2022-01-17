@@ -21,6 +21,8 @@ namespace Terradue.Stars.Services.Translator
         public int Priority { get; set; }
         public string Key { get => "DefaultStacTranslator"; set { } }
 
+        public string Label => "Default STAC Translator";
+
         public DefaultStacTranslator(ILogger<DefaultStacTranslator> logger, ICredentials credentials)
         {
             this.logger = logger;
@@ -75,7 +77,16 @@ namespace Terradue.Stars.Services.Translator
             if (stacAssetAsset == null)
             {
                 stacAsset = new StacAsset(stacItem, uri, asset.Roles, asset.Title, asset.ContentType);
-                stacAsset.FileExtension().Size = asset.ContentLength;
+                try
+                {
+                    stacAsset.FileExtension().Size = asset.ContentLength;
+                }
+                catch { }
+                foreach (var key in asset.Properties.Keys)
+                {
+                    stacAsset.Properties.Remove(key);
+                    stacAsset.Properties.Add(key, asset.Properties[key]);
+                }
             }
             else
             {

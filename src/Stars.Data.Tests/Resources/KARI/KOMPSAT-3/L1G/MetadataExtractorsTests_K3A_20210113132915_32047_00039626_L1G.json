@@ -1,0 +1,251 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "K3A_20210113132915_32047_00039626_L1G",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -5.41592269,
+          35.519820993
+        ],
+        [
+          -5.319435133,
+          35.52171597
+        ],
+        [
+          -5.222938753,
+          35.523533843
+        ],
+        [
+          -5.22731974,
+          35.681708536
+        ],
+        [
+          -5.324005887,
+          35.679880094
+        ],
+        [
+          -5.420683142,
+          35.6779741
+        ],
+        [
+          -5.41592269,
+          35.519820993
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-01-13T13:29:19.2834234Z",
+    "start_datetime": "2021-01-13T13:29:19.2834234Z",
+    "end_datetime": "2021-01-13T13:29:21.1454934Z",
+    "platform": "kompsat-3a",
+    "constellation": "kompsat-3",
+    "mission": "kompsat-3",
+    "instruments": [
+      "aeiss-a"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.55,
+    "eo:cloud_cover": 0.0,
+    "sat:absolute_orbit": 32047,
+    "sat:relative_orbit": 32047,
+    "proj:epsg": 32630,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 30N\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM30N\", AUTHORITY[\"EPSG\", \"32630\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", -3], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 0], AUTHORITY[\"EPSG\", \"32630\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 31.332785165,
+    "view:azimuth": 8.968590413,
+    "view:sun_azimuth": 196.30544163613845,
+    "view:sun_elevation": 28.68378454853847,
+    "processing:level": "L1G",
+    "processing:software": {
+      "PMS": "HPLevelProcessor_K3A_v1.2_2020-12-14"
+    },
+    "product_type": "PAN_MS_L1G",
+    "title": "Kompsat-3A AEISS-A L1G 13/01/2021 13:29:19"
+  },
+  "bbox": [
+    -5.420683142,
+    35.519820993,
+    -5.222938753,
+    35.681708536
+  ],
+  "assets": {
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_th.jpg",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_th.jpg",
+      "file:size": 5471
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_br.jpg",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_br.jpg",
+      "file:size": 236600
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_Aux.xml",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_Aux.xml",
+      "file:size": 56911
+    },
+    "PAN": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Pan 675nm radiance",
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_P.tif",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_P.tif",
+      "file:size": 0,
+      "gsd": 0.55,
+      "proj:shape": [
+        31840,
+        31920
+      ],
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "common_name": "pan",
+          "center_wavelength": 0.675
+        }
+      ]
+    },
+    "MS1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Blue 4850nm radiance",
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_B.tif",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_B.tif",
+      "file:size": 0,
+      "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.0362,
+          "offset": -22.1416
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "MS1",
+          "common_name": "blue",
+          "center_wavelength": 4.85,
+          "solar_illumination": 2001.0
+        }
+      ]
+    },
+    "MS2": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Green 5600nm radiance",
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_G.tif",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_G.tif",
+      "file:size": 0,
+      "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.0249,
+          "offset": -14.021
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "MS2",
+          "common_name": "green",
+          "center_wavelength": 5.6,
+          "solar_illumination": 1875.0
+        }
+      ]
+    },
+    "MS3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Red 6600nm radiance",
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_R.tif",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_R.tif",
+      "file:size": 0,
+      "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.0229,
+          "offset": -13.0457
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "MS3",
+          "common_name": "red",
+          "center_wavelength": 6.6,
+          "solar_illumination": 1525.0
+        }
+      ]
+    },
+    "MS4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Near Infrared 8300nm radiance",
+      "href": "data/K3A_20210113132915_32047_00039626_L1G/K3A_20210113132915_32047_00039626_L1G_N.tif",
+      "filename": "K3A_20210113132915_32047_00039626_L1G_N.tif",
+      "file:size": 0,
+      "gsd": 2.2,
+      "proj:shape": [
+        7960,
+        7980
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.013,
+          "offset": -10.2834
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "MS4",
+          "common_name": "nir",
+          "center_wavelength": 8.3,
+          "solar_illumination": 1027.0
+        }
+      ]
+    }
+  },
+  "links": []
+}

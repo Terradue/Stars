@@ -23,7 +23,7 @@ namespace Terradue.Stars.Services.Model.Atom
         public int Priority { get; set; }
         public string Key { get => "Atom"; set { } }
 
-        public string Label => "Atom";
+        public string Label => "Atom Native Router";
 
         public bool CanRoute(IResource node)
         {

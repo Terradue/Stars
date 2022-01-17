@@ -1,0 +1,222 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          57.5838,
+          -20.8196
+        ],
+        [
+          57.9211,
+          -20.8858
+        ],
+        [
+          57.9953,
+          -20.5724
+        ],
+        [
+          57.6587,
+          -20.5064
+        ],
+        [
+          57.5838,
+          -20.8196
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2020-08-22T05:16:13.087512Z",
+    "end_datetime": "2020-08-22T05:16:18.244874Z",
+    "datetime": "2020-08-22T05:16:13.087512Z",
+    "created": "2020-08-24T17:41:58.159829Z",
+    "platform": "vrss-1",
+    "mission": "vrss-1",
+    "instruments": [
+      "mss-2"
+    ],
+    "sensor_type": "optical",
+    "gsd": 10.0,
+    "title": "VRSS-1 MSS-2 L2B 22/08/2020 05:16:13",
+    "sat:absolute_orbit": 42593,
+    "proj:epsg": 32740,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 40S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM40S\", AUTHORITY[\"EPSG\", \"32740\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32740\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 21.348473,
+    "view:sun_azimuth": 56.599,
+    "view:sun_elevation": 36.661,
+    "processing:level": "L2B"
+  },
+  "bbox": [
+    57.5838,
+    -20.8858,
+    57.9953,
+    -20.5064
+  ],
+  "assets": {
+    "band-1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_1.tif",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_1.tif",
+      "file:size": 1,
+      "proj:shape": [
+        4202,
+        3979
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.2264185119775393,
+          "offset": -13.763981569533124
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-1",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1976.417847
+        }
+      ]
+    },
+    "band-2": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_2.tif",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_2.tif",
+      "file:size": 1,
+      "proj:shape": [
+        4202,
+        3979
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.2041733022989914,
+          "offset": -7.889256196659725
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-2",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "solar_illumination": 1863.542725
+        }
+      ]
+    },
+    "band-3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_3.tif",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_3.tif",
+      "file:size": 1,
+      "proj:shape": [
+        4202,
+        3979
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.1825517077712262,
+          "offset": -6.03698497599445
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-3",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1542.293457
+        }
+      ]
+    },
+    "band-4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_4.tif",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_4.tif",
+      "file:size": 1,
+      "proj:shape": [
+        4202,
+        3979
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.251426847358761,
+          "offset": -5.053679631911096
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-4",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "solar_illumination": 1073.072144
+        }
+      ]
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "title": "Browse image",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182.jpg",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182.jpg",
+      "file:size": 387321
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Thumbnail image",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_THUMB.jpg",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_THUMB.jpg",
+      "file:size": 17046
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182.xml",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182.xml",
+      "file:size": 5349
+    },
+    "metadata-addition": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Additional metadata",
+      "href": "data/a5_20082465000043/VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_ADDITION.xml",
+      "filename": "VRSS-1_MSS-2_0698_0240_20200822_L2B_824172452182_ADDITION.xml",
+      "file:size": 30576
+    }
+  },
+  "links": []
+}

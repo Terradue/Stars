@@ -1,0 +1,122 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CBERS_4A_WFI_20200801_221_156_L4_BAND15",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -68.909668,
+          -37.221943
+        ],
+        [
+          -62.858375,
+          -37.369654
+        ],
+        [
+          -62.870086,
+          -29.919749
+        ],
+        [
+          -68.424042,
+          -29.808218
+        ],
+        [
+          -68.909668,
+          -37.221943
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2020-08-01T14:31:52.33637Z",
+    "end_datetime": "2020-08-01T14:33:40.74086Z",
+    "datetime": "2020-08-01T14:32:46.53386Z",
+    "created": "2020-08-02T16:54:34.864819Z",
+    "platform": "cbers-4a",
+    "mission": "cbers-4a",
+    "instruments": [
+      "wfi"
+    ],
+    "sensor_type": "optical",
+    "gsd": 55.0,
+    "title": "cbers-4a L4 01/08/2020 14:32:46",
+    "eo:bands": [
+      {
+        "name": "band-15-left",
+        "common_name": "green",
+        "center_wavelength": 0.555
+      },
+      {
+        "name": "band-15-right",
+        "common_name": "green",
+        "center_wavelength": 0.555
+      }
+    ],
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 221156,
+    "view:sun_azimuth": 31.4597,
+    "view:sun_elevation": 32.501,
+    "processing:level": "L4"
+  },
+  "bbox": [
+    -68.909668,
+    -37.369654,
+    -62.858375,
+    -29.808218
+  ],
+  "assets": {
+    "band-15-left": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND15/CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND15.tif",
+      "filename": "CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND15.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "band-15-left",
+          "common_name": "green",
+          "center_wavelength": 0.555
+        }
+      ]
+    },
+    "band-15-right": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND15/CBERS_4A_WFI_20200801_221_156_L4_RIGHT_BAND15.tif",
+      "filename": "CBERS_4A_WFI_20200801_221_156_L4_RIGHT_BAND15.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "band-15-right",
+          "common_name": "green",
+          "center_wavelength": 0.555
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND15/CBERS_4A_WFI_20200801_221_156_L4_BAND15.xml",
+      "filename": "CBERS_4A_WFI_20200801_221_156_L4_BAND15.xml",
+      "file:size": 154085
+    }
+  },
+  "links": []
+}

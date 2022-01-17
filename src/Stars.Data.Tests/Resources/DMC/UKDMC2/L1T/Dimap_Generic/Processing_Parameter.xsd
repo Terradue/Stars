@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- oct. 19, 2004 -->
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" version="1.1.2" xmlns:dim="http://www.spotimage.fr/Dimap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xsd:annotation>
+		<xsd:documentation source="schema">
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:include schemaLocation="Dimap_Common.xsd"/>
+	<xsd:element id="Processing_Parameter" name="Processing_Parameter" type="t_Processing_Parameter">
+		<xsd:annotation>
+			<xsd:documentation source="Processing_Parameter">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_Processing_Parameter" name="t_Processing_Parameter">
+		<xsd:all>
+			<xsd:element ref="PROC_PARAMETER_DESC"/>
+			<xsd:element ref="PROC_PARAMETER_VALUE"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:element id="PROC_PARAMETER_DESC" name="PROC_PARAMETER_DESC" type="t_PROC_PARAMETER_DESC">
+		<xsd:annotation>
+			<xsd:documentation source="PROC_PARAMETER_DESC">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType id="t_PROC_PARAMETER_DESC" name="t_PROC_PARAMETER_DESC">
+		<xsd:restriction base="String">
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element id="PROC_PARAMETER_VALUE" name="PROC_PARAMETER_VALUE" type="t_PROC_PARAMETER_VALUE">
+		<xsd:annotation>
+			<xsd:documentation source="PROC_PARAMETER_VALUE">
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType id="t_PROC_PARAMETER_VALUE" name="t_PROC_PARAMETER_VALUE">
+		<xsd:complexContent>
+			<xsd:extension base="Text"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

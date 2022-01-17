@@ -1,0 +1,165 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "GE01N47_736527E130_9631942021031800000000MS00",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          130.841111111111,
+          47.6491666666667
+        ],
+        [
+          131.085277777778,
+          47.6491666666667
+        ],
+        [
+          131.085277777778,
+          47.8238888888889
+        ],
+        [
+          130.841111111111,
+          47.8238888888889
+        ],
+        [
+          130.841111111111,
+          47.6491666666667
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "platform": "geoeye-1",
+    "constellation": "geoeye-1",
+    "mission": "geoeye-1",
+    "instruments": [
+      "msi"
+    ],
+    "sensor_type": "optical",
+    "gsd": 2.0,
+    "datetime": "2021-03-18T02:12:24Z",
+    "created": "2021-03-18T02:12:24Z",
+    "eo:cloud_cover": 0.0,
+    "view:sun_azimuth": 156.6,
+    "view:sun_elevation": 39.1,
+    "proj:epsg": null,
+    "processing:level": "LV1B",
+    "title": "Geoeye-1 MSI LV1B 18/03/2021 02:12:24"
+  },
+  "bbox": [
+    130.841111111111,
+    47.6491666666667,
+    131.085277777778,
+    47.8238888888889
+  ],
+  "assets": {
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GE01N47_736527E130_9631942021031800000000MS00/GE01N47_736527E130_9631942021031800000000MS00_BU003002001.jpg",
+      "filename": "GE01N47_736527E130_9631942021031800000000MS00_BU003002001.jpg",
+      "file:size": 155840
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GE01N47_736527E130_9631942021031800000000MS00/GE01N47_736527E130_9631942021031800000000MS00_DU003002001.txt",
+      "filename": "GE01N47_736527E130_9631942021031800000000MS00_DU003002001.txt",
+      "file:size": 1948
+    },
+    "bluegreenrednir": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/GE01N47_736527E130_9631942021031800000000MS00/GE01N47_736527E130_9631942021031800000000MS00_GU003002001.tif",
+      "filename": "GE01N47_736527E130_9631942021031800000000MS00_GU003002001.tif",
+      "file:size": 1,
+      "gsd": 2.0,
+      "proj:shape": [
+        9216,
+        10240
+      ],
+      "eo:bands": [
+        {
+          "name": "blue",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "solar_illumination": 1993.18,
+          "full_width_half_max": 0.03
+        },
+        {
+          "name": "green",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "solar_illumination": 1828.83,
+          "full_width_half_max": 0.03
+        },
+        {
+          "name": "red",
+          "common_name": "red",
+          "center_wavelength": 0.673,
+          "solar_illumination": 1491.49,
+          "full_width_half_max": 0.03
+        },
+        {
+          "name": "nir08",
+          "common_name": "nir08",
+          "center_wavelength": 0.85,
+          "solar_illumination": 1022.58,
+          "full_width_half_max": 0.03
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.15652844999999999,
+          "offset": -4.537
+        },
+        {
+          "scale": 0.1007419,
+          "offset": -4.175
+        },
+        {
+          "scale": 0.1616161485142857,
+          "offset": -3.754
+        },
+        {
+          "scale": 0.05670769999999999,
+          "offset": -3.87
+        }
+      ]
+    },
+    "rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GE01N47_736527E130_9631942021031800000000MS00/vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.RPB",
+      "filename": "vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.RPB",
+      "file:size": 1862
+    },
+    "manifest": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GE01N47_736527E130_9631942021031800000000MS00/vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.XML",
+      "filename": "vendor_metadata/21MAR18021224-M1BS-505570424020_01_P001.XML",
+      "file:size": 1155720
+    }
+  },
+  "links": []
+}

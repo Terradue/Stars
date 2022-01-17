@@ -1,0 +1,140 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VIS1_PAN_20210114224140_ORTP_S105354_1e08",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          178.2862924039,
+          -17.21733544498
+        ],
+        [
+          178.0220416422,
+          -17.26611040589
+        ],
+        [
+          178.0443565247,
+          -17.37595217424
+        ],
+        [
+          178.0642179943,
+          -17.46986767141
+        ],
+        [
+          178.064904396,
+          -17.46986399656
+        ],
+        [
+          178.3269672421,
+          -17.42141743123
+        ],
+        [
+          178.2862924039,
+          -17.21733544498
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-01-14T22:41:40Z",
+    "start_datetime": "2021-01-14T22:41:40Z",
+    "end_datetime": "2021-01-14T22:41:49Z",
+    "created": "2021-01-26T00:00:00Z",
+    "platform": "vision-1",
+    "constellation": "dmc",
+    "mission": "vision-1",
+    "instruments": [
+      "s-1"
+    ],
+    "sensor_type": "optical",
+    "gsd": 1.0,
+    "title": "Vision-1 S-1  14/01/2021 22:41:40",
+    "sat:orbit_state": "ascending",
+    "proj:epsg": 16160,
+    "proj:shape": [
+      37241,
+      31955
+    ],
+    "view:azimuth": 27.13387868873,
+    "view:sun_azimuth": 103.4175468101,
+    "view:sun_elevation": 67.32504132054,
+    "view:incidence_angle": 29.85796240132,
+    "processing:software": {
+      "Keystone": "4.8.8"
+    }
+  },
+  "bbox": [
+    178.0220416422,
+    -17.46986767141,
+    178.3269672421,
+    -17.21733544498
+  ],
+  "assets": {
+    "composite": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Composite Scaled Radiance Orthorectified ",
+      "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
+      "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "PAN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "common_name": "pan",
+          "solar_illumination": 1830.15
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/DIM_VIS1_PAN_20210114224140_ORTP_S105354_1e08_Meta.xml",
+      "filename": "DIM_VIS1_PAN_20210114224140_ORTP_S105354_1e08_Meta.xml",
+      "file:size": 17117
+    },
+    "overview": {
+      "type": "image/tiff",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08_Preview.tif",
+      "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08_Preview.tif",
+      "file:size": 0
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08_Icon.jpg",
+      "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08_Icon.jpg",
+      "file:size": 0
+    }
+  },
+  "links": []
+}

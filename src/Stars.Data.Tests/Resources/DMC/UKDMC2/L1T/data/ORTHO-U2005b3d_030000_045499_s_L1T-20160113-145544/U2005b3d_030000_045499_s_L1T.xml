@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Metadata_Id>
+        <METADATA_FORMAT version="1.1">DIMAP</METADATA_FORMAT>
+        <METADATA_PROFILE>DMCii</METADATA_PROFILE>
+    </Metadata_Id>
+    <Dataset_Id>
+        <DATASET_NAME>U2005b3d_030000_045499_s_L1T</DATASET_NAME>
+        <COPYRIGHT>(c) COPYRIGHT, DMC International Imaging Ltd. (DMCii).  All rights reserved.</COPYRIGHT>
+        <DATASET_TN_PATH href="U2005b3d_030000_045499_s_L1T_thumb.jpg"/>
+        <DATASET_QL_PATH href="U2005b3d_030000_045499_s_L1T_browse.jpg"/>
+    </Dataset_Id>
+    <Production>
+        <DATASET_PRODUCER_NAME>DMC International Imaging Ltd</DATASET_PRODUCER_NAME>
+        <DATASET_PRODUCER_URL href="http://www.dmcii.com"/>
+        <DATASET_PRODUCTION_DATE>2016-01-13</DATASET_PRODUCTION_DATE>
+        <PRODUCT_TYPE>L1T</PRODUCT_TYPE>
+    </Production>
+    <Quality_Assessment>
+        <QUALITY_TABLES version="1.0">SPACEMETRIC</QUALITY_TABLES>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>Number of control points</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:NGCP</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE>47</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>Root Mean Square residual error X component</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:RMSX</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">12.2</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>Root Mean Square residual error Y component</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:RMSY</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">7.16</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>CE90</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:CE90</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">20.77328</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>CE95</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:CE95</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">23.693736</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+    </Quality_Assessment>
+    <Dataset_Use>
+        <DATASET_CONTENT/>
+    </Dataset_Use>
+    <Data_Processing>
+        <GEOMETRIC_PROCESSING>ORTHORECTIFIED</GEOMETRIC_PROCESSING>
+        <RADIOMETRIC_PROCESSING>SCALED RADIANCE</RADIOMETRIC_PROCESSING>
+    </Data_Processing>
+    <Coordinate_Reference_System>
+        <GEO_TABLES>EPSG</GEO_TABLES>
+        <Horizontal_CS>
+            <HORIZONTAL_CS_CODE>EPSG:32629</HORIZONTAL_CS_CODE>
+            <HORIZONTAL_CS_TYPE>PROJECTED</HORIZONTAL_CS_TYPE>
+            <HORIZONTAL_CS_NAME>WGS 84 / UTM zone 29N</HORIZONTAL_CS_NAME>
+            <Coordinate_Axis>
+                <AXIS1_NAME>Easting</AXIS1_NAME>
+                <AXIS2_NAME>Northing</AXIS2_NAME>
+                <AXIS1_ORIENTATION>EAST</AXIS1_ORIENTATION>
+                <AXIS2_ORIENTATION>NORTH</AXIS2_ORIENTATION>
+            </Coordinate_Axis>
+            <Projection>
+                <PROJECTION_NAME>UTM zone 29N</PROJECTION_NAME>
+                <PROJECTION_CODE>EPSG:16029</PROJECTION_CODE>
+                <Projection_CT_Method>
+                    <PROJECTION_CT_NAME>Transverse Mercator</PROJECTION_CT_NAME>
+                    <PROJECTION_CT_CODE>EPSG:9807</PROJECTION_CT_CODE>
+                    <Projection_Parameters>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>Latitude_of_natural_origin</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="DEG">0.0</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>Longitude_of_natural_origin</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="DEG">-9.0</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>Scale_factor_at_natural_origin</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE>0.9996</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>False_easting</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="M">500000.0</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>False_northing</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="M">0.0</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                    </Projection_Parameters>
+                </Projection_CT_Method>
+            </Projection>
+            <Geographic_CS>
+                <GEOGRAPHIC_CS_NAME>WGS 84</GEOGRAPHIC_CS_NAME>
+                <GEOGRAPHIC_CS_CODE>EPSG:4326</GEOGRAPHIC_CS_CODE>
+                <Horizontal_Datum>
+                    <HORIZONTAL_DATUM_NAME>World Geodetic System 1984</HORIZONTAL_DATUM_NAME>
+                    <HORIZONTAL_DATUM_CODE>EPSG:6326</HORIZONTAL_DATUM_CODE>
+                    <Ellipsoid>
+                        <ELLIPSOID_NAME>WGS 84</ELLIPSOID_NAME>
+                        <ELLIPSOID_CODE>EPSG:7030</ELLIPSOID_CODE>
+                        <Ellipsoid_Parameters>
+                            <ELLIPSOID_MAJOR_AXIS unit="M">6378137.0</ELLIPSOID_MAJOR_AXIS>
+                            <ELLIPSOID_MINOR_AXIS unit="M">6356752.314245</ELLIPSOID_MINOR_AXIS>
+                        </Ellipsoid_Parameters>
+                    </Ellipsoid>
+                    <Prime_Meridian>
+                        <PRIME_MERIDIAN_NAME>Greenwich</PRIME_MERIDIAN_NAME>
+                        <PRIME_MERIDIAN_CODE>EPSG:8901</PRIME_MERIDIAN_CODE>
+                        <PRIME_MERIDIAN_OFFSET unit="DEG">0.0</PRIME_MERIDIAN_OFFSET>
+                    </Prime_Meridian>
+                </Horizontal_Datum>
+            </Geographic_CS>
+        </Horizontal_CS>
+    </Coordinate_Reference_System>
+    <Geoposition>
+        <Geoposition_Insert>
+            <ULXMAP unit="M">369391.0</ULXMAP>
+            <ULYMAP unit="M">1493349.0</ULYMAP>
+            <XDIM unit="M">22.0</XDIM>
+            <YDIM unit="M">22.0</YDIM>
+        </Geoposition_Insert>
+    </Geoposition>
+    <Raster_CS>
+        <RASTER_CS_TYPE>POINT</RASTER_CS_TYPE>
+    </Raster_CS>
+    <Dataset_Frame>
+        <Vertex>
+            <FRAME_X unit="M">682297.0</FRAME_X>
+            <FRAME_Y unit="M">1493349.0</FRAME_Y>
+            <FRAME_LON unit="DEG">-7.315697874912</FRAME_LON>
+            <FRAME_LAT unit="DEG">13.50265236028</FRAME_LAT>
+            <FRAME_COL>14223.0</FRAME_COL>
+            <FRAME_ROW>0.0</FRAME_ROW>
+        </Vertex>
+        <Vertex>
+            <FRAME_X unit="M">369479.0</FRAME_X>
+            <FRAME_Y unit="M">1436501.0</FRAME_Y>
+            <FRAME_LON unit="DEG">-10.20348783477</FRAME_LON>
+            <FRAME_LAT unit="DEG">12.99147347131</FRAME_LAT>
+            <FRAME_COL>4.0</FRAME_COL>
+            <FRAME_ROW>2584.0</FRAME_ROW>
+        </Vertex>
+        <Vertex>
+            <FRAME_X unit="M">432883.0</FRAME_X>
+            <FRAME_Y unit="M">1100759.0</FRAME_Y>
+            <FRAME_LON unit="DEG">-9.612315772194</FRAME_LON>
+            <FRAME_LAT unit="DEG">9.957350192923</FRAME_LAT>
+            <FRAME_COL>2886.0</FRAME_COL>
+            <FRAME_ROW>17845.0</FRAME_ROW>
+        </Vertex>
+        <Vertex>
+            <FRAME_X unit="M">747791.0</FRAME_X>
+            <FRAME_Y unit="M">1156089.0</FRAME_Y>
+            <FRAME_LON unit="DEG">-6.73640774887</FRAME_LON>
+            <FRAME_LAT unit="DEG">10.45030818268</FRAME_LAT>
+            <FRAME_COL>17200.0</FRAME_COL>
+            <FRAME_ROW>15330.0</FRAME_ROW>
+        </Vertex>
+    </Dataset_Frame>
+    <Raster_Encoding>
+        <NBITS>8</NBITS>
+        <DATA_TYPE>BYTE</DATA_TYPE>
+        <BYTEORDER>I</BYTEORDER>
+    </Raster_Encoding>
+    <Data_Access>
+        <DATA_FILE_FORMAT>GEOTIFF</DATA_FILE_FORMAT>
+        <Data_File>
+            <DATA_FILE_PATH href="U2005b3d_030000_045499_s_L1T.tif"/>
+        </Data_File>
+    </Data_Access>
+    <Raster_Dimensions>
+        <NCOLS>17210</NCOLS>
+        <NROWS>17850</NROWS>
+        <NBANDS>3</NBANDS>
+    </Raster_Dimensions>
+    <Image_Interpretation>
+        <Spectral_Band_Info>
+            <BAND_INDEX>1</BAND_INDEX>
+            <BAND_DESCRIPTION>NIR</BAND_DESCRIPTION>
+            <PHYSICAL_GAIN>1.4237047959488924</PHYSICAL_GAIN>
+            <PHYSICAL_BIAS>16.715571904750256</PHYSICAL_BIAS>
+            <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+        </Spectral_Band_Info>
+        <Spectral_Band_Info>
+            <BAND_INDEX>2</BAND_INDEX>
+            <BAND_DESCRIPTION>Red</BAND_DESCRIPTION>
+            <PHYSICAL_GAIN>1.4125939046816456</PHYSICAL_GAIN>
+            <PHYSICAL_BIAS>18.13352421041051</PHYSICAL_BIAS>
+            <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+        </Spectral_Band_Info>
+        <Spectral_Band_Info>
+            <BAND_INDEX>3</BAND_INDEX>
+            <BAND_DESCRIPTION>Green</BAND_DESCRIPTION>
+            <PHYSICAL_GAIN>1.7182582768158448</PHYSICAL_GAIN>
+            <PHYSICAL_BIAS>29.810625525690778</PHYSICAL_BIAS>
+            <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+        </Spectral_Band_Info>
+    </Image_Interpretation>
+    <Image_Display>
+        <Band_Display_Order>
+            <RED_CHANNEL>1</RED_CHANNEL>
+            <GREEN_CHANNEL>2</GREEN_CHANNEL>
+            <BLUE_CHANNEL>3</BLUE_CHANNEL>
+        </Band_Display_Order>
+        <Special_Value>
+            <SPECIAL_VALUE_INDEX>0</SPECIAL_VALUE_INDEX>
+            <SPECIAL_VALUE_TEXT>nodata</SPECIAL_VALUE_TEXT>
+        </Special_Value>
+        <Band_Statistics>
+            <BAND_INDEX>1</BAND_INDEX>
+            <STX_LIN_MIN>49.503276018282705</STX_LIN_MIN>
+            <STX_LIN_MAX>122.71703284792606</STX_LIN_MAX>
+            <STX_STDV>14.642751365928671</STX_STDV>
+            <STX_MEAN>86.11015443310438</STX_MEAN>
+            <STX_MIN>1.0</STX_MIN>
+            <STX_MAX>254.0</STX_MAX>
+        </Band_Statistics>
+        <Band_Statistics>
+            <BAND_INDEX>2</BAND_INDEX>
+            <STX_LIN_MIN>-20.496885567278138</STX_LIN_MIN>
+            <STX_LIN_MAX>79.0820236882789</STX_LIN_MAX>
+            <STX_STDV>19.915781851111408</STX_STDV>
+            <STX_MEAN>29.29256906050038</STX_MEAN>
+            <STX_MIN>1.0</STX_MIN>
+            <STX_MAX>254.0</STX_MAX>
+        </Band_Statistics>
+        <Band_Statistics>
+            <BAND_INDEX>3</BAND_INDEX>
+            <STX_LIN_MIN>-23.238501104304113</STX_LIN_MIN>
+            <STX_LIN_MAX>102.04326867044537</STX_LIN_MAX>
+            <STX_STDV>25.056353954949895</STX_STDV>
+            <STX_MEAN>39.402383783070626</STX_MEAN>
+            <STX_MIN>1.0</STX_MIN>
+            <STX_MAX>251.0</STX_MAX>
+        </Band_Statistics>
+    </Image_Display>
+    <Dataset_Sources>
+        <Source_Information>
+            <SOURCE_ID>U2005b3d_030000_045499_s</SOURCE_ID>
+            <Coordinate_Reference_System>
+                <GEO_TABLES>EPSG</GEO_TABLES>
+                <Horizontal_CS>
+                    <HORIZONTAL_CS_CODE>EPSG:32629</HORIZONTAL_CS_CODE>
+                    <HORIZONTAL_CS_TYPE>PROJECTED</HORIZONTAL_CS_TYPE>
+                    <HORIZONTAL_CS_NAME>WGS 84 / UTM zone 29N</HORIZONTAL_CS_NAME>
+                </Horizontal_CS>
+            </Coordinate_Reference_System>
+            <Source_Frame>
+                <Vertex>
+                    <FRAME_X unit="M">682307.5514941</FRAME_X>
+                    <FRAME_Y unit="M">1493345.961413</FRAME_Y>
+                    <FRAME_LON unit="DEG">-7.315600608669</FRAME_LON>
+                    <FRAME_LAT unit="DEG">13.50262424141</FRAME_LAT>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">747796.7408423</FRAME_X>
+                    <FRAME_Y unit="M">1156094.772744</FRAME_Y>
+                    <FRAME_LON unit="DEG">-6.736354956238</FRAME_LON>
+                    <FRAME_LAT unit="DEG">10.45035998027</FRAME_LAT>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">432886.7487304</FRAME_X>
+                    <FRAME_Y unit="M">1100751.511364</FRAME_Y>
+                    <FRAME_LON unit="DEG">-9.61228144722</FRAME_LON>
+                    <FRAME_LAT unit="DEG">9.95728252777</FRAME_LAT>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">369475.7572651</FRAME_X>
+                    <FRAME_Y unit="M">1436496.087441</FRAME_Y>
+                    <FRAME_LON unit="DEG">-10.20351751634</FRAME_LON>
+                    <FRAME_LAT unit="DEG">12.99142891981</FRAME_LAT>
+                </Vertex>
+            </Source_Frame>
+            <Scene_Source>
+                <MISSION>UK-DMC</MISSION>
+                <MISSION_INDEX>2</MISSION_INDEX>
+                <INSTRUMENT>SLIM-6-22</INSTRUMENT>
+                <IMAGING_DATE>2014-10-17</IMAGING_DATE>
+                <IMAGING_TIME>10:50:15</IMAGING_TIME>
+                <INCIDENCE_ANGLE unit="DEG">14.03498761405</INCIDENCE_ANGLE>
+                <VIEWING_ANGLE unit="DEG">0.1526433392493</VIEWING_ANGLE>
+                <SUN_AZIMUTH unit="DEG">132.2830908359</SUN_AZIMUTH>
+                <SUN_ELEVATION unit="DEG">59.40359618729</SUN_ELEVATION>
+                <THEORETICAL_RESOLUTION unit="M">22.0</THEORETICAL_RESOLUTION>
+            </Scene_Source>
+            <Quality_Assessment>
+                <QUALITY_TABLES version="1.0">SPACEMETRIC</QUALITY_TABLES>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Scene altitude (meter)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:ALTITUDE</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>661479</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Sensor azimuth at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:SENSOR_AZIMUTH</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>82.67341428663553</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Sensor elevation at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:SENSOR_ELEVATION</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>75.96501238595063</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Number of control points</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:NGCP</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>47</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Root Mean Square residual error X component</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:RMSX</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE unit="M">12.2</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Root Mean Square residual error Y component</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:RMSY</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE unit="M">7.16</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+            </Quality_Assessment>
+        </Source_Information>
+    </Dataset_Sources>
+</Dimap_Document>

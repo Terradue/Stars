@@ -1,14 +1,18 @@
+using System;
+using System.IO;
+using System.Runtime.Loader;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Terradue.Systems.Charter.Supervisor.Tests.Fixtures;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Xunit;
 using Xunit.DependencyInjection;
 using Xunit.DependencyInjection.Logging;
 
-namespace Terradue.Systems.Charter.Supervisor
+namespace Stars.Tests
 {
     public class Startup
     {
@@ -16,7 +20,7 @@ namespace Terradue.Systems.Charter.Supervisor
 
         public void ConfigureServices(IServiceCollection services)
         {
-            Configuration = GetTestConfiguration();
+            Configuration = GetApplicationConfiguration();
             services.AddLogging(builder =>
                 {
                     builder.AddConfiguration(Configuration.GetSection("Logging"));
@@ -29,17 +33,30 @@ namespace Terradue.Systems.Charter.Supervisor
             awsOptions.Credentials = awsCredentials;
             services.AddDefaultAWSOptions(awsOptions);
             services.Configure<LocalStackOptions>(Configuration.GetSection("LocalStack"));
+            services.AddSingleton<S3StreamingCarrier, S3StreamingCarrier>();
+            services.AddStarsManagedServices((provider, config) => config
+                .UseGlobalConfiguration(Configuration)
+            );
+            services.LoadConfiguredStarsPlugin(_ => AssemblyLoadContext.Default);
         }
 
-        public void Configure(ILoggerFactory loggerfactory, ITestOutputHelperAccessor accessor)
+        public void Configure(IServiceProvider provider, ILoggerFactory loggerFactory, ITestOutputHelperAccessor accessor)
         {
-            loggerfactory.AddProvider(new XunitTestOutputLoggerProvider(accessor));
+            Assert.NotNull(accessor);
+            loggerFactory.AddProvider(new XunitTestOutputLoggerProvider(accessor, delegate { return true; }));
+
+            ILogger<Startup> logger = provider.GetService<ILogger<Startup>>();
+            var root = (IConfigurationRoot)Configuration;
+            logger.LogInformation(root.GetDebugView());
         }
 
-        public IConfiguration GetTestConfiguration()
+        public IConfiguration GetApplicationConfiguration()
         {
+            var configFile = new FileInfo(Path.Join(@"../../../../Stars.Data", "stars-data.json"));
+            configFile.OpenRead();
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true)
+                .AddNewtonsoftJsonFile("testsettings.json", optional: true)
+                .AddNewtonsoftJsonFile(configFile.FullName, optional: false, reloadOnChange: false)
                 .AddEnvironmentVariables()
                 .Build();
 

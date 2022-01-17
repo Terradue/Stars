@@ -1,0 +1,100 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CBERS_4_AWFI_20201031_003_075_L2_BAND15",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          105.149248,
+          18.27768
+        ],
+        [
+          115.095171,
+          18.323501
+        ],
+        [
+          115.344841,
+          26.550512
+        ],
+        [
+          104.793931,
+          26.481481
+        ],
+        [
+          105.149248,
+          18.27768
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2020-10-31T03:15:42.830809Z",
+    "end_datetime": "2020-10-31T03:17:37.001437Z",
+    "datetime": "2020-10-31T03:16:39.935702Z",
+    "created": "2020-11-01T03:40:45.332637Z",
+    "platform": "cbers-4",
+    "mission": "cbers-4",
+    "instruments": [
+      "awfi"
+    ],
+    "sensor_type": "optical",
+    "gsd": 64.0,
+    "title": "cbers-4 L2 31/10/2020 03:16:39",
+    "eo:bands": [
+      {
+        "name": "band-15",
+        "common_name": "green",
+        "center_wavelength": 0.555
+      }
+    ],
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 3075,
+    "view:sun_azimuth": 156.12,
+    "view:sun_elevation": 49.6736,
+    "processing:level": "L2"
+  },
+  "bbox": [
+    104.793931,
+    18.27768,
+    115.344841,
+    26.550512
+  ],
+  "assets": {
+    "band-15": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4_AWFI_20201031_003_075_L2_BAND15/CBERS_4_AWFI_20201031_003_075_L2_BAND15.tif",
+      "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND15.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "band-15",
+          "common_name": "green",
+          "center_wavelength": 0.555
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CBERS_4_AWFI_20201031_003_075_L2_BAND15/CBERS_4_AWFI_20201031_003_075_L2_BAND15.xml",
+      "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND15.xml",
+      "file:size": 82952
+    }
+  },
+  "links": []
+}

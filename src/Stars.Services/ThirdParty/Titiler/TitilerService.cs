@@ -15,8 +15,9 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
         private readonly IOptions<TitilerConfiguration> options;
         private readonly ILogger<TitilerService> logger;
 
-        private static string[] TITILER_VALID_TYPE = new string[6] {
+        private static string[] TITILER_VALID_TYPE = new string[7] {
             "image/vnd.stac.geotiff; cloud-optimized=true",
+            "image/tiff; application=geotiff",
             "image/tiff",
             "image/x.geotiff",
             "image/jp2",
@@ -46,7 +47,7 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
                                                             .Where(a => a.Value.Roles != null)
                                                             .Where(a => a.Value.Roles.Contains("overview") ||
                                                                         a.Value.Roles.Contains("visual"))
-                                                            .Where(a => a.Key == "overview-trc")
+                                                            .Where(a => a.Key.Contains("overview"))
                                                             .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
                                                             .Take(1)
                                                             .ToDictionary(a => a.Key, a => a.Value);
@@ -123,8 +124,8 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             return new Uri(this.Uri,
                 string.Format("/stac/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?url={0}&assets={1}&rescale={2}&color_formula=&resampling_method=average",
                     finalItemUri,
-                    string.Join(',', overviewAssets.Keys.Take(3)),
-                    string.Join(',', GetScale(overviewAssets.Values.First())),
+                    string.Join(",", overviewAssets.Keys.Take(3)),
+                    string.Join(",", GetScale(overviewAssets.Values.First())),
                     GetColorFormula(overviewAssets)
                     ));
         }

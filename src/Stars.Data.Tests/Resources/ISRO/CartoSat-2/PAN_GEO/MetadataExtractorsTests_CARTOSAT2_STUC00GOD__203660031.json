@@ -1,0 +1,110 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CARTOSAT2_STUC00GOD__203660031",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          106.4116103,
+          -6.00509927
+        ],
+        [
+          106.50195592,
+          -6.00542096
+        ],
+        [
+          106.50101932,
+          -6.0909856
+        ],
+        [
+          106.41243947,
+          -6.09025252
+        ],
+        [
+          106.4116103,
+          -6.00509927
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2018-12-28T02:15:56.0151Z",
+    "created": "2020-06-26T14:43:37Z",
+    "platform": "cartosat-2",
+    "constellation": "cartosat-2",
+    "mission": "cartosat-2",
+    "instruments": [
+      "pan"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.390625,
+    "proj:epsg": null,
+    "view:azimuth": 191.79635279,
+    "view:incidence_angle": 15.74005824,
+    "processing:level": "GEO",
+    "title": "Cartosat-2 PAN GEO 28/12/2018 02:15:56"
+  },
+  "bbox": [
+    106.4116103,
+    -6.0909856,
+    106.50195592,
+    -6.00509927
+  ],
+  "assets": {
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/203660031/203660031_P_MET.TXT",
+      "filename": "203660031_P_MET.TXT",
+      "file:size": 2209
+    },
+    "geodata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/203660031/203660031_P_RPC.TXT",
+      "filename": "203660031_P_RPC.TXT",
+      "file:size": 3628
+    },
+    "pan": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/203660031/203660031_P.tif",
+      "filename": "203660031_P.tif",
+      "file:size": 0,
+      "proj:shape": [
+        10048,
+        9536
+      ],
+      "eo:bands": [
+        {
+          "name": "pan",
+          "common_name": "pan"
+        }
+      ]
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/203660031/BANDP.jpg",
+      "filename": "BANDP.jpg",
+      "file:size": 0
+    }
+  },
+  "links": []
+}

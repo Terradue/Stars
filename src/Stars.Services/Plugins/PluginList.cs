@@ -21,6 +21,18 @@ namespace Terradue.Stars.Services.Plugins
             }
         }
 
+        public PluginList(IEnumerable<KeyValuePair<string, T>> plugins)
+        {
+            if (plugins != null)
+            {
+                foreach (var plugin in plugins)
+                {
+                    this.Remove(plugin.Key);
+                    this.Add(plugin.Key, plugin.Value);
+                }
+            }
+        }
+
         public new ValueCollection Values
         {
             get

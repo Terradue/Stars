@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,13 +21,13 @@ namespace Terradue.Stars.Services
             this.serviceProvider = serviceProvider;
         }
 
-
-        public PluginList<T> Plugins
+        /// <summary>
+        /// Return a new plugin list
+        /// </summary>
+        /// <returns></returns>
+        public PluginList<T> GetPlugins()
         {
-            get
-            {
-                return new PluginList<T>(serviceProvider.GetServices<T>());
-            }
+            return new PluginList<T>(serviceProvider.GetServices<T>());
         }
     }
 }

@@ -1,0 +1,221 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          36.788234180166,
+          -1.279994868841
+        ],
+        [
+          36.96414922951,
+          -1.316542624883
+        ],
+        [
+          36.975861335508,
+          -1.258970020457
+        ],
+        [
+          36.799950935118,
+          -1.222437185983
+        ],
+        [
+          36.788234180166,
+          -1.279994868841
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-02-15T03:14:03Z",
+    "created": "2020-02-15T03:14:03Z",
+    "mission": "rcm",
+    "platform": "rcm-3",
+    "instruments": [
+      "sar"
+    ],
+    "sensor_type": "radar",
+    "title": "Rcm-3 GRD HH/VV",
+    "sat:orbit_state": "descending",
+    "sar:instrument_mode": "FSL",
+    "sar:frequency_band": "C",
+    "sar:polarizations": [
+      "HH",
+      "VV"
+    ],
+    "sar:product_type": "GRD",
+    "sar:observation_direction": "right",
+    "sar:center_frequency": 5.404999999449389,
+    "sar:resolution_range": 0.0,
+    "sar:resolution_azimuth": 0.0,
+    "sar:pixel_spacing_range": 0.3300000131130219,
+    "sar:pixel_spacing_azimuth": 0.3300000131130219,
+    "sar:looks_range": 1.0,
+    "sar:looks_azimuth": 1.0,
+    "proj:epsg": null,
+    "proj:shape": [
+      60593,
+      19695
+    ],
+    "view:incidence_angle": 43.887136459350586
+  },
+  "bbox": [
+    36.788234180166,
+    -1.316542624883,
+    36.975861335508,
+    -1.222437185983
+  ],
+  "assets": {
+    "manifest": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/manifest.safe",
+      "filename": "manifest.safe",
+      "file:size": 28243
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/product.xml",
+      "filename": "metadata/product.xml",
+      "file:size": 245843
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/preview/productOverview.png",
+      "filename": "preview/productOverview.png",
+      "file:size": 0
+    },
+    "amplitude-v": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/imagery/1050063_1_CV.tif",
+      "filename": "imagery/1050063_1_CV.tif",
+      "file:size": 0,
+      "polarization": [
+        "VV"
+      ]
+    },
+    "amplitude-h": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/imagery/1050063_1_CH.tif",
+      "filename": "imagery/1050063_1_CH.tif",
+      "file:size": 0,
+      "polarization": [
+        "HH"
+      ]
+    },
+    "calibration-compactPolGainImbalance": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/compactPolGainImbalance.xml",
+      "filename": "metadata/calibration/compactPolGainImbalance.xml",
+      "file:size": 5489
+    },
+    "calibration-lutBeta_CV": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/lutBeta_CV.xml",
+      "filename": "metadata/calibration/lutBeta_CV.xml",
+      "file:size": 1333433
+    },
+    "calibration-lutBeta_CH": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/lutBeta_CH.xml",
+      "filename": "metadata/calibration/lutBeta_CH.xml",
+      "file:size": 1333433
+    },
+    "calibration-noiseLevels_CV": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/noiseLevels_CV.xml",
+      "filename": "metadata/calibration/noiseLevels_CV.xml",
+      "file:size": 10499
+    },
+    "calibration-noiseLevels_CH": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/noiseLevels_CH.xml",
+      "filename": "metadata/calibration/noiseLevels_CH.xml",
+      "file:size": 10499
+    },
+    "calibration-lutGamma_CV": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/lutGamma_CV.xml",
+      "filename": "metadata/calibration/lutGamma_CV.xml",
+      "file:size": 1333433
+    },
+    "calibration-incidenceAngles": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/incidenceAngles.xml",
+      "filename": "metadata/calibration/incidenceAngles.xml",
+      "file:size": 1
+    },
+    "calibration-lutGamma_CH": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/lutGamma_CH.xml",
+      "filename": "metadata/calibration/lutGamma_CH.xml",
+      "file:size": 1333433
+    },
+    "calibration-lutSigma_CV": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/lutSigma_CV.xml",
+      "filename": "metadata/calibration/lutSigma_CV.xml",
+      "file:size": 1333433
+    },
+    "calibration-lutSigma_CH": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/RCM3_OK1048829_PK1050063_1_FSLCP27_20200215_031403_CH_CV_GRD/metadata/calibration/lutSigma_CH.xml",
+      "filename": "metadata/calibration/lutSigma_CH.xml",
+      "file:size": 1333433
+    }
+  },
+  "links": []
+}

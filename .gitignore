@@ -363,3 +363,8 @@ out/
 src/catalog.json
 src/tmp/
 tmp/
+src/MSBuild_Logs/
+
+src/.idea
+src/global.json
+

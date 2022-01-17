@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="LIBRARY/DS_STYLE.XSL" type="text/xsl"?><Dimap_Document xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="0.2" xsi:noNamespaceSchemaLocation="SPOT_list.xsd">
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.12">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>DATASET</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>SINGLE_DATASET</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>English</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Dataset_Identification>
+    <DATASET_NAME>Product Description</DATASET_NAME>
+    <DATASET_ID>1</DATASET_ID>
+  </Dataset_Identification>
+  <Product_Information>
+    <Producer_Information>
+      <PRODUCER_NAME>AIRBUS DS</PRODUCER_NAME>
+      <PRODUCER_URL href="http://www.geo-airbusds.com"/>
+      <PRODUCER_CONTACT>sales@airbus.com</PRODUCER_CONTACT>
+      <PRODUCER_ADDRESS>5 rue des satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</PRODUCER_ADDRESS>
+    </Producer_Information>
+    <Distributor_Information>
+      <DISTRIBUTOR_NAME>AIRBUS DS</DISTRIBUTOR_NAME>
+      <DISTRIBUTOR_URL href="http://www.geo-airbusds.com"/>
+      <DISTRIBUTOR_CONTACT>sales@airbus.com</DISTRIBUTOR_CONTACT>
+      <DISTRIBUTOR_ADDRESS>5 rue des satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</DISTRIBUTOR_ADDRESS>
+    </Distributor_Information>
+    <Delivery_Identification>
+      <PRODUCTION_DATE>2021-02-08T07:54:33.912Z</PRODUCTION_DATE>
+      <DELIVERY_TYPE>NETWORK</DELIVERY_TYPE>
+      <Order_Identification>
+        <CUSTOMER_REFERENCE>C100037</CUSTOMER_REFERENCE>
+        <INTERNAL_REFERENCE>SPOT_PRO_5588528101_20210208074013723_2</INTERNAL_REFERENCE>
+        <COMMERCIAL_REFERENCE>SO21009288</COMMERCIAL_REFERENCE>
+        <COMMENT>17-0236-02-0056/CHARTE_End2 - Cdes Auto</COMMENT>
+      </Order_Identification>
+    </Delivery_Identification>
+  </Product_Information>
+  <Dataset_Components>
+    <Component>
+      <COMPONENT_TITLE>PROD_SPOT6_001</COMPONENT_TITLE>
+      <COMPONENT_TYPE>DIMAP</COMPONENT_TYPE>
+      <COMPONENT_PATH href="PROD_SPOT6_001/SPOT_PROD.XML"/>
+    </Component>
+    <Component>
+      <COMPONENT_TITLE>Digital Documentation about DIMAP format</COMPONENT_TITLE>
+      <COMPONENT_TYPE>ENCAPSULATED</COMPONENT_TYPE>
+      <COMPONENT_PATH href="http://www.intelligence-airbusds.com/en/3030-pleiades-and-spot-6-7-formatdelivery"/>
+    </Component>
+  </Dataset_Components>
+</Dimap_Document>

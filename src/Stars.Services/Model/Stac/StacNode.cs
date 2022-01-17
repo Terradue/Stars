@@ -22,6 +22,8 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             if (stacObject == null)
                 throw new ArgumentNullException("stacObject");
+            if (!uri.IsAbsoluteUri)
+                throw new ArgumentException("STAC uri must be an absolute uri");
             this.stacObject = stacObject;
             this.credentials = credentials;
             this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;
@@ -57,7 +59,7 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 if (!string.IsNullOrEmpty(filename))
                     return filename;
-                if (IsRoot)
+                if (ResourceType == ResourceType.Catalog)
                     return "catalog.json";
                 return Id + ".json";
             }
@@ -85,8 +87,6 @@ namespace Terradue.Stars.Services.Model.Stac
 
 
         public IStacObject StacObject => stacObject;
-
-        public bool IsRoot { get; set; }
 
         public bool CanBeRanged => false;
 

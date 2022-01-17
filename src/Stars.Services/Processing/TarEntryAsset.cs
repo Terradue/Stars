@@ -31,7 +31,7 @@ namespace Terradue.Stars.Services.Processing
             get
             {
                 Dictionary<string, object> props = new Dictionary<string, object>();
-                props.Add("filename", Path.GetFileName(name));
+                props.Add("filename", name);
                 return props;
             }
         }
@@ -54,6 +54,11 @@ namespace Terradue.Stars.Services.Processing
         public Uri Uri => new Uri(name, UriKind.Relative);
 
         public bool CanBeRanged => false;
+
+        public Task CacheHeaders(bool force = false)
+        {
+            return Task.CompletedTask;
+        }
 
         public IStreamable GetStreamable()
         {

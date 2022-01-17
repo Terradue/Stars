@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -21,6 +23,10 @@ namespace Terradue.Stars.Services.Supplier
             this.title = title;
             this.roles = roles;
             this.uri = route.Uri;
+            if (route is IAsset)
+            {
+                properties = new Dictionary<string, object>((route as IAsset).Properties.ToDictionary(x => x.Key, x => x.Value));
+            }
         }
 
         public string Title => title;
@@ -42,6 +48,21 @@ namespace Terradue.Stars.Services.Supplier
         public IStreamable GetStreamable()
         {
             return route as IStreamable;
+        }
+
+        internal void MergeProperties(IReadOnlyDictionary<string, object> props)
+        {
+            foreach (var key in props.Keys)
+            {
+                properties.Remove(key);
+                properties.Add(key, props[key]);
+            }
+        }
+
+        public async Task CacheHeaders(bool force = false)
+        {
+            if ( route is WebRoute )
+                await (route as WebRoute).CacheHeadersAsync(force);
         }
     }
 }

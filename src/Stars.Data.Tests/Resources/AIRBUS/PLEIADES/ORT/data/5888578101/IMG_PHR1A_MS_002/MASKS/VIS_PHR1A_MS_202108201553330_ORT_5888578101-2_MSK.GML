@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask gml:id="DS_PHR1A_202108201553330_FR1_PX_W075N18_1209_01287_imgvis_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <gml:name>Visibility mask from data-strip DS_PHR1A_202108201553330_FR1_PX_W075N18_1209_01287</gml:name>
+
+  <gml:boundedBy>
+    <gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+      <gml:lowerCorner>593407 2020981</gml:lowerCorner>
+      <gml:upperCorner>613675 2035557</gml:upperCorner>
+    </gml:Envelope>
+  </gml:boundedBy>
+
+  <hma:maskMembers>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-0">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>610952 2028020 611036 2028020 611062 2027988 611062 2027916 611036 2027848 611036 2027822 610946 2027822 610946 2028018 610952 2028020</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-1">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>604584 2032022 604674 2032022 604680 2031984 604700 2031962 604716 2031916 604722 2031908 604712 2031870 604674 2031812 604674 2031788 604584 2031786 604584 2032022</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-2">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>594546 2032158 594636 2032158 594648 2032124 594648 2032116 594636 2032094 594636 2032078 594578 2032078 594578 2032092 594546 2032092 594546 2032158</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-3">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>594720 2032670 594810 2032670 594826 2032650 594816 2032624 594810 2032620 594810 2032596 594730 2032596 594734 2032616 594720 2032614 594720 2032670</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-4">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>595616 2032768 595690 2032768 595690 2032726 595618 2032724 595618 2032744 595604 2032744 595604 2032766 595616 2032768</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-5">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>595914 2032908 595952 2032908 595976 2032890 595992 2032870 595952 2032832 595952 2032808 595862 2032808 595862 2032906 595914 2032908</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-6">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>597398 2033596 597446 2033596 597452 2033588 597452 2033566 597458 2033562 597464 2033488 597446 2033456 597446 2033446 597404 2033444 597396 2033458 597356 2033458 597356 2033594 597398 2033596</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-7">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>596386 2033700 596484 2033700 596484 2033662 596478 2033656 596478 2033632 596388 2033630 596386 2033700</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-8">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>596482 2033786 596566 2033786 596564 2033744 596498 2033744 596498 2033762 596482 2033762 596482 2033786</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-9">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>595326 2034362 595418 2034362 595422 2034340 595418 2034282 595392 2034282 595390 2034290 595328 2034290 595326 2034362</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-10">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>595060 2034990 595152 2034990 595166 2034984 595166 2034946 595150 2034932 595150 2034908 595060 2034908 595060 2034990</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-11">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>595500 2035084 595592 2035084 595602 2035078 595600 2035044 595590 2035030 595590 2035016 595546 2035016 595548 2035026 595500 2035024 595500 2035084</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+    <hma:MaskFeature gml:id="visibility-DS_PHR1A_202108201552560_FR1_PX_W075N18_1209_01230-12">
+      <hma:maskType codeSpace="urn:phr:ipu:maskType">VISIBILITY</hma:maskType>
+      <gml:extentOf>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.3:32618">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>595764 2035168 595854 2035168 595854 2035126 595802 2035126 595808 2035136 595790 2035136 595790 2035142 595764 2035142 595764 2035168</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </gml:extentOf>
+    </hma:MaskFeature>
+  </hma:maskMembers>
+
+</hma:Mask>

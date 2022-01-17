@@ -1,0 +1,126 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          134.9049604826155,
+          48.8087443260848
+        ],
+        [
+          134.791936749352,
+          48.3085554974268
+        ],
+        [
+          135.2012715438879,
+          48.2671157556725
+        ],
+        [
+          135.3223948894424,
+          48.7669152933208
+        ],
+        [
+          134.9049604826155,
+          48.8087443260848
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-08-05T21:07:30.187426Z",
+    "start_datetime": "2021-08-05T21:07:30.187426Z",
+    "end_datetime": "2021-08-05T21:07:38.186859Z",
+    "created": "2021-08-06T06:51:01.000000Z",
+    "platform": "tdx-1",
+    "constellation": "tdx-1",
+    "mission": "tdx-1",
+    "instruments": [
+      "x-sar"
+    ],
+    "sensor_type": "radar",
+    "gsd": 6.1615293363776,
+    "title": "TDX-1 SAR EEC SM 103 HH 2021-08-05T21:07:30.187426Z",
+    "sat:absolute_orbit": 61696,
+    "sat:relative_orbit": 103,
+    "sat:orbit_state": "descending",
+    "sat:platform_international_designator": "2019-038D",
+    "proj:epsg": null,
+    "proj:shape": [
+      14000,
+      21500
+    ],
+    "view:sun_azimuth": 188.7238,
+    "view:incidence_angle": 47.672830096823056,
+    "sar:instrument_mode": "SM",
+    "sar:frequency_band": "X",
+    "sar:polarizations": [
+      "HH"
+    ],
+    "sar:product_type": "EEC",
+    "sar:observation_direction": "right",
+    "sar:center_frequency": 9649998797.0,
+    "processing:level": "L1B"
+  },
+  "bbox": [
+    134.791936749352,
+    48.2671157556725,
+    135.3223948894424,
+    48.8087443260848
+  ],
+  "assets": {
+    "amplitude-hh": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/TSX-1.SAR.L1B/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/IMAGEDATA/IMAGE_HH_SRA_strip_016.tif",
+      "filename": "TSX-1.SAR.L1B/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/IMAGEDATA/IMAGE_HH_SRA_strip_016.tif",
+      "file:size": 1,
+      "gsd": 6.1615293363776,
+      "sar:polarizations": [
+        "HH"
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/iif/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/L1B_iif.xml",
+      "filename": "iif/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/L1B_iif.xml",
+      "file:size": 3062
+    },
+    "product-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/TSX-1.SAR.L1B/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738.xml",
+      "filename": "TSX-1.SAR.L1B/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738.xml",
+      "file:size": 298524
+    },
+    "overview": {
+      "type": "image/tiff",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/TSX-1.SAR.L1B/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/PREVIEW/COMPOSITE_QL.tif",
+      "filename": "TSX-1.SAR.L1B/TDX1_SAR__EEC_RE___SM_S_SRA_20210805T210730_20210805T210738/PREVIEW/COMPOSITE_QL.tif",
+      "file:size": 1
+    }
+  },
+  "links": []
+}

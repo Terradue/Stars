@@ -1,0 +1,26 @@
+bandId = "Multi";
+numTiles = 1;
+tileSizeX = 9376;
+tileSizeY = 7623;
+tileUnits = "Pixels";
+tileOverlap = 0;
+BEGIN_GROUP = TILE_1
+	filename = "21SEP14082709-M1BS-014379587010_01_P001.TIF";
+	ULColOffset = 0;
+	ULRowOffset = 0;
+	URColOffset = 9375;
+	URRowOffset = 0;
+	LRColOffset = 9375;
+	LRRowOffset = 7622;
+	LLColOffset = 0;
+	LLRowOffset = 7622;
+	ULLon =     32.69881880;
+	ULLat =     12.55943035;
+	URLon =     32.85371542;
+	URLat =     12.56821815;
+	LRLon =     32.85407042;
+	LRLat =     12.43496568;
+	LLLon =     32.69850487;
+	LLLat =     12.42547685;
+END_GROUP = TILE_1
+END;

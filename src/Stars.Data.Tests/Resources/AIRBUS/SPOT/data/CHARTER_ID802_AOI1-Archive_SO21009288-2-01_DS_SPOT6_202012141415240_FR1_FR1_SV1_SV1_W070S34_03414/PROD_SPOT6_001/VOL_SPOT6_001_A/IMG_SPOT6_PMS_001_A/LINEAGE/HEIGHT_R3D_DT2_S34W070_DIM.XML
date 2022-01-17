@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="HEIGHT_PAS_DT2.xsd">
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.0">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>S6_ORTHO</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>HEIGHT</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Source_Identification>
+    <SOURCE_ID>R3D</SOURCE_ID>
+    <SOURCE_TYPE>DEM</SOURCE_TYPE>
+    <SOURCE_NAME>Reference3D PAS DEM Layer</SOURCE_NAME>
+    <SOURCE_DESCRIPTION>DTED2 Digital Elevation Model</SOURCE_DESCRIPTION>
+  </Source_Identification>
+  <Source_Content>
+    <SOURCE_LOCATION>S34W070</SOURCE_LOCATION>
+  </Source_Content>
+  <Source_Information>
+    <Producer_Information>
+      <PRODUCER_NAME>IGN - AIRBUS DS GEO</PRODUCER_NAME>
+      <PRODUCER_URL href="http://www.geo-airbusds.com"/>
+      <PRODUCER_ADDRESS>5 rue des Satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</PRODUCER_ADDRESS>
+    </Producer_Information>
+  </Source_Information>
+  <Coordinate_Reference_System>
+    <Geodetic_CRS>
+      <GEODETIC_CRS_TYPE>GEOGRAPHIC2D</GEODETIC_CRS_TYPE>
+      <GEODETIC_CRS_NAME>WGS 84</GEODETIC_CRS_NAME>
+      <GEODETIC_CRS_CODE>urn:ogc:def:crs:EPSG::4326</GEODETIC_CRS_CODE>
+    </Geodetic_CRS>
+    <Vertical_CS>
+      <VERTICAL_CRS_TYPE>ORTHOMETRIC</VERTICAL_CRS_TYPE>
+      <VERTICAL_CRS_NAME>EGM96 geoid height</VERTICAL_CRS_NAME>
+      <VERTICAL_CRS_CODE>urn:ogc:def:crs:EPSG::5773</VERTICAL_CRS_CODE>
+    </Vertical_CS>
+  </Coordinate_Reference_System>
+  <Processing_Information>
+    <PROCESSING_LEVEL>ORTHO</PROCESSING_LEVEL>
+    <Adjustment_Method>
+      <VERTICAL_ADJUSTMENT>ELEVATION</VERTICAL_ADJUSTMENT>
+    </Adjustment_Method>
+  </Processing_Information>
+  <Quality_Assessment>
+    <Planimetric_Accuracy_Measurement>
+      <QUALITY_TABLES>DTED</QUALITY_TABLES>
+      <MEASURE_NAME>Absolute Horizontal Accuracy</MEASURE_NAME>
+      <MEASURE_ID>AHA</MEASURE_ID>
+      <MEASURE_TYPE>SPECIFICATION</MEASURE_TYPE>
+      <MEASURE_UNIT>M</MEASURE_UNIT>
+      <MEASURE_CITATION version="5.3">Reference3D Product Description</MEASURE_CITATION>
+      <Quality_Values>
+        <ACCURACY_CE90>15</ACCURACY_CE90>
+      </Quality_Values>
+    </Planimetric_Accuracy_Measurement>
+    <Planimetric_Accuracy_Measurement>
+      <QUALITY_TABLES>DTED</QUALITY_TABLES>
+      <MEASURE_NAME>Relative Horizontal Accuracy</MEASURE_NAME>
+      <MEASURE_ID>RHA</MEASURE_ID>
+      <MEASURE_TYPE>SPECIFICATION</MEASURE_TYPE>
+      <MEASURE_UNIT>M</MEASURE_UNIT>
+      <MEASURE_CITATION version="5.3">Reference3D Product Description</MEASURE_CITATION>
+      <Quality_Values>
+        <ACCURACY_CE90>8</ACCURACY_CE90>
+      </Quality_Values>
+    </Planimetric_Accuracy_Measurement>
+    <Vertical_Accuracy_Measurement>
+      <QUALITY_TABLES>DTED</QUALITY_TABLES>
+      <MEASURE_NAME>Absolute Vertical Accuracy</MEASURE_NAME>
+      <MEASURE_ID>AVA</MEASURE_ID>
+      <MEASURE_TYPE>SPECIFICATION</MEASURE_TYPE>
+      <MEASURE_UNIT>M</MEASURE_UNIT>
+      <MEASURE_CITATION version="5.3">Reference3D Product Description</MEASURE_CITATION>
+      <Quality_Classes>
+        <Quality_Class>
+          <QUALITY_CLASS_NAME>AVA slopes lower to 20 percent</QUALITY_CLASS_NAME>
+          <QUALITY_CLASS_DESC>LE 90 Absolute Vertical Accuracy flat or rolling terrain</QUALITY_CLASS_DESC>
+          <QUALITY_CLASS_VALUE>10</QUALITY_CLASS_VALUE>
+        </Quality_Class>
+        <Quality_Class>
+          <QUALITY_CLASS_NAME>AVA slopes from 20 to 40 percent</QUALITY_CLASS_NAME>
+          <QUALITY_CLASS_DESC>LE 90 Absolute Vertical Accuracy hilly terrain</QUALITY_CLASS_DESC>
+          <QUALITY_CLASS_VALUE>18</QUALITY_CLASS_VALUE>
+        </Quality_Class>
+        <Quality_Class>
+          <QUALITY_CLASS_NAME>AVA slopes upper to 40 percent</QUALITY_CLASS_NAME>
+          <QUALITY_CLASS_DESC>LE 90 Absolute Vertical Accuracy mountainous terrain</QUALITY_CLASS_DESC>
+          <QUALITY_CLASS_VALUE>30</QUALITY_CLASS_VALUE>
+        </Quality_Class>
+      </Quality_Classes>
+    </Vertical_Accuracy_Measurement>
+    <Vertical_Accuracy_Measurement>
+      <QUALITY_TABLES>DTED</QUALITY_TABLES>
+      <MEASURE_NAME>Relative Vertical Accuracy</MEASURE_NAME>
+      <MEASURE_ID>RVA</MEASURE_ID>
+      <MEASURE_TYPE>SPECIFICATION</MEASURE_TYPE>
+      <MEASURE_UNIT>M</MEASURE_UNIT>
+      <MEASURE_CITATION version="5.3">Reference3D Product Description</MEASURE_CITATION>
+      <Quality_Classes>
+        <Quality_Class>
+          <QUALITY_CLASS_NAME>RVA slopes lower to 20 percent</QUALITY_CLASS_NAME>
+          <QUALITY_CLASS_DESC>LE 90 Absolute Vertical Accuracy flat or rolling terrain</QUALITY_CLASS_DESC>
+          <QUALITY_CLASS_VALUE>5</QUALITY_CLASS_VALUE>
+        </Quality_Class>
+        <Quality_Class>
+          <QUALITY_CLASS_NAME>RVA slopes from 20 to 40 percent</QUALITY_CLASS_NAME>
+          <QUALITY_CLASS_DESC>LE 90 Absolute Vertical Accuracy hilly terrain</QUALITY_CLASS_DESC>
+          <QUALITY_CLASS_VALUE>15</QUALITY_CLASS_VALUE>
+        </Quality_Class>
+        <Quality_Class>
+          <QUALITY_CLASS_NAME>RVA slopes upper to 40 percent</QUALITY_CLASS_NAME>
+          <QUALITY_CLASS_DESC>LE 90 Absolute Vertical Accuracy mountainous terrain</QUALITY_CLASS_DESC>
+          <QUALITY_CLASS_VALUE>28</QUALITY_CLASS_VALUE>
+        </Quality_Class>
+      </Quality_Classes>
+    </Vertical_Accuracy_Measurement>
+  </Quality_Assessment>
+</Dimap_Document>

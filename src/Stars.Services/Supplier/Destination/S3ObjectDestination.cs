@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.S3;
 using System.Threading.Tasks;
@@ -14,8 +15,9 @@ namespace Terradue.Stars.Services.Supplier.Destination
     {
         private readonly Uri s3Uri;
         private readonly IResource resource;
+        private readonly char[] WRONG_FILENAME_STARTING_CHAR = new char[] { ' ', '.', '-', '$', '&' };
 
-        private S3ObjectDestination(Uri s3Uri, IResource resource)
+        private S3ObjectDestination(Uri s3Uri, IResource resource = null)
         {
             if (!s3Uri.Scheme.Equals("s3", StringComparison.CurrentCultureIgnoreCase))
                 throw new InvalidDataException("Only s3 URL supported");
@@ -25,11 +27,12 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public string BucketName => S3UriParser.GetBucketName(s3Uri);
 
-        public static S3ObjectDestination Create(string s3UriStr, IResource route)
+        public static S3ObjectDestination Create(string s3UriStr, IResource route = null)
         {
             Uri s3Uri = new Uri(s3UriStr);
-            WebRoute s3Route = WebRoute.Create(s3Uri);
-            return (S3ObjectDestination)(new S3ObjectDestination(s3Uri, s3Route)).To(route);
+            var dest = new S3ObjectDestination(s3Uri, route);
+            if (route != null) dest = (S3ObjectDestination)dest.To(route);
+            return dest;
         }
 
         public Uri Uri => s3Uri;
@@ -49,13 +52,22 @@ namespace Terradue.Stars.Services.Supplier.Destination
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
                 filename = subroute.ContentDisposition.FileName;
 
+            // to avoid wrong filename such as '$value'
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset)
+            {
+                if (resource != null && resource.ResourceType == ResourceType.Item)
+                    filename = (resource as IItem).Id + ".zip";
+                else
+                    filename = "asset.zip";
+            }
+
             // if the relPath requested is null, we will build one from the origin route to the new one
             if (relPathFix == null)
             {
                 if (subroute.Uri.IsAbsoluteUri)
                 {
                     // Let's see if the 2 routes are relative
-                    var relUri = Uri.MakeRelativeUri(subroute.Uri);
+                    var relUri = subroute.Uri.MakeRelativeUri(Uri);
                     // If not, let's see if they have a common pattern
                     if (relUri.IsAbsoluteUri)
                     {
@@ -71,13 +83,17 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 }
                 else
                     relPath = Path.GetDirectoryName(subroute.Uri.ToString());
+                if (relPath == null || relPath.StartsWith(".."))
+                    relPath = relPathFix ?? "";
             }
-            var newFilePath = Path.Join(relPath, filename);
-            Uri newUri = new Uri(string.Format("s3://" + Path.Join(
-                                               S3UriParser.GetBucketName(s3Uri),
-                                               Path.GetDirectoryName(S3UriParser.GetKey(s3Uri)),
-                                               newFilePath)));
-            return new S3ObjectDestination(newUri, subroute);
+            string newFilePath = filename;
+            if (!string.IsNullOrEmpty(relPath))
+                newFilePath = Path.Combine(relPath, filename);
+            Uri newUri = new Uri(string.Format("s3:/" + Path.GetFullPath(Path.Combine(
+                                               "/" + S3UriParser.GetBucketName(s3Uri),
+                                               Path.GetDirectoryName(S3UriParser.GetKey(s3Uri)) ?? "",
+                                               newFilePath))));
+            return new S3ObjectDestination(newUri);
         }
 
         public override string ToString()
