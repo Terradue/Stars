@@ -19,6 +19,11 @@ namespace Terradue.Stars.Services.Supplier
                 return af;
             }
         }
+
+        public override string ToString()
+        {
+            return Count == 0 ? "No filter" : string.Join(", ", this.Select(af => af.ToString()));
+        }
     }
 
     public interface IAssetFilter
@@ -39,9 +44,12 @@ namespace Terradue.Stars.Services.Supplier
         {
             return UriRegex.IsMatch(asset.Value.Uri.ToString());
         }
+
+        public override string ToString()
+        {
+            return "uri[regex]: " + UriRegex.ToString();
+        }
     }
-
-
 
     public class RolesAssetFilter : IAssetFilter
     {
@@ -56,6 +64,11 @@ namespace Terradue.Stars.Services.Supplier
         public bool IsMatch(KeyValuePair<string, IAsset> asset)
         {
             return asset.Value.Roles.Any(role => RolesRegex.IsMatch(role));
+        }
+
+        public override string ToString()
+        {
+            return "role[regex]: " + RolesRegex.ToString();
         }
     }
 
@@ -73,11 +86,15 @@ namespace Terradue.Stars.Services.Supplier
         {
             return KeyRegex.IsMatch(asset.Key);
         }
+
+        public override string ToString()
+        {
+            return "key[regex]: " + KeyRegex.ToString();
+        }
     }
 
     public class PropertyAssetFilter : IAssetFilter
     {
-
         public KeyValuePair<string, Regex> PropertyRegexPattern { get; set; }
 
         public PropertyAssetFilter(string key, Regex valuePattern)
