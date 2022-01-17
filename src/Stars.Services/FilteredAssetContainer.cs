@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services
 
         private bool AssetMatch(KeyValuePair<string, IAsset> asset)
         {
-            if (assetFilters == null) return true;
+            if (assetFilters == null || assetFilters.Count == 0) return true;
             return assetFilters.Any(af => af.IsMatch(asset));
         }
     }
