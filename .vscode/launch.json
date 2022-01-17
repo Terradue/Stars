@@ -673,15 +673,16 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
-                "s3://cpe-production-catalog/calls/call-844/acquisitions/844-DLR-TANDEM_X-urn_ogc_def_EOP_DLR_C475_N158_A_SL_spot_106_R_2021-10-03T11_33_23_301626Z/844-DLR-TANDEM_X-urn_ogc_def_EOP_DLR_C475_N158_A_SL_spot_106_R_2021-10-03T11_33_23_301626Z.json",
+                "https://catalog.charter.uat.esaportal.eu//charter/search?format=atom&uid=call1016_S2B_MSIL2A_20210713T184919_N0301_R113_T10TFK_20210713T213143-calibrated",
                 "-v",
                 "-r",
                 "4",
-                "-aa",
-                // "-rel",
-                "--harvest",
+                "-af",
+                "red",
+                "-af",
+                "green",
                 "--output",
-                "s3://cpe-production-catalog/"
+                "/tmp/stars"
             ],
             "cwd": "${workspaceFolder}/src",
             "env": {
