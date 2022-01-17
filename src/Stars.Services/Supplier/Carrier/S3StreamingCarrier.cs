@@ -161,28 +161,25 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
         }
 
-        public Task StartSourceCopy(Stream sourceStream, Stream destStream, int chunkSize = 80 * 1024)
+        public async Task StartSourceCopy(Stream sourceStream, Stream destStream, int chunkSize = 80 * 1024)
         {
-            return Task.Factory.StartNew((state) =>
+            ulong totalRead = 0;
+            int read = 0;
+            var buffer = new byte[chunkSize];
+            do
             {
-                ulong totalRead = 0;
-                int read = 0;
-                var buffer = new byte[chunkSize];
-                do
+                try
                 {
-                    try
-                    {
-                        read = sourceStream.Read(buffer, 0, chunkSize);
-                        destStream.Write(buffer, 0, read);
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogWarning(e.Message);
-                    }
-                    totalRead += Convert.ToUInt32(read);
-                } while (read > 0);
-                destStream.Close();
-            }, null, TaskCreationOptions.AttachedToParent);
+                    read = await sourceStream.ReadAsync(buffer, 0, chunkSize);
+                    await destStream.WriteAsync(buffer, 0, read);
+                }
+                catch (Exception e)
+                {
+                    logger.LogWarning(e.Message);
+                }
+                totalRead += Convert.ToUInt32(read);
+            } while (read > 0);
+            destStream.Close();
         }
 
         private void SetRequestParametersWithUri(Uri uri, TransferUtilityUploadRequest ur)
