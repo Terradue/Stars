@@ -294,7 +294,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             for (int i = 0 ; i < coords.Length ; i++)
             {
                 if (coords[i].Longitude > 180)
-                    coords[i] = new GeoJSON.Net.Geometry.Position(coords[i].Latitude, coords[i].Longitude - 180);
+                    coords[i] = new GeoJSON.Net.Geometry.Position(coords[i].Latitude, coords[i].Longitude - 360);
             }
 
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(coords);
