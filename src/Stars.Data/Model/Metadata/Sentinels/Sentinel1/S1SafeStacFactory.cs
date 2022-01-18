@@ -2,14 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GeoJSON.Net.Geometry;
 using Stac;
 using Stac.Extensions.Sar;
-using Stac;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
-using Terradue.Stars.Geometry.Gml321;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Stac.Extensions.Projection;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1

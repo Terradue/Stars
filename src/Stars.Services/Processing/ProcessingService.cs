@@ -93,6 +93,7 @@ namespace Terradue.Stars.Services.Processing
                     stacItemNode.StacItem.MergeAssets(itemNode);
                 }
                 newItemNode = await storeService.StoreItemNodeAtDestination(stacItemNode, destination);
+                break;
             }
             return newItemNode;
         }

@@ -707,12 +707,11 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net5.0/Stars.dll",
             "args": [
                 "copy",
-                "https://s3.cl2.du.cesnet.cz/vo_t2_geohazards:java/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174/S1A_IW_SLC__1SDV_20141027T222517_20141027T222530_003021_00371C_C174.json",
+                "https://s3.cl2.du.cesnet.cz/vo_t2_geohazards:cache/S1B_IW_SLC__1SDV_20190104T122514_20190104T122542_014344_01AB0B_EC04/S1B_IW_SLC__1SDV_20190104T122514_20190104T122542_014344_01AB0B_EC04.json",
                 "-v",
                 "-r",
                 "4",
-                "-aa",
-                // "-rel",
+                "--harvest",
                 "--output",
                 "/tmp/stars"
             ],
