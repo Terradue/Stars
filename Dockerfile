@@ -3,7 +3,8 @@ FROM centos:8
 # MAINTAINER Emmanuel Mathot <emmanuel.mathot@terradue.com>
 
 RUN yum install -y epel-release unzip procps \
-    && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg
+    && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg \
+    && yum clean all -y
 
 # Install HDF5 tools
 RUN dnf install 'dnf-command(config-manager)' -y \
