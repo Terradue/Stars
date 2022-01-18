@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
 using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Sat;
-using Stac;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Geometry.Gml321;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 {

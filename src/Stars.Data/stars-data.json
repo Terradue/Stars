@@ -110,7 +110,8 @@
           "Type": "Terradue.Stars.Data.Model.Metadata.CosmoSkymed.CosmoSkymedMetadataExtractor"
         },
         "GDAL": {
-          "Type": "Terradue.Stars.Data.Model.Metadata.Gdal.GdalMetadataExtractor"
+          "Type": "Terradue.Stars.Data.Model.Metadata.Gdal.GdalMetadataExtractor",
+          "Priority": "1000"
         }
       }
     }

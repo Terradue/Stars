@@ -1,18 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using GeoJSON.Net.Geometry;
 using Stac;
-using Terradue.OpenSearch.Sentinel.Data.Safe;
-using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S1.Level1.Product;
-using Terradue.Stars.Geometry.Gml321;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services.Processing;
-using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Calibration
 {

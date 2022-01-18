@@ -12,9 +12,11 @@ using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Data.Model.Metadata.Gdal
 {
+    [PluginPriority(10000)]
     public class GdalMetadataExtractor : MetadataExtraction
     {
         private readonly string GDALFILE_REGEX = @".*\.(tif|tiff)$";

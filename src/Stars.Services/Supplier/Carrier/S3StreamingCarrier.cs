@@ -170,8 +170,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             {
                 try
                 {
-                    read = await sourceStream.ReadAsync(buffer, 0, chunkSize);
-                    await destStream.WriteAsync(buffer, 0, read);
+                    read = await sourceStream.ReadAsync(buffer, 0, chunkSize).ConfigureAwait(false);
+                    await destStream.WriteAsync(buffer, 0, read).ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {
