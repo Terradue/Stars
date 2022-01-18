@@ -9,7 +9,8 @@ RUN yum install -y epel-release unzip procps \
 RUN dnf install 'dnf-command(config-manager)' -y \
     && dnf config-manager -y --set-enabled powertools \
     && yum update -y \
-    && yum install -y hdf5
+    && yum install -y hdf5 \
+    && yum clean all -y
 
 ARG STARS_RPM
 COPY $STARS_RPM /tmp/$STARS_RPM
