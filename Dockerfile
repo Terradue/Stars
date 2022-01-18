@@ -15,4 +15,4 @@ RUN dnf install 'dnf-command(config-manager)' -y \
 
 ARG STARS_RPM
 COPY $STARS_RPM /tmp/$STARS_RPM
-RUN yum localinstall -y /tmp/$STARS_RPM
+RUN yum localinstall -y /tmp/$STARS_RPM && yum clean all -y
