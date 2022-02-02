@@ -1,18 +1,13 @@
-FROM centos:latest
+FROM debian:buster-slim
 
 # MAINTAINER Emmanuel Mathot <emmanuel.mathot@terradue.com>
 
-RUN yum install -y epel-release unzip procps \
-    && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg \
-    && yum clean all -y
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 libicu63 \
+  && rm -rf /var/lib/apt/lists/* /tmp/*
 
-# Install HDF5 tools
-RUN dnf install 'dnf-command(config-manager)' -y \
-    && dnf config-manager -y --set-enabled powertools \
-    && yum update -y \
-    && yum install -y hdf5 \
-    && yum clean all -y
-
-ARG STARS_RPM
-COPY $STARS_RPM /tmp/$STARS_RPM
-RUN yum localinstall -y /tmp/$STARS_RPM && yum clean all -y
+ARG STARS_DEB
+COPY $STARS_DEB /tmp/$STARS_DEB
+RUN apt install -f /tmp/$STARS_DEB \
+    && rm -rf /tmp/$STARS_DEB

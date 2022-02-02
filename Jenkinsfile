@@ -43,7 +43,7 @@ pipeline {
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
-            stash name: 'stars-rpms', includes: 'src/Stars.Console/bin/**/*.rpm'
+            stash name: 'stars-debs', includes: 'src/Stars.Console/bin/**/*.deb'
             stash name: 'stars-exe', includes: 'src/Stars.Console/bin/**/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
             stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/linux**/*.zip'
             archiveArtifacts artifacts: 'src/Stars.Console/bin/linux**/publish/Stars,src/Stars.Console/bin/linux**/publish/*.json,src/Stars.Console/bin/**/*.rpm,src/Stars.Console/bin/**/*.deb, src/Stars.Console/bin/**/*.zip', fingerprint: true
@@ -88,14 +88,14 @@ pipeline {
     stage('Build & Publish Docker') {
       steps {
         script {
-          unstash name: 'stars-rpms'
-          def starsrpm = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.linux-x64.rpm")
+          unstash name: 'stars-debs'
+          def starsdeb = findFiles(glob: "src/Stars.Console/bin/**/Stars.*.linux-x64.deb")
           def descriptor = readDescriptor()
-          sh "mv ${starsrpm[0].path} ."
+          sh "mv ${starsdeb[0].path} ."
           def mType=getTypeOfVersion(env.BRANCH_NAME)
           def baseImage = docker.image('centos:latest')
           baseImage.pull()
-          def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--no-cache --build-arg STARS_RPM=${starsrpm[0].name} .")
+          def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--no-cache --build-arg STARS_DEB=${starsdeb[0].name} .")
           testsuite.tag("${mType}latest")
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             testsuite.push("${mType}${env.VERSION_TOOL}")
