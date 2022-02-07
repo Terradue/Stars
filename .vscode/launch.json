@@ -154,7 +154,7 @@
             "args": [
                 "list",
                 "-v",
-                "https://catalog.terradue.com/sentinel3/search?format=atom&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
+                "https://catalog.terradue.com/sentinel3/search?format=json&uid=S3B_SL_2_LST____20200623T092744_20200623T093044_20200624T153106_0180_040_207_2700_LN2_O_NT_004",
                 "-r",
                 "2"
             ],

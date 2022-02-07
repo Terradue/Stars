@@ -346,5 +346,10 @@ namespace Terradue.Stars.Services.Router
             }
             return stream;
         }
+
+        public WebRoute CloneRoute(Uri uri = null)
+        {
+            return WebRoute.Create(uri ?? request.RequestUri, credentials: request.Credentials);
+        }
     }
 }
