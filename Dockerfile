@@ -4,7 +4,7 @@ FROM debian:buster-slim
 
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 libicu63 \
+  && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 libicu63 ca-certificates \
   && rm -rf /var/lib/apt/lists/* /tmp/*
 
 ARG STARS_DEB
