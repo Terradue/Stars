@@ -15,7 +15,7 @@
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     <Authors>emmanuelmathot</Authors>
     <RepositoryUrl>https://github.com/Terradue/Stars</RepositoryUrl>
-    <Copyright>Copyright (c) 2010-2020 by Terradue</Copyright>
+    <Copyright>Copyright (c) 2010-2022 by Terradue</Copyright>
     <Company>Terradue</Company>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
