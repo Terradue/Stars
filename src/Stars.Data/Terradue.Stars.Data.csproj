@@ -31,7 +31,7 @@
     <PackageReference Include="Terradue.MetadataExtractor" Version="1.3.0"/>
     <PackageReference Include="ProjNet" Version="2.0.0"/>
     <PackageReference Include="MimeTypes" Version="2.0.2"/>
-    <PackageReference Include="Terradue.OpenSearch.SciHub" Version="1.17.1"/>
+    <!-- <PackageReference Include="Terradue.OpenSearch.SciHub" Version="1.17.1"/> -->
     <PackageReference Include="Terradue.OpenSearch.Asf" Version="1.2.*"/>
     <PackageReference Include="DotNetStac" Version="1.2.*"/>
     <PackageReference Include="Terradue.OpenSearch.GeoJson" Version="1.4.5"/>
@@ -49,6 +49,9 @@
     <ProjectReference Include="..\Stars.Geometry\Terradue.Stars.Geometry.csproj">
       <PrivateAssets>all</PrivateAssets>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../../../sugar/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>

@@ -83,64 +83,6 @@
     8.60248389641262
   ],
   "assets": {
-    "amplitude-hh": {
-      "type": "image/tiff",
-      "roles": [
-        "amplitude",
-        "data"
-      ],
-      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D.tif",
-      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D.tif",
-      "file:size": 0,
-      "sar:polarizations": [
-        "HH"
-      ]
-    },
-    "overview-worldfile": {
-      "type": "application/octet-stream",
-      "roles": [
-        "overview-worldfile"
-      ],
-      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.pgw",
-      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.pgw",
-      "file:size": 0
-    },
-    "browse-worldfile": {
-      "type": "application/octet-stream",
-      "roles": [
-        "overview-worldfile"
-      ],
-      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jgw",
-      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jgw",
-      "file:size": 0
-    },
-    "browse": {
-      "type": "image/jpeg",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jpg",
-      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jpg",
-      "file:size": 0
-    },
-    "thumbnail": {
-      "type": "image/jpeg",
-      "roles": [
-        "thumbnail"
-      ],
-      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_th.jpg",
-      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_th.jpg",
-      "file:size": 0
-    },
-    "overview": {
-      "type": "image/png",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.png",
-      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.png",
-      "file:size": 0
-    },
     "metadata": {
       "type": "application/xml",
       "roles": [
@@ -157,6 +99,64 @@
       ],
       "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_GIM.tif",
       "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_GIM.tif",
+      "file:size": 0
+    },
+    "overview-worldfile": {
+      "type": "application/octet-stream",
+      "roles": [
+        "overview-worldfile"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.pgw",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.pgw",
+      "file:size": 0
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.png",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_QL.png",
+      "file:size": 0
+    },
+    "browse-worldfile": {
+      "type": "application/octet-stream",
+      "roles": [
+        "overview-worldfile"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jgw",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jgw",
+      "file:size": 0
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_th.jpg",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_th.jpg",
+      "file:size": 0
+    },
+    "amplitude-hh": {
+      "type": "image/tiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D.tif",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D.tif",
+      "file:size": 0,
+      "sar:polarizations": [
+        "HH"
+      ]
+    },
+    "browse": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D/K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jpg",
+      "filename": "K5_20201209004207_013610_40077_A_EW03_HH_GTC_B_L1D_br.jpg",
       "file:size": 0
     }
   },

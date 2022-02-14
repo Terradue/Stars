@@ -54,7 +54,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             mtdStacAsset.Properties.AddRange(mtdAsset.Properties);
             stacItem.Assets.Add("mtd", mtdStacAsset);
 
-            foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, ".jp2$").OrderBy(a => Path.GetFileName(a.Value.Uri.ToString()), StringComparer.InvariantCultureIgnoreCase))
+            foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, "^(?!MSK).*.jp2$").OrderBy(a => Path.GetFileName(a.Value.Uri.ToString()), StringComparer.InvariantCultureIgnoreCase))
             {
                 AddJp2BandAsset(stacItem, bandAsset.Value, item, level1C_User_Product, mtdTile);
             }
