@@ -129,7 +129,7 @@
       "file:size": 1,
       "gsd": 60.0
     },
-    "B01": {
+    "coastal": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -139,10 +139,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B01_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B01_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B01-60m",
+          "name": "coastal-60m",
           "description": "coastal 442nm BOA 60m",
           "common_name": "coastal",
           "center_wavelength": 0.4423,
@@ -162,9 +161,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B02": {
+    "blue": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -174,10 +174,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B02_10m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B02_10m.jp2",
       "file:size": 1,
-      "gsd": 10.0,
       "eo:bands": [
         {
-          "name": "B02-10m",
+          "name": "blue-10m",
           "description": "blue 492nm BOA 10m",
           "common_name": "blue",
           "center_wavelength": 0.4923,
@@ -197,7 +196,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 10.0
     },
     "B02-20": {
       "type": "image/jp2",
@@ -209,10 +209,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B02_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B02_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B02-20m",
+          "name": "blue-20m",
           "description": "blue 492nm BOA 20m",
           "common_name": "blue",
           "center_wavelength": 0.4923,
@@ -232,7 +231,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B02-60": {
       "type": "image/jp2",
@@ -244,10 +244,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B02_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B02_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B02-60m",
+          "name": "blue-60m",
           "description": "blue 492nm BOA 60m",
           "common_name": "blue",
           "center_wavelength": 0.4923,
@@ -267,9 +266,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B03": {
+    "green": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -279,10 +279,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B03_10m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B03_10m.jp2",
       "file:size": 1,
-      "gsd": 10.0,
       "eo:bands": [
         {
-          "name": "B03-10m",
+          "name": "green-10m",
           "description": "green 559nm BOA 10m",
           "common_name": "green",
           "center_wavelength": 0.559,
@@ -302,7 +301,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 10.0
     },
     "B03-20": {
       "type": "image/jp2",
@@ -314,10 +314,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B03_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B03_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B03-20m",
+          "name": "green-20m",
           "description": "green 559nm BOA 20m",
           "common_name": "green",
           "center_wavelength": 0.559,
@@ -337,7 +336,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B03-60": {
       "type": "image/jp2",
@@ -349,10 +349,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B03_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B03_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B03-60m",
+          "name": "green-60m",
           "description": "green 559nm BOA 60m",
           "common_name": "green",
           "center_wavelength": 0.559,
@@ -372,9 +371,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B04": {
+    "red": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -384,10 +384,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B04_10m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B04_10m.jp2",
       "file:size": 1,
-      "gsd": 10.0,
       "eo:bands": [
         {
-          "name": "B04-10m",
+          "name": "red-10m",
           "description": "red 665nm BOA 10m",
           "common_name": "red",
           "center_wavelength": 0.665,
@@ -407,7 +406,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 10.0
     },
     "B04-20": {
       "type": "image/jp2",
@@ -419,10 +419,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B04_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B04_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B04-20m",
+          "name": "red-20m",
           "description": "red 665nm BOA 20m",
           "common_name": "red",
           "center_wavelength": 0.665,
@@ -442,7 +441,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B04-60": {
       "type": "image/jp2",
@@ -454,10 +454,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B04_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B04_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B04-60m",
+          "name": "red-60m",
           "description": "red 665nm BOA 60m",
           "common_name": "red",
           "center_wavelength": 0.665,
@@ -477,9 +476,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B05": {
+    "rededge70": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -489,10 +489,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B05_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B05_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B05-20m",
+          "name": "rededge70-20m",
           "description": "rededge 704nm BOA 20m",
           "common_name": "rededge",
           "center_wavelength": 0.7038,
@@ -512,7 +511,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B05-60": {
       "type": "image/jp2",
@@ -524,10 +524,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B05_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B05_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B05-60m",
+          "name": "rededge70-60m",
           "description": "rededge 704nm BOA 60m",
           "common_name": "rededge",
           "center_wavelength": 0.7038,
@@ -547,9 +546,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B06": {
+    "rededge74": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -559,10 +559,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B06_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B06_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B06-20m",
+          "name": "rededge74-20m",
           "description": "rededge 739nm BOA 20m",
           "common_name": "rededge",
           "center_wavelength": 0.7391,
@@ -582,7 +581,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B06-60": {
       "type": "image/jp2",
@@ -594,10 +594,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B06_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B06_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B06-60m",
+          "name": "rededge74-60m",
           "description": "rededge 739nm BOA 60m",
           "common_name": "rededge",
           "center_wavelength": 0.7391,
@@ -617,9 +616,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B07": {
+    "rededge78": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -629,10 +629,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B07_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B07_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B07-20m",
+          "name": "rededge78-20m",
           "description": "rededge 780nm BOA 20m",
           "common_name": "rededge",
           "center_wavelength": 0.7797000000000001,
@@ -652,7 +651,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B07-60": {
       "type": "image/jp2",
@@ -664,10 +664,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B07_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B07_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B07-60m",
+          "name": "rededge78-60m",
           "description": "rededge 780nm BOA 60m",
           "common_name": "rededge",
           "center_wavelength": 0.7797000000000001,
@@ -687,9 +686,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B08": {
+    "nir": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -699,10 +699,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B08_10m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R10m/T49WDM_20210208T043939_B08_10m.jp2",
       "file:size": 1,
-      "gsd": 10.0,
       "eo:bands": [
         {
-          "name": "B08-10m",
+          "name": "nir-10m",
           "description": "nir 833nm BOA 10m",
           "common_name": "nir",
           "center_wavelength": 0.833,
@@ -722,9 +721,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 10.0
     },
-    "B09": {
+    "nir09": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -734,10 +734,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B09_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B09_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B09-60m",
+          "name": "nir09-60m",
           "description": "nir09 943nm BOA 60m",
           "common_name": "nir09",
           "center_wavelength": 0.9432,
@@ -757,9 +756,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B11": {
+    "swir16": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -769,10 +769,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B11_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B11_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B11-20m",
+          "name": "swir16-20m",
           "description": "swir16 1610nm BOA 20m",
           "common_name": "swir16",
           "center_wavelength": 1.6104,
@@ -792,7 +791,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B11-60": {
       "type": "image/jp2",
@@ -804,10 +804,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B11_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B11_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B11-60m",
+          "name": "swir16-60m",
           "description": "swir16 1610nm BOA 60m",
           "common_name": "swir16",
           "center_wavelength": 1.6104,
@@ -827,9 +826,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B12": {
+    "swir22": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -839,10 +839,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B12_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B12_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B12-20m",
+          "name": "swir22-20m",
           "description": "swir22 2186nm BOA 20m",
           "common_name": "swir22",
           "center_wavelength": 2.1856999999999998,
@@ -862,7 +861,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B12-60": {
       "type": "image/jp2",
@@ -874,10 +874,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B12_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B12_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B12-60m",
+          "name": "swir22-60m",
           "description": "swir22 2186nm BOA 60m",
           "common_name": "swir22",
           "center_wavelength": 2.1856999999999998,
@@ -897,9 +896,10 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
-    "B8A": {
+    "nir08": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -909,10 +909,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B8A_20m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R20m/T49WDM_20210208T043939_B8A_20m.jp2",
       "file:size": 1,
-      "gsd": 20.0,
       "eo:bands": [
         {
-          "name": "B8A-20m",
+          "name": "nir08-20m",
           "description": "nir08 864nm BOA 20m",
           "common_name": "nir08",
           "center_wavelength": 0.864,
@@ -932,7 +931,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 20.0
     },
     "B8A-60": {
       "type": "image/jp2",
@@ -944,10 +944,9 @@
       "href": "data/S2B_MSIL2A_20210208T043939_N0214_R033_T49WDM_20210208T061027.SAFE/GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B8A_60m.jp2",
       "filename": "GRANULE/L2A_T49WDM_A020508_20210208T043937/IMG_DATA/R60m/T49WDM_20210208T043939_B8A_60m.jp2",
       "file:size": 1,
-      "gsd": 60.0,
       "eo:bands": [
         {
-          "name": "B8A-60m",
+          "name": "nir08-60m",
           "description": "nir08 864nm BOA 60m",
           "common_name": "nir08",
           "center_wavelength": 0.864,
@@ -967,7 +966,8 @@
             "maximum": 10000.0
           }
         }
-      ]
+      ],
+      "gsd": 60.0
     },
     "PVI": {
       "type": "image/jp2",

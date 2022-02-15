@@ -88,7 +88,7 @@ namespace Terradue.Stars.Data.Model.Metadata
             return assetsContainer.Assets.Where(a =>
             {
                 return Regex.IsMatch(Path.GetFileName(a.Value.Uri.ToString()), pattern);
-            }).ToDictionary(a => a.Key, a => a.Value);
+            }).OrderBy(k => k.Key).ToDictionary(a => a.Key, a => a.Value);
         }
 
         public static string StylePlatform(string v)
