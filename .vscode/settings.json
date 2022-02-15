@@ -2,5 +2,6 @@
     "vssolution.altSolutionFolders": [
         "src"
     ],
-    "omnisharp.disableMSBuildDiagnosticWarning": true
+    "omnisharp.disableMSBuildDiagnosticWarning": true,
+    "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)"
 }
