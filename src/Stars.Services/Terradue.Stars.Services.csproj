@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>Terradue.Stars</Title>
     <Description>Stars is a set of services for working with Spatio Temporal Catalog such as STAC but not only</Description>
-    <Version>1.3.0</Version>
+    <Version>1.3.1</Version>
     <!-- <VersionSuffix>beta.26</VersionSuffix> -->
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <AssemblyName>Terradue.Stars.Services</AssemblyName>
@@ -15,7 +15,7 @@
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     <Authors>emmanuelmathot</Authors>
     <RepositoryUrl>https://github.com/Terradue/Stars</RepositoryUrl>
-    <Copyright>Copyright (c) 2010-2020 by Terradue</Copyright>
+    <Copyright>Copyright (c) 2010-2022 by Terradue</Copyright>
     <Company>Terradue</Company>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

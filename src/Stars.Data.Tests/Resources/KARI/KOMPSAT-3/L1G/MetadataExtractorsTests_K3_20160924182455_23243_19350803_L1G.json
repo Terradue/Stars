@@ -82,14 +82,14 @@
     -26.315331831
   ],
   "assets": {
-    "overview": {
-      "type": "image/jpeg",
+    "metadata": {
+      "type": "application/xml",
       "roles": [
-        "overview"
+        "metadata"
       ],
-      "href": "data/K3_20160924182455_23243_19350803_L1G/K3_20160924182455_23243_19350803_L1G_br.jpg",
-      "filename": "K3_20160924182455_23243_19350803_L1G_br.jpg",
-      "file:size": 0
+      "href": "data/K3_20160924182455_23243_19350803_L1G/K3_20160924182455_23243_19350803_L1G_Aux.xml",
+      "filename": "K3_20160924182455_23243_19350803_L1G_Aux.xml",
+      "file:size": 632291
     },
     "thumbnail": {
       "type": "image/jpeg",
@@ -100,14 +100,14 @@
       "filename": "K3_20160924182455_23243_19350803_L1G_th.jpg",
       "file:size": 0
     },
-    "metadata": {
-      "type": "application/xml",
+    "overview": {
+      "type": "image/jpeg",
       "roles": [
-        "metadata"
+        "overview"
       ],
-      "href": "data/K3_20160924182455_23243_19350803_L1G/K3_20160924182455_23243_19350803_L1G_Aux.xml",
-      "filename": "K3_20160924182455_23243_19350803_L1G_Aux.xml",
-      "file:size": 632291
+      "href": "data/K3_20160924182455_23243_19350803_L1G/K3_20160924182455_23243_19350803_L1G_br.jpg",
+      "filename": "K3_20160924182455_23243_19350803_L1G_br.jpg",
+      "file:size": 0
     },
     "PAN": {
       "type": "image/tiff",
