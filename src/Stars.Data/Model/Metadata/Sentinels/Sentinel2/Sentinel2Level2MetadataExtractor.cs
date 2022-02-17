@@ -102,7 +102,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             if (spectralInfo != null)
             {
                 assetName = Sentinel2Level1MetadataExtractor.GetBandNameConvention(spectralInfo);
-                EoBandObject eoBandObject = new EoBandObject(assetName + "-" + res, Sentinel2Level1MetadataExtractor.GetBandCommonName(spectralInfo));
+                var assetNameRes = assetName;
+                if (stacItem.Assets.Any(a => a.Key == assetNameRes))
+                    assetNameRes += "-" + res;
+                EoBandObject eoBandObject = new EoBandObject(assetNameRes, Sentinel2Level1MetadataExtractor.GetBandCommonName(spectralInfo));
                 eoBandObject.CenterWavelength = spectralInfo.Wavelength.CENTRAL.Value / 1000;
                 eoBandObject.Description = string.Format("{0} {1}nm BOA {2}", Sentinel2Level1MetadataExtractor.GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), res);
                 var solarIrradiance = level2AUserProduct.General_Info.Product_Image_Characteristics.Reflectance_Conversion.Solar_Irradiance_List.FirstOrDefault(si => si.bandId == spectralInfo.bandId);
