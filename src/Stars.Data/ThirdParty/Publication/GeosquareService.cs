@@ -154,7 +154,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (wr.StatusCode == HttpStatusCode.OK) return;
 
             logger.LogDebug("Creating index {0}", index);
-            httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(GeosquareConfiguration.AuthorizationHeader);
+            if ( !string.IsNullOrEmpty(GeosquareConfiguration.AuthorizationHeader))
+                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(GeosquareConfiguration.AuthorizationHeader);
             var webresponse = await httpClient.PutAsync(new Uri(GeosquareConfiguration.BaseUri, index), null);
             string response = await webresponse.Content.ReadAsStringAsync();
             logger.LogDebug(response);

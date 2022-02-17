@@ -141,7 +141,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "coastal-60m",
+          "name": "coastal",
           "description": "coastal 442nm BOA 60m",
           "common_name": "coastal",
           "center_wavelength": 0.4423,
@@ -176,7 +176,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "blue-10m",
+          "name": "blue",
           "description": "blue 492nm BOA 10m",
           "common_name": "blue",
           "center_wavelength": 0.4923,
@@ -281,7 +281,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "green-10m",
+          "name": "green",
           "description": "green 559nm BOA 10m",
           "common_name": "green",
           "center_wavelength": 0.559,
@@ -386,7 +386,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "red-10m",
+          "name": "red",
           "description": "red 665nm BOA 10m",
           "common_name": "red",
           "center_wavelength": 0.665,
@@ -491,7 +491,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "rededge70-20m",
+          "name": "rededge70",
           "description": "rededge 704nm BOA 20m",
           "common_name": "rededge",
           "center_wavelength": 0.7038,
@@ -561,7 +561,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "rededge74-20m",
+          "name": "rededge74",
           "description": "rededge 739nm BOA 20m",
           "common_name": "rededge",
           "center_wavelength": 0.7391,
@@ -631,7 +631,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "rededge78-20m",
+          "name": "rededge78",
           "description": "rededge 780nm BOA 20m",
           "common_name": "rededge",
           "center_wavelength": 0.7797000000000001,
@@ -701,7 +701,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "nir-10m",
+          "name": "nir",
           "description": "nir 833nm BOA 10m",
           "common_name": "nir",
           "center_wavelength": 0.833,
@@ -736,7 +736,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "nir09-60m",
+          "name": "nir09",
           "description": "nir09 943nm BOA 60m",
           "common_name": "nir09",
           "center_wavelength": 0.9432,
@@ -771,7 +771,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "swir16-20m",
+          "name": "swir16",
           "description": "swir16 1610nm BOA 20m",
           "common_name": "swir16",
           "center_wavelength": 1.6104,
@@ -841,7 +841,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "swir22-20m",
+          "name": "swir22",
           "description": "swir22 2186nm BOA 20m",
           "common_name": "swir22",
           "center_wavelength": 2.1856999999999998,
@@ -911,7 +911,7 @@
       "file:size": 1,
       "eo:bands": [
         {
-          "name": "nir08-20m",
+          "name": "nir08",
           "description": "nir08 864nm BOA 20m",
           "common_name": "nir08",
           "center_wavelength": 0.864,
