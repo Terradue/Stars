@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using GeoJSON.Net.Geometry;
 using Microsoft.Extensions.Logging;
+using OSGeo.GDAL;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
@@ -19,12 +20,13 @@ using Stac.Extensions.View;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-// using Catfood.Shapefile;
 
 namespace Terradue.Stars.Data.Model.Metadata.Resursp {
     public class ResurspMetadataExtractor : MetadataExtraction {
         public override string Label => "Resursp (Roscosmos) missions product metadata extractor";
 
+        private readonly string GDALFILE_REGEX = @".*\.(tif|tiff)$";
+        
         public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger) : base(logger) {
         }
 
@@ -69,11 +71,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             SPP_ROOT productMetadata = await DeserializeProductMetadata(metadatafile.GetStreamable());
 
 
-            logger.LogDebug("Retrieving the shapefile in the product package");
-            IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");
-            if (shapefile == null) {
-                throw new FileNotFoundException("Unable to find any shapefile asset");
-            }
+            // logger.LogDebug("Retrieving the shapefile in the product package");
+            // IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");
+            // if (shapefile == null) {
+            //     throw new FileNotFoundException("Unable to find any shapefile asset");
+            // }
+            
+            
+            KeyValuePair<string, IAsset> gdalAsset = GetGdalAsset(item);
+            Dataset dataset = await LoadGdalAsset(gdalAsset);
 
             // retrieving id from filename
             // GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml
@@ -83,7 +89,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             double gsd = Double.Parse(productMetadata.Normal.NPixelImg);
 
             // to retrieve the properties, any product metadata is ok
-            var stacItem = GetStacItemWithProperties(productMetadata, stacItemId, gsd, shapefile);
+            var stacItem = GetStacItemWithProperties(productMetadata, stacItemId, gsd, dataset);
 
             await AddAssetsAsync(stacItem, item, gsd);
 
@@ -93,14 +99,44 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             ;
         }
 
+        
+        public virtual async Task<OSGeo.GDAL.Dataset> LoadGdalAsset(KeyValuePair<string, IAsset> gdalAsset)
+        {
+            OSGeo.GDAL.Dataset dataset = OSGeo.GDAL.Gdal.Open(GetGdalPath(gdalAsset.Value), Access.GA_ReadOnly);
 
+            dataset.GetDriver();
+
+            return dataset;
+        }
+        protected virtual KeyValuePair<string, IAsset> GetGdalAsset(IItem item)
+        {
+            var gdalAsset = FindFirstKeyAssetFromFileNameRegex(item, GDALFILE_REGEX);
+            if (gdalAsset.Key == null)
+            {
+                throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
+            }
+            return gdalAsset;
+        }
+        
+        private static string GetGdalPath(IAsset gdalAsset)
+        {
+            switch (gdalAsset.Uri.Scheme)
+            {
+                case "file":
+                    return gdalAsset.Uri.LocalPath;
+            }
+
+            return gdalAsset.Uri.ToString();
+        }
+        
         private StacItem GetStacItemWithProperties(SPP_ROOT productMetadata, string stacItemId, double gsd,
-            IAsset shapefile) {
+            Dataset dataset) {
             // retrieving GeometryObject from metadata
-            var geometryObject = GetGeometryObjectFromProductMetadata(productMetadata);
+            // var geometryObject = GetGeometryObjectFromProductMetadata(productMetadata);
             
             // TODO retrieve geometry from shapefile
             //var geometryObject = GetGeometryObjectFromProductShapefile(shapefile);
+            var geometryObject = GetGeometry(dataset);
 
             // retrieving the common metadata properties (i.e. time and instruments)
             var commonMetadata = GetCommonMetadata(productMetadata, gsd);
@@ -189,6 +225,112 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
             return null;
         }*/
+        
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Dataset dataset)
+        {
+            var box = GetRasterExtent(dataset);
+
+            if (box != null && !(box.MinX == 0 && box.MinY == 0))
+            {
+                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
+                    new GeoJSON.Net.Geometry.Position[] {
+                        new GeoJSON.Net.Geometry.Position(
+                            box.MaxY,
+                            box.MinX
+                        ),
+                        new GeoJSON.Net.Geometry.Position(
+                            box.MinY,
+                            box.MinX
+                        ),
+                        new GeoJSON.Net.Geometry.Position(
+                            box.MinY,
+                            box.MaxX
+                        ),
+                        new GeoJSON.Net.Geometry.Position(
+                            box.MaxY,
+                            box.MaxX
+                        ),
+                        new GeoJSON.Net.Geometry.Position(
+                            box.MaxY,
+                            box.MinX
+                        )
+                    });
+                return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            }
+            return null;
+
+
+        }
+
+        public OSGeo.OGR.Envelope GetRasterExtent(Dataset dataset, string proj4 = "+proj=latlong +datum=WGS84 +no_defs")
+        {
+
+            OSGeo.OSR.SpatialReference srcSRS = new OSGeo.OSR.SpatialReference(dataset.GetProjection());
+            OSGeo.OGR.Envelope extent;
+
+            if (dataset.RasterCount == 0)
+                return null;
+
+            extent = GetBaseRasterExtent(dataset);
+
+            if (string.IsNullOrEmpty(dataset.GetProjection()))
+            {
+                srcSRS = new OSGeo.OSR.SpatialReference("");
+                srcSRS.ImportFromProj4(proj4);
+            }
+
+            if (srcSRS.__str__().Contains("AUTHORITY[\"EPSG\",\"3857\"]") || srcSRS.__str__().Contains("LOCAL_CS[\"WGS 84 / Pseudo-Mercator\""))
+            {
+                srcSRS.ImportFromProj4("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
+            }
+
+            OSGeo.OSR.SpatialReference dstSRS = new OSGeo.OSR.SpatialReference("");
+            dstSRS.ImportFromProj4(proj4);
+
+            if (dstSRS.IsSame(srcSRS, null) == 1)
+            {
+                return extent;
+            }
+
+            OSGeo.OSR.CoordinateTransformation ct;
+
+            ct = new OSGeo.OSR.CoordinateTransformation(srcSRS, dstSRS);
+
+            double[] newXs = new double[] { extent.MaxX, extent.MinX };
+            double[] newYs = new double[] { extent.MaxY, extent.MinY };
+
+            ct.TransformPoints(2, newXs, newYs, new double[] { 0, 0 });
+
+            extent.MaxX = newXs[0];
+            extent.MinX = newXs[1];
+            extent.MaxY = newYs[0];
+            extent.MinY = newYs[1];
+
+            return extent;
+        }
+
+        public OSGeo.OGR.Envelope GetBaseRasterExtent(Dataset dataset)
+        {
+
+            if (dataset.RasterCount > 0)
+            {
+                OSGeo.OGR.Envelope extent = new OSGeo.OGR.Envelope();
+                double[] geoTransform = new double[6];
+                dataset.GetGeoTransform(geoTransform);
+
+                extent.MinX = geoTransform[0];
+                extent.MinY = geoTransform[3];
+                extent.MaxX = geoTransform[0] + (dataset.RasterXSize * geoTransform[1]) + (geoTransform[2] * dataset.RasterYSize);
+                extent.MaxY = geoTransform[3] + (dataset.RasterYSize * geoTransform[5]) + (geoTransform[4] * dataset.RasterXSize); ;
+
+                return extent;
+            }
+
+            return null;
+
+        }
+        
+
 
         private IDictionary<string, object> GetCommonMetadata(SPP_ROOT productMetadata, double gsd) {
             Dictionary<string, object> properties = new Dictionary<string, object>();
