@@ -68,14 +68,17 @@
       // "PLANET": [
       //   "PLANETSCOPE"
       // ],
-      // "RESURSP": [
-      //   "ROSCOSMOS/RESURS-P"
-      // ],
       // "CSK": [
       //   "ASI/COSMO-SKYMED"
       // ],
       // "GDAL": [
       //   "GDAL"
+      // ],
+      
+      
+      // TO TEST RESURSP REPLACE THE MOCK TIFF FILES WITH REAL TIFFS
+      // "RESURSP": [
+      //   "ROSCOSMOS/RESURS-P"
       // ]
     }
   }
