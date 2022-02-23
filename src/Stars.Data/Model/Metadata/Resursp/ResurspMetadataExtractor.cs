@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using GeoJSON.Net.Geometry;
 using Microsoft.Extensions.Logging;
-using OSGeo.GDAL;
+using Newtonsoft.Json;
+using OSGeo.OGR;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
@@ -20,13 +19,14 @@ using Stac.Extensions.View;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Polygon = GeoJSON.Net.Geometry.Polygon;
 
 namespace Terradue.Stars.Data.Model.Metadata.Resursp {
     public class ResurspMetadataExtractor : MetadataExtraction {
         public override string Label => "Resursp (Roscosmos) missions product metadata extractor";
 
-        private readonly string GDALFILE_REGEX = @".*\.(tif|tiff)$";
-        
+        private readonly string GDALFILE_REGEX = @".*\.(shp)$";
+
         public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger) : base(logger) {
         }
 
@@ -37,25 +37,25 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             if (metadataFile == null) {
                 return false;
             }
-             // deserialize product medatadata
-            SPP_ROOT productMetadata = DeserializeProductMetadata(metadataFile.GetStreamable()).GetAwaiter().GetResult();
+
+            // deserialize product medatadata
+            SPP_ROOT productMetadata =
+                DeserializeProductMetadata(metadataFile.GetStreamable()).GetAwaiter().GetResult();
             if (productMetadata == null) {
                 return false;
             }
-
             return true;
         }
 
         public static async Task<SPP_ROOT> DeserializeProductMetadata(IStreamable productMetadataFile) {
             XmlSerializer ser = new XmlSerializer(typeof(SPP_ROOT));
             SPP_ROOT auxiliary;
-            using (var stream = new StreamReader(productMetadataFile.Uri.AbsolutePath,Encoding.UTF8,true) ) {
+            using (var stream = new StreamReader(productMetadataFile.Uri.AbsolutePath, Encoding.UTF8, true)) {
                 using (XmlReader reader = XmlReader.Create(stream)) {
                     auxiliary = (SPP_ROOT)ser.Deserialize(reader);
                 }
             }
-            
-            
+
             return auxiliary;
         }
 
@@ -70,16 +70,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             // deserialize product medatadata
             SPP_ROOT productMetadata = await DeserializeProductMetadata(metadatafile.GetStreamable());
 
-
-            // logger.LogDebug("Retrieving the shapefile in the product package");
-            // IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");
-            // if (shapefile == null) {
-            //     throw new FileNotFoundException("Unable to find any shapefile asset");
-            // }
-            
-            
-            KeyValuePair<string, IAsset> gdalAsset = GetGdalAsset(item);
-            Dataset dataset = await LoadGdalAsset(gdalAsset);
+            logger.LogDebug("Retrieving the shapefile in the product package");
+            IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");
+            if (shapefile == null) {
+                throw new FileNotFoundException("Unable to find any shapefile asset");
+            }
 
             // retrieving id from filename
             // GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml
@@ -89,54 +84,41 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             double gsd = Double.Parse(productMetadata.Normal.NPixelImg);
 
             // to retrieve the properties, any product metadata is ok
-            var stacItem = GetStacItemWithProperties(productMetadata, stacItemId, gsd, dataset);
+            var stacItem = GetStacItemWithProperties(productMetadata, stacItemId, gsd, shapefile);
 
-            await AddAssetsAsync(stacItem, item, gsd);
+            await AddAssetsAsync(stacItem, item, gsd, productMetadata);
 
             FillBasicsProperties(stacItem.Properties);
 
             return StacItemNode.Create(stacItem, item.Uri);
-            ;
         }
 
-        
-        public virtual async Task<OSGeo.GDAL.Dataset> LoadGdalAsset(KeyValuePair<string, IAsset> gdalAsset)
-        {
-            OSGeo.GDAL.Dataset dataset = OSGeo.GDAL.Gdal.Open(GetGdalPath(gdalAsset.Value), Access.GA_ReadOnly);
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometryFromShpFileAsset(IAsset shapeFileAsset) {
+            // load the shapefile in a datasource
+            var shapefilePath = shapeFileAsset.Title;
+            DataSource shpDatasource = Ogr.Open(shapefilePath, 0);
+            if (shpDatasource == null)
+                throw new InvalidDataException("Not valid shapefile");
 
-            dataset.GetDriver();
+            // load the shapefile layer
+            Layer shpLayer = shpDatasource.GetLayerByIndex(0);
+            var feature = shpLayer.GetNextFeature();
 
-            return dataset;
-        }
-        protected virtual KeyValuePair<string, IAsset> GetGdalAsset(IItem item)
-        {
-            var gdalAsset = FindFirstKeyAssetFromFileNameRegex(item, GDALFILE_REGEX);
-            if (gdalAsset.Key == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
-            }
-            return gdalAsset;
-        }
-        
-        private static string GetGdalPath(IAsset gdalAsset)
-        {
-            switch (gdalAsset.Uri.Scheme)
-            {
-                case "file":
-                    return gdalAsset.Uri.LocalPath;
-            }
+            // load simplified geometry
+            var geometry = feature.GetGeometryRef().Simplify(0.001);
 
-            return gdalAsset.Uri.ToString();
+            // uncomment for debug purposes
+            // string wkt;
+            // geometry.ExportToWkt(out wkt);
+
+            string geoJson = geometry.ExportToJson(new string[] { });
+            return JsonConvert.DeserializeObject<Polygon>(geoJson);
         }
-        
+
         private StacItem GetStacItemWithProperties(SPP_ROOT productMetadata, string stacItemId, double gsd,
-            Dataset dataset) {
-            // retrieving GeometryObject from metadata
-            // var geometryObject = GetGeometryObjectFromProductMetadata(productMetadata);
-            
-            // TODO retrieve geometry from shapefile
-            //var geometryObject = GetGeometryObjectFromProductShapefile(shapefile);
-            var geometryObject = GetGeometry(dataset);
+            IAsset shapefile) {
+            // retrieve geometry from shapefile
+            var geometryObject = GetGeometryFromShpFileAsset(shapefile);
 
             // retrieving the common metadata properties (i.e. time and instruments)
             var commonMetadata = GetCommonMetadata(productMetadata, gsd);
@@ -147,7 +129,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             AddViewStacExtension(productMetadata, stacItem);
             AddProjStacExtension(productMetadata, stacItem);
             AddProcessingStacExtension(productMetadata, stacItem);
-
             return stacItem;
         }
 
@@ -171,166 +152,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
             return degrees + (minutes / 60) + (seconds / 3600);
         }
-        
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometryObjectFromProductMetadata(
-            SPP_ROOT productMetadata) {
-            // need to convert Degrees Minutes Seconds to Decimal Degrees
-            // example 0:15:22.185719
-
-
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
-                new GeoJSON.Net.Geometry.Position[5]
-                {
-                    new GeoJSON.Net.Geometry.Position(ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ASWLat),
-                        ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ASWLong)),
-                    new GeoJSON.Net.Geometry.Position(ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ASELat),
-                        ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ASELong)),
-                    new GeoJSON.Net.Geometry.Position(ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ANELat),
-                        ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ANELong)),
-                    new GeoJSON.Net.Geometry.Position(ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ANWLat),
-                        ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ANWLong)),
-                    new GeoJSON.Net.Geometry.Position(ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ASWLat),
-                        ConvertDegreeAngleToDegreeString(productMetadata.Geographic.ASWLong))
-                }
-            );
-
-            return new GeoJSON.Net.Geometry.Polygon(new[] { lineString });
-        }
-
-
-        /*
-        / TODO Retrieve geometry from shapefile
-        private IGeometryObject GetGeometryObjectFromProductShapefile(IAsset shapefileAsset) {
-            string shapeFilePath = shapefileAsset.Title;
-            if (!File.Exists(shapeFilePath)) {
-                throw new FileNotFoundException("Unable to find any shapefile asset");
-            }
-
-            // construct shapefile with the path to the .shp file
-            using (Shapefile shapefile = new Shapefile(shapeFilePath)) {
-                // enumerate all shapes
-                Shape shape = shapefile.First();
-
-                ShapePolygon shapePolygon = shape as ShapePolygon;
-                foreach (PointD[] part in shapePolygon.Parts) {
-                    Console.WriteLine("Polygon part:");
-                    foreach (PointD point in part) {
-                        Console.WriteLine("{0}, {1}", point.X, point.Y);
-                    }
-
-                    Console.WriteLine();
-                }
-            }
-
-
-            return null;
-        }*/
-        
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Dataset dataset)
-        {
-            var box = GetRasterExtent(dataset);
-
-            if (box != null && !(box.MinX == 0 && box.MinY == 0))
-            {
-                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
-                    new GeoJSON.Net.Geometry.Position[] {
-                        new GeoJSON.Net.Geometry.Position(
-                            box.MaxY,
-                            box.MinX
-                        ),
-                        new GeoJSON.Net.Geometry.Position(
-                            box.MinY,
-                            box.MinX
-                        ),
-                        new GeoJSON.Net.Geometry.Position(
-                            box.MinY,
-                            box.MaxX
-                        ),
-                        new GeoJSON.Net.Geometry.Position(
-                            box.MaxY,
-                            box.MaxX
-                        ),
-                        new GeoJSON.Net.Geometry.Position(
-                            box.MaxY,
-                            box.MinX
-                        )
-                    });
-                return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
-            }
-            return null;
-
-
-        }
-
-        public OSGeo.OGR.Envelope GetRasterExtent(Dataset dataset, string proj4 = "+proj=latlong +datum=WGS84 +no_defs")
-        {
-
-            OSGeo.OSR.SpatialReference srcSRS = new OSGeo.OSR.SpatialReference(dataset.GetProjection());
-            OSGeo.OGR.Envelope extent;
-
-            if (dataset.RasterCount == 0)
-                return null;
-
-            extent = GetBaseRasterExtent(dataset);
-
-            if (string.IsNullOrEmpty(dataset.GetProjection()))
-            {
-                srcSRS = new OSGeo.OSR.SpatialReference("");
-                srcSRS.ImportFromProj4(proj4);
-            }
-
-            if (srcSRS.__str__().Contains("AUTHORITY[\"EPSG\",\"3857\"]") || srcSRS.__str__().Contains("LOCAL_CS[\"WGS 84 / Pseudo-Mercator\""))
-            {
-                srcSRS.ImportFromProj4("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs");
-            }
-
-            OSGeo.OSR.SpatialReference dstSRS = new OSGeo.OSR.SpatialReference("");
-            dstSRS.ImportFromProj4(proj4);
-
-            if (dstSRS.IsSame(srcSRS, null) == 1)
-            {
-                return extent;
-            }
-
-            OSGeo.OSR.CoordinateTransformation ct;
-
-            ct = new OSGeo.OSR.CoordinateTransformation(srcSRS, dstSRS);
-
-            double[] newXs = new double[] { extent.MaxX, extent.MinX };
-            double[] newYs = new double[] { extent.MaxY, extent.MinY };
-
-            ct.TransformPoints(2, newXs, newYs, new double[] { 0, 0 });
-
-            extent.MaxX = newXs[0];
-            extent.MinX = newXs[1];
-            extent.MaxY = newYs[0];
-            extent.MinY = newYs[1];
-
-            return extent;
-        }
-
-        public OSGeo.OGR.Envelope GetBaseRasterExtent(Dataset dataset)
-        {
-
-            if (dataset.RasterCount > 0)
-            {
-                OSGeo.OGR.Envelope extent = new OSGeo.OGR.Envelope();
-                double[] geoTransform = new double[6];
-                dataset.GetGeoTransform(geoTransform);
-
-                extent.MinX = geoTransform[0];
-                extent.MinY = geoTransform[3];
-                extent.MaxX = geoTransform[0] + (dataset.RasterXSize * geoTransform[1]) + (geoTransform[2] * dataset.RasterYSize);
-                extent.MaxY = geoTransform[3] + (dataset.RasterYSize * geoTransform[5]) + (geoTransform[4] * dataset.RasterXSize); ;
-
-                return extent;
-            }
-
-            return null;
-
-        }
-        
-
 
         private IDictionary<string, object> GetCommonMetadata(SPP_ROOT productMetadata, double gsd) {
             Dictionary<string, object> properties = new Dictionary<string, object>();
@@ -341,9 +162,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             return properties;
         }
 
+        private void AddRasterBands(SPP_ROOT productMetadata, StacAsset stacAsset) {
+            var gains = productMetadata.AbsoluteCalibr.BMult.Split(',');
+            var offsets = productMetadata.AbsoluteCalibr.BAdd.Split(',');
+            RasterBand[] rasterBands = new RasterBand[gains.Length];
+            for (int i = 0; i < gains.Length; i++) {
+                rasterBands[i] = CreateRasterBandObject(Double.Parse(offsets[i]), Double.Parse(gains[i]));
+            }
+
+            stacAsset.RasterExtension().Bands = rasterBands;
+        }
+
         private void FillBitProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties) {
             properties.Remove("bit");
-            properties.Add("bit",productMetadata.Normal.NBitsPerPixel);
+            properties.Add("bit", productMetadata.Normal.NBitsPerPixel);
         }
 
         private void FillDateTimeProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties) {
@@ -377,7 +209,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             }
 
             string dateformat = "dd/MM/yyyy";
-            DateTime.TryParseExact(productMetadata.DDateHeaderFile, dateformat, provider, DateTimeStyles.AssumeUniversal,
+            DateTime.TryParseExact(productMetadata.DDateHeaderFile, dateformat, provider,
+                DateTimeStyles.AssumeUniversal,
                 out var createdDate);
 
             if (createdDate.Ticks != 0) {
@@ -441,14 +274,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        private async Task AddAssetsAsync(StacItem stacItem, IAssetsContainer assetsContainer, double gsd) {
+        private async Task AddAssetsAsync(StacItem stacItem, IAssetsContainer assetsContainer, double gsd,
+            SPP_ROOT productMetadata) {
             foreach (var asset in assetsContainer.Assets.Values.OrderBy(a => a.Uri.ToString())) {
-                await AddAssetAsync(stacItem, asset, assetsContainer, gsd);
+                await AddAssetAsync(stacItem, asset, assetsContainer, gsd, productMetadata);
             }
         }
 
         private async Task AddAssetAsync(StacItem stacItem, IAsset asset,
-            IAssetsContainer assetsContainer, double gsd) {
+            IAssetsContainer assetsContainer, double gsd, SPP_ROOT productMetadata) {
             string filename = Path.GetFileName(asset.Uri.ToString());
             string sensorName = filename.Split('_')[1];
             // thumbnail
@@ -478,10 +312,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
                 else {
                     mssBandName = "PMS";
                 }
+
                 var metadataAsset =
                     FindAssetsFromFileNameRegex(assetsContainer, ".*" + filename.Replace(".tiff", ".xml"));
                 var bandAsset = GetBandAsset(stacItem, asset, gsd);
                 stacItem.Assets.Add(mssBandName, bandAsset);
+
+                // add raster bands only if product is Geoton
+                if (asset.Uri.ToString().Contains("Geoton")) {
+                    AddRasterBands(productMetadata, bandAsset);
+                }
+
+
                 return;
             }
         }
