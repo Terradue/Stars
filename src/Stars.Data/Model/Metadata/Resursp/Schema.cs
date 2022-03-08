@@ -225,6 +225,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         [XmlElement(ElementName = "nLDownEast")]
         public string NLDownEast { get; set; }
     }
+    
+    [XmlRoot(ElementName="AbsoluteCalibr")]
+    public class AbsoluteCalibr {
+        [XmlElement(ElementName="cFormula")]
+        public string CFormula { get; set; }
+        [XmlElement(ElementName="nDone")]
+        public string NDone { get; set; }
+        [XmlElement(ElementName="bMult")]
+        public string BMult { get; set; }
+        [XmlElement(ElementName="bAdd")]
+        public string BAdd { get; set; }
+    }
 
     [XmlRoot(ElementName = "SPP_ROOT")]
     public class SPP_ROOT {
@@ -262,6 +274,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         [XmlElement(ElementName = "CoordinateSystem")]
         public CoordinateSystem CoordinateSystem { get; set; }
 
-        [XmlElement(ElementName = "Normal")] public Normal Normal { get; set; }
+        [XmlElement(ElementName = "Normal")] 
+        public Normal Normal { get; set; }
+        
+        [XmlElement(ElementName="AbsoluteCalibr")]
+        public AbsoluteCalibr AbsoluteCalibr { get; set; }
     }
 }

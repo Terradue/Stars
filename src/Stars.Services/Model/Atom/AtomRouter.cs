@@ -32,7 +32,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public bool CanRoute(IResource node)
         {
-            if ( !supportedTypes.Contains(node.ContentType.MediaType) )
+            if ( !supportedTypes.Contains(node.ContentType.MediaType) ) return false;
             try
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
