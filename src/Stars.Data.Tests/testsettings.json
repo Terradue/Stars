@@ -76,6 +76,9 @@
 //      ],
       "RESURSP": [
         "ROSCOSMOS/RESURS-P"
+      ],
+      "BLACKSKY": [
+        "BLACKSKY/Global"
       ]
     }
   }

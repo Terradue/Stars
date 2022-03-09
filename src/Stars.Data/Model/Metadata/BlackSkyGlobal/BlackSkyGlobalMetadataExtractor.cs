@@ -13,6 +13,7 @@ using ProjNet.CoordinateSystems;
 using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
+using Stac.Extensions.Eo;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
 using Terradue.Stars.Interface;
@@ -23,7 +24,7 @@ using Newtonsoft.Json;
 
 namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 {
-    public class BlackSkyMetadataExtractor : MetadataExtraction
+    public class BlackSkyGlobalMetadataExtractor : MetadataExtraction
     {
         // Possible identifiers:
         // CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156
@@ -35,7 +36,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
  
         public override string Label => "COSMO SkyMed (ASI) mission product metadata extractor";
 
-        public BlackSkyMetadataExtractor(ILogger<BlackSkyMetadataExtractor> logger) : base(logger)
+        public BlackSkyGlobalMetadataExtractor(ILogger<BlackSkyGlobalMetadataExtractor> logger) : base(logger)
         {
         }
 
@@ -61,7 +62,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             IAsset metadataAsset = GetMetadataAsset(item);
             Schemas.Metadata metadata = await ReadMetadata(metadataAsset);
 
-            StacItem stacItem = CreateStacItem(metadata);
+            StacItem stacItem = CreateStacItem(metadata, item);
 
             AddAssets(stacItem, item, metadata);
 
@@ -69,41 +70,9 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             AddProjStacExtension(stacItem, metadata);
             AddViewStacExtension(stacItem, metadata);
             AddProcessingStacExtension(stacItem, metadata);
+            AddEoStacExtension(stacItem, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
-        }
-
-        internal virtual StacItem CreateStacItem(Schemas.Metadata metadata)
-        {
-
-            string identifier = metadata.id;
-            StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), GetCommonMetadata(metadata));
-            
-            return stacItem;
-        }
-
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)
-        {
-            return null;
-            //return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
-        }
-
-
-        private double[] GetCoordinates(string input)
-        {
-            Match coordinateMatch = coordinateRegex.Match(input);
-            if (!coordinateMatch.Success)
-            {
-                throw new InvalidOperationException(String.Format("Invalid coordinate input: {0}", input));
-            }
-
-            if (!Double.TryParse(coordinateMatch.Groups["lat"].Value, out double lat) || !Double.TryParse(coordinateMatch.Groups["lon"].Value, out double lon))
-            {
-                throw new InvalidOperationException(String.Format("Invalid coordinate value: {0}", input));
-            }
-
-            return new double[] { lat, lon };
-
+            return StacItemNode.Create(stacItem, item.Uri);
         }
 
 
@@ -116,6 +85,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
             return metadataAsset;
         }
+
 
         public virtual async Task<Schemas.Metadata> ReadMetadata(IAsset metadataAsset)
         {
@@ -134,16 +104,135 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         }
 
 
-        private IDictionary<string, object> GetCommonMetadata(Schemas.Metadata metadata)
+        internal virtual StacItem CreateStacItem(Schemas.Metadata metadata, IItem item)
         {
+            string suffix = String.Empty;
+            if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id)) != null) suffix = "_ortho";
+            else if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null) suffix = "_non-ortho";
+
+            string identifier = String.Format("{0}{1}", metadata.id, suffix);
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
             FillDateTimeProperties(properties, metadata);
             FillInstrument(properties, metadata);
             FillBasicsProperties(properties, metadata);
 
-            return properties;
+            StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), properties);
+            
+            return stacItem;
         }
+
+
+        protected void AddAssets(StacItem stacItem, IItem item, Schemas.Metadata metadata)
+        {
+            //string imageFile = String.Format("{0}_ortho.tif", metadata.id);
+
+            IAsset metadataAsset = GetMetadataAsset(item);
+            stacItem.Assets.Add("metadata", StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType("application/json"), "Metadata file"));
+            stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
+
+            // Overview/browse
+            IAsset browseAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_browse\.png$", metadata.id));
+            if (browseAsset != null)
+            {
+                stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, browseAsset.Uri, new ContentType("image/png"), "Browse image"));
+                stacItem.Assets["overview"].Properties.AddRange(browseAsset.Properties);
+            }
+
+            // RGB TIFF (ortho)
+            IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id));
+            if (imageAsset != null)
+            {
+                StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image file");
+                stacItem.Assets.Add("ortho", stacAsset);
+                stacAsset.Properties.AddRange(imageAsset.Properties);
+                stacAsset.Properties["gsd"] = metadata.gsd;
+                stacAsset.EoExtension().Bands = new EoBandObject[] {
+                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 485 },
+                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 545 },
+                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 645 },
+                };
+            }
+
+            // PAN TIFF (ortho)
+            IAsset imageAssetPan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id));
+            if (imageAssetPan != null)
+            {
+                StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image file");
+                stacItem.Assets.Add("ortho-pan", stacAssetPan);
+                stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
+                stacAssetPan.Properties["gsd"] = metadata.gsd;
+                stacAssetPan.EoExtension().Bands = new EoBandObject[] {
+                    new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 575 },
+                };
+            }
+
+            // RGB TIFF (non-ortho)
+            imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id));
+            if (imageAsset != null)
+            {
+                StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image file");
+                stacItem.Assets.Add("georeferenced", stacAsset);
+                stacAsset.Properties.AddRange(imageAsset.Properties);
+                stacAsset.Properties["gsd"] = metadata.gsd;
+                stacAsset.EoExtension().Bands = new EoBandObject[] {
+                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 485 },
+                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 545 },
+                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 645 },
+                };
+            }
+
+            // PAN TIFF (non-ortho)
+            imageAssetPan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
+            if (imageAssetPan != null)
+            {
+                StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image file");
+                stacItem.Assets.Add("georeferenced-pan", stacAssetPan);
+                stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
+                stacAssetPan.Properties["gsd"] = metadata.gsd;
+                stacAssetPan.EoExtension().Bands = new EoBandObject[] {
+                    new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 575 },
+                };
+            }
+
+            // Mask TIFF (non-ortho)
+            IAsset imageAssetMask = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_mask\.tif$", metadata.id));
+            if (imageAssetMask != null)
+            {
+                StacAsset stacAssetMask = StacAsset.CreateDataAsset(stacItem, imageAssetMask.Uri, new ContentType("image/tiff; application=geotiff"), "Pixel mask");
+                stacItem.Assets.Add("mask", stacAssetMask);
+                stacAssetMask.Properties.AddRange(imageAssetMask.Properties);
+                stacAssetMask.Properties["gsd"] = metadata.gsd;
+            }
+
+            // RGB RPC (non-ortho)
+            IAsset rpcAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced_rpc\.txt$", metadata.id));
+            if (rpcAsset != null)
+            {
+                StacAsset stacAssetRpc = StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new ContentType("text/plain"), "RPC (RGB)");
+                stacItem.Assets.Add("georefrenced-rpc", stacAssetRpc);
+                stacAssetRpc.Properties.AddRange(rpcAsset.Properties);
+            }
+
+            // PAN RPC (non-ortho)
+            rpcAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan_rpc\.txt$", metadata.id));
+            if (rpcAsset != null)
+            {
+                StacAsset stacAssetRpc = StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new ContentType("text/plain"), "RPC (PAN)");
+                stacItem.Assets.Add("georefrenced-pan-rpc", stacAssetRpc);
+                stacAssetRpc.Properties.AddRange(rpcAsset.Properties);
+            }
+
+            // Mask RPC (non-ortho)
+            rpcAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_mask_rpc\.txt$", metadata.id));
+            if (rpcAsset != null)
+            {
+                StacAsset stacAssetRpc = StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new ContentType("text/plain"), "RPC (mask)");
+                stacItem.Assets.Add("mask-rpc", stacAssetRpc);
+                stacAssetRpc.Properties.AddRange(rpcAsset.Properties);
+            }
+        }
+
 
         private void FillDateTimeProperties(Dictionary<string, object> properties, Schemas.Metadata metadata)
         {
@@ -156,20 +245,6 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         }
 
 
-        private DateTime? GetAcquisitionDateTime(Schemas.Metadata metadata)
-        {
-            DateTime acquisitionDate = DateTime.MinValue;
-            if (DateTime.TryParse(metadata.acquisitionDate, null, DateTimeStyles.AssumeUniversal, out DateTime result))
-            {
-                return result;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-
         private void FillInstrument(Dictionary<string, object> properties, Schemas.Metadata metadata)
         {
             // platform & constellation
@@ -179,18 +254,21 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             properties["mission"] = "Global";
             properties["instruments"] = new string[] { metadata.sensorName.ToLower() };
             properties["sensor_type"] = "optical";
+            properties["gsd"] = metadata.gsd;
+
         }
 
         private void FillBasicsProperties(IDictionary<String, object> properties, Schemas.Metadata metadata)
         {
             DateTime? acquisitionDate = GetAcquisitionDateTime(metadata);
-            string dateStr = (acquisitionDate != null ? String.Format(" {0}", acquisitionDate.Value.ToUniversalTime().ToString("G")) : String.Empty);
+            string dateStr = (acquisitionDate != null ? String.Format(" {0:yyyy-MM-dd HH:mm:ss}", acquisitionDate.Value.ToUniversalTime()) : String.Empty);
             CultureInfo culture = new CultureInfo("fr-FR");
-            properties["title"] = String.Format("BlackSky {0} {1}",
+            properties["title"] = String.Format("BlackSky {0}{1}",
                 metadata.sensorName,
                 dateStr
             );
         }
+
 
         private void AddSatStacExtension(StacItem stacItem, Schemas.Metadata metadata)
         {
@@ -225,10 +303,41 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         }
 
 
-
-
-        protected void AddAssets(StacItem stacItem, IItem item, Schemas.Metadata metadata)
+        private void AddEoStacExtension(StacItem stacItem, Schemas.Metadata metadata)
         {
+            EoStacExtension eo = stacItem.EoExtension();
+            eo.CloudCover = metadata.cloudCoverPercent;
+            List<EoBandObject> bands = new List<EoBandObject>();
+            foreach (StacAsset asset in stacItem.Assets.Values)
+            {
+                EoStacExtension assetEo = asset.EoExtension();
+                if (assetEo.Bands != null) bands.AddRange(assetEo.Bands);
+            }
+            eo.Bands = bands.ToArray();
+        }
+
+
+
+
+        private DateTime? GetAcquisitionDateTime(Schemas.Metadata metadata)
+        {
+            DateTime acquisitionDate = DateTime.MinValue;
+            if (DateTime.TryParse(metadata.acquisitionDate, null, DateTimeStyles.AssumeUniversal, out DateTime result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)
+        {
+            string s = JsonConvert.SerializeObject(metadata.geometry);
+            GeoJSON.Net.Geometry.Polygon polygon = JsonConvert.DeserializeObject<GeoJSON.Net.Geometry.Polygon>(s);
+            return polygon;
         }
 
 

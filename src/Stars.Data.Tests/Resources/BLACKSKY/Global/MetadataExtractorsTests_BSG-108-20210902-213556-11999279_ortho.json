@@ -1,0 +1,151 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+      "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+      "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+      "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "BSG-108-20210902-213556-11999279_ortho",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -75.12948188832118,
+            39.951193872769544
+          ],
+          [
+            -75.16335070466222,
+            39.92967968802465
+          ],
+          [
+            -75.20606168353703,
+            39.96975426955367
+          ],
+          [
+            -75.17209285763781,
+            39.99133716421872
+          ],
+          [
+            -75.12948188832118,
+            39.951193872769544
+          ]
+        ]
+      ]
+    },
+    "properties": {
+      "title": "BlackSky Global-8 2021-09-02 21:35:56",
+      "agency": "BlackSky",
+      "platform": "global-8",
+      "mission": "Global",
+      "instruments": [
+        "global-8"
+      ],
+      "sensor_type": "optical",
+      "gsd": 0.8632106,
+      "datetime": "2021-09-02T21:35:56.707Z",
+      "eo:cloud_cover": 0.0,
+      "eo:bands": [
+        {
+          "name": "blue",
+          "common_name": "blue",
+          "center_wavelength": 485.0
+        },
+        {
+          "name": "green",
+          "common_name": "green",
+          "center_wavelength": 545.0
+        },
+        {
+          "name": "red",
+          "common_name": "red",
+          "center_wavelength": 645.0
+        },
+        {
+          "name": "pan",
+          "common_name": "pan",
+          "center_wavelength": 575.0
+        }
+      ],
+      "view:sun_azimuth": 262.15057,
+      "view:sun_elevation": 20.95552,
+      "view:off_nadir": 13.258979,
+      "processing:level": "ORTHO"
+    },
+    "bbox": [
+      -75.20606168353703,
+      39.92967968802465,
+      -75.12948188832118,
+      39.99133716421872
+    ],
+    "assets": {
+      "overview": {
+        "title": "Browse image",
+        "type": "image/png",
+        "roles": [
+          "overview"
+        ],
+        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_browse.png",
+        "filename": "BSG-108-20210902-213556-11999279_browse.png",
+        "file:size": 1
+      },
+      "metadata": {
+        "title": "Metadata file",
+        "type": "application/json",
+        "roles": [
+          "metadata"
+        ],
+        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_metadata.json",
+        "filename": "BSG-108-20210902-213556-11999279_metadata.json",
+        "file:size": 3807
+      },
+      "ortho": {
+        "title": "RGB image file",
+        "type": "image/tiff; application=geotiff",
+        "roles": [
+          "data"
+        ],
+        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_ortho.tif",
+        "filename": "BSG-108-20210902-213556-11999279_ortho.tif",
+        "file:size": 1,
+        "gsd": 0.8632106,
+        "eo:bands": [
+          {
+            "name": "blue",
+            "common_name": "blue",
+            "center_wavelength": 485.0
+          },
+          {
+            "name": "green",
+            "common_name": "green",
+            "center_wavelength": 545.0
+          },
+          {
+            "name": "red",
+            "common_name": "red",
+            "center_wavelength": 645.0
+          }
+        ]
+      },
+      "ortho-pan": {
+        "type": "image/tiff; application=geotiff",
+        "roles": [
+          "data"
+        ],
+        "title": "PAN image file",
+        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_ortho-pan.tif",
+        "filename": "BSG-108-20210902-213556-11999279_ortho-pan.tif",
+        "file:size": 1,
+        "gsd": 0.8632106,
+        "eo:bands": [
+          {
+            "name": "pan",
+            "common_name": "pan",
+            "center_wavelength": 575.0
+          }
+        ]
+      }
+    },
+    "links": []
+  }

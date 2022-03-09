@@ -109,6 +109,9 @@
         "CSK": {
           "Type": "Terradue.Stars.Data.Model.Metadata.CosmoSkymed.CosmoSkymedMetadataExtractor"
         },
+        "BLACKSKY": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.BlackSkyGlobalMetadataExtractor"
+        },
         "GDAL": {
           "Type": "Terradue.Stars.Data.Model.Metadata.Gdal.GdalMetadataExtractor",
           "Priority": "1000"
