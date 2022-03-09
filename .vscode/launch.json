@@ -534,7 +534,7 @@
                 "copy",
                 "-k",
                 "-v",
-                "https://catalog.terradue.com/sentinel2/search?uid=S2B_MSIL2A_20200130T004659_N0213_R102_T53HPA_20200130T022348",
+                "https://catalog.terradue.com/sentinel2/search?format=atom&uid=S2B_MSIL1C_20220209T100049_N0400_R122_T33TVM_20220209T104141&do=[terradue]",
                 "--harvest",
                 "-r",
                 "4",
