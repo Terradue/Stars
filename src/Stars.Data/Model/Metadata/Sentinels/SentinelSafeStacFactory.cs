@@ -261,7 +261,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             properties.Remove("title");
             properties.Add("title", string.Format("{0} {1}",
                                                   GetTitle(properties),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
+                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)));
         }
 
         protected abstract string GetTitle(IDictionary<string, object> properties);

@@ -60,7 +60,7 @@
       "Sentinel-1 IPF": "003.31"
     },
     "proj:epsg": null,
-    "title": "Sentinel-1A SLC VV/VH 124 15/06/2021 05:04:56",
+    "title": "Sentinel-1A SLC VV/VH 124 2021-06-15 05:04:56",
     "sar:instrument_mode": "IW",
     "sar:frequency_band": "C",
     "sar:polarizations": [
