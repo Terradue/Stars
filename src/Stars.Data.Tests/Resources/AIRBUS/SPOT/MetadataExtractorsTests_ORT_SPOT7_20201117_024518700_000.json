@@ -48,7 +48,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 2.61241124661,
-    "title": "SPOT-7 SPOT-7 RASTER_ORTHO 17/11/2020 02:45:17",
+    "title": "SPOT-7 SPOT-7 RASTER_ORTHO 2020-11-17 02:45:17",
     "sat:platform_international_designator": "2014-034A",
     "proj:epsg": 32749,
     "proj:shape": [

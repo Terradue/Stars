@@ -44,7 +44,7 @@
       "sar"
     ],
     "sensor_type": "radar",
-    "title": "Rcm-3 GRD HH/VV",
+    "title": "RCM-3 GRD HH/VV",
     "sat:orbit_state": "descending",
     "sar:instrument_mode": "FSL",
     "sar:frequency_band": "C",

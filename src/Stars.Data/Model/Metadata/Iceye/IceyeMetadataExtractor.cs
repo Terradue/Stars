@@ -206,11 +206,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
             // title
             properties.Remove("title");
             properties.Add("title", string.Format("{0} {1} {2} {3} {4}",
-                                                  StylePlatform(properties.GetProperty<string>("platform")),
-                                                  metadata.product_type,
-                                                  metadata.product_level,
-                                                  string.Join("/", GetPolarizations(metadata)),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
+                metadata.product_type,
+                metadata.product_level,
+                string.Join("/", GetPolarizations(metadata)),
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
+            );
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)

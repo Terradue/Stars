@@ -46,7 +46,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 50.0,
-    "title": "Saocom-1A SAO1A GTC VV/VH 19/08/2020 21:17:26",
+    "title": "SAOCOM-1A SAO1A GTC VV/VH 2020-08-19 21:17:26",
     "sat:orbit_state": "ascending",
     "proj:epsg": null,
     "proj:shape": [

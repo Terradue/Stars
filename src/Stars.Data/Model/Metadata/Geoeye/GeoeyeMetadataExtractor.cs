@@ -370,10 +370,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
             // title
             properties.Remove("title");
             properties.Add("title", string.Format("{0} {1} {2} {3}",
-                                                  StylePlatform(properties.GetProperty<string>("platform")),
-                                                  properties.GetProperty<string[]>("instruments").First().ToUpper(),
-                                                  properties.GetProperty<string>("processing:level").ToUpper(),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
+                properties.GetProperty<string[]>("instruments").First().ToUpper(),
+                properties.GetProperty<string>("processing:level").ToUpper(),
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
+            );
         }
 
 

@@ -41,11 +41,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         protected override string GetTitle(IDictionary<string, object> properties)
         {
-            return string.Format("{0} {1} {2} {3}", StylePlatform(properties.GetProperty<string>("platform")),
-                                                  GetProductType(),
-                                                  string.Join("/", GetPolarizations()),
-                                                  properties.GetProperty<int>("sat:relative_orbit")
-                                                  );
+            return string.Format("{0} {1} {2} {3}",
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
+                GetProductType(),
+                string.Join("/", GetPolarizations()),
+                properties.GetProperty<int>("sat:relative_orbit")
+            );
         }
 
         private string[] GetPolarizations()

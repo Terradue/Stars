@@ -226,11 +226,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             // title
             properties.Remove("title");
             properties.Add("title", string.Format("{0} {1} {2} {3} {4}",
-                                                  StylePlatform(properties.GetProperty<string>("platform")),
+                                                  //StylePlatform(properties.GetProperty<string>("platform")),
+                                                  properties.GetProperty<string>("platform").ToUpper(),
                                                   metadata.Channel[0].DataSetInfo.SensorName,
                                                   GetProductType(metadata),
                                                   string.Join("/", GetPolarizations(item)),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
+                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)));
         }
 
         private void FillInstrument(SAOCOM_XMLProduct metadata, Dictionary<string, object> properties)

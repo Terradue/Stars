@@ -45,7 +45,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 9.0,
-    "title": "Rcm-2 GRD HH/HV/VH/VV",
+    "title": "RCM-2 GRD HH/HV/VH/VV",
     "sat:orbit_state": "ascending",
     "sar:instrument_mode": "QP",
     "sar:frequency_band": "C",

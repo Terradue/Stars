@@ -290,10 +290,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             // title
             properties.Remove("title");
             properties.Add("title", string.Format("{0} {1} {2} {3}",
-                                                  StylePlatform(properties.GetProperty<string>("platform")),
-                                                  string.Join(" ", properties.GetProperty<string[]>("instruments")).ToUpper(),
-                                                  properties.GetProperty<string>("processing:level")?.ToUpper(),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
+                string.Join(" ", properties.GetProperty<string[]>("instruments")).ToUpper(),
+                properties.GetProperty<string>("processing:level")?.ToUpper(),
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
+            );
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Auxiliary auxiliary)

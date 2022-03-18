@@ -48,7 +48,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 1.0,
-    "title": "Kompsat-5 cosi GTC HH 22/01/2021 22:05:51",
+    "title": "KOMPSAT-5 cosi GTC HH 2021-01-22 22:05:51",
     "sat:absolute_orbit": 40752,
     "sat:orbit_state": "ascending",
     "sar:instrument_mode": "HR",

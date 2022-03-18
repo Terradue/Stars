@@ -49,7 +49,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 3.0,
-    "title": "Iceye-X4 Stripmap GRD VV 06/12/2020 08:42:01",
+    "title": "ICEYE-X4 Stripmap GRD VV 2020-12-06 08:42:01",
     "sat:absolute_orbit": 7782,
     "sat:relative_orbit": 7782,
     "sat:orbit_state": "descending",

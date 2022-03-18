@@ -49,7 +49,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 6.1615293363776,
-    "title": "TDX-1 SAR EEC SM 103 HH 2021-08-05T21:07:30.187426Z",
+    "title": "TDX-1 SAR EEC SM 103 HH 2021-08-05 21:07:30",
     "sat:absolute_orbit": 61696,
     "sat:relative_orbit": 103,
     "sat:orbit_state": "descending",

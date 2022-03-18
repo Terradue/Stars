@@ -302,9 +302,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             Schemas.prdfSatellite satellite = (metadata.leftCamera == null ? metadata.satellite : metadata.leftCamera.satellite);
             CultureInfo culture = new CultureInfo("fr-FR");
             properties["title"] = String.Format("{0} {1} {2}",
-                String.Format("{0}-{1}", satellite.name, satellite.number).ToLower(),
+                String.Format("{0}-{1}", satellite.name.ToUpper(), satellite.number.ToUpper()),
                 GetProcessingLevel(metadata),
-                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
 

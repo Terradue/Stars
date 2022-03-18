@@ -187,7 +187,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
                 metadata.GetString("Ext_ObservationMode"),
                 metadata.GetString("Lbi_ProcessLevel"),
                 metadata.GetString("Ext_Polarizations"),
-                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
 

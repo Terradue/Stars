@@ -263,8 +263,8 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             DateTime? acquisitionDate = GetAcquisitionDateTime(metadata);
             string dateStr = (acquisitionDate != null ? String.Format(" {0:yyyy-MM-dd HH:mm:ss}", acquisitionDate.Value.ToUniversalTime()) : String.Empty);
             CultureInfo culture = new CultureInfo("fr-FR");
-            properties["title"] = String.Format("BlackSky {0}{1}",
-                metadata.sensorName,
+            properties["title"] = String.Format("{0}{1}",
+                metadata.sensorName.ToUpper(),
                 dateStr
             );
         }

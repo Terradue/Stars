@@ -208,7 +208,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
                 metadata.satelliteId,
                 metadata.sensorId,
                 GetProcessingLevel(metadata),
-                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
 

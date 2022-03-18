@@ -371,10 +371,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         protected string GetTitle(Product auxiliary, IDictionary<string, object> properties)
         {
-            return string.Format("{0} {1} {2}", StylePlatform(properties.GetProperty<string>("platform")),
-                                                  GetProductType(auxiliary),
-                                                  string.Join("/", GetPolarizations(auxiliary))
-                                                  );
+            return string.Format("{0} {1} {2}", 
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
+                GetProductType(auxiliary),
+                string.Join("/", GetPolarizations(auxiliary))
+            );
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Product auxiliary, Kml kml)

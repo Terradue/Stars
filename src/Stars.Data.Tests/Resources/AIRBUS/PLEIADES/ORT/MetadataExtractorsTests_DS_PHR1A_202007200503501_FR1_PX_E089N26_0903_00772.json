@@ -48,7 +48,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 0.8263581262995172,
-    "title": "Pleiades-1A PHR-1A RASTER_ORTHO 20/07/2020 05:04:27",
+    "title": "PLEIADES-1A PHR-1A RASTER_ORTHO 2020-07-20 05:04:27",
     "sat:platform_international_designator": "2011-076F",
     "proj:epsg": 32645,
     "proj:shape": [

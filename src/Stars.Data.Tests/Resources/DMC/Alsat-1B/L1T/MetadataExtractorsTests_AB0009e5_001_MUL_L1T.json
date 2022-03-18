@@ -50,7 +50,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 24.0,
-    "title": "ALSAT-1B ALITE L1T 14/03/2020 01:26:57",
+    "title": "ALSAT-1B ALITE L1T 2020-03-14 01:26:57",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16050,
     "proj:shape": [

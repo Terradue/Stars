@@ -58,7 +58,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 1.0,
-    "title": "Vision-1 S-1  14/01/2021 22:41:40",
+    "title": "Vision-1 S-1  2021-01-14 22:41:40",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16160,
     "proj:shape": [

@@ -84,7 +84,7 @@
     "sat:platform_international_designator": "2015-000A",
     "processing:level": "L2A",
     "processing:lineage": "Generation of Level-2A User Product",
-    "title": "Sentinel-2A MSI L2A 16/12/2019 00:47:01",
+    "title": "SENTINEL-2A MSI L2A 16/12/2019 00:47:01",
     "eo:bands": [
       {
         "name": "B01-60m",
