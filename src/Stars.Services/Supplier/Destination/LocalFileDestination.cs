@@ -83,6 +83,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 if (relPath == null || relPath.StartsWith(".."))
                     relPath = relPathFix ?? "";
             }
+            if (relPath.StartsWith("/")) relPath = relPath.Substring(1);
+            if (filename.StartsWith("/")) filename = filename.Substring(1);
             var newFilePath = Path.Combine(file.Directory.FullName, relPath, filename);
             return new LocalFileDestination(new FileInfo(newFilePath), subroute);
         }
