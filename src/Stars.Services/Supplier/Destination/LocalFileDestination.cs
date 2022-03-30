@@ -50,6 +50,9 @@ namespace Terradue.Stars.Services.Supplier.Destination
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
                 filename = subroute.ContentDisposition.FileName;
 
+            if (String.IsNullOrEmpty(filename))
+                filename = "asset.zip";
+
             // to avoid wrong filename such as '$value'
             if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset){
                 if ( resource != null && resource.ResourceType == ResourceType.Item)
