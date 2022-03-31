@@ -66,7 +66,7 @@ namespace Terradue.Stars.Services.Store
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
             this.credentials = credentials;
-            this._stacRouter = new StacRouter(credentials);
+            this._stacRouter = new StacRouter(credentials, logger);
         }
 
 

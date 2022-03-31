@@ -18,6 +18,8 @@ namespace Terradue.Stars.Services.Router
 
         public IRouter GetRouter(IResource route)
         {
+            if (route is WebRoute && !(route as WebRoute).CachedHeaders.AllKeys.Contains("Content-Type"))
+                ((WebRoute)route).CacheHeadersAsync().GetAwaiter().GetResult();
             return GetPlugins().Values.FirstOrDefault(r =>
             {
                 try
