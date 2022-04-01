@@ -467,11 +467,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             // title
             properties.Remove("title");
             properties.Add("title", string.Format("{0} {1} {2} {3} {4}",
-                                                  StylePlatform(properties.GetProperty<string>("platform")),
-                                                  string.Join(",", properties.GetProperty<string[]>("instruments")),
-                                                  GetProductType(auxiliary),
-                                                  string.Join("/", GetPolarizations(auxiliary)),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
+                string.Join(",", properties.GetProperty<string[]>("instruments")),
+                GetProductType(auxiliary),
+                string.Join("/", GetPolarizations(auxiliary)),
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
+            );
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Auxiliary auxiliary)

@@ -46,7 +46,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                                                   GetPlatform(),
                                                   string.Join("/", GetInstruments()),
                                                   GetProcessingLevel(),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture));
+                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
         }
 
         protected override EoBandObject GetEoBandObject(Schemas.t_Spectral_Band_Info bandInfo, string description)

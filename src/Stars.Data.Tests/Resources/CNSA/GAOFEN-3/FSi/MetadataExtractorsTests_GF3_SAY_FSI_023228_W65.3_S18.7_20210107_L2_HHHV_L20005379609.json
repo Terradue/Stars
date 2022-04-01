@@ -41,9 +41,9 @@
     "start_datetime": "2021-01-07T09:54:49.286464Z",
     "end_datetime": "2021-01-07T09:54:58.238015Z",
     "created": "2021-01-08T13:49:16Z",
-    "platform": "gf-3",
-    "constellation": "gf-3",
-    "mission": "gf-3",
+    "platform": "gaofen-3",
+    "constellation": "gaofen-3",
+    "mission": "gaofen-3",
     "instruments": [
       "SAR"
     ],
@@ -72,7 +72,7 @@
       26719,
       28763
     ],
-    "title": "Gf-3 SAR L2 01/07/2021 09:54:49"
+    "title": "GAOFEN-3 SAR L2 2021-01-07 09:54:49"
   },
   "bbox": [
     -65.649846,

@@ -216,7 +216,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             properties["title"] = String.Format("{0} {1} {2}",
                 metadata.ProductDefinitionData.SatelliteId,
                 metadata.ProcessingInfo.ProcessingLevel,
-                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
 

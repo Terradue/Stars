@@ -78,10 +78,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             return string.Format("{0} {1} {2} {3}",
-                                                  GetPlatform(),
+                                                  GetPlatform().ToUpper(),
                                                   string.Join("/", GetInstruments()),
                                                   GetProductType(),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture));
+                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
         }
 
         public virtual string[] GetInstruments()

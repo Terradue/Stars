@@ -47,7 +47,7 @@
       "sar-x"
     ],
     "sensor_type": "radar",
-    "title": "CSKS4 Level-1A 16/10/2021 04:51:49",
+    "title": "CSKS4 Level-1A 2021-10-16 04:51:49",
     "sat:orbit_state": "ascending",
     "proj:epsg": 4326,
     "view:incidence_angle": 43.11329629,

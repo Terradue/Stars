@@ -47,7 +47,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 8.0,
-    "title": "cbers-4a L4 30/07/2020 13:51:24",
+    "title": "CBERS-4A L4 2020-07-30 13:51:24",
     "eo:bands": [
       {
         "name": "band-1",

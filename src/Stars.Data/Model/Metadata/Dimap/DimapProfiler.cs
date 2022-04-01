@@ -80,7 +80,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                                                   GetPlatform(),
                                                   string.Join("/", GetInstruments()),
                                                   GetProcessingLevel(),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture));
+                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
         }
 
         public virtual string[] GetInstruments()

@@ -46,7 +46,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 50.0,
-    "title": "Saocom-1A SAO1A GEC VV/VH/HH/HV 08/11/2019 09:50:27",
+    "title": "SAOCOM-1A SAO1A GEC VV/VH/HH/HV 2019-11-08 09:50:27",
     "sat:orbit_state": "descending",
     "proj:epsg": null,
     "proj:shape": [

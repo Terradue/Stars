@@ -49,7 +49,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 6.3235365317422,
-    "title": "TSX-1 SAR EEC SM 164 HH 2018-09-29T21:46:04.680000Z",
+    "title": "TSX-1 SAR EEC SM 164 HH 2018-09-29 21:46:04",
     "sat:absolute_orbit": 62622,
     "sat:relative_orbit": 164,
     "sat:orbit_state": "descending",

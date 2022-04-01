@@ -50,7 +50,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 22.0,
-    "title": "UK-DMC-2 SLIM-6-22 L1T 17/12/2019 23:12:48",
+    "title": "UK-DMC-2 SLIM-6-22 L1T 2019-12-17 23:12:48",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16051,
     "proj:shape": [

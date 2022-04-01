@@ -21,7 +21,6 @@ namespace Terradue.Stars.Data
                     logger.LogDebug(loggingEvent.RenderedMessage);
                     break;
             }
-            
         }
     }
 }

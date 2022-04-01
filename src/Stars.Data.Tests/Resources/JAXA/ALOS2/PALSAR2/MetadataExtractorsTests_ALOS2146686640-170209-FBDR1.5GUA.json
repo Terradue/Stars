@@ -48,7 +48,7 @@
       "palsar-2"
     ],
     "sensor_type": "radar",
-    "title": "ALOS-2 PALSAR-2 FBD L1.5 HH/HV 09/02/2017 05:11:03",
+    "title": "ALOS-2 PALSAR-2 FBD L1.5 HH/HV 2017-02-09 05:11:03",
     "sat:absolute_orbit": 14668,
     "sat:relative_orbit": 14668,
     "sat:orbit_state": "ascending",

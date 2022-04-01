@@ -60,7 +60,7 @@
       "Sentinel-1 IPF": "003.31"
     },
     "proj:epsg": null,
-    "title": "Sentinel-1A GRD VV/VH 11 27/11/2020 11:13:57",
+    "title": "SENTINEL-1A GRD VV/VH 11 2020-11-27 11:13:57",
     "sar:instrument_mode": "IW",
     "sar:frequency_band": "C",
     "sar:polarizations": [

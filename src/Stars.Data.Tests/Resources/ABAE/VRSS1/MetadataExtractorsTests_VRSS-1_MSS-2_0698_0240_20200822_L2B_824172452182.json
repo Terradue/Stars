@@ -49,7 +49,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 10.0,
-    "title": "VRSS-1 MSS-2 L2B 22/08/2020 05:16:13",
+    "title": "VRSS-1 MSS-2 L2B 2020-08-22 05:16:13",
     "sat:absolute_orbit": 42593,
     "proj:epsg": 32740,
     "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 40S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM40S\", AUTHORITY[\"EPSG\", \"32740\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 57], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32740\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",

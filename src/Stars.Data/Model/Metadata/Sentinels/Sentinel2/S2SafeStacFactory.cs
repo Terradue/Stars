@@ -70,9 +70,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         protected override string GetTitle(IDictionary<string, object> properties)
         {
-            return string .Format("{0} {1} {2}", StylePlatform(properties.GetProperty<string>("platform")),
-                                                  properties.GetProperty<string[]>("instruments").First().ToUpper(),
-                                                  properties.GetProperty<string>("processing:level").ToUpper());
+            return string .Format("{0} {1} {2} {3}",
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
+                properties.GetProperty<string[]>("instruments").First().ToUpper(),
+                properties.GetProperty<string>("processing:level").ToUpper(),
+                properties.GetProperty<int>("sat:relative_orbit")
+            );
         }
 
         protected override string GetSensorType(metadataObjectType platformMetadata)

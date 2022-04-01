@@ -23,7 +23,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 {
     public class Gaofen3MetadataExtractor : MetadataExtraction
     {
-        private const string GAOFEN3_PLATFORM_NAME = "gf-3";
+        //private const string GAOFEN3_PLATFORM_NAME = "gf-3";
+        private const string GAOFEN3_PLATFORM_NAME = "GAOFEN-3";
+       
         private const string GAOFEN3_DESCENDING_ORBIT_STATE = "descending";
 
         public override string Label => "Gaofen-3 SAR Satellite (CNSA) mission product metadata extractor";
@@ -178,10 +180,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             // title
             properties.Remove("title");
             properties.Add("title", string.Format("{0} {1} {2} {3}",
-                StylePlatform(properties.GetProperty<string>("platform")),
+                //StylePlatform(properties.GetProperty<string>("platform")),
+                properties.GetProperty<string>("platform").ToUpper(),
                 properties.GetProperty<string[]>("instruments").First().ToUpper(),
                 properties.GetProperty<string>("processing:level").ToUpper(),
-                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("G", culture)));
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)));
         }
 
 

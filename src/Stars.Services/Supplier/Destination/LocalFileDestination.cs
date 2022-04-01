@@ -50,6 +50,9 @@ namespace Terradue.Stars.Services.Supplier.Destination
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
                 filename = subroute.ContentDisposition.FileName;
 
+            if (String.IsNullOrEmpty(filename) && subroute.ResourceType == ResourceType.Asset)
+                filename = "asset.zip";
+
             // to avoid wrong filename such as '$value'
             if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset){
                 if ( resource != null && resource.ResourceType == ResourceType.Item)
@@ -83,6 +86,8 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 if (relPath == null || relPath.StartsWith(".."))
                     relPath = relPathFix ?? "";
             }
+            if (relPath.StartsWith("/")) relPath = relPath.Substring(1);
+            if (filename.StartsWith("/")) filename = filename.Substring(1);
             var newFilePath = Path.Combine(file.Directory.FullName, relPath, filename);
             return new LocalFileDestination(new FileInfo(newFilePath), subroute);
         }
