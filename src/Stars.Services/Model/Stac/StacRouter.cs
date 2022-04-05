@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stac;
@@ -16,10 +17,12 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacRouter : IRouter
     {
         private ICredentials credentials;
+        private readonly ILogger logger;
 
-        public StacRouter(ICredentials credentials)
+        public StacRouter(ICredentials credentials, ILogger logger = null)
         {
             this.credentials = credentials;
+            this.logger = logger;
         }
 
         public int Priority { get; set; }
@@ -41,7 +44,10 @@ namespace Terradue.Stars.Services.Model.Stac
                     StacConvert.Deserialize<IStacObject>((routeFound as IStreamable).ReadAsString().Result);
                     return true;
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    logger?.LogDebug(e, "Cannot read STAC object from {0}", routeFound.Uri);
+                }
             }
             return false;
         }
@@ -88,7 +94,7 @@ namespace Terradue.Stars.Services.Model.Stac
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamable).ReadAsString());
-                if ( stacObject is IStacCatalog )
+                if (stacObject is IStacCatalog)
                     return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri, credentials);
                 else
                     return new StacItemNode(stacObject as StacItem, routeFound.Uri, credentials);

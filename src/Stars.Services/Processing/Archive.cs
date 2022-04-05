@@ -60,7 +60,7 @@ namespace Terradue.Stars.Services.Processing
 
         private static ArchiveType FindCompression(IAsset asset)
         {
-            return ArchiveFileExtensions.FirstOrDefault(ext => asset.ContentDisposition.FileName.EndsWith(ext.Key)).Value;
+            return ArchiveFileExtensions.FirstOrDefault(ext => asset.ContentDisposition.FileName.EndsWith(ext.Key, StringComparison.InvariantCultureIgnoreCase)).Value;
         }
 
         public abstract Uri Uri { get; }

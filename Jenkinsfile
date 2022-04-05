@@ -107,7 +107,7 @@ pipeline {
     stage('Create Release') {
       agent { 
           docker { 
-              image 'golang'
+              image 'golang:1.12'
               args '-u root'
           } 
       }
