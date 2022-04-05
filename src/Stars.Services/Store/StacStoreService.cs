@@ -180,7 +180,7 @@ namespace Terradue.Stars.Services.Store
             IStacObject stacObject = stacNode.StacObject;
             if (stacObject == null) return;
 
-            var links = stacObject.Links.Where(l => l != null);
+            var links = stacObject.Links.Where(l => l != null).ToArray();
 
             stacObject.Links.Clear();
             stacObject.Links.AddRange<StacLink>(links);
