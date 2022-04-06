@@ -148,9 +148,9 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.Properties["gsd"] = metadata.gsd;
                 stacAsset.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 485 },
-                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 545 },
-                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 645 },
+                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485 },
+                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545 },
+                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 0.645 },
                 };
             }
 
@@ -163,7 +163,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
                 stacAssetPan.Properties["gsd"] = metadata.gsd;
                 stacAssetPan.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 575 },
+                    new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 0.575 },
                 };
             }
 
@@ -176,9 +176,9 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.Properties["gsd"] = metadata.gsd;
                 stacAsset.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 485 },
-                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 545 },
-                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 645 },
+                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485 },
+                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545 },
+                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 0.645 },
                 };
             }
 
@@ -191,7 +191,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
                 stacAssetPan.Properties["gsd"] = metadata.gsd;
                 stacAssetPan.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 575 },
+                    new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 0.575 },
                 };
             }
 

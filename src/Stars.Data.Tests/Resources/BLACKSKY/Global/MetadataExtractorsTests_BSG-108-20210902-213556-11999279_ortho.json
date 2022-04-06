@@ -50,22 +50,22 @@
         {
           "name": "blue",
           "common_name": "blue",
-          "center_wavelength": 485.0
+          "center_wavelength": 0.485
         },
         {
           "name": "green",
           "common_name": "green",
-          "center_wavelength": 545.0
+          "center_wavelength": 0.545
         },
         {
           "name": "red",
           "common_name": "red",
-          "center_wavelength": 645.0
+          "center_wavelength": 0.645
         },
         {
           "name": "pan",
           "common_name": "pan",
-          "center_wavelength": 575.0
+          "center_wavelength": 0.575
         }
       ],
       "view:sun_azimuth": 262.15057,
@@ -114,17 +114,17 @@
           {
             "name": "blue",
             "common_name": "blue",
-            "center_wavelength": 485.0
+            "center_wavelength": 0.485
           },
           {
             "name": "green",
             "common_name": "green",
-            "center_wavelength": 545.0
+            "center_wavelength": 0.545
           },
           {
             "name": "red",
             "common_name": "red",
-            "center_wavelength": 645.0
+            "center_wavelength": 0.645
           }
         ]
       },
@@ -142,7 +142,7 @@
           {
             "name": "pan",
             "common_name": "pan",
-            "center_wavelength": 575.0
+            "center_wavelength": 0.575
           }
         ]
       }
