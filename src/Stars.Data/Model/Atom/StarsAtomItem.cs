@@ -98,6 +98,8 @@ namespace Terradue.Stars.Data.Model.Atom
                 starsAtomItem.Links.Add(new SyndicationLink(assetUri, rel, atitle, type, length));
                 if (rel == "icon" && asset.Value.Roles.Any(r => r == "overview"))
                     starsAtomItem.Links.Add(new SyndicationLink(assetUri, "enclosure", atitle, type, length));
+                else if (rel == "legend")
+                    starsAtomItem.Links.Add(new SyndicationLink(assetUri, "legend", atitle, type, length));
             }
 
             starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", string.Format("{0}", stacItem.DateTime.Start.ToString("O")));
@@ -117,6 +119,8 @@ namespace Terradue.Stars.Data.Model.Atom
                 return "icon";
             if (semanticRoles.Any(r => r == "icon"))
                 return "icon";
+            if (semanticRoles.Any(r => r == "legend"))
+                return "legend";
             return "enclosure";
         }
 
