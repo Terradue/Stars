@@ -1,0 +1,273 @@
+{
+    "stac_extensions": [
+      "sat",
+      "processing",
+      "eo"
+    ],
+    "stac_version": "1.0.0-beta3",
+    "links": [
+      {
+        "type": "application/json",
+        "rel": "parent",
+        "href": "../catalog.json"
+      },
+      {
+        "type": "application/json; profile=stac-item",
+        "rel": "self",
+        "href": "s3://eoepca-ades/wf-d0534740-b97b-11eb-82cf-0a580a830350/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808.json"
+      }
+    ],
+    "assets": {
+      "ndvi": {
+        "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+        "roles": [
+          "data"
+        ],
+        "href": "ndvi.tif",
+        "s-expression": "(/ (- nir red) (+ nir red))",
+        "eo:bands": [
+          {
+            "name": "ndvi",
+            "common_name": "ndvi",
+            "description": "ndvi ((/ (- nir red) (+ nir red)))"
+          }
+        ],
+        "size": 422636684
+      },
+      "color_scale": {
+        "type": "image/png",
+        "roles": [
+          "legend"
+        ],
+        "href": "https://test.com/legend.png",
+        "size": 1000
+      }
+    },
+    "type": "Feature",
+    "id": "S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            136.09904081237448,
+            -35.238087535820235
+          ],
+          [
+            137.30514540705778,
+            -35.2211228310596
+          ],
+          [
+            137.33382636269508,
+            -36.210306946433825
+          ],
+          [
+            136.11272686189528,
+            -36.22789729830299
+          ],
+          [
+            136.09904081237448,
+            -35.238087535820235
+          ],
+          [
+            136.09904081237448,
+            -35.238087535820235
+          ]
+        ]
+      ]
+    },
+    "properties": {
+      "datetime": "2019-12-16T00:47:01.024Z",
+      "updated": "2021-05-20T15:00:26.643224Z",
+      "platform": "sentinel-2a",
+      "constellation": "sentinel-2",
+      "mission": "sentinel-2",
+      "instruments": [
+        "msi"
+      ],
+      "gsd": 10.0,
+      "sat:orbit_state": "descending",
+      "sat:absolute_orbit": 23408,
+      "sat:relative_orbit": 102,
+      "sat:platform_international_designator": "2015-000A",
+      "processing:level": "L2A",
+      "processing:lineage": "Generation of Level-2A User Product",
+      "title": "SENTINEL-2A MSI L2A 16/12/2019 00:47:01",
+      "eo:bands": [
+        {
+          "name": "B01-60m",
+          "common_name": "coastal",
+          "center_wavelength": 0.4427,
+          "gain": 0.24326574019590658,
+          "eai": 1884.69
+        },
+        {
+          "name": "B02-10m",
+          "common_name": "blue",
+          "center_wavelength": 0.49269999999999997,
+          "gain": 0.26657102666914634,
+          "eai": 1959.66
+        },
+        {
+          "name": "B02-20m",
+          "common_name": "blue",
+          "center_wavelength": 0.49269999999999997,
+          "gain": 0.26657102666914634,
+          "eai": 1959.66
+        },
+        {
+          "name": "B02-60m",
+          "common_name": "blue",
+          "center_wavelength": 0.49269999999999997,
+          "gain": 0.26657102666914634,
+          "eai": 1959.66
+        },
+        {
+          "name": "B03-10m",
+          "common_name": "green",
+          "center_wavelength": 0.5598,
+          "gain": 0.23966582473740097,
+          "eai": 1823.24
+        },
+        {
+          "name": "B03-20m",
+          "common_name": "green",
+          "center_wavelength": 0.5598,
+          "gain": 0.23966582473740097,
+          "eai": 1823.24
+        },
+        {
+          "name": "B03-60m",
+          "common_name": "green",
+          "center_wavelength": 0.5598,
+          "gain": 0.23966582473740097,
+          "eai": 1823.24
+        },
+        {
+          "name": "B04-10m",
+          "common_name": "red",
+          "center_wavelength": 0.6646,
+          "gain": 0.22205374856282928,
+          "eai": 1512.06
+        },
+        {
+          "name": "B04-20m",
+          "common_name": "red",
+          "center_wavelength": 0.6646,
+          "gain": 0.22205374856282928,
+          "eai": 1512.06
+        },
+        {
+          "name": "B04-60m",
+          "common_name": "red",
+          "center_wavelength": 0.6646,
+          "gain": 0.22205374856282928,
+          "eai": 1512.06
+        },
+        {
+          "name": "B05-20m",
+          "common_name": "rededge70",
+          "center_wavelength": 0.7041000000000001,
+          "gain": 0.1927698231117501,
+          "eai": 1424.64
+        },
+        {
+          "name": "B05-60m",
+          "common_name": "rededge70",
+          "center_wavelength": 0.7041000000000001,
+          "gain": 0.1927698231117501,
+          "eai": 1424.64
+        },
+        {
+          "name": "B06-20m",
+          "common_name": "rededge74",
+          "center_wavelength": 0.7405,
+          "gain": 0.20605291863831748,
+          "eai": 1287.61
+        },
+        {
+          "name": "B06-60m",
+          "common_name": "rededge74",
+          "center_wavelength": 0.7405,
+          "gain": 0.20605291863831748,
+          "eai": 1287.61
+        },
+        {
+          "name": "B07-20m",
+          "common_name": "rededge78",
+          "center_wavelength": 0.7827999999999999,
+          "gain": 0.2213239386869214,
+          "eai": 1162.08
+        },
+        {
+          "name": "B07-60m",
+          "common_name": "rededge78",
+          "center_wavelength": 0.7827999999999999,
+          "gain": 0.2213239386869214,
+          "eai": 1162.08
+        },
+        {
+          "name": "B08-10m",
+          "common_name": "nir",
+          "center_wavelength": 0.8328,
+          "gain": 0.1629008560824433,
+          "eai": 1041.63
+        },
+        {
+          "name": "B09-60m",
+          "common_name": "nir09",
+          "center_wavelength": 0.9451,
+          "gain": 0.117784429556592,
+          "eai": 812.92
+        },
+        {
+          "name": "B11-20m",
+          "common_name": "swir16",
+          "center_wavelength": 1.6137000000000001,
+          "gain": 0.02835517947219024,
+          "eai": 245.59
+        },
+        {
+          "name": "B11-60m",
+          "common_name": "swir16",
+          "center_wavelength": 1.6137000000000001,
+          "gain": 0.02835517947219024,
+          "eai": 245.59
+        },
+        {
+          "name": "B12-20m",
+          "common_name": "swir22",
+          "center_wavelength": 2.2024,
+          "gain": 0.009412723402170229,
+          "eai": 85.25
+        },
+        {
+          "name": "B12-60m",
+          "common_name": "swir22",
+          "center_wavelength": 2.2024,
+          "gain": 0.009412723402170229,
+          "eai": 85.25
+        },
+        {
+          "name": "B8A-20m",
+          "common_name": "nir08",
+          "center_wavelength": 0.8647,
+          "gain": 0.1955226800071635,
+          "eai": 955.32
+        },
+        {
+          "name": "B8A-60m",
+          "common_name": "nir08",
+          "center_wavelength": 0.8647,
+          "gain": 0.1955226800071635,
+          "eai": 955.32
+        }
+      ]
+    },
+    "bbox": [
+      136.09904081237448,
+      -36.22789729830299,
+      137.33382636269508,
+      -35.2211228310596
+    ]
+  }

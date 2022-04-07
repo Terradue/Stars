@@ -1,3 +1,4 @@
+using System.Linq;
 using Newtonsoft.Json;
 using Xunit;
 using Stac.Extensions.Projection;
@@ -29,5 +30,27 @@ namespace Terradue.Data.Test.Harvesters
 
         }
 
+        [Fact]
+        public async System.Threading.Tasks.Task LegendTest()
+        {
+            string json = GetJson("Translators");
+
+            // ValidateJson(json);
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(null, ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.Translate<AtomItemNode>(stacItemNode);
+
+            ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
+
+            Assert.NotNull(legendLink);
+            Assert.Equal("https://test.com/legend.png", legendLink.Uri.AbsoluteUri);
+        }
+
     }
+
 }
