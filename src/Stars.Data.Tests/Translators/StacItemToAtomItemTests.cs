@@ -16,7 +16,7 @@ namespace Terradue.Data.Test.Harvesters
         {
             string json = GetJson("Translators");
 
-            // ValidateJson(json);
+            ValidateJson(json);
 
             StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
 
@@ -35,7 +35,7 @@ namespace Terradue.Data.Test.Harvesters
         {
             string json = GetJson("Translators");
 
-            // ValidateJson(json);
+            ValidateJson(json);
 
             StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
 
