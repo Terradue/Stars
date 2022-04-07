@@ -1,10 +1,10 @@
 {
   "stac_extensions": [
-    "sat",
-    "processing",
-    "eo"
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json"
   ],
-  "stac_version": "1.0.0-beta3",
+  "stac_version": "1.0.0",
   "links": [
     {
       "type": "application/json",
@@ -28,7 +28,6 @@
       "eo:bands": [
         {
           "name": "ndvi",
-          "common_name": "ndvi",
           "description": "ndvi ((/ (- nir red) (+ nir red)))"
         }
       ],
@@ -158,42 +157,42 @@
       },
       {
         "name": "B05-20m",
-        "common_name": "rededge70",
+        "common_name": "rededge",
         "center_wavelength": 0.7041000000000001,
         "gain": 0.1927698231117501,
         "eai": 1424.64
       },
       {
         "name": "B05-60m",
-        "common_name": "rededge70",
+        "common_name": "rededge",
         "center_wavelength": 0.7041000000000001,
         "gain": 0.1927698231117501,
         "eai": 1424.64
       },
       {
         "name": "B06-20m",
-        "common_name": "rededge74",
+        "common_name": "rededge",
         "center_wavelength": 0.7405,
         "gain": 0.20605291863831748,
         "eai": 1287.61
       },
       {
         "name": "B06-60m",
-        "common_name": "rededge74",
+        "common_name": "rededge",
         "center_wavelength": 0.7405,
         "gain": 0.20605291863831748,
         "eai": 1287.61
       },
       {
         "name": "B07-20m",
-        "common_name": "rededge78",
+        "common_name": "rededge",
         "center_wavelength": 0.7827999999999999,
         "gain": 0.2213239386869214,
         "eai": 1162.08
       },
       {
         "name": "B07-60m",
-        "common_name": "rededge78",
+        "common_name": "rededge",
         "center_wavelength": 0.7827999999999999,
         "gain": 0.2213239386869214,
         "eai": 1162.08

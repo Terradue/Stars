@@ -113,10 +113,10 @@ namespace Terradue.Stars.Data.Model.Atom
         {
             if (semanticRoles.Any(r => r == "overview"))
                 return "image";
-            if (semanticRoles.Any(r => r == "thumbnail"))
+            if (semanticRoles.Any(r => r == "thumbnail" || r == "icon"))
                 return "icon";
-            if (semanticRoles.Any(r => r == "icon"))
-                return "icon";
+            if (semanticRoles.Any(r => r == "legend"))
+                return "legend";
             return "enclosure";
         }
 

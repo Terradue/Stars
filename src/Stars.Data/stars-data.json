@@ -115,6 +115,9 @@
         "GDAL": {
           "Type": "Terradue.Stars.Data.Model.Metadata.Gdal.GdalMetadataExtractor",
           "Priority": "1000"
+        },
+        "NEWSAT": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.NewSat.NewSatMetadataExtractor"
         }
       }
     }

@@ -24,9 +24,9 @@
         "CNSA/GAOFEN-2",
         "CNSA/GAOFEN-4"
       ],
-      "GAOFEN-3": [
-        "CNSA/GAOFEN-3"
-      ],
+//      "GAOFEN-3": [
+//        "CNSA/GAOFEN-3"
+//      ],
       "LANDSAT8": [
         "NASA/LANDSAT8"
       ],
@@ -79,6 +79,9 @@
       ],
       "BLACKSKY": [
         "BLACKSKY/Global"
+      ],
+      "NEWSAT": [
+        "SATELLOGIC/NEWSAT"
       ]
     }
   }

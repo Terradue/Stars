@@ -1,0 +1,485 @@
+{
+  "stac_version": "1.0.0-rc.2",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "20220320_112827_SN20_L1_SR",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          37.31426417527183,
+          -17.597727801239444
+        ],
+        [
+          37.31424603408977,
+          -17.597726807149723
+        ],
+        [
+          37.31422807710294,
+          -17.597724141860144
+        ],
+        [
+          37.314210471303596,
+          -17.597719830156805
+        ],
+        [
+          37.31419338041806,
+          -17.597713912136733
+        ],
+        [
+          37.31417696338415,
+          -17.597706442834994
+        ],
+        [
+          37.31416137287306,
+          -17.5976974917129
+        ],
+        [
+          37.314146753869636,
+          -17.597687142012035
+        ],
+        [
+          37.31413324232407,
+          -17.597675489980148
+        ],
+        [
+          37.31412096388757,
+          -17.597662643976047
+        ],
+        [
+          37.3141100327439,
+          -17.59764872346197
+        ],
+        [
+          37.31410055054755,
+          -17.597633857892532
+        ],
+        [
+          37.31409260547834,
+          -17.597618185510974
+        ],
+        [
+          37.314086271421466,
+          -17.59760185206345
+        ],
+        [
+          37.314081607280336,
+          -17.59758500944368
+        ],
+        [
+          37.3140786564289,
+          -17.59756781428046
+        ],
+        [
+          37.314077446308225,
+          -17.597550426480982
+        ],
+        [
+          37.314077988171384,
+          -17.597533007743856
+        ],
+        [
+          37.3140802769788,
+          -17.59751572005534
+        ],
+        [
+          37.31441101616644,
+          -17.595716803886315
+        ],
+        [
+          37.314411510186055,
+          -17.5957142262847
+        ],
+        [
+          37.33203723383056,
+          -17.50730399176852
+        ],
+        [
+          37.33204165292303,
+          -17.50728655630823
+        ],
+        [
+          37.33204785227619,
+          -17.507269627310237
+        ],
+        [
+          37.33205577076799,
+          -17.507253371683536
+        ],
+        [
+          37.33206533032677,
+          -17.507237949698066
+        ],
+        [
+          37.33207643670115,
+          -17.50722351340457
+        ],
+        [
+          37.33208898038921,
+          -17.50721020513548
+        ],
+        [
+          37.33210283771812,
+          -17.50719815610165
+        ],
+        [
+          37.33211787206353,
+          -17.507187485098644
+        ],
+        [
+          37.33213393519651,
+          -17.507178297335553
+        ],
+        [
+          37.33215086874509,
+          -17.507170683397693
+        ],
+        [
+          37.332168505755575,
+          -17.507164718353486
+        ],
+        [
+          37.33218667233871,
+          -17.507160461014376
+        ],
+        [
+          37.33220518938399,
+          -17.507157953354934
+        ],
+        [
+          37.33222387432564,
+          -17.507157220099074
+        ],
+        [
+          37.388183698449126,
+          -17.507621417799836
+        ],
+        [
+          37.3882019950837,
+          -17.50762242257467
+        ],
+        [
+          37.38822010332444,
+          -17.507625128872725
+        ],
+        [
+          37.38823785171527,
+          -17.507629511069737
+        ],
+        [
+          37.388255072207244,
+          -17.507635527673337
+        ],
+        [
+          37.38827160174976,
+          -17.507643121715933
+        ],
+        [
+          37.38828728383431,
+          -17.507652221294105
+        ],
+        [
+          37.38830196997641,
+          -17.50766274024938
+        ],
+        [
+          37.38831552112149,
+          -17.507674578984023
+        ],
+        [
+          37.38832780896152,
+          -17.507687625404092
+        ],
+        [
+          37.38833871714988,
+          -17.507701755980737
+        ],
+        [
+          37.38834814240297,
+          -17.50771683691982
+        ],
+        [
+          37.388355995478186,
+          -17.507732725428756
+        ],
+        [
+          37.388362202018904,
+          -17.5077492710685
+        ],
+        [
+          37.38836670325851,
+          -17.507766317177992
+        ],
+        [
+          37.388369456576875,
+          -17.507783702357443
+        ],
+        [
+          37.38837043590389,
+          -17.507801261996576
+        ],
+        [
+          37.388369631966356,
+          -17.50781882983319
+        ],
+        [
+          37.3883670523758,
+          -17.50783623952743
+        ],
+        [
+          37.370284598041096,
+          -17.59804670231156
+        ],
+        [
+          37.37028016129475,
+          -17.598064115920913
+        ],
+        [
+          37.37027394746465,
+          -17.598081022299912
+        ],
+        [
+          37.37026601769276,
+          -17.598097255094338
+        ],
+        [
+          37.370256450005485,
+          -17.598112654577807
+        ],
+        [
+          37.37024533854598,
+          -17.598127069223473
+        ],
+        [
+          37.37023279264776,
+          -17.59814035719501
+        ],
+        [
+          37.370218935758956,
+          -17.598152387742232
+        ],
+        [
+          37.370203904227566,
+          -17.59816304248768
+        ],
+        [
+          37.37018784595985,
+          -17.59817221659142
+        ],
+        [
+          37.370170918964966,
+          -17.59817981978261
+        ],
+        [
+          37.37015328980018,
+          -17.59818577724784
+        ],
+        [
+          37.370135131932,
+          -17.59819003036719
+        ],
+        [
+          37.37011662402925,
+          -17.598192537291066
+        ],
+        [
+          37.37009794820506,
+          -17.598193273352013
+        ],
+        [
+          37.31426417527183,
+          -17.597727801239444
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "title": "NEWSAT MS L1 2022-03-20 11:28:27",
+    "description": "scene_set_id: ece6d219-e452-4524-8fdc-c61c59727ecf",
+    "datetime": "2022-03-20T11:28:27.976967Z",
+    "processing:level": "l1",
+    "mission": "NewSat",
+    "providers": [
+      {
+        "name": "Satellogic",
+        "description": "High-resolution geospatial imagery and analytics",
+        "roles": [
+          "producer",
+          "processor"
+        ],
+        "url": "https://satellogic.com/"
+      }
+    ],
+    "platform": "NewSat",
+    "instruments": [
+      "ms"
+    ],
+    "constellation": "Aleph1",
+    "gsd": 0.7,
+    "eo:cloud_cover": 0.32,
+    "proj:epsg": "32737",
+    "proj:centroid": [
+      -17.5527,
+      37.3535,
+      0.0
+    ],
+    "view:sun_elevation": 57.68586708834182,
+    "view:off_nadir": 16.469754679093796,
+    "view:exposure_sec": 0.0014556799999999998,
+    "rd:type": "stripes",
+    "rd:sat_id": "SN20",
+    "rd:product_level": "L1 TOA Reflectance SR"
+  },
+  "bbox": [
+    37.314077446308225,
+    -17.598193273352013,
+    37.38837043590389,
+    -17.507157220099074
+  ],
+  "assets": {
+    "analytic": {
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "4-Band Analytic",
+      "href": "data/Flood_Mozambique-product/rasters/20220320_112827_SN20_L1_SR_MS_0.tif",
+      "eo:bands": [
+        {
+          "name": "band1",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "full_width_half_max": 0.06
+        },
+        {
+          "name": "band2",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "band3",
+          "common_name": "red",
+          "center_wavelength": 0.64,
+          "full_width_half_max": 0.1
+        },
+        {
+          "name": "band4",
+          "common_name": "nir",
+          "center_wavelength": 0.825,
+          "full_width_half_max": 0.15
+        }
+      ],
+      "filename": "20220320_112827_SN20_L1_SR_MS_0.tif"
+    },
+    "visual": {
+      "roles": [
+        "data"
+      ],
+      "title": "3-Band Visual",
+      "href": "data/Flood_Mozambique-product/rasters/20220320_112827_SN20_L3_SR_MS_0.tif",
+      "eo:bands": [
+        {
+          "name": "band1",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "full_width_half_max": 0.06
+        },
+        {
+          "name": "band2",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "band3",
+          "common_name": "red",
+          "center_wavelength": 0.64,
+          "full_width_half_max": 0.1
+        }
+      ],
+      "filename": "20220320_112827_SN20_L3_SR_MS_0.tif"
+    },
+    "thumbnail": {
+      "type": "image/png",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Thumbnail",
+      "href": "data/Flood_Mozambique-product/20220320_112827_SN20_L3_SR_MS_thumbnail.png",
+      "filename": "20220320_112827_SN20_L1_SR_MS_thumbnail.png"
+    },
+    "preview": {
+      "type": "image/png",
+      "roles": [
+        "preview"
+      ],
+      "title": "Preview",
+      "href": "data/Flood_Mozambique-product/20220320_112827_SN20_L3_SR_MS_preview.png",
+      "filename": "20220320_112827_SN20_L1_SR_MS_preview.png"
+    },
+    "cloud_mask": {
+      "type": "image/tif",
+      "roles": [
+        "cloud_mask"
+      ],
+      "title": "Cloud Mask",
+      "href": "data/Flood_Mozambique-product/rasters/20220320_112827_SN20_L1_SR_MS_cloud_mask_0.tif",
+      "filename": "20220320_112827_SN20_L1_SR_MS_cloud_mask_0.tif"
+    },
+    "geojson-metadata": {
+      "type": "application/geojson",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Extended STAC Metadata",
+      "href": "data/Flood_Mozambique-product/20220320_112827_SN20_L1_SR_MS_metadata_stac.geojson",
+      "filename": "20220320_112827_SN20_L1_SR_MS_metadata_stac.geojson"
+    },
+    "xml-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Extended ISO Metadata",
+      "href": "data/Flood_Mozambique-product/20220320_112827_SN20_L1_SR_MS_metadata_iso.xml",
+      "filename": "20220320_112827_SN20_L1_SR_MS_metadata_iso.xml"
+    },
+    "footprint": {
+      "type": "footprint/kml",
+      "roles": [
+        "footprint"
+      ],
+      "title": "Footprint",
+      "href": "data/Flood_Mozambique-product/20220320_112827_SN20_L1_SR_MS_footprint.kml",
+      "filename": "20220320_112827_SN20_L1_SR_MS_footprint.kml"
+    }
+  },
+  "links": [
+    {
+      "type": "application/json",
+      "rel": "collection",
+      "title": "Simple Example Collection",
+      "href": "./collection.json"
+    },
+    {
+      "type": "application/json",
+      "rel": "root",
+      "href": "./collection.json"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "href": "/index.html"
+    },
+    {
+      "type": "text/html",
+      "rel": "license",
+      "href": "https://satellogic.com/"
+    }
+  ],
+  "collection": "Catalog"
+}

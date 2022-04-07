@@ -237,13 +237,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         private void FillInstrument(SAOCOM_XMLProduct metadata, Dictionary<string, object> properties)
         {
             properties.Remove("platform");
-            properties.Add("platform", "saocom-1a");
+            string sensorName = metadata.Channel[0].DataSetInfo.SensorName;
+            string serialNumber = (sensorName.Substring(0, 3) == "SAO" ? sensorName.Substring(3) : String.Empty);
+            properties.Add("platform", String.Format("saocom-{0}", serialNumber).ToLower());
+
             properties.Remove("mission");
             properties.Add("mission", "saocom-1");
 
             properties.Remove("instruments");
 
-            properties.Add("instruments", new string[] { metadata.Channel[0].DataSetInfo.SensorName.ToLower() });
+            properties.Add("instruments", new string[] { sensorName.ToLower() });
 
             properties.Remove("sensor_type");
             properties.Add("sensor_type", "radar");
