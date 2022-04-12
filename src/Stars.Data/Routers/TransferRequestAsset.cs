@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
 using Terradue.OpenSearch.DataHub;
 using Terradue.Stars.Interface;
+using System.Linq;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -39,6 +40,8 @@ namespace Terradue.Stars.Data.Routers
         public bool CanBeRanged => tr.CanBeRanged;
 
         public IReadOnlyDictionary<string, object> Properties => properties;
+
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
 
         public IStreamable GetStreamable()
         {

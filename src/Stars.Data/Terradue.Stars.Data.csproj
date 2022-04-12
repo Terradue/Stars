@@ -33,7 +33,6 @@
     <PackageReference Include="MimeTypes" Version="2.0.2"/>
     <PackageReference Include="Terradue.OpenSearch.SciHub" Version="1.18.4"/>
     <PackageReference Include="Terradue.OpenSearch.Asf" Version="1.2.*"/>
-    <PackageReference Include="DotNetStac" Version="1.2.*"/>
     <PackageReference Include="Terradue.OpenSearch.GeoJson" Version="1.4.5"/>
     <PackageReference Include="Terradue.GeoJson" Version="1.12.1"/>
     <PackageReference Include="MaxRev.Gdal.Core" Version="3.3.3.110"/>

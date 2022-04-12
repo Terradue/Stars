@@ -49,6 +49,8 @@ namespace Terradue.Data.Test
             }
         }
 
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
+
         public Task CacheHeaders(bool force = false)
         {
             return Task.CompletedTask;

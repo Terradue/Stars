@@ -56,6 +56,8 @@ namespace Terradue.Stars.Services.Processing
             }
         }
 
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
+
         public Task<Stream> GetStreamAsync()
         {
             return Task.FromResult(entry.OpenReader() as Stream);

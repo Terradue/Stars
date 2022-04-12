@@ -45,6 +45,8 @@ namespace Terradue.Stars.Services.Supplier
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
+        public IEnumerable<IAsset> Alternates => (route is IAsset) ? ((IAsset)route).Alternates : Enumerable.Empty<IAsset>();
+
         public IStreamable GetStreamable()
         {
             return route as IStreamable;

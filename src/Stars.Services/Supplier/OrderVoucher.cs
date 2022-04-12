@@ -69,6 +69,8 @@ namespace Terradue.Stars.Services.Supplier
         [JsonProperty]
         public IReadOnlyDictionary<string, object> Properties => new Dictionary<string, object>();
 
+        public IEnumerable<IAsset> Alternates => new List<IAsset>();
+
         public async Task<Stream> GetStreamAsync()
         {
             return await Task<Stream>.Run(() =>

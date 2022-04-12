@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
+using Stac.Extensions.Alternate;
 using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 
@@ -17,6 +18,7 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private readonly StacAsset asset;
+        private readonly IAssetsContainer parent;
         private readonly IStreamable _streamable;
         private readonly ICredentials credentials;
         private readonly Uri uri;
@@ -24,6 +26,7 @@ namespace Terradue.Stars.Services.Model.Stac
         public StacAssetAsset(StacAsset asset, IAssetsContainer parent, ICredentials credentials = null)
         {
             this.asset = asset;
+            this.parent = parent;
             this.credentials = credentials;
             if (asset.Uri.IsAbsoluteUri)
                 this.uri = asset.Uri;
@@ -101,9 +104,22 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 
+        public IEnumerable<IAsset> Alternates
+        {
+            get
+            {
+                var alternateAssets = asset.AlternateExtension().AlternateAssets;
+                if ( alternateAssets != null )
+                    return alternateAssets.Values.Select(a => new StacAlternateAssetAsset(a, this, credentials));
+                return Enumerable.Empty<IAsset>();
+            }
+        }
+
+        public IAssetsContainer Parent => parent;
+
         public async Task CacheHeaders(bool force = false)
         {
-            if ( _streamable is WebRoute )
+            if (_streamable is WebRoute)
                 await (_streamable as WebRoute).CacheHeadersAsync(force);
         }
 

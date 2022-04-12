@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
@@ -59,6 +60,8 @@ namespace Terradue.Stars.Services.Processing
         public Uri Uri => new Uri(name, UriKind.Relative);
 
         public bool CanBeRanged => false;
+
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
 
         public Task CacheHeaders(bool force = false)
         {

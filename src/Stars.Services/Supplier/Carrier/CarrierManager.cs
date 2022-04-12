@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
@@ -26,47 +27,59 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return GetPlugins().Where(r => r.Value.CanDeliver(route, destination)).Select(r => r.Value);
         }
 
-        public async Task<IDeliveryQuotation> GetAssetsDeliveryQuotationsAsync(IAssetsContainer assetsContainer, IDestination destination)
+        public async Task<IDeliveryQuotation> GetAssetsDeliveryQuotationsAsync(IAssetsContainer assetsContainer, IDestination destination, bool includeAlternates = true)
         {
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
             Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
 
             foreach (var asset in assetsContainer.Assets)
             {
-                try
+                List<IDelivery> assetsDeliveryQuotations = new List<IDelivery>();
+                IList<IAsset> possibleAssets = new List<IAsset>();
+                possibleAssets.Add(asset.Value);
+                // Add the alternates
+                if (includeAlternates && asset.Value.Alternates != null)
                 {
-                    var length = asset.Value.ContentLength;
-                    await asset.Value.CacheHeaders();
-                    length = asset.Value.ContentLength;
-                    string relPath = null;
-                    if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
+                    possibleAssets.AddRange(asset.Value.Alternates);
+                }
+                foreach (var possibleAsset in possibleAssets)
+                {
+                    try
                     {
-                        var relUri = assetsContainer.Uri.MakeRelativeUri(asset.Value.Uri);
-                        // Use the relative path only if a sub-directory
-                        if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
-                            relPath = Path.GetDirectoryName(relUri.ToString());
+                        var length = asset.Value.ContentLength;
+                        await asset.Value.CacheHeaders();
+                        length = asset.Value.ContentLength;
+                        string relPath = null;
+                        if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
+                        {
+                            var relUri = assetsContainer.Uri.MakeRelativeUri(asset.Value.Uri);
+                            // Use the relative path only if a sub-directory
+                            if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
+                                relPath = Path.GetDirectoryName(relUri.ToString());
+                        }
+                        // If the asset contains a content disposition, use it as the filename
+                        if (asset.Value.ContentDisposition != null && !string.IsNullOrEmpty(asset.Value.ContentDisposition.FileName))
+                        {
+                            if (asset.Value.ContentDisposition.FileName.Contains("/"))
+                                relPath = "";
+                        }
+                        assetsDeliveryQuotations.AddRange(GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath)));
                     }
-                    if (asset.Value.ContentDisposition != null && !string.IsNullOrEmpty(asset.Value.ContentDisposition.FileName))
+                    catch (WebException we)
                     {
-                        if ( asset.Value.ContentDisposition.FileName.Contains("/"))
-                            relPath = "";
+                        logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, we.Message);
+                        if (we.InnerException != null)
+                            logger.LogWarning(we.InnerException.Message);
+                        assetsExceptions.Add(asset.Key, we);
                     }
-                    var assetsDeliveryQuotations = GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath));
-                    assetsQuotes.Add(asset.Key, assetsDeliveryQuotations);
+                    catch (Exception e)
+                    {
+                        logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
+                        logger.LogDebug(e.StackTrace);
+                        assetsExceptions.Add(asset.Key, e);
+                    }
                 }
-                catch (WebException we)
-                {
-                    logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, we.Message);
-                    if ( we.InnerException != null )
-                        logger.LogWarning(we.InnerException.Message);
-                    assetsExceptions.Add(asset.Key, we);
-                }
-                catch (Exception e)
-                {
-                    logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
-                    logger.LogDebug(e.StackTrace);
-                    assetsExceptions.Add(asset.Key, e);
-                }
+                assetsQuotes.Add(asset.Key, assetsDeliveryQuotations.OrderBy(d => d.Cost));
             }
             return new DeliveryQuotation(assetsQuotes, assetsExceptions);
         }

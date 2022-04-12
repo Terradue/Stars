@@ -75,6 +75,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IReadOnlyDictionary<string, object> Properties => link.AttributeExtensions.ToDictionary(k => k.Key.ToString(), k => k.Value as object);
 
+        public IEnumerable<IAsset> Alternates => new IAsset[0];
         public IStreamable GetStreamable()
         {
             return webRoute;
