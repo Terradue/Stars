@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 using Ionic.Zip;
@@ -21,9 +22,11 @@ namespace Terradue.Stars.Services.Processing
         private readonly ILogger logger;
 
         private IStreamable localStreamable;
+        private readonly IFileSystem fileSystem;
 
-        public ZipArchiveAsset(IAsset asset, ILogger logger)
+        public ZipArchiveAsset(IAsset asset, ILogger logger, IFileSystem fileSystem)
         {
+            this.fileSystem = fileSystem;
             this.asset = asset;
             this.logger = logger;
         }
@@ -32,7 +35,7 @@ namespace Terradue.Stars.Services.Processing
         {
             if (asset.Uri.Scheme == "file")
                 return await asset.GetStreamable().GetStreamAsync();
-            var tmpDestination = LocalFileDestination.Create(Path.GetTempPath(), asset);
+            var tmpDestination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory(Path.GetTempPath()), asset);
             var tmpArchiveAssetDestination = tmpDestination.To(asset, Guid.NewGuid().ToString());
             tmpArchiveAssetDestination.PrepareDestination();
             var localZipDelivery = carrierManager.GetSingleDeliveryQuotations(asset, tmpArchiveAssetDestination).First();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -15,10 +16,13 @@ namespace Terradue.Stars.Services.Supplier.Destination
     public class LocalFileSystemDestinationGuide : IDestinationGuide
     {
         private readonly ILogger logger;
+        private readonly IFileSystem fileSystem;
 
-        public LocalFileSystemDestinationGuide(ILogger<LocalFileSystemDestinationGuide> logger)
+        public LocalFileSystemDestinationGuide(ILogger<LocalFileSystemDestinationGuide> logger,
+                                               IFileSystem fileSystem)
         {
             this.logger = logger;
+            this.fileSystem = fileSystem;
         }
 
         public int Priority { get; set; }
@@ -42,10 +46,10 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public Task<IDestination> Guide(string directory, IResource route)
         {
-            var dir = new DirectoryInfo(directory.Replace("file:", "").TrimEnd('/'));
+            var dir = fileSystem.DirectoryInfo.FromDirectoryName(directory.Replace("file:", "").TrimEnd('/'));
             if (!dir.Exists && !dir.Parent.Exists )
                 throw new InvalidOperationException(string.Format("{0} directory does not exist", dir.Parent.FullName));
-            return Task.FromResult<IDestination>(LocalFileDestination.Create(directory.Replace("file:", "").TrimEnd('/'), route));
+            return Task.FromResult<IDestination>(LocalFileDestination.Create(dir, route));
         }
     }
 }

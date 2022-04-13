@@ -13,13 +13,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Terradue.Stars.Services.Store;
+using System.IO.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Terradue.Data.Test.Harvesters
 {
     public class MetadataExtractorsTests : TestBase
     {
+        private readonly IFileSystem fileSystem;
+
         public MetadataExtractorsTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
+            this.fileSystem = ServiceProvider.GetService<IFileSystem>();
         }
 
         public static IEnumerable<object[]> TestData
@@ -36,7 +41,7 @@ namespace Terradue.Data.Test.Harvesters
             StacRouter stacRouter = new StacRouter(null);
             TestItem testNode = new TestItem(datadir);
             IResource route = new ContainerNode(testNode, new Dictionary<string, IAsset>(testNode.Assets), "");
-            IDestination destination = LocalFileDestination.Create("out/", route);
+            IDestination destination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory("out/"), route);
             destination.PrepareDestination();
 
             Assert.True(extractor.CanProcess(route, destination));

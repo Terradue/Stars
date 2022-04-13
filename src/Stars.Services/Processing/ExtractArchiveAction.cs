@@ -12,6 +12,7 @@ using Terradue.Stars.Interface.Processing;
 using Terradue.Stars.Interface;
 using Microsoft.Extensions.Options;
 using System.Globalization;
+using System.IO.Abstractions;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -20,6 +21,7 @@ namespace Terradue.Stars.Services.Processing
 
         private readonly DestinationManager destinationManager;
         private readonly CarrierManager carrierManager;
+        private readonly IFileSystem fileSystem;
         private readonly ILogger logger;
         private readonly IOptions<ExtractArchiveOptions> options;
 
@@ -30,11 +32,16 @@ namespace Terradue.Stars.Services.Processing
 
         public string Label => "Archive Extractor (ZIP, TAR GZ, GZIP)";
 
-        public ExtractArchiveAction(IOptions<ExtractArchiveOptions> options, DestinationManager destinationManager, CarrierManager carrierManager, ILogger<ExtractArchiveAction> logger)
+        public ExtractArchiveAction(IOptions<ExtractArchiveOptions> options,
+                                    DestinationManager destinationManager,
+                                    CarrierManager carrierManager,
+                                    IFileSystem fileSystem,
+                                    ILogger<ExtractArchiveAction> logger)
         {
             this.options = options;
             this.destinationManager = destinationManager;
             this.carrierManager = carrierManager;
+            this.fileSystem = fileSystem;
             this.logger = logger;
             Key = "ExtractArchive";
             Priority = 1;
@@ -104,7 +111,7 @@ namespace Terradue.Stars.Services.Processing
 
         private async Task<IAssetsContainer> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
         {
-            Archive archive = await Archive.Read(asset.Value, logger);
+            Archive archive = await Archive.Read(asset.Value, logger, fileSystem);
 
             return await archive.ExtractToDestination(destination, carrierManager);
         }
