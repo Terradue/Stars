@@ -18,6 +18,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Raster;
 using Terradue.Stars.Services;
+using Terradue.Stars.Geometry.GeoJson;
 using Stac.Extensions.Projection;
 
 namespace Terradue.Stars.Data.Model.Metadata.Worldview
@@ -624,7 +625,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
                         data["LL_LONG"])
                 }
             );
-            return new GeoJSON.Net.Geometry.Polygon(new[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new[] { lineString }).NormalizePolygon();
         }
     }
 }

@@ -14,6 +14,7 @@ using Stac.Extensions.Projection;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 {
@@ -167,7 +168,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                 positions.ToArray()
             );
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
 

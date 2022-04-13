@@ -17,7 +17,9 @@ using Stac.Extensions.View;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Geometry.GeoJson;
 using System.Xml.Linq;
+
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {
     public class Saocom1MetadataExtractor : MetadataExtraction
@@ -301,7 +303,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             );
 
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
         private string ReadFilename(IItem item)

@@ -10,6 +10,7 @@ using Stac.Extensions.Sat;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Geometry.Gml321;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 {
@@ -377,7 +378,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 linearRing.ItemsElementName = new Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
                 polygon.exterior.Item = linearRing;
 
-                return polygon.ToGeometry();
+                return polygon.ToGeometry().NormalizePolygon();
             }
 
             if (measurementFrameSet.metadataWrap.xmlData.frameSet11 != null && measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint != null &&
@@ -399,7 +400,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 linearRing.ItemsElementName = new Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
                 polygon.exterior.Item = linearRing;
 
-                return polygon.ToGeometry();
+                return polygon.ToGeometry().NormalizePolygon();
             }
 
             return null;
