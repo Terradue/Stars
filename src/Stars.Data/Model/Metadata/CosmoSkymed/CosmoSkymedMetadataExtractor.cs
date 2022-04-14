@@ -19,6 +19,7 @@ using Stac.Extensions.View;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Geometry.GeoJson;
 using Stac.Extensions.Raster;
 
 namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
@@ -110,7 +111,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                     new GeoJSON.Net.Geometry.Position(bottomLeft[0], bottomLeft[1])
                 }
             );
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
 

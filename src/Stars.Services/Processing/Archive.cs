@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,7 @@ namespace Terradue.Stars.Services.Processing
             "application/zip"
         };
 
-        internal async static Task<Archive> Read(IAsset asset, ILogger logger)
+        internal async static Task<Archive> Read(IAsset asset, ILogger logger, IFileSystem fileSystem)
         {
             IStreamable streamableAsset = asset.GetStreamable();
 
@@ -47,11 +48,11 @@ namespace Terradue.Stars.Services.Processing
             switch (compression)
             {
                 case ArchiveType.Zip:
-                    return new ZipArchiveAsset(asset, logger);
+                    return new ZipArchiveAsset(asset, logger, fileSystem);
                 case ArchiveType.TarGzip:
                     return new TarGzipArchive(asset, logger);
                 case ArchiveType.Gzip:
-                    return new GzipArchive(asset, logger);
+                    return new GzipArchive(asset, logger, fileSystem);
 
                 default:
                     throw new System.IO.InvalidDataException("Asset is not recognized as an archive");

@@ -21,6 +21,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
 {
@@ -494,7 +495,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
                         new GeoJSON.Net.Geometry.Position(tlgc[0],tlgc[1])
                     }
                 );
-                return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+                return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
             }
 
             var p0 = new GeoJSON.Net.Geometry.Position(0, 0);

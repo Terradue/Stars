@@ -22,6 +22,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Isro
 {
@@ -440,7 +441,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
                 }
             );
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
 

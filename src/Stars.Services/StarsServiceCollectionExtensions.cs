@@ -21,6 +21,7 @@ using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router.Translator;
 using System.Net.S3;
 using Amazon.Extensions.NETCore.Setup;
+using System.IO.Abstractions;
 
 namespace Terradue.Stars.Services
 {
@@ -106,6 +107,7 @@ namespace Terradue.Stars.Services
 
             // Local Filesystem destination
             services.AddTransient<IDestinationGuide, LocalFileSystemDestinationGuide>();
+            services.AddSingleton<IFileSystem, FileSystem>();
 
             // S3 destination
             services.AddTransient<IDestinationGuide, S3DestinationGuide>();

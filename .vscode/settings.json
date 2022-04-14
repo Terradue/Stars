@@ -3,5 +3,6 @@
         "src"
     ],
     "omnisharp.disableMSBuildDiagnosticWarning": true,
-    "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)"
+    "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)",
+    "jira-plugin.workingProject": "DATAAUTHOR"
 }
