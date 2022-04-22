@@ -35,9 +35,29 @@ namespace Terradue.Stars.Geometry.GeoJson
 					}
 				}
 				return new MultiPolygon(polygons);
+			} else if (geometry is LineString)
+			{
+				LineString lineString = geometry as LineString;
+				return NormalizeLineString(lineString);
 			}
-			
-			// Return original geometry if it is neither a polygon or a multipolygon
+			else if (geometry is MultiLineString)
+			{
+				MultiLineString multiLineString = geometry as MultiLineString;
+				List<LineString> lineStrings = new List<LineString>();
+				foreach (LineString lineString in multiLineString.Coordinates)
+				{
+					IGeometryObject newGeometry = lineString.NormalizeLineString();
+					if (newGeometry is LineString)
+					{
+						lineStrings.Add(newGeometry as LineString);
+					}
+					else if (newGeometry is MultiLineString) 
+					{
+						foreach (LineString l in (newGeometry as MultiLineString).Coordinates) lineStrings.Add(l);
+					}
+				}
+				return new MultiLineString(lineStrings);
+			}
 			return geometry;
 		}
 
@@ -143,11 +163,23 @@ namespace Terradue.Stars.Geometry.GeoJson
 				List<List<LineString>> rawPolygons = new List<List<LineString>>();
 				List<LineString> innerRings = new List<LineString>();
 
-				// Find all inner rings (holes); note that inner rings that are split become part of an outer ring
-				// TODO
+				// Find all unsplit inner rings (holes); note that inner rings that are split become part of an outer ring
+				foreach (RingSegment s in segments)
+				{
+					if (s.RingIndex != 0 && !s.Split) {
+						List<Position> coords = new List<Position>();
+						foreach (PositionInfo pos in positions)
+						{
+							if (pos.Segment.RingIndex == s.RingIndex) {
+								coords.Add(new Position(pos.Latitude, pos.Longitude, pos.Altitude));
+							}
+						}
+						innerRings.Add(new LineString(coords));
+					}
+				}
 
 
-				// Find all outer rings (each becomes a new polygon)
+				// Find all segments of original outer ring (each becomes a new polygon)
 				RingSegment segment = null;
 				while (true)
 				{
@@ -155,7 +187,7 @@ namespace Terradue.Stars.Geometry.GeoJson
 					List<Position> coords = new List<Position>();
 					foreach (RingSegment s in segments)
 					{
-						if (s.IsUsed || s.RingIndex != 0 && s.Split) continue;
+						if (s.IsUsed || s.RingIndex != 0) continue;  
 						segment = s;
 						break;
 					}
@@ -220,17 +252,27 @@ namespace Terradue.Stars.Geometry.GeoJson
 
 					// Close polygon
 					if (segment == null && startPos.Split) coords.Add(coords[0]);
-					
 					rawPolygons.Add(new List<LineString>() { new LineString(coords) });
 				}
 
 				// Add inner rings to appropriate outer ring
+				foreach (LineString innerRing in innerRings)
+				{
+					foreach (List<LineString> rawPolygon in rawPolygons)
+					{
+						if (IsWithin(innerRing, rawPolygon[0]))
+						{
+							rawPolygon.Add(innerRing);
+						}
+					}
+				}
 
 
 				// Build multipolygon
 				List<Polygon> polygons = new List<Polygon>();
-				foreach (List<LineString> ll in rawPolygons) {
-					polygons.Add(new Polygon(ll));
+				foreach (List<LineString> p in rawPolygons)
+				{
+					polygons.Add(new Polygon(p));
 				}
 
 				MultiPolygon multiPolygon = new MultiPolygon(polygons);
@@ -246,19 +288,114 @@ namespace Terradue.Stars.Geometry.GeoJson
 					List<Position> coords = new List<Position>();
 					foreach (PositionInfo pos in positions)
 					{
-						if (pos.Segment.RingIndex != ringIndex) continue;
-
-						coords.Add(new Position(pos.Latitude, pos.Longitude, pos.Altitude));
+						if (pos.Segment.RingIndex == ringIndex)
+						{
+							coords.Add(new Position(pos.Latitude, pos.Longitude, pos.Altitude));
+						}
 					}
 					lineStrings.Add(new LineString(coords));
 
 				}
 				return new Polygon(lineStrings);
-				// Split the geometry
 			}
 
 			return polygon;
 		}
+
+
+		/// <summary>Checks and corrects the coordinates of a linestring and returns a valid geometry (split, if necessary, into more than one if segments of it crosses the 180-degree meridian).</summary>
+		/// <param name="lineString">The input linestring.</param>
+		/// <returns>The same linestring if no change was needed, otherwise an adjusted linestring or multilinestring.</returns>
+		public static IGeometryObject NormalizeLineString(this LineString lineString)
+		{
+			List<PositionInfo> positions = new List<PositionInfo>();
+
+			// Find segments that cross the 180-degree meridian.
+			// As a convention, this is considered to be the case if the difference
+			// between the two longitudes is greater than 180,
+			// i.e. crossing the 180-degree meridian would be shorter than
+			// crossing the prime (Greenwich) meridian
+
+			bool split = false;
+			int segmentIndex = 0;
+			List<IPosition> coordinates = new List<IPosition>(lineString.Coordinates);
+			for (int curr = 1; curr < coordinates.Count; curr++)
+			{
+				int prev = curr - 1;
+				if (Math.Abs(coordinates[curr].Longitude - coordinates[prev].Longitude) > 180 && Math.Abs(coordinates[curr].Longitude) != 180 && Math.Abs(coordinates[curr].Longitude) != 180)
+				{
+					split = true;
+					
+					int dir = coordinates[curr].Longitude < 0 ? 1 : -1;
+					// Meaning:
+					//           ... 180|-180 ...
+					// dir = 1:  east ->|-> west (prev -> 180 -> -180 -> curr), crossing from eastern to western hemisphere (going eastward)
+					// dir = -1: east <-|<- west (curr <- 180 <- -180 <- prev), crossing from western to eastern hemisphere (going westward)
+					
+					double crossingLatitude = Math.Round(GetCrossingLatitude(coordinates[curr], coordinates[prev]), 6);
+					positions.Add(new PositionInfo(new Position(crossingLatitude, 180 * dir), segmentIndex));
+
+					// Start new segment
+					segmentIndex++;
+					positions.Add(new PositionInfo(new Position(crossingLatitude, -180 * dir), segmentIndex));
+				}
+
+				positions.Add(new PositionInfo(coordinates[curr], segmentIndex));
+			}
+
+			if (split)
+			{
+				List<LineString> lineStrings = new List<LineString>();
+
+				int segmentCount = segmentIndex + 1;
+
+				for (segmentIndex = 0; segmentIndex < segmentCount; segmentIndex++)
+				{
+					List<Position> coords = new List<Position>();
+					foreach (PositionInfo pos in positions)
+					{
+						if (pos.SegmentIndex == segmentIndex)
+						{
+							coords.Add(new Position(pos.Latitude, pos.Longitude, pos.Altitude));
+						}
+					}
+					lineStrings.Add(new LineString(coords));
+				}
+				return new MultiLineString(lineStrings);
+			}
+
+			return lineString;
+		}
+
+
+
+		public static bool IsWithin(LineString inner, LineString outer, bool fullCheck = false)
+		{
+			IPosition point = inner.Coordinates[0];
+			List<IPosition> outerCoordinates = new List<IPosition>(outer.Coordinates);
+			int north = 0;
+			int south = 0;
+			IPosition start = outerCoordinates[outerCoordinates.Count - 1];
+			IPosition prev = start;
+			foreach (IPosition pos in outerCoordinates)
+			{
+				if (pos.Longitude != point.Longitude)
+				{
+					if ((pos.Longitude - point.Longitude) * (start.Longitude - point.Longitude) < 0)
+					{
+						double crossingLatitude = GetCrossingLatitude(prev, pos, point.Longitude);
+						if (crossingLatitude > point.Latitude) north++;
+						else if (crossingLatitude < point.Latitude) south++;
+					}
+					start = pos;
+				}
+				prev = pos;
+			}
+
+			return (north % 2 == 1 && south % 2 == 1);
+
+		}
+
 
 
 		/// <summary>Gets the latitude at which the geometry crosses the 180-degree meridian.</summary>
@@ -274,6 +411,26 @@ namespace Terradue.Stars.Geometry.GeoJson
 
 			return (lat2 - lat1) * (180 - lon1) / (lon2 - lon1) + lat1;
 		}
+
+
+
+		/// <summary>Gets the longitude at which the geometry crosses the given parallel.</summary>
+		/// <param name="pos1">Point on one side of the parallel.</param>
+		/// <param name="pos2">Point on the other side of the parallel.</param>
+		/// <param name="latitude">The latitude of the parallel.</param>
+		/// <returns>The latitude where the geometry crosses.</returns>
+		public static double GetCrossingLatitude(IPosition pos1, IPosition pos2, double longitude)
+		{
+			double lon1 = pos1.Longitude - longitude;
+			double lat1 = pos1.Latitude;
+			double lon2 = pos2.Longitude - longitude;
+			double lat2 = pos2.Latitude;
+
+			return (lat1 - lat2) * lon1 / (lon2 - lon1) + lat1;
+		}
+
+
+
 	}
 
 
@@ -311,6 +468,7 @@ namespace Terradue.Stars.Geometry.GeoJson
         public double Latitude { get; set; }
         public double? Altitude { get; set; }
         public RingSegment Segment { get; set; }
+        public int SegmentIndex { get; set; }
         public bool Split { get; set; }
 
         public PositionInfo(IPosition source, RingSegment segment, bool split = false)
@@ -319,6 +477,15 @@ namespace Terradue.Stars.Geometry.GeoJson
             this.Latitude = source.Latitude;
             this.Altitude = source.Altitude;
             this.Segment = segment;
+            this.Split = split;
+        }
+
+        public PositionInfo(IPosition source, int segmentIndex, bool split = false)
+        {
+            this.Longitude = source.Longitude;
+            this.Latitude = source.Latitude;
+            this.Altitude = source.Altitude;
+            this.SegmentIndex = segmentIndex;
             this.Split = split;
         }
     }
