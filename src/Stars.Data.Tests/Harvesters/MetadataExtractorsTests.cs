@@ -1,20 +1,21 @@
-using Terradue.Stars.Services;
-using Terradue.Stars.Services.Supplier;
+using System;
+using System.IO;
+using System.IO.Abstractions;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Model.Stac;
 using Stac;
 using Terradue.Stars.Data.Model.Metadata;
-using System.IO;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Interface;
-using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
 using Terradue.Stars.Services.Store;
-using System.IO.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Terradue.Data.Test.Harvesters
 {
@@ -73,7 +74,16 @@ namespace Terradue.Data.Test.Harvesters
                 // WriteJson(Path.Join(datadir, "../.."), actualJson, stacItem.Id);
                 var expectedJson = GetJson(Path.Join(datadir, "../.."), stacItem.Id);
                 // stacValidator.ValidateJson(expectedJson);
-                JsonAssert.AreEqual(expectedJson, actualJson);
+                
+                try
+                {
+                    JsonAssert.AreEqual(expectedJson, actualJson);
+                }
+                catch (System.Exception)
+                {
+                    System.Console.WriteLine(actualJson);
+                    throw;
+                } 
             }
         }
 
