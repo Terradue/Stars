@@ -18,6 +18,7 @@ using Stac.Extensions.View;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Geometry.GeoJson;
 using Stac.Extensions.Raster;
 
 namespace Terradue.Stars.Data.Model.Metadata.Vrss
@@ -108,7 +109,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
                                                         double.Parse(metadata.dataLowerLeftLong)),
                 }
             );
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.GZip;
 using Microsoft.Extensions.Logging;
@@ -14,11 +15,13 @@ namespace Terradue.Stars.Services.Processing
     {
         private readonly IAsset asset;
         private readonly ILogger logger;
+        private readonly IFileSystem fileSystem;
 
-        public GzipArchive(IAsset asset, ILogger logger)
+        public GzipArchive(IAsset asset, ILogger logger, IFileSystem fileSystem)
         {
             this.asset = asset;
             this.logger = logger;
+            this.fileSystem = fileSystem;
         }
 
         public override Uri Uri => asset.Uri;
@@ -56,7 +59,7 @@ namespace Terradue.Stars.Services.Processing
 
             try
             {
-                var newArchive = await Archive.Read(gzipEntryAsset, logger);
+                var newArchive = await Archive.Read(gzipEntryAsset, logger, fileSystem);
                 return await newArchive.ExtractToDestination(destination, carrierManager);
             }
             catch { }

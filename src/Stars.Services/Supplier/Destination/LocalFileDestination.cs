@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
@@ -11,11 +12,11 @@ namespace Terradue.Stars.Services.Supplier.Destination
 {
     public class LocalFileDestination : IDestination
     {
-        private readonly FileInfo file;
+        private readonly IFileInfo file;
         private readonly IResource resource;
         private readonly char[] WRONG_FILENAME_STARTING_CHAR = new char[] { ' ', '.', '-', '$', '&' };
 
-        private LocalFileDestination(FileInfo file, IResource resource)
+        private LocalFileDestination(IFileInfo file, IResource resource)
         {
             this.file = file;
             this.resource = resource;
@@ -25,14 +26,14 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public bool Exists => file.Exists;
 
-        public static LocalFileDestination Create(string directory, IResource route)
+        public static LocalFileDestination Create(IDirectoryInfo directory, IResource route)
         {
             var filename = Path.GetFileName(route.Uri.ToString());
             if (route.ContentDisposition != null && !string.IsNullOrEmpty(route.ContentDisposition.FileName))
                 filename = route.ContentDisposition.FileName;
             if (string.IsNullOrEmpty(filename))
                 filename = Guid.NewGuid().ToString("N");
-            return new LocalFileDestination(new FileInfo(Path.Combine(directory, filename)), route);
+            return new LocalFileDestination(directory.FileSystem.FileInfo.FromFileName(Path.Combine(directory.FullName, filename)), route);
         }
 
         public void PrepareDestination()
@@ -89,7 +90,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
             if (relPath.StartsWith("/")) relPath = relPath.Substring(1);
             if (filename.StartsWith("/")) filename = filename.Substring(1);
             var newFilePath = Path.Combine(file.Directory.FullName, relPath, filename);
-            return new LocalFileDestination(new FileInfo(newFilePath), subroute);
+            return new LocalFileDestination(file.FileSystem.FileInfo.FromFileName(newFilePath), subroute);
         }
 
         public override string ToString()

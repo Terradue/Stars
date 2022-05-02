@@ -67,6 +67,9 @@
         "LANDSAT8": {
           "Type": "Terradue.Stars.Data.Model.Metadata.Landsat8.Landsat8MetadataExtraction"
         },
+        "LANDSAT9": {
+          "Type": "Terradue.Stars.Data.Model.Metadata.Landsat9.Landsat9MetadataExtraction"
+        },
         "DIMAP": {
           "Type": "Terradue.Stars.Data.Model.Metadata.Dimap.DimapMetadataExtractor"
         },

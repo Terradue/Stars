@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
@@ -37,6 +38,7 @@ namespace Terradue.Data.Test
             Collection.AddLogging((builder) => builder.AddXUnit(OutputHelper));
             Collection.AddSingleton<CarrierManager, CarrierManager>();
             Collection.AddSingleton<ICarrier, LocalStreamingCarrier>();
+            Collection.AddSingleton<IFileSystem, FileSystem>();
         }
 
         protected TestBase()

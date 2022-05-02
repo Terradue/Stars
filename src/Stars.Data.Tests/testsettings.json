@@ -30,6 +30,9 @@
       "LANDSAT8": [
         "NASA/LANDSAT8"
       ],
+      "LANDSAT9": [
+        "NASA/LANDSAT9"
+      ],
       "DIMAP": [
         "DMC"
       ],

@@ -18,6 +18,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 {
@@ -344,7 +345,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
                         productMetadata.Imageinfo.Corner.BottomLeft.Longitude)
                 }
             );
-            return new GeoJSON.Net.Geometry.Polygon(new[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new[] { lineString }).NormalizePolygon();
         }
 
         private IDictionary<string, object> GetCommonMetadata(ProductMetadata productMetadata,

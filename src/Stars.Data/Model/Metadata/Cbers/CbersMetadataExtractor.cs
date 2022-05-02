@@ -17,6 +17,7 @@ using Stac.Extensions.View;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Cbers
 {
@@ -199,7 +200,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     new GeoJSON.Net.Geometry.Position(Double.Parse(image.boundingBox.LL.latitude), Double.Parse(image.boundingBox.LL.longitude)),
                 }
             );
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
 

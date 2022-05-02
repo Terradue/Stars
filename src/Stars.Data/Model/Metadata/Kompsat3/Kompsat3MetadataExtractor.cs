@@ -23,6 +23,7 @@ using Stac.Extensions.Raster;
 using Humanizer;
 using Newtonsoft.Json.Linq;
 using Terradue.Stars.Services;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
 {
@@ -372,7 +373,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
                 }
             );
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
 
