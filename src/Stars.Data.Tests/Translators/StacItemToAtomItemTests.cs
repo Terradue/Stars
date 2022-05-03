@@ -7,7 +7,7 @@ using Stac;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Model.Atom;
 
-namespace Terradue.Data.Test.Harvesters
+namespace Terradue.Data.Tests.Harvesters
 {
     public class StacItemToAtomItemTests : TestBase
     {

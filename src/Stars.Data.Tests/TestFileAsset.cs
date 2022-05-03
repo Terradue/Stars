@@ -9,7 +9,7 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Router;
 
-namespace Terradue.Data.Test
+namespace Terradue.Data.Tests
 {
     internal class TestFileAsset : IAsset, IStreamResource
     {

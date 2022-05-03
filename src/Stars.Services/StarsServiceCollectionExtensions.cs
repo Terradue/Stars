@@ -22,6 +22,8 @@ using Terradue.Stars.Interface.Router.Translator;
 using System.Net.S3;
 using Amazon.Extensions.NETCore.Setup;
 using System.IO.Abstractions;
+using Terradue.Stars.Services.Resources;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services
 {
@@ -127,6 +129,8 @@ namespace Terradue.Stars.Services
 
             services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(StacLinkTranslator)));
             services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(DefaultStacTranslator)));
+
+            services.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
 
             return services;
 

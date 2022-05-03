@@ -12,6 +12,7 @@ using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Resources
 {
@@ -24,9 +25,18 @@ namespace Terradue.Stars.Services.Resources
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<IResource> CreateAsync(Uri url)
+        public async Task<IStreamResource> CreateAsync(Uri url)
         {
+            // Local file
+            if ( url.IsFile )
+            {
+                return new LocalFileSystemResource(url.AbsolutePath, ResourceType.Unknown);
+            }
+
+            // HTTP
             var client = _serviceProvider.GetService<HttpClient>();
+            if ( client == null )
+                throw new SystemException("HttpClient not provided");
 
             HttpResponseMessage response = await client.GetAsync(url);
 
@@ -38,17 +48,17 @@ namespace Terradue.Stars.Services.Resources
                 return await S3Resource.CreateAsync(s3Url, s3Options.Value, null);
             }
 
-            return new HttpRoute(url, client, response.Content.Headers);
+            return new HttpResource(url, client, response.Content.Headers);
         }
 
-        public Task<Stream> GetAssetStreamAsync(IAsset asset)
+        public async Task<Stream> GetAssetStreamAsync(IAsset asset)
         {
-            throw new NotImplementedException();
+            return await (await CreateAsync(asset.Uri)).GetStreamAsync();
         }
 
-        public Task<IStreamResource> GetStreamResourceAsync(IResource resource)
+        public async Task<IStreamResource> GetStreamResourceAsync(IResource resource)
         {
-            throw new NotImplementedException();
+            return await CreateAsync(resource.Uri);
         }
 
     }
