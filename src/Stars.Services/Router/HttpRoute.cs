@@ -19,7 +19,7 @@ namespace Terradue.Stars.Services.Router
         private readonly HttpClient _client;
         private HttpContentHeaders _cachedHeaders;
 
-        private HttpRoute(Uri url, HttpClient httpClient, HttpContentHeaders cachedHeaders = null)
+        internal HttpRoute(Uri url, HttpClient httpClient, HttpContentHeaders cachedHeaders = null)
         {
             this._url = url;
             this._client = httpClient;
@@ -52,8 +52,8 @@ namespace Terradue.Stars.Services.Router
         {
             get
             {
-                if (CachedHeaders.Contains(HeaderNames.AcceptRanges))
-                    return (CachedHeaders.GetValues(HeaderNames.AcceptRanges).Contains("bytes"));
+                if (CachedHeaders.Contains("Accept-Ranges"))
+                    return (CachedHeaders.GetValues("Accept-Ranges").Contains("bytes"));
                 return false;
             }
         }

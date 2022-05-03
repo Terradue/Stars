@@ -128,6 +128,9 @@ namespace Terradue.Stars.Services
             services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(StacLinkTranslator)));
             services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(DefaultStacTranslator)));
 
+            // Generic Resource Provider
+            services.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
+
             return services;
 
         }

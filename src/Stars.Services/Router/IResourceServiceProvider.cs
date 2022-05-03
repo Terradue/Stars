@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 
-namespace Stars.Services.Router
+namespace Terradue.Stars.Services.Router
 {
     public interface IResourceServiceProvider
     {

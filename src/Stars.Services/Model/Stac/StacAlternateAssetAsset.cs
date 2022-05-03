@@ -15,7 +15,7 @@ namespace Terradue.Stars.Services.Model.Stac
     {
         private readonly StacAssetAsset parentAsset;
         private readonly AlternateAssetObject alternateAsset;
-        private readonly IStreamable _streamable;
+        private readonly Task<IStreamable> _streamable;
         private readonly ICredentials credentials;
         private readonly Uri uri;
 
@@ -38,7 +38,7 @@ namespace Terradue.Stars.Services.Model.Stac
                 else this.uri = alternateAsset.Uri;
             }
             if (alternateAsset is IStreamable)
-                _streamable = alternateAsset as IStreamable;
+                _streamable = Task.FromResult(alternateAsset as IStreamable);
             else
             {
                 _streamable = WebRoute.Create(uri, credentials: credentials);
