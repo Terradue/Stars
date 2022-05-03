@@ -20,7 +20,6 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
     <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
