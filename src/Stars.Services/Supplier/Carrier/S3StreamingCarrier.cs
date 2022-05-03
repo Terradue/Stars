@@ -18,14 +18,19 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     public class S3StreamingCarrier : ICarrier
     {
         private readonly ILogger logger;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly AWSOptions options;
         private readonly S3BucketsOptions s3BucketsConfiguration;
 
         private readonly Regex regEx = new Regex(@"^s3://(?'hostOrBucket'[^/]*)(/.*)?$");
 
-        public S3StreamingCarrier(ILogger<S3StreamingCarrier> logger, Amazon.Extensions.NETCore.Setup.AWSOptions options, S3BucketsOptions s3BucketsConfiguration = null)
+        public S3StreamingCarrier(ILogger<S3StreamingCarrier> logger,
+                                  IResourceServiceProvider resourceServiceProvider,
+                                  Amazon.Extensions.NETCore.Setup.AWSOptions options,
+                                  S3BucketsOptions s3BucketsConfiguration = null)
         {
             this.logger = logger;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.options = options;
             this.s3BucketsConfiguration = s3BucketsConfiguration;
             Priority = 75;
@@ -42,33 +47,33 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             if (route is IOrderable) return false;
             if (!(destination is S3ObjectDestination)) return false;
             if (route is IAsset) return true;
-            if (!(route is IStreamable)) return false;
+            if (!(route is IStreamResource)) return false;
 
             return true;
         }
 
         public async Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
         {
+            // First create de destination
             S3Delivery s3Delivery = delivery as S3Delivery;
-            WebRoute s3Route = WebRoute.Create(s3Delivery.Destination.Uri);
+            WebRoute s3DestinationResource = WebRoute.Create(s3Delivery.Destination.Uri);
 
-            IStreamable streamable = delivery.Route as IStreamable;
-            if (streamable == null && delivery.Route is IAsset)
-                streamable = (delivery.Route as IAsset).GetStreamable();
+            // Get the connected resource metadata
+            Stream inputStream = resourceServiceProvider.OpenStreamAsync(s3Delivery.Resource);
 
-            if (streamable == null)
-                throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Route.Uri));
-
-            if (!overwrite && streamable.ContentLength > 0 &&
-               Convert.ToUInt64(s3Route.ContentLength) == streamable.ContentLength)
+            if (!overwrite && inputStream.Length.ContentLength > 0 &&
+               Convert.ToUInt64(s3DestinationResource.ContentLength) == streamable.ContentLength)
             {
-                logger.LogDebug("Object {0} exists with the same size. Skipping transfer", s3Route.Uri);
-                return s3Route;
+                logger.LogDebug("Object {0} exists with the same size. Skipping transfer", s3DestinationResource.Uri);
+                return s3DestinationResource;
             }
-            s3Route = await StreamToS3Object(streamable, s3Route, overwrite);
+
+            Stream inputStream = await resourceServiceProvider.OpenStreamAsync(s3Delivery.Resource);
+
+            s3DestinationResource = await StreamToS3Object(streamable, s3DestinationResource, overwrite);
             // if (streamable.ContentLength > 0 && Convert.ToUInt64(s3Route.ContentLength) != streamable.ContentLength)
             // throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", s3Route.ContentLength, streamable.ContentLength));
-            return s3Route;
+            return s3DestinationResource;
         }
 
         public IDelivery QuoteDelivery(IResource route, IDestination destination)
@@ -90,7 +95,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return new S3Delivery(this, route, destination as S3ObjectDestination, cost);
         }
 
-        public async Task<WebRoute> StreamToS3Object(IStreamable streamable, WebRoute s3Resource, bool overwrite = false)
+        public async Task<WebRoute> StreamToS3Object(IStreamResource streamable, WebRoute s3Resource, bool overwrite = false)
         {
             try
             {
@@ -129,7 +134,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 else
                 {
-
                     var tx = new TransferUtility(s3WebRequest.S3Client);
                     TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
                     ur.PartSize = partSize;

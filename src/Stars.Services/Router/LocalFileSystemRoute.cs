@@ -9,7 +9,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Router
 {
-    public class LocalFileSystemResource : IResource, IStreamable
+    public class LocalFileSystemResource : IResource, IStreamResource
     {
         private readonly ResourceType resourceType;
         private FileInfo fileInfo;

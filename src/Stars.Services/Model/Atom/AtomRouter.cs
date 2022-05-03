@@ -74,14 +74,14 @@ namespace Terradue.Stars.Services.Model.Atom
             }
         }
 
-        public IStreamable FetchResource(IResource node)
+        public IStreamResource FetchResource(IResource node)
         {
             if (node is WebRoute && node.Uri.Query.Contains("format=json"))
             {
                 return (node as WebRoute).CloneRoute(new Uri (node.Uri.ToString().Replace("format=json", "format=atom")));
             }
 
-            if (node is IStreamable) return node as IStreamable;
+            if (node is IStreamResource) return node as IStreamResource;
 
             return WebRoute.Create(node.Uri);
         }

@@ -8,14 +8,13 @@ using Stac;
 
 namespace Terradue.Stars.Interface
 {
-    public interface IItem : IResource, IAssetsContainer, IStreamable
+    public interface IItem : IResource, IAssetsContainer
     {
         string Label { get; }
         string Id { get; }
         IGeometryObject Geometry { get; }
         IDictionary<string, object> Properties { get; }
         Itenso.TimePeriod.ITimePeriod DateTime { get; }
-
         IReadOnlyList<IResourceLink> GetLinks();
     }
 }

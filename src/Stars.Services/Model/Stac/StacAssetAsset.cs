@@ -17,7 +17,7 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private readonly StacAsset asset;
-        private readonly IStreamable _streamable;
+        private readonly IStreamResource _streamable;
         private readonly ICredentials credentials;
         private readonly Uri uri;
 
@@ -38,8 +38,8 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
                 else this.uri = asset.Uri;
             }
-            if (asset is IStreamable)
-                _streamable = asset as IStreamable;
+            if (asset is IStreamResource)
+                _streamable = asset as IStreamResource;
             else
             {
                 _streamable = WebRoute.Create(uri, credentials: credentials);
@@ -107,7 +107,7 @@ namespace Terradue.Stars.Services.Model.Stac
                 await (_streamable as WebRoute).CacheHeadersAsync(force);
         }
 
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
             return _streamable;
         }

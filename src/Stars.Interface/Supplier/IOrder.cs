@@ -4,9 +4,8 @@ using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Interface.Supplier
 {
-    public interface IOrder : IStreamable
+    public interface IOrder
     {
-        
 
     }
 }

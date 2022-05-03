@@ -12,7 +12,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier
 {
-    public class ContainerNode : IAssetsContainer, IItem, IStreamable
+    public class ContainerNode : IAssetsContainer, IItem, IStreamResource
     {
         private readonly IItem item;
         private readonly IDictionary<string, IAsset>  assets;

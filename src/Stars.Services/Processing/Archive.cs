@@ -38,7 +38,7 @@ namespace Terradue.Stars.Services.Processing
 
         internal async static Task<Archive> Read(IAsset asset, ILogger logger, IFileSystem fileSystem)
         {
-            IStreamable streamableAsset = asset.GetStreamable();
+            IStreamResource streamableAsset = asset.GetStreamable();
 
             if (streamableAsset == null)
                 throw new System.IO.InvalidDataException("Asset must be streamable to be read as an archive");

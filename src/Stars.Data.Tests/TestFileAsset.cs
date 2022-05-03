@@ -11,7 +11,7 @@ using Terradue.Stars.Services.Router;
 
 namespace Terradue.Data.Test
 {
-    internal class TestFileAsset : IAsset
+    internal class TestFileAsset : IAsset, IStreamResource
     {
         private readonly FileInfo fileInfo;
         private readonly Uri folderUri;
@@ -49,19 +49,9 @@ namespace Terradue.Data.Test
             }
         }
 
-        public Task CacheHeaders(bool force = false)
+        public Task<Stream> GetStreamAsync()
         {
-            return Task.CompletedTask;
-        }
-
-        public IStreamable GetStreamable()
-        {
-            return WebRoute.Create(new Uri(fileInfo.FullName), Convert.ToUInt64(fileInfo.Length));
-        }
-
-        public Task Remove()
-        {
-            throw new NotImplementedException();
+            return Task.FromResult<Stream>(fileInfo.OpenRead());
         }
     }
 }

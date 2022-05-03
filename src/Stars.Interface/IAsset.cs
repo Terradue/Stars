@@ -12,9 +12,5 @@ namespace Terradue.Stars.Interface
 
         IReadOnlyDictionary<string, object> Properties { get; }
 
-        Task CacheHeaders(bool force = false);
-        
-        IStreamable GetStreamable();
-
     }
 }

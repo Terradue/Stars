@@ -60,7 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
 
             //  loading properties in dictionary
             IAsset isdMetadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.XML)$");
-            IStreamable isdMetadataFileStreamable = isdMetadataFile.GetStreamable();
+            IStreamResource isdMetadataFileStreamable = isdMetadataFile.GetStreamable();
             if (isdMetadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -470,7 +470,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
         }
 
 
-        public static async Task<Isd> DeserializeProductMetadata(IStreamable productMetadataFile)
+        public static async Task<Isd> DeserializeProductMetadata(IStreamResource productMetadataFile)
         {
             XmlSerializer ser = new XmlSerializer(typeof(Isd));
             Isd auxiliary;

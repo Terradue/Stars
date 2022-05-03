@@ -54,7 +54,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamable auxFileStreamable = auxFile.GetStreamable();
+            IStreamResource auxFileStreamable = auxFile.GetStreamable();
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -64,7 +64,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             Product auxiliary = await DeserializeProduct(auxFileStreamable);
             logger.LogDebug("Metadata deserialized. Starting metadata generation");
 
-            IStreamable kmlFileStreamable = kmlFile.GetStreamable();
+            IStreamResource kmlFileStreamable = kmlFile.GetStreamable();
             Kml kml = null;
             if (kmlFileStreamable != null)
                 kml = await DeserializeKml(kmlFileStreamable);
@@ -413,7 +413,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
         /// <summary>Deserialize Product from xml to class</summary>
         /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<Product> DeserializeProduct(IStreamable auxiliaryFile)
+        public static async Task<Product> DeserializeProduct(IStreamResource auxiliaryFile)
         {
             XmlSerializer ser = new XmlSerializer(typeof(Product));
             Product auxiliary;
@@ -427,7 +427,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             return auxiliary;
         }
 
-        public static async Task<Kml> DeserializeKml(IStreamable auxiliaryFile)
+        public static async Task<Kml> DeserializeKml(IStreamResource auxiliaryFile)
         {
             XmlSerializer ser = new XmlSerializer(typeof(Kml));
             Kml auxiliary;

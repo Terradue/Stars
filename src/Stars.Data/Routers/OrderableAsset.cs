@@ -66,7 +66,7 @@ namespace Terradue.Stars.Data.Routers
             return Task.CompletedTask;
         }
 
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
             return null;
         }

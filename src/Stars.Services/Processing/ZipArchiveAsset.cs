@@ -21,7 +21,7 @@ namespace Terradue.Stars.Services.Processing
         private readonly IAsset asset;
         private readonly ILogger logger;
 
-        private IStreamable localStreamable;
+        private IStreamResource localStreamable;
         private readonly IFileSystem fileSystem;
 
         public ZipArchiveAsset(IAsset asset, ILogger logger, IFileSystem fileSystem)
@@ -92,9 +92,9 @@ namespace Terradue.Stars.Services.Processing
                     if (assetExtracted != null)
                     {
                         var extractedAsset = new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles);
-                        if (delivery.Route is IAsset)
+                        if (delivery.Resource is IAsset)
                         {
-                            extractedAsset.MergeProperties((delivery.Route as IAsset).Properties);
+                            extractedAsset.MergeProperties((delivery.Resource as IAsset).Properties);
                         }
                         assetsExtracted.Add(asset.ContentDisposition.FileName + "!" + archiveAsset.Key, extractedAsset);
                         break;

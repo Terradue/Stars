@@ -36,12 +36,12 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             var routeFound = AffineRoute(route);
             if (routeFound is StacNode) return true;
-            if (!(routeFound is IStreamable)) return false;
+            if (!(routeFound is IStreamResource)) return false;
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 try
                 {
-                    StacConvert.Deserialize<IStacObject>((routeFound as IStreamable).ReadAsString().Result);
+                    StacConvert.Deserialize<IStacObject>((routeFound as IStreamResource).ReadAsString().Result);
                     return true;
                 }
                 catch (Exception e)
@@ -90,10 +90,10 @@ namespace Terradue.Stars.Services.Model.Stac
                 return routeFound as StacCatalogNode;
             if (routeFound is StacItemNode)
                 return routeFound as StacItemNode;
-            if (!(routeFound is IStreamable)) return null;
+            if (!(routeFound is IStreamResource)) return null;
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
-                IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamable).ReadAsString());
+                IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamResource).ReadAsString());
                 if (stacObject is IStacCatalog)
                     return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri, credentials);
                 else

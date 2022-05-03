@@ -7,7 +7,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
 {
-    public class GzipEntryAsset : IAsset, IStreamable
+    public class GzipEntryAsset : IAsset, IStreamResource
     {
         private string name;
         private BlockingStream blockingStream;
@@ -65,7 +65,7 @@ namespace Terradue.Stars.Services.Processing
             return Task.CompletedTask;
         }
 
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
             return this;
         }

@@ -48,7 +48,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamable auxFileStreamable = auxFile.GetStreamable();
+            IStreamResource auxFileStreamable = auxFile.GetStreamable();
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -317,7 +317,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         /// <summary>Deserialize Auxiliary from xml to class</summary>
         /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamable auxiliaryFile)
+        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamResource auxiliaryFile)
         {
             Auxiliary auxiliary = new Auxiliary();
             using (var stream = await auxiliaryFile.GetStreamAsync())

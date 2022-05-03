@@ -14,7 +14,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Router
 {
-    public class WebRoute : IResource, IStreamable
+    public class WebRoute : IResource, IStreamResource
     {
         private readonly WebRequest request;
         private readonly ulong contentLength;

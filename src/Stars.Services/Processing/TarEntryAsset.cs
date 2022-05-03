@@ -7,7 +7,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
 {
-    public class TarEntryAsset : IAsset, IStreamable
+    public class TarEntryAsset : IAsset, IStreamResource
     {
         private string name;
         private ulong size;
@@ -53,26 +53,9 @@ namespace Terradue.Stars.Services.Processing
 
         public Uri Uri => new Uri(name, UriKind.Relative);
 
-        public bool CanBeRanged => false;
-
-        public Task CacheHeaders(bool force = false)
-        {
-            return Task.CompletedTask;
-        }
-
-        public IStreamable GetStreamable()
-        {
-            return this;
-        }
-
         public Task<Stream> GetStreamAsync()
         {
-            return Task<Stream>.FromResult((Stream)blockingStream);
-        }
-
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult<Stream>(blockingStream);
         }
     }
 }

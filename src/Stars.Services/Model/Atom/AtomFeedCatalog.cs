@@ -13,7 +13,7 @@ using Terradue.OpenSearch.Result;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
-    public class AtomFeedCatalog : ICatalog, IStreamable
+    public class AtomFeedCatalog : ICatalog, IStreamResource
     {
         private readonly AtomFeed feed;
         private readonly Uri sourceUri;

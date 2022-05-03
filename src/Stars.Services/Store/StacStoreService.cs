@@ -334,7 +334,7 @@ namespace Terradue.Stars.Services.Store
             }
         }
 
-        public async Task<IEnumerable<IStreamable>> GetAssetsInFolder(string relPath)
+        public async Task<IEnumerable<IStreamResource>> GetAssetsInFolder(string relPath)
         {
             var assetsFolder = WebRoute.Create(new Uri(RootCatalogDestination.Uri, relPath));
             return assetsFolder.ListFolder().Select(a => WebRoute.Create(MapToFrontUri(a.Uri)));

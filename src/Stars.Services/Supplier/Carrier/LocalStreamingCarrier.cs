@@ -33,7 +33,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             if (route is IOrderable) return false;
             if (!(destination is LocalFileDestination)) return false;
             if (route is IAsset) return true;
-            if (!(route is IStreamable)) return false;
+            if (!(route is IStreamResource)) return false;
 
             return true;
         }
@@ -41,14 +41,14 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public override async Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
         {
             LocalDelivery localDelivery = delivery as LocalDelivery;
-            LocalFileSystemResource localRoute = new LocalFileSystemResource(localDelivery.LocalPath, localDelivery.Route.ResourceType);
+            LocalFileSystemResource localRoute = new LocalFileSystemResource(localDelivery.LocalPath, localDelivery.Resource.ResourceType);
 
-            IStreamable streamable = delivery.Route as IStreamable;
-            if (streamable == null && delivery.Route is IAsset)
-                streamable = (delivery.Route as IAsset).GetStreamable();
+            IStreamResource streamable = delivery.Resource as IStreamResource;
+            if (streamable == null && delivery.Resource is IAsset)
+                streamable = (delivery.Resource as IAsset).GetStreamable();
 
             if (streamable == null)
-                throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Route.Uri));
+                throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Resource.Uri));
 
             if (!overwrite && localRoute.File.Exists && streamable.ContentLength > 0 &&
                Convert.ToUInt64(localRoute.File.Length) == streamable.ContentLength)
@@ -63,7 +63,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return localRoute;
         }
 
-        private async Task StreamToFile(IStreamable streamable, LocalFileSystemResource localResource, bool overwrite = false)
+        private async Task StreamToFile(IStreamResource streamable, LocalFileSystemResource localResource, bool overwrite = false)
         {
             FileInfo file = localResource.File;
             Stream stream = null;

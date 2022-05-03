@@ -9,7 +9,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Routers
 {
-    internal class TransferRequestAsset : IAsset, IStreamable
+    internal class TransferRequestAsset : IAsset, IStreamResource
     {
         private ITransferRequest tr;
         private readonly string label;
@@ -40,7 +40,7 @@ namespace Terradue.Stars.Data.Routers
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
             return this;
         }

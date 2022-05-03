@@ -47,7 +47,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             return true;
         }
 
-        public static async Task<SPP_ROOT> DeserializeProductMetadata(IStreamable productMetadataFile) {
+        public static async Task<SPP_ROOT> DeserializeProductMetadata(IStreamResource productMetadataFile) {
             XmlSerializer ser = new XmlSerializer(typeof(SPP_ROOT));
             SPP_ROOT auxiliary;
             using (var stream = new StreamReader(productMetadataFile.Uri.AbsolutePath, Encoding.UTF8, true)) {

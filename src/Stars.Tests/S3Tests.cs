@@ -60,7 +60,7 @@ namespace Stars.Tests
             s3StreamingCarrier.StartSourceCopy(
                                     File.OpenRead(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")),
                                     stream);
-            IStreamable streamable = new TestStreamable(stream, 0);
+            IStreamResource streamable = new TestStreamable(stream, 0);
             var newRoute = await s3StreamingCarrier.StreamToS3Object(streamable, s3Route);
             System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://unlimited/test.bin");
             s3WebRequest.Method = "GET";

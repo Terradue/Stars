@@ -27,7 +27,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public IDestination Destination => fileDestination;
 
-        public IResource Route => route;
+        public IResource Resource => route;
 
         public ICarrier Carrier => carrier;
 

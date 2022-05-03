@@ -448,7 +448,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         /// <summary>Deserialize JavaProperties from xml to class</summary>
         /// <param name="metadataFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<JavaProperties> ReadMetadata(IStreamable metadataFile)
+        public static async Task<JavaProperties> ReadMetadata(IStreamResource metadataFile)
         {
             var metadata = new JavaProperties();
             metadata.Load(await metadataFile.GetStreamAsync());

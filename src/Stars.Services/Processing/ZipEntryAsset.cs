@@ -9,7 +9,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
 {
-    internal class ZipEntryAsset : IAsset, IStreamable
+    internal class ZipEntryAsset : IAsset, IStreamResource
     {
         private ZipEntry entry;
         private readonly ZipFile zipFile;
@@ -61,7 +61,7 @@ namespace Terradue.Stars.Services.Processing
             return Task.FromResult(entry.OpenReader() as Stream);
         }
 
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
             return this;
         }

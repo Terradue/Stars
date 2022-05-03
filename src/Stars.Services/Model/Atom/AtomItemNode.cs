@@ -21,7 +21,7 @@ using Itenso.TimePeriod;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
-    public class AtomItemNode : IItem, IAssetsContainer, IStreamable
+    public class AtomItemNode : IItem, IAssetsContainer, IStreamResource
     {
         private AtomItem item;
         private readonly Uri sourceUri;

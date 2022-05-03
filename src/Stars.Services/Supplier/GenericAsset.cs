@@ -45,9 +45,9 @@ namespace Terradue.Stars.Services.Supplier
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
-            return route as IStreamable;
+            return route as IStreamResource;
         }
 
         internal void MergeProperties(IReadOnlyDictionary<string, object> props)

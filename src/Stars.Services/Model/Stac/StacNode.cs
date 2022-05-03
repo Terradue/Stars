@@ -12,7 +12,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public abstract class StacNode : IResource, IStreamable, ILocatable
+    public abstract class StacNode : IResource, IStreamResource, ILocatable
     {
         protected IStacObject stacObject;
         protected readonly ICredentials credentials;
