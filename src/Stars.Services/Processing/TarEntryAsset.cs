@@ -53,9 +53,16 @@ namespace Terradue.Stars.Services.Processing
 
         public Uri Uri => new Uri(name, UriKind.Relative);
 
+        public bool CanBeRanged => false;
+
         public Task<Stream> GetStreamAsync()
         {
             return Task.FromResult<Stream>(blockingStream);
+        }
+
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

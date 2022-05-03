@@ -27,7 +27,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
         public override string Label => "TerraSAR-X/TanDEM-X (DLR) missions product metadata extractor";
 
-        public TerrasarXMetadataExtractor(ILogger<TerrasarXMetadataExtractor> logger) : base(logger)
+        public TerrasarXMetadataExtractor(ILogger<TerrasarXMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -257,7 +257,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             if (fileAsset == null)
                 throw new FileNotFoundException(string.Format("Coordinates file not found "));
 
-            coordinatesDocument.Load(fileAsset.GetStreamable().GetStreamAsync().GetAwaiter().GetResult());
+            coordinatesDocument.Load(resourceServiceProvider.GetAssetStreamAsync(fileAsset).GetAwaiter().GetResult());
 
 
             return coordinatesDocument;
@@ -292,7 +292,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
                                                         double.Parse(nodeList[0].SelectSingleNode("longitude").InnerText))
                 };
 
-            for (int i = 0 ; i < coords.Length ; i++)
+            for (int i = 0; i < coords.Length; i++)
             {
                 if (coords[i].Longitude > 180)
                     coords[i] = new GeoJSON.Net.Geometry.Position(coords[i].Latitude, coords[i].Longitude - 360);
@@ -411,7 +411,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await manifestAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

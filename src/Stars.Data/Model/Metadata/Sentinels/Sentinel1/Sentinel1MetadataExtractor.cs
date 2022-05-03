@@ -13,7 +13,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
     {
         public override string Label => "Sentinel-1 (ESA) mission product metadata extractor";
 
-        public Sentinel1MetadataExtractor(ILogger<Sentinel1MetadataExtractor> logger) : base(logger)
+        public Sentinel1MetadataExtractor(ILogger<Sentinel1MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -74,9 +74,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             SentinelAssetFactory assetFactory = null;
 
             if (stacFactory.GetProductType() == "OCN")
-                assetFactory = await S1L2AssetProduct.CreateData(annotationAsset);
+                assetFactory = await S1L2AssetProduct.CreateData(annotationAsset, resourceServiceProvider);
             else
-                assetFactory = await S1L1AssetProduct.Create(annotationAsset, bandAsset);
+                assetFactory = await S1L1AssetProduct.Create(annotationAsset, bandAsset, resourceServiceProvider);
 
 
             stacItem.Assets.Add(assetFactory.GetId(), assetFactory.CreateDataAsset(stacItem));
@@ -88,9 +88,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             SentinelAssetFactory assetFactory = null;
 
             if (stacFactory.GetProductType() == "OCN")
-                assetFactory = await S1L2AssetProduct.CreateData(annotationAsset);
+                assetFactory = await S1L2AssetProduct.CreateData(annotationAsset, resourceServiceProvider);
             else
-                assetFactory = await S1L1AssetProduct.Create(annotationAsset, null);
+                assetFactory = await S1L1AssetProduct.Create(annotationAsset, null, resourceServiceProvider);
 
             stacItem.Assets.Add(assetFactory.GetAnnotationId(), assetFactory.CreateMetadataAsset(stacItem));
             return assetFactory.GetAnnotationId();
@@ -101,9 +101,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             SentinelAssetFactory assetFactory = null;
 
             if (stacFactory.GetProductType() == "OCN")
-                assetFactory = await S1L2AssetProduct.CreateData(asset);
+                assetFactory = await S1L2AssetProduct.CreateData(asset, resourceServiceProvider);
             else
-                assetFactory = await Calibration.S1L1AssetCalibration.Create(asset);
+                assetFactory = await Calibration.S1L1AssetCalibration.Create(asset, resourceServiceProvider);
 
             stacItem.Assets.Add(assetFactory.GetId(), assetFactory.CreateDataAsset(stacItem));
             return assetFactory.GetId();
@@ -114,9 +114,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             SentinelAssetFactory assetFactory = null;
 
             if (stacFactory.GetProductType() == "OCN")
-                assetFactory = await S1L2AssetProduct.CreateData(asset);
+                assetFactory = await S1L2AssetProduct.CreateData(asset, resourceServiceProvider);
             else
-                assetFactory = await Noise.S1L1AssetNoise.Create(asset);
+                assetFactory = await Noise.S1L1AssetNoise.Create(asset, resourceServiceProvider);
 
             stacItem.Assets.Add(assetFactory.GetId(), assetFactory.CreateDataAsset(stacItem));
             return assetFactory.GetId();

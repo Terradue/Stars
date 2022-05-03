@@ -8,6 +8,10 @@ namespace Terradue.Stars.Interface
 {
     public interface IStreamResource : IResource
     {
+        bool CanBeRanged { get; }
+
         Task<Stream> GetStreamAsync();
+
+        Task<Stream> GetStreamAsync(long start, long end = -1);
     }
 }

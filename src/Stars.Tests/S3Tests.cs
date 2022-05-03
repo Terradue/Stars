@@ -3,10 +3,12 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
@@ -21,7 +23,7 @@ namespace Stars.Tests
         private readonly AssetService assetService;
         private readonly IServiceProvider serviceProvider;
 
-        public S3Tests(AssetService assetService, IServiceProvider sp)
+        public S3Tests(AssetService assetService, IServiceProvider sp, IOptions<S3Options> options) : base(options)
         {
             this.assetService = assetService;
             this.serviceProvider = sp;
@@ -54,7 +56,7 @@ namespace Stars.Tests
         public async Task ImportUnlimitedStreamabletoS3()
         {
             await CreateBucketAsync("s3://unlimited");
-            WebRoute s3Route = WebRoute.Create(new Uri("s3://unlimited/test.bin"));
+            S3Resource s3Route = await S3Resource.CreateAsync(S3Url.Parse("s3://unlimited/test.bin"), s3Options.Value, null);
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
             s3StreamingCarrier.StartSourceCopy(
@@ -72,7 +74,7 @@ namespace Stars.Tests
         public async Task ImportHttpStreamabletoS3()
         {
             await CreateBucketAsync("s3://http");
-            WebRoute s3Route = WebRoute.Create(new Uri("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
+            S3Resource s3Route = await S3Resource.CreateAsync(S3Url.Parse("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"), s3Options.Value, null);
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
             var httpRoute = WebRoute.Create(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));

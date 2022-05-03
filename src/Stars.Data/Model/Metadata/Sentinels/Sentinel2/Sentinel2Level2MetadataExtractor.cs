@@ -23,7 +23,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         public static XmlSerializer s2L2AProductTileSerializer = new XmlSerializer(typeof(Level2A_Tile));
 
 
-        public Sentinel2Level2MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger) : base(logger)
+        public Sentinel2Level2MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -47,9 +47,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
             Level2A_Tile mtdTile = null;
             if (mtdtlAsset != null)
-                mtdTile = (Level2A_Tile)s2L2AProductTileSerializer.Deserialize(await mtdtlAsset.GetStreamable().GetStreamAsync());
+                mtdTile = (Level2A_Tile)s2L2AProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset));
 
-            Level2A_User_Product Level2A_User_Product = (Level2A_User_Product)s2L2AProductSerializer.Deserialize(await mtdAsset.GetStreamable().GetStreamAsync());
+            Level2A_User_Product Level2A_User_Product = (Level2A_User_Product)s2L2AProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
             StacAsset mtdStacAsset = StacAsset.CreateMetadataAsset(stacItem, mtdAsset.Uri, new ContentType(MimeTypes.GetMimeType(mtdAsset.Uri.ToString())));
             mtdStacAsset.Properties.AddRange(mtdAsset.Properties);
             stacItem.Assets.Add("mtd", mtdStacAsset);

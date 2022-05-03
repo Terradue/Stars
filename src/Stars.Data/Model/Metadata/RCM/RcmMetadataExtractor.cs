@@ -38,7 +38,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         public override string Label => "RADARSAT (CSA) constellation product metadata extractor";
 
-        public RcmMetadataExtraction(ILogger<RcmMetadataExtraction> logger) : base(logger)
+        public RcmMetadataExtraction(ILogger<RcmMetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamResource auxFileStreamable = auxFile.GetStreamable();
+            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -64,7 +64,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             Product auxiliary = await DeserializeProduct(auxFileStreamable);
             logger.LogDebug("Metadata deserialized. Starting metadata generation");
 
-            IStreamResource kmlFileStreamable = kmlFile.GetStreamable();
+            IStreamResource kmlFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(kmlFile);
             Kml kml = null;
             if (kmlFileStreamable != null)
                 kml = await DeserializeKml(kmlFileStreamable);
@@ -448,7 +448,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(product.xml)$");
             try
             {
-                DeserializeProduct(auxFile.GetStreamable()).GetAwaiter().GetResult();
+                DeserializeProduct(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
             }
             catch (Exception e)
             {

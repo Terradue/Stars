@@ -16,10 +16,13 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     public class LocalStreamingCarrier : LocalCarrier, ICarrier
     {
         private readonly ILogger logger;
+        private readonly IResourceServiceProvider resourceServiceProvider;
 
-        public LocalStreamingCarrier(ILogger<LocalStreamingCarrier> logger) : base(logger)
+        public LocalStreamingCarrier(ILogger<LocalStreamingCarrier> logger,
+                                     IResourceServiceProvider resourceServiceProvider) : base(logger)
         {
             this.logger = logger;
+            this.resourceServiceProvider = resourceServiceProvider;
             Priority = 75;
         }
 
@@ -43,23 +46,21 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileSystemResource localRoute = new LocalFileSystemResource(localDelivery.LocalPath, localDelivery.Resource.ResourceType);
 
-            IStreamResource streamable = delivery.Resource as IStreamResource;
-            if (streamable == null && delivery.Resource is IAsset)
-                streamable = (delivery.Resource as IAsset).GetStreamable();
+            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(delivery.Resource);
 
-            if (streamable == null)
+            if (inputStreamResource == null)
                 throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Resource.Uri));
 
-            if (!overwrite && localRoute.File.Exists && streamable.ContentLength > 0 &&
-               Convert.ToUInt64(localRoute.File.Length) == streamable.ContentLength)
+            if (!overwrite && localRoute.File.Exists && inputStreamResource.ContentLength > 0 &&
+               Convert.ToUInt64(localRoute.File.Length) == inputStreamResource.ContentLength)
             {
                 logger.LogDebug("File {0} exists with the same size. Skipping download", localRoute.File.Name);
                 return localRoute;
             }
-            await StreamToFile(streamable, localRoute, overwrite);
+            await StreamToFile(inputStreamResource, localRoute, overwrite);
             localRoute.File.Refresh();
-            if (streamable.ContentLength > 0 && Convert.ToUInt64(localRoute.File.Length) != streamable.ContentLength)
-                throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", localRoute.File.Length, streamable.ContentLength));
+            if (inputStreamResource.ContentLength > 0 && Convert.ToUInt64(localRoute.File.Length) != inputStreamResource.ContentLength)
+                throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", localRoute.File.Length, inputStreamResource.ContentLength));
             return localRoute;
         }
 

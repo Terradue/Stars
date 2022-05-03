@@ -27,7 +27,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
     {
         public override string Label => "WorldView (DigitalGlobe) contellation product metadata extractor";
 
-        public WorldviewMetadataExtractor(ILogger<WorldviewMetadataExtractor> logger) : base(logger) { }
+        public WorldviewMetadataExtractor(ILogger<WorldviewMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) { }
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
@@ -60,7 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
 
             //  loading properties in dictionary
             IAsset isdMetadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.XML)$");
-            IStreamResource isdMetadataFileStreamable = isdMetadataFile.GetStreamable();
+            IStreamResource isdMetadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(isdMetadataFile);
             if (isdMetadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -69,7 +69,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
 
             logger.LogDebug("Deserializing metadata files");
             var metadata = new JavaProperties();
-            metadata.Load(await metadataFile.GetStreamable().GetStreamAsync());
+            metadata.Load(await resourceServiceProvider.GetAssetStreamAsync(metadataFile));
 
             Isd isdMetadata = await DeserializeProductMetadata(isdMetadataFileStreamable);
             logger.LogDebug("Metadata files deserialized. Starting metadata generation");

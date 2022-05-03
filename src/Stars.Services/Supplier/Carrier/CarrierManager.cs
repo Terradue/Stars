@@ -35,9 +35,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             {
                 try
                 {
-                    var length = asset.Value.ContentLength;
-                    await asset.Value.CacheHeaders();
-                    length = asset.Value.ContentLength;
                     string relPath = null;
                     if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
                     {

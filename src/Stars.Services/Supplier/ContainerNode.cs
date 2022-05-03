@@ -12,7 +12,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier
 {
-    public class ContainerNode : IAssetsContainer, IItem, IStreamResource
+    public class ContainerNode : IAssetsContainer, IItem
     {
         private readonly IItem item;
         private readonly IDictionary<string, IAsset>  assets;
@@ -45,8 +45,6 @@ namespace Terradue.Stars.Services.Supplier
 
         public IDictionary<string, object> Properties => item.Properties;
 
-        public bool CanBeRanged => item.CanBeRanged;
-
         public IReadOnlyDictionary<string, IAsset> Assets => new ReadOnlyDictionary<string, IAsset>(assets);
 
         public ITimePeriod DateTime => item.DateTime;
@@ -54,16 +52,6 @@ namespace Terradue.Stars.Services.Supplier
         public IReadOnlyList<IResourceLink> GetLinks()
         {
             return item.GetLinks();
-        }
-
-        public async Task<Stream> GetStreamAsync()
-        {
-            return await item.GetStreamAsync();
-        }
-
-        public async Task<Stream> GetStreamAsync(long start, long end = -1)
-        {
-            return await item.GetStreamAsync(start, end);
         }
     }
 }

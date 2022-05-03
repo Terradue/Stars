@@ -3,11 +3,19 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
+using Microsoft.Extensions.Options;
+using Terradue.Stars.Services.Resources;
 
 namespace Stars.Tests
 {
     public abstract class S3BaseTest
     {
+        protected IOptions<S3Options> s3Options;
+
+        protected S3BaseTest(IOptions<S3Options> options)
+        {
+            this.s3Options = options;
+        }
 
         protected async Task CreateBucketAsync(string s3bucketUri)
         {

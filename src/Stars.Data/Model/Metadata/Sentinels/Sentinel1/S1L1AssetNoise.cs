@@ -15,18 +15,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise
 
         private readonly IAsset noiseAsset;
 
-        public S1L1AssetNoise(l1NoiseVectorType l1Calibration, IAsset calibrationAsset)
+        public S1L1AssetNoise(l1NoiseVectorType l1Calibration, IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider) : base(resourceServiceProvider)
         {
             this.l1Noise = l1Calibration;
             this.noiseAsset = calibrationAsset;
         }
 
-        public async static Task<S1L1AssetNoise> Create(IAsset calibrationAsset)
+        public async static Task<S1L1AssetNoise> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
         {
-            var streamable = calibrationAsset.GetStreamable();
-            if (streamable == null)
-                throw new InvalidDataException("Cannot stream data from " + calibrationAsset.Uri);
-            return new S1L1AssetNoise((l1NoiseVectorType)s1L1NoiseSerializer.Deserialize(await streamable.GetStreamAsync()), calibrationAsset);
+            return new S1L1AssetNoise((l1NoiseVectorType)s1L1NoiseSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(calibrationAsset)), calibrationAsset, resourceServiceProvider);
         }
 
         public static Task<S1L1AssetProduct> CreateData(IAsset annotationAsset)

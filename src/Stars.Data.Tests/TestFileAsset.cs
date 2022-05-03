@@ -49,9 +49,16 @@ namespace Terradue.Data.Test
             }
         }
 
+        public bool CanBeRanged => false;
+
         public Task<Stream> GetStreamAsync()
         {
             return Task.FromResult<Stream>(fileInfo.OpenRead());
+        }
+
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        {
+            throw new NotImplementedException();
         }
     }
 }

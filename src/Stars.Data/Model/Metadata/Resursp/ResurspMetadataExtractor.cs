@@ -27,7 +27,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
         private readonly string GDALFILE_REGEX = @".*\.(shp)$";
 
-        public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger) : base(logger) {
+        public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) {
         }
 
         public override bool CanProcess(IResource route, IDestination destination) {
@@ -40,7 +40,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
             // deserialize product medatadata
             SPP_ROOT productMetadata =
-                DeserializeProductMetadata(metadataFile.GetStreamable()).GetAwaiter().GetResult();
+                DeserializeProductMetadata(resourceServiceProvider.GetStreamResourceAsync(metadataFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
             if (productMetadata == null) {
                 return false;
             }
@@ -68,7 +68,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             }
 
             // deserialize product medatadata
-            SPP_ROOT productMetadata = await DeserializeProductMetadata(metadatafile.GetStreamable());
+            SPP_ROOT productMetadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadatafile));
 
             logger.LogDebug("Retrieving the shapefile in the product package");
             IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");

@@ -38,7 +38,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
 
         public override string Label => "ResourceSat/CartoSat (ISRO) constellation product metadata extractor";
 
-        public IsroMetadataExtractor(ILogger<IsroMetadataExtractor> logger) : base(logger)
+        public IsroMetadataExtractor(ILogger<IsroMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                JavaProperties metadata = ReadMetadata(metadataAsset.GetStreamable()).GetAwaiter().GetResult();
+                JavaProperties metadata = ReadMetadata(resourceServiceProvider.GetStreamResourceAsync(metadataAsset).Result).GetAwaiter().GetResult();
                 return (metadata.AllKeys.Contains("SatID") && satelitteIds.Contains(metadata["SatID"]));
             }
             catch
@@ -67,7 +67,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             }
             logger.LogDebug(String.Format("Metadata file is {0}", metadataAsset.Uri));
             logger.LogDebug("Reading metadata");
-            JavaProperties metadata = await ReadMetadata(metadataAsset.GetStreamable());
+            JavaProperties metadata = await ReadMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset));
             logger.LogDebug("Metadata deserialized. Starting metadata generation");
 
             StacItem stacItem = new StacItem(string.Format("{0}_{1}_{2}_{3}",

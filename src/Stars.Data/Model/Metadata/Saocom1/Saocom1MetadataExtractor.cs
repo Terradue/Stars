@@ -28,7 +28,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
         public override string Label => "SAR Observation & Communications Satellite (CONAE) constellation product metadata extractor";
 
-        public Saocom1MetadataExtractor(ILogger<Saocom1MetadataExtractor> logger) : base(logger)
+        public Saocom1MetadataExtractor(ILogger<Saocom1MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -309,7 +309,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         private string ReadFilename(IItem item)
         {
             var parameterFile = FindFirstAssetFromFileNameRegex(item, @".*parameter.*\.xml");
-            var xDoc = XDocument.Load(parameterFile.GetStreamable().GetStreamAsync().GetAwaiter().GetResult());
+            var xDoc = XDocument.Load(resourceServiceProvider.GetAssetStreamAsync(parameterFile).GetAwaiter().GetResult());
             XNamespace np = "http://www.conae.gov.ar/CGSS/XPNet";
             XName xoutput = np + "output";
             XName nValue = np + "value";
@@ -382,7 +382,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 if (metadataAsset != null)
                 {
                     L1BFileData = new XmlDocument();
-                    L1BFileData.Load(metadataAsset.GetStreamable().GetStreamAsync().GetAwaiter().GetResult());
+                    L1BFileData.Load(resourceServiceProvider.GetAssetStreamAsync(metadataAsset).GetAwaiter().GetResult());
                     var aa = L1BFileData.SelectSingleNode("/SAOCOM_XMLProduct/Channel/SwathInfo/Polarization");
                     polarizationList.Add(aa.InnerText.Replace("/", "").ToString());
                 }
@@ -410,7 +410,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await manifestAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

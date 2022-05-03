@@ -21,10 +21,13 @@ namespace Terradue.Stars.Data.Model.Metadata
     public abstract class MetadataExtraction : IProcessing
     {
         protected ILogger logger;
+        protected readonly IResourceServiceProvider resourceServiceProvider;
 
-        public MetadataExtraction(ILogger logger)
+        public MetadataExtraction(ILogger logger,
+                                  IResourceServiceProvider resourceServiceProvider)
         {
             this.logger = logger;
+            this.resourceServiceProvider = resourceServiceProvider;
         }
 
         public int Priority { get; set; }

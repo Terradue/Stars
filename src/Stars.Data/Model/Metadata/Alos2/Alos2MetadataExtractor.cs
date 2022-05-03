@@ -25,7 +25,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
         public override string Label => "Advanced Land Observing Satellite-2 (JAXA) mission product metadata extractor";
 
-        public Alos2MetadataExtractor(ILogger<Alos2MetadataExtractor> logger) : base(logger)
+        public Alos2MetadataExtractor(ILogger<Alos2MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -297,7 +297,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
             Alos2Metadata metadata = new Alos2Metadata(manifestAsset);
 
-            await metadata.ReadMetadata();
+            await metadata.ReadMetadata(resourceServiceProvider);
 
             return metadata;
 
@@ -337,13 +337,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
             Assets = new List<string>();
         }
 
-        public async Task ReadMetadata()
+        public async Task ReadMetadata(IResourceServiceProvider resourceServiceProvider)
         {
             //logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
             List<string> polarizations = new List<string>();
 
-            using (var stream = await summaryAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(summaryAsset))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {

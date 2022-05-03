@@ -7,10 +7,8 @@ namespace Terradue.Stars.Interface
 {
     public interface IResourceServiceProvider
     {
-        Task<bool> CanBeRanged(IResource resource);
-
-        Task<Stream> OpenStreamAsync(IResource resource);
-
-        Task<Stream> GetStreamAsync(IResource resource, long start, long end = -1);
+        Task<IStreamResource> GetStreamResourceAsync(IResource resource);
+        
+        Task<Stream> GetAssetStreamAsync(IAsset asset);
     }
 }

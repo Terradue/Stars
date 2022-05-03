@@ -31,7 +31,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         public override string Label => "China-Brazil Earth Resources Satellite-4A (INPE) mission product metadata extractor";
 
-        public CbersMetadataExtractor(ILogger<CbersMetadataExtractor> logger) : base(logger)
+        public CbersMetadataExtractor(ILogger<CbersMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -218,7 +218,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            using (var stream = await metadataAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);

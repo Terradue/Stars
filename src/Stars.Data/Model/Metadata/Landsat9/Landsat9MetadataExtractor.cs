@@ -34,7 +34,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         private const string ASCENDING = "Ascending Orbit";
         private const string DESCENDING = "Descending Orbit";
 
-        public Landsat9MetadataExtraction(ILogger<Landsat9MetadataExtraction> logger) : base(logger)
+        public Landsat9MetadataExtraction(ILogger<Landsat9MetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -48,7 +48,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamResource auxFileStreamable = auxFile.GetStreamable();
+            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -339,7 +339,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
 
             try
             {
-                var auxiliary = DeserializeAuxiliary(auxFile.GetStreamable()).GetAwaiter().GetResult();
+                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return auxiliary.IsLandsat9();
             }
             catch (Exception e)

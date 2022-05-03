@@ -19,7 +19,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
     public class NewSatMetadataExtractor : MetadataExtraction {
         public override string Label => "NewSat (Satellogic) contellation product metadata extractor";
 
-        public NewSatMetadataExtractor(ILogger<NewSatMetadataExtractor> logger) : base(logger) {
+        public NewSatMetadataExtractor(ILogger<NewSatMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) {
         }
 
         public override bool CanProcess(IResource route, IDestination destination) {
@@ -29,7 +29,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
             if (geojson == null) {
                 return false;
             }
-            IStreamResource geoJsonFileStreamable = geojson.GetStreamable();
+            IStreamResource geoJsonFileStreamable = resourceServiceProvider.GetStreamResourceAsync(geojson).Result;
             if (geoJsonFileStreamable == null) {
                 return false;
             }
@@ -48,7 +48,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
                 throw new FileNotFoundException(String.Format("Unable to find the geojson file asset"));
             }
             logger.LogDebug(String.Format("geojson file is {0}", geojsonAsset.Uri));
-            IStreamResource geoJsonFileStreamable = geojsonAsset.GetStreamable();
+            IStreamResource geoJsonFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(geojsonAsset);
             if (geoJsonFileStreamable == null) {
                 logger.LogError("geojson file asset is not streamable, skipping metadata extraction");
                 return null;

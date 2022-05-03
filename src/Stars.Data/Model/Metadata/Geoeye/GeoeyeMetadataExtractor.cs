@@ -27,7 +27,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
     {
         public override string Label => "GeoEye-1 (DigitalGlobe) mission product metadata extractor";
 
-        public GeoeyeMetadataExtractor(ILogger<GeoeyeMetadataExtractor> logger) : base(logger) { }
+        public GeoeyeMetadataExtractor(ILogger<GeoeyeMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) { }
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
@@ -60,7 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 
             //  loading properties in dictionary
             IAsset isdMetadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.XML)$");
-            IStreamResource isdMetadataFileStreamable = isdMetadataFile.GetStreamable();
+            IStreamResource isdMetadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(isdMetadataFile);
             if (isdMetadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -69,7 +69,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 
             logger.LogDebug("Deserializing metadata files");
             var metadata = new JavaProperties();
-            metadata.Load(await metadataFile.GetStreamable().GetStreamAsync());
+            metadata.Load(await resourceServiceProvider.GetAssetStreamAsync(metadataFile));
 
             Isd isdMetadata = await DeserializeProductMetadata(isdMetadataFileStreamable);
             logger.LogDebug("Metadata files deserialized. Starting metadata generation");

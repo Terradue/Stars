@@ -21,7 +21,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
     {
         public static XmlSerializer xfduSerializer = new XmlSerializer(typeof(XFDUType));
 
-        protected SentinelMetadataExtractor(ILogger logger) : base(logger)
+        protected SentinelMetadataExtractor(ILogger logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -96,7 +96,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await manifestAsset.GetStreamable().GetStreamAsync())
+            using (Stream stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
