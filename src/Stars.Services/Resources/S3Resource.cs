@@ -37,7 +37,7 @@ namespace Terradue.Stars.Services.Resources
         public static async Task<AmazonS3Client> GetS3ClientAsync(S3Url s3Url, S3Options s3Options, IIdentityProvider identityProvider = null)
         {
             // Find S3 config if any
-            S3Configuration s3Config = s3Options.GetS3Configuration(s3Url.Url.ToString());
+            S3Configuration s3Config = s3Options.GetS3Configuration(s3Url.Uri.ToString());
             Uri endpoint = s3Config?.EndpointUrl;
             // no endpoint, use default from url
             if (endpoint == null)

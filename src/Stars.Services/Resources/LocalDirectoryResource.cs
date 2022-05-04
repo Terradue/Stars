@@ -23,7 +23,7 @@ namespace Terradue.Stars.Services.Router
             this.fileSystem = fileSystem;
         }
 
-        public IReadOnlyDictionary<string, IAsset> Assets => dirInfo.EnumerateFiles().ToDictionary(f => f.Name, f => new LocalFileResource(fileSystem, f.FullName));
+        public IReadOnlyDictionary<string, IAsset> Assets => dirInfo.EnumerateFiles().ToDictionary(f => f.Name, f => (IAsset)new LocalFileResource(fileSystem, f.FullName, ResourceType.Unknown));
         public Uri Uri => throw new NotImplementedException();
     }
 }

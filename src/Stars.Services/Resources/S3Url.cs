@@ -200,7 +200,7 @@ namespace Terradue.Stars.Services.Resources
 
         public object Clone()
         {
-            return S3Url.ParseUri(this.uri);
+            return S3Url.ParseUri(this.Uri);
         }
 
         public void NormalizeKey()
