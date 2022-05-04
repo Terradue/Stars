@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IDictionary<string, object> Properties => StacItem.Properties;
 
-        public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this, credentials));
+        public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this));
 
         public ITimePeriod DateTime => StacItem.DateTime;
 

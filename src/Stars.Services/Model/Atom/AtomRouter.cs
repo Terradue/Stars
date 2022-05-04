@@ -9,6 +9,7 @@ using Terradue.Stars.Services.Plugins;
 using Terradue.OpenSearch.Result;
 using Terradue.Stars.Services.Router;
 using System.Linq;
+using Terradue.Stars.Services.Resources;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -18,11 +19,11 @@ namespace Terradue.Stars.Services.Model.Atom
 
         private static string[] supportedTypes = new string[] { "application/atom+xml", "application/xml", "text/xml" };
 
-        private ICredentials credentials;
+        private readonly IResourceServiceProvider resourceServiceProvider;
 
-        public AtomRouter(ICredentials credentials)
+        public AtomRouter(IResourceServiceProvider resourceServiceProvider)
         {
-            this.credentials = credentials;
+            this.resourceServiceProvider = resourceServiceProvider;
         }
 
         public int Priority { get; set; }
@@ -32,18 +33,18 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public bool CanRoute(IResource node)
         {
-            if ( !supportedTypes.Contains(node.ContentType.MediaType) ) return false;
+            if (!supportedTypes.Contains(node.ContentType.MediaType)) return false;
             try
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                feedFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result));
+                feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result));
                 return true;
             }
             catch { }
             try
             {
                 Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
-                itemFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result));
+                itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result));
                 return true;
             }
             catch { }
@@ -56,16 +57,16 @@ namespace Terradue.Stars.Services.Model.Atom
             try
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result)));
-                return new AtomFeedCatalog(new AtomFeed(feedFormatter.Feed), node.Uri, credentials);
+                await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result)));
+                return new AtomFeedCatalog(new AtomFeed(feedFormatter.Feed), node.Uri);
             }
             catch (Exception)
             {
                 try
                 {
                     Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
-                    await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result)));
-                    return new AtomItemNode(new AtomItem(itemFormatter.Item), node.Uri, credentials);
+                    await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result)));
+                    return new AtomItemNode(new AtomItem(itemFormatter.Item), node.Uri);
                 }
                 catch (Exception)
                 {
@@ -74,16 +75,16 @@ namespace Terradue.Stars.Services.Model.Atom
             }
         }
 
-        public IStreamResource FetchResource(IResource node)
+        public async Task<IStreamResource> FetchResourceAsync(IResource node)
         {
-            if (node is WebRoute && node.Uri.Query.Contains("format=json"))
+            if (node is HttpResource && node.Uri.Query.Contains("format=json"))
             {
-                return (node as WebRoute).CloneRoute(new Uri (node.Uri.ToString().Replace("format=json", "format=atom")));
+                return await resourceServiceProvider.CreateStreamResourceAsync(new Uri(node.Uri.ToString().Replace("format=json", "format=atom")));
             }
 
             if (node is IStreamResource) return node as IStreamResource;
 
-            return WebRoute.Create(node.Uri);
+            return await resourceServiceProvider.CreateStreamResourceAsync(node);
         }
 
     }

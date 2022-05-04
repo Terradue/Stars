@@ -18,9 +18,9 @@ namespace Terradue.Stars.Services.Resources
         public List<S3Configuration> Services { get; set; }
         public S3OptionsPolicies Policies { get; set; }
 
-        public S3Configuration GetS3Configuration(string endpointHost)
+        public S3Configuration GetS3Configuration(string url)
         {
-            var kv = Services.Where(c => Regex.Match(endpointHost, c.UrlPattern, RegexOptions.Singleline).Success).FirstOrDefault();
+            var kv = Services.Where(c => Regex.Match(url, c.UrlPattern, RegexOptions.Singleline).Success).FirstOrDefault();
             if (kv != null)
                 return kv;
             return null;
@@ -55,5 +55,6 @@ namespace Terradue.Stars.Services.Resources
                 return new Uri(string.Format("http{0}://{1}", SslEnabled ? "s" : "", Endpoint));
             }
         }
+
     }
 }

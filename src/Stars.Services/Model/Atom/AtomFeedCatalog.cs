@@ -17,13 +17,11 @@ namespace Terradue.Stars.Services.Model.Atom
     {
         private readonly AtomFeed feed;
         private readonly Uri sourceUri;
-        private readonly ICredentials credentials;
 
-        public AtomFeedCatalog(AtomFeed feed, Uri sourceUri, System.Net.ICredentials credentials = null)
+        public AtomFeedCatalog(AtomFeed feed, Uri sourceUri)
         {
             this.feed = feed;
             this.sourceUri = sourceUri;
-            this.credentials = credentials;
         }
 
         public AtomFeed AtomFeed => feed;

@@ -18,10 +18,9 @@ namespace Terradue.Stars.Data.Translators
         private readonly IServiceProvider serviceProvider;
         private AtomRouter atomRouter;
         
-        public StacItemToAtomItemTranslator(ICredentials credentials,
-                                            IServiceProvider serviceProvider)
+        public StacItemToAtomItemTranslator(IServiceProvider serviceProvider)
         {
-            this.atomRouter = new AtomRouter(credentials);
+            this.atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
             this.serviceProvider = serviceProvider;
         }
 

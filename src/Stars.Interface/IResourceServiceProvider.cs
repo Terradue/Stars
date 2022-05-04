@@ -16,7 +16,7 @@ namespace Terradue.Stars.Interface
         Task<Stream> GetAssetStreamAsync(IAsset asset);
         
         Task<IAssetsContainer> GetAssetsInFolder(Uri uri);
-
         
+        Task Delete(IResource resource);
     }
 }

@@ -29,14 +29,14 @@ namespace Terradue.Stars.Services.Resources
         public async Task<IStreamResource> CreateStreamResourceAsync(Uri url)
         {
             // Local file
-            if ( url.IsFile )
+            if (url.IsFile)
             {
                 return new LocalFileResource(_serviceProvider.GetService<IFileSystem>(), url.AbsolutePath, ResourceType.Unknown);
             }
 
             // HTTP
             var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
-            if ( clientFactory == null )
+            if (clientFactory == null)
                 throw new SystemException("HttpClient Factory not provided");
 
             var client = clientFactory.CreateClient("stars");
@@ -61,15 +61,27 @@ namespace Terradue.Stars.Services.Resources
 
         public Task<IAssetsContainer> GetAssetsInFolder(Uri uri)
         {
-            return Task.FromResult(new LocalDirectoryResource(_serviceProvider.GetService<IFileSystem>(), uri.AbsolutePath));        }
+            return Task.FromResult<IAssetsContainer>(new LocalDirectoryResource(_serviceProvider.GetService<IFileSystem>(), uri.AbsolutePath));
+        }
 
         public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource)
         {
-            if ( resource is IStreamResource )
+            if (resource is IStreamResource)
             {
                 return (IStreamResource)resource;
             }
             return await CreateStreamResourceAsync(resource.Uri);
+        }
+
+        public async Task Delete(IResource resource)
+        {
+            IStreamResource streamResource = await CreateStreamResourceAsync(resource);
+            if ( streamResource is IDeletableResource)
+            {
+                await ((IDeletableResource)streamResource).Delete();
+                return;
+            }
+            throw new SystemException("Resource cannot be deleted");
         }
     }
 }

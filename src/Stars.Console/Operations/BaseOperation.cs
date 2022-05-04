@@ -145,7 +145,7 @@ namespace Terradue.Stars.Console.Operations
             collection.AddSingleton<ILogger>(logger);
 
             // Add Stars Services
-            collection.AddStarsManagedServices((provider, configuration) =>
+            collection.AddStarsManagedServices(Configuration, (provider, configuration) =>
             {
                 configuration
                     .UseGlobalConfiguration(Configuration);

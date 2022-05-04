@@ -32,7 +32,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanRoute(IResource route)
         {
-            var routeFound = AffineRouteAsync(route);
+            var routeFound = AffineRouteAsync(route).Result;
             if (routeFound is StacNode) return true;
             if (!(routeFound is IStreamResource)) return false;
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")

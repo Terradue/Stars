@@ -15,7 +15,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Resources
 {
-    public class S3Resource : IStreamResource
+    public class S3Resource : IStreamResource, IDeletableResource
     {
         private S3Url s3Url;
 
@@ -153,5 +153,9 @@ namespace Terradue.Stars.Services.Resources
             await Client.CopyObjectAsync(s3Url.Bucket, s3Url.Key, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key);
         }
 
+        public async Task Delete()
+        {
+            await Client.DeleteObjectAsync(s3Url.Bucket, s3Url.Key);
+        }
     }
 }

@@ -7,6 +7,7 @@ using DotNet.Testcontainers.Network;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Terradue.Stars.Services.Resources;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -19,7 +20,7 @@ namespace Stars.Tests
         private readonly string _networkName;
         private readonly IDockerNetwork _network;
 
-        public LocalStackFixture(IOptions<LocalStackOptions> options, Amazon.Extensions.NETCore.Setup.AWSOptions awsOptions)
+        public LocalStackFixture(IOptions<LocalStackOptions> options, IOptions<S3Options> s3Options)
         {
             // _networkName = Guid.NewGuid().ToString();
             // var networkLabel = Guid.NewGuid().ToString();
@@ -42,13 +43,13 @@ namespace Stars.Tests
                 // .WithNetwork(_network)
                 .WithName("localstack");
 
-            if (awsOptions != null)
+            if (s3Options != null)
             {
-                if (awsOptions.Credentials != null)
+                var s3Config = s3Options.Value.GetS3Configuration("s3://localhost");
+                if (s3Config != null)
                 {
-                    var awsCreds = awsOptions.Credentials.GetCredentials();
-                    localStackBuilder.WithEnvironment("AWS_ACCESS_KEY_ID", awsCreds.AccessKey)
-                        .WithEnvironment("AWS_SECRET_ACCESS_KEY", awsCreds.SecretKey);
+                    localStackBuilder.WithEnvironment("AWS_ACCESS_KEY_ID", s3Config.AccessKey)
+                        .WithEnvironment("AWS_SECRET_ACCESS_KEY", s3Config.SecretKey);
                 }
             }
 

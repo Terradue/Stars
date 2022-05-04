@@ -29,6 +29,7 @@ namespace Terradue.Stars.Console.Operations
         public bool SkippAssets { get; set; }
 
         private RouterService routingService;
+        private IResourceServiceProvider resourceServiceProvider;
         private int recursivity = 1;
         private string[] inputs = new string[0];
 
@@ -117,8 +118,10 @@ namespace Terradue.Stars.Console.Operations
         protected override async Task ExecuteAsync()
         {
             this.routingService = ServiceProvider.GetService<RouterService>();
+            this.resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
             InitRoutingTask();
-            List<IResource> routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
+            var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new Uri(input)));
+            List<IResource> routes = (await Task.WhenAll(tasks)).Cast<IResource>().ToList();
 
             foreach (var route in routes)
             {

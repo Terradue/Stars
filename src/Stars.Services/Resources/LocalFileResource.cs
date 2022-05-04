@@ -11,7 +11,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Router
 {
-    public class LocalFileResource : IAsset, IStreamResource
+    public class LocalFileResource : IAsset, IStreamResource, IDeletableResource
     {
         private readonly ResourceType resourceType;
         private IFileInfo fileInfo;
@@ -43,6 +43,12 @@ namespace Terradue.Stars.Services.Router
         public IReadOnlyList<string> Roles => roles;
 
         public IReadOnlyDictionary<string, object> Properties => new Dictionary<string, object>();
+
+        public Task Delete()
+        {
+            fileInfo.Delete();
+            return Task.CompletedTask;
+        }
 
         public Task<Stream> GetStreamAsync()
         {

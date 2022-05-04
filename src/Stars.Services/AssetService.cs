@@ -26,6 +26,7 @@ namespace Terradue.Stars.Services
         protected readonly SupplierManager suppliersManager;
         protected readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ICredentials credentials;
 
         public AssetService(ILogger<AssetService> logger,
@@ -33,6 +34,7 @@ namespace Terradue.Stars.Services
                             SupplierManager suppliersManager,
                             TranslatorManager translatorManager,
                             CarrierManager carrierManager,
+                            IResourceServiceProvider resourceServiceProvider,
                             ICredentials credentials)
         {
             this.logger = logger;
@@ -40,6 +42,7 @@ namespace Terradue.Stars.Services
             this.suppliersManager = suppliersManager;
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.credentials = credentials;
         }
 
@@ -158,8 +161,7 @@ namespace Terradue.Stars.Services
             foreach (var asset in assetsContainer.Assets)
             {
                 try {
-                    WebRoute assetRoute = WebRoute.Create(asset.Value.Uri, 0, credentials);
-                    await assetRoute.Remove();
+                    await resourceServiceProvider.Delete(asset.Value);
                 }
                 catch(Exception e)
                 {

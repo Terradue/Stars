@@ -36,7 +36,7 @@ namespace Stars.Tests
             AtomRouter router = new AtomRouter(null);
             var uri = new Uri("file://" + Path.Combine(Environment.CurrentDirectory, "../../../In/call864_S2B_MSIL1C_20210303T095029_N0209_R079_T33SWB_20210303T105137.atom"));
             AtomFeed atomFeed = AtomFeed.Load(XmlReader.Create(uri.AbsolutePath));
-            AtomItemNode item = new AtomItemNode(atomFeed.Items.First() as AtomItem, uri, serviceProvider.GetService<ICredentials>());
+            AtomItemNode item = new AtomItemNode(atomFeed.Items.First() as AtomItem, uri);
             TranslatorManager translatorManager = new TranslatorManager(serviceProvider.GetService<ILogger<TranslatorManager>>(), serviceProvider);
             var stacNode = translatorManager.Translate<StacItemNode>(item).GetAwaiter().GetResult();
             var stacItem = stacNode.StacItem;
@@ -49,8 +49,9 @@ namespace Stars.Tests
         {
             var routersManager = serviceProvider.GetService<RoutersManager>();
             var translatorManager = serviceProvider.GetService<TranslatorManager>();
-            var route = WebRoute.Create(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=[terradue]"));
-            var router = routersManager.GetRouter(route);
+            var resourceServiceProvider = serviceProvider.GetService<IResourceServiceProvider>();
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=[terradue]"));
+            var router = await routersManager.GetRouterAsync(route);
             var resource = await router.Route(route);
             while (resource is ICatalog)
             {
