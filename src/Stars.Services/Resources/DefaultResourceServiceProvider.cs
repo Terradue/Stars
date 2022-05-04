@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -25,18 +26,20 @@ namespace Terradue.Stars.Services.Resources
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<IStreamResource> CreateAsync(Uri url)
+        public async Task<IStreamResource> CreateStreamResourceAsync(Uri url)
         {
             // Local file
             if ( url.IsFile )
             {
-                return new LocalFileSystemResource(url.AbsolutePath, ResourceType.Unknown);
+                return new LocalFileResource(_serviceProvider.GetService<IFileSystem>(), url.AbsolutePath, ResourceType.Unknown);
             }
 
             // HTTP
-            var client = _serviceProvider.GetService<HttpClient>();
-            if ( client == null )
-                throw new SystemException("HttpClient not provided");
+            var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
+            if ( clientFactory == null )
+                throw new SystemException("HttpClient Factory not provided");
+
+            var client = clientFactory.CreateClient("stars");
 
             HttpResponseMessage response = await client.GetAsync(url);
 
@@ -53,13 +56,20 @@ namespace Terradue.Stars.Services.Resources
 
         public async Task<Stream> GetAssetStreamAsync(IAsset asset)
         {
-            return await (await CreateAsync(asset.Uri)).GetStreamAsync();
+            return await (await CreateStreamResourceAsync(asset.Uri)).GetStreamAsync();
         }
 
-        public async Task<IStreamResource> GetStreamResourceAsync(IResource resource)
+        public Task<IAssetsContainer> GetAssetsInFolder(Uri uri)
         {
-            return await CreateAsync(resource.Uri);
-        }
+            return Task.FromResult(new LocalDirectoryResource(_serviceProvider.GetService<IFileSystem>(), uri.AbsolutePath));        }
 
+        public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource)
+        {
+            if ( resource is IStreamResource )
+            {
+                return (IStreamResource)resource;
+            }
+            return await CreateStreamResourceAsync(resource.Uri);
+        }
     }
 }

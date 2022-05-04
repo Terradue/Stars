@@ -29,7 +29,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
             if (geojson == null) {
                 return false;
             }
-            IStreamResource geoJsonFileStreamable = resourceServiceProvider.GetStreamResourceAsync(geojson).Result;
+            IStreamResource geoJsonFileStreamable = resourceServiceProvider.CreateStreamResourceAsync(geojson).Result;
             if (geoJsonFileStreamable == null) {
                 return false;
             }
@@ -48,7 +48,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
                 throw new FileNotFoundException(String.Format("Unable to find the geojson file asset"));
             }
             logger.LogDebug(String.Format("geojson file is {0}", geojsonAsset.Uri));
-            IStreamResource geoJsonFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(geojsonAsset);
+            IStreamResource geoJsonFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(geojsonAsset);
             if (geoJsonFileStreamable == null) {
                 logger.LogError("geojson file asset is not streamable, skipping metadata extraction");
                 return null;

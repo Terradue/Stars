@@ -1,5 +1,4 @@
 using System.Net;
-using System.Net.S3;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

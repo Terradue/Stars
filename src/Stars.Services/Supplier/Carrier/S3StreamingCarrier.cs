@@ -8,9 +8,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using System.Net;
-using System.Net.S3;
 using Amazon.S3.Transfer;
-using Amazon.Extensions.NETCore.Setup;
 using System.Text.RegularExpressions;
 using Terradue.Stars.Services.Resources;
 using Microsoft.Extensions.Options;
@@ -22,21 +20,16 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         private readonly ILogger logger;
         private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly IOptionsMonitor<S3Options> s3OptionsMonitor;
-        private readonly AWSOptions options;
-        private readonly S3BucketsOptions s3BucketsConfiguration;
 
         private readonly Regex regEx = new Regex(@"^s3://(?'hostOrBucket'[^/]*)(/.*)?$");
 
         public S3StreamingCarrier(ILogger<S3StreamingCarrier> logger,
                                   IResourceServiceProvider resourceServiceProvider,
-                                  IOptionsMonitor<S3Options> s3OptionsMonitor,
-                                  S3BucketsOptions s3BucketsConfiguration = null)
+                                  IOptionsMonitor<S3Options> s3OptionsMonitor)
         {
             this.logger = logger;
             this.resourceServiceProvider = resourceServiceProvider;
             this.s3OptionsMonitor = s3OptionsMonitor;
-            this.options = options;
-            this.s3BucketsConfiguration = s3BucketsConfiguration;
             Priority = 75;
 
         }
@@ -63,7 +56,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             S3Resource s3DestinationResource = await S3Resource.CreateAsync(S3Url.ParseUri(s3Delivery.Destination.Uri), s3OptionsMonitor.CurrentValue, null);
 
             // Get the resource as a stream
-            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(s3Delivery.Resource);
+            IStreamResource inputStreamResource = await resourceServiceProvider.CreateStreamResourceAsync(s3Delivery.Resource);
 
             if (!overwrite && inputStreamResource.ContentLength > 0 &&
                Convert.ToUInt64(s3DestinationResource.ContentLength) == inputStreamResource.ContentLength)
@@ -127,7 +120,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 if (inputStreamResource.ContentLength == 0 || uploadStream)
                 {
-                    S3UploadStream s3UploadStream = new S3UploadStream(s3outputStreamResource.Client, S3UriParser.GetBucketName(s3outputStreamResource.Uri), S3UriParser.GetKey(s3outputStreamResource.Uri), partSize);
+                    S3UploadStream s3UploadStream = new S3UploadStream(s3outputStreamResource.Client, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key, partSize);
                     await StartSourceCopy(sourceStream, s3UploadStream, partSize);
                 }
                 else
@@ -136,7 +129,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
                     ur.PartSize = partSize;
                     ur.AutoResetStreamPosition = false;
-                    SetRequestParametersWithUri(s3outputStreamResource.Uri, ur);
+                    SetRequestParametersWithUri(s3outputStreamResource.S3Uri, ur);
 
                     ur.InputStream = sourceStream;
                     ur.ContentType = inputStreamResource.ContentType.MediaType;
@@ -184,10 +177,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             destStream.Close();
         }
 
-        private void SetRequestParametersWithUri(Uri uri, TransferUtilityUploadRequest ur)
+        private void SetRequestParametersWithUri(S3Url uri, TransferUtilityUploadRequest ur)
         {
-            ur.BucketName = S3UriParser.GetBucketName(uri);
-            ur.Key = S3UriParser.GetKey(uri);
+            ur.BucketName = uri.Bucket;
+            ur.Key = uri.Key;
         }
     }
 

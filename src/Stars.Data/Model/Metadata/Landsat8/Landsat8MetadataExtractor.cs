@@ -48,7 +48,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
+            IStreamResource auxFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -339,7 +339,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 
             try
             {
-                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.CreateStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return auxiliary.IsLandsat8();
             }
             catch (Exception e)

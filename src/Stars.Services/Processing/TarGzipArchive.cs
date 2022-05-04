@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Processing
         {
             const int chunk = 4096;
             BlockingStream blockingStream = new BlockingStream(1000);
-            resourceServiceProvider.GetStreamResourceAsync(asset)
+            resourceServiceProvider.CreateStreamResourceAsync(asset)
                 .ContinueWith(task => task.Result.GetStreamAsync()
                     .ContinueWith(task =>
                     {

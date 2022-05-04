@@ -11,7 +11,7 @@ namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacItemNode : StacNode, IItem
     {
-        public StacItemNode(StacItem stacItem, Uri uri, ICredentials credentials = null) : base(stacItem, uri, credentials)
+        public StacItemNode(StacItem stacItem, Uri uri) : base(stacItem, uri)
         {
             
         }
@@ -28,7 +28,8 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public ITimePeriod DateTime => StacItem.DateTime;
 
-        public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
+
+        public override IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider)
         {
             return new List<IResource>();
         }

@@ -14,13 +14,18 @@ namespace Terradue.Stars.Services.Router
     {
         public RouterServiceParameters Parameters { get; set; }
         private readonly ILogger logger;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly RoutersManager routersManager;
         private readonly ICredentials credentialsManager;
 
-        public RouterService(ILogger<RouterService> logger, RoutersManager routersManager, ICredentials credentialsManager)
+        public RouterService(ILogger<RouterService> logger,
+                             IResourceServiceProvider resourceServiceProvider,
+                             RoutersManager routersManager,
+                             ICredentials credentialsManager)
         {
             this.Parameters = new RouterServiceParameters();
             this.logger = logger;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.routersManager = routersManager;
             this.credentialsManager = credentialsManager;
         }
@@ -55,7 +60,7 @@ namespace Terradue.Stars.Services.Router
                     return await onItemFunction.Invoke(itemNode, prevRouter, state);
                 }
                 // Ask the router manager if there is another router available for this route
-                router = routersManager.GetRouter(route);
+                router = await routersManager.GetRouterAsync(route);
                 // Definitively impossible to Route
                 if (router == null)
                 {
@@ -87,7 +92,7 @@ namespace Terradue.Stars.Services.Router
             }
 
             // Let's get sub routes
-            IReadOnlyList<IResource> subroutes = catalogNode.GetRoutes(credentialsManager);
+            IReadOnlyList<IResource> subroutes = catalogNode.GetRoutes(resourceServiceProvider);
 
             state = await beforeBranchingFunction.Invoke(catalogNode, router, state);
 

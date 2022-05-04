@@ -39,13 +39,13 @@ namespace Terradue.Stars.Services.Processing
         {
             if (asset.Uri.Scheme == "file")
             {
-                return await (await resourceServiceProvider.GetStreamResourceAsync(asset)).GetStreamAsync();
+                return await (await resourceServiceProvider.CreateStreamResourceAsync(asset)).GetStreamAsync();
             }
             var tmpDestination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory(Path.GetTempPath()), asset);
             var tmpArchiveAssetDestination = tmpDestination.To(asset, Guid.NewGuid().ToString());
             tmpArchiveAssetDestination.PrepareDestination();
             var localZipDelivery = carrierManager.GetSingleDeliveryQuotations(asset, tmpArchiveAssetDestination).First();
-            localStreamable = await localZipDelivery.Carrier.Deliver(localZipDelivery) as LocalFileSystemResource;
+            localStreamable = await localZipDelivery.Carrier.Deliver(localZipDelivery) as LocalFileResource;
             return await localStreamable.GetStreamAsync();
         }
 

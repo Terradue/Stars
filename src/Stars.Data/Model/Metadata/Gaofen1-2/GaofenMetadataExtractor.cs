@@ -42,7 +42,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 return false;
             }
 
-            IStreamResource metadataFileStreamable = resourceServiceProvider.GetStreamResourceAsync(metadataFile).Result;
+            IStreamResource metadataFileStreamable = resourceServiceProvider.CreateStreamResourceAsync(metadataFile).Result;
             if (metadataFileStreamable == null)
             {
                 return false;
@@ -157,7 +157,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
             {
                 logger.LogDebug("Metadata file is {0}", metadataFile.Uri);
 
-                IStreamResource metadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(metadataFile);
+                IStreamResource metadataFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(metadataFile);
                 if (metadataFileStreamable == null)
                 {
                     logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -332,7 +332,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, mssBandName, sensorName, asset, satelliteId, metadata);
@@ -349,7 +349,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, mssBandName, sensorName, asset, satelliteId, metadata);
@@ -365,7 +365,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 string panBandName = "PAN";
@@ -381,7 +381,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, null, sensorName, asset, satelliteId, metadata);
@@ -396,7 +396,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAssets.FirstOrDefault()));
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadataAssets.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, null, sensorName, asset, satelliteId, metadata);

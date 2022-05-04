@@ -22,8 +22,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     {
         private readonly ILogger logger;
 
-        public LocalCarrier(ILogger logger)
+        protected readonly System.IO.Abstractions.IFileSystem fileSystem;
+        public LocalCarrier(ILogger logger, System.IO.Abstractions.IFileSystem fileSystem)
         {
+            this.fileSystem = fileSystem;
             this.logger = logger;
         }
 

@@ -46,7 +46,7 @@ namespace Terradue.Stars.Services.Resources
             }
             if (endpoint == null)
             {
-                throw new InvalidOperationException($"No S3 endpoint found for URL {s3Url.Url}");
+                throw new InvalidOperationException($"No S3 endpoint found for URL {s3Url.Uri}");
             }
 
             string region = s3Config?.Region;
@@ -113,7 +113,9 @@ namespace Terradue.Stars.Services.Resources
 
         public ContentDisposition ContentDisposition => new ContentDisposition(ObjectMetadata.Headers.ContentDisposition.ToString());
 
-        public Uri Uri => s3Url.Url;
+        public S3Url S3Uri => s3Url;
+
+        public Uri Uri => s3Url.Uri;
 
         public bool CanBeRanged => true;
 
@@ -139,12 +141,17 @@ namespace Terradue.Stars.Services.Resources
 
         internal bool SameBucket(S3Resource s3outputStreamResource)
         {
-            throw new NotImplementedException();
+            return S3Uri.Bucket == s3outputStreamResource.S3Uri.Bucket;
         }
 
-        internal Task CopyTo(S3Resource s3outputStreamResource)
+        internal async Task CopyTo(S3Resource s3outputStreamResource)
         {
-            throw new NotImplementedException();
+            if ( S3Uri.Endpoint != s3outputStreamResource.S3Uri.Endpoint)
+            {
+                throw new InvalidOperationException("Cannot copy between different endpoints");
+            }
+            await Client.CopyObjectAsync(s3Url.Bucket, s3Url.Key, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key);
         }
+
     }
 }

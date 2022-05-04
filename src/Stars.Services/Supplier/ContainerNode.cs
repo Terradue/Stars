@@ -49,6 +49,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public ITimePeriod DateTime => item.DateTime;
 
+
         public IReadOnlyList<IResourceLink> GetLinks()
         {
             return item.GetLinks();

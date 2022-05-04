@@ -17,14 +17,13 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacAssetAsset : IAsset
     {
         private readonly StacAsset asset;
-        private readonly IStreamResource _streamable;
-        private readonly ICredentials credentials;
-        private readonly Uri uri;
+        private readonly IAssetsContainer parent;
+        private Uri uri;
 
-        public StacAssetAsset(StacAsset asset, IAssetsContainer parent, ICredentials credentials = null)
+        public StacAssetAsset(StacAsset asset, IAssetsContainer parent)
         {
             this.asset = asset;
-            this.credentials = credentials;
+            this.parent = parent;
             if (asset.Uri.IsAbsoluteUri)
                 this.uri = asset.Uri;
             else
@@ -38,15 +37,13 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
                 else this.uri = asset.Uri;
             }
-            if (asset is IStreamResource)
-                _streamable = asset as IStreamResource;
-            else
-            {
-                _streamable = WebRoute.Create(uri, credentials: credentials);
-            }
         }
 
-        public Uri Uri => uri;
+        public Uri Uri
+        {
+            get { return uri; }
+            private set { uri = value; }
+        }
 
         public ContentType ContentType => asset.MediaType;
 
@@ -55,8 +52,6 @@ namespace Terradue.Stars.Services.Model.Stac
             get
             {
                 if (asset.FileExtension().Size.HasValue) return asset.FileExtension().Size.Value;
-                var cl = _streamable?.ContentLength;
-                if (cl.HasValue) return cl.Value;
                 return 0;
             }
         }
@@ -87,29 +82,11 @@ namespace Terradue.Stars.Services.Model.Stac
                 {
                     cd.FileName = asset.GetProperty<string>("filename");
                 }
-                else
-                {
-                    try
-                    {
-                        cd = _streamable?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
-                    }
-                    catch { }
-                }
                 return cd;
             }
         }
 
         public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 
-        public async Task CacheHeaders(bool force = false)
-        {
-            if ( _streamable is WebRoute )
-                await (_streamable as WebRoute).CacheHeadersAsync(force);
-        }
-
-        public IStreamResource GetStreamable()
-        {
-            return _streamable;
-        }
     }
 }

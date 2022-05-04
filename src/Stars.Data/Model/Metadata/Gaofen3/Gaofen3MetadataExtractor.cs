@@ -59,7 +59,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 
             logger.LogDebug("Metadata file is {0}", metadataFile.Uri);
 
-            IStreamResource metadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(metadataFile);
+            IStreamResource metadataFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(metadataFile);
             if (metadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");

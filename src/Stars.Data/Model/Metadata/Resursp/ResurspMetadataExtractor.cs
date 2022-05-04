@@ -40,7 +40,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
             // deserialize product medatadata
             SPP_ROOT productMetadata =
-                DeserializeProductMetadata(resourceServiceProvider.GetStreamResourceAsync(metadataFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                DeserializeProductMetadata(resourceServiceProvider.CreateStreamResourceAsync(metadataFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
             if (productMetadata == null) {
                 return false;
             }
@@ -68,7 +68,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             }
 
             // deserialize product medatadata
-            SPP_ROOT productMetadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadatafile));
+            SPP_ROOT productMetadata = await DeserializeProductMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadatafile));
 
             logger.LogDebug("Retrieving the shapefile in the product package");
             IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");

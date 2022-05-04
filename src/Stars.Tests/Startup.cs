@@ -34,7 +34,7 @@ namespace Stars.Tests
             services.AddDefaultAWSOptions(awsOptions);
             services.Configure<LocalStackOptions>(Configuration.GetSection("LocalStack"));
             services.AddSingleton<S3StreamingCarrier, S3StreamingCarrier>();
-            services.AddStarsManagedServices((provider, config) => config
+            services.AddStarsManagedServices(Configuration, (provider, config) => config
                 .UseGlobalConfiguration(Configuration)
             );
             services.LoadConfiguredStarsPlugin(_ => AssemblyLoadContext.Default);

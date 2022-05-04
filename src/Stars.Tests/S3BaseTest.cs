@@ -19,11 +19,9 @@ namespace Stars.Tests
 
         protected async Task CreateBucketAsync(string s3bucketUri)
         {
-            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create(s3bucketUri);
-            s3WebRequest.Method = "MKB";
-            System.Net.S3.S3ObjectWebResponse<PutBucketResponse> s3WebResponse =
-                (System.Net.S3.S3ObjectWebResponse<PutBucketResponse>)(await s3WebRequest.GetResponseAsync());
-
+            var s3uri = S3Url.Parse(s3bucketUri);
+            var client = await S3Resource.GetS3ClientAsync(s3uri, s3Options.Value, null);
+            await client.PutBucketAsync(s3uri.Bucket);
         }
 
         protected async Task CopyLocalDataToBucketAsync(string filename, string s3destination)

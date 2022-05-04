@@ -36,7 +36,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public ResourceType ResourceType => ResourceType.Catalog;
 
-        public string Id => string.IsNullOrEmpty(feed.Id)? "feed" : feed.Id.CleanIdentifier();
+        public string Id => string.IsNullOrEmpty(feed.Id) ? "feed" : feed.Id.CleanIdentifier();
 
         public string Filename => Id + ".atom.xml";
 
@@ -53,9 +53,9 @@ namespace Terradue.Stars.Services.Model.Atom
             return feed.Links.Select(l => new AtomResourceLink(l)).ToList();
         }
 
-        public IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
+        public IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider)
         {
-            return feed.Items.Cast<AtomItem>().Select(item => new AtomItemNode(item, new Uri(Uri, item.Id), credentials)).Cast<IResource>().ToList();
+            return feed.Items.Cast<AtomItem>().Select(item => new AtomItemNode(item, new Uri(Uri, item.Id))).Cast<IResource>().ToList();
         }
 
         public async Task<Stream> GetStreamAsync()

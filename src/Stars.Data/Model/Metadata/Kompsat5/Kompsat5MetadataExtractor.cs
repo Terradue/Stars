@@ -53,7 +53,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
+            IStreamResource auxFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -533,7 +533,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(Aux\\.xml)$");
             try
             {
-                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.CreateStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return auxiliary.Root.SatelliteID == "KMPS5";
             }
             catch (Exception e)

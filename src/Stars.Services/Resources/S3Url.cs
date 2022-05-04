@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.Resources
 {
-    public class S3Url
+    public class S3Url : ICloneable
     {
         // DefaultRegion contains a default region for an S3 bucket, when a region
         // cannot be determined, for example when the s3:// schema is used or when
@@ -35,8 +35,6 @@ namespace Terradue.Stars.Services.Resources
         // Pattern used to parse multiple path and host style S3 endpoint URLs.
         private static Regex s3URLPattern = new Regex(@"^(.+\.)?s3[.-](?:(accelerated|dualstack|website)[.-])?([a-z0-9-]+)\.(?:[a-z0-9-\.]+)");
 
-        private Uri uri;
-
         public bool HostStyle { get; private set; }
         public bool PathStyle { get; private set; }
         public bool Accelerated { get; private set; }
@@ -45,33 +43,22 @@ namespace Terradue.Stars.Services.Resources
 
         public string Scheme { get; private set; }
 
-        public string Endpoint => uri.Host;
+        public string Endpoint { get; private set; }
 
-        public string Bucket { get; private set; }
+        public string Bucket { get; set; }
 
-        public string Key { get; private set; }
+        public string Key { get; set; }
 
         public string VersionID { get; private set; }
 
         public string Region { get; private set; }
 
-        public Uri Url => uri;
+        public Uri Uri => new Uri(string.Format("{0}://{1}{2}/{3}", Scheme, Endpoint + "/", Bucket, Key));
 
         public Uri EndpointUrl => new Uri(string.Format("{0}://{1}", Scheme, Endpoint));
 
-        public void Reset()
-        {
-            uri = null;
-            HostStyle = false;
-            PathStyle = false;
-            Accelerated = false;
-            DualStack = false;
-            Website = false;
-        }
-
         public static S3Url Parse(string url)
         {
-
             Uri s3Uri = null;
             if (!Uri.TryCreate(url, UriKind.Absolute, out s3Uri))
             {
@@ -83,8 +70,6 @@ namespace Terradue.Stars.Services.Resources
         public static S3Url ParseUri(Uri uri)
         {
             S3Url s3Url = new S3Url();
-            s3Url.Reset();
-            s3Url.uri = uri;
 
             switch (uri.Scheme)
             {
@@ -107,8 +92,6 @@ namespace Terradue.Stars.Services.Resources
                 }
                 s3Url.Bucket = uri.Host;
 
-
-
                 if (!string.IsNullOrEmpty(uri.LocalPath) && uri.LocalPath != "/")
                 {
                     s3Url.Key = uri.LocalPath.Substring(1);
@@ -118,6 +101,8 @@ namespace Terradue.Stars.Services.Resources
                 return s3Url;
 
             }
+
+            s3Url.Endpoint = uri.Host;
 
             if (string.IsNullOrEmpty(uri.Host))
             {
@@ -213,6 +198,11 @@ namespace Terradue.Stars.Services.Resources
 
         }
 
+        public object Clone()
+        {
+            return S3Url.ParseUri(this.uri);
+        }
+
         public void NormalizeKey()
         {
             this.Key = this.Key.TrimEnd('/');
@@ -248,6 +238,11 @@ namespace Terradue.Stars.Services.Resources
         {
             this.Region = region;
             return this;
+        }
+
+        public override string ToString()
+        {
+            return Uri.ToString();
         }
 
     }

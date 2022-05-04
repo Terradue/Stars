@@ -51,7 +51,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
+            IStreamResource auxFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -411,7 +411,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                Auxiliary metadata = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(metadataAsset).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                Auxiliary metadata = DeserializeAuxiliary(resourceServiceProvider.CreateStreamResourceAsync(metadataAsset).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return metadata.General.Satellite.StartsWith("KOMPSAT-3");
             }
             catch

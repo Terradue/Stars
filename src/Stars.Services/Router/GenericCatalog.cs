@@ -43,7 +43,7 @@ namespace Terradue.Stars.Services.Router
             return new List<IResourceLink>();
         }
 
-        public IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
+        public IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider)
         {
             return routes.ToList();
         }

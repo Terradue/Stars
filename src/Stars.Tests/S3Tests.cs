@@ -40,7 +40,7 @@ namespace Stars.Tests
         [Fact]
         public async Task ImportAssetsS3toS3()
         {
-            await CreateBucketAsync("s3://cpe-acceptance-catalog");
+            await CreateBucketAsync("s3://cpe-acceptance-catalog/test");
             // await CreateBucketAsync("s3://dest");
             await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
             System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
