@@ -22,11 +22,11 @@ using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Geometry.GeoJson;
 
-namespace Terradue.Stars.Data.Model.Metadata.Landsat9
+namespace Terradue.Stars.Data.Model.Metadata.Landsat
 {
 
     [PluginPriority(1000)]
-    public class Landsat9MetadataExtraction : MetadataExtraction
+    public class LandsatMetadataExtraction : MetadataExtraction
     {
 
         public override string Label => "Landsat-8 (NASA) mission product metadata extractor";
@@ -34,7 +34,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         private const string ASCENDING = "Ascending Orbit";
         private const string DESCENDING = "Descending Orbit";
 
-        public Landsat9MetadataExtraction(ILogger<Landsat9MetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
+        public LandsatMetadataExtraction(ILogger<LandsatMetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -340,14 +340,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             try
             {
                 var auxiliary = DeserializeAuxiliary(resourceServiceProvider.CreateStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
-                return auxiliary.IsLandsat9();
+                return auxiliary.IsLandsat8() || auxiliary.IsLandsat9();
             }
             catch (Exception e)
             {
                 return false;
             }
-
-            return true;
         }
 
 
