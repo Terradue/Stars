@@ -4,6 +4,7 @@ using Docker.DotNet.Models;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Network;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -20,7 +21,7 @@ namespace Stars.Tests
         private readonly string _networkName;
         private readonly IDockerNetwork _network;
 
-        public LocalStackFixture(IOptions<LocalStackOptions> options, IOptions<S3Options> s3Options)
+        public LocalStackFixture(IOptions<LocalStackOptions> options, S3ClientFactory s3ClientFactory)
         {
             // _networkName = Guid.NewGuid().ToString();
             // var networkLabel = Guid.NewGuid().ToString();
@@ -43,13 +44,15 @@ namespace Stars.Tests
                 // .WithNetwork(_network)
                 .WithName("localstack");
 
-            if (s3Options != null)
+            if (s3ClientFactory != null)
             {
-                var s3Config = s3Options.Value.GetS3Configuration("s3://localhost");
-                if (s3Config != null)
+                S3Url s3Url = S3Url.Parse("s3://test");
+                var credentials = s3ClientFactory.CreateCredentials(s3Url);
+                if (credentials != null)
                 {
-                    localStackBuilder.WithEnvironment("AWS_ACCESS_KEY_ID", s3Config.AccessKey)
-                        .WithEnvironment("AWS_SECRET_ACCESS_KEY", s3Config.SecretKey);
+                    var creds = credentials.GetCredentials();
+                    localStackBuilder.WithEnvironment("AWS_ACCESS_KEY_ID", creds.AccessKey)
+                        .WithEnvironment("AWS_SECRET_ACCESS_KEY", creds.SecretKey);
                 }
             }
 
@@ -58,7 +61,8 @@ namespace Stars.Tests
         }
         public async Task InitializeAsync()
         {
-            if (options.Value.Enabled){
+            if (options.Value.Enabled)
+            {
                 // await _network.CreateAsync();
                 await _localStackContainer.StartAsync();
             }
@@ -66,7 +70,8 @@ namespace Stars.Tests
 
         public async Task DisposeAsync()
         {
-            if (options.Value.Enabled){
+            if (options.Value.Enabled)
+            {
                 await _localStackContainer.StopAsync();
                 // await _network.DeleteAsync();
             }

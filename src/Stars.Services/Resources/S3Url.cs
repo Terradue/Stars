@@ -53,9 +53,9 @@ namespace Terradue.Stars.Services.Resources
 
         public string Region { get; private set; }
 
-        public Uri Uri => new Uri(string.Format("{0}://{1}{2}/{3}", Scheme, Endpoint + "/", Bucket, Key));
+        public Uri Uri => new Uri(string.Format("{0}://{1}{2}/{3}", Scheme, Endpoint == null ? null : Endpoint  + "/", Bucket, Key));
 
-        public Uri EndpointUrl => new Uri(string.Format("{0}://{1}", Scheme, Endpoint));
+        public Uri EndpointUrl => Endpoint == null ? null : new Uri(string.Format("{0}://{1}", Scheme, Endpoint));
 
         public static S3Url Parse(string url)
         {

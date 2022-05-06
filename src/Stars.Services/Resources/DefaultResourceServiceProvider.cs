@@ -34,6 +34,14 @@ namespace Terradue.Stars.Services.Resources
                 return new LocalFileResource(_serviceProvider.GetService<IFileSystem>(), url.AbsolutePath, ResourceType.Unknown);
             }
 
+            // S3
+            if ( url.Scheme == "s3" )
+            {
+                S3Url s3Url = S3Url.ParseUri(url);
+                S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
+                return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+            }
+
             // HTTP
             var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
             if (clientFactory == null)
@@ -47,8 +55,8 @@ namespace Terradue.Stars.Services.Resources
             if (response.Headers.Any(h => h.Key.StartsWith("x-amz")))
             {
                 S3Url s3Url = S3Url.ParseUri(url);
-                IOptions<S3Options> s3Options = _serviceProvider.GetService<IOptions<S3Options>>();
-                return await S3Resource.CreateAsync(s3Url, s3Options.Value, null);
+                S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
+                return await s3ClientFactory.CreateAndLoadAsync(s3Url);
             }
 
             return new HttpResource(url, client, response.Content.Headers);

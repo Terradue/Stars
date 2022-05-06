@@ -19,17 +19,16 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     {
         private readonly ILogger logger;
         private readonly IResourceServiceProvider resourceServiceProvider;
-        private readonly IOptionsMonitor<S3Options> s3OptionsMonitor;
-
+        private readonly S3ClientFactory s3ClientFactory;
         private readonly Regex regEx = new Regex(@"^s3://(?'hostOrBucket'[^/]*)(/.*)?$");
 
         public S3StreamingCarrier(ILogger<S3StreamingCarrier> logger,
                                   IResourceServiceProvider resourceServiceProvider,
-                                  IOptionsMonitor<S3Options> s3OptionsMonitor)
+                                  S3ClientFactory s3ClientFactory)
         {
             this.logger = logger;
             this.resourceServiceProvider = resourceServiceProvider;
-            this.s3OptionsMonitor = s3OptionsMonitor;
+            this.s3ClientFactory = s3ClientFactory;
             Priority = 75;
 
         }
@@ -53,7 +52,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
             // First create de destination
             S3Delivery s3Delivery = delivery as S3Delivery;
-            S3Resource s3DestinationResource = await S3Resource.CreateAsync(S3Url.ParseUri(s3Delivery.Destination.Uri), s3OptionsMonitor.CurrentValue, null);
+            S3Resource s3DestinationResource = s3ClientFactory.Create(S3Url.ParseUri(s3Delivery.Destination.Uri));
 
             // Get the resource as a stream
             IStreamResource inputStreamResource = await resourceServiceProvider.CreateStreamResourceAsync(s3Delivery.Resource);
@@ -101,7 +100,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     if (s3InputStreamResource.SameBucket(s3outputStreamResource))
                     {
                         logger.LogDebug("Source and destination are in the same bucket. Copying object {0} to {1}", s3InputStreamResource.Uri, s3outputStreamResource.Uri);
-                        await s3InputStreamResource.CopyTo(s3outputStreamResource);
+                        return await s3InputStreamResource.CopyTo(s3outputStreamResource);
                     }
                 }
 
@@ -137,7 +136,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
 
                 // refresh metadata
-                await s3outputStreamResource.CacheMetadata();
+                await s3outputStreamResource.LoadMetadata();
                 return s3outputStreamResource;
             }
             catch (WebException we)

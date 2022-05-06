@@ -30,12 +30,12 @@ namespace Stars.Tests
             services.AddOptions();
             var chain = new CredentialProfileStoreChain();
             services.Configure<LocalStackOptions>(Configuration.GetSection("LocalStack"));
-            services.Configure<S3Options>(Configuration.GetSection("S3"));
             services.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
             services.AddSingleton<S3StreamingCarrier, S3StreamingCarrier>();
-            services.AddStarsManagedServices(Configuration, (provider, config) => config
-                .UseGlobalConfiguration(Configuration)
-            );
+            services.AddStarsManagedServices(builder =>
+                {
+                    builder.UseDefaultConfiguration(Configuration);
+                });
             services.LoadConfiguredStarsPlugin(_ => AssemblyLoadContext.Default);
         }
 

@@ -10,36 +10,32 @@ namespace Stars.Tests
 {
     public abstract class S3BaseTest
     {
-        protected IOptions<S3Options> s3Options;
-
-        protected S3BaseTest(IOptions<S3Options> options)
+        protected readonly S3ClientFactory s3ClientFactory;
+        protected S3BaseTest(S3ClientFactory s3ClientFactory)
         {
-            this.s3Options = options;
+            this.s3ClientFactory = s3ClientFactory;
         }
 
         protected async Task CreateBucketAsync(string s3bucketUri)
         {
             var s3uri = S3Url.Parse(s3bucketUri);
-            var client = await S3Resource.GetS3ClientAsync(s3uri, s3Options.Value, null);
-            await client.PutBucketAsync(s3uri.Bucket);
+            var client = s3ClientFactory.CreateS3Client(s3uri);
+            var response = await client.PutBucketAsync(s3uri.Bucket);
         }
 
         protected async Task CopyLocalDataToBucketAsync(string filename, string s3destination)
         {
-            var client = await S3Resource.GetS3ClientAsync(S3Url.Parse(s3destination), s3Options.Value, null);
+            var s3uri = S3Url.Parse(s3destination);
+            var client = s3ClientFactory.CreateS3Client(s3uri);
 
             PutObjectRequest request = new PutObjectRequest();
-            
-            Task.Run(() =>
-            {
-                using ( var fileStream = File.Open(filename, FileMode.Open, FileAccess.Read)){
-                    fileStream.CopyTo(request.InputStream, 4096);
-                }
-                request.InputStream.Close();
-            });
-            await client.PutObjectAsync(request);
+            request.BucketName = s3uri.Bucket;
+            request.Key = s3uri.Key;
+            request.InputStream = File.Open(filename, FileMode.Open, FileAccess.Read);
+
+            var response = await client.PutObjectAsync(request);
+
+        }
 
     }
-
-}
 }

@@ -22,11 +22,16 @@ namespace Stars.Tests
     {
         private readonly AssetService assetService;
         private readonly IServiceProvider serviceProvider;
+        private readonly IResourceServiceProvider resourceServiceProvider;
 
-        public S3Tests(AssetService assetService, IServiceProvider sp, IOptions<S3Options> options) : base(options)
+        public S3Tests(AssetService assetService,
+                       IServiceProvider sp,
+                       IResourceServiceProvider resourceServiceProvider,
+                       S3ClientFactory s3ClientFactory) : base(s3ClientFactory)
         {
             this.assetService = assetService;
             this.serviceProvider = sp;
+            this.resourceServiceProvider = resourceServiceProvider;
         }
 
         [Fact]
@@ -41,22 +46,26 @@ namespace Stars.Tests
         public async Task ImportAssetsS3toS3()
         {
             await CreateBucketAsync("s3://cpe-acceptance-catalog/test");
-            // await CreateBucketAsync("s3://dest");
             await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
-            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
-            s3WebRequest.Method = "GET";
-            System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
+            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif"));
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://cpe-acceptance-catalog/calls/857/notifications/test502.json");
             StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
-            await assetService.ImportAssets(itemNode, s3ObjectDestination, AssetFilters.SkipRelative);
+            var importReport = await assetService.ImportAssets(itemNode, s3ObjectDestination, AssetFilters.SkipRelative);
+            foreach (var ex in importReport.AssetsExceptions)
+            {
+                throw ex.Value;
+            }
+            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://cpe-acceptance-catalog/calls/857/notifications/500x477.tif"));
+            Assert.Equal(s3Resource.ContentLength, s3dest.ContentLength);
         }
 
         [Fact]
         public async Task ImportUnlimitedStreamabletoS3()
         {
             await CreateBucketAsync("s3://unlimited");
-            S3Resource s3Route = await S3Resource.CreateAsync(S3Url.Parse("s3://unlimited/test.bin"), s3Options.Value, null);
+            S3Url s3Url = S3Url.Parse("s3://unlimited/test.bin");
+            S3Resource s3Route = s3ClientFactory.Create(s3Url);
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
             s3StreamingCarrier.StartSourceCopy(
@@ -64,25 +73,21 @@ namespace Stars.Tests
                                     stream);
             IStreamResource streamable = new TestStreamable(stream, 0);
             var newRoute = await s3StreamingCarrier.StreamToS3Object(streamable, s3Route);
-            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://unlimited/test.bin");
-            s3WebRequest.Method = "GET";
-            System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
-            Assert.Equal(new FileInfo(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")).Length, s3WebResponse.ContentLength);
+            var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Url.Bucket, s3Url.Key);
+            Assert.Equal(new FileInfo(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")).Length, metadata.ContentLength);
         }
 
         [Fact]
         public async Task ImportHttpStreamabletoS3()
         {
             await CreateBucketAsync("s3://http");
-            S3Resource s3Route = await S3Resource.CreateAsync(S3Url.Parse("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"), s3Options.Value, null);
+            S3Resource s3Route = s3ClientFactory.Create(S3Url.Parse("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
-            var httpRoute = WebRoute.Create(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
+            var httpRoute = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
             var newRoute = await s3StreamingCarrier.StreamToS3Object(httpRoute, s3Route);
-            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg");
-            s3WebRequest.Method = "GET";
-            System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
-            Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(s3WebResponse.ContentLength));
+            var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Route.S3Uri.Bucket, s3Route.S3Uri.Key);
+            Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(metadata.ContentLength));
         }
     }
 }

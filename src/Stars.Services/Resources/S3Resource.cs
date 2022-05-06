@@ -10,6 +10,7 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface;
 
@@ -19,99 +20,24 @@ namespace Terradue.Stars.Services.Resources
     {
         private S3Url s3Url;
 
-        private S3Resource(S3Url url)
+        public S3Resource(S3Url url, IAmazonS3 client)
         {
             this.s3Url = url;
+            Client = client;
         }
 
-        public static async Task<S3Resource> CreateAsync(S3Url url,
-                                               S3Options s3Options,
-                                               IIdentityProvider identityProvider)
-        {
-            S3Resource s3Resource = new S3Resource(url);
-            s3Resource.Client = await GetS3ClientAsync(url, s3Options, identityProvider);
-            
-            return s3Resource;
-        }
-
-        public static async Task<AmazonS3Client> GetS3ClientAsync(S3Url s3Url, S3Options s3Options, IIdentityProvider identityProvider = null)
-        {
-            // Find S3 config if any
-            S3Configuration s3Config = s3Options.GetS3Configuration(s3Url.Uri.ToString());
-            Uri endpoint = s3Config?.EndpointUrl;
-            // no endpoint, use default from url
-            if (endpoint == null)
-            {
-                endpoint = s3Url.EndpointUrl;
-            }
-            if (endpoint == null)
-            {
-                throw new InvalidOperationException($"No S3 endpoint found for URL {s3Url.Uri}");
-            }
-
-            string region = s3Config?.Region;
-            if (string.IsNullOrEmpty(region))
-            {
-                region = s3Url.Region;
-            }
-
-            AWSCredentials s3Creds = await GetCredentialsAsync(endpoint.ToString(), s3Config, identityProvider);
-
-            AmazonS3Config awsS3Config = new AmazonS3Config();
-            awsS3Config.ServiceURL = endpoint.ToString();
-            awsS3Config.AuthenticationRegion = region;
-            awsS3Config.ForcePathStyle = true;
-            return new Amazon.S3.AmazonS3Client(s3Creds, awsS3Config);
-        }
-
-        private static async Task<AWSCredentials> GetCredentialsAsync(string endpoint, S3Configuration s3Config, IIdentityProvider identityProvider = null)
-        {
-            // If there is a config for the S3 provider, we only use that one
-            if (s3Config != null && !string.IsNullOrEmpty(s3Config.AccessKey) && !string.IsNullOrEmpty(s3Config.SecretKey))
-            {
-                return new BasicAWSCredentials(s3Config.AccessKey, s3Config.SecretKey);
-            }
-            else
-            {
-                // Add the STS credentials provider from user context
-                if (identityProvider != null)
-                {
-                    return await GetWebIdentityCredentialsAsync(endpoint, identityProvider.GetJwtSecurityToken(), null);
-                }
-            }
-            return new AnonymousAWSCredentials();
-        }
-
-        private static async Task<AWSCredentials> GetWebIdentityCredentialsAsync(string endpoint, JwtSecurityToken jwt, string policy)
-        {
-            AmazonSecurityTokenServiceConfig amazonSecurityTokenServiceConfig = new AmazonSecurityTokenServiceConfig();
-            amazonSecurityTokenServiceConfig.ServiceURL = endpoint;
-            var stsClient = new AmazonSecurityTokenServiceClient(new AnonymousAWSCredentials(), amazonSecurityTokenServiceConfig);
-
-            var assumeRoleResult = await stsClient.AssumeRoleWithWebIdentityAsync(new AssumeRoleWithWebIdentityRequest
-            {
-                WebIdentityToken = jwt.RawData,
-                RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
-                RoleSessionName = "MySession",
-                DurationSeconds = 3600,
-                Policy = policy
-            });
-
-            return assumeRoleResult.Credentials;
-        }
-
-        internal async Task CacheMetadata()
+        internal async Task LoadMetadata()
         {
             ObjectMetadata = await Client.GetObjectMetadataAsync(s3Url.Bucket, s3Url.Key);
         }
 
-        public ContentType ContentType => new ContentType(ObjectMetadata.Headers.ContentType);
+        public ContentType ContentType => new ContentType(ObjectMetadata?.Headers.ContentType);
 
         public ResourceType ResourceType => ResourceType.Unknown;
 
-        public ulong ContentLength => Convert.ToUInt64(ObjectMetadata.Headers.ContentLength);
+        public ulong ContentLength => ObjectMetadata == null ? 0 : Convert.ToUInt64(ObjectMetadata.Headers.ContentLength);
 
-        public ContentDisposition ContentDisposition => new ContentDisposition(ObjectMetadata.Headers.ContentDisposition.ToString());
+        public ContentDisposition ContentDisposition => new ContentDisposition(ObjectMetadata?.Headers.ContentDisposition.ToString());
 
         public S3Url S3Uri => s3Url;
 
@@ -119,8 +45,8 @@ namespace Terradue.Stars.Services.Resources
 
         public bool CanBeRanged => true;
 
-        public AmazonS3Client Client { get; private set; }
-        
+        public IAmazonS3 Client { get; private set; }
+
         public GetObjectMetadataResponse ObjectMetadata { get; private set; }
 
         public async Task<Stream> GetStreamAsync()
@@ -144,13 +70,14 @@ namespace Terradue.Stars.Services.Resources
             return S3Uri.Bucket == s3outputStreamResource.S3Uri.Bucket;
         }
 
-        internal async Task CopyTo(S3Resource s3outputStreamResource)
+        internal async Task<S3Resource> CopyTo(S3Resource s3outputStreamResource)
         {
-            if ( S3Uri.Endpoint != s3outputStreamResource.S3Uri.Endpoint)
+            if (S3Uri.Endpoint != s3outputStreamResource.S3Uri.Endpoint)
             {
                 throw new InvalidOperationException("Cannot copy between different endpoints");
             }
             await Client.CopyObjectAsync(s3Url.Bucket, s3Url.Key, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key);
+            return s3outputStreamResource;
         }
 
         public async Task Delete()

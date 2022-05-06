@@ -7,6 +7,28 @@
         "SecretKey": "localsecret",
         "ServiceURL": "http://localhost:4566"
     },
+    "S3": {
+        "Policies": {
+            "PersonalStoragePolicyId": "{0}.personalStorageReadWrite"
+        },
+        "Services": {
+            "localstack": {
+                "UrlPattern": "s3:\/\/.*",
+                "Region": "eu-central-1",
+                "UseHttp": true,
+                "AccessKey": "localkey",
+                "SecretKey": "localsecret",
+                "ServiceURL": "http://localhost:4566",
+                "ForcePathStyle": true
+            },
+            "geohazards-tep": {
+                "UrlPattern": "https:\/\/.*s3.geohazards-tep.eu.*",
+                "Region": "fr-par",
+                "AuthenticationRegion": "fr-par",
+                "UseHttp": false
+            }
+        }
+    },
     "LocalStack": {
         "Enabled": true
     },

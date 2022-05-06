@@ -32,17 +32,15 @@ namespace Terradue.Stars.Services
     public static class StarsServiceCollectionExtensions
     {
 
-        public static IServiceCollection AddStarsManagedServices(this IServiceCollection services, IConfiguration config, Action<IServiceProvider, StarsConfiguration> configure)
+        public static IServiceCollection AddStarsManagedServices(this IServiceCollection services, Action<IStarsBuilder> configure)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             if (configure == null) throw new ArgumentNullException(nameof(configure));
 
-            // Add Credentials from config
-            services.AddOptions<CredentialsOptions>().Configure<StarsConfiguration>((co, sc) => co.Load(sc.CredentialsOptions));
             // Add default credentials manager
             services.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
-            services.Configure<S3Options>(config.GetSection("S3"));
 
+            services.AddSingleton<S3ClientFactory>();
             services.AddHttpClient();
             services.AddHttpClient<HttpClient>("stars").ConfigurePrimaryHttpMessageHandler(sp =>
             {
@@ -58,8 +56,6 @@ namespace Terradue.Stars.Services
             //  ## Add plugins
             //  1. Add predefined plugins
             LoadBasePlugins(services);
-            // Add Plugins from config
-            services.AddOptions<PluginsOptions>().Configure<StarsConfiguration>((co, sc) => co.Load(sc.PluginsOptions));
 
             // 2. Add the Managers
             services.AddSingleton<RoutersManager, RoutersManager>();
@@ -69,25 +65,9 @@ namespace Terradue.Stars.Services
             services.AddSingleton<TranslatorManager, TranslatorManager>();
             services.AddSingleton<ProcessingManager, ProcessingManager>();
 
-            // Finally, let's configure
-            services.AddSingleton<StarsConfiguration>(serviceProvider =>
-            {
-                var configurationInstance = StarsConfiguration.Configuration;
-
-                // init defaults for log provider and job activator
-                // they may be overwritten by the configuration callback later
-
-                // var scopeFactory = serviceProvider.GetService<IServiceScopeFactory>();
-                // if (scopeFactory != null)
-                // {
-                //     configurationInstance.UseActivator(new AspNetCoreJobActivator(scopeFactory));
-                // }
-
-                // do configuration inside callback
-                configure(serviceProvider, configurationInstance);
-
-                return configurationInstance;
-            });
+            // 3. Let's Configure
+            var builder = new StarsBuilder(services);
+            configure(builder);
 
             return services;
         }
