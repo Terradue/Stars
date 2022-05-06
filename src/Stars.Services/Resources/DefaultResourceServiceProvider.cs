@@ -35,7 +35,7 @@ namespace Terradue.Stars.Services.Resources
             }
 
             // S3
-            if ( url.Scheme == "s3" )
+            if (url.Scheme == "s3")
             {
                 S3Url s3Url = S3Url.ParseUri(url);
                 S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
@@ -54,9 +54,13 @@ namespace Terradue.Stars.Services.Resources
             // S3 resource case
             if (response.Headers.Any(h => h.Key.StartsWith("x-amz")))
             {
-                S3Url s3Url = S3Url.ParseUri(url);
-                S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
-                return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                try
+                {
+                    S3Url s3Url = S3Url.ParseUri(url);
+                    S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
+                    return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                }
+                catch { }
             }
 
             return new HttpResource(url, client, response.Content.Headers);
@@ -84,7 +88,7 @@ namespace Terradue.Stars.Services.Resources
         public async Task Delete(IResource resource)
         {
             IStreamResource streamResource = await CreateStreamResourceAsync(resource);
-            if ( streamResource is IDeletableResource)
+            if (streamResource is IDeletableResource)
             {
                 await ((IDeletableResource)streamResource).Delete();
                 return;
