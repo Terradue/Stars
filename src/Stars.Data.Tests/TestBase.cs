@@ -49,6 +49,7 @@ namespace Terradue.Data.Tests
             Collection = new ServiceCollection();
             Collection.AddLogging();
             Collection.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
+            Collection.AddSingleton<IFileSystem, FileSystem>();
             Collection.AddHttpClient();
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file

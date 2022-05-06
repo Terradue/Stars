@@ -65,5 +65,7 @@ namespace Terradue.Stars.Services.Processing
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
@@ -21,7 +22,9 @@ namespace Terradue.Stars.Services.Router
         {
             this.fileInfo = fileSystem.FileInfo.FromFileName(filePath);            
             resourceType = ResourceType;
-            roles = new List<string>(roles);
+            this.roles = new List<string>();
+            if ( roles != null )
+                this.roles.AddRange(roles);
         }
 
         public Uri Uri => new Uri("file://" + fileInfo.FullName);
@@ -43,6 +46,8 @@ namespace Terradue.Stars.Services.Router
         public IReadOnlyList<string> Roles => roles;
 
         public IReadOnlyDictionary<string, object> Properties => new Dictionary<string, object>();
+
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
 
         public Task Delete()
         {

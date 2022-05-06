@@ -31,7 +31,7 @@ namespace Terradue.Stars.Services.Resources
             // Local file
             if (url.IsFile)
             {
-                return new LocalFileResource(_serviceProvider.GetService<IFileSystem>(), url.AbsolutePath, ResourceType.Unknown);
+                return new LocalFileResource(_serviceProvider.GetRequiredService<IFileSystem>(), url.AbsolutePath, ResourceType.Unknown);
             }
 
             // S3

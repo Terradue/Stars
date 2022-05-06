@@ -55,6 +55,8 @@ namespace Terradue.Stars.Services.Supplier
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
+        public IEnumerable<IAsset> Alternates => new IAsset[] { };
+
         internal void MergeProperties(IReadOnlyDictionary<string, object> props)
         {
             foreach (var key in props.Keys)

@@ -87,6 +87,19 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
+        public IEnumerable<IAsset> Alternates
+        {
+            get
+            {
+                var alternateAssets = asset.AlternateExtension().AlternateAssets;
+                if (alternateAssets != null)
+                    return alternateAssets.Values.Select(a => new StacAlternateAssetAsset(a, this));
+                return Enumerable.Empty<IAsset>();
+            }
+        }
+
+        public IAssetsContainer Parent => parent;
+
         public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 
     }

@@ -41,6 +41,8 @@ namespace Terradue.Stars.Data.Routers
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
+
         public IStreamResource GetStreamable()
         {
             return this;

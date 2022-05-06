@@ -71,5 +71,6 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IReadOnlyDictionary<string, object> Properties => link.AttributeExtensions.ToDictionary(k => k.Key.ToString(), k => k.Value as object);
 
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
     }
 }

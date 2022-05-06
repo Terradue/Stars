@@ -49,7 +49,7 @@
     <PackageReference Include="HttpClient.Caching" Version="1.2.*"/>
   </ItemGroup>
   <ItemGroup>
-    <!-- <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" /> -->
+    <ProjectReference Include="../../../../sugar/DotNetStac/src/DotNetStac/DotNetStac.csproj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../Stars.Interface/Terradue.Stars.Interface.csproj">

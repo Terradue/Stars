@@ -51,6 +51,8 @@ namespace Terradue.Data.Tests
 
         public bool CanBeRanged => false;
 
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
+
         public Task<Stream> GetStreamAsync()
         {
             return Task.FromResult<Stream>(fileInfo.OpenRead());

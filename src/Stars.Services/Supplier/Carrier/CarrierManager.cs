@@ -47,37 +47,32 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     string relPath = null;
                     if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
                     {
-                        var length = asset.Value.ContentLength;
-                        await asset.Value.CacheHeaders();
-                        length = asset.Value.ContentLength;
-                        string relPath = null;
-                        if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
+                        try
                         {
-                            var relUri = assetsContainer.Uri.MakeRelativeUri(asset.Value.Uri);
-                            // Use the relative path only if a sub-directory
-                            if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
-                                relPath = Path.GetDirectoryName(relUri.ToString());
+                            var length = asset.Value.ContentLength;
+                            length = asset.Value.ContentLength;
+                            if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
+                            {
+                                var relUri = assetsContainer.Uri.MakeRelativeUri(asset.Value.Uri);
+                                // Use the relative path only if a sub-directory
+                                if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
+                                    relPath = Path.GetDirectoryName(relUri.ToString());
+                            }
+                            // If the asset contains a content disposition, use it as the filename
+                            if (asset.Value.ContentDisposition != null && !string.IsNullOrEmpty(asset.Value.ContentDisposition.FileName))
+                            {
+                                if (asset.Value.ContentDisposition.FileName.Contains("/"))
+                                    relPath = "";
+                            }
+                            assetsDeliveryQuotations.AddRange(GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath)));
                         }
-                        // If the asset contains a content disposition, use it as the filename
-                        if (asset.Value.ContentDisposition != null && !string.IsNullOrEmpty(asset.Value.ContentDisposition.FileName))
+                        catch (WebException we)
                         {
-                            if (asset.Value.ContentDisposition.FileName.Contains("/"))
-                                relPath = "";
+                            logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, we.Message);
+                            if (we.InnerException != null)
+                                logger.LogWarning(we.InnerException.Message);
+                            assetsExceptions.Add(asset.Key, we);
                         }
-                        assetsDeliveryQuotations.AddRange(GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath)));
-                    }
-                    catch (WebException we)
-                    {
-                        logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, we.Message);
-                        if (we.InnerException != null)
-                            logger.LogWarning(we.InnerException.Message);
-                        assetsExceptions.Add(asset.Key, we);
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
-                        logger.LogDebug(e.StackTrace);
-                        assetsExceptions.Add(asset.Key, e);
                     }
                 }
                 assetsQuotes.Add(asset.Key, assetsDeliveryQuotations.OrderBy(d => d.Cost));

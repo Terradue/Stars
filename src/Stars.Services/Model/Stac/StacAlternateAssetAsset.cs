@@ -15,15 +15,12 @@ namespace Terradue.Stars.Services.Model.Stac
     {
         private readonly StacAssetAsset parentAsset;
         private readonly AlternateAssetObject alternateAsset;
-        private readonly Task<IStreamable> _streamable;
-        private readonly ICredentials credentials;
         private readonly Uri uri;
 
-        public StacAlternateAssetAsset(AlternateAssetObject alternateAsset, StacAssetAsset parentAsset, ICredentials credentials = null)
+        public StacAlternateAssetAsset(AlternateAssetObject alternateAsset, StacAssetAsset parentAsset)
         {
             this.alternateAsset = alternateAsset;
             this.parentAsset = parentAsset;
-            this.credentials = credentials;
             if (alternateAsset.Uri.IsAbsoluteUri)
                 this.uri = alternateAsset.Uri;
             else
@@ -37,12 +34,6 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
                 else this.uri = alternateAsset.Uri;
             }
-            if (alternateAsset is IStreamable)
-                _streamable = Task.FromResult(alternateAsset as IStreamable);
-            else
-            {
-                _streamable = WebRoute.Create(uri, credentials: credentials);
-            }
         }
 
         public Uri Uri => uri;
@@ -53,8 +44,6 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                var cl = _streamable?.ContentLength;
-                if (cl.HasValue) return cl.Value;
                 return parentAsset.ContentLength;
             }
         }
@@ -82,15 +71,5 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
 
-        public async Task CacheHeaders(bool force = false)
-        {
-            if (_streamable is WebRoute)
-                await (_streamable as WebRoute).CacheHeadersAsync(force);
-        }
-
-        public IStreamable GetStreamable()
-        {
-            return _streamable;
-        }
     }
 }
