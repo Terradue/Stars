@@ -15,12 +15,17 @@ namespace Terradue.Stars.Services.Processing
     {
         private readonly IAsset asset;
         private readonly ILogger logger;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly IFileSystem fileSystem;
 
-        public GzipArchive(IAsset asset, ILogger logger, IFileSystem fileSystem)
+        public GzipArchive(IAsset asset,
+                           ILogger logger,
+                           IResourceServiceProvider resourceServiceProvider,
+                           IFileSystem fileSystem)
         {
             this.asset = asset;
             this.logger = logger;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.fileSystem = fileSystem;
         }
 
@@ -30,23 +35,25 @@ namespace Terradue.Stars.Services.Processing
         {
             const int chunk = 4096;
             BlockingStream blockingStream = new BlockingStream(1000);
-            asset.GetStreamable().GetStreamAsync()
-                .ContinueWith(task =>
-                {
-                    var stream = new ICSharpCode.SharpZipLib.GZip.GZipInputStream(task.GetAwaiter().GetResult());
-                    // blockingStream.SetLength(stream.Length);
-                    Task.Factory.StartNew(() =>
+            resourceServiceProvider.CreateStreamResourceAsync(asset)
+                .ContinueWith(task => task.Result.GetStreamAsync()
+                    .ContinueWith(task =>
                     {
-                        int read;
-                        var buffer = new byte[chunk];
-                        do
+                        var stream = new ICSharpCode.SharpZipLib.GZip.GZipInputStream(task.GetAwaiter().GetResult());
+                        // blockingStream.SetLength(stream.Length);
+                        Task.Factory.StartNew(() =>
                         {
-                            read = stream.Read(buffer, 0, chunk);
-                            blockingStream.Write(buffer, 0, read);
-                        } while (read == chunk);
-                        blockingStream.Close();
-                    });
-                });
+                            int read;
+                            var buffer = new byte[chunk];
+                            do
+                            {
+                                read = stream.Read(buffer, 0, chunk);
+                                blockingStream.Write(buffer, 0, read);
+                            } while (read == chunk);
+                            blockingStream.Close();
+                        });
+                    })
+                );
             return blockingStream;
         }
 
@@ -59,7 +66,7 @@ namespace Terradue.Stars.Services.Processing
 
             try
             {
-                var newArchive = await Archive.Read(gzipEntryAsset, logger, fileSystem);
+                var newArchive = await Archive.Read(gzipEntryAsset, logger, resourceServiceProvider, fileSystem);
                 return await newArchive.ExtractToDestination(destination, carrierManager);
             }
             catch { }

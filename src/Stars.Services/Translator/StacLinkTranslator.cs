@@ -15,6 +15,7 @@ namespace Terradue.Stars.Services.Translator
     public class StacLinkTranslator : ITranslator
     {
         private ILogger logger;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ICredentials credentials;
 
         public int Priority { get; set; }
@@ -22,9 +23,12 @@ namespace Terradue.Stars.Services.Translator
 
         public string Label => "STAC alternate link finder";
 
-        public StacLinkTranslator(ILogger<StacLinkTranslator> logger, ICredentials credentials)
+        public StacLinkTranslator(ILogger<StacLinkTranslator> logger,
+                                  IResourceServiceProvider resourceServiceProvider,
+                                  ICredentials credentials)
         {
             this.logger = logger;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.credentials = credentials;
         }
 
@@ -39,10 +43,10 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacRoute = WebRoute.Create(stacLink.Uri, credentials: credentials);
+                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink.Uri);
                             var stacCatalog = StacConvert.Deserialize<IStacCatalog>(await stacRoute.ReadAsString());
                             if (stacCatalog != null)
-                                return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri, credentials: credentials) as IResource);
+                                return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri) as IResource);
                         }
                         catch { }
                     }
@@ -60,10 +64,10 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacRoute = WebRoute.Create(stacLink.Uri, credentials: credentials);
+                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink.Uri);
                             var stacItem = StacConvert.Deserialize<StacItem>(await stacRoute.ReadAsString());
                             if (stacItem != null)
-                                return (T)(new StacItemNode(stacItem, stacRoute.Uri, credentials: credentials) as IResource);
+                                return (T)(new StacItemNode(stacItem, stacRoute.Uri) as IResource);
                         }
                         catch { }
                     }

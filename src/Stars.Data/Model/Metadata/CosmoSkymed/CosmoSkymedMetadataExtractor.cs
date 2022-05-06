@@ -36,7 +36,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
  
         public override string Label => "COSMO SkyMed (ASI) mission product metadata extractor";
 
-        public CosmoSkymedMetadataExtractor(ILogger<CosmoSkymedMetadataExtractor> logger) : base(logger)
+        public CosmoSkymedMetadataExtractor(ILogger<CosmoSkymedMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -147,7 +147,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            using (var stream = await metadataAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset))
             {
                 XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
                 var reader = XmlReader.Create(stream, settings);

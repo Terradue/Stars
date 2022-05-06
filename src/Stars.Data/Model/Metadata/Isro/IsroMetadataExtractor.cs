@@ -38,7 +38,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
 
         public override string Label => "ResourceSat/CartoSat (ISRO) constellation product metadata extractor";
 
-        public IsroMetadataExtractor(ILogger<IsroMetadataExtractor> logger) : base(logger)
+        public IsroMetadataExtractor(ILogger<IsroMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                JavaProperties metadata = ReadMetadata(metadataAsset.GetStreamable()).GetAwaiter().GetResult();
+                JavaProperties metadata = ReadMetadata(resourceServiceProvider.CreateStreamResourceAsync(metadataAsset).Result).GetAwaiter().GetResult();
                 return (metadata.AllKeys.Contains("SatID") && satelitteIds.Contains(metadata["SatID"]));
             }
             catch
@@ -67,7 +67,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             }
             logger.LogDebug(String.Format("Metadata file is {0}", metadataAsset.Uri));
             logger.LogDebug("Reading metadata");
-            JavaProperties metadata = await ReadMetadata(metadataAsset.GetStreamable());
+            JavaProperties metadata = await ReadMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadataAsset));
             logger.LogDebug("Metadata deserialized. Starting metadata generation");
 
             StacItem stacItem = new StacItem(string.Format("{0}_{1}_{2}_{3}",
@@ -448,7 +448,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         /// <summary>Deserialize JavaProperties from xml to class</summary>
         /// <param name="metadataFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<JavaProperties> ReadMetadata(IStreamable metadataFile)
+        public static async Task<JavaProperties> ReadMetadata(IStreamResource metadataFile)
         {
             var metadata = new JavaProperties();
             metadata.Load(await metadataFile.GetStreamAsync());

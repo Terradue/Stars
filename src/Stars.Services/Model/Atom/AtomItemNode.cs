@@ -21,17 +21,15 @@ using Itenso.TimePeriod;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
-    public class AtomItemNode : IItem, IAssetsContainer, IStreamable
+    public class AtomItemNode : IItem, IAssetsContainer, IStreamResource
     {
         private AtomItem item;
         private readonly Uri sourceUri;
-        private readonly ICredentials credentials;
 
-        public AtomItemNode(AtomItem item, Uri sourceUri, System.Net.ICredentials credentials = null)
+        public AtomItemNode(AtomItem item, Uri sourceUri)
         {
             this.item = item;
             this.sourceUri = sourceUri;
-            this.credentials = credentials;
         }
 
         public AtomItem AtomItem => item;
@@ -102,10 +100,7 @@ namespace Terradue.Stars.Services.Model.Atom
                     string key = link.RelationshipType;
                     if ( keysCount[key] > 1 )
                         key += "-" + keysIndex[key]++;
-                    foreach (KeyValuePair<string, IAsset> atomLinkAsset in AtomLinkAsset.ResolveEnclosure(link, item, credentials, key))
-                    {
-                        assets.Add(atomLinkAsset.Key, atomLinkAsset.Value);
-                    }
+                    assets.Add(key, new AtomLinkAsset(link, this.AtomItem));
                 }
                 return assets;
             }

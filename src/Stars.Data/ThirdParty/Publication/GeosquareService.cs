@@ -35,6 +35,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         private readonly TitilerService titilerService;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly ICredentials credentials;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ILogger<GeosquareService> logger;
 
         public GeosquareConfiguration GeosquareConfiguration => geosquareConfiguration;
@@ -45,6 +46,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                                   TitilerService titilerService,
                                   IHttpClientFactory httpClientFactory,
                                   ICredentials credentials,
+                                  IResourceServiceProvider resourceServiceProvider,
                                   ILogger<GeosquareService> logger)
         {
             this.routingService = routerService;
@@ -53,6 +55,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             this.titilerService = titilerService;
             this.httpClientFactory = httpClientFactory;
             this.credentials = credentials;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.logger = logger;
         }
 
@@ -61,7 +64,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (geosquareModel.CreateIndex) await CreateIndexIfNotExist(geosquareModel.Index);
             InitRoutingTask();
             var guid = CalculateHash(geosquareModel.Url.ToString());
-            IResource route = (IResource)WebRoute.Create(new Uri(geosquareModel.Url), credentials: credentials);
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri(geosquareModel.Url));
 
             GeosquarePublicationState state = new GeosquarePublicationState(geosquareModel);
             state.Hash = guid;
@@ -196,7 +199,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             {
                 var template = geosquareConfiguration.GetOpenSearchForUri(link.Uri);
                 if (string.IsNullOrEmpty(template)) return null;
-                WebRoute webRoute = WebRoute.Create(link.Uri, credentials: credentials);
+                var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(link.Uri);
                 IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync());
                 var osUrl = template.ReplaceMacro<IStacObject>("stacObject", linkedStacObject);
                 osUrl = osUrl.ReplaceMacro<string>("index", catalogPublicationState.GeosquarePublicationModel.Index);

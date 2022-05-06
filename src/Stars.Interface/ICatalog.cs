@@ -17,6 +17,6 @@ namespace Terradue.Stars.Interface
 
         IReadOnlyList<IResourceLink> GetLinks();
 
-        IReadOnlyList<IResource> GetRoutes(ICredentials credentials);
+        IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider);
     }
 }

@@ -37,7 +37,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         private const string ASCENDING = "Ascending Orbit";
         private const string DESCENDING = "Descending Orbit";
 
-        public Kompsat3MetadataExtraction(ILogger<Kompsat3MetadataExtraction> logger) : base(logger)
+        public Kompsat3MetadataExtraction(ILogger<Kompsat3MetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -51,7 +51,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamable auxFileStreamable = auxFile.GetStreamable();
+            IStreamResource auxFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -380,7 +380,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         /// <summary>Deserialize Auxiliary from xml to class</summary>
         /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamable auxiliaryFile)
+        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamResource auxiliaryFile)
         {
             XmlSerializer ser = new XmlSerializer(typeof(Auxiliary));
             Auxiliary auxiliary;
@@ -411,7 +411,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                Auxiliary metadata = DeserializeAuxiliary(metadataAsset.GetStreamable()).GetAwaiter().GetResult();
+                Auxiliary metadata = DeserializeAuxiliary(resourceServiceProvider.CreateStreamResourceAsync(metadataAsset).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return metadata.General.Satellite.StartsWith("KOMPSAT-3");
             }
             catch

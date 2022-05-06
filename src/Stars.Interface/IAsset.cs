@@ -14,9 +14,5 @@ namespace Terradue.Stars.Interface
         
         IEnumerable<IAsset> Alternates { get; }
 
-        Task CacheHeaders(bool force = false);
-        
-        IStreamable GetStreamable();
-
     }
 }

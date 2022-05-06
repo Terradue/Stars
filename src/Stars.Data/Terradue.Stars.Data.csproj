@@ -20,7 +20,6 @@
     <Company>Terradue</Company>
     <LicenseUrl>https://creativecommons.org/licenses/by-nc-sa/4.0/</LicenseUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -37,6 +36,7 @@
     <PackageReference Include="Terradue.GeoJson" Version="1.12.1"/>
     <PackageReference Include="MaxRev.Gdal.Core" Version="3.3.3.110"/>
     <PackageReference Include="MaxRev.Gdal.LinuxRuntime.Minimal" Version="3.3.3.120"/>
+    <PackageReference Include="AWSSDK.Core" Version="3.5.*"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj">

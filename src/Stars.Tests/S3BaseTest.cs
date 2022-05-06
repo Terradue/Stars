@@ -3,38 +3,39 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
+using Microsoft.Extensions.Options;
+using Terradue.Stars.Services.Resources;
 
 namespace Stars.Tests
 {
     public abstract class S3BaseTest
     {
+        protected readonly S3ClientFactory s3ClientFactory;
+        protected S3BaseTest(S3ClientFactory s3ClientFactory)
+        {
+            this.s3ClientFactory = s3ClientFactory;
+        }
 
         protected async Task CreateBucketAsync(string s3bucketUri)
         {
-            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create(s3bucketUri);
-            s3WebRequest.Method = "MKB";
-            System.Net.S3.S3ObjectWebResponse<PutBucketResponse> s3WebResponse =
-                (System.Net.S3.S3ObjectWebResponse<PutBucketResponse>)(await s3WebRequest.GetResponseAsync());
-
+            var s3uri = S3Url.Parse(s3bucketUri);
+            var client = s3ClientFactory.CreateS3Client(s3uri);
+            var response = await client.PutBucketAsync(s3uri.Bucket);
         }
 
         protected async Task CopyLocalDataToBucketAsync(string filename, string s3destination)
         {
-            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create(s3destination);
-            s3WebRequest.Method = "POST";
-            s3WebRequest.ContentType = "application/octet-stream";
+            var s3uri = S3Url.Parse(s3destination);
+            var client = s3ClientFactory.CreateS3Client(s3uri);
 
-            Stream uploadStream = await s3WebRequest.GetRequestStreamAsync();
-            Task.Run(() =>
-            {
-                using ( var fileStream = File.Open(filename, FileMode.Open, FileAccess.Read)){
-                    fileStream.CopyTo(uploadStream, 4096);
-                }
-                uploadStream.Close();
-            });
-            System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
+            PutObjectRequest request = new PutObjectRequest();
+            request.BucketName = s3uri.Bucket;
+            request.Key = s3uri.Key;
+            request.InputStream = File.Open(filename, FileMode.Open, FileAccess.Read);
+
+            var response = await client.PutObjectAsync(request);
+
+        }
 
     }
-
-}
 }

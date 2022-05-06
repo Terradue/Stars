@@ -10,7 +10,7 @@ namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacCatalogNode : StacNode, ICatalog
     {
-        public StacCatalogNode(IStacCatalog stacCatalog, Uri uri, ICredentials credentials = null) : base(stacCatalog, uri, credentials)
+        public StacCatalogNode(IStacCatalog stacCatalog, Uri uri) : base(stacCatalog, uri)
         {
         }
 
@@ -27,11 +27,11 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
+        public override IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider)
         {
-            StacRouter stacRouter = new StacRouter(credentials);
-            return StacCatalog.GetChildren(this.Uri, stacRouter).Select(child => new StacCatalogNode(child.Value, child.Key)).Cast<IResource>()
-                    .Concat(StacCatalog.GetItems(this.Uri, stacRouter).Select(item => new StacItemNode(item.Value, item.Key)))
+            StacRouter stacRouter = new StacRouter(resourceServiceProvider);
+            return StacCatalog.GetChildren(this.Uri, resourceServiceProvider).Select(child => new StacCatalogNode(child.Value, child.Key)).Cast<IResource>()
+                    .Concat(StacCatalog.GetItems(this.Uri, resourceServiceProvider).Select(item => new StacItemNode(item.Value, item.Key)))
                     .ToList();
         }
     }

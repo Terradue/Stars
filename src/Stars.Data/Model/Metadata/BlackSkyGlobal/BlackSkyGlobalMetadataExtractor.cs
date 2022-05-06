@@ -36,7 +36,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
  
         public override string Label => "COSMO SkyMed (ASI) mission product metadata extractor";
 
-        public BlackSkyGlobalMetadataExtractor(ILogger<BlackSkyGlobalMetadataExtractor> logger) : base(logger)
+        public BlackSkyGlobalMetadataExtractor(ILogger<BlackSkyGlobalMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -91,7 +91,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            using (var stream = await metadataAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {

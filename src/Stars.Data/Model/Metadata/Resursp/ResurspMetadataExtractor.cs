@@ -27,7 +27,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
         private readonly string GDALFILE_REGEX = @".*\.(shp)$";
 
-        public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger) : base(logger) {
+        public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) {
         }
 
         public override bool CanProcess(IResource route, IDestination destination) {
@@ -40,14 +40,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
             // deserialize product medatadata
             SPP_ROOT productMetadata =
-                DeserializeProductMetadata(metadataFile.GetStreamable()).GetAwaiter().GetResult();
+                DeserializeProductMetadata(resourceServiceProvider.CreateStreamResourceAsync(metadataFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
             if (productMetadata == null) {
                 return false;
             }
             return true;
         }
 
-        public static async Task<SPP_ROOT> DeserializeProductMetadata(IStreamable productMetadataFile) {
+        public static async Task<SPP_ROOT> DeserializeProductMetadata(IStreamResource productMetadataFile) {
             XmlSerializer ser = new XmlSerializer(typeof(SPP_ROOT));
             SPP_ROOT auxiliary;
             using (var stream = new StreamReader(productMetadataFile.Uri.AbsolutePath, Encoding.UTF8, true)) {
@@ -68,7 +68,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             }
 
             // deserialize product medatadata
-            SPP_ROOT productMetadata = await DeserializeProductMetadata(metadatafile.GetStreamable());
+            SPP_ROOT productMetadata = await DeserializeProductMetadata(await resourceServiceProvider.CreateStreamResourceAsync(metadatafile));
 
             logger.LogDebug("Retrieving the shapefile in the product package");
             IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");

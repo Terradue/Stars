@@ -89,7 +89,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             // var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
             // Level1C_Tile mtdTile = null;
             // if (mtdtlAsset != null)
-            //     mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await mtdtlAsset.GetStreamable().GetStreamAsync());
+            //     mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset));
             // stacAsset.ProjectionExtension().Epsg = int.Parse(mtdTile.Geometric_Info.Tile_Geocoding.HORIZONTAL_CS_CODE.Replace("EPSG:", ""));
             stacItem.ProjectionExtension().Epsg = null;
         }

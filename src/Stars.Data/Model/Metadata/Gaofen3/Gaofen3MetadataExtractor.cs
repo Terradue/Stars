@@ -31,7 +31,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 
         public override string Label => "Gaofen-3 SAR Satellite (CNSA) mission product metadata extractor";
 
-        public Gaofen3MetadataExtractor(ILogger<Gaofen3MetadataExtractor> logger) : base(logger) { }
+        public Gaofen3MetadataExtractor(ILogger<Gaofen3MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) { }
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
@@ -59,7 +59,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 
             logger.LogDebug("Metadata file is {0}", metadataFile.Uri);
 
-            IStreamable metadataFileStreamable = metadataFile.GetStreamable();
+            IStreamResource metadataFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(metadataFile);
             if (metadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -359,7 +359,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
         }
 
 
-        public static async Task<ProductMetadata> DeserializeProductMetadata(IStreamable productMetadataFile)
+        public static async Task<ProductMetadata> DeserializeProductMetadata(IStreamResource productMetadataFile)
         {
             XmlSerializer ser = new XmlSerializer(typeof(ProductMetadata));
             ProductMetadata auxiliary;

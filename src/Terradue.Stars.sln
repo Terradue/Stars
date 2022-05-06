@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stars.Tests", "Stars.Tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Data", "Stars.Data\Terradue.Stars.Data.csproj", "{D779A8C8-59C8-4AC8-B51F-3923CC916259}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Data.Test", "Stars.Data.Tests\Terradue.Stars.Data.Test.csproj", "{2CECA466-635D-43D5-B4FD-2B3B7DBF869D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terradue.Stars.Data.Test", "Stars.Data.Tests\Terradue.Stars.Data.Tests.csproj", "{2CECA466-635D-43D5-B4FD-2B3B7DBF869D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

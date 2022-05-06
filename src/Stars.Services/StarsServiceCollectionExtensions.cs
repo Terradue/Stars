@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
@@ -19,31 +20,42 @@ using System.Runtime.Loader;
 using Terradue.Stars.Services.Plugins;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface.Router.Translator;
-using System.Net.S3;
-using Amazon.Extensions.NETCore.Setup;
 using System.IO.Abstractions;
+using Terradue.Stars.Services.Resources;
+using Terradue.Stars.Interface;
+using System.Net.Http;
+using Microsoft.Extensions.Caching.InMemory;
+using Microsoft.Extensions.Caching.Abstractions;
 
 namespace Terradue.Stars.Services
 {
     public static class StarsServiceCollectionExtensions
     {
 
-        public static IServiceCollection AddStarsManagedServices(this IServiceCollection services, Action<IServiceProvider, StarsConfiguration> configure)
+        public static IServiceCollection AddStarsManagedServices(this IServiceCollection services, Action<IStarsBuilder> configure)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             if (configure == null) throw new ArgumentNullException(nameof(configure));
 
-            // Add Credentials from config
-            services.AddOptions<CredentialsOptions>().Configure<StarsConfiguration>((co, sc) => co.Load(sc.CredentialsOptions));
             // Add default credentials manager
             services.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
-            services.AddSingleton<AWSOptions>(sp => sp.GetService<StarsConfiguration>().AWSOptions);
+
+            services.AddSingleton<S3ClientFactory>();
+            services.AddHttpClient();
+            services.AddHttpClient<HttpClient>("stars").ConfigurePrimaryHttpMessageHandler(sp =>
+            {
+                var httpClientHandler = new HttpClientHandler()
+                {
+                    UseDefaultCredentials = true,
+                    Credentials = sp.GetRequiredService<ICredentials>()
+                };
+                var cacheExpirationPerHttpResponseCode = CacheExpirationProvider.CreateSimple(TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(5));
+                return new InMemoryCacheHandler(httpClientHandler, cacheExpirationPerHttpResponseCode);
+            });
 
             //  ## Add plugins
             //  1. Add predefined plugins
             LoadBasePlugins(services);
-            // Add Plugins from config
-            services.AddOptions<PluginsOptions>().Configure<StarsConfiguration>((co, sc) => co.Load(sc.PluginsOptions));
 
             // 2. Add the Managers
             services.AddSingleton<RoutersManager, RoutersManager>();
@@ -53,33 +65,9 @@ namespace Terradue.Stars.Services
             services.AddSingleton<TranslatorManager, TranslatorManager>();
             services.AddSingleton<ProcessingManager, ProcessingManager>();
 
-            // Finally, let's configure
-            services.AddSingleton<StarsConfiguration>(serviceProvider =>
-            {
-                var configurationInstance = StarsConfiguration.Configuration;
-
-                // init defaults for log provider and job activator
-                // they may be overwritten by the configuration callback later
-
-                // var scopeFactory = serviceProvider.GetService<IServiceScopeFactory>();
-                // if (scopeFactory != null)
-                // {
-                //     configurationInstance.UseActivator(new AspNetCoreJobActivator(scopeFactory));
-                // }
-
-                // do configuration inside callback
-                configure(serviceProvider, configurationInstance);
-
-                WebRequest.RegisterPrefix("s3",
-                    new S3WebRequestCreate(serviceProvider.GetService<ILogger<S3WebRequest>>(),
-                                            configurationInstance.AWSOptions,
-                                            configurationInstance.S3BucketsOptions
-                                            ));
-                if (!UriParser.IsKnownScheme("s3"))
-                    UriParser.Register(new S3UriParser(), "s3", -1);
-
-                return configurationInstance;
-            });
+            // 3. Let's Configure
+            var builder = new StarsBuilder(services);
+            configure(builder);
 
             return services;
         }
@@ -128,7 +116,6 @@ namespace Terradue.Stars.Services
             services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(StacLinkTranslator)));
             services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(DefaultStacTranslator)));
 
-            // Generic Resource Provider
             services.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
 
             return services;

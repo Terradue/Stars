@@ -17,11 +17,15 @@ namespace Terradue.Stars.Services.Processing
     internal class TarArchiveAsset : Archive
     {
         protected readonly IAsset asset;
+        protected readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ILogger logger;
 
-        public TarArchiveAsset(IAsset asset, ILogger logger)
+        public TarArchiveAsset(IAsset asset,
+                               IResourceServiceProvider resourceServiceProvider,
+                               ILogger logger)
         {
             this.asset = asset;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.logger = logger;
         }
 
@@ -31,22 +35,24 @@ namespace Terradue.Stars.Services.Processing
         {
             const int chunk = 4096;
             BlockingStream blockingStream = new BlockingStream(1000);
-            asset.GetStreamable().GetStreamAsync()
-                .ContinueWith(task =>
-                {
-                    var stream = task.GetAwaiter().GetResult();
-                    Task.Factory.StartNew(() =>
+            resourceServiceProvider.CreateStreamResourceAsync(asset)
+                .ContinueWith(task => task.Result.GetStreamAsync()
+                    .ContinueWith(task =>
                     {
-                        int read;
-                        var buffer = new byte[chunk];
-                        do
+                        var stream = task.GetAwaiter().GetResult();
+                        Task.Factory.StartNew(() =>
                         {
-                            read = stream.Read(buffer, 0, chunk);
-                            blockingStream.Write(buffer, 0, read);
-                        } while (read == chunk);
-                        blockingStream.Close();
-                    });
-                });
+                            int read;
+                            var buffer = new byte[chunk];
+                            do
+                            {
+                                read = stream.Read(buffer, 0, chunk);
+                                blockingStream.Write(buffer, 0, read);
+                            } while (read == chunk);
+                            blockingStream.Close();
+                        });
+                    })
+                );
             return blockingStream;
         }
 
@@ -64,9 +70,9 @@ namespace Terradue.Stars.Services.Processing
             logger.LogDebug(tarEntryAsset.Name);
             var assetExtracted = await assetDeliveries.First().Carrier.Deliver(assetDeliveries.First());
             var entryAsset = new GenericAsset(assetExtracted, tarEntryAsset.Name, new string[] { "data" });
-            if (assetDeliveries.First().Route is IAsset)
+            if (assetDeliveries.First().Resource is IAsset)
             {
-                entryAsset.MergeProperties((assetDeliveries.First().Route as IAsset).Properties);
+                entryAsset.MergeProperties((assetDeliveries.First().Resource as IAsset).Properties);
             }
             return entryAsset;
         }

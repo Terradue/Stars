@@ -10,12 +10,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Schema;
 using Stac.Schemas;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Plugins;
+using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Xunit.Abstractions;
 
-namespace Terradue.Data.Test
+namespace Terradue.Data.Tests
 {
     public abstract class TestBase
     {
@@ -39,12 +41,15 @@ namespace Terradue.Data.Test
             Collection.AddSingleton<CarrierManager, CarrierManager>();
             Collection.AddSingleton<ICarrier, LocalStreamingCarrier>();
             Collection.AddSingleton<IFileSystem, FileSystem>();
+            Collection.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
         }
 
         protected TestBase()
         {
             Collection = new ServiceCollection();
             Collection.AddLogging();
+            Collection.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
+            Collection.AddHttpClient();
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
             var configFile = new FileInfo(Path.Join(@"../../../../Stars.Data", "stars-data.json"));
@@ -70,10 +75,8 @@ namespace Terradue.Data.Test
         {
             get
             {
-                string codeBase = ThisAssembly.CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
+                string codeBase = ThisAssembly.Location;
+                return Path.GetDirectoryName(codeBase);
             }
         }
 

@@ -10,7 +10,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 
-namespace Terradue.Data.Test
+namespace Terradue.Data.Tests
 {
     internal class TestItem : IItem
     {

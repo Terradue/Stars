@@ -19,15 +19,12 @@ namespace Terradue.Stars.Services.Model.Stac
     {
         private readonly StacAsset asset;
         private readonly IAssetsContainer parent;
-        private readonly IStreamable _streamable;
-        private readonly ICredentials credentials;
-        private readonly Uri uri;
+        private Uri uri;
 
-        public StacAssetAsset(StacAsset asset, IAssetsContainer parent, ICredentials credentials = null)
+        public StacAssetAsset(StacAsset asset, IAssetsContainer parent)
         {
             this.asset = asset;
             this.parent = parent;
-            this.credentials = credentials;
             if (asset.Uri.IsAbsoluteUri)
                 this.uri = asset.Uri;
             else
@@ -41,15 +38,13 @@ namespace Terradue.Stars.Services.Model.Stac
                 }
                 else this.uri = asset.Uri;
             }
-            if (asset is IStreamable)
-                _streamable = asset as IStreamable;
-            else
-            {
-                _streamable = WebRoute.Create(uri, credentials: credentials);
-            }
         }
 
-        public Uri Uri => uri;
+        public Uri Uri
+        {
+            get { return uri; }
+            private set { uri = value; }
+        }
 
         public ContentType ContentType => asset.MediaType;
 
@@ -58,8 +53,6 @@ namespace Terradue.Stars.Services.Model.Stac
             get
             {
                 if (asset.FileExtension().Size.HasValue) return asset.FileExtension().Size.Value;
-                var cl = _streamable?.ContentLength;
-                if (cl.HasValue) return cl.Value;
                 return 0;
             }
         }
@@ -90,42 +83,11 @@ namespace Terradue.Stars.Services.Model.Stac
                 {
                     cd.FileName = asset.GetProperty<string>("filename");
                 }
-                else
-                {
-                    try
-                    {
-                        cd = _streamable?.ContentDisposition ?? new ContentDisposition() { FileName = Filename };
-                    }
-                    catch { }
-                }
                 return cd;
             }
         }
 
         public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 
-        public IEnumerable<IAsset> Alternates
-        {
-            get
-            {
-                var alternateAssets = asset.AlternateExtension().AlternateAssets;
-                if ( alternateAssets != null )
-                    return alternateAssets.Values.Select(a => new StacAlternateAssetAsset(a, this, credentials));
-                return Enumerable.Empty<IAsset>();
-            }
-        }
-
-        public IAssetsContainer Parent => parent;
-
-        public async Task CacheHeaders(bool force = false)
-        {
-            if (_streamable is WebRoute)
-                await (_streamable as WebRoute).CacheHeadersAsync(force);
-        }
-
-        public IStreamable GetStreamable()
-        {
-            return _streamable;
-        }
     }
 }

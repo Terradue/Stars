@@ -16,12 +16,12 @@ namespace Terradue.Stars.Services.Model.Stac
     [PluginPriority(1)]
     public class StacRouter : IRouter
     {
-        private ICredentials credentials;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ILogger logger;
 
-        public StacRouter(ICredentials credentials, ILogger logger = null)
+        public StacRouter(IResourceServiceProvider resourceServiceProvider, ILogger logger = null)
         {
-            this.credentials = credentials;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.logger = logger;
         }
 
@@ -30,18 +30,16 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public string Label => "Stac Native Router";
 
-        public ICredentials Credentials => credentials;
-
         public bool CanRoute(IResource route)
         {
-            var routeFound = AffineRoute(route);
+            var routeFound = AffineRouteAsync(route).Result;
             if (routeFound is StacNode) return true;
-            if (!(routeFound is IStreamable)) return false;
+            if (!(routeFound is IStreamResource)) return false;
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 try
                 {
-                    StacConvert.Deserialize<IStacObject>((routeFound as IStreamable).ReadAsString().Result);
+                    StacConvert.Deserialize<IStacObject>((routeFound as IStreamResource).ReadAsString().Result);
                     return true;
                 }
                 catch (Exception e)
@@ -52,7 +50,7 @@ namespace Terradue.Stars.Services.Model.Stac
             return false;
         }
 
-        private IResource AffineRoute(IResource route)
+        private async Task<IResource> AffineRouteAsync(IResource route)
         {
             try
             {
@@ -64,11 +62,11 @@ namespace Terradue.Stars.Services.Model.Stac
             catch (Exception)
             {
                 // maybe the route is a folder
-                if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())) && route is WebRoute)
+                if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())))
                 {
                     try
                     {
-                        WebRoute newRoute = WebRoute.Create(new Uri(route.Uri.ToString() + "/catalog.json"));
+                        IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new Uri(route.Uri.ToString() + "/catalog.json"));
                         if (newRoute.ContentType.MediaType.Contains("application/json"))
                         {
                             return newRoute;
@@ -85,19 +83,19 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public async Task<IResource> Route(IResource route)
         {
-            var routeFound = AffineRoute(route);
+            var routeFound = await AffineRouteAsync(route);
             if (routeFound is StacCatalogNode)
                 return routeFound as StacCatalogNode;
             if (routeFound is StacItemNode)
                 return routeFound as StacItemNode;
-            if (!(routeFound is IStreamable)) return null;
+            if (!(routeFound is IStreamResource)) return null;
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
-                IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamable).ReadAsString());
+                IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamResource).ReadAsString());
                 if (stacObject is IStacCatalog)
-                    return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri, credentials);
+                    return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri);
                 else
-                    return new StacItemNode(stacObject as StacItem, routeFound.Uri, credentials);
+                    return new StacItemNode(stacObject as StacItem, routeFound.Uri);
             }
             throw new NotSupportedException(routeFound.ContentType.ToString());
         }

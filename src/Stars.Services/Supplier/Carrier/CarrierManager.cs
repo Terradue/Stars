@@ -44,7 +44,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 foreach (var possibleAsset in possibleAssets)
                 {
-                    try
+                    string relPath = null;
+                    if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
                     {
                         var length = asset.Value.ContentLength;
                         await asset.Value.CacheHeaders();

@@ -17,7 +17,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Store;
 
-namespace Terradue.Data.Test.Harvesters
+namespace Terradue.Data.Tests.Harvesters
 {
     public class MetadataExtractorsTests : TestBase
     {

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Terradue.Stars.Data.Routers
 {
-    internal class TransferRequestAsset : IAsset, IStreamable
+    internal class TransferRequestAsset : IAsset, IStreamResource
     {
         private ITransferRequest tr;
         private readonly string label;
@@ -41,9 +41,7 @@ namespace Terradue.Stars.Data.Routers
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
-        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
-
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
             return this;
         }

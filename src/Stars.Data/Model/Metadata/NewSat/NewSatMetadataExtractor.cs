@@ -19,7 +19,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
     public class NewSatMetadataExtractor : MetadataExtraction {
         public override string Label => "NewSat (Satellogic) contellation product metadata extractor";
 
-        public NewSatMetadataExtractor(ILogger<NewSatMetadataExtractor> logger) : base(logger) {
+        public NewSatMetadataExtractor(ILogger<NewSatMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) {
         }
 
         public override bool CanProcess(IResource route, IDestination destination) {
@@ -29,7 +29,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
             if (geojson == null) {
                 return false;
             }
-            IStreamable geoJsonFileStreamable = geojson.GetStreamable();
+            IStreamResource geoJsonFileStreamable = resourceServiceProvider.CreateStreamResourceAsync(geojson).Result;
             if (geoJsonFileStreamable == null) {
                 return false;
             }
@@ -48,7 +48,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
                 throw new FileNotFoundException(String.Format("Unable to find the geojson file asset"));
             }
             logger.LogDebug(String.Format("geojson file is {0}", geojsonAsset.Uri));
-            IStreamable geoJsonFileStreamable = geojsonAsset.GetStreamable();
+            IStreamResource geoJsonFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(geojsonAsset);
             if (geoJsonFileStreamable == null) {
                 logger.LogError("geojson file asset is not streamable, skipping metadata extraction");
                 return null;
@@ -102,7 +102,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
         }
 
 
-        private static async Task<StacItem> DeserializeProductMetadata(IStreamable geoJsonFileStreamable,
+        private static async Task<StacItem> DeserializeProductMetadata(IStreamResource geoJsonFileStreamable,
             IItem item ) {
             StacItem stacItem;
             using (var stream = new StreamReader(geoJsonFileStreamable.Uri.AbsolutePath, Encoding.UTF8, true)) {

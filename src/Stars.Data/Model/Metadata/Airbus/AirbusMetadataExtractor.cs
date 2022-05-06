@@ -30,7 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public override string Label => "Airbus missions (Pleiades, SPOT, VOL) DIMAP based product metadata extractor";
 
-        public AirbusMetadataExtractor(ILogger<AirbusMetadataExtractor> logger) : base(logger)
+        public AirbusMetadataExtractor(ILogger<AirbusMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -369,7 +369,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await manifestAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

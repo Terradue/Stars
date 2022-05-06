@@ -9,9 +9,9 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Router;
 
-namespace Terradue.Data.Test
+namespace Terradue.Data.Tests
 {
-    internal class TestFileAsset : IAsset
+    internal class TestFileAsset : IAsset, IStreamResource
     {
         private readonly FileInfo fileInfo;
         private readonly Uri folderUri;
@@ -49,19 +49,14 @@ namespace Terradue.Data.Test
             }
         }
 
-        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
+        public bool CanBeRanged => false;
 
-        public Task CacheHeaders(bool force = false)
+        public Task<Stream> GetStreamAsync()
         {
-            return Task.CompletedTask;
+            return Task.FromResult<Stream>(fileInfo.OpenRead());
         }
 
-        public IStreamable GetStreamable()
-        {
-            return WebRoute.Create(new Uri(fileInfo.FullName), Convert.ToUInt64(fileInfo.Length));
-        }
-
-        public Task Remove()
+        public Task<Stream> GetStreamAsync(long start, long end = -1)
         {
             throw new NotImplementedException();
         }

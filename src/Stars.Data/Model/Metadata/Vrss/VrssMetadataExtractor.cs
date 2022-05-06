@@ -38,7 +38,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
  
         public override string Label => "Venezuelan Remote Sensing Satellite (ABAE) mission product metadata extractor";
 
-        public VrssMetadataExtractor(ILogger<VrssMetadataExtractor> logger) : base(logger)
+        public VrssMetadataExtractor(ILogger<VrssMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -127,7 +127,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            using (var stream = await metadataAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);

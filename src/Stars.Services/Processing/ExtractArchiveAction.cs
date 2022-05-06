@@ -22,6 +22,7 @@ namespace Terradue.Stars.Services.Processing
         private readonly DestinationManager destinationManager;
         private readonly CarrierManager carrierManager;
         private readonly IFileSystem fileSystem;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ILogger logger;
         private readonly IOptions<ExtractArchiveOptions> options;
 
@@ -36,12 +37,14 @@ namespace Terradue.Stars.Services.Processing
                                     DestinationManager destinationManager,
                                     CarrierManager carrierManager,
                                     IFileSystem fileSystem,
+                                    IResourceServiceProvider resourceServiceProvider,
                                     ILogger<ExtractArchiveAction> logger)
         {
             this.options = options;
             this.destinationManager = destinationManager;
             this.carrierManager = carrierManager;
             this.fileSystem = fileSystem;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.logger = logger;
             Key = "ExtractArchive";
             Priority = 1;
@@ -111,7 +114,7 @@ namespace Terradue.Stars.Services.Processing
 
         private async Task<IAssetsContainer> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
         {
-            Archive archive = await Archive.Read(asset.Value, logger, fileSystem);
+            Archive archive = await Archive.Read(asset.Value, logger, resourceServiceProvider, fileSystem);
 
             return await archive.ExtractToDestination(destination, carrierManager);
         }

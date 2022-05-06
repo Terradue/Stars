@@ -23,6 +23,7 @@ namespace Terradue.Stars.Services.Store
         private readonly DestinationManager destinationManager;
         private readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         protected readonly ICredentials credentials;
         private readonly StacRouter _stacRouter;
         private readonly StacStoreConfiguration storeOptions;
@@ -57,6 +58,7 @@ namespace Terradue.Stars.Services.Store
                             DestinationManager destinationManager,
                             TranslatorManager translatorManager,
                             CarrierManager carrierManager,
+                            IResourceServiceProvider resourceServiceProvider,
                             ICredentials credentials
                             )
         {
@@ -65,8 +67,9 @@ namespace Terradue.Stars.Services.Store
             this.destinationManager = destinationManager;
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.credentials = credentials;
-            this._stacRouter = new StacRouter(credentials, logger);
+            this._stacRouter = new StacRouter(resourceServiceProvider, logger);
         }
 
 
@@ -82,7 +85,7 @@ namespace Terradue.Stars.Services.Store
 
         public async Task<StacNode> Load(Uri uri)
         {
-            var resource = WebRoute.Create(uri, credentials: credentials);
+            var resource = await resourceServiceProvider.CreateStreamResourceAsync(uri);
             return (await _stacRouter.Route(resource)) as StacNode;
         }
 
@@ -106,7 +109,7 @@ namespace Terradue.Stars.Services.Store
 
         private async Task LoadRootCatalogNode()
         {
-            var rootCatalogRoute = WebRoute.Create(storeOptions.RootCatalogue.Uri, credentials: credentials);
+            var rootCatalogRoute = await resourceServiceProvider.CreateStreamResourceAsync(storeOptions.RootCatalogue.Uri);
             IStacCatalog rootCatalog = StacConvert.Deserialize<IStacCatalog>(await rootCatalogRoute.ReadAsString());
             if (!rootCatalog.Id.Equals(storeOptions.RootCatalogue.Identifier))
                 throw new KeyNotFoundException(string.Format("No catalog with ID {0} at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri));
@@ -164,9 +167,16 @@ namespace Terradue.Stars.Services.Store
             if (rootCatalogNode != null)
             {
                 Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
-                var publicResource = WebRoute.Create(new Uri(RootCatalogNode.Uri, relativeCatalogUri), credentials: credentials);
+                Uri frontUri = new Uri(RootCatalogNode.Uri, relativeCatalogUri);
+                // First read the resource from its front uri
+                var frontResource = await resourceServiceProvider.CreateStreamResourceAsync(frontUri);
+                if (!_stacRouter.CanRoute(frontResource))
+                {
+                    throw new InvalidOperationException(string.Format("Front Resource {0} cannot be routed", frontUri));
+                }
+                deliveredResource = await _stacRouter.Route(frontResource);
 
-                return publicResource;
+                return frontResource;
             }
             else
             {
@@ -334,10 +344,11 @@ namespace Terradue.Stars.Services.Store
             }
         }
 
-        public async Task<IEnumerable<IStreamable>> GetAssetsInFolder(string relPath)
+        public async Task<IAssetsContainer> GetAssetsInFolder(string relPath)
         {
-            var assetsFolder = WebRoute.Create(new Uri(RootCatalogDestination.Uri, relPath));
-            return assetsFolder.ListFolder().Select(a => WebRoute.Create(MapToFrontUri(a.Uri)));
+            return await resourceServiceProvider.GetAssetsInFolder(new Uri(RootCatalogDestination.Uri, relPath));
+            // var assetsFolder = WebRoute.Create(new Uri(RootCatalogDestination.Uri, relPath));
+            // return assetsFolder.ListFolder().Select(a => WebRoute.Create(MapToFrontUri(a.Uri)));
         }
     }
 }

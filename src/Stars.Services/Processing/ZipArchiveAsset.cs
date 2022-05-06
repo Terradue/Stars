@@ -20,26 +20,32 @@ namespace Terradue.Stars.Services.Processing
         private ZipFile zipFile;
         private readonly IAsset asset;
         private readonly ILogger logger;
-
-        private IStreamable localStreamable;
+        private readonly IResourceServiceProvider resourceServiceProvider;
+        private IStreamResource localStreamable;
         private readonly IFileSystem fileSystem;
 
-        public ZipArchiveAsset(IAsset asset, ILogger logger, IFileSystem fileSystem)
+        public ZipArchiveAsset(IAsset asset,
+                               ILogger logger,
+                               IResourceServiceProvider resourceServiceProvider,
+                               IFileSystem fileSystem)
         {
             this.fileSystem = fileSystem;
             this.asset = asset;
             this.logger = logger;
+            this.resourceServiceProvider = resourceServiceProvider;
         }
 
         protected async Task<Stream> GetZipStreamAsync(IAsset asset, CarrierManager carrierManager)
         {
             if (asset.Uri.Scheme == "file")
-                return await asset.GetStreamable().GetStreamAsync();
+            {
+                return await (await resourceServiceProvider.CreateStreamResourceAsync(asset)).GetStreamAsync();
+            }
             var tmpDestination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory(Path.GetTempPath()), asset);
             var tmpArchiveAssetDestination = tmpDestination.To(asset, Guid.NewGuid().ToString());
             tmpArchiveAssetDestination.PrepareDestination();
             var localZipDelivery = carrierManager.GetSingleDeliveryQuotations(asset, tmpArchiveAssetDestination).First();
-            localStreamable = await localZipDelivery.Carrier.Deliver(localZipDelivery) as LocalFileSystemResource;
+            localStreamable = await localZipDelivery.Carrier.Deliver(localZipDelivery) as LocalFileResource;
             return await localStreamable.GetStreamAsync();
         }
 
@@ -92,9 +98,9 @@ namespace Terradue.Stars.Services.Processing
                     if (assetExtracted != null)
                     {
                         var extractedAsset = new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles);
-                        if (delivery.Route is IAsset)
+                        if (delivery.Resource is IAsset)
                         {
-                            extractedAsset.MergeProperties((delivery.Route as IAsset).Properties);
+                            extractedAsset.MergeProperties((delivery.Resource as IAsset).Properties);
                         }
                         assetsExtracted.Add(asset.ContentDisposition.FileName + "!" + archiveAsset.Key, extractedAsset);
                         break;
