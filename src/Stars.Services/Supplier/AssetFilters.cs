@@ -95,17 +95,59 @@ namespace Terradue.Stars.Services.Supplier
 
     public class PropertyAssetFilter : IAssetFilter
     {
-        public KeyValuePair<string, Regex> PropertyRegexPattern { get; set; }
+        public Dictionary<string, Regex> PropertiesRegexPattern { get; set; }
 
-        public PropertyAssetFilter(string key, Regex valuePattern)
+        public PropertyAssetFilter(Dictionary<string, Regex> filters)
         {
-            PropertyRegexPattern = new KeyValuePair<string, Regex>(key, valuePattern);
+            PropertiesRegexPattern = new Dictionary<string, Regex>(filters);
         }
 
         public bool IsMatch(KeyValuePair<string, IAsset> asset)
         {
-            return asset.Value.Properties.ContainsKey(PropertyRegexPattern.Key) &&
-                PropertyRegexPattern.Value.IsMatch(asset.Value.Properties[PropertyRegexPattern.Key].ToString());
+            return PropertiesRegexPattern.All(kvp =>
+            {
+                return asset.Value.Properties.ContainsKey(kvp.Key) &&
+                kvp.Value.IsMatch(asset.Value.Properties[kvp.Key].ToString());
+            });
+        }
+    }
+
+    public class ContentTypeAssetFilter : IAssetFilter
+    {
+        private readonly string mediaType;
+        private readonly Dictionary<string, string> parameters;
+
+        public ContentTypeAssetFilter(string mediaType, Dictionary<string, string> parameters)
+        {
+            this.mediaType = mediaType;
+            this.parameters = parameters;
+        }
+
+        public bool IsMatch(KeyValuePair<string, IAsset> asset)
+        {
+            return 
+                ( string.IsNullOrEmpty(mediaType) ||
+                  asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
+                ) &&
+                ( parameters == null ||
+                  parameters.Any(p => asset.Value.ContentType.Parameters.ContainsKey(p.Key) &&
+                                      asset.Value.ContentType.Parameters[p.Key] == p.Value)
+                );
+        }
+    }
+
+    public class NotAssetFilter : IAssetFilter
+    {
+        private readonly IAssetFilter assetFilter;
+
+        public NotAssetFilter(IAssetFilter assetFilter)
+        {
+            this.assetFilter = assetFilter;
+        }
+
+        public bool IsMatch(KeyValuePair<string, IAsset> asset)
+        {
+            return !assetFilter.IsMatch(asset);
         }
     }
 }

@@ -757,7 +757,7 @@
             }
         },
         {
-            "name": "Copy from element84",
+            "name": "Copy S2 from element84",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -768,6 +768,7 @@
                 "-v",
                 "-r",
                 "4",
+                "--nocopy-cog",
                 "--output",
                 "/tmp/stars",
                 "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2B_53HPA_20210723_0_L2A"
@@ -793,6 +794,7 @@
                 "-k",
                 "-r",
                 "4",
+                "--nocopy-cog",
                 "--output",
                 "/tmp/stars",
                 "https://landsatlook.usgs.gov/stac-server/collections/landsat-c2l2-sr/items/LC09_L2SP_088084_20220405_20220407_02_T2_SR"
