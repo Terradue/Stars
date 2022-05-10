@@ -37,7 +37,7 @@ namespace Terradue.Stars.Console.Operations
         public int Recursivity { get => recursivity; set => recursivity = value; }
 
         [Option("-sa|--skip-assets", "Do not copy assets", CommandOptionType.NoValue)]
-        public bool SkippAssets { get; set; }
+        public bool SkipAssets { get; set; }
 
         [Option("-o|--output", "Output Url (Default to current dir)", CommandOptionType.SingleValue)]
         public string Output { get => output; set => output = value; }
@@ -78,6 +78,12 @@ namespace Terradue.Stars.Console.Operations
         [Option("-af|--asset-filter", "Asset filters to match to be included in the copy (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFilters { get; set; }
 
+        [Option("-koa|--keep-original-assets", "Keep original assets not included in the copy (default to false)", CommandOptionType.NoValue)]
+        public bool KeepOriginalAssets { get; set; } = false;
+
+        [Option("--nocopy-cog", "Add Asset filters in order to not copy Cloud Optimized Assets (imply asset filters on COG media types and keep original assets)", CommandOptionType.NoValue)]
+        public bool NoCopyCog { get; set; } = false;
+
         [Option("-afo|--asset-filter-out", "Asset filters to match to be included in the Items after the extraction and harvesting (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFiltersOut { get; set; }
 
@@ -104,7 +110,7 @@ namespace Terradue.Stars.Console.Operations
             routingService.Parameters = new RouterServiceParameters()
             {
                 Recursivity = Recursivity,
-                SkipAssets = SkippAssets
+                SkipAssets = SkipAssets
             };
             // routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
             routingService.OnBeforeBranching((node, router, state) => CreateCatalog(node, router, state));
@@ -242,15 +248,23 @@ namespace Terradue.Stars.Console.Operations
                         continue;
                     }
 
-                    if (!SkippAssets)
+                    if (!SkipAssets)
                     {
                         AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFilters);
+                        if (NoCopyCog)
+                        {
+                            Dictionary<string, string> cogParameters = new Dictionary<string, string>();
+                            cogParameters.Add("cloud-optimized", "true");
+                            cogParameters.Add("profile", "cloud-optimized");
+                            assetFilters.Add(new NotAssetFilter(new ContentTypeAssetFilter(null, cogParameters)));
+                            KeepOriginalAssets = true;
+                        }
                         AssetImportReport deliveryReport = await assetService.ImportAssets(supplierNode as IAssetsContainer, destination, assetFilters);
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
                         if (deliveryReport.ImportedAssets.Count() > 0)
-                            stacItemNode.StacItem.MergeAssets(deliveryReport, true);
+                            stacItemNode.StacItem.MergeAssets(deliveryReport, !KeepOriginalAssets);
                         else continue;
                     }
                     break;
@@ -296,9 +310,9 @@ namespace Terradue.Stars.Console.Operations
             if (assetFiltersStr == null)
                 return assetFilters;
             Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
-            foreach (var assetName in assetFiltersStr)
+            foreach (var assetFilterStr in assetFiltersStr)
             {
-                Match propertyMatch = propertyRegex.Match(assetName);
+                Match propertyMatch = propertyRegex.Match(assetFilterStr);
                 if (propertyMatch.Success)
                 {
                     if (propertyMatch.Groups["key"].Value == "roles")
@@ -311,13 +325,19 @@ namespace Terradue.Stars.Console.Operations
                         assetFilters.Add(new UriAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
                         continue;
                     }
-                    assetFilters.Add(new PropertyAssetFilter(propertyMatch.Groups["key"].Value,
-                        new Regex(propertyMatch.Groups["value"].Value)));
+                    if (propertyMatch.Groups["key"].Value == "type")
+                    {
+                        assetFilters.Add(new ContentTypeAssetFilter(propertyMatch.Groups["value"].Value, null));
+                        continue;
+                    }
+                    Dictionary<string, Regex> dic = new Dictionary<string, Regex>();
+                    dic.Add(propertyMatch.Groups["key"].Value, new Regex(propertyMatch.Groups["value"].Value));
+                    assetFilters.Add(new PropertyAssetFilter(dic));
                     continue;
                 }
                 else
                 {
-                    assetFilters.Add(new KeyAssetFilter(new Regex("^" + assetName + "$")));
+                    assetFilters.Add(new KeyAssetFilter(new Regex("^" + assetFilterStr + "$")));
                 }
             }
             return assetFilters;
