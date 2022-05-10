@@ -267,6 +267,10 @@ namespace Terradue.Stars.Console.Operations
                             stacItemNode.StacItem.MergeAssets(deliveryReport, !KeepOriginalAssets);
                         else continue;
                     }
+                    else
+                    {
+                        stacItemNode.StacItem.MergeAssets(supplierNode as IAssetsContainer, false);
+                    }
                     break;
                 }
 

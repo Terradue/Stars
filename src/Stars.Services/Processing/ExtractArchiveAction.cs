@@ -50,7 +50,17 @@ namespace Terradue.Stars.Services.Processing
         public bool CanProcess(IResource route, IDestination destination)
         {
             IAssetsContainer assetsContainer = route as IAssetsContainer;
-            return assetsContainer != null && assetsContainer.Assets != null && assetsContainer.Assets.Any(asset => IsArchive(asset.Value));
+            return assetsContainer != null && assetsContainer.Assets != null && assetsContainer.Assets.Any(asset =>
+            {
+                try
+                {
+                    return IsArchive(asset.Value);
+                }
+                catch
+                {
+                    return false;
+                }
+            });
         }
 
         private bool IsArchive(IAsset asset)
