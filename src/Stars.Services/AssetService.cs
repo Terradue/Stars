@@ -106,7 +106,7 @@ namespace Terradue.Stars.Services
                 int j = 1;
                 foreach (var delivery in item.Value)
                 {
-                    logger.LogDebug("  #{0}{1} to {2} : {3}$", j, delivery.Carrier.Id, delivery.Destination.ToString(), delivery.Cost);
+                    logger.LogDebug("  #{0} {1}", j, delivery);
                     j++;
                 }
             }

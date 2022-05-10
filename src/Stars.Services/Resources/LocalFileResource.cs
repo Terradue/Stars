@@ -64,5 +64,10 @@ namespace Terradue.Stars.Services.Router
         {
             throw new NotImplementedException();
         }
+
+        public override string ToString()
+        {
+            return fileInfo.FullName;
+        }
     }
 }

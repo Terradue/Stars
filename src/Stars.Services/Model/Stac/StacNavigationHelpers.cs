@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Stac;
 using Stars.Services.Exceptions;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
 
@@ -44,7 +45,7 @@ namespace Stars.Services.Model.Stac
                     throw new RoutingException(string.Format("relative route without base Url : {0}", linkUri));
                 linkUri = new Uri(baseUri, linkUri);
             }
-            var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(linkUri);
+            var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(linkUri));
             return StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync());
         }
 

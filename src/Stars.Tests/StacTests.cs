@@ -10,6 +10,7 @@ using Xunit;
 using Microsoft.Extensions.Logging;
 using MELT;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services;
 
 namespace Stars.Tests
 {
@@ -29,17 +30,17 @@ namespace Stars.Tests
         [Fact]
         public async Task FolderRouteAsync()
         {
-            var route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("file://" + Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json")));
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("file://" + Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json"))));
             StacRouter router = new StacRouter(null); 
             Assert.True(router.CanRoute(route));
-            route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri(Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json")));
+            route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json"))));
             Assert.True(router.CanRoute(route));
         }
 
         [Fact]
         public async Task CatalogManuela()
         {
-            var route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("file://" + Path.Join(Environment.CurrentDirectory, "../../../In/catalogManuela/WQ_CHL_S3B_20210918T023115.json")));
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("file://" + Path.Join(Environment.CurrentDirectory, "../../../In/catalogManuela/WQ_CHL_S3B_20210918T023115.json"))));
             StacRouter router = new StacRouter(null, null);
             Assert.False(router.CanRoute(route));
             Assert.Empty(loggerFactory.Sink.LogEntries);
@@ -47,7 +48,7 @@ namespace Stars.Tests
             Assert.False(router.CanRoute(route));
             var log = Assert.Single(loggerFactory.Sink.LogEntries);
             Assert.Contains("Cannot read STAC object from", log.Message);
-            route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri(Path.Join(Environment.CurrentDirectory, "../../../In/catalogManuela/WQ_CHL_S3B_20210918T023115.json")));
+            route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(Path.Join(Environment.CurrentDirectory, "../../../In/catalogManuela/WQ_CHL_S3B_20210918T023115.json"))));
             await Assert.ThrowsAsync<InvalidStacDataException>(async () => await router.Route(route));
         }
     }

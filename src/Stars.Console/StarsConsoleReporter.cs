@@ -10,8 +10,11 @@ namespace Terradue.Stars.Console
 {
     public class StarsConsoleReporter : ConsoleReporter, ILogger
     {
-        public StarsConsoleReporter(IConsole console, bool verbose) : base(console, verbose, false)
+        private readonly int verbose;
+
+        public StarsConsoleReporter(IConsole console, int verbose) : base(console, verbose > 0, false)
         {
+            this.verbose = verbose;
             // const int totalTicks = 10;
             // var options = new ProgressBarOptions
             // {
@@ -23,9 +26,7 @@ namespace Terradue.Stars.Console
             //     Task.Run(() => TickToCompletion(pbar, totalTicks, sleep: 500));
             //     pbar.Spawn()
             // }
-            
         }
-
 
         public IDisposable BeginScope<TState>(TState state)
         {
@@ -40,6 +41,9 @@ namespace Terradue.Stars.Console
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
             string message = formatter(state, exception);
+
+            if ( logLevel == LogLevel.Trace && verbose <= 1 )
+                return;
 
             switch (logLevel)
             {
@@ -58,8 +62,6 @@ namespace Terradue.Stars.Console
                     base.Warn(message);
                     break;
             }
-
-
         }
     }
 }

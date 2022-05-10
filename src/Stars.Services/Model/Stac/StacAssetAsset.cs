@@ -102,5 +102,10 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IReadOnlyDictionary<string, object> Properties => new ReadOnlyDictionary<string, object>(asset.Properties);
 
+        public override string ToString()
+        {
+            return uri.ToString();
+        }
+
     }
 }

@@ -52,10 +52,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
             // First create de destination
             S3Delivery s3Delivery = delivery as S3Delivery;
-            S3Resource s3DestinationResource = s3ClientFactory.Create(S3Url.ParseUri(s3Delivery.Destination.Uri));
+            S3Resource s3DestinationResource = await s3ClientFactory.CreateAsync(S3Url.ParseUri(s3Delivery.Destination.Uri));
 
             // Get the resource as a stream
-            IStreamResource inputStreamResource = await resourceServiceProvider.CreateStreamResourceAsync(s3Delivery.Resource);
+            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(s3Delivery.Resource);
 
             if (!overwrite && inputStreamResource.ContentLength > 0 &&
                Convert.ToUInt64(s3DestinationResource.ContentLength) == inputStreamResource.ContentLength)

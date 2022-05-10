@@ -24,5 +24,10 @@ namespace Terradue.Stars.Services.Supplier
         public ICarrier Carrier => carrier;
 
         public IDestination Destination => null;
+
+        public override string ToString()
+        {
+            return string.Format("No delivery");
+        }
     }
 }

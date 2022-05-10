@@ -11,6 +11,7 @@ using Terradue.OpenSearch.Result;
 using Terradue.Stars.Data.Translators;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router.Translator;
+using Terradue.Stars.Services;
 using Terradue.Stars.Services.Credentials;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
@@ -50,7 +51,7 @@ namespace Stars.Tests
             var routersManager = serviceProvider.GetService<RoutersManager>();
             var translatorManager = serviceProvider.GetService<TranslatorManager>();
             var resourceServiceProvider = serviceProvider.GetService<IResourceServiceProvider>();
-            var route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=[terradue]"));
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=[terradue]")));
             var router = await routersManager.GetRouterAsync(route);
             var resource = await router.Route(route);
             while (resource is ICatalog)

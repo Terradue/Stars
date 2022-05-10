@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -12,6 +14,7 @@ using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Resources
@@ -19,6 +22,7 @@ namespace Terradue.Stars.Services.Resources
     public class S3Resource : IStreamResource, IDeletableResource
     {
         private S3Url s3Url;
+        private readonly bool? requester_pays;
 
         public S3Resource(S3Url url, IAmazonS3 client)
         {
@@ -26,9 +30,23 @@ namespace Terradue.Stars.Services.Resources
             Client = client;
         }
 
+        public S3Resource(IAsset asset, IAmazonS3 client)
+        {
+            this.s3Url = S3Url.ParseUri(asset.Uri);
+            this.requester_pays = asset.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                                                  .GetProperty<bool?>(Stac.Extensions.Storage.StorageStacExtension.RequesterPaysField);
+            Client = client;
+        }
+
         internal async Task LoadMetadata()
         {
-            ObjectMetadata = await Client.GetObjectMetadataAsync(s3Url.Bucket, s3Url.Key);
+            GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
+            gomr.BucketName = s3Url.Bucket;
+            gomr.Key = s3Url.Key;
+            if (requester_pays.HasValue && requester_pays.Value)
+                gomr.RequestPayer = RequestPayer.Requester;
+            ObjectMetadata = await Client.GetObjectMetadataAsync(gomr);
+
         }
 
         public ContentType ContentType => new ContentType(ObjectMetadata?.Headers.ContentType);
@@ -51,7 +69,12 @@ namespace Terradue.Stars.Services.Resources
 
         public async Task<Stream> GetStreamAsync()
         {
-            return (await Client.GetObjectAsync(s3Url.Bucket, s3Url.Key)).ResponseStream;
+            GetObjectRequest gor = new GetObjectRequest();
+            gor.BucketName = s3Url.Bucket;
+            gor.Key = s3Url.Key;
+            if (requester_pays.HasValue && requester_pays.Value)
+                gor.RequestPayer = RequestPayer.Requester;
+            return (await Client.GetObjectAsync(gor)).ResponseStream;
         }
 
         public async Task<Stream> GetStreamAsync(long start, long end = -1)
@@ -62,6 +85,8 @@ namespace Terradue.Stars.Services.Resources
                 Key = s3Url.Key,
                 ByteRange = new ByteRange(start, end)
             };
+            if (requester_pays.HasValue && requester_pays.Value)
+                rangeRequest.RequestPayer = RequestPayer.Requester;
             return (await Client.GetObjectAsync(rangeRequest)).ResponseStream;
         }
 
@@ -83,6 +108,11 @@ namespace Terradue.Stars.Services.Resources
         public async Task Delete()
         {
             await Client.DeleteObjectAsync(s3Url.Bucket, s3Url.Key);
+        }
+
+        public override string ToString()
+        {
+            return s3Url.ToString();
         }
     }
 }

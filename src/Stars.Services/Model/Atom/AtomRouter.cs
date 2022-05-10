@@ -10,6 +10,7 @@ using Terradue.OpenSearch.Result;
 using Terradue.Stars.Services.Router;
 using System.Linq;
 using Terradue.Stars.Services.Resources;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -79,12 +80,12 @@ namespace Terradue.Stars.Services.Model.Atom
         {
             if (node is HttpResource && node.Uri.Query.Contains("format=json"))
             {
-                return await resourceServiceProvider.CreateStreamResourceAsync(new Uri(node.Uri.ToString().Replace("format=json", "format=atom")));
+                return await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(node.Uri.ToString().Replace("format=json", "format=atom"))));
             }
 
             if (node is IStreamResource) return node as IStreamResource;
 
-            return await resourceServiceProvider.CreateStreamResourceAsync(node);
+            return await resourceServiceProvider.GetStreamResourceAsync(node);
         }
 
     }

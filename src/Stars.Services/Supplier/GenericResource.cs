@@ -7,7 +7,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Router;
 
-namespace Terradue.Stars.Services.Supplier
+namespace Terradue.Stars.Services
 {
     public class GenericResource : IResource
     {

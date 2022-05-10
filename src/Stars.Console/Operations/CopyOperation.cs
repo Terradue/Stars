@@ -146,7 +146,7 @@ namespace Terradue.Stars.Console.Operations
 
         private async Task<CopyOperationState> PrepareNewRouteAsync(IResource parentRoute, IResource newRoute, IEnumerable<IResource> siblings, object state)
         {
-            newRoute = await resourceServiceProvider.CreateStreamResourceAsync(newRoute);
+            newRoute = await resourceServiceProvider.GetStreamResourceAsync(newRoute);
             if (state == null)
             {
                 return new CopyOperationState(1, storeService, storeService.RootCatalogDestination);
@@ -348,7 +348,7 @@ namespace Terradue.Stars.Console.Operations
             List<IResource> routes = null;
             try
             {
-                var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new Uri(input)));
+                var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(input))));
                 routes = (await Task.WhenAll(tasks)).Cast<IResource>().ToList();
             }
             catch (Exception e)

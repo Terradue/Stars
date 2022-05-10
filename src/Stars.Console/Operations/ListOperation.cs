@@ -120,7 +120,7 @@ namespace Terradue.Stars.Console.Operations
             this.routingService = ServiceProvider.GetService<RouterService>();
             this.resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
             InitRoutingTask();
-            var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new Uri(input)));
+            var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(input))));
             List<IResource> routes = (await Task.WhenAll(tasks)).Cast<IResource>().ToList();
 
             foreach (var route in routes)

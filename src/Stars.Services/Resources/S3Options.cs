@@ -14,14 +14,18 @@ namespace Terradue.Stars.Services.Resources
         {
             Services = new Dictionary<string, S3Configuration>();
             Policies = new S3OptionsPolicies();
+            AdaptClientRegion = true;
         }
 
         public Dictionary<string, S3Configuration> Services { get; set; }
+
         public S3OptionsPolicies Policies { get; set; }
+
+        public bool AdaptClientRegion { get; set; }
 
         public IConfigurationSection ConfigurationSection { get; set; }
 
-         public IConfiguration RootConfiguration { get; set; }
+        public IConfiguration RootConfiguration { get; set; }
 
         public KeyValuePair<string, S3Configuration> GetS3Configuration(string url)
         {

@@ -24,6 +24,7 @@ using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 using Terradue.Stars.Services.Translator;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -64,7 +65,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (geosquareModel.CreateIndex) await CreateIndexIfNotExist(geosquareModel.Index);
             InitRoutingTask();
             var guid = CalculateHash(geosquareModel.Url.ToString());
-            var route = await resourceServiceProvider.CreateStreamResourceAsync(new Uri(geosquareModel.Url));
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(geosquareModel.Url)));
 
             GeosquarePublicationState state = new GeosquarePublicationState(geosquareModel);
             state.Hash = guid;
@@ -199,7 +200,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             {
                 var template = geosquareConfiguration.GetOpenSearchForUri(link.Uri);
                 if (string.IsNullOrEmpty(template)) return null;
-                var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(link.Uri);
+                var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(new AtomResourceLink(link));
                 IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync());
                 var osUrl = template.ReplaceMacro<IStacObject>("stacObject", linkedStacObject);
                 osUrl = osUrl.ReplaceMacro<string>("index", catalogPublicationState.GeosquarePublicationModel.Index);

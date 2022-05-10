@@ -71,5 +71,10 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
 
+        public override string ToString()
+        {
+            return uri.ToString();
+        }
+
     }
 }

@@ -63,20 +63,14 @@ namespace Terradue.Stars.Services.Processing
             return Task.FromResult(entry.OpenReader() as Stream);
         }
 
-        public IStreamResource GetStreamable()
-        {
-            return this;
-        }
-
         public Task<Stream> GetStreamAsync(long start, long end = -1)
         {
             throw new NotImplementedException();
         }
 
-        public Task CacheHeaders(bool force = false)
+        public override string ToString()
         {
-            return Task.CompletedTask;
+            return string.Format("Zip Entry {0}", entry.FileName);
         }
-
     }
 }

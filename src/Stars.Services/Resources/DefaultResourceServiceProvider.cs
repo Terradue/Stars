@@ -5,12 +5,14 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Router;
@@ -19,26 +21,32 @@ namespace Terradue.Stars.Services.Resources
 {
     public class DefaultResourceServiceProvider : IResourceServiceProvider
     {
+        private readonly ILogger<DefaultResourceServiceProvider> logger;
         private readonly IServiceProvider _serviceProvider;
 
-        public DefaultResourceServiceProvider(IServiceProvider serviceProvider)
+        public DefaultResourceServiceProvider(ILogger<DefaultResourceServiceProvider> logger,
+                                              IServiceProvider serviceProvider)
         {
+            this.logger = logger;
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<IStreamResource> CreateStreamResourceAsync(Uri url)
+        public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource)
         {
+
             // Local file
-            if (url.IsFile)
+            if (resource.Uri.IsFile)
             {
-                return new LocalFileResource(_serviceProvider.GetRequiredService<IFileSystem>(), url.AbsolutePath, ResourceType.Unknown);
+                return new LocalFileResource(_serviceProvider.GetRequiredService<IFileSystem>(), resource.Uri.AbsolutePath, ResourceType.Unknown);
             }
 
             // S3
-            if (url.Scheme == "s3")
+            if (resource.Uri.Scheme == "s3")
             {
-                S3Url s3Url = S3Url.ParseUri(url);
                 S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
+                if (resource is IAsset)
+                    return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
+                S3Url s3Url = S3Url.ParseUri(resource.Uri);
                 return await s3ClientFactory.CreateAndLoadAsync(s3Url);
             }
 
@@ -49,45 +57,54 @@ namespace Terradue.Stars.Services.Resources
 
             var client = clientFactory.CreateClient("stars");
 
-            HttpResponseMessage response = await client.GetAsync(url);
+            HttpResponseMessage response = await client.GetAsync(resource.Uri);
 
             // S3 resource case
             if (response.Headers.Any(h => h.Key.StartsWith("x-amz")))
             {
                 try
                 {
-                    S3Url s3Url = S3Url.ParseUri(url);
                     S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
+                    if (resource is IAsset)
+                        return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
+                    S3Url s3Url = S3Url.ParseUri(resource.Uri);
                     return await s3ClientFactory.CreateAndLoadAsync(s3Url);
                 }
                 catch { }
             }
 
-            return new HttpResource(url, client, response.Content.Headers);
+            return new HttpResource(resource.Uri, client, response.Content.Headers);
         }
 
         public async Task<Stream> GetAssetStreamAsync(IAsset asset)
         {
-            return await (await CreateStreamResourceAsync(asset.Uri)).GetStreamAsync();
+            return await (await CreateStreamResourceAsync(asset)).GetStreamAsync();
         }
 
-        public Task<IAssetsContainer> GetAssetsInFolder(Uri uri)
+        public Task<IAssetsContainer> GetAssetsInFolder(IResource resource)
         {
-            return Task.FromResult<IAssetsContainer>(new LocalDirectoryResource(_serviceProvider.GetService<IFileSystem>(), uri.AbsolutePath));
+            return Task.FromResult<IAssetsContainer>(new LocalDirectoryResource(_serviceProvider.GetService<IFileSystem>(), resource.Uri.AbsolutePath));
         }
 
-        public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource)
+        public async Task<IStreamResource> GetStreamResourceAsync(IResource resource)
         {
             if (resource is IStreamResource)
             {
                 return (IStreamResource)resource;
             }
-            return await CreateStreamResourceAsync(resource.Uri);
+            IStreamResource sresource = await CreateStreamResourceAsync(resource);
+            if (resource.ContentType == null || sresource.ContentType.MediaType.EndsWith("octet-stream"))
+                return sresource;
+            if (sresource.ContentType.MediaType != resource.ContentType.MediaType)
+            {
+                throw new Exception($"Requested Stream type '{sresource.ContentType}' is different from the reference type '{resource.ContentType}'");
+            }
+            return sresource;
         }
 
         public async Task Delete(IResource resource)
         {
-            IStreamResource streamResource = await CreateStreamResourceAsync(resource);
+            IStreamResource streamResource = await GetStreamResourceAsync(resource);
             if (streamResource is IDeletableResource)
             {
                 await ((IDeletableResource)streamResource).Delete();

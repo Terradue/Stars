@@ -32,5 +32,10 @@ namespace Terradue.Stars.Services.Supplier
         public ICarrier Carrier => carrier;
 
         public string LocalPath => fileDestination.Uri.AbsolutePath;
+
+        public override string ToString()
+        {
+            return string.Format("{0} from {1} to {2} ({3})", Carrier.Id, Resource, Destination, Cost);
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         public override int Priority { get; set; }
         public override string Key { get => Id; set { } }
 
-        public override string Id => "Streaming";
+        public override string Id => "Local Streaming";
 
         public override bool CanDeliver(IResource route, IDestination destination)
         {
@@ -48,7 +48,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileResource localRoute = new LocalFileResource(fileSystem, localDelivery.LocalPath, localDelivery.Resource.ResourceType);
 
-            IStreamResource inputStreamResource = await resourceServiceProvider.CreateStreamResourceAsync(delivery.Resource);
+            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(delivery.Resource);
 
             if (inputStreamResource == null)
                 throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Resource.Uri));

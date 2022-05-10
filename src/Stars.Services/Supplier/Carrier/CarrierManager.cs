@@ -49,22 +49,22 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     {
                         try
                         {
-                            var length = asset.Value.ContentLength;
-                            length = asset.Value.ContentLength;
+                            var length = possibleAsset.ContentLength;
+                            length = possibleAsset.ContentLength;
                             if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
                             {
-                                var relUri = assetsContainer.Uri.MakeRelativeUri(asset.Value.Uri);
+                                var relUri = assetsContainer.Uri.MakeRelativeUri(possibleAsset.Uri);
                                 // Use the relative path only if a sub-directory
                                 if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
                                     relPath = Path.GetDirectoryName(relUri.ToString());
                             }
                             // If the asset contains a content disposition, use it as the filename
-                            if (asset.Value.ContentDisposition != null && !string.IsNullOrEmpty(asset.Value.ContentDisposition.FileName))
+                            if (possibleAsset.ContentDisposition != null && !string.IsNullOrEmpty(possibleAsset.ContentDisposition.FileName))
                             {
-                                if (asset.Value.ContentDisposition.FileName.Contains("/"))
+                                if (possibleAsset.ContentDisposition.FileName.Contains("/"))
                                     relPath = "";
                             }
-                            assetsDeliveryQuotations.AddRange(GetSingleDeliveryQuotations(asset.Value, destination.To(asset.Value, relPath)));
+                            assetsDeliveryQuotations.AddRange(GetSingleDeliveryQuotations(possibleAsset, destination.To(possibleAsset, relPath)));
                         }
                         catch (WebException we)
                         {

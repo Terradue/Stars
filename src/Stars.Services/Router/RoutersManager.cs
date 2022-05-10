@@ -22,7 +22,7 @@ namespace Terradue.Stars.Services.Router
         {
             // Force retrieaval of content-type from remote loacation
             IResourceServiceProvider resourceServiceProvider = serviceProvider.GetService<IResourceServiceProvider>();
-            IStreamResource streamResource = await resourceServiceProvider.CreateStreamResourceAsync(route);
+            IStreamResource streamResource = await resourceServiceProvider.GetStreamResourceAsync(route);
             return GetPlugins().Values.FirstOrDefault(r =>
             {
                 try

@@ -60,7 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
 
             //  loading properties in dictionary
             IAsset isdMetadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.XML)$");
-            IStreamResource isdMetadataFileStreamable = await resourceServiceProvider.CreateStreamResourceAsync(isdMetadataFile);
+            IStreamResource isdMetadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(isdMetadataFile);
             if (isdMetadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");

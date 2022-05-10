@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
+using Amazon.Runtime.Internal;
 using Amazon.S3;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
@@ -32,11 +33,19 @@ namespace Terradue.Stars.Services.Resources
             return s3Resource;
         }
 
-        public static S3Resource Create(this S3ClientFactory factory,
-                                        S3Url url)
+        public static async Task<S3Resource> CreateAsync(this S3ClientFactory factory,
+                                                         S3Url url)
         {
-            var Client = factory.CreateS3Client(url);
+            var Client = await factory.CreateS3ClientAsync(url);
             S3Resource s3Resource = new S3Resource(url, Client);
+            return s3Resource;
+        }
+
+        public static async Task<S3Resource> CreateAsync(this S3ClientFactory factory,
+                                                         IAsset asset)
+        {
+            var Client = await factory.CreateS3ClientAsync(S3Url.ParseUri(asset.Uri));
+            S3Resource s3Resource = new S3Resource(asset, Client);
             return s3Resource;
         }
 
@@ -53,11 +62,21 @@ namespace Terradue.Stars.Services.Resources
         public static async Task<S3Resource> CreateAndLoadAsync(this S3ClientFactory factory,
                                                                 S3Url url)
         {
-            var Client = factory.CreateS3Client(url);
+            var Client = await factory.CreateS3ClientAsync(url);
             S3Resource s3Resource = new S3Resource(url, Client);
             await s3Resource.LoadMetadata();
             return s3Resource;
         }
+
+        public static async Task<S3Resource> CreateAndLoadAsync(this S3ClientFactory factory,
+                                                                IAsset asset)
+        {
+            var Client = await factory.CreateS3ClientAsync(asset);
+            S3Resource s3Resource = new S3Resource(asset, Client);
+            await s3Resource.LoadMetadata();
+            return s3Resource;
+        }
+
 
     }
 }

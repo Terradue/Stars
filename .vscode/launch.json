@@ -803,7 +803,17 @@
             "stopAtEntry": false,
             "logging": {
                 "moduleLoad": false
-            }
+            },
+            "justMyCode": false,
+            "requireExactSource": false,
+            // "symbolOptions": {
+            //     // "searchPaths": [
+            //     //     "/data/workspace/Others/aws-sdk-net/sdk/src"
+            //     // ],
+            //     "searchMicrosoftSymbolServer": true,
+            //     "searchNuGetOrgSymbolServer": true
+            // },
+            "enableStepFiltering": false
         },
         {
             "name": ".NET Core Attach",

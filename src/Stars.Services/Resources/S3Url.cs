@@ -97,6 +97,7 @@ namespace Terradue.Stars.Services.Resources
                     s3Url.Key = uri.LocalPath.Substring(1);
                 }
                 s3Url.Region = DefaultRegion;
+                s3Url.PathStyle = true;
 
                 return s3Url;
 

@@ -43,7 +43,7 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink.Uri);
+                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink);
                             var stacCatalog = StacConvert.Deserialize<IStacCatalog>(await stacRoute.ReadAsString());
                             if (stacCatalog != null)
                                 return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri) as IResource);
@@ -64,7 +64,7 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink.Uri);
+                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink);
                             var stacItem = StacConvert.Deserialize<StacItem>(await stacRoute.ReadAsString());
                             if (stacItem != null)
                                 return (T)(new StacItemNode(stacItem, stacRoute.Uri) as IResource);

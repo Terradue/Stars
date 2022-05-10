@@ -69,5 +69,10 @@ namespace Terradue.Stars.Services.Resources
                 return _cachedHeaders;
             }
         }
+
+        public override string ToString()
+        {
+            return Uri.ToString();
+        }
     }
 }

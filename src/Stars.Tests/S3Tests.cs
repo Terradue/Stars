@@ -47,7 +47,7 @@ namespace Stars.Tests
         {
             await CreateBucketAsync("s3://cpe-acceptance-catalog/test");
             await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
-            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif"));
+            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif")));
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://cpe-acceptance-catalog/calls/857/notifications/test502.json");
             StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
@@ -65,7 +65,7 @@ namespace Stars.Tests
         {
             await CreateBucketAsync("s3://unlimited");
             S3Url s3Url = S3Url.Parse("s3://unlimited/test.bin");
-            S3Resource s3Route = s3ClientFactory.Create(s3Url);
+            S3Resource s3Route = await s3ClientFactory.CreateAsync(s3Url);
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
             s3StreamingCarrier.StartSourceCopy(
@@ -81,10 +81,10 @@ namespace Stars.Tests
         public async Task ImportHttpStreamabletoS3()
         {
             await CreateBucketAsync("s3://http");
-            S3Resource s3Route = s3ClientFactory.Create(S3Url.Parse("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
+            S3Resource s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
-            var httpRoute = await resourceServiceProvider.CreateStreamResourceAsync(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
+            var httpRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg")));
             var newRoute = await s3StreamingCarrier.StreamToS3Object(httpRoute, s3Route);
             var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Route.S3Uri.Bucket, s3Route.S3Uri.Key);
             Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(metadata.ContentLength));

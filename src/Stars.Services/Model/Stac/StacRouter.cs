@@ -66,7 +66,7 @@ namespace Terradue.Stars.Services.Model.Stac
                 {
                     try
                     {
-                        IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new Uri(route.Uri.ToString() + "/catalog.json"));
+                        IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString() + "/catalog.json")));
                         if (newRoute.ContentType.MediaType.Contains("application/json"))
                         {
                             return newRoute;

@@ -21,6 +21,9 @@ namespace Terradue.Stars.Console.Operations
         [Option]
         public static bool Verbose { get; set; }
 
+        [Option("-vv", "Trace logging", CommandOptionType.NoValue)]
+        public static bool Trace { get; set; }
+
         [Option("-conf|--config-file", "Config file to use", CommandOptionType.MultipleValue)]
         public string[] ConfigFiles { get; set; }
 
@@ -84,7 +87,7 @@ namespace Terradue.Stars.Console.Operations
         private ServiceCollection RegisterServices()
         {
 
-            logger = new StarsConsoleReporter(_console, Verbose);
+            logger = new StarsConsoleReporter(_console, GetVerbosityLevel());
 
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
             //Determines the working environment as IHostingEnvironment is unavailable in a console app
@@ -94,7 +97,7 @@ namespace Terradue.Stars.Console.Operations
             var collection = new ServiceCollection();
 
             // Add logging
-            collection.AddLogging(c => c.AddProvider(new StarsConsoleLoggerProvider(_console, Verbose))
+            collection.AddLogging(c => c.AddProvider(new StarsConsoleLoggerProvider(_console, GetVerbosityLevel()))
                         .AddFilter(logLevel => logLevel > LogLevel.Debug || Verbose));
 
             // Add Configuration
@@ -162,6 +165,18 @@ namespace Terradue.Stars.Console.Operations
 
             return collection;
 
+        }
+
+        private int GetVerbosityLevel()
+        {
+            int verbosity = 0;
+            if ( Verbose )
+                verbosity ++;
+            
+            if ( Trace )
+                verbosity = 2;
+
+            return verbosity;
         }
 
         protected abstract void RegisterOperationServices(ServiceCollection collection);

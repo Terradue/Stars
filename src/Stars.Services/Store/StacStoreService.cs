@@ -85,7 +85,7 @@ namespace Terradue.Stars.Services.Store
 
         public async Task<StacNode> Load(Uri uri)
         {
-            var resource = await resourceServiceProvider.CreateStreamResourceAsync(uri);
+            var resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(uri));
             return (await _stacRouter.Route(resource)) as StacNode;
         }
 
@@ -109,7 +109,7 @@ namespace Terradue.Stars.Services.Store
 
         private async Task LoadRootCatalogNode()
         {
-            var rootCatalogRoute = await resourceServiceProvider.CreateStreamResourceAsync(storeOptions.RootCatalogue.Uri);
+            var rootCatalogRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(storeOptions.RootCatalogue.Uri));
             IStacCatalog rootCatalog = StacConvert.Deserialize<IStacCatalog>(await rootCatalogRoute.ReadAsString());
             if (!rootCatalog.Id.Equals(storeOptions.RootCatalogue.Identifier))
                 throw new KeyNotFoundException(string.Format("No catalog with ID {0} at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri));
@@ -169,7 +169,7 @@ namespace Terradue.Stars.Services.Store
                 Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
                 Uri frontUri = new Uri(RootCatalogNode.Uri, relativeCatalogUri);
                 // First read the resource from its front uri
-                var frontResource = await resourceServiceProvider.CreateStreamResourceAsync(frontUri);
+                var frontResource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(frontUri));
                 if (!_stacRouter.CanRoute(frontResource))
                 {
                     throw new InvalidOperationException(string.Format("Front Resource {0} cannot be routed", frontUri));
@@ -346,7 +346,7 @@ namespace Terradue.Stars.Services.Store
 
         public async Task<IAssetsContainer> GetAssetsInFolder(string relPath)
         {
-            return await resourceServiceProvider.GetAssetsInFolder(new Uri(RootCatalogDestination.Uri, relPath));
+            return await resourceServiceProvider.GetAssetsInFolder(new GenericResource(new Uri(RootCatalogDestination.Uri, relPath)));
             // var assetsFolder = WebRoute.Create(new Uri(RootCatalogDestination.Uri, relPath));
             // return assetsFolder.ListFolder().Select(a => WebRoute.Create(MapToFrontUri(a.Uri)));
         }

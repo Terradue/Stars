@@ -9,13 +9,13 @@ namespace Terradue.Stars.Interface
 {
     public interface IResourceServiceProvider
     {
-        Task<IStreamResource> CreateStreamResourceAsync(Uri uri);
-
         Task<IStreamResource> CreateStreamResourceAsync(IResource resource);
+
+        Task<IStreamResource> GetStreamResourceAsync(IResource resource);
         
         Task<Stream> GetAssetStreamAsync(IAsset asset);
         
-        Task<IAssetsContainer> GetAssetsInFolder(Uri uri);
+        Task<IAssetsContainer> GetAssetsInFolder(IResource resource);
         
         Task Delete(IResource resource);
     }

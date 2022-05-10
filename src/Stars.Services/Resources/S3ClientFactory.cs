@@ -1,18 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
+using Amazon.Runtime.Internal;
 using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Credentials;
 using Terradue.Stars.Services.Plugins;
@@ -47,16 +52,113 @@ namespace Terradue.Stars.Services.Resources
             return awsOptions.CreateServiceClient<IAmazonS3>();
         }
 
+        public async Task<IAmazonS3> CreateS3ClientAsync(IAsset asset)
+        {
+            S3Url s3Url = S3Url.ParseUri(asset.Uri);
+            AmazonS3Config amazonS3Config = GetAmazonS3Config(s3Url);
+            var region = asset.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                                                  .GetProperty<string>(Stac.Extensions.Storage.StorageStacExtension.RegionField);
+            if (!string.IsNullOrEmpty(region))
+            {
+                amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(region);
+            }
+            AWSCredentials credentials = CreateCredentials(s3Url);
+
+            return await CreateS3ClientAsync(asset, credentials, amazonS3Config);
+        }
+
+        private async Task<IAmazonS3> CreateS3ClientAsync(IAsset asset, AWSCredentials credentials, AmazonS3Config amazonS3Config)
+        {
+            var s3Url = S3Url.ParseUri(asset.Uri);
+            IAmazonS3 client = new AmazonS3Client(credentials, amazonS3Config);
+            GetObjectMetadataRequest gblr = new GetObjectMetadataRequest();
+            gblr.BucketName = s3Url.Bucket;
+            gblr.Key = s3Url.Key;
+            if (asset.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+                                                  .GetProperty<bool>(Stac.Extensions.Storage.StorageStacExtension.RequesterPaysField))
+            {
+                gblr.RequestPayer = RequestPayer.Requester;
+            }
+            if (s3Options.CurrentValue.AdaptClientRegion)
+            {
+                return await AdaptClientRegion(asset, credentials, amazonS3Config, client, gblr);
+            }
+            return client;
+        }
+
+        private async Task<IAmazonS3> AdaptClientRegion(IAsset asset, AWSCredentials credentials, AmazonS3Config amazonS3Config, IAmazonS3 client, GetObjectMetadataRequest gblr)
+        {
+            try
+            {
+                var metadataResponse = await client.GetObjectMetadataAsync(gblr);
+                return client;
+            }
+            catch (AmazonS3Exception e)
+            {
+                if (e.InnerException is HttpErrorResponseException)
+                {
+                    var here = e.InnerException as HttpErrorResponseException;
+                    if (here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint.SystemName)
+                    {
+                        logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint.SystemName}. Auto-adapting.");
+                        amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
+                        return await CreateS3ClientAsync(asset, credentials, amazonS3Config);
+                    }
+                }
+            }
+            return client;
+        }
+
+        private async Task<IAmazonS3> AdaptClientRegion(S3Url s3Url, AWSCredentials credentials, AmazonS3Config amazonS3Config, IAmazonS3 client, GetObjectMetadataRequest gblr)
+        {
+            try
+            {
+                var metadataResponse = await client.GetObjectMetadataAsync(gblr);
+                return client;
+            }
+            catch (AmazonS3Exception e)
+            {
+                if (e.InnerException is HttpErrorResponseException)
+                {
+                    var here = e.InnerException as HttpErrorResponseException;
+                    if (here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint.SystemName)
+                    {
+                        logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint.SystemName}. Auto-adapting.");
+                        amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
+                        return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
+                    }
+                }
+            }
+            return client;
+        }
+
+        private async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url, AWSCredentials credentials, AmazonS3Config amazonS3Config)
+        {
+            IAmazonS3 client = new AmazonS3Client(credentials, amazonS3Config);
+            GetObjectMetadataRequest gblr = new GetObjectMetadataRequest();
+            gblr.BucketName = s3Url.Bucket;
+            gblr.Key = s3Url.Key;
+            if (s3Options.CurrentValue.AdaptClientRegion)
+            {
+                return await AdaptClientRegion(s3Url, credentials, amazonS3Config, client, gblr);
+            }
+            return client;
+        }
+
         public IAmazonS3 CreateS3Client(AWSCredentials credentials, AmazonS3Config amazonS3Config)
         {
             IAmazonS3 client = new AmazonS3Client(credentials, amazonS3Config);
             return client;
         }
 
-        public IAmazonS3 CreateS3Client(S3Url s3Url)
+        public async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url)
         {
             AmazonS3Config amazonS3Config = GetAmazonS3Config(s3Url);
             AWSCredentials credentials = CreateCredentials(s3Url);
+            if (s3Options.CurrentValue.AdaptClientRegion)
+            {
+                return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
+            }
 
             return CreateS3Client(credentials, amazonS3Config);
         }
@@ -143,10 +245,20 @@ namespace Terradue.Stars.Services.Resources
 
             AmazonS3Config amazonS3Config = CreateS3Configuration(awsOptions);
 
-            if (s3Configuration.Value?.ForcePathStyle == true)
+            if (s3Configuration.Value?.ForcePathStyle == true || s3Url.PathStyle)
             {
                 amazonS3Config.ForcePathStyle = true;
             }
+
+            if (string.IsNullOrEmpty(amazonS3Config.ServiceURL))
+            {
+                logger?.LogInformation($"No Service URL configured, defaulting to {Amazon.RegionEndpoint.USEast1}");
+                amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.USEast1;
+                // amazonS3Config.ServiceURL = "https://s3.us-east-1.amazonaws.com";
+            }
+
+            amazonS3Config.AllowAutoRedirect = true;
+            amazonS3Config.RetryMode = RequestRetryMode.Standard;
 
             return amazonS3Config;
         }
@@ -192,10 +304,10 @@ namespace Terradue.Stars.Services.Resources
                     // Skip setting RetryMode if it is set to legacy but the DefaultConfigurationMode is not legacy.
                     // This will allow the retry mode to be configured from the DefaultConfiguration.
                     // This is a workaround to handle the inability to tell if RetryMode was explicitly set.
-                    if (string.Equals(property.Name, "RetryMode", StringComparison.Ordinal) &&
-                        defaultConfig.RetryMode == RequestRetryMode.Legacy &&
-                        config.DefaultConfigurationMode != DefaultConfigurationMode.Legacy)
-                        continue;
+                    // if (string.Equals(property.Name, "RetryMode", StringComparison.Ordinal) &&
+                    //     defaultConfig.RetryMode == RequestRetryMode.Legacy &&
+                    //     config.DefaultConfigurationMode != DefaultConfigurationMode.Legacy)
+                    //     continue;
 
                     singleArray[0] = property.GetMethod.Invoke(defaultConfig, emptyArray);
                     if (singleArray[0] != null)
