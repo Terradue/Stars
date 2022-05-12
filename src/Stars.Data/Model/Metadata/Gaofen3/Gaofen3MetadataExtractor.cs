@@ -131,11 +131,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             switch (metadata.Productinfo.ProductPolar)
             {
                 // single polarization
-                case "HH":
+                case "HH": case "DH":
                     return new[] { "HH" };
                 case "HV":
                     return new[] { "HV" };
-                case "VV":
+                case "VV": case "DV":
                     return new[] { "VV" };
                 case "VH":
                     return new[] { "VH" };
@@ -216,11 +216,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 
 
             // thumbnail
-            Regex rgx = new Regex("[0-9a-zA-Z_-]*(HH|HV|VH|VV)[0-9a-zA-Z_-]*(\\.thumb\\.jpg)$");
+            Regex rgx = new Regex("[0-9a-zA-Z_-]*(HH|HV|VH|VV|DH|DV)[0-9a-zA-Z_-]*(\\.thumb\\.jpg)$");
             Match match = rgx.Match(filename);
             if (match.Success)
             {
-                string polarization = match.Groups[1].Value;
+                string polarization;
+                if (match.Groups[1].Value.ToUpper().Equals("DH")) {
+                    polarization = "HH";
+                } else if (match.Groups[1].Value.ToUpper().Equals("DV")) {
+                    polarization = "VV";
+                } else {
+                    polarization = match.Groups[1].Value;    
+                }
 
                 var thumbnailAsset = GetGenericAsset(stacItem, asset.Uri, new[] { "thumbnail" });
                 thumbnailAsset.SetProperty("sar:polarizations", new[] { polarization });
@@ -231,11 +238,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 
 
             // overview
-            rgx = new Regex("[0-9a-zA-Z_-]*(HH|HV|VH|VV)[0-9a-zA-Z_-]*(\\.jpg)$");
+            rgx = new Regex("[0-9a-zA-Z_-]*(HH|HV|VH|VV|DH|DV)[0-9a-zA-Z_-]*(\\.jpg)$");
             match = rgx.Match(filename);
             if (match.Success)
             {
-                string polarization = match.Groups[1].Value;
+                string polarization;
+                if (match.Groups[1].Value.ToUpper().Equals("DH")) {
+                    polarization = "HH";
+                } else if (match.Groups[1].Value.ToUpper().Equals("DV")) {
+                    polarization = "VV";
+                } else {
+                    polarization = match.Groups[1].Value;    
+                }
 
                 var overviewAsset = GetGenericAsset(stacItem, asset.Uri, new[] { "overview" });
                 overviewAsset.SetProperty("sar:polarizations", new[] { polarization });
@@ -247,11 +261,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             }
 
             // Tiff
-            rgx = new Regex("[0-9a-zA-Z_-]*(HH|HV|VH|VV)[0-9a-zA-Z_-]*(\\.tiff)$");
+            rgx = new Regex("[0-9a-zA-Z_-]*(HH|HV|VH|VV|DH|DV)[0-9a-zA-Z_-]*(\\.tiff)$");
             match = rgx.Match(filename);
-            if (match.Success)
-            {
-                string polarization = match.Groups[1].Value;
+            if (match.Success) {
+                string polarization;
+                if (match.Groups[1].Value.ToUpper().Equals("DH")) {
+                    polarization = "HH";
+                } else if (match.Groups[1].Value.ToUpper().Equals("DV")) {
+                    polarization = "VV";
+                } else {
+                    polarization = match.Groups[1].Value;    
+                }
                 var tiffAsset = GetGenericAsset(stacItem, asset.Uri, new[] { "amplitude", "data" });
                 tiffAsset.SetProperty("sar:polarizations", new[] { polarization });
                 tiffAsset.SetProperty($"{polarization}:qualify", GetPolarizationQualifyValue(polarization, productMetadata));
@@ -268,9 +288,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             double polarizationCalibrationConstantValue = polarization switch
             {
                 "HH" => double.Parse(productMetadata.Processinfo.CalibrationConst.HH),
+                "DH" => double.Parse(productMetadata.Processinfo.CalibrationConst.HH),
                 "HV" => double.Parse(productMetadata.Processinfo.CalibrationConst.HV),
                 "VH" => double.Parse(productMetadata.Processinfo.CalibrationConst.VH),
                 "VV" => double.Parse(productMetadata.Processinfo.CalibrationConst.VV),
+                "DV" => double.Parse(productMetadata.Processinfo.CalibrationConst.VV),
                 _ => 0
             };
 
@@ -283,9 +305,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             double polarizationQualifyValue = polarization switch
             {
                 "HH" => double.Parse(productMetadata.Imageinfo.QualifyValue.HH),
+                "DH" => double.Parse(productMetadata.Imageinfo.QualifyValue.HH),
                 "HV" => double.Parse(productMetadata.Imageinfo.QualifyValue.HV),
                 "VH" => double.Parse(productMetadata.Imageinfo.QualifyValue.VH),
                 "VV" => double.Parse(productMetadata.Imageinfo.QualifyValue.VV),
+                "DV" => double.Parse(productMetadata.Imageinfo.QualifyValue.VV),
                 _ => 0
             };
 
