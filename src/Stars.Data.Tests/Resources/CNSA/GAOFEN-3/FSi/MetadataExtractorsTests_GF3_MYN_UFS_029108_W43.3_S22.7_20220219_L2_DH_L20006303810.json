@@ -51,7 +51,7 @@
     "sar:instrument_mode": "UFS",
     "sar:frequency_band": "C",
     "sar:polarizations": [
-      "DH"
+      "HH"
     ],
     "sar:product_type": "SLP",
     "sar:observation_direction": "right",
@@ -80,14 +80,14 @@
     -22.48606
   ],
   "assets": {
-    "overview-dh": {
+    "overview-hh": {
       "type": "image/jpeg",
       "roles": [
         "overview"
       ],
       "href": "data/GF3UFS6303810/GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.jpg",
       "sar:polarizations": [
-        "DH"
+        "HH"
       ],
       "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.jpg",
       "file:size": 0
@@ -101,19 +101,19 @@
       "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.meta.xml",
       "file:size": 320362
     },
-    "thumbnail-dh": {
+    "thumbnail-hh": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
       ],
       "href": "data/GF3UFS6303810/GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.thumb.jpg",
       "sar:polarizations": [
-        "DH"
+        "HH"
       ],
       "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.thumb.jpg",
       "file:size": 0
     },
-    "amplitude-dh": {
+    "amplitude-hh": {
       "type": "image/tiff",
       "roles": [
         "amplitude",
@@ -121,10 +121,10 @@
       ],
       "href": "data/GF3UFS6303810/GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.tiff",
       "sar:polarizations": [
-        "DH"
+        "HH"
       ],
-      "DH:qualify": 1422.100464,
-      "DH:calibration_constant": 18.04,
+      "HH:qualify": 1422.100464,
+      "HH:calibration_constant": 18.04,
       "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.tiff",
       "file:size": 0
     }
