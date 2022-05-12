@@ -67,6 +67,11 @@ namespace Terradue.Stars.Services.Resources
             return await CreateS3ClientAsync(asset, credentials, amazonS3Config);
         }
 
+        public string GetPersonalStoragePolicyName(IIdentityProvider identityProvider)
+        {
+            return string.Format(s3Options.CurrentValue.Policies.PersonalStoragePolicyId, identityProvider.Name);
+        }
+
         private async Task<IAmazonS3> CreateS3ClientAsync(IAsset asset, AWSCredentials credentials, AmazonS3Config amazonS3Config)
         {
             var s3Url = S3Url.ParseUri(asset.Uri);
@@ -109,11 +114,25 @@ namespace Terradue.Stars.Services.Resources
             return client;
         }
 
-        private async Task<IAmazonS3> AdaptClientRegion(S3Url s3Url, AWSCredentials credentials, AmazonS3Config amazonS3Config, IAmazonS3 client, GetObjectMetadataRequest gblr)
+        private async Task<IAmazonS3> AdaptClientRegion(S3Url s3Url, AWSCredentials credentials, AmazonS3Config amazonS3Config, IAmazonS3 client)
         {
+            Task task = null;
+            if (string.IsNullOrEmpty(s3Url.Key))
+            {
+                GetBucketLocationRequest gblr = new GetBucketLocationRequest();
+                gblr.BucketName = s3Url.Bucket;
+                task = client.GetBucketLocationAsync(gblr);
+            }
+            else
+            {
+                GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
+                gomr.BucketName = s3Url.Bucket;
+                gomr.Key = s3Url.Key;
+                task = client.GetObjectMetadataAsync(gomr);
+            }
             try
             {
-                var metadataResponse = await client.GetObjectMetadataAsync(gblr);
+                await task;
                 return client;
             }
             catch (AmazonS3Exception e)
@@ -121,13 +140,17 @@ namespace Terradue.Stars.Services.Resources
                 if (e.InnerException is HttpErrorResponseException)
                 {
                     var here = e.InnerException as HttpErrorResponseException;
-                    if (here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint.SystemName)
+                    if (here.Response.StatusCode == System.Net.HttpStatusCode.Moved || here.Response.StatusCode == System.Net.HttpStatusCode.MovedPermanently)
                     {
-                        logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint.SystemName}. Auto-adapting.");
-                        amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
-                        return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
+                        if (here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint?.SystemName)
+                        {
+                            logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint?.SystemName}. Auto-adapting.");
+                            amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
+                            return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
+                        }
                     }
                 }
+                throw e;
             }
             return client;
         }
@@ -135,12 +158,10 @@ namespace Terradue.Stars.Services.Resources
         private async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url, AWSCredentials credentials, AmazonS3Config amazonS3Config)
         {
             IAmazonS3 client = new AmazonS3Client(credentials, amazonS3Config);
-            GetObjectMetadataRequest gblr = new GetObjectMetadataRequest();
-            gblr.BucketName = s3Url.Bucket;
-            gblr.Key = s3Url.Key;
+
             if (s3Options.CurrentValue.AdaptClientRegion)
             {
-                return await AdaptClientRegion(s3Url, credentials, amazonS3Config, client, gblr);
+                return await AdaptClientRegion(s3Url, credentials, amazonS3Config, client);
             }
             return client;
         }
@@ -170,6 +191,13 @@ namespace Terradue.Stars.Services.Resources
             AWSCredentials credentials = await GetWebIdentityCredentialsAsync(amazonS3Config.ServiceURL,
                                                                           identityProvider.GetJwtSecurityToken(),
                                                                           null);
+            if (credentials == null)
+                credentials = CreateCredentials(s3Url);
+
+            if (s3Options.CurrentValue.AdaptClientRegion)
+            {
+                return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
+            }
 
             return CreateS3Client(credentials, amazonS3Config);
         }
@@ -338,22 +366,31 @@ namespace Terradue.Stars.Services.Resources
         }
 
 
-        private static async Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceURL, JwtSecurityToken jwt, string policy)
+        public async Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceURL, JwtSecurityToken jwt, string policy)
         {
             AmazonSecurityTokenServiceConfig amazonSecurityTokenServiceConfig = new AmazonSecurityTokenServiceConfig();
             amazonSecurityTokenServiceConfig.ServiceURL = serviceURL;
             var stsClient = new AmazonSecurityTokenServiceClient(new AnonymousAWSCredentials(), amazonSecurityTokenServiceConfig);
 
-            var assumeRoleResult = await stsClient.AssumeRoleWithWebIdentityAsync(new AssumeRoleWithWebIdentityRequest
+            try
             {
-                WebIdentityToken = jwt.RawData,
-                RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
-                RoleSessionName = "MySession",
-                DurationSeconds = 3600,
-                Policy = policy
-            });
+                var assumeRoleResult = await stsClient.AssumeRoleWithWebIdentityAsync(new AssumeRoleWithWebIdentityRequest
+                {
+                    WebIdentityToken = jwt.RawData,
+                    RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
+                    RoleSessionName = "MySession",
+                    DurationSeconds = 3600,
+                    Policy = policy
+                });
+                return assumeRoleResult.Credentials;
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "Cannot get the Web Identity");
+                return null;
+            }
 
-            return assumeRoleResult.Credentials;
+
         }
 
     }

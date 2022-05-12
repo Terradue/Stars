@@ -53,7 +53,11 @@ namespace Terradue.Stars.Services.Resources
 
         public string Region { get; private set; }
 
-        public Uri Uri => new Uri(string.Format("{0}://{1}{2}/{3}", Scheme, Endpoint == null ? null : Endpoint  + "/", Bucket, Key));
+        public Uri Uri => new Uri(string.Format("{0}://{1}{2}{3}", 
+                            Scheme, 
+                            Endpoint == null ? null : Endpoint + "/", 
+                            PathStyle ? Bucket + "/" : null, 
+                            Key));
 
         public Uri EndpointUrl => Endpoint == null ? null : new Uri(string.Format("{0}://{1}", Scheme, Endpoint));
 
@@ -148,7 +152,7 @@ namespace Terradue.Stars.Services.Resources
             else
             {
                 s3Url.HostStyle = true;
-                s3Url.Bucket = prefix;
+                s3Url.Bucket = prefix.TrimEnd('.');
 
                 if (!string.IsNullOrEmpty(uri.LocalPath) && uri.LocalPath != "/")
                 {

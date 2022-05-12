@@ -4,6 +4,8 @@ namespace Terradue.Stars.Interface
 {
     public interface IIdentityProvider
     {
+        string Name { get; }
+
         JwtSecurityToken GetJwtSecurityToken();
     }
 }
