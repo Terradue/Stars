@@ -88,6 +88,7 @@ namespace Terradue.Stars.Services
         public static IServiceCollection LoadBasePlugins(this IServiceCollection services)
         {
             services.AddTransient<IRouter, StacRouter>();
+            services.AddTransient<StacRouter, StacRouter>();
             // Atom Router
             services.AddTransient<IRouter, AtomRouter>();
 

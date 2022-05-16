@@ -59,7 +59,8 @@ namespace Terradue.Stars.Services.Store
                             TranslatorManager translatorManager,
                             CarrierManager carrierManager,
                             IResourceServiceProvider resourceServiceProvider,
-                            ICredentials credentials
+                            ICredentials credentials,
+                            StacRouter stacRouter
                             )
         {
             this.storeOptions = options.Value;
@@ -69,7 +70,7 @@ namespace Terradue.Stars.Services.Store
             this.carrierManager = carrierManager;
             this.resourceServiceProvider = resourceServiceProvider;
             this.credentials = credentials;
-            this._stacRouter = new StacRouter(resourceServiceProvider, logger);
+            this._stacRouter = stacRouter;
         }
 
 

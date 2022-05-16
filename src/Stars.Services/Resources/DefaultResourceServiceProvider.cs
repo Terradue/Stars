@@ -93,7 +93,7 @@ namespace Terradue.Stars.Services.Resources
                 return (IStreamResource)resource;
             }
             IStreamResource sresource = await CreateStreamResourceAsync(resource);
-            if (resource.ContentType == null || sresource.ContentType.MediaType.EndsWith("octet-stream"))
+            if (resource.ContentType == null || resource.ContentType.MediaType.EndsWith("octet-stream") || sresource.ContentType.MediaType.EndsWith("octet-stream"))
                 return sresource;
             if (sresource.ContentType.MediaType != resource.ContentType.MediaType)
             {

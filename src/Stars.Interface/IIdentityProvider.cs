@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Terradue.Stars.Interface
 {
@@ -7,5 +10,7 @@ namespace Terradue.Stars.Interface
         string Name { get; }
 
         JwtSecurityToken GetJwtSecurityToken();
+
+        ClaimsPrincipal GetPrincipal();
     }
 }

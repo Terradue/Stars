@@ -17,9 +17,10 @@ namespace Terradue.Stars.Services.Model.Stac
     public class StacRouter : IRouter
     {
         private readonly IResourceServiceProvider resourceServiceProvider;
-        private readonly ILogger logger;
+        private readonly ILogger<StacRouter> logger;
 
-        public StacRouter(IResourceServiceProvider resourceServiceProvider, ILogger logger = null)
+        public StacRouter(IResourceServiceProvider resourceServiceProvider,
+                          ILogger<StacRouter> logger)
         {
             this.resourceServiceProvider = resourceServiceProvider;
             this.logger = logger;
@@ -52,30 +53,25 @@ namespace Terradue.Stars.Services.Model.Stac
 
         private async Task<IResource> AffineRouteAsync(IResource route)
         {
-            try
+            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())));
+            if (newRoute.ContentType.MediaType.Contains("application/json") && newRoute is IStreamResource)
             {
-                if (route.ContentType.MediaType.Contains("application/json"))
+                return newRoute;
+            }
+            // maybe the route is a folder
+            if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())))
+            {
+                try
+                {
+                    newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString() + "/catalog.json")));
+                    if (newRoute.ContentType.MediaType.Contains("application/json"))
+                    {
+                        return newRoute;
+                    }
+                }
+                catch
                 {
                     return route;
-                }
-            }
-            catch (Exception)
-            {
-                // maybe the route is a folder
-                if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())))
-                {
-                    try
-                    {
-                        IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString() + "/catalog.json")));
-                        if (newRoute.ContentType.MediaType.Contains("application/json"))
-                        {
-                            return newRoute;
-                        }
-                    }
-                    catch
-                    {
-                        return route;
-                    }
                 }
             }
             return route;
