@@ -46,7 +46,9 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
             // Let's translate the node to STAC
             var stacNode = await translatorManager.Translate<StacNode>(node);
             if (stacNode == null || !(stacNode is StacItemNode)) return null;
-            StacItemNode stacItemNode = stacNode as StacItemNode;
+            StacItem newItem = (stacNode as StacItemNode).StacItem.Clone() as StacItem;
+            newItem.Assets.Clear();
+            StacItemNode stacItemNode = new StacItemNode(newItem , null);
 
             int[] callids = stacItemNode.Properties.GetProperty<int[]>("disaster:call_ids");
 
@@ -69,22 +71,19 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
 
             string pattern = match.Groups["pattern"].Value;
 
-            IDictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-
             foreach (var callid in callids)
             {
                 logger.LogDebug("Searching for {0} for call {1}", pattern, callid);
-                assets = await GetAssets(pattern, callid);
+                await AddAssets(pattern, callid, stacItemNode);
             }
 
-            if (assets.Count == 0) return null;
+            if (stacItemNode.Assets.Count == 0) return null;
 
             return stacItemNode;
         }
 
-        private async Task<IDictionary<string, IAsset>> GetAssets(string pattern, int callid)
+        private async Task AddAssets(string pattern, int callid, StacItemNode itemNode)
         {
-            IDictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
             string username = string.Format("CHARTER_END{0}", callid.ToString().Last());
             var ftpUri = new Uri(string.Format("ftp://{0}@geodelivery.astrium-geo.com/", username));
             List<string> allLines = new List<string>();
@@ -108,10 +107,10 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                             string line = reader.ReadLine();
                             while (line != null)
                             {
-                                Regex regex = new Regex(@"^([d-])([rwxt-]{3}){3}\s+\d{1,}\s+.*?(\d{1,})\s+(\w+\s+\d{1,2}\s+(?:\d{4})?)(\d{1,2}:\d{2})?\s+(.+?)\s?$",
-                                    RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
+                                Regex regex = new Regex ( @"^([d-])([rwxt-]{3}){3}\s+\d{1,}\s+.*?(\d{1,})\s+(\w+\s+\d{1,2}\s+(?:\d{4})?)(\d{1,2}:\d{2})?\s+(.+?)\s?$",
+                                    RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace );
                                 Match detail = regex.Match(line);
-                                if (!detail.Success) continue;
+                                if ( !detail.Success ) continue;
                                 ulong contentLength = ulong.Parse(detail.Groups[3].Value);
                                 allLines.Add(detail.Groups[6].Value);
                                 Match match = Regex.Match(detail.Groups[6].Value, string.Format("CHARTER_ID{0}_(?'aoi'.+)_{1}.*\\.zip$", callid, pattern));
@@ -119,11 +118,15 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                                 {
                                     logger.LogDebug("Asset found {0}", detail.Groups[6].Value);
                                     Uri enclosure = new Uri(string.Format("ftp://{0}@geodelivery.astrium-geo.com/{1}", username, detail.Groups[6].Value));
-                                    StacAsset asset = new StacAsset(null, enclosure, new string[] { "data" },
+                                    if ( !itemNode.StacItem.Assets.ContainsKey(match.Groups["aoi"].Value) )
+                                    {
+                                        itemNode.StacItem.Assets.Remove(match.Groups["aoi"].Value);
+                                    }
+                                    itemNode.StacItem.Assets.Add(match.Groups["aoi"].Value,
+                                        new StacAsset(itemNode.StacItem, enclosure, new string[] { "data" },
                                                                 string.Format("Astrium Charter data {0} for call {1}", match.Groups["aoi"].Value, callid),
-                                                                 new System.Net.Mime.ContentType("application/zip"));
-                                    asset.FileExtension().Size = contentLength;
-                                    assets.Add(match.Groups["aoi"].Value, new StacAssetAsset(asset, null));
+                                                                 new System.Net.Mime.ContentType("application/zip")));
+                                    itemNode.StacItem.Assets[match.Groups["aoi"].Value].FileExtension().Size = contentLength;
                                 }
                                 line = reader.ReadLine();
                             }
@@ -140,7 +143,6 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                 }
                 Thread.Sleep(Convert.ToUInt16(i * 10 * 1000));
             }
-            return assets;
         }
 
         public virtual Task<IOrder> Order(IOrderable orderableRoute)
