@@ -31,7 +31,7 @@ namespace Stars.Tests
         public async Task FolderRouteAsync()
         {
             var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("file://" + Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json"))));
-            StacRouter router = new StacRouter(null); 
+            StacRouter router = new StacRouter(resourceServiceProvider, loggerFactory.CreateLogger<StacRouter>()); 
             Assert.True(router.CanRoute(route));
             route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json"))));
             Assert.True(router.CanRoute(route));
@@ -44,7 +44,7 @@ namespace Stars.Tests
             StacRouter router = new StacRouter(null, null);
             Assert.False(router.CanRoute(route));
             Assert.Empty(loggerFactory.Sink.LogEntries);
-            router = new StacRouter(null, logger);
+            router = new StacRouter(resourceServiceProvider, loggerFactory.CreateLogger<StacRouter>());;
             Assert.False(router.CanRoute(route));
             var log = Assert.Single(loggerFactory.Sink.LogEntries);
             Assert.Contains("Cannot read STAC object from", log.Message);

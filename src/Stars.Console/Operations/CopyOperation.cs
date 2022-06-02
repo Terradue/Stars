@@ -250,7 +250,7 @@ namespace Terradue.Stars.Console.Operations
 
                     if (!SkipAssets)
                     {
-                        AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFilters);
+                        AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFilters);
                         if (NoCopyCog)
                         {
                             Dictionary<string, string> cogParameters = new Dictionary<string, string>();
@@ -295,7 +295,7 @@ namespace Terradue.Stars.Console.Operations
 
                 if (AssetsFiltersOut != null && AssetsFiltersOut.Count() > 0)
                 {
-                    AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFiltersOut);
+                    AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFiltersOut);
                     FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(stacNode as IItem, assetFilters);
                     var assets = filteredAssetContainer.Assets.ToDictionary(a => a.Key, a => (a.Value as StacAssetAsset).StacAsset);
                     (stacNode as StacItemNode).StacItem.Assets.Clear();
@@ -307,46 +307,6 @@ namespace Terradue.Stars.Console.Operations
 
             return operationState;
         }
-
-        private AssetFilters CreateAssetFiltersFromOptions(string[] assetFiltersStr)
-        {
-            AssetFilters assetFilters = new AssetFilters();
-            if (assetFiltersStr == null)
-                return assetFilters;
-            Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
-            foreach (var assetFilterStr in assetFiltersStr)
-            {
-                Match propertyMatch = propertyRegex.Match(assetFilterStr);
-                if (propertyMatch.Success)
-                {
-                    if (propertyMatch.Groups["key"].Value == "roles")
-                    {
-                        assetFilters.Add(new RolesAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
-                        continue;
-                    }
-                    if (propertyMatch.Groups["key"].Value == "uri")
-                    {
-                        assetFilters.Add(new UriAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
-                        continue;
-                    }
-                    if (propertyMatch.Groups["key"].Value == "type")
-                    {
-                        assetFilters.Add(new ContentTypeAssetFilter(propertyMatch.Groups["value"].Value, null));
-                        continue;
-                    }
-                    Dictionary<string, Regex> dic = new Dictionary<string, Regex>();
-                    dic.Add(propertyMatch.Groups["key"].Value, new Regex(propertyMatch.Groups["value"].Value));
-                    assetFilters.Add(new PropertyAssetFilter(dic));
-                    continue;
-                }
-                else
-                {
-                    assetFilters.Add(new KeyAssetFilter(new Regex("^" + assetFilterStr + "$")));
-                }
-            }
-            return assetFilters;
-        }
-
         private PluginList<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
         {
             if (route is IItem)

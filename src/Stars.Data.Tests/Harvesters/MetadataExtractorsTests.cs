@@ -39,7 +39,7 @@ namespace Terradue.Data.Tests.Harvesters
         [Theory, MemberData("TestData", DisableDiscoveryEnumeration = true)]
         public async void TestExtractors(string key, string datadir, MetadataExtraction extractor)
         {
-            StacRouter stacRouter = new StacRouter(null);
+            StacRouter stacRouter = ServiceProvider.GetService<StacRouter>();
             TestItem testNode = new TestItem(datadir);
             IResource route = new ContainerNode(testNode, new Dictionary<string, IAsset>(testNode.Assets), "");
             IDestination destination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory("out/"), route);
