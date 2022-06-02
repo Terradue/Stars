@@ -84,7 +84,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
 
         private async Task<IDictionary<string, IAsset>> GetAssets(string pattern, int callid)
         {
-            IDictionary<string, StacAssetAsset> assets = new Dictionary<string, StacAssetAsset>();
+            IDictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
             string username = string.Format("CHARTER_END{0}", callid.ToString().Last());
             var ftpUri = new Uri(string.Format("ftp://{0}@geodelivery.astrium-geo.com/", username));
             List<string> allLines = new List<string>();
@@ -108,10 +108,10 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                             string line = reader.ReadLine();
                             while (line != null)
                             {
-                                Regex regex = new Regex ( @"^([d-])([rwxt-]{3}){3}\s+\d{1,}\s+.*?(\d{1,})\s+(\w+\s+\d{1,2}\s+(?:\d{4})?)(\d{1,2}:\d{2})?\s+(.+?)\s?$",
-                                    RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace );
+                                Regex regex = new Regex(@"^([d-])([rwxt-]{3}){3}\s+\d{1,}\s+.*?(\d{1,})\s+(\w+\s+\d{1,2}\s+(?:\d{4})?)(\d{1,2}:\d{2})?\s+(.+?)\s?$",
+                                    RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
                                 Match detail = regex.Match(line);
-                                if ( !detail.Success ) continue;
+                                if (!detail.Success) continue;
                                 ulong contentLength = ulong.Parse(detail.Groups[3].Value);
                                 allLines.Add(detail.Groups[6].Value);
                                 Match match = Regex.Match(detail.Groups[6].Value, string.Format("CHARTER_ID{0}_(?'aoi'.+)_{1}.*\\.zip$", callid, pattern));
@@ -119,11 +119,11 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                                 {
                                     logger.LogDebug("Asset found {0}", detail.Groups[6].Value);
                                     Uri enclosure = new Uri(string.Format("ftp://{0}@geodelivery.astrium-geo.com/{1}", username, detail.Groups[6].Value));
-                                    assets.Add(match.Groups["aoi"].Value,
-                                        new StacAssetAsset(new StacAsset(null, enclosure, new string[] { "data" },
+                                    StacAsset asset = new StacAsset(null, enclosure, new string[] { "data" },
                                                                 string.Format("Astrium Charter data {0} for call {1}", match.Groups["aoi"].Value, callid),
-                                                                 new System.Net.Mime.ContentType("application/zip")), null));
-                                    assets[match.Groups["aoi"].Value].StacAsset.FileExtension().Size = contentLength;
+                                                                 new System.Net.Mime.ContentType("application/zip"));
+                                    asset.FileExtension().Size = contentLength;
+                                    assets.Add(match.Groups["aoi"].Value, new StacAssetAsset(asset, null));
                                 }
                                 line = reader.ReadLine();
                             }
