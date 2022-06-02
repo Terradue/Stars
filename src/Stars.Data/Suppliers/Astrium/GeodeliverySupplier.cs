@@ -48,7 +48,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
             if (stacNode == null || !(stacNode is StacItemNode)) return null;
             StacItem newItem = (stacNode as StacItemNode).StacItem.Clone() as StacItem;
             newItem.Assets.Clear();
-            StacItemNode stacItemNode = new StacItemNode(newItem , null);
+            StacItemNode stacItemNode = new StacItemNode(newItem , new Uri(newItem.Id + ".json", UriKind.Relative));
 
             int[] callids = stacItemNode.Properties.GetProperty<int[]>("disaster:call_ids");
 
