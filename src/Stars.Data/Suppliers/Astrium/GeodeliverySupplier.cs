@@ -74,7 +74,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
             foreach (var callid in callids)
             {
                 logger.LogDebug("Searching for {0} for call {1}", pattern, callid);
-                await AddAssets(pattern, callid, stacItemNode);
+                assets = await GetAssets(pattern, callid);
             }
 
             if (assets.Count == 0) return null;
@@ -82,8 +82,9 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
             return stacItemNode;
         }
 
-        private async Task AddAssets(string pattern, int callid, StacItemNode itemNode)
+        private async Task<IDictionary<string, IAsset>> GetAssets(string pattern, int callid)
         {
+            IDictionary<string, StacAssetAsset> assets = new Dictionary<string, StacAssetAsset>();
             string username = string.Format("CHARTER_END{0}", callid.ToString().Last());
             var ftpUri = new Uri(string.Format("ftp://{0}@geodelivery.astrium-geo.com/", username));
             List<string> allLines = new List<string>();
@@ -118,11 +119,11 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                                 {
                                     logger.LogDebug("Asset found {0}", detail.Groups[6].Value);
                                     Uri enclosure = new Uri(string.Format("ftp://{0}@geodelivery.astrium-geo.com/{1}", username, detail.Groups[6].Value));
-                                    itemNode.StacItem.Assets.Add(match.Groups["aoi"].Value,
-                                        new StacAsset(itemNode.StacItem, enclosure, new string[] { "data" },
+                                    assets.Add(match.Groups["aoi"].Value,
+                                        new StacAssetAsset(new StacAsset(null, enclosure, new string[] { "data" },
                                                                 string.Format("Astrium Charter data {0} for call {1}", match.Groups["aoi"].Value, callid),
-                                                                 new System.Net.Mime.ContentType("application/zip")));
-                                    itemNode.StacItem.Assets[match.Groups["aoi"].Value].FileExtension().Size = contentLength;
+                                                                 new System.Net.Mime.ContentType("application/zip")), null));
+                                    assets[match.Groups["aoi"].Value].StacAsset.FileExtension().Size = contentLength;
                                 }
                                 line = reader.ReadLine();
                             }
@@ -139,6 +140,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                 }
                 Thread.Sleep(Convert.ToUInt16(i * 10 * 1000));
             }
+            return assets;
         }
 
         public virtual Task<IOrder> Order(IOrderable orderableRoute)
