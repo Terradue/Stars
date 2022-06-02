@@ -24,7 +24,9 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
         private readonly TranslatorManager translatorManager;
         private ICredentials credentials;
 
-        public GeodeliverySupplier(ILogger<GeodeliverySupplier> logger, TranslatorManager translatorManager, ICredentials credentials)
+        public GeodeliverySupplier(ILogger<GeodeliverySupplier> logger,
+                                   TranslatorManager translatorManager,
+                                   ICredentials credentials)
         {
             this.logger = logger;
             this.translatorManager = translatorManager;
@@ -48,7 +50,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
             if (stacNode == null || !(stacNode is StacItemNode)) return null;
             StacItem newItem = (stacNode as StacItemNode).StacItem.Clone() as StacItem;
             newItem.Assets.Clear();
-            StacItemNode stacItemNode = new StacItemNode(newItem , new Uri(newItem.Id + ".json", UriKind.Relative));
+            StacItemNode stacItemNode = new StacItemNode(newItem , new Uri(newItem.Id + ".json", UriKind.Relative), credentials);
 
             int[] callids = stacItemNode.Properties.GetProperty<int[]>("disaster:call_ids");
 
