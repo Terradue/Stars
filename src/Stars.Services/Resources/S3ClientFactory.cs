@@ -189,7 +189,7 @@ namespace Terradue.Stars.Services.Resources
         {
             AmazonS3Config amazonS3Config = GetAmazonS3Config(s3Url);
             AWSCredentials credentials = await GetWebIdentityCredentialsAsync(amazonS3Config.ServiceURL,
-                                                                          identityProvider.GetJwtSecurityToken(),
+                                                                          identityProvider.GetIdToken(),
                                                                           null);
             if (credentials == null)
                 credentials = CreateCredentials(s3Url);

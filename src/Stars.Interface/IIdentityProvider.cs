@@ -9,7 +9,7 @@ namespace Terradue.Stars.Interface
     {
         string Name { get; }
 
-        JwtSecurityToken GetJwtSecurityToken();
+        JwtSecurityToken GetIdToken();
 
         ClaimsPrincipal GetPrincipal();
     }
