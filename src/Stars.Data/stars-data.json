@@ -29,9 +29,9 @@
           "projectId": "cdab-282908",
           "AccountFile": "/home/emathot/Workspace/Terradue/Components/systems/cdab-cli/cdab-282908-8d011fc74cdf.json"
         },
-        "ASF":{
-          "Type":"Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
-          "ServiceUrl":"https://api.daac.asf.alaska.edu"
+        "ASF": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://api.daac.asf.alaska.edu"
         }
       },
       "Translators": {

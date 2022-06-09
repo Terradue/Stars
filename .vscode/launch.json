@@ -736,15 +736,15 @@
             "args": [
                 "copy",
                 "-si",
-                "CREO",
-                "-si",
-                "Native",
+                "ONDA",
+                // "-si",
+                // "Native",
                 "-v",
                 "-r",
                 "4",
                 "--output",
                 "/tmp/stars",
-                "https://catalog.terradue.com/sentinel2/search?format=atom&uid=S2A_MSIL2A_20211111T073141_N0301_R049_T36JVQ_20211111T102411"
+                "https://catalog.terradue.com/sentinel2/search?format=atom&uid=S2A_MSIL1C_20220609T044341_N0400_R047_T43FEB_20220609T062321"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
