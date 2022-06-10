@@ -21,7 +21,7 @@ namespace Stars.Tests
         private readonly string _networkName;
         private readonly IDockerNetwork _network;
 
-        public LocalStackFixture(IOptions<LocalStackOptions> options, S3ClientFactory s3ClientFactory)
+        public LocalStackFixture(IOptions<LocalStackOptions> options, IS3ClientFactory s3ClientFactory)
         {
             // _networkName = Guid.NewGuid().ToString();
             // var networkLabel = Guid.NewGuid().ToString();

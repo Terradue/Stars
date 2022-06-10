@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services
             // Add default credentials manager
             services.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
 
-            services.AddSingleton<S3ClientFactory>();
+            services.AddSingleton<IS3ClientFactory, S3ClientFactory>();
             services.AddHttpClient();
             services.AddHttpClient<HttpClient>("stars").ConfigurePrimaryHttpMessageHandler(sp =>
             {

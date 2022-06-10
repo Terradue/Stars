@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
@@ -14,18 +12,14 @@ using Amazon.S3.Model;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Stac;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Credentials;
-using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Services.Resources;
 
 namespace Terradue.Stars.Services.Resources
 {
-    public class S3ClientFactory
+    public class S3ClientFactory : IS3ClientFactory
     {
         private readonly ILogger<S3ClientFactory> logger;
         private readonly IOptionsMonitor<S3Options> s3Options;
@@ -211,6 +205,12 @@ namespace Terradue.Stars.Services.Resources
         public AWSCredentials CreateCredentials(S3Url s3Url)
         {
             var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString());
+
+            if ( !string.IsNullOrEmpty(s3Configuration.Value.AccessKey) != null && !string.IsNullOrEmpty(s3Configuration.Value.SecretKey))
+            {
+                return new BasicAWSCredentials(s3Configuration.Value.AccessKey, s3Configuration.Value.SecretKey);
+            }
+
             AWSOptions options = GetNamedAWSOptionsOrDefault(s3Configuration.Key);
 
             if (options != null)

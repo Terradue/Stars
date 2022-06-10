@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Resources
     public static class S3Extensions
     {
 
-        public static async Task<S3Resource> CreateAsync(this S3ClientFactory factory,
+        public static async Task<S3Resource> CreateAsync(this IS3ClientFactory factory,
                                                          S3Url url,
                                                          IIdentityProvider identityProvider)
         {
@@ -33,7 +33,7 @@ namespace Terradue.Stars.Services.Resources
             return s3Resource;
         }
 
-        public static async Task<S3Resource> CreateAsync(this S3ClientFactory factory,
+        public static async Task<S3Resource> CreateAsync(this IS3ClientFactory factory,
                                                          S3Url url)
         {
             var Client = await factory.CreateS3ClientAsync(url);
@@ -41,7 +41,7 @@ namespace Terradue.Stars.Services.Resources
             return s3Resource;
         }
 
-        public static async Task<S3Resource> CreateAsync(this S3ClientFactory factory,
+        public static async Task<S3Resource> CreateAsync(this IS3ClientFactory factory,
                                                          IAsset asset)
         {
             var Client = await factory.CreateS3ClientAsync(S3Url.ParseUri(asset.Uri));
@@ -49,7 +49,7 @@ namespace Terradue.Stars.Services.Resources
             return s3Resource;
         }
 
-        public static async Task<S3Resource> CreateAndLoadAsync(this S3ClientFactory factory,
+        public static async Task<S3Resource> CreateAndLoadAsync(this IS3ClientFactory factory,
                                                                 S3Url url,
                                                                 IIdentityProvider identityProvider)
         {
@@ -59,7 +59,7 @@ namespace Terradue.Stars.Services.Resources
             return s3Resource;
         }
 
-        public static async Task<S3Resource> CreateAndLoadAsync(this S3ClientFactory factory,
+        public static async Task<S3Resource> CreateAndLoadAsync(this IS3ClientFactory factory,
                                                                 S3Url url)
         {
             var Client = await factory.CreateS3ClientAsync(url);
@@ -68,7 +68,7 @@ namespace Terradue.Stars.Services.Resources
             return s3Resource;
         }
 
-        public static async Task<S3Resource> CreateAndLoadAsync(this S3ClientFactory factory,
+        public static async Task<S3Resource> CreateAndLoadAsync(this IS3ClientFactory factory,
                                                                 IAsset asset)
         {
             var Client = await factory.CreateS3ClientAsync(asset);

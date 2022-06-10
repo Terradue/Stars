@@ -27,7 +27,7 @@ namespace Stars.Tests
         public S3Tests(AssetService assetService,
                        IServiceProvider sp,
                        IResourceServiceProvider resourceServiceProvider,
-                       S3ClientFactory s3ClientFactory) : base(s3ClientFactory)
+                       IS3ClientFactory s3ClientFactory) : base(s3ClientFactory)
         {
             this.assetService = assetService;
             this.serviceProvider = sp;

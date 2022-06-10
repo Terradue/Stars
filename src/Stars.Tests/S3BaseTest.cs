@@ -10,8 +10,8 @@ namespace Stars.Tests
 {
     public abstract class S3BaseTest
     {
-        protected readonly S3ClientFactory s3ClientFactory;
-        protected S3BaseTest(S3ClientFactory s3ClientFactory)
+        protected readonly IS3ClientFactory s3ClientFactory;
+        protected S3BaseTest(IS3ClientFactory s3ClientFactory)
         {
             this.s3ClientFactory = s3ClientFactory;
         }

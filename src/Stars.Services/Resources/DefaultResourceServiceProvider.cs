@@ -43,7 +43,7 @@ namespace Terradue.Stars.Services.Resources
             // S3
             if (resource.Uri.Scheme == "s3")
             {
-                S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
+                IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
                 if (resource is IAsset)
                     return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
                 S3Url s3Url = S3Url.ParseUri(resource.Uri);
@@ -60,11 +60,11 @@ namespace Terradue.Stars.Services.Resources
             HttpResponseMessage response = await client.GetAsync(resource.Uri);
 
             // S3 resource case
-            if (response.Headers.Any(h => h.Key.StartsWith("x-amz")))
+            if (response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
             {
                 try
                 {
-                    S3ClientFactory s3ClientFactory = _serviceProvider.GetService<S3ClientFactory>();
+                    IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
                     if (resource is IAsset)
                         return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
                     S3Url s3Url = S3Url.ParseUri(resource.Uri);

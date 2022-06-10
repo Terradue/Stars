@@ -19,12 +19,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     {
         private readonly ILogger logger;
         private readonly IResourceServiceProvider resourceServiceProvider;
-        private readonly S3ClientFactory s3ClientFactory;
+        private readonly IS3ClientFactory s3ClientFactory;
         private readonly Regex regEx = new Regex(@"^s3://(?'hostOrBucket'[^/]*)(/.*)?$");
 
         public S3StreamingCarrier(ILogger<S3StreamingCarrier> logger,
                                   IResourceServiceProvider resourceServiceProvider,
-                                  S3ClientFactory s3ClientFactory)
+                                  IS3ClientFactory s3ClientFactory)
         {
             this.logger = logger;
             this.resourceServiceProvider = resourceServiceProvider;

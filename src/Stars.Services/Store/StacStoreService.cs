@@ -127,7 +127,6 @@ namespace Terradue.Stars.Services.Store
             await StoreResourceAtDestination(catalogNode, rootCatalogDestination);
             logger.LogInformation("Root catalog {0} created at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri);
             await LoadRootCatalogNode();
-
         }
 
         public async Task<StacNode> StoreStacNodeAtDestination(StacNode stacNode, IDestination destination)
