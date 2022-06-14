@@ -10,6 +10,7 @@ using Terradue.ServiceModel.Syndication;
 using System.Net;
 using Terradue.Stars.Interface;
 using Terradue.OpenSearch.Result;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -51,7 +52,7 @@ namespace Terradue.Stars.Services.Model.Atom
             return feed.Links.Select(l => new AtomResourceLink(l)).ToList();
         }
 
-        public IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider)
+        public IReadOnlyList<IResource> GetRoutes(IRouter router)
         {
             return feed.Items.Cast<AtomItem>().Select(item => new AtomItemNode(item, new Uri(Uri, item.Id))).Cast<IResource>().ToList();
         }

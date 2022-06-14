@@ -51,10 +51,22 @@ namespace Terradue.Stars.Services.Model.Stac
             return false;
         }
 
+        public Task<IResource> RouteLink(IResource resource, IResourceLink childLink)
+        {
+            if (!(resource is StacNode))
+            {
+                throw new Exception("Cannot route link from non-stac resource");
+            }
+            var link = resourceServiceProvider.ComposeLinkUri(childLink, resource);
+            return Route(new GenericResource(link));
+        }
+
         private async Task<IResource> AffineRouteAsync(IResource route)
         {
             IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())));
-            if (newRoute.ContentType.MediaType.Contains("application/json") && newRoute is IStreamResource)
+            if ((newRoute.ContentType.MediaType.Contains("application/json")
+                    || newRoute.ContentType.MediaType.Contains("application/geo+json"))
+                && newRoute is IStreamResource)
             {
                 return newRoute;
             }
@@ -84,7 +96,8 @@ namespace Terradue.Stars.Services.Model.Stac
                 return routeFound as StacCatalogNode;
             if (routeFound is StacItemNode)
                 return routeFound as StacItemNode;
-            if (!(routeFound is IStreamResource)) return null;
+            if (!(routeFound is IStreamResource))
+                return null;
             if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamResource).ReadAsString());

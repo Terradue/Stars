@@ -130,7 +130,7 @@ namespace Terradue.Stars.Services.Resources
 
 
             var localpath = uri.LocalPath;
-            if (!string.IsNullOrEmpty(uri.LocalPath) && uri.LocalPath != "/")
+            if (!string.IsNullOrEmpty(uri.LocalPath) && uri.LocalPath != "/" && string.IsNullOrEmpty(prefix))
             {
                 localpath = uri.LocalPath.Substring(1);
                 var index = localpath.IndexOf("/");

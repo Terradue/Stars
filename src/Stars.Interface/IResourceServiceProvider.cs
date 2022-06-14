@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Interface
@@ -18,5 +19,7 @@ namespace Terradue.Stars.Interface
         Task<IAssetsContainer> GetAssetsInFolder(IResource resource);
         
         Task Delete(IResource resource);
+
+        Uri ComposeLinkUri(IResourceLink childLink, IResource resource);
     }
 }

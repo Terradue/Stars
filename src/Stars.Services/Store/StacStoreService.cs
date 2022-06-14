@@ -14,6 +14,7 @@ using System.IO;
 using System.Net;
 using System.Linq;
 using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Services.Store
 {
@@ -26,6 +27,7 @@ namespace Terradue.Stars.Services.Store
         private readonly IResourceServiceProvider resourceServiceProvider;
         protected readonly ICredentials credentials;
         private readonly StacRouter _stacRouter;
+        private readonly AssetService assetService;
         private readonly StacStoreConfiguration storeOptions;
         private static IDestination rootCatalogDestination;
         private static StacCatalogNode rootCatalogNode;
@@ -60,8 +62,8 @@ namespace Terradue.Stars.Services.Store
                             CarrierManager carrierManager,
                             IResourceServiceProvider resourceServiceProvider,
                             ICredentials credentials,
-                            StacRouter stacRouter
-                            )
+                            StacRouter stacRouter,
+                            AssetService assetService)
         {
             this.storeOptions = options.Value;
             this.logger = logger;
@@ -71,6 +73,7 @@ namespace Terradue.Stars.Services.Store
             this.resourceServiceProvider = resourceServiceProvider;
             this.credentials = credentials;
             this._stacRouter = stacRouter;
+            this.assetService = assetService;
         }
 
 
@@ -209,6 +212,11 @@ namespace Terradue.Stars.Services.Store
                 stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
 
             RemoveDuplicateLinks(stacNode);
+        }
+
+        public async Task<AssetImportReport> ImportAssets(IItem node, StacItemNode stacItemNode, string path, AssetFilters assetFilters)
+        {
+            return await assetService.ImportAssets(node, RootCatalogDestination.To(stacItemNode, path) , assetFilters);
         }
 
         private void MakeAllLinksRelative(IStacObject stacObject, IDestination destination)

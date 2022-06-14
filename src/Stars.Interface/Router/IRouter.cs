@@ -10,5 +10,7 @@ namespace Terradue.Stars.Interface.Router
         bool CanRoute(IResource node);
 
         Task<IResource> Route(IResource node);
+
+        Task<IResource> RouteLink(IResource resource, IResourceLink childLink);
     }
 }

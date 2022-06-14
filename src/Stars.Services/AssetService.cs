@@ -146,6 +146,7 @@ namespace Terradue.Stars.Services
                 catch (Exception e)
                 {
                     logger.LogError("Error delivering asset {0} ({1}) : {2}", key, delivery.Carrier.Id, e.Message);
+                    logger.LogDebug(e.StackTrace);
                     exceptions.Add(e);
                 }
             }

@@ -14,6 +14,7 @@ using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Router;
 
@@ -111,6 +112,29 @@ namespace Terradue.Stars.Services.Resources
                 return;
             }
             throw new SystemException("Resource cannot be deleted");
+        }
+
+        public Uri ComposeLinkUri(IResourceLink childLink, IResource resource)
+        {
+            Uri linkUri = childLink.Uri;
+            // Simple case: link is relative to the resource
+            if (!childLink.Uri.IsAbsoluteUri && resource.Uri.IsAbsoluteUri)
+            {
+                linkUri = new Uri(resource.Uri, childLink.Uri);
+                return linkUri;
+            }
+            // Complex case: mixing S3
+            if (childLink.Uri.IsAbsoluteUri && resource.Uri.IsAbsoluteUri && childLink.Uri.Scheme == "s3")
+            {
+                S3Url s3Url = S3Url.ParseUri(childLink.Uri);
+                S3Url resourceS3Url = S3Url.ParseUri(resource.Uri);
+                if (s3Url.Bucket == resourceS3Url.Bucket)
+                {
+                    linkUri = new Uri(resource.Uri, "/" + s3Url.Key);
+                    return linkUri;
+                }
+            }
+            return linkUri;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Net;
 using Terradue.Stars.Interface;
 using System;
 using Itenso.TimePeriod;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -29,7 +30,7 @@ namespace Terradue.Stars.Services.Model.Stac
         public ITimePeriod DateTime => StacItem.DateTime;
 
 
-        public override IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider)
+        public override IReadOnlyList<IResource> GetRoutes(IRouter router)
         {
             return new List<IResource>();
         }

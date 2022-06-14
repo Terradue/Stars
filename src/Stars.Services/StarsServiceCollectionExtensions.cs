@@ -41,15 +41,12 @@ namespace Terradue.Stars.Services
             services.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
 
             services.AddSingleton<IS3ClientFactory, S3ClientFactory>();
+            services.AddSingleton<StarsHttpMessageHandler>();
             services.AddHttpClient();
             services.AddHttpClient<HttpClient>("stars").ConfigurePrimaryHttpMessageHandler(sp =>
             {
-                var httpClientHandler = new HttpClientHandler()
-                {
-                    UseDefaultCredentials = true,
-                    Credentials = sp.GetRequiredService<ICredentials>(),
-                    AllowAutoRedirect = true
-                };
+                var httpClientHandler = sp.GetRequiredService<StarsHttpMessageHandler>();
+                httpClientHandler.Credentials = sp.GetRequiredService<ICredentials>();
                 var cacheExpirationPerHttpResponseCode = CacheExpirationProvider.CreateSimple(TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(5));
                 return new InMemoryCacheHandler(httpClientHandler, cacheExpirationPerHttpResponseCode);
             });

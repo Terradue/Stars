@@ -40,7 +40,7 @@ namespace Stars.Tests
                 .WithEnvironment("SERVICES", "s3")
                 .WithEnvironment("DOCKER_HOST", "unix:///var/run/docker.sock")
                 .WithEnvironment("DEBUG", "1")
-                .WithPortBinding(4566, 4566)
+                .WithPortBinding(4566, 4566)    
                 // .WithNetwork(_network)
                 .WithName("localstack");
 

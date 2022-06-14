@@ -88,5 +88,16 @@ namespace Terradue.Stars.Services.Model.Atom
             return await resourceServiceProvider.GetStreamResourceAsync(node);
         }
 
+        public Task<IResource> RouteLink(IResource resource, IResourceLink childLink)
+        {
+            if (!(resource is AtomFeedCatalog) 
+                && !(resource is AtomItemNode))
+            {
+                throw new Exception("Cannot route link from non-atom resource");
+            }
+            var link = resourceServiceProvider.ComposeLinkUri(childLink, resource);
+            return Route(new GenericResource(link));
+        }
+
     }
 }

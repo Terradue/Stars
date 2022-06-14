@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stac;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -91,7 +92,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanBeRanged => false;
 
-        public abstract IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider);
+        public abstract IReadOnlyList<IResource> GetRoutes(IRouter router);
 
         public async Task<Stream> GetStreamAsync()
         {

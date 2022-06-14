@@ -5,6 +5,7 @@ using System.Net;
 using Stac;
 using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -27,10 +28,13 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public override IReadOnlyList<IResource> GetRoutes(IResourceServiceProvider resourceServiceProvider)
+        public override IReadOnlyList<IResource> GetRoutes(IRouter router)
         {
-            return StacCatalog.GetChildren(this.Uri, resourceServiceProvider).Select(child => new StacCatalogNode(child.Value, child.Key)).Cast<IResource>()
-                    .Concat(StacCatalog.GetItems(this.Uri, resourceServiceProvider).Select(item => new StacItemNode(item.Value, item.Key)))
+            StacRouter stacRouter = router as StacRouter;
+            if (stacRouter == null)
+                throw new Exception("Router is not a StacRouter");
+            return this.GetChildren(stacRouter).Cast<IResource>()
+                    .Concat(this.GetItems(stacRouter).Cast<IResource>())
                     .ToList();
         }
     }
