@@ -39,8 +39,8 @@ pipeline {
             }
             sh "dotnet tool restore"
             sh "dotnet rpm install"
-            sh "dotnet deb publish"
-            sh "dotnet zip publish"
+            sh "dotnet deb install"
+            sh "dotnet zip install"
             sh "dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
             sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
