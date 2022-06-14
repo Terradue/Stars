@@ -53,22 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../Stars.Interface/Terradue.Stars.Interface.csproj">
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <IncludeAssets>Terradue.Stars.Interface.dll</IncludeAssets>
+      <!-- <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>Terradue.Stars.Interface.dll</IncludeAssets> -->
     </ProjectReference>
     <ProjectReference Include="../Stars.Geometry/Terradue.Stars.Geometry.csproj">
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <IncludeAssets>Terradue.Stars.Geometry.dll</IncludeAssets>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="../Stars.Interface/Terradue.Stars.Interface.csproj">
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <IncludeAssets>Terradue.Stars.Interface.dll</IncludeAssets>
-    </ProjectReference>
-    <ProjectReference Include="../Stars.Geometry/Terradue.Stars.Geometry.csproj">
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <IncludeAssets>Terradue.Stars.Geometry.dll</IncludeAssets>
+      <!-- <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>Terradue.Stars.Geometry.dll</IncludeAssets> -->
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

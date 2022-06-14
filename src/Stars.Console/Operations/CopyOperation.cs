@@ -328,7 +328,7 @@ namespace Terradue.Stars.Console.Operations
             var stacRouter = ServiceProvider.GetService<StacRouter>();
             await this.storeService.Init(!AppendCatalog);
             InitRoutingTask();
-            PrepareNewRouteAsync(null, storeService.RootCatalogNode, null, null);
+            await PrepareNewRouteAsync(null, storeService.RootCatalogNode, null, null);
             routingService.OnRoutingException((res, router, ex, state) => Task.FromResult(OnRoutingException(res, router, ex, state)));
             List<IResource> routes = null;
             try
