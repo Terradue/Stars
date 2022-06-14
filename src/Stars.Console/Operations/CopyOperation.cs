@@ -325,6 +325,7 @@ namespace Terradue.Stars.Console.Operations
             this.supplierManager = ServiceProvider.GetService<SupplierManager>();
             this.stacLinkTranslator = ServiceProvider.GetService<StacLinkTranslator>();
             this.resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
+            var stacRouter = ServiceProvider.GetService<StacRouter>();
             await this.storeService.Init(!AppendCatalog);
             InitRoutingTask();
             PrepareNewRouteAsync(null, storeService.RootCatalogNode, null, null);
@@ -351,7 +352,7 @@ namespace Terradue.Stars.Console.Operations
             storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.SelectMany<StacNode, IResource>(sn =>
             {
                 if (sn is StacItemNode) return new IResource[] { sn };
-                if (sn is StacCatalogNode) return sn.GetRoutes(ServiceProvider.GetService<IResourceServiceProvider>());
+                if (sn is StacCatalogNode) return sn.GetRoutes(stacRouter);
                 return new IResource[0];
             }));
             var rootCat = await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);

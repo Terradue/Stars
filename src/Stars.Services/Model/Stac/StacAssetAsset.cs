@@ -79,10 +79,7 @@ namespace Terradue.Stars.Services.Model.Stac
             get
             {
                 ContentDisposition cd = new ContentDisposition();
-                if (asset.Properties.ContainsKey("filename"))
-                {
-                    cd.FileName = asset.GetProperty<string>("filename");
-                }
+                cd.FileName = Filename;
                 return cd;
             }
         }
