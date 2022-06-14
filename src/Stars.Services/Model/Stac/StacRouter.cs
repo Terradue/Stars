@@ -36,7 +36,8 @@ namespace Terradue.Stars.Services.Model.Stac
             var routeFound = AffineRouteAsync(route).Result;
             if (routeFound is StacNode) return true;
             if (!(routeFound is IStreamResource)) return false;
-            if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
+            if ((routeFound.ContentType.MediaType.Contains("application/json")
+                    || routeFound.ContentType.MediaType.Contains("application/geo+json")) || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 try
                 {
@@ -63,13 +64,13 @@ namespace Terradue.Stars.Services.Model.Stac
 
         private async Task<IResource> AffineRouteAsync(IResource route)
         {
-            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())));
-            if ((newRoute.ContentType.MediaType.Contains("application/json")
-                    || newRoute.ContentType.MediaType.Contains("application/geo+json"))
-                && newRoute is IStreamResource)
+            if ((route.ContentType.MediaType.Contains("application/json")
+                    || route.ContentType.MediaType.Contains("application/geo+json"))
+                && route is IStreamResource)
             {
-                return newRoute;
+                return route;
             }
+            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())));
             // maybe the route is a folder
             if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())))
             {

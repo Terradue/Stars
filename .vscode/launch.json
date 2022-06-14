@@ -653,8 +653,7 @@
                 "--output",
                 "/tmp/charter"
             ],
-            "env": {
-            },
+            "env": {},
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "integratedTerminal",
@@ -766,10 +765,10 @@
                 "-v",
                 "-r",
                 "4",
-                "--nocopy-cog",
+                // "--nocopy-cog",
                 "--output",
                 "/tmp/stars",
-                "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2B_53HPA_20210723_0_L2A"
+                "https://earth-search.s3.us-west-2.amazonaws.com/sentinel-s2-l1c/10/T/FK/2021/7/S2B_10TFK_20210713_0_L1C/S2B_10TFK_20210713_0_L1C.json"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

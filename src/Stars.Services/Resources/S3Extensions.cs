@@ -30,6 +30,9 @@ namespace Terradue.Stars.Services.Resources
         {
             var Client = await factory.CreateS3ClientAsync(url, identityProvider);
             S3Resource s3Resource = new S3Resource(url, Client);
+            var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
+            if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
+                s3Resource.RequesterPays = true;
             return s3Resource;
         }
 
@@ -38,6 +41,9 @@ namespace Terradue.Stars.Services.Resources
         {
             var Client = await factory.CreateS3ClientAsync(url);
             S3Resource s3Resource = new S3Resource(url, Client);
+            var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
+            if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
+                s3Resource.RequesterPays = true;
             return s3Resource;
         }
 
@@ -46,6 +52,9 @@ namespace Terradue.Stars.Services.Resources
         {
             var Client = await factory.CreateS3ClientAsync(S3Url.ParseUri(asset.Uri));
             S3Resource s3Resource = new S3Resource(asset, Client);
+            var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
+            if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
+                s3Resource.RequesterPays = true;
             return s3Resource;
         }
 
@@ -55,6 +64,9 @@ namespace Terradue.Stars.Services.Resources
         {
             var Client = await factory.CreateS3ClientAsync(url, identityProvider);
             S3Resource s3Resource = new S3Resource(url, Client);
+            var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
+            if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
+                s3Resource.RequesterPays = true;
             await s3Resource.LoadMetadata();
             return s3Resource;
         }
@@ -64,6 +76,9 @@ namespace Terradue.Stars.Services.Resources
         {
             var Client = await factory.CreateS3ClientAsync(url);
             S3Resource s3Resource = new S3Resource(url, Client);
+            var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
+            if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
+                s3Resource.RequesterPays = true;
             await s3Resource.LoadMetadata();
             return s3Resource;
         }
@@ -73,6 +88,9 @@ namespace Terradue.Stars.Services.Resources
         {
             var Client = await factory.CreateS3ClientAsync(asset);
             S3Resource s3Resource = new S3Resource(asset, Client);
+            var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
+            if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
+                s3Resource.RequesterPays = true;
             await s3Resource.LoadMetadata();
             return s3Resource;
         }

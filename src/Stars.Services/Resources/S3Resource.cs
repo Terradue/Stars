@@ -22,7 +22,7 @@ namespace Terradue.Stars.Services.Resources
     public class S3Resource : IStreamResource, IDeletableResource
     {
         private S3Url s3Url;
-        private readonly bool? requester_pays;
+        private bool? requester_pays;
 
         public S3Resource(S3Url url, IAmazonS3 client)
         {
@@ -66,6 +66,19 @@ namespace Terradue.Stars.Services.Resources
         public IAmazonS3 Client { get; private set; }
 
         public GetObjectMetadataResponse ObjectMetadata { get; private set; }
+
+        public bool? RequesterPays
+        {
+            get
+            {
+                return requester_pays;
+            }
+
+            set
+            {
+                requester_pays = value;
+            }
+        }
 
         public async Task<Stream> GetStreamAsync()
         {
