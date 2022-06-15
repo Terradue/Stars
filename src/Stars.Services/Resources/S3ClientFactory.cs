@@ -99,9 +99,9 @@ namespace Terradue.Stars.Services.Resources
                     var here = e.InnerException as HttpErrorResponseException;
                     if (here.Response.StatusCode == System.Net.HttpStatusCode.MovedPermanently || here.Response.StatusCode == System.Net.HttpStatusCode.Moved)
                     {
-                        if (!string.IsNullOrEmpty(here.Response.GetHeaderValue("x-amz-bucket-region")) && here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint.SystemName)
+                        if (!string.IsNullOrEmpty(here.Response?.GetHeaderValue("x-amz-bucket-region")) && here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint?.SystemName)
                         {
-                            logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint.SystemName}. Auto-adapting.");
+                            logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint?.SystemName}. Auto-adapting.");
                             amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
                             return await CreateS3ClientAsync(asset, credentials, amazonS3Config);
                         }
