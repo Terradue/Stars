@@ -1,0 +1,386 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "DS_PHR1B_201512251536493_FR1_PX_W074N18_0206_02942",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -73.94564740790015,
+          18.39569951408236
+        ],
+        [
+          -73.94741773856352,
+          18.10194700867729
+        ],
+        [
+          -73.75812110310898,
+          18.10082068549816
+        ],
+        [
+          -73.75603258047522,
+          18.39455365181851
+        ],
+        [
+          -73.94564740790015,
+          18.39569951408236
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2015-12-25T15:37:25.3Z",
+    "created": "2015-12-28T15:41:26.582Z",
+    "platform": "pleiades-1b",
+    "constellation": "pleiades",
+    "mission": "pleiades-1b",
+    "instruments": [
+      "phr-1b"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.6935638450187404,
+    "title": "PLEIADES-1B PHR-1B RASTER_ORTHO 2015-12-25 15:37:25",
+    "sat:platform_international_designator": "2012-068A",
+    "proj:epsg": 32618,
+    "proj:shape": [
+      40065,
+      65013
+    ],
+    "view:azimuth": 180.002343018733,
+    "view:sun_azimuth": 154.5338485597655,
+    "view:sun_elevation": 44.27853412514555,
+    "view:incidence_angle": 1.619579498250824,
+    "processing:level": "ORTHO/BASIC",
+    "processing:software": {
+      "IPU V_04_01": "V_04_01"
+    }
+  },
+  "bbox": [
+    -73.94741773856352,
+    18.10082068549816,
+    -73.75603258047522,
+    18.39569951408236
+  ],
+  "assets": {
+    "PMS-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PMS Ortho R1 C1",
+      "href": "data/Pleiades_P_MS_haiti_pre_event/IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R1C1.JP2",
+      "filename": "IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R1C1.JP2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B2",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1594.0
+        },
+        {
+          "name": "B1",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1830.0
+        },
+        {
+          "name": "B0",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1915.0
+        },
+        {
+          "name": "B3",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08841732979664013,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09823182711198429,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09871668311944717,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.057537399309551214,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PMS",
+      "proj:shape": [
+        40065,
+        65013
+      ]
+    },
+    "PMS-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/Pleiades_P_MS_haiti_pre_event/IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R1C1.J2W",
+      "filename": "IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R1C1.J2W",
+      "file:size": 0
+    },
+    "PMS-R2C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PMS Ortho R2 C1",
+      "href": "data/Pleiades_P_MS_haiti_pre_event/IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R2C1.JP2",
+      "filename": "IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R2C1.JP2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B2",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1594.0
+        },
+        {
+          "name": "B1",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1830.0
+        },
+        {
+          "name": "B0",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1915.0
+        },
+        {
+          "name": "B3",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08841732979664013,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09823182711198429,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09871668311944717,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.057537399309551214,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PMS",
+      "proj:shape": [
+        40065,
+        65013
+      ]
+    },
+    "PMS-R2C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/Pleiades_P_MS_haiti_pre_event/IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R2C1.J2W",
+      "filename": "IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R2C1.J2W",
+      "file:size": 0
+    },
+    "PMS-R3C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PMS Ortho R3 C1",
+      "href": "data/Pleiades_P_MS_haiti_pre_event/IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R3C1.JP2",
+      "filename": "IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R3C1.JP2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B2",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1594.0
+        },
+        {
+          "name": "B1",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1830.0
+        },
+        {
+          "name": "B0",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1915.0
+        },
+        {
+          "name": "B3",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08841732979664013,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09823182711198429,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09871668311944717,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.057537399309551214,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PMS",
+      "proj:shape": [
+        40065,
+        65013
+      ]
+    },
+    "PMS-R3C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/Pleiades_P_MS_haiti_pre_event/IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R3C1.J2W",
+      "filename": "IMG_PHR1B_PMS_201512251537253_ORT_1629599101-001_R3C1.J2W",
+      "file:size": 0
+    },
+    "metadata-PMS": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/Pleiades_P_MS_haiti_pre_event/DIM_PHR1B_PMS_201512251537253_ORT_1629599101-001.XML",
+      "filename": "DIM_PHR1B_PMS_201512251537253_ORT_1629599101-001.XML",
+      "file:size": 102743
+    },
+    "overview-PMS": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/Pleiades_P_MS_haiti_pre_event/PREVIEW_PHR1B_PMS_201512251537253_ORT_1629599101-001.JPG",
+      "filename": "PREVIEW_PHR1B_PMS_201512251537253_ORT_1629599101-001.JPG",
+      "file:size": 0
+    },
+    "thumbnail-PMS": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/Pleiades_P_MS_haiti_pre_event/ICON_PHR1B_PMS_201512251537253_ORT_1629599101-001.JPG",
+      "filename": "ICON_PHR1B_PMS_201512251537253_ORT_1629599101-001.JPG",
+      "file:size": 0
+    }
+  },
+  "links": []
+}
