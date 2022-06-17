@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Xml;
+using Stac;
 using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -12,7 +14,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
     /// Publication Model
     /// </summary>
     [DataContract]
-    public class GeosquarePublicationModel
+    public class GeosquarePublicationModel : IPublicationModel
     {
         private AuthenticationHeaderValue authorizationHeaderValue;
 
@@ -25,7 +27,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             Url = publishCatalogModel.Url;
             authorizationHeaderValue = publishCatalogModel.authorizationHeaderValue;
             Index = publishCatalogModel.Index;
-            Links = publishCatalogModel.Links;
+            AdditionalLinks = publishCatalogModel.AdditionalLinks;
             Categories = publishCatalogModel.Categories;
             CreateIndex = publishCatalogModel.CreateIndex;
         }
@@ -57,10 +59,16 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public bool CreateIndex { get; set; }
 
         /// <summary>
+        /// Collection used to publish on the catalog
+        /// </summary>
+        [DataMember]
+        public string Collection { get; set; }
+
+        /// <summary>
         /// Links to be added to the catalog items
         /// </summary>
         [DataMember]
-        public List<SyndicationLinkModel> Links { get; set; }
+        public List<StacLink> AdditionalLinks { get; set; }
 
         /// <summary>
         /// Categories to be added to the catalog items
@@ -90,23 +98,5 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             return category;
         }
     }
-
-    public class SyndicationLinkModel
-    {
-        public string Title { get; set; }
-        public string Rel { get; set; }
-        public string Href { get; set; }
-        public string Type { get; set; }
-        public List<KeyValuePair<string, string>> Attributes { get; set; }
-
-        public SyndicationLink ToSyndicationLink()
-        {
-            var link = new SyndicationLink(new System.Uri(Href), Rel, Title, Type, 0);
-            if (Attributes != null)
-            {
-                foreach (var attr in Attributes) link.AttributeExtensions.Add(new XmlQualifiedName(attr.Key), attr.Value);
-            }
-            return link;
-        }
-    }
+   
 }

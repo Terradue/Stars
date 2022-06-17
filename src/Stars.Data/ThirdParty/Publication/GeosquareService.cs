@@ -25,10 +25,11 @@ using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services;
+using System.Threading;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
-    public class GeosquareService
+    public class GeosquareService : ICatalogService
     {
         private readonly RouterService routingService;
         private readonly TranslatorManager translatorManager;
@@ -60,8 +61,13 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             this.logger = logger;
         }
 
-        public async Task<Uri> PostAsync(GeosquarePublicationModel geosquareModel)
+        public async Task<Uri> PublishAsync(IPublicationModel publicationModel, CancellationToken ct)
         {
+            GeosquarePublicationModel geosquareModel = publicationModel as GeosquarePublicationModel;
+            if ( geosquareModel == null )
+            {
+                throw new ArgumentException("Publication model is not of type GeosquarePublicationModel");
+            }
             if (geosquareModel.CreateIndex) await CreateIndexIfNotExist(geosquareModel.Index);
             InitRoutingTask();
             var guid = CalculateHash(geosquareModel.Url.ToString());
@@ -137,9 +143,9 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             }
 
             //add links
-            if (geosquarePublicationState.GeosquarePublicationModel != null && geosquarePublicationState.GeosquarePublicationModel.Links != null)
+            if (geosquarePublicationState.GeosquarePublicationModel != null && geosquarePublicationState.GeosquarePublicationModel.AdditionalLinks != null)
             {
-                foreach (var link in geosquarePublicationState.GeosquarePublicationModel.Links)
+                foreach (var link in geosquarePublicationState.GeosquarePublicationModel.AdditionalLinks)
                     atomItem.Links.Add(link.ToSyndicationLink());
             }
 
