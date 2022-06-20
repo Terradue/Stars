@@ -100,7 +100,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             // Coordinates are given as lat/lon
             bottomLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomLeft);
             bottomRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomRight);
-            topRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopRight);
+            topRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoord:Right);
             topLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopLeft);
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                 new GeoJSON.Net.Geometry.Position[5]{
@@ -206,7 +206,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             // platform & constellation
             
             properties["platform"] = metadata.ProductDefinitionData.SatelliteId.ToLower().Replace("csks", "csk");
-            properties["mission"] = (metadata.ProductInfo.MissionId == null ? "CSK" : metadata.ProductInfo.MissionId.ToLower()); 
+            properties["mission"] = (metadata.ProductInfo.MissionId == null ? "csk" : metadata.ProductInfo.MissionId.ToLower()); 
             properties["instruments"] = new string[] { "sar-x" };
             properties["sensor_type"] = "radar";
         }
