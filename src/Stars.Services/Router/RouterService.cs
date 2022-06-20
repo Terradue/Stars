@@ -99,9 +99,9 @@ namespace Terradue.Stars.Services.Router
             List<object> substates = new List<object>();
             for (int i = 0; i < subroutes.Count(); i++)
             {
-                var newRoute = subroutes.ElementAt(i);
-                var newState = await onBranchingFunction.Invoke(route, newRoute, subroutes, state);
-                var substate = await Route(newRoute, recursivity - 1, router, newState);
+                var subRoute = subroutes.ElementAt(i);
+                var newState = await onBranchingFunction.Invoke(route, subRoute, subroutes, state);
+                var substate = await Route(subRoute, recursivity - 1, router, newState);
                 substates.Add(substate);
             }
             return await afterBranchingFunction.Invoke(catalogNode, router, state, substates);

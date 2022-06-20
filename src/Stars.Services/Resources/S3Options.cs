@@ -53,7 +53,9 @@ namespace Terradue.Stars.Services.Resources
         public string AccessKey { get; set; }
         public string SecretKey { get; set; }
         public string Region { get; set; }
+        public string AuthenticationRegion { get; set; }
         public bool UseHttp { get; set; }
         public bool ForcePathStyle { get; set; }
+        public bool UserScoped { get; set; }
     }
 }

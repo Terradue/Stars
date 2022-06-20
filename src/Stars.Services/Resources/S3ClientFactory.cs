@@ -108,6 +108,10 @@ namespace Terradue.Stars.Services.Resources
                     }
                 }
             }
+            catch(Exception e)
+            {
+                return client;
+            }
             return client;
         }
 
@@ -290,6 +294,7 @@ namespace Terradue.Stars.Services.Resources
 
             amazonS3Config.AllowAutoRedirect = true;
             amazonS3Config.RetryMode = RequestRetryMode.Standard;
+            amazonS3Config.LogResponse = true;
 
             return amazonS3Config;
         }

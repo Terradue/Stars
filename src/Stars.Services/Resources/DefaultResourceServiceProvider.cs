@@ -35,6 +35,11 @@ namespace Terradue.Stars.Services.Resources
         public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource)
         {
 
+            if (resource is IStreamResource)
+            {
+                return resource as IStreamResource;
+            }
+
             // Local file
             if (resource.Uri.IsFile)
             {
@@ -71,7 +76,10 @@ namespace Terradue.Stars.Services.Resources
                     S3Url s3Url = S3Url.ParseUri(resource.Uri);
                     return await s3ClientFactory.CreateAndLoadAsync(s3Url);
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    
+                }
             }
 
             return new HttpResource(resource.Uri, client, response.Content.Headers);

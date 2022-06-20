@@ -11,6 +11,7 @@ using Terradue.Stars.Services.Router;
 using System.Linq;
 using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Supplier;
+using System.IO;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -34,18 +35,19 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public bool CanRoute(IResource node)
         {
-            if (!supportedTypes.Contains(node.ContentType.MediaType)) return false;
+            var affinedRoute = AffineRouteAsync(node).Result;
+            if (!supportedTypes.Contains(affinedRoute.ContentType.MediaType)) return false;
             try
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result));
+                feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result));
                 return true;
             }
             catch { }
             try
             {
                 Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
-                itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result));
+                itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result));
                 return true;
             }
             catch { }
@@ -53,21 +55,33 @@ namespace Terradue.Stars.Services.Model.Atom
             return false;
         }
 
+        private async Task<IResource> AffineRouteAsync(IResource route)
+        {
+            if (supportedTypes.Contains(route.ContentType.MediaType)
+                && route is IStreamResource)
+            {
+                return route;
+            }
+            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())));
+            return newRoute;
+        }
+
         public async Task<IResource> Route(IResource node)
         {
+            var affinedRoute = AffineRouteAsync(node).Result;
             try
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result)));
-                return new AtomFeedCatalog(new AtomFeed(feedFormatter.Feed), node.Uri);
+                await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result)));
+                return new AtomFeedCatalog(new AtomFeed(feedFormatter.Feed), affinedRoute.Uri);
             }
             catch (Exception)
             {
                 try
                 {
                     Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
-                    await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(node).Result.GetStreamAsync().Result)));
-                    return new AtomItemNode(new AtomItem(itemFormatter.Item), node.Uri);
+                    await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result)));
+                    return new AtomItemNode(new AtomItem(itemFormatter.Item), affinedRoute.Uri);
                 }
                 catch (Exception)
                 {

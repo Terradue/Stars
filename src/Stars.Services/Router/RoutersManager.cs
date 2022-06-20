@@ -21,13 +21,13 @@ namespace Terradue.Stars.Services.Router
         public async Task<IRouter> GetRouterAsync(IResource route)
         {
             // Force retrieaval of content-type from remote loacation
-            IResourceServiceProvider resourceServiceProvider = serviceProvider.GetService<IResourceServiceProvider>();
-            IStreamResource streamResource = await resourceServiceProvider.GetStreamResourceAsync(route);
+            // IResourceServiceProvider resourceServiceProvider = serviceProvider.GetService<IResourceServiceProvider>();
+            // IStreamResource streamResource = await resourceServiceProvider.GetStreamResourceAsync(route);
             return GetPlugins().Values.FirstOrDefault(r =>
             {
                 try
                 {
-                    return r.CanRoute(streamResource);
+                    return r.CanRoute(route);
                 }
                 catch { return false; }
             });

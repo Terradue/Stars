@@ -40,12 +40,19 @@ namespace Terradue.Stars.Services.Resources
 
         internal async Task LoadMetadata()
         {
-            GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
-            gomr.BucketName = s3Url.Bucket;
-            gomr.Key = s3Url.Key;
-            if (requester_pays.HasValue && requester_pays.Value)
-                gomr.RequestPayer = RequestPayer.Requester;
-            ObjectMetadata = await Client.GetObjectMetadataAsync(gomr);
+            try
+            {
+                GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
+                gomr.BucketName = s3Url.Bucket;
+                gomr.Key = s3Url.Key;
+                if (requester_pays.HasValue && requester_pays.Value)
+                    gomr.RequestPayer = RequestPayer.Requester;
+                ObjectMetadata = await Client.GetObjectMetadataAsync(gomr);
+            }
+            catch (AmazonS3Exception e)
+            {
+                
+            }
 
         }
 

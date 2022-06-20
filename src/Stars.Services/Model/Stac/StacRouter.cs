@@ -87,7 +87,7 @@ namespace Terradue.Stars.Services.Model.Stac
                     return route;
                 }
             }
-            return route;
+            return newRoute;
         }
 
         public async Task<IResource> Route(IResource route)

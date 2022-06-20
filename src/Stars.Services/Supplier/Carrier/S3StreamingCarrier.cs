@@ -93,9 +93,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
             try
             {
+                bool uploadStream = false;
                 // in case source is also S3, try to make a copy
                 if (inputStreamResource is S3Resource)
                 {
+                    uploadStream = true;
                     S3Resource s3InputStreamResource = inputStreamResource as S3Resource;
                     if (s3InputStreamResource.SameBucket(s3outputStreamResource))
                     {
@@ -107,7 +109,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 // If streamable cannot be ranged, pass by a blocking stream
                 Stream sourceStream = await inputStreamResource.GetStreamAsync();
                 int partSize = 10 * 1024 * 1024;
-                bool uploadStream = false;
                 try
                 {
                     var l = sourceStream.Length;
