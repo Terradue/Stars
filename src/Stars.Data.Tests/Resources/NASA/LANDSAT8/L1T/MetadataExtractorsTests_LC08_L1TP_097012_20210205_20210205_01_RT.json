@@ -5,6 +5,7 @@
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -105,6 +106,11 @@
           "center_wavelength": 0.44,
           "full_width_half_max": 0.02
         }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
       ]
     },
     "B10": {
@@ -126,6 +132,11 @@
           "common_name": "lwir11",
           "center_wavelength": 10.9,
           "full_width_half_max": 0.8
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
         }
       ]
     },
@@ -149,6 +160,11 @@
           "center_wavelength": 12.0,
           "full_width_half_max": 1.0
         }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
       ]
     },
     "B2": {
@@ -170,6 +186,11 @@
           "common_name": "blue",
           "center_wavelength": 0.48,
           "full_width_half_max": 0.06
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
         }
       ]
     },
@@ -193,6 +214,11 @@
           "center_wavelength": 0.56,
           "full_width_half_max": 0.06
         }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
       ]
     },
     "B4": {
@@ -214,6 +240,11 @@
           "common_name": "red",
           "center_wavelength": 0.65,
           "full_width_half_max": 0.04
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
         }
       ]
     },
@@ -237,6 +268,11 @@
           "center_wavelength": 0.86,
           "full_width_half_max": 0.03
         }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
       ]
     },
     "B6": {
@@ -258,6 +294,11 @@
           "common_name": "swir16",
           "center_wavelength": 1.6,
           "full_width_half_max": 0.08
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
         }
       ]
     },
@@ -281,6 +322,11 @@
           "center_wavelength": 2.2,
           "full_width_half_max": 0.2
         }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
       ]
     },
     "B8": {
@@ -303,6 +349,11 @@
           "center_wavelength": 0.59,
           "full_width_half_max": 0.18
         }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 15.0
+        }
       ]
     },
     "B9": {
@@ -324,6 +375,11 @@
           "common_name": "cirrus",
           "center_wavelength": 1.37,
           "full_width_half_max": 0.02
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
         }
       ]
     },
