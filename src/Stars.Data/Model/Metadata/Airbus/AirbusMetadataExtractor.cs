@@ -45,7 +45,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 var dimapProfiler = GetProfiler(metadata);
                 return dimapProfiler != null;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
@@ -89,7 +89,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             if (stacItemNodes.Count() == 1 && stacItemNodes.First() is StacItemNode)
             {
-                    return stacItemNodes.First() as StacItemNode;
+                return stacItemNodes.First() as StacItemNode;
             }
 
             var mergedItems = stacItemNodes.OfType<StacItemNode>().GroupBy<StacItemNode, string, StacItemNode>(item => item.Id,
@@ -356,9 +356,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             {
                 manifestAsset = FindAllAssetsFromFileNameRegex(item, @"SPOT_VOL.XML$");
             }
-            if (manifestAsset == null || !volume)
+            if (manifestAsset == null || manifestAsset.Count() == 0 || !volume)
             {
-                manifestAsset = FindAllAssetsFromFileNameRegex(item, @"DIM.*\.xml$");
+                manifestAsset = FindAllAssetsFromFileNameRegex(item, @"^DIM.*\.XML$");
                 if (manifestAsset == null)
                     throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
             }

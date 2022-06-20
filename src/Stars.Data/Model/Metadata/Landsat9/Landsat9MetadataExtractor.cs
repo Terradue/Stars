@@ -81,7 +81,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             StacItem stacItem = new StacItem(auxiliary.ProductId,
                                                 GetGeometry(auxiliary),
                                                 GetCommonMetadata(auxiliary));
-            stacItem.SetCollection("landsat-c1l1", new Uri("../landsat8.json", UriKind.Relative));
+            stacItem.SetCollection("landsat-c1l1", new Uri("../landsat9.json", UriKind.Relative));
             AddEoStacExtension(auxiliary, stacItem);
             AddSatStacExtension(auxiliary, stacItem);
             AddLandsatStacExtension(auxiliary, stacItem);

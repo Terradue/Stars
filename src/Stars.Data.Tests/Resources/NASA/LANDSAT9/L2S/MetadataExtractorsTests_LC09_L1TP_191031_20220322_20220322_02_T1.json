@@ -315,7 +315,7 @@
   "links": [
     {
       "rel": "collection",
-      "href": "../landsat8.json"
+      "href": "../landsat9.json"
     }
   ],
   "collection": "landsat-c1l1"
