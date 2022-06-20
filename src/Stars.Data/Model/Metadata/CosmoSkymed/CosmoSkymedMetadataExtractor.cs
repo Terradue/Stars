@@ -100,7 +100,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             // Coordinates are given as lat/lon
             bottomLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomLeft);
             bottomRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomRight);
-            topRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoord:Right);
+            topRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopRight);
             topLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopLeft);
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                 new GeoJSON.Net.Geometry.Position[5]{
