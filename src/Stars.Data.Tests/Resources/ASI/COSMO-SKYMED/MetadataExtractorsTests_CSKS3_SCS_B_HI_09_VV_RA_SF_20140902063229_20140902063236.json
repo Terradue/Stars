@@ -42,7 +42,7 @@
     "datetime": "2014-09-02T06:32:28.5062577Z",
     "created": "2014-09-12T11:41:39Z",
     "platform": "csk3",
-    "mission": "CSK",
+    "mission": "csk",
     "instruments": [
       "sar-x"
     ],
