@@ -27,7 +27,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         public string PixelSize_Band11 => GetProperty("BAND11_PIXEL_SIZE");
 
         public double GetPixelSizeFromBand(string band) {
-            return double.Parse(GetProperty($"BAND{$"{band.PadLeft(2, '0')}"}_PIXEL_SIZE"));
+
+            double pixelSizeBand;
+            try {
+                pixelSizeBand = double.Parse(GetProperty($"BAND{$"{band.PadLeft(2, '0')}"}_PIXEL_SIZE"));
+            }
+            catch {
+                // L1T product
+                if (band == "8") {
+                    pixelSizeBand = double.Parse(GetProperty("GRID_CELL_SIZE_PANCHROMATIC"));    
+                } else if (band == "10" || band == "11") {
+                    pixelSizeBand = double.Parse(GetProperty("GRID_CELL_SIZE_THERMAL"));
+                } else {
+                    pixelSizeBand = double.Parse(GetProperty("GRID_CELL_SIZE_REFLECTIVE"));
+                }
+                
+            }
+            return pixelSizeBand;
         }
     }
 

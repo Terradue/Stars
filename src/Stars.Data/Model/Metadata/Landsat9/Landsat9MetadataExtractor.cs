@@ -60,7 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             logger.LogDebug("Retrieving the metadata file in the product package");
             AuxiliarySpatialResolution auxiliarySpatialResolution = null;
             IAsset auxSpatialResolutionFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_ANG\\.txt)$");
-            if (auxSpatialResolutionFile != null) {
+            if (auxSpatialResolutionFile != null && auxSpatialResolutionFile.ContentLength != 0) {
                 logger.LogDebug(String.Format("ANG.txt file is {0}", auxSpatialResolutionFile.Uri));
                 IStreamable auxSpatialiResolutionFileStreamable = auxSpatialResolutionFile.GetStreamable();
                 if (auxSpatialiResolutionFileStreamable == null) {
@@ -70,6 +70,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
                 logger.LogDebug("Deserializing ANG file");
                 auxiliarySpatialResolution = await DeserializeAuxiliarySpatialResolution(auxSpatialiResolutionFileStreamable);
                 logger.LogDebug("ANG file deserialized.");
+            }
+            else {
+                // L1T products have an empty ANG.txt file, we will retrieve the spatial resolution from the MTL.txt file 
+                auxSpatialResolutionFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_MTL\\.txt)$");
+                if (auxSpatialResolutionFile != null) {
+                    logger.LogDebug(String.Format(".txt file is {0}", auxSpatialResolutionFile.Uri));
+                    IStreamable auxSpatialiResolutionFileStreamable = auxSpatialResolutionFile.GetStreamable();
+                    if (auxSpatialiResolutionFileStreamable == null) {
+                        logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
+                        return null;
+                    }
+                    logger.LogDebug("Deserializing metadata txt file");
+                    auxiliarySpatialResolution = await DeserializeAuxiliarySpatialResolution(auxSpatialiResolutionFileStreamable);
+                    logger.LogDebug("file deserialized.");
+                }
             }
             
             
@@ -179,9 +194,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             if (auxiliarySpatialResolution != null) {
                 rasterBand.SpatialResolution = auxiliarySpatialResolution.GetPixelSizeFromBand(assetKey.Remove(0, 1));
             } else if ( assetKey == "B8" ) {
-                rasterBand.SpatialResolution = 30.0;
-            } else {
                 rasterBand.SpatialResolution = 15.0;
+            } else {
+                rasterBand.SpatialResolution = 30.0;
             }
 
             if (JObject.FromObject(rasterBand).Children().Any())
