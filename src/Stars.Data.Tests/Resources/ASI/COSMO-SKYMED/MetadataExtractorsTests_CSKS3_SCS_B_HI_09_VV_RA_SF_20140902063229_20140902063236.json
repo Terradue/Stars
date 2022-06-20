@@ -1,0 +1,103 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -18.258259,
+          64.843066
+        ],
+        [
+          -18.056643,
+          64.42391
+        ],
+        [
+          -17.112008,
+          64.503662
+        ],
+        [
+          -17.299032,
+          64.923484
+        ],
+        [
+          -18.258259,
+          64.843066
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2014-09-02T06:32:28.5062577Z",
+    "end_datetime": "2014-09-02T06:32:36.1486932Z",
+    "datetime": "2014-09-02T06:32:28.5062577Z",
+    "created": "2014-09-12T11:41:39Z",
+    "platform": "csk3",
+    "mission": "CSK",
+    "instruments": [
+      "sar-x"
+    ],
+    "sensor_type": "radar",
+    "title": "CSKS3 Level-1A 2014-09-02 06:32:28",
+    "sar:observation_direction": "right",
+    "sar:instrument_mode": "HIMAGE",
+    "sar:frequency_band": "X",
+    "sar:center_frequency": 9.6,
+    "sar:polarizations": [
+      "VV"
+    ],
+    "sar:product_type": "SCS_B",
+    "sar:resolution_range": 3.0,
+    "sar:pixel_spacing_range": 1.5,
+    "sar:pixel_spacing_azimuth": 1.5,
+    "sar:resolution_azimuth": 3.0,
+    "sar:looks_range": 1.0,
+    "sar:looks_azimuth": 1.0,
+    "sar:looks_equivalent_number": 1.0,
+    "sat:orbit_state": "ascending",
+    "proj:epsg": 4326,
+    "view:incidence_angle": 34.579358,
+    "processing:level": "L1A"
+  },
+  "bbox": [
+    -18.258259,
+    64.42391,
+    -17.112008,
+    64.923484
+  ],
+  "assets": {
+    "image": {
+      "type": "application/x-hdf5",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236/CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5",
+      "filename": "CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5",
+      "file:size": 0,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236/DFDN_CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5.xml",
+      "filename": "DFDN_CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5.xml",
+      "file:size": 3670
+    }
+  },
+  "links": []
+}

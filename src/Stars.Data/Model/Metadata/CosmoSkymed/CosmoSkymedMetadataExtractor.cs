@@ -206,7 +206,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             // platform & constellation
             
             properties["platform"] = metadata.ProductDefinitionData.SatelliteId.ToLower().Replace("csks", "csk");
-            properties["mission"] = metadata.ProductInfo.MissionId.ToLower();
+            properties["mission"] = (metadata.ProductInfo.MissionId == null ? "CSK" : metadata.ProductInfo.MissionId.ToLower()); 
             properties["instruments"] = new string[] { "sar-x" };
             properties["sensor_type"] = "radar";
         }
