@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xfdu:XFDU xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xfdu="urn:ccsds:schema:xfdu:1" xsi:schemaLocation="urn:ccsds:schema:xfdu:1 ./support/schemas/rcm_prod_manifest.xsd">
+	<informationPackageMap>
+		<xfdu:contentUnit unitType="RCM Product Information Package" textInfo="RCM GRD Product">
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlicense_pdf"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_product_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_geodeticCoordinate_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproduct_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HH_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HH_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HH_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HV_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HV_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HV_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_noiseLevels_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HH_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_noiseLevels_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HV_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_incidenceAngles_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDincidenceAngles_xml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRD2116811_1_HH_tif"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRD2116811_1_HV_tif"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_mapOverlay_xsdSchema">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDmapOverlay_kml"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductPreview_html"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductOverview_tif"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Imagery Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductOverview_png"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlogo_png"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDreadme_txt"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlabel_txt"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDclassification_txt"/>
+			</xfdu:contentUnit>
+			<xfdu:contentUnit unitType="Metadata Unit">
+				<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_product_xslt"/>
+			</xfdu:contentUnit>
+		</xfdu:contentUnit>
+	</informationPackageMap>
+	<metadataSection>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlicense_pdfMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlicense_pdf"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproduct_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproduct_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HH_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HH_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HH_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HH_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HH_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HH_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HV_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HV_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HV_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HV_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HV_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HV_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HH_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HH_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HV_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HV_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDincidenceAngles_xmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDincidenceAngles_xml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDmapOverlay_kmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDmapOverlay_kml"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductPreview_htmlMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductPreview_html"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlogo_pngMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlogo_png"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDreadme_txtMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDreadme_txt"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlabel_txtMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlabel_txt"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDclassification_txtMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDclassification_txt"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_product_xsltMetadata" classification="DESCRIPTION" category="DMD">
+			<dataObjectPointer dataObjectID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_product_xslt"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_dataTypes.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_doppler_grid_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_doppler_grid.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_geodeticCoordinate_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_geodeticCoordinate.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_identifiers.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_incidenceAngles_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_incidenceAngles.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_compactPoleGainImb_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_compactPoleGainImb.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_lists.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_lut.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_manifest_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_manifest.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_mapOverlay_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_mapOverlay.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_noiseLevels_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_noiseLevels.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_product_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_product.xsd"/>
+		</metadataObject>
+		<metadataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema" classification="SYNTAX" category="REP">
+			<metadataReference locatorType="URL" href="support/schemas/rcm_prod_units.xsd"/>
+		</metadataObject>
+	</metadataSection>
+	<dataObjectSection>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlicense_pdf">
+			<byteStream mimeType="application/pdf" size="246203">
+				<fileLocation locatorType="URL" href="license.pdf"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproduct_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_product_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_geodeticCoordinate_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="740911">
+				<fileLocation locatorType="URL" href="metadata/product.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HH_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="106967">
+				<fileLocation locatorType="URL" href="metadata/calibration/lutBeta_HH.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HH_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="106967">
+				<fileLocation locatorType="URL" href="metadata/calibration/lutSigma_HH.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HH_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="106967">
+				<fileLocation locatorType="URL" href="metadata/calibration/lutGamma_HH.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutBeta_HV_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="106967">
+				<fileLocation locatorType="URL" href="metadata/calibration/lutBeta_HV.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutSigma_HV_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="106967">
+				<fileLocation locatorType="URL" href="metadata/calibration/lutSigma_HV.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlutGamma_HV_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lut_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="106967">
+				<fileLocation locatorType="URL" href="metadata/calibration/lutGamma_HV.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HH_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_noiseLevels_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="7959">
+				<fileLocation locatorType="URL" href="metadata/calibration/noiseLevels_HH.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDnoiseLevels_HV_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_noiseLevels_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_lists_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_identifiers_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_dataTypes_xsdSchema">
+			<byteStream mimeType="text/xml" size="7959">
+				<fileLocation locatorType="URL" href="metadata/calibration/noiseLevels_HV.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDincidenceAngles_xml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_incidenceAngles_xsdSchema RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_units_xsdSchema">
+			<byteStream mimeType="text/xml" size="252322">
+				<fileLocation locatorType="URL" href="metadata/calibration/incidenceAngles.xml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRD2116811_1_HH_tif">
+			<byteStream mimeType="application/octet-stream" size="90088132">
+				<fileLocation locatorType="URL" href="imagery/2116811_1_HH.tif"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRD2116811_1_HV_tif">
+			<byteStream mimeType="application/octet-stream" size="90088132">
+				<fileLocation locatorType="URL" href="imagery/2116811_1_HV.tif"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDmapOverlay_kml" repID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_mapOverlay_xsdSchema">
+			<byteStream mimeType="text/xml" size="3521">
+				<fileLocation locatorType="URL" href="preview/mapOverlay.kml"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductPreview_html">
+			<byteStream mimeType="text/html" size="3350">
+				<fileLocation locatorType="URL" href="preview/productPreview.html"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductOverview_tif">
+			<byteStream mimeType="application/octet-stream" size="1524507">
+				<fileLocation locatorType="URL" href="preview/productOverview.tif"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDproductOverview_png">
+			<byteStream mimeType="application/octet-stream" size="1243246">
+				<fileLocation locatorType="URL" href="preview/productOverview.png"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlogo_png">
+			<byteStream mimeType="image/png" size="15064">
+				<fileLocation locatorType="URL" href="preview/icons/logo.png"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDreadme_txt">
+			<byteStream mimeType="text/plain" size="35">
+				<fileLocation locatorType="URL" href="support/readme.txt"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDlabel_txt">
+			<byteStream mimeType="text/plain" size="195">
+				<fileLocation locatorType="URL" href="support/label.txt"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDclassification_txt">
+			<byteStream mimeType="text/plain" size="162">
+				<fileLocation locatorType="URL" href="support/classification.txt"/>
+			</byteStream>
+		</dataObject>
+		<dataObject ID="RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRDrcm_prod_product_xslt">
+			<byteStream mimeType="text/xml" size="3567">
+				<fileLocation locatorType="URL" href="support/rcm_prod_product.xslt"/>
+			</byteStream>
+		</dataObject>
+	</dataObjectSection>
+</xfdu:XFDU>

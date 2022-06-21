@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using ProjNet.CoordinateSystems;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
 using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
@@ -54,11 +56,28 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
                 return null;
             }
-
+            
+            
+            
+            logger.LogDebug("Retrieving the metadata file in the product package");
+            AuxiliarySpatialResolution auxiliarySpatialResolution = null;
+            IAsset auxSpatialResolutionFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_ANG\\.txt)$");
+            if (auxSpatialResolutionFile != null) {
+                logger.LogDebug(String.Format("ANG.txt file is {0}", auxSpatialResolutionFile.Uri));
+                IStreamable auxSpatialiResolutionFileStreamable = auxSpatialResolutionFile.GetStreamable();
+                if (auxSpatialiResolutionFileStreamable == null) {
+                    logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
+                    return null;
+                }
+                logger.LogDebug("Deserializing ANG file");
+                auxiliarySpatialResolution = await DeserializeAuxiliarySpatialResolution(auxSpatialiResolutionFileStreamable);
+                logger.LogDebug("ANG file deserialized.");
+            }
+            
+            
             logger.LogDebug("Deserializing metadata");
             Auxiliary auxiliary = await DeserializeAuxiliary(auxFileStreamable);
-
-            logger.LogDebug("Metadata deserialized. Starting metadata generation");
+            logger.LogDebug("Metadata file deserialized. Starting metadata generation");
 
             StacItem stacItem = new StacItem(auxiliary.ProductId,
                                                 GetGeometry(auxiliary),
@@ -72,7 +91,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             AddProcessingStacExtension(auxiliary, stacItem);
             AddOtherProperties(auxiliary, stacItem);
 
-            AddAssets(stacItem, auxiliary, item);
+            AddAssets(stacItem, auxiliary, auxiliarySpatialResolution, item);
 
             // AddEoBandPropertyInItem(stacItem);
 
@@ -93,39 +112,39 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             eo.Bands = stacItem.Assets.Values.Where(a => a.EoExtension().Bands != null).SelectMany(a => a.EoExtension().Bands).ToArray();
         }
 
-        private void AddAssets(StacItem stacItem, Auxiliary auxiliary, IAssetsContainer assetsContainer)
+        private void AddAssets(StacItem stacItem, Auxiliary auxiliary, AuxiliarySpatialResolution auxiliarySpatialResolution, IAssetsContainer assetsContainer)
         {
             foreach (var asset in assetsContainer.Assets.OrderBy(a => a.Key))
             {
-                AddAsset(stacItem, auxiliary, asset.Value);
+                AddAsset(stacItem, auxiliary, auxiliarySpatialResolution, asset.Value);
             }
         }
 
-        private void AddAsset(StacItem stacItem, Auxiliary auxiliary, IAsset asset)
+        private void AddAsset(StacItem stacItem, Auxiliary auxiliary, AuxiliarySpatialResolution auxiliarySpatialResolution, IAsset asset)
         {
             string filename = Path.GetFileName(asset.Uri.ToString());
             if (filename.EndsWith("_B1.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B01.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B1", asset, EoBandCommonName.coastal, 0.44, 0.02, 30, auxiliary);
+                AddbandAsset(stacItem, "B1", asset, EoBandCommonName.coastal, 0.44, 0.02, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B2.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B02.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B2", asset, EoBandCommonName.blue, 0.48, 0.06, 30, auxiliary);
+                AddbandAsset(stacItem, "B2", asset, EoBandCommonName.blue, 0.48, 0.06, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B3.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B03.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B3", asset, EoBandCommonName.green, 0.56, 0.06, 30, auxiliary);
+                AddbandAsset(stacItem, "B3", asset, EoBandCommonName.green, 0.56, 0.06, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B4.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B04.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B4", asset, EoBandCommonName.red, 0.65, 0.04, 30, auxiliary);
+                AddbandAsset(stacItem, "B4", asset, EoBandCommonName.red, 0.65, 0.04, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B5.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B05.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B5", asset, EoBandCommonName.nir, 0.86, 0.03, 30, auxiliary);
+                AddbandAsset(stacItem, "B5", asset, EoBandCommonName.nir, 0.86, 0.03, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B6.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B06.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B6", asset, EoBandCommonName.swir16, 1.6, 0.08, 30, auxiliary);
+                AddbandAsset(stacItem, "B6", asset, EoBandCommonName.swir16, 1.6, 0.08, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B7.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B07.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B7", asset, EoBandCommonName.swir22, 2.2, 0.2, 30, auxiliary);
+                AddbandAsset(stacItem, "B7", asset, EoBandCommonName.swir22, 2.2, 0.2, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B8.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B08.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B8", asset, EoBandCommonName.pan, 0.59, 0.18, 15, auxiliary);
+                AddbandAsset(stacItem, "B8", asset, EoBandCommonName.pan, 0.59, 0.18, 15, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B9.TIF", true, CultureInfo.InvariantCulture) || filename.EndsWith("_B09.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B9", asset, EoBandCommonName.cirrus, 1.37, 0.02, 30, auxiliary);
+                AddbandAsset(stacItem, "B9", asset, EoBandCommonName.cirrus, 1.37, 0.02, 30, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B10.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B10", asset, EoBandCommonName.lwir11, 10.9, 0.8, 100, auxiliary);
+                AddbandAsset(stacItem, "B10", asset, EoBandCommonName.lwir11, 10.9, 0.8, 100, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_B11.TIF", true, CultureInfo.InvariantCulture))
-                AddbandAsset(stacItem, "B11", asset, EoBandCommonName.lwir12, 12, 1, 100, auxiliary);
+                AddbandAsset(stacItem, "B11", asset, EoBandCommonName.lwir12, 12, 1, 100, auxiliary, auxiliarySpatialResolution);
             if (filename.EndsWith("_BQA.TIF", true, CultureInfo.InvariantCulture))
                 stacItem.Assets.Add("BQA", GetGenericAsset(stacItem, asset, "BQA"));
             if (filename.EndsWith("_MTL.txt", true, CultureInfo.InvariantCulture))
@@ -134,7 +153,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
                 stacItem.Assets.Add("angle_coefficient", GetGenericAsset(stacItem, asset, "metadata"));
         }
 
-        private void AddbandAsset(StacItem stacItem, string assetKey, IAsset asset, EoBandCommonName common_name, double center_wavelength, double full_width_half_max, double gsd, Auxiliary auxiliary)
+        private void AddbandAsset(StacItem stacItem, string assetKey, IAsset asset, EoBandCommonName common_name, double center_wavelength, double full_width_half_max, double gsd, Auxiliary auxiliary, AuxiliarySpatialResolution auxiliarySpatialResolution)
         {
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, asset.Uri,
                 new System.Net.Mime.ContentType(MimeTypes.GetMimeType(asset.Uri.ToString()))
@@ -155,6 +174,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 
             stacAsset.SetProperty("gsd", gsd);
             stacAsset.EoExtension().Bands = new EoBandObject[1] { eoBandObject };
+            
+            // adding raster band
+            RasterBand rasterBand = new RasterBand();
+            if (auxiliarySpatialResolution != null) {
+                rasterBand.SpatialResolution = auxiliarySpatialResolution.GetPixelSizeFromBand(assetKey.Remove(0, 1));
+            } else if ( assetKey == "B8" ) {
+                rasterBand.SpatialResolution = 30.0;
+            } else {
+                rasterBand.SpatialResolution = 15.0;
+            }
+
+            if (JObject.FromObject(rasterBand).Children().Any())
+                stacAsset.RasterExtension().Bands = new RasterBand[1] { rasterBand };
+            
             stacItem.Assets.Add(assetKey, stacAsset);
         }
 
@@ -327,6 +360,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             return auxiliary;
         }
 
+        /// <summary>Deserialize Auxiliary from xml to class</summary>
+        /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
+        /// <returns>The deserialized metadata object.</returns>
+        public static async Task<AuxiliarySpatialResolution> DeserializeAuxiliarySpatialResolution(IStreamable auxiliaryFile)
+        {
+            AuxiliarySpatialResolution auxiliary = new AuxiliarySpatialResolution();
+            using (var stream = await auxiliaryFile.GetStreamAsync())
+            {
+                auxiliary.Load(stream);
+            }
+            return auxiliary;
+        }
+        
         public override bool CanProcess(IResource route, IDestination destinations)
         {
             IItem item = route as IItem;

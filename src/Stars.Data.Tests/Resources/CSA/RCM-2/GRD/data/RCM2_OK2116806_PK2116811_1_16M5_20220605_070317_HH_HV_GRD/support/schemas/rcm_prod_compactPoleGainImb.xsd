@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_compactPoleGainImb.xsd@@/main/3 ( Pitt: 37906 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+Y. Yang       07-Nov-2017   Original Definition RCM-SP-53-0419 Issue 2/5
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:rcm_prod="rcmGsProductSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_units.xsd"/>
+	<xsd:include schemaLocation="rcm_prod_lists.xsd"/>
+	<xsd:complexType name="subBeamImbRxDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+          Sub-Beam Imbalance on Receive Data Store
+   		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="subBeamID" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+                 Sub Beam ID for the given stepped receive pointing step, from 1 to the Number Of Stepped Receive Pointing Steps.  
+              </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbRxIncrement" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>
+               The receive imbalance (V relative to H) angle increment between each of the gain or phase values given below, in degrees.  
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbRxSize" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+             The number of gain or phase values given in each of the receive imbalance (V relative to H)  arrays below.  
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbRxNominalLookAngle" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>
+               The elevation angle at the centre of the receive imbalance gain or phase values given below.  
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbRxGainValues">
+				<xsd:annotation>
+					<xsd:documentation>
+            The receive gain imbalance (V relative to H), specified in dB as a function of elevation angle.  The number of values is the imbRxSize given above.  
+          </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:compactImbValuesList">
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="imbRxPhaseValues">
+				<xsd:annotation>
+					<xsd:documentation>
+             The receive phase imbalance (V relative to H), specified in degrees as a function of elevation angle.  The number of values is the imbRxSize given above.  
+         </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:compactImbValuesList">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="beamImbPatternDataStore">
+		<xsd:annotation>
+			<xsd:documentation> 
+         The Beam Imbalance Data Store
+   		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="beam" type="rcm_prod:beamList">
+				<xsd:annotation>
+					<xsd:documentation>
+                 Beam for this record. Values are same as those used in the beam list.
+              </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbTxIncrement" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>
+                The transmit imbalance (V relative to H) angle increment between each of the gain or phase values given below, in degrees. 
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbTxSize" type="xsd:integer">
+				<xsd:annotation>
+					<xsd:documentation>
+             The number of gain or phase values given in each of the transmit imbalance (V relative to H) arrays below.  
+          </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbTxNominalLookAngle" type="xsd:double">
+				<xsd:annotation>
+					<xsd:documentation>
+               The elevation angle at the centre of the transmit imbalance gain or phase values given below.  
+            </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="imbTxGainValues">
+				<xsd:annotation>
+					<xsd:documentation>
+             The transmit gain imbalance (V relative to H), specified in dB as a function of elevation angle.  The number of values is the imbTxSize given above.  
+         </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:compactImbValuesList">
+							<xsd:attribute name="units" type="rcm_prod:powerUnits" use="required" fixed="dB"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="imbTxPhaseValues">
+				<xsd:annotation>
+					<xsd:documentation>
+             The transmit phase imbalance (V relative to H), specified in degrees as a function of elevation angle.  The number of values is the imbRxSize given above.  
+         </xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:simpleContent>
+						<xsd:extension base="rcm_prod:compactImbValuesList">
+							<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="subBeamImbRxPattern" type="rcm_prod:subBeamImbRxDataStore" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>
+             The transmit phase imbalance (V relative to H), specified in degrees as a function of elevation angle.  The number of values is the imbRxSize given above.  
+         </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="compactPoleGainImbalance">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Compact Pol Gain Imbalance (V relative to H) on Transmit and Receive
+The information provided in this record corresponds to polarization = "CV" only.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="beamImbPattern" type="rcm_prod:beamImbPatternDataStore" minOccurs="1" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>
+						   A set of records that collectively describes all of the beams imbalances for polarization = "CV"  channel.Each record supplies the imbalance (V relative to H) on transmit for a given beam and on receive for a given beam (or sub-beam if applicable).
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

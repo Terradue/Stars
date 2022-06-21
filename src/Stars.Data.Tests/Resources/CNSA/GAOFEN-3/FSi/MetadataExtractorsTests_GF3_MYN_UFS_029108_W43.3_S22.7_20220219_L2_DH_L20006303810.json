@@ -1,0 +1,133 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -43.493289,
+          -22.801116
+        ],
+        [
+          -43.163805,
+          -22.875316
+        ],
+        [
+          -43.08491,
+          -22.560035
+        ],
+        [
+          -43.413278,
+          -22.48606
+        ],
+        [
+          -43.493289,
+          -22.801116
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2022-02-19T08:33:23.753066Z",
+    "start_datetime": "2022-02-19T08:33:23.753066Z",
+    "end_datetime": "2022-02-19T08:33:29.050428Z",
+    "created": "2022-02-21T13:24:17Z",
+    "platform": "gaofen-3",
+    "constellation": "gaofen-3",
+    "mission": "gaofen-3",
+    "instruments": [
+      "SAR"
+    ],
+    "sensor_type": "radar",
+    "sar:instrument_mode": "UFS",
+    "sar:frequency_band": "C",
+    "sar:polarizations": [
+      "HH"
+    ],
+    "sar:product_type": "SLP",
+    "sar:observation_direction": "right",
+    "sar:pixel_spacing_range": 1.5,
+    "sar:pixel_spacing_azimuth": 1.5,
+    "sar:looks_range": 1.0,
+    "sar:looks_azimuth": 1.0,
+    "sat:absolute_orbit": 29108,
+    "sat:orbit_state": "descending",
+    "view:off_nadir": 18.68,
+    "view:incidence_angle": 19.030093,
+    "processing:level": "L2",
+    "product_type": "SLP",
+    "proj:epsg": null,
+    "proj:wkt2": "GEOCCS[\"WGS84 Geocentric\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], AXIS[\"X\", OTHER], AXIS[\"Y\", OTHER], AXIS[\"Z\", OTHER]]",
+    "proj:shape": [
+      27967,
+      28727
+    ],
+    "title": "GAOFEN-3 SAR L2 2022-02-19 08:33:23"
+  },
+  "bbox": [
+    -43.493289,
+    -22.875316,
+    -43.08491,
+    -22.48606
+  ],
+  "assets": {
+    "overview-hh": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF3UFS6303810/GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.jpg",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.jpg",
+      "file:size": 0
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF3UFS6303810/GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.meta.xml",
+      "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.meta.xml",
+      "file:size": 320362
+    },
+    "thumbnail-hh": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF3UFS6303810/GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.thumb.jpg",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.thumb.jpg",
+      "file:size": 0
+    },
+    "amplitude-hh": {
+      "type": "image/tiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/GF3UFS6303810/GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.tiff",
+      "sar:polarizations": [
+        "HH"
+      ],
+      "HH:qualify": 1422.100464,
+      "HH:calibration_constant": 18.04,
+      "filename": "GF3_MYN_UFS_029108_W43.3_S22.7_20220219_L2_DH_L20006303810.tiff",
+      "file:size": 0
+    }
+  },
+  "links": []
+}

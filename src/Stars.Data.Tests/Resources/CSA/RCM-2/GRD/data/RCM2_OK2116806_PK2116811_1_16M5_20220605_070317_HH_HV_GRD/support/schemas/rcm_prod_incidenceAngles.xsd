@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!--=========================================================================
+Filename      : rcm_prod_incidenceAngles.xsd@@/main/7 ( Pitt: 36700 )
+Project       : RCM-GS
+Module        : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Data Store Schema definition
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+E. Jenkins    19-Nov-2016   Consolidated schema files
+C. Vigneron   28-Oct-2016   Updated stepSize description
+=============================================================================-->
+<!-- 67890123456789012345678901234567890123456789012345678901234567890123456 -->
+<xsd:schema xmlns:rcm_prod="rcmGsProductSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="rcmGsProductSchema" elementFormDefault="qualified">
+	<xsd:include schemaLocation="rcm_prod_units.xsd"/>
+	<xsd:element name="incidenceAngles">
+		<xsd:annotation>
+			<xsd:documentation> 
+      Incidence angles.
+    		</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="pixelFirstAnglesValue" type="xsd:integer">
+					<xsd:annotation>
+						<xsd:documentation>Pixel number corresponding to the first value of angles list. 
+The pixel is indexed from the leftmost range sample of the full range line and starts with ‘0’ with respect to the range start of the COPG.          </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="stepSize" type="xsd:integer">
+					<xsd:annotation>
+						<xsd:documentation>Number of range pixels between angles. The sign of stepSize (positive or negative) depends on pixelTimeOrdering which indicates the samples increase or decrease with range time order.
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="numberOfValues" type="xsd:integer">
+					<xsd:annotation>
+						<xsd:documentation>Number of entries in angles
+            </xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="angles" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Angle for each range sample (units = deg)
+            </xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:simpleContent>
+							<xsd:extension base="xsd:double">
+								<xsd:attribute name="units" type="rcm_prod:angularUnits" use="required" fixed="deg"/>
+							</xsd:extension>
+						</xsd:simpleContent>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE DeliveryAccompanyingSheet SYSTEM "DeliveryAccompanyingSheet.dtd"><DeliveryAccompanyingSheet><DeliveryRequestId Datatype="ULONG">3355418</DeliveryRequestId><Product><ProductId Datatype="String">7398224</ProductId><ProductType Datatype="String">SCS_B</ProductType><ProductFormat Datatype="String">H5</ProductFormat><FormatVersion Datatype="String">1.0.0</FormatVersion><ClassificationLevel Datatype="String">UNCLASSIFIED</ClassificationLevel></Product></DeliveryAccompanyingSheet>
