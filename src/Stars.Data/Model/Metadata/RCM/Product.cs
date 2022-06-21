@@ -746,7 +746,7 @@ public class SarProcessingInformation {
 	public int NumberOfAzimuthLooks { get; set; } 
 
 	[XmlElement(ElementName="scalarLookWeights", Namespace="rcmGsProductSchema")] 
-	public double ScalarLookWeights { get; set; } 
+	public string ScalarLookWeights { get; set; } 
 
 	[XmlElement(ElementName="azimuthLookBandwidth", Namespace="rcmGsProductSchema")] 
 	public AzimuthLookBandwidth AzimuthLookBandwidth { get; set; } 
