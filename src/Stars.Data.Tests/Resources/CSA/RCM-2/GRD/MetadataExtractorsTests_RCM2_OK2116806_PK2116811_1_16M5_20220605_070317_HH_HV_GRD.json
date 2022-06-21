@@ -100,7 +100,7 @@
       ],
       "href": "data/RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRD/preview/productOverview.png",
       "filename": "preview/productOverview.png",
-      "file:size": 1243246
+      "file:size": 0
     },
     "amplitude-hv": {
       "type": "image/tiff",
@@ -109,7 +109,7 @@
       ],
       "href": "data/RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRD/imagery/2116811_1_HV.tif",
       "filename": "imagery/2116811_1_HV.tif",
-      "file:size": 90088132,
+      "file:size": 0,
       "polarization": [
         "HV"
       ]
@@ -121,7 +121,7 @@
       ],
       "href": "data/RCM2_OK2116806_PK2116811_1_16M5_20220605_070317_HH_HV_GRD/imagery/2116811_1_HH.tif",
       "filename": "imagery/2116811_1_HH.tif",
-      "file:size": 90088132,
+      "file:size": 0,
       "polarization": [
         "HH"
       ]
