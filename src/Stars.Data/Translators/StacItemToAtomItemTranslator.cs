@@ -22,6 +22,7 @@ namespace Terradue.Stars.Data.Translators
         {
             this.atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
             this.serviceProvider = serviceProvider;
+            Key = "stac-to-atom";
         }
 
         public int Priority { get; set; }

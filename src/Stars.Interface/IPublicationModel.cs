@@ -7,7 +7,9 @@ namespace Terradue.Stars.Interface
     {
         string Url { get; }
 
-        List<StacLink> AdditionalLinks { get; set; }
+        List<StacLink> AdditionalLinks { get; }
+
+        List<ISubject> Subjects { get; }
 
         string Collection { get; }
     }

@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Xml;
 using Stac;
-using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Model;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -28,7 +29,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             authorizationHeaderValue = publishCatalogModel.authorizationHeaderValue;
             Index = publishCatalogModel.Index;
             AdditionalLinks = publishCatalogModel.AdditionalLinks;
-            Categories = publishCatalogModel.Categories;
+            SubjectsList = publishCatalogModel.Subjects.Select(s => new Subject(s)).ToList();
             CreateIndex = publishCatalogModel.CreateIndex;
         }
 
@@ -71,10 +72,13 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public List<StacLink> AdditionalLinks { get; set; }
 
         /// <summary>
-        /// Categories to be added to the catalog items
+        /// Subjects to be added to the catalog items
         /// </summary>
-        [DataMember]
-        public List<SyndicationCategoryModel> Categories { get; set; }
+        [DataMember(Name = "subjects")]
+        public List<Subject> SubjectsList { get; set; }
+
+        [IgnoreDataMember]
+        public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
         
         public AuthenticationHeaderValue AuthorizationHeaderValue { get => authorizationHeaderValue; set => authorizationHeaderValue = value; }
 
@@ -84,18 +88,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             var base64EncodedAuthenticationString = Convert.ToBase64String(System.Text.ASCIIEncoding.UTF8.GetBytes(authenticationString));
             authorizationHeaderValue = new AuthenticationHeaderValue("Basic", base64EncodedAuthenticationString);
 
-        }
-    }
-
-    public class SyndicationCategoryModel
-    {
-        public string Name { get; set; }
-        public string Label { get; set; }
-        public string Scheme { get; set; }
-        public SyndicationCategory ToSyndicationCategory()
-        {
-            var category = new SyndicationCategory(Name, Scheme, Label);
-            return category;
         }
     }
    

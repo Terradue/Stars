@@ -26,6 +26,7 @@ using Terradue.Stars.Services.ThirdParty.Titiler;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services;
 using System.Threading;
+using Terradue.Stars.Services.Model;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -66,7 +67,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             GeosquarePublicationModel geosquareModel = publicationModel as GeosquarePublicationModel;
             if ( geosquareModel == null )
             {
-                throw new ArgumentException("Publication model is not of type GeosquarePublicationModel");
+                geosquareModel = CreateModelFromPublication(publicationModel);
             }
             if (geosquareModel.CreateIndex) await CreateIndexIfNotExist(geosquareModel.Index);
             InitRoutingTask();
@@ -79,6 +80,18 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
             return new Uri(GeosquareConfiguration.BaseUri,
                             string.Format("{0}/cat/{1}/description", geosquareModel.Index, guid.Value));
+        }
+
+        private GeosquarePublicationModel CreateModelFromPublication(IPublicationModel publicationModel)
+        {
+            return new GeosquarePublicationModel
+            {
+                Url = publicationModel.Url,
+                Index = geosquareConfiguration.DefaultIndex,
+                AdditionalLinks = publicationModel.AdditionalLinks,
+                CreateIndex = true,
+                SubjectsList = publicationModel.Subjects?.Select(s => new Subject(s)).ToList()
+            };
         }
 
         private KeyValuePair<string, string> CalculateHash(string input)
@@ -150,10 +163,10 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             }
 
             //add categories
-            if (geosquarePublicationState.GeosquarePublicationModel != null && geosquarePublicationState.GeosquarePublicationModel.Categories != null)
+            if (geosquarePublicationState.GeosquarePublicationModel != null && geosquarePublicationState.GeosquarePublicationModel.SubjectsList != null)
             {
-                foreach (var category in geosquarePublicationState.GeosquarePublicationModel.Categories)
-                    atomItem.Categories.Add(category.ToSyndicationCategory());
+                foreach (var subject in geosquarePublicationState.GeosquarePublicationModel.SubjectsList)
+                    atomItem.Categories.Add(subject.ToSyndicationCategory());
             }
         }
 
