@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by jkuo (MDA SYSTEMS LTD) -->
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Cam Pearce (MacDonald Detwiller and Associates) -->
+<!--=========================================================================
+Filename      : rcm_prod_dataTypes.xsd@@/main/4 ( Pitt: 36362 )
+Project       : PGS - Product Metadata Generator
+Document Type : XSD
+Purpose       : Common simple type definitions for Product Metadata and Ground Segment
+
+(C) Copyright 2015 MacDonald, Dettwiler and Associates Ltd. and/or its affiliates. All Rights Reserved.
+
+Author        Date          Changes
+J. Kuo        17-Nov-2015   Original Definition RCM-SP-53-0419 Issue 2/0
+=========================================================================-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xsd:annotation>
+		<xsd:documentation>Common type definitions for RCM Product Metadata and Ground Segment         </xsd:documentation>
+	</xsd:annotation>
+	<xsd:simpleType name="beamModeDefinitionIdType">
+		<xsd:annotation>
+			<xsd:documentation> An integer that uniquely identifies this Beam Mode within the entire system.              </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="4294967295"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="beamModeMnemonicType">
+		<xsd:annotation>
+			<xsd:documentation>A symbolic identifier for the Beam Mode, corresponding to the Beam Mode Definition ID.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="2"/>
+			<xsd:maxLength value="16"/>
+			<xsd:pattern value="[0-9A-Za-z_\-]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="downlinkSegmentIdType">
+		<xsd:annotation>
+			<xsd:documentation>Unique (across the constellation, for the life of the mission) identifier of a Downlink Segment.  Its format is [Data Segment ID in decimal representation] + "_" + [qualifying string to ensure the ID is unique for each Downlink Segment].  That is, the corresponding Data Segment ID can be derived from the Downlink Segment ID by converting the character substring preceding the first underscore to a decimal number.
+Because this value is passed out of the classified enclave, its content is restricted by length and possible values so as not to pose a security risk.
+</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="36"/>
+			<xsd:pattern value="[0-9]+_[0-9A-Za-z_\-]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="inputDataSetFacilityNameType">
+		<xsd:annotation>
+			<xsd:documentation>A string to indicate the Name of an Archive facility, which maintains Archive Segments (datasets) from which RCM Image Products are produced.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="36"/>
+			<xsd:pattern value="[0-9A-Za-z_\-]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="inputDataSetIdType">
+		<xsd:annotation>
+			<xsd:documentation>A string  to indicate the Identifier of an Archive Segment (dataset). When combined with the archiveFacilityId uniquely identifies a dataset.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="256"/>
+			<xsd:pattern value="[0-9A-Za-z_/:\\\.\-]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="prfType">
+		<xsd:annotation>
+			<xsd:documentation> SAR Pulse Repetition Frequency in Hz</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:double">
+			<xsd:maxInclusive value="10000.0"/>
+			<xsd:minExclusive value="0.0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="priPerDwellType">
+		<xsd:annotation>
+			<xsd:documentation>Number of transmitted pulse repetition intervals per dwell (if Number of Beams > 1)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="65535"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="processingFacilityNameType">
+		<xsd:annotation>
+			<xsd:documentation>Name of the Processing Facility which generated the product.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="36"/>
+			<xsd:pattern value="[0-9A-Za-z_\-]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="pulseBandwidthType">
+		<xsd:annotation>
+			<xsd:documentation>In MHz unless overridden by atrribute, e.g. units=Hz</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:double"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="pulseDurationType">
+		<xsd:annotation>
+			<xsd:documentation>In micro-seconds unless overridden by attribute, e.g. units=s (seconds)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:double"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="rangeSamplingRateType">
+		<xsd:annotation>
+			<xsd:documentation>The range sampling rate (sampling rate of echo data within each sample window) (units=Hz).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:double"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="rankType">
+		<xsd:annotation>
+			<xsd:documentation>Number of transmitted pulse repetition intervals between transmission and reception.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minExclusive value="0"/>
+			<xsd:maxInclusive value="100"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="receivedPulsesPerDwellType">
+		<xsd:annotation>
+			<xsd:documentation>Number of pulses received per dwell (required if Number of Beams > 1)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="65535"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="transmittedPulsesPerDwellType">
+		<xsd:annotation>
+			<xsd:documentation>Number of pulses Transmitted per dwell (required if Number of Beams > 1) It is assumed that the start of pulse transmissions is the first PRI of the dwell.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="65535"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="utcTimeType">
+		<xsd:annotation>
+			<xsd:documentation>UTC Time - this is stored in XML dateTime format as 
+"CCYY-MM-DDThh:mm:ss.uuu...uuZ".  Decimal fraction of seconds is optional.			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:dateTime">
+			<xsd:pattern value="\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
