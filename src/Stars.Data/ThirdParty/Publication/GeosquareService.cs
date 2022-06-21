@@ -90,7 +90,9 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 Index = geosquareConfiguration.DefaultIndex,
                 AdditionalLinks = publicationModel.AdditionalLinks,
                 CreateIndex = true,
-                SubjectsList = publicationModel.Subjects?.Select(s => new Subject(s)).ToList()
+                SubjectsList = publicationModel.Subjects?.Select(s => new Subject(s)).ToList(),
+                ApiKey = geosquareConfiguration.ApiKey,
+                AuthorizationHeader = geosquareConfiguration.AuthorizationHeader
             };
         }
 
@@ -190,9 +192,13 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             HttpClient httpClient = httpClientFactory.CreateClient();
             var content = GetAtomContent(atomFeed);
             httpClient.DefaultRequestHeaders.Authorization = pubModel.AuthorizationHeaderValue;
+            UriBuilder postUri = new UriBuilder(new Uri(GeosquareConfiguration.BaseUri, pubModel.Index));
+            if ( !string.IsNullOrEmpty(pubModel.ApiKey) ){
+                postUri.Query = string.Format("apikey={0}", pubModel.ApiKey);
+            }
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/atom+xml");
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            var webresponse = await httpClient.PostAsync(new Uri(GeosquareConfiguration.BaseUri, pubModel.Index), content);
+            var webresponse = await httpClient.PostAsync(postUri.Uri, content);
             string response = await webresponse.Content.ReadAsStringAsync();
             logger.LogDebug(response);
 

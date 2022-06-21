@@ -29,6 +29,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         public Uri MapUri(Uri uri)
         {
+            if ( UriMaps == null ) return uri;  // no map
             var mapping = UriMaps.FirstOrDefault(kvp =>
             {
                 try
@@ -45,6 +46,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         }
 
         public Dictionary<string, UriMap> OpenSearchTemplatesMap { get; internal set; }
+        public string ApiKey { get; set; }
 
         public string GetOpenSearchForUri(Uri uri)
         {

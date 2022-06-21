@@ -45,7 +45,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         /// Authorization Header used to publish on the catalog
         /// </summary>
         [DataMember]
-        public string AuthorizationHeader { get => authorizationHeaderValue?.ToString(); set => authorizationHeaderValue = AuthenticationHeaderValue.Parse(value); }
+        public string AuthorizationHeader { get => authorizationHeaderValue?.ToString(); set => authorizationHeaderValue = value != null ? AuthenticationHeaderValue.Parse(value) : default(AuthenticationHeaderValue); }
 
         /// <summary>
         /// Index used to publish on the catalog
@@ -81,6 +81,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
         
         public AuthenticationHeaderValue AuthorizationHeaderValue { get => authorizationHeaderValue; set => authorizationHeaderValue = value; }
+
+        public string ApiKey { get;  set; }
 
         public void SetAuthorizationHeader(string Username, string Password)
         {
