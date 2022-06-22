@@ -32,7 +32,7 @@ pipeline {
           steps {
             script {
               def sdf = sh(returnStdout: true, script: 'date -u +%Y%m%dT%H%M%S').trim()
-              if (env.BRANCH_NAME == 'master') 
+              if (env.BRANCH_NAME =~ /(release\/[\d.]+|master)/) 
                 env.DOTNET_ARGS = ""
               else
                 env.DOTNET_ARGS = "--version-suffix SNAPSHOT" + sdf
@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Publish NuGet') {
           when{
-            branch 'master'
+            branch pattern: "(release\/[\d.]+|master)", comparator: "REGEXP"
           }
           steps {
             withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
@@ -115,7 +115,7 @@ pipeline {
           } 
       }
       when {
-        branch 'master'
+        branch pattern: "(release\/[\d.]+|master)", comparator: "REGEXP"
       }
       steps {
         withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
@@ -140,7 +140,7 @@ pipeline {
 }
 
 def getTypeOfVersion(branchName) {
-  def matcher = (branchName =~ /master/)
+  def matcher = (branchName =~ /(release\/[\d.]+|master)/)
   if (matcher.matches())
     return ""
   
@@ -148,7 +148,7 @@ def getTypeOfVersion(branchName) {
 }
 
 def getConfiguration(branchName) {
-  def matcher = (branchName =~ /master/)
+  def matcher = (branchName =~ /(release\/[\d.]+|master)/)
   if (matcher.matches())
     return "Release"
   
