@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Publish NuGet') {
           when{
-            branch pattern: "(release\/[\d.]+|master)", comparator: "REGEXP"
+            branch pattern: "(release\\/[\d.]+|master)", comparator: "REGEXP"
           }
           steps {
             withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
@@ -115,7 +115,7 @@ pipeline {
           } 
       }
       when {
-        branch pattern: "(release\/[\d.]+|master)", comparator: "REGEXP"
+        branch pattern: "(release\\/[\d.]+|master)", comparator: "REGEXP"
       }
       steps {
         withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
