@@ -108,7 +108,7 @@ namespace Terradue.Stars.Services.Resources
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return client;
             }
@@ -243,7 +243,7 @@ namespace Terradue.Stars.Services.Resources
                 }
             }
 
-            var credentials = FallbackCredentialsFactory.GetCredentials();
+            var credentials = FallbackCredentialsFactory.GetCredentials(true);
             if (credentials == null)
             {
                 logger?.LogError("Last effort to find AWS Credentials with AWS SDK's default credential search failed");
@@ -251,7 +251,14 @@ namespace Terradue.Stars.Services.Resources
             }
             else
             {
-                logger?.LogInformation("Found credentials using the AWS SDK's default credential search");
+                if (credentials.GetType().Name == "DefaultInstanceProfileAWSCredentials")
+                {
+                    logger?.LogInformation("No configured AWS credentials. Defaulting to instance profile credentials (EC2)");
+                }
+                else
+                {
+                    logger?.LogInformation($"Found credentials using the AWS SDK's default credential search ({credentials.GetType().Name})");
+                }
             }
 
             return credentials;
