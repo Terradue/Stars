@@ -32,10 +32,10 @@ namespace Terradue.Stars.Services.Router
     {
         public S3OptionsPolicies()
         {
-            PersonalStoragePolicyId = "personalStorageReadWrite";
+            PrivateWorkspacePolicyId = "privateWorkspaceReadWrite";
         }
 
-        public string PersonalStoragePolicyId { get; set; }
+        public string PrivateWorkspacePolicyId { get; set; }
     }
 
     public class S3Configuration

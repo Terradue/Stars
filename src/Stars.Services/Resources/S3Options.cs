@@ -40,10 +40,10 @@ namespace Terradue.Stars.Services.Resources
     {
         public S3OptionsPolicies()
         {
-            PersonalStoragePolicyId = "personalStorageReadWrite";
+            PrivateWorkspacePolicyId = "personalStorageReadWrite";
         }
 
-        public string PersonalStoragePolicyId { get; set; }
+        public string PrivateWorkspacePolicyId { get; set; }
     }
 
     public class S3Configuration

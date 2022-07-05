@@ -63,7 +63,7 @@ namespace Terradue.Stars.Services.Resources
 
         public string GetPersonalStoragePolicyName(IIdentityProvider identityProvider)
         {
-            return string.Format(s3Options.CurrentValue.Policies.PersonalStoragePolicyId, identityProvider.Name);
+            return string.Format(s3Options.CurrentValue.Policies.PrivateWorkspacePolicyId, identityProvider.Name);
         }
 
         private async Task<IAmazonS3> CreateS3ClientAsync(IAsset asset, AWSCredentials credentials, AmazonS3Config amazonS3Config)
