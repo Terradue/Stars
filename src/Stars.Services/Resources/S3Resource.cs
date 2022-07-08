@@ -1,19 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
-using Amazon.SecurityToken;
-using Amazon.SecurityToken.Model;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Stac;
 using Terradue.Stars.Interface;
 
@@ -40,29 +31,21 @@ namespace Terradue.Stars.Services.Resources
 
         internal async Task LoadMetadata()
         {
-            try
-            {
-                GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
-                gomr.BucketName = s3Url.Bucket;
-                gomr.Key = s3Url.Key;
-                if (requester_pays.HasValue && requester_pays.Value)
-                    gomr.RequestPayer = RequestPayer.Requester;
-                ObjectMetadata = await Client.GetObjectMetadataAsync(gomr);
-            }
-            catch (AmazonS3Exception e)
-            {
-                
-            }
-
+            GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
+            gomr.BucketName = s3Url.Bucket;
+            gomr.Key = s3Url.Key;
+            if (requester_pays.HasValue && requester_pays.Value)
+                gomr.RequestPayer = RequestPayer.Requester;
+            ObjectMetadata = await Client.GetObjectMetadataAsync(gomr);
         }
 
-        public ContentType ContentType => new ContentType(ObjectMetadata?.Headers.ContentType);
+        public ContentType ContentType => ObjectMetadata?.Headers.ContentType != null ? new ContentType(ObjectMetadata?.Headers.ContentType) : null;
 
         public ResourceType ResourceType => ResourceType.Unknown;
 
         public ulong ContentLength => ObjectMetadata == null ? 0 : Convert.ToUInt64(ObjectMetadata.Headers.ContentLength);
 
-        public ContentDisposition ContentDisposition => new ContentDisposition(ObjectMetadata?.Headers.ContentDisposition.ToString());
+        public ContentDisposition ContentDisposition => ObjectMetadata?.Headers.ContentDisposition != null ? new ContentDisposition(ObjectMetadata?.Headers.ContentDisposition.ToString()) : null;
 
         public S3Url S3Uri => s3Url;
 
