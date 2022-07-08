@@ -13,7 +13,7 @@ RUN dotnet restore -r linux-x64 /p:PublishReadyToRun=true src/Stars.Console/
 
 RUN apt-get update \
   && apt-get upgrade -y \
-  && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 libicu63 ca-certificates \
+  && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 ca-certificates \
   && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # copy everything else and build app
