@@ -23,14 +23,17 @@ namespace Terradue.Stars.Services.Resources
     {
         private readonly ILogger<S3ClientFactory> logger;
         private readonly IOptionsMonitor<S3Options> s3Options;
+        private readonly ILogger<IAmazonS3> _s3ClientLogger;
         private readonly IConfiguration configuration;
 
         public S3ClientFactory(ILogger<S3ClientFactory> logger,
                                 IOptionsMonitor<S3Options> s3Options,
+                                ILogger<IAmazonS3> s3ClientLogger,
                                 IConfiguration configuration)
         {
             this.logger = logger;
             this.s3Options = s3Options;
+            _s3ClientLogger = s3ClientLogger;
             this.configuration = configuration;
         }
 
@@ -69,7 +72,7 @@ namespace Terradue.Stars.Services.Resources
         private IAmazonS3 CreateS3Client(IAsset asset, S3Configuration s3Config)
         {
             var s3Url = S3Url.ParseUri(asset.Uri);
-            IAmazonS3 client = new S3Client(s3Config, this);
+            IAmazonS3 client = new S3Client(s3Config, this, _s3ClientLogger);
             return client;
         }
 
@@ -77,7 +80,7 @@ namespace Terradue.Stars.Services.Resources
 
         public IAmazonS3 CreateS3Client(S3Configuration s3Config)
         {
-            IAmazonS3 client = new S3Client(s3Config, this);
+            IAmazonS3 client = new S3Client(s3Config, this, _s3ClientLogger);
             return client;
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -38,18 +39,12 @@ namespace Stars.Tests
         [Fact]
         public async Task AdaptRegion()
         {
-            var client = s3ClientFactory.CreateS3Client(S3Url.Parse("s3://usgs-landsat/collection02/level-2/standard/oli-tirs/2022/088/084/LC09_L2SP_088084_20220405_20220407_02_T2/LC09_L2SP_088084_20220405_20220407_02_T2_thumb_large.jpeg"));
-            var list = await client.ListObjectsV2Async(new ListObjectsV2Request
+            var client = s3ClientFactory.CreateS3Client(S3Url.Parse("s3://usgs-landsat/collection02/level-2/standard/oli-tirs/2022/088/084/LC09_L2SP_088084_20220405_20220407_02_T2/LC09_L2SP_088084_20220405_20220407_02_T2_thumb_small.jpeg"));
+            await Assert.ThrowsAsync<AmazonS3Exception>(async () => await client.ListObjectsV2Async(new ListObjectsV2Request
             {
                 BucketName = "usgs-landsat",
-                Prefix = "collection02/level-2/standard/oli-tirs/2022/088/084/LC09_L2SP_088084_20220405_20220407_02_T2/LC09_L2SP_088084_20220405_20220407_02_T2_thumb_large.jpeg"
-            });
-            var bucketlocation = await client.GetBucketLocationAsync("usgs-landsat");
-            Assert.Equal(Amazon.S3.S3Region.EU, bucketlocation.Location);
-            var listing = await client.ListObjectsV2Async(new ListObjectsV2Request()
-            {
-                BucketName = "usgs-landsat",
-            });
+                Prefix = "collection02/level-2/standard/oli-tirs/2022/088/084/LC09_L2SP_088084_20220405_20220407_02_T2/LC09_L2SP_088084_20220405_20220407_02_T2_thumb_small.jpeg"
+            }));
         }
 
     }

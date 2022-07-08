@@ -8,6 +8,7 @@ using Amazon.Runtime;
 using Amazon.Runtime.Internal;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Microsoft.Extensions.Logging;
 
 namespace Terradue.Stars.Services.Resources
 {
@@ -16,12 +17,14 @@ namespace Terradue.Stars.Services.Resources
         private IAmazonS3 _client;
         private readonly S3Configuration _s3Config;
         private readonly IS3ClientFactory _s3ClientFactory;
+        private readonly ILogger<IAmazonS3> _logger;
 
-        public S3Client(S3Configuration s3Config, IS3ClientFactory s3ClientFactory)
+        public S3Client(S3Configuration s3Config, IS3ClientFactory s3ClientFactory, ILogger<IAmazonS3> logger)
         {
             _client = new AmazonS3Client(s3Config.AWSCredentials, s3Config.AmazonS3Config);
             _s3Config = s3Config;
             _s3ClientFactory = s3ClientFactory;
+            _logger = logger;
         }
 
         public async Task AdaptS3Config(AmazonS3Exception exception)
@@ -33,7 +36,7 @@ namespace Terradue.Stars.Services.Resources
                 {
                     if (here.Response.GetHeaderValue("x-amz-bucket-region") != _s3Config.AmazonS3Config.RegionEndpoint?.SystemName)
                     {
-                        // logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint?.SystemName}. Auto-adapting.");
+                        _logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {_s3Config.AmazonS3Config.RegionEndpoint?.SystemName}. Auto-adapting.");
                         _s3Config.AmazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
                         _client = new AmazonS3Client(_s3Config.AWSCredentials, _s3Config.AmazonS3Config);
                         return;
@@ -563,18 +566,23 @@ namespace Terradue.Stars.Services.Resources
             return _client.ListObjectsAsync(request, cancellationToken);
         }
 
-        public async Task<ListObjectsV2Response> ListObjectsV2Async(ListObjectsV2Request request, CancellationToken cancellationToken = default)
+        public Task<ListObjectsV2Response> ListObjectsV2Async(ListObjectsV2Request request, CancellationToken cancellationToken = default)
+        {
+            return TryAndAdapt<ListObjectsV2Response>(client => client.ListObjectsV2Async(request, cancellationToken));
+        }
+
+        private async Task<TOut> TryAndAdapt<TOut>(Func<IAmazonS3, Task<TOut>> func)
         {
             try
             {
-                return await _client.ListObjectsV2Async(request, cancellationToken);
+                return await func(_client);
             }
             catch (Amazon.S3.AmazonS3Exception s3ex)
             {
                 if (s3ex.ErrorCode == "PermanentRedirect")
                 {
                     await AdaptS3Config(s3ex);
-                    return await _client.ListObjectsV2Async(request, cancellationToken);
+                    return await func(_client);
                 }
                 else
                 {
