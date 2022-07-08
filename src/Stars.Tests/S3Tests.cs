@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Amazon.S3.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Stac;
@@ -37,26 +38,26 @@ namespace Stars.Tests
         [Fact]
         public void Test1()
         {
-            S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://cpe-production-catalog/test.json");
+            S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-production-catalog/test.json");
             StacCatalogNode node = (StacCatalogNode)StacCatalogNode.Create(new StacCatalog("test", "test"), s3ObjectDestination.Uri);
-            Assert.Equal("s3://cpe-production-catalog/test.json", node.Uri.ToString());
+            Assert.Equal("s3://local-production-catalog/test.json", node.Uri.ToString());
         }
 
         [Fact]
         public async Task ImportAssetsS3toS3()
         {
-            await CreateBucketAsync("s3://cpe-acceptance-catalog/test");
-            await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
-            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif")));
+            await CreateBucketAsync("s3://local-acceptance-catalog/test");
+            await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
+            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif")));
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")));
-            S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://cpe-acceptance-catalog/calls/857/notifications/test502.json");
+            S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog/calls/857/notifications/test502.json");
             StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
             var importReport = await assetService.ImportAssets(itemNode, s3ObjectDestination, AssetFilters.SkipRelative);
             foreach (var ex in importReport.AssetsExceptions)
             {
                 throw ex.Value;
             }
-            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://cpe-acceptance-catalog/calls/857/notifications/500x477.tif"));
+            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/calls/857/notifications/500x477.tif"));
             Assert.Equal(s3Resource.ContentLength, s3dest.ContentLength);
         }
 
@@ -89,5 +90,27 @@ namespace Stars.Tests
             var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Route.S3Uri.Bucket, s3Route.S3Uri.Key);
             Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(metadata.ContentLength));
         }
+
+        [Fact]
+        public async Task AdaptRegion()
+        {
+            await CreateBucketAsync("nogoodregion", "localstack-eu-west-1");
+            var client = s3ClientFactory.CreateS3Client(S3Url.Parse("http://nogoodregion.s3.eu-west-1.localhost.localstack.cloud:4566/"));
+            var bucketlocation = await client.GetBucketLocationAsync("nogoodregion");
+            Assert.Equal(Amazon.S3.S3Region.EU, bucketlocation.Location);
+            client = s3ClientFactory.CreateS3Client(S3Url.Parse("http://nogoodregion.s3.eu-central-1.localhost.localstack.cloud:4566/"));
+            var listing = await client.ListObjectsV2Async(new ListObjectsV2Request()
+            {
+                BucketName = "nogoodregion",
+            });
+            await client.PutObjectAsync(new PutObjectRequest
+            {
+                BucketName = "nogoodregion",
+                Key = "test.json",
+                ContentBody = File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json"))
+            });
+            var s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://nogoodregion/test.json"));
+        }
+
     }
 }

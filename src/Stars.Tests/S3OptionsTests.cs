@@ -45,7 +45,7 @@ namespace Stars.Tests
             Assert.NotNull(s3Client);
             Assert.Equal("fr-par", s3Client.Config.AuthenticationRegion);
             S3Url s3url = S3Url.Parse("https://s3.geohazards-tep.eu/bucket/key");
-            s3Client = await s3ClientFactory.CreateS3ClientAsync(s3url);
+            s3Client = s3ClientFactory.CreateS3Client(s3url);
             Assert.NotNull(s3Client);
             Assert.Equal("fr-par", s3Client.Config.AuthenticationRegion);
             Assert.Equal("https://s3.geohazards-tep.eu/", s3Client.Config.ServiceURL);

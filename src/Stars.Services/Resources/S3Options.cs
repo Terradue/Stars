@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Amazon.Runtime;
+using Amazon.S3;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.Resources
 {
@@ -13,14 +16,11 @@ namespace Terradue.Stars.Services.Resources
         {
             Services = new Dictionary<string, S3Configuration>();
             Policies = new S3OptionsPolicies();
-            AdaptClientRegion = true;
         }
 
         public Dictionary<string, S3Configuration> Services { get; set; }
 
         public S3OptionsPolicies Policies { get; set; }
-
-        public bool AdaptClientRegion { get; set; }
 
         public IConfigurationSection ConfigurationSection { get; set; }
 
@@ -48,6 +48,26 @@ namespace Terradue.Stars.Services.Resources
 
     public class S3Configuration
     {
+        public S3Configuration()
+        {
+        }
+
+        public S3Configuration(S3Configuration s3Configuration)
+        {
+            this.UrlPattern = s3Configuration?.UrlPattern;
+            this.Region = s3Configuration?.Region;
+            this.ServiceURL = s3Configuration?.ServiceURL;
+            this.AccessKey = s3Configuration?.AccessKey;
+            this.SecretKey = s3Configuration?.SecretKey;
+            this.AuthenticationRegion = s3Configuration?.AuthenticationRegion;
+            this.UseHttp = s3Configuration == null ? false : s3Configuration.UseHttp;
+            this.ForcePathStyle = s3Configuration == null ? false : s3Configuration.ForcePathStyle;
+            this.UserScoped = s3Configuration == null ? false : s3Configuration.UserScoped;
+            this.TryAdaptRegion = s3Configuration == null ? false : s3Configuration.TryAdaptRegion;
+            this.AmazonS3Config = s3Configuration?.AmazonS3Config;
+            this.AWSCredentials = s3Configuration?.AWSCredentials;
+        }
+
         public string UrlPattern { get; set; }
         public string ServiceURL { get; set; }
         public string AccessKey { get; set; }
@@ -57,5 +77,12 @@ namespace Terradue.Stars.Services.Resources
         public bool UseHttp { get; set; }
         public bool ForcePathStyle { get; set; }
         public bool UserScoped { get; set; }
+        public bool TryAdaptRegion { get; set; } = true;
+
+        [JsonIgnore]
+        public AmazonS3Config AmazonS3Config { get; set; }
+
+        [JsonIgnore]
+        public AWSCredentials AWSCredentials { get; set; }
     }
 }

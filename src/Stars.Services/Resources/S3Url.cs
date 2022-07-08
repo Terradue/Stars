@@ -35,6 +35,19 @@ namespace Terradue.Stars.Services.Resources
         // Pattern used to parse multiple path and host style S3 endpoint URLs.
         private static Regex s3URLPattern = new Regex(@"^(.+\.)?s3[.-](?:(accelerated|dualstack|website)[.-])?([a-z0-9-]+)\.(?:[a-z0-9-\.]+)");
 
+        public S3Url(string bucketName, string key)
+        {
+            Scheme = "s3";
+            Bucket = bucketName;
+            Key = key;
+            PathStyle = true;
+            HostStyle = false;
+        }
+
+        internal S3Url()
+        {
+        }
+
         public bool HostStyle { get; private set; }
         public bool PathStyle { get; private set; }
         public bool Accelerated { get; private set; }

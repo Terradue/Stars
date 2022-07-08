@@ -46,19 +46,19 @@ namespace Terradue.Stars.Services.Resources
             return awsOptions.CreateServiceClient<IAmazonS3>();
         }
 
-        public async Task<IAmazonS3> CreateS3ClientAsync(IAsset asset)
+        public IAmazonS3 CreateS3Client(IAsset asset)
         {
             S3Url s3Url = S3Url.ParseUri(asset.Uri);
-            AmazonS3Config amazonS3Config = GetAmazonS3Config(s3Url);
+            var s3Config = GetAmazonS3Config(s3Url);
             var region = asset.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
                                                   .GetProperty<string>(Stac.Extensions.Storage.StorageStacExtension.RegionField);
             if (!string.IsNullOrEmpty(region))
             {
-                amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(region);
+                s3Config.AmazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(region);
             }
-            AWSCredentials credentials = CreateCredentials(s3Url);
+            s3Config.AWSCredentials = CreateCredentials(s3Url);
 
-            return await CreateS3ClientAsync(asset, credentials, amazonS3Config);
+            return CreateS3Client(asset, s3Config);
         }
 
         public string GetPersonalStoragePolicyName(IIdentityProvider identityProvider)
@@ -66,141 +66,40 @@ namespace Terradue.Stars.Services.Resources
             return string.Format(s3Options.CurrentValue.Policies.PrivateWorkspacePolicyId, identityProvider.Name);
         }
 
-        private async Task<IAmazonS3> CreateS3ClientAsync(IAsset asset, AWSCredentials credentials, AmazonS3Config amazonS3Config)
+        private IAmazonS3 CreateS3Client(IAsset asset, S3Configuration s3Config)
         {
             var s3Url = S3Url.ParseUri(asset.Uri);
-            IAmazonS3 client = new AmazonS3Client(credentials, amazonS3Config);
-            GetObjectMetadataRequest gblr = new GetObjectMetadataRequest();
-            gblr.BucketName = s3Url.Bucket;
-            gblr.Key = s3Url.Key;
-            if (asset.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
-                                                  .GetProperty<bool>(Stac.Extensions.Storage.StorageStacExtension.RequesterPaysField))
-            {
-                gblr.RequestPayer = RequestPayer.Requester;
-            }
-            if (s3Options.CurrentValue.AdaptClientRegion)
-            {
-                return await AdaptClientRegion(asset, credentials, amazonS3Config, client, gblr);
-            }
+            IAmazonS3 client = new S3Client(s3Config, this);
             return client;
         }
 
-        private async Task<IAmazonS3> AdaptClientRegion(IAsset asset, AWSCredentials credentials, AmazonS3Config amazonS3Config, IAmazonS3 client, GetObjectMetadataRequest gblr)
+        
+
+        public IAmazonS3 CreateS3Client(S3Configuration s3Config)
         {
-            try
-            {
-                var metadataResponse = await client.GetObjectMetadataAsync(gblr);
-                return client;
-            }
-            catch (AmazonS3Exception e)
-            {
-                if (e.InnerException is HttpErrorResponseException)
-                {
-                    var here = e.InnerException as HttpErrorResponseException;
-                    if (here.Response.StatusCode == System.Net.HttpStatusCode.MovedPermanently || here.Response.StatusCode == System.Net.HttpStatusCode.Moved)
-                    {
-                        if (!string.IsNullOrEmpty(here.Response?.GetHeaderValue("x-amz-bucket-region")) && here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint?.SystemName)
-                        {
-                            logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint?.SystemName}. Auto-adapting.");
-                            amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
-                            return await CreateS3ClientAsync(asset, credentials, amazonS3Config);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                return client;
-            }
+            IAmazonS3 client = new S3Client(s3Config, this);
             return client;
         }
 
-        private async Task<IAmazonS3> AdaptClientRegion(S3Url s3Url, AWSCredentials credentials, AmazonS3Config amazonS3Config, IAmazonS3 client)
+        public IAmazonS3 CreateS3Client(S3Url s3Url)
         {
-            Task task = null;
-            if (string.IsNullOrEmpty(s3Url.Key))
-            {
-                GetBucketLocationRequest gblr = new GetBucketLocationRequest();
-                gblr.BucketName = s3Url.Bucket;
-                task = client.GetBucketLocationAsync(gblr);
-            }
-            else
-            {
-                GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
-                gomr.BucketName = s3Url.Bucket;
-                gomr.Key = s3Url.Key;
-                task = client.GetObjectMetadataAsync(gomr);
-            }
-            try
-            {
-                await task;
-                return client;
-            }
-            catch (AmazonS3Exception e)
-            {
-                if (e.InnerException is HttpErrorResponseException)
-                {
-                    var here = e.InnerException as HttpErrorResponseException;
-                    if (here.Response.StatusCode == System.Net.HttpStatusCode.Moved || here.Response.StatusCode == System.Net.HttpStatusCode.MovedPermanently)
-                    {
-                        if (here.Response.GetHeaderValue("x-amz-bucket-region") != amazonS3Config.RegionEndpoint?.SystemName)
-                        {
-                            logger.LogInformation($"Bucket region {here.Response.GetHeaderValue("x-amz-bucket-region")} differs from configured region {amazonS3Config.RegionEndpoint?.SystemName}. Auto-adapting.");
-                            amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(here.Response.GetHeaderValue("x-amz-bucket-region"));
-                            return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
-                        }
-                    }
-                }
-                throw e;
-            }
-            return client;
-        }
+            var s3Config = GetAmazonS3Config(s3Url);
+            s3Config.AWSCredentials = CreateCredentials(s3Url);
 
-        private async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url, AWSCredentials credentials, AmazonS3Config amazonS3Config)
-        {
-            IAmazonS3 client = new AmazonS3Client(credentials, amazonS3Config);
-
-            if (s3Options.CurrentValue.AdaptClientRegion)
-            {
-                return await AdaptClientRegion(s3Url, credentials, amazonS3Config, client);
-            }
-            return client;
-        }
-
-        public IAmazonS3 CreateS3Client(AWSCredentials credentials, AmazonS3Config amazonS3Config)
-        {
-            IAmazonS3 client = new AmazonS3Client(credentials, amazonS3Config);
-            return client;
-        }
-
-        public async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url)
-        {
-            AmazonS3Config amazonS3Config = GetAmazonS3Config(s3Url);
-            AWSCredentials credentials = CreateCredentials(s3Url);
-            if (s3Options.CurrentValue.AdaptClientRegion)
-            {
-                return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
-            }
-
-            return CreateS3Client(credentials, amazonS3Config);
+            return CreateS3Client(s3Config);
         }
 
         public async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url,
                                                          IIdentityProvider identityProvider)
         {
-            AmazonS3Config amazonS3Config = GetAmazonS3Config(s3Url);
-            AWSCredentials credentials = await GetWebIdentityCredentialsAsync(amazonS3Config.ServiceURL,
+            var s3Config = GetAmazonS3Config(s3Url);
+            s3Config.AWSCredentials = await GetWebIdentityCredentialsAsync(s3Config.ServiceURL,
                                                                           identityProvider.GetIdToken(),
                                                                           null);
-            if (credentials == null)
-                credentials = CreateCredentials(s3Url);
+            if (s3Config.AWSCredentials == null)
+                s3Config.AWSCredentials = CreateCredentials(s3Url);
 
-            if (s3Options.CurrentValue.AdaptClientRegion)
-            {
-                return await CreateS3ClientAsync(s3Url, credentials, amazonS3Config);
-            }
-
-            return CreateS3Client(credentials, amazonS3Config);
+            return CreateS3Client(s3Config);
         }
 
         /// <summary>
@@ -264,7 +163,7 @@ namespace Terradue.Stars.Services.Resources
             return credentials;
         }
 
-        public AmazonS3Config GetAmazonS3Config(S3Url s3Url)
+        public S3Configuration GetAmazonS3Config(S3Url s3Url)
         {
             var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString());
             AWSOptions awsOptions = GetNamedAWSOptionsOrDefault(s3Configuration.Key);
@@ -303,7 +202,11 @@ namespace Terradue.Stars.Services.Resources
             amazonS3Config.RetryMode = RequestRetryMode.Standard;
             amazonS3Config.LogResponse = true;
 
-            return amazonS3Config;
+            var config = new S3Configuration(s3Configuration.Value);
+            config.AmazonS3Config = amazonS3Config;
+
+            return config;
+
         }
 
         /// <summary>
@@ -361,9 +264,12 @@ namespace Terradue.Stars.Services.Resources
             }
 
             // Setting RegionEndpoint only if ServiceURL was not set, because ServiceURL value will be lost otherwise
-            if (options.Region != null && string.IsNullOrEmpty(defaultConfig.ServiceURL))
+            if (options.Region != null)
             {
-                config.RegionEndpoint = options.Region;
+                if (string.IsNullOrEmpty(defaultConfig.ServiceURL))
+                {
+                    config.RegionEndpoint = options.Region;
+                }
             }
 
             return config;
@@ -408,5 +314,9 @@ namespace Terradue.Stars.Services.Resources
 
         }
 
+        public S3Configuration GetS3Configuration(S3Url s3Url)
+        {
+            return s3Options.CurrentValue?.GetS3Configuration(s3Url.ToString()).Value;
+        }
     }
 }

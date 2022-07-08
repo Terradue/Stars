@@ -1,23 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Reflection;
 using System.Threading.Tasks;
-using Amazon.Extensions.NETCore.Setup;
-using Amazon.Runtime;
-using Amazon.Runtime.CredentialManagement;
-using Amazon.Runtime.Internal;
-using Amazon.S3;
-using Amazon.SecurityToken;
-using Amazon.SecurityToken.Model;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Credentials;
-using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Services.Resources;
 
 namespace Terradue.Stars.Services.Resources
 {
@@ -39,8 +22,8 @@ namespace Terradue.Stars.Services.Resources
         public static async Task<S3Resource> CreateAsync(this IS3ClientFactory factory,
                                                          S3Url url)
         {
-            var Client = await factory.CreateS3ClientAsync(url);
-            S3Resource s3Resource = new S3Resource(url, Client);
+            var client = factory.CreateS3Client(url);
+            S3Resource s3Resource = new S3Resource(url, client);
             var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
             if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
                 s3Resource.RequesterPays = true;
@@ -50,7 +33,7 @@ namespace Terradue.Stars.Services.Resources
         public static async Task<S3Resource> CreateAsync(this IS3ClientFactory factory,
                                                          IAsset asset)
         {
-            var Client = await factory.CreateS3ClientAsync(S3Url.ParseUri(asset.Uri));
+            var Client = factory.CreateS3Client(S3Url.ParseUri(asset.Uri));
             S3Resource s3Resource = new S3Resource(asset, Client);
             var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
             if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
@@ -74,7 +57,7 @@ namespace Terradue.Stars.Services.Resources
         public static async Task<S3Resource> CreateAndLoadAsync(this IS3ClientFactory factory,
                                                                 S3Url url)
         {
-            var Client = await factory.CreateS3ClientAsync(url);
+            var Client = factory.CreateS3Client(url);
             S3Resource s3Resource = new S3Resource(url, Client);
             var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
             if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))
@@ -86,7 +69,7 @@ namespace Terradue.Stars.Services.Resources
         public static async Task<S3Resource> CreateAndLoadAsync(this IS3ClientFactory factory,
                                                                 IAsset asset)
         {
-            var Client = await factory.CreateS3ClientAsync(asset);
+            var Client = factory.CreateS3Client(asset);
             S3Resource s3Resource = new S3Resource(asset, Client);
             var reqp = Environment.GetEnvironmentVariable("AWS_REQUEST_PAYER");
             if (!string.IsNullOrEmpty(reqp) && reqp.Equals("requester", StringComparison.InvariantCultureIgnoreCase))

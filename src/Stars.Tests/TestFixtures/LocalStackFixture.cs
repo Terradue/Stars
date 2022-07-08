@@ -33,16 +33,16 @@ namespace Stars.Tests
             //   .Build();
 
             var localStackBuilder = new TestcontainersBuilder<TestcontainersContainer>()
-                .WithImage("localstack/localstack")
+                .WithImage("localstack/localstack:0.14.4")
                 .WithCleanUp(true)
                 .WithOutputConsumer(Consume.RedirectStdoutAndStderrToConsole())
-                .WithEnvironment("DEFAULT_REGION", "eu-central-1")
                 .WithEnvironment("SERVICES", "s3")
                 .WithEnvironment("DOCKER_HOST", "unix:///var/run/docker.sock")
                 .WithEnvironment("DEBUG", "1")
                 .WithPortBinding(4566, 4566)    
                 // .WithNetwork(_network)
                 .WithName("localstack");
+                
 
             if (s3ClientFactory != null)
             {
