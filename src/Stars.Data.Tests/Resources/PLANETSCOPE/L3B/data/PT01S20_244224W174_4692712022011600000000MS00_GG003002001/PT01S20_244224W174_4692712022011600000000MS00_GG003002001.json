@@ -1,0 +1,212 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/version/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+        "https://terradue.github.io/disaster/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "PT01S20_244224W174_4692712022011600000000MS00_GG003002001",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -174.6570110195,
+                    -20.1181609426
+                ],
+                [
+                    -174.2819565421,
+                    -20.1181609426
+                ],
+                [
+                    -174.2819565421,
+                    -20.370370626
+                ],
+                [
+                    -174.6570110195,
+                    -20.370370626
+                ],
+                [
+                    -174.6570110195,
+                    -20.1181609426
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "datetime": "2022-01-16T21:10:07Z",
+        "start_datetime": "2022-01-16T21:10:07Z",
+        "end_datetime": "2022-01-16T21:10:07Z",
+        "mission": "planetscope",
+        "platform": "planetscope",
+        "instruments": [
+            "psb.sd"
+        ],
+        "sensor_type": "optical",
+        "gsd": 3.0,
+        "sat:orbit_state": "descending",
+        "sat:absolute_orbit": 5294818,
+        "view:sun_elevation": 53.59702,
+        "view:sun_azimuth": 97.90125,
+        "view:incidence_angle": 5.450392,
+        "view:off_nadir": 5.02456,
+        "proj:epsg": 32701,
+        "processing:level": "L3B",
+        "title": "Planetscope PSB.SD L3B 16/01/2022 21:10:07",
+        "disaster:class": "Acquisition",
+        "cpe:status": {
+            "stage": "dataset",
+            "message": "Created",
+            "link": null
+        },
+        "updated": "2022-01-18T20:43:29.5841956Z",
+        "created": "2022-01-18T20:42:46.003826Z",
+        "cpe:notified": [
+            "2022-01-18T20:07:52.2724307Z",
+            "2022-01-18T20:31:47.9072712Z",
+            "2022-01-18T20:40:18.467174Z"
+        ],
+        "providers": [
+            {
+                "name": "PLANET",
+                "roles": [
+                    "licensor"
+                ]
+            }
+        ],
+        "license": "proprietary",
+        "disaster:call_ids": [
+            855
+        ],
+        "disaster:resolution_class": "HR",
+        "cpe:cos2_xml": null,
+        "cpe:cos2_id": "855-PLANET-PlanetScope-urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00",
+        "description": "Name | Value\n---- | -----\nAgency | **PLANET**\nSatellite  | **planetscope**\nInstruments  | **psb.sd**\nSensor Type  | **optical**\nAcquisition Date  | **16/01/2022 21:10:07**\nResolution  | **HR**\nCOS2 Id  | **855-PLANET-PlanetScope-urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00**\nLicense  | **proprietary**\nCreated  | **18/01/2022 20:42:46**\nUpdated  | **18/01/2022 20:42:46**\n",
+        "version": "3"
+    },
+    "bbox": [
+        -174.6570110195,
+        -20.370370626,
+        -174.2819565421,
+        -20.1181609426
+    ],
+    "assets": {
+        "overview": {
+            "type": "image/jpeg",
+            "roles": [
+                "overview"
+            ],
+            "href": "s3://cpe-production-catalog/calls/call-855/datasets/PT01S20_244224W174_4692712022011600000000MS00_GG003002001/urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00-preview.jpg",
+            "file:size": 55013
+        },
+        "data": {
+            "type": "image/tiff; application=geotiff",
+            "roles": [
+                "data",
+                "dn"
+            ],
+            "href": "s3://cpe-production-catalog/calls/call-855/datasets/PT01S20_244224W174_4692712022011600000000MS00_GG003002001/PT01S20_244224W174_4692712022011600000000MS00_GG003002001.tif",
+            "filename": "PT01S20_244224W174_4692712022011600000000MS00_GG003002001.tif",
+            "file:size": 526057148,
+            "proj:shape": [
+                13138,
+                9468
+            ],
+            "raster:bands": [
+                {
+                    "scale": 1.91852681461E-05,
+                    "radiometric_scale": 0.01
+                },
+                {
+                    "scale": 2.08079134075E-05,
+                    "radiometric_scale": 0.01
+                },
+                {
+                    "scale": 2.50451965527E-05,
+                    "radiometric_scale": 0.01
+                },
+                {
+                    "scale": 3.96402488198E-05,
+                    "radiometric_scale": 0.01
+                }
+            ],
+            "eo:bands": [
+                {
+                    "name": "blue",
+                    "description": "blue 485nm TOA",
+                    "common_name": "blue",
+                    "center_wavelength": 0.485,
+                    "solar_illumination": 1997.46
+                },
+                {
+                    "name": "green",
+                    "description": "green 545nm TOA",
+                    "common_name": "green",
+                    "center_wavelength": 0.545,
+                    "solar_illumination": 1832.09
+                },
+                {
+                    "name": "red",
+                    "description": "red 630nm TOA",
+                    "common_name": "red",
+                    "center_wavelength": 0.63,
+                    "solar_illumination": 1631.38
+                },
+                {
+                    "name": "nir",
+                    "description": "nir 820nm TOA",
+                    "common_name": "nir",
+                    "center_wavelength": 0.82,
+                    "solar_illumination": 1066.31
+                }
+            ]
+        },
+        "metadata": {
+            "type": "application/xml",
+            "roles": [
+                "metadata"
+            ],
+            "href": "s3://cpe-production-catalog/calls/call-855/datasets/PT01S20_244224W174_4692712022011600000000MS00_GG003002001/vendor_metadata/20220116_211007_70_2276_3B_AnalyticMS_metadata.xml",
+            "filename": "vendor_metadata/20220116_211007_70_2276_3B_AnalyticMS_metadata.xml",
+            "file:size": 14981
+        },
+        "thumbnail": {
+            "type": "image/jpeg",
+            "roles": [
+                "thumbnail"
+            ],
+            "title": "Acquisition Thumbnail",
+            "href": "s3://cpe-production-catalog/calls/call-855/acquisitions/855-PLANET-PlanetScope-urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00/urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00-icon.jpg"
+        }
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "derived_from",
+            "title": "Acquisition",
+            "href": "s3://cpe-production-catalog/calls/call-855/acquisitions/855-PLANET-PlanetScope-urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00/855-PLANET-PlanetScope-urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "related",
+            "title": "Calibrated Dataset",
+            "href": "s3://cpe-production-catalog/calls/call-855/calibratedDatasets/PT01S20_244224W174_4692712022011600000000MS00_GG003002001-calibrated/PT01S20_244224W174_4692712022011600000000MS00_GG003002001-calibrated.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "href": "s3://cpe-production-catalog/calls/call-855/datasets/PT01S20_244224W174_4692712022011600000000MS00_GG003002001/PT01S20_244224W174_4692712022011600000000MS00_GG003002001.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "s3://cpe-production-catalog/catalog.json"
+        }
+    ]
+}

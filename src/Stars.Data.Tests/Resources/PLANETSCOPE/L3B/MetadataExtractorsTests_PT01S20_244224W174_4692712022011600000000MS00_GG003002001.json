@@ -9,60 +9,60 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "PT01N20_243369E121_8769672021112100000000MS00_GG003002001",
+  "id": "PT01S20_244224W174_4692712022011600000000MS00_GG003002001",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          121.7507255346,
-          20.3014620524
+          -174.6570110195,
+          -20.1181609426
         ],
         [
-          121.7507255346,
-          20.1852995711
+          -174.6570110195,
+          -20.370370626
         ],
         [
-          122.0033050171,
-          20.1852995711
+          -174.2819565421,
+          -20.370370626
         ],
         [
-          122.0033050171,
-          20.3014620524
+          -174.2819565421,
+          -20.1181609426
         ],
         [
-          121.7507255346,
-          20.3014620524
+          -174.6570110195,
+          -20.1181609426
         ]
       ]
     ]
   },
   "properties": {
-    "datetime": "2021-11-21T02:02:56+00:00",
-    "start_datetime": "2021-11-21T02:02:56+00:00",
-    "end_datetime": "2021-11-21T02:02:56+00:00",
+    "datetime": "2022-01-16T21:10:07+00:00",
+    "start_datetime": "2022-01-16T21:10:07+00:00",
+    "end_datetime": "2022-01-16T21:10:07+00:00",
     "mission": "planetscope",
     "platform": "planetscope",
     "instruments": [
-      "ps2"
+      "psb.sd"
     ],
     "sensor_type": "optical",
     "gsd": 3.0,
     "sat:orbit_state": "descending",
-    "sat:absolute_orbit": 5114939,
-    "view:sun_elevation": 43.35266,
-    "view:sun_azimuth": 147.943,
-    "view:incidence_angle": 5.413673,
-    "view:off_nadir": 5.00467,
-    "proj:epsg": 32651,
+    "sat:absolute_orbit": 5294818,
+    "view:sun_elevation": 53.59702,
+    "view:sun_azimuth": 97.90125,
+    "view:incidence_angle": 5.450392,
+    "view:off_nadir": 5.02456,
+    "proj:epsg": 32701,
     "processing:level": "L3B",
-    "title": "PLANETSCOPE PS2 L3B 2021-11-21 02:02:56"
+    "title": "PLANETSCOPE PSB.SD L3B 2022-01-16 21:10:07"
   },
   "bbox": [
-    121.7507255346,
-    20.1852995711,
-    122.0033050171,
-    20.3014620524
+    -174.6570110195,
+    -20.370370626,
+    -174.2819565421,
+    -20.1181609426
   ],
   "assets": {
     "overview": {
@@ -70,9 +70,9 @@
       "roles": [
         "overview"
       ],
-      "href": "data/L3B/PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_BG003002001.jpg",
-      "filename": "PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_BG003002001.jpg",
-      "file:size": 1
+      "href": "data/PT01S20_244224W174_4692712022011600000000MS00_GG003002001/urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00-preview.jpg",
+      "filename": "urn_ogc_def_EOP_PLANET_PT01S20_244224W174_4692712022011600000000MS00-preview.jpg",
+      "file:size": 55013
     },
     "data": {
       "type": "image/tiff; application=geotiff",
@@ -80,28 +80,28 @@
         "data",
         "dn"
       ],
-      "href": "data/L3B/PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_GG003002001.tif",
-      "filename": "PT01N20_243369E121_8769672021112100000000MS00/PT01N20_243369E121_8769672021112100000000MS00_GG003002001.tif",
+      "href": "data/PT01S20_244224W174_4692712022011600000000MS00_GG003002001/PT01S20_244224W174_4692712022011600000000MS00_GG003002001.tif",
+      "filename": "PT01S20_244224W174_4692712022011600000000MS00_GG003002001.tif",
       "file:size": 1,
       "proj:shape": [
-        8801,
-        4338
+        13138,
+        9468
       ],
       "raster:bands": [
         {
-          "scale": 2.30069895051E-05,
+          "scale": 1.91852681461E-05,
           "radiometric_scale": 0.01
         },
         {
-          "scale": 2.43431761442E-05,
+          "scale": 2.08079134075E-05,
           "radiometric_scale": 0.01
         },
         {
-          "scale": 2.708123545E-05,
+          "scale": 2.50451965527E-05,
           "radiometric_scale": 0.01
         },
         {
-          "scale": 4.07735365759E-05,
+          "scale": 3.96402488198E-05,
           "radiometric_scale": 0.01
         }
       ],
@@ -141,10 +141,11 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/L3B/PT01N20_243369E121_8769672021112100000000MS00/vendor_metadata/20211121_020256_100c_3B_AnalyticMS_metadata.xml",
-      "filename": "PT01N20_243369E121_8769672021112100000000MS00/vendor_metadata/20211121_020256_100c_3B_AnalyticMS_metadata.xml",
-      "file:size": 10430
+      "href": "data/PT01S20_244224W174_4692712022011600000000MS00_GG003002001/vendor_metadata/20220116_211007_70_2276_3B_AnalyticMS_metadata.xml",
+      "filename": "vendor_metadata/20220116_211007_70_2276_3B_AnalyticMS_metadata.xml",
+      "file:size": 14981
     }
   },
   "links": []
 }
+
