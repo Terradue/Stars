@@ -76,7 +76,7 @@ namespace Terradue.Stars.Services.Resources
             return client;
         }
 
-        
+
 
         public IAmazonS3 CreateS3Client(S3Configuration s3Config)
         {
@@ -296,25 +296,15 @@ namespace Terradue.Stars.Services.Resources
             amazonSecurityTokenServiceConfig.ServiceURL = serviceURL;
             var stsClient = new AmazonSecurityTokenServiceClient(new AnonymousAWSCredentials(), amazonSecurityTokenServiceConfig);
 
-            try
+            var assumeRoleResult = await stsClient.AssumeRoleWithWebIdentityAsync(new AssumeRoleWithWebIdentityRequest
             {
-                var assumeRoleResult = await stsClient.AssumeRoleWithWebIdentityAsync(new AssumeRoleWithWebIdentityRequest
-                {
-                    WebIdentityToken = jwt.RawData,
-                    RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
-                    RoleSessionName = "MySession",
-                    DurationSeconds = 3600,
-                    Policy = policy
-                });
-                return assumeRoleResult.Credentials;
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e, "Cannot get the Web Identity");
-                return null;
-            }
-
-
+                WebIdentityToken = jwt.RawData,
+                RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
+                RoleSessionName = "MySession",
+                DurationSeconds = 3600,
+                Policy = policy
+            });
+            return assumeRoleResult.Credentials;
         }
 
         public S3Configuration GetS3Configuration(S3Url s3Url)
