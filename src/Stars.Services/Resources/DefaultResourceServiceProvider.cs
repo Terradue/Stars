@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Amazon.Runtime;
+using Amazon.Runtime.Internal;
 using Amazon.S3;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
@@ -46,14 +47,28 @@ namespace Terradue.Stars.Services.Resources
                 return new LocalFileResource(_serviceProvider.GetRequiredService<IFileSystem>(), resource.Uri.AbsolutePath, ResourceType.Unknown);
             }
 
+            S3Url s3Url = S3Url.ParseUri(resource.Uri);
+            bool triedS3 = false;
+
             // S3
-            if (resource.Uri.Scheme == "s3")
+            if (resource.Uri.Scheme == "s3" || s3Url.Endpoint.Contains("s3."))
             {
                 IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
-                if (resource is IAsset)
-                    return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
-                S3Url s3Url = S3Url.ParseUri(resource.Uri);
-                return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                try
+                {
+                    if (resource is IAsset)
+                        return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
+                    return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                }
+                catch (AmazonS3Exception e)
+                {
+                    logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
+                }
+                catch (Exception e)
+                {
+                    logger.LogError(e, e.Message);
+                }
+                triedS3 = true;
             }
 
             // HTTP
@@ -66,20 +81,24 @@ namespace Terradue.Stars.Services.Resources
             HttpResponseMessage response = await client.GetAsync(resource.Uri);
 
             // S3 resource case
-            if (response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
+            if (!triedS3 && response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
             {
                 try
                 {
                     IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
                     if (resource is IAsset)
                         return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
-                    S3Url s3Url = S3Url.ParseUri(resource.Uri);
                     return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                }
+                catch (AmazonS3Exception e)
+                {
+                    logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
                 }
                 catch (Exception e)
                 {
-                    
+                    logger.LogError(e, e.Message);
                 }
+                triedS3 = true;
             }
 
             return new HttpResource(resource.Uri, client, response.Content.Headers);
@@ -102,7 +121,7 @@ namespace Terradue.Stars.Services.Resources
                 return (IStreamResource)resource;
             }
             IStreamResource sresource = await CreateStreamResourceAsync(resource);
-            if (resource.ContentType == null || resource.ContentType.MediaType == null ||  resource.ContentType.MediaType.EndsWith("octet-stream") || sresource.ContentType.MediaType.EndsWith("octet-stream"))
+            if (resource.ContentType == null || resource.ContentType.MediaType == null || resource.ContentType.MediaType.EndsWith("octet-stream") || sresource.ContentType.MediaType.EndsWith("octet-stream"))
                 return sresource;
             if (sresource.ContentType.MediaType != resource.ContentType.MediaType)
             {

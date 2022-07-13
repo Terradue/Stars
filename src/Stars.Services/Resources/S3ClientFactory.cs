@@ -145,7 +145,14 @@ namespace Terradue.Stars.Services.Resources
                 }
             }
 
-            var credentials = FallbackCredentialsFactory.GetCredentials(true);
+            AWSCredentials credentials = new EnvironmentVariablesAWSCredentials();
+            if ( credentials.GetCredentials() != null)
+            {
+                logger?.LogInformation("Using AWS credentials found in the environment");
+                return credentials;
+            }
+
+            credentials = FallbackCredentialsFactory.GetCredentials(true);
             if (credentials == null)
             {
                 logger?.LogError("Last effort to find AWS Credentials with AWS SDK's default credential search failed");
