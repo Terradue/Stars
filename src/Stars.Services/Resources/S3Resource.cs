@@ -33,7 +33,7 @@ namespace Terradue.Stars.Services.Resources
         {
             GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
             gomr.BucketName = s3Url.Bucket;
-            gomr.Key = s3Url.Key;
+            gomr.Key = string.IsNullOrEmpty(s3Url.Key) ? "/" : s3Url.Key;
             if (requester_pays.HasValue && requester_pays.Value)
                 gomr.RequestPayer = RequestPayer.Requester;
             ObjectMetadata = await Client.GetObjectMetadataAsync(gomr);

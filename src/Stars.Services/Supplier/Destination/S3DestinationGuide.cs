@@ -48,6 +48,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 {
                     return true;
                 }
+                logger.LogDebug(e.ResponseBody);
                 return false;
             }
             catch (Exception e)
