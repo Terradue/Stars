@@ -6,12 +6,13 @@ using System.Net;
 using Terradue.Stars.Interface;
 using System;
 using Itenso.TimePeriod;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacItemNode : StacNode, IItem
     {
-        public StacItemNode(StacItem stacItem, Uri uri, ICredentials credentials = null) : base(stacItem, uri, credentials)
+        public StacItemNode(StacItem stacItem, Uri uri) : base(stacItem, uri)
         {
             
         }
@@ -24,11 +25,12 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IDictionary<string, object> Properties => StacItem.Properties;
 
-        public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this, credentials));
+        public IReadOnlyDictionary<string, IAsset> Assets => StacItem.Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this));
 
         public ITimePeriod DateTime => StacItem.DateTime;
 
-        public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
+
+        public override IReadOnlyList<IResource> GetRoutes(IRouter router)
         {
             return new List<IResource>();
         }

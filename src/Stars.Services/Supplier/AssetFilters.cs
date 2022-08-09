@@ -7,7 +7,6 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class AssetFilters : List<IAssetFilter>
     {
-
         public static AssetFilters None => new AssetFilters();
 
         public static AssetFilters SkipRelative
@@ -23,6 +22,45 @@ namespace Terradue.Stars.Services.Supplier
         public override string ToString()
         {
             return Count == 0 ? "No filter" : string.Join(", ", this.Select(af => af.ToString()));
+        }
+
+        public static AssetFilters CreateAssetFilters(string[] assetFiltersStr)
+        {
+            AssetFilters assetFilters = new AssetFilters();
+            if (assetFiltersStr == null)
+                return assetFilters;
+            Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
+            foreach (var assetFilterStr in assetFiltersStr)
+            {
+                Match propertyMatch = propertyRegex.Match(assetFilterStr);
+                if (propertyMatch.Success)
+                {
+                    if (propertyMatch.Groups["key"].Value == "roles")
+                    {
+                        assetFilters.Add(new RolesAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
+                        continue;
+                    }
+                    if (propertyMatch.Groups["key"].Value == "uri")
+                    {
+                        assetFilters.Add(new UriAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
+                        continue;
+                    }
+                    if (propertyMatch.Groups["key"].Value == "type")
+                    {
+                        assetFilters.Add(new ContentTypeAssetFilter(propertyMatch.Groups["value"].Value, null));
+                        continue;
+                    }
+                    Dictionary<string, Regex> dic = new Dictionary<string, Regex>();
+                    dic.Add(propertyMatch.Groups["key"].Value, new Regex(propertyMatch.Groups["value"].Value));
+                    assetFilters.Add(new PropertyAssetFilter(dic));
+                    continue;
+                }
+                else
+                {
+                    assetFilters.Add(new KeyAssetFilter(new Regex("^" + assetFilterStr + "$")));
+                }
+            }
+            return assetFilters;
         }
     }
 

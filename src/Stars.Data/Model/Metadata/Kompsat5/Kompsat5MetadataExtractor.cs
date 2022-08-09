@@ -39,7 +39,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
 
         public override string Label => "Korea Multi-Purpose Satellite-5 (KARI) mission product metadata extractor";
 
-        public Kompsat5MetadataExtraction(ILogger<Kompsat5MetadataExtraction> logger) : base(logger)
+        public Kompsat5MetadataExtraction(ILogger<Kompsat5MetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -53,7 +53,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamable auxFileStreamable = auxFile.GetStreamable();
+            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -512,7 +512,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
         /// <summary>Deserialize Auxiliary from xml to class</summary>
         /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamable auxiliaryFile)
+        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamResource auxiliaryFile)
         {
             XmlSerializer ser = new XmlSerializer(typeof(Auxiliary));
             Auxiliary auxiliary;
@@ -533,7 +533,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
             IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(Aux\\.xml)$");
             try
             {
-                var auxiliary = DeserializeAuxiliary(auxFile.GetStreamable()).GetAwaiter().GetResult();
+                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return auxiliary.Root.SatelliteID == "KMPS5";
             }
             catch (Exception e)

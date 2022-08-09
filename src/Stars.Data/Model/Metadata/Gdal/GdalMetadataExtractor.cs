@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gdal
 
         public override string Label => "GDAL metadata extractor";
 
-        public GdalMetadataExtractor(ILogger<GdalMetadataExtractor> logger) : base(logger)
+        public GdalMetadataExtractor(ILogger<GdalMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
             GdalBase.ConfigureAll();
         }

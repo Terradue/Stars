@@ -1,11 +1,12 @@
 using System;
+using System.IO;
 using System.Net.Mime;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
-    internal class AtomResourceLink : IResourceLink
+    public class AtomResourceLink : IResourceLink
     {
         private SyndicationLink atomLink;
 
@@ -23,5 +24,9 @@ namespace Terradue.Stars.Services.Model.Atom
         public string Title => atomLink.Title;
 
         public ulong ContentLength => Convert.ToUInt64(atomLink.Length);
+
+        public ResourceType ResourceType => ResourceType.Unknown;
+
+        public ContentDisposition ContentDisposition => new ContentDisposition(Path.GetFileName(Uri.AbsoluteUri.ToString()));
     }
 }

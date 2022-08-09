@@ -21,7 +21,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
     public class KanopusVMetadataExtractor : MetadataExtraction
     {
         public override string Label => "Kanopus-V(-IK) (Roscosmos) missions product metadata extractor";
-        public KanopusVMetadataExtractor(ILogger<KanopusVMetadataExtractor> logger) : base(logger)
+        public KanopusVMetadataExtractor(ILogger<KanopusVMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -50,7 +50,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri); ;
         }
 
 
@@ -96,7 +96,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
             FillDateTimeProperties(metadata, properties);
             FillPlatformDefinition(metadata, properties);
-            
+
 
             return properties;
         }
@@ -244,7 +244,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 var bandAsset = GetBandAsset(stacItem, "MSS", mssAsset, metadata);
                 stacItem.Assets.Add("mss", bandAsset);
-            } else if (sAsset != null)
+            }
+            else if (sAsset != null)
             {
                 var bandAsset = GetBandAsset(stacItem, "MSS", sAsset, metadata);
                 stacItem.Assets.Add("mss", bandAsset);
@@ -256,8 +257,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 var bandAsset = GetBandAsset(stacItem, "PAN", pssAsset, metadata);
                 stacItem.Assets.Add("pan", bandAsset);
-            } 
-            
+            }
+
         }
 
         protected virtual IAsset GetMetadataAsset(IItem item)
@@ -266,7 +267,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             if (manifestAsset != null) return manifestAsset;
             manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*MSS.*\.xml");
             if (manifestAsset != null) return manifestAsset;
-            
+
             throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
         }
 
@@ -274,7 +275,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         {
             KanopusVMetadata metadata = new KanopusVMetadata(manifestAsset);
 
-            await metadata.ReadMetadata();
+            await metadata.ReadMetadata(resourceServiceProvider);
 
             return metadata;
         }
@@ -295,11 +296,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             Assets = new List<string>();
         }
 
-        public async Task ReadMetadata()
+        public async Task ReadMetadata(IResourceServiceProvider resourceServiceProvider)
         {
             string key = null;
 
-            using (var stream = await summaryAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(summaryAsset))
             {
 
                 using (StreamReader reader = new StreamReader(stream))

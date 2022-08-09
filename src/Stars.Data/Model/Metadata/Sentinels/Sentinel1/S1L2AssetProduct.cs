@@ -15,21 +15,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
         private readonly level2ProductType l2ProductType;
         private readonly string type;
 
-        public S1L2AssetProduct(level2ProductType l2ProductType, string type) 
+        public S1L2AssetProduct(level2ProductType l2ProductType, string type, IResourceServiceProvider resourceServiceProvider) : base(resourceServiceProvider)
         {
             this.l2ProductType = l2ProductType;
             this.type = type;
         }
 
-        public async static Task<S1L2AssetProduct> CreateData(IAsset annotationAsset)
+        public async static Task<S1L2AssetProduct> CreateData(IAsset annotationAsset, IResourceServiceProvider resourceServiceProvider)
         {
-            var streamable = annotationAsset.GetStreamable();
-            if ( streamable == null )
-                throw new InvalidDataException("Cannot stream data from " + annotationAsset.Uri);
-            return new S1L2AssetProduct((level2ProductType)s1L2ProductSerializer.Deserialize(await streamable.GetStreamAsync()), "data");
+            return new S1L2AssetProduct((level2ProductType)s1L2ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset)), "data", resourceServiceProvider);
         }
-
-
 
         public override StacAsset CreateDataAsset(IStacObject stacObject)
         {

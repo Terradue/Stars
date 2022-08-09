@@ -19,10 +19,15 @@ namespace Terradue.Stars.Services.Supplier
 
         public int Cost => 100000;
 
-        public IResource Route => route;
+        public IResource Resource => route;
 
         public ICarrier Carrier => carrier;
 
         public IDestination Destination => null;
+
+        public override string ToString()
+        {
+            return string.Format("No delivery");
+        }
     }
 }

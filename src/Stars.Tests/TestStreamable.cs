@@ -7,7 +7,7 @@ using Terradue.Stars.Services;
 
 namespace Stars.Tests
 {
-    internal class TestStreamable : IStreamable
+    internal class TestStreamable : IStreamResource
     {
         private Stream stream;
         private readonly ulong contentLength;

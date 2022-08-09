@@ -15,18 +15,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Calibration
 
         private readonly IAsset calibrationAsset;
 
-        public S1L1AssetCalibration(l1CalibrationType l1Calibration, IAsset calibrationAsset)
+        public S1L1AssetCalibration(l1CalibrationType l1Calibration, IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider): base(resourceServiceProvider)
         {
             this.l1Calibration = l1Calibration;
             this.calibrationAsset = calibrationAsset;
         }
 
-        public async static Task<S1L1AssetCalibration> Create(IAsset calibrationAsset)
+        public async static Task<S1L1AssetCalibration> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
         {
-            var streamable = calibrationAsset.GetStreamable();
-            if (streamable == null)
-                throw new InvalidDataException("Cannot stream data from " + calibrationAsset.Uri);
-            return new S1L1AssetCalibration((l1CalibrationType)s1L1CalibrationSerializer.Deserialize(await streamable.GetStreamAsync()), calibrationAsset);
+            return new S1L1AssetCalibration((l1CalibrationType)s1L1CalibrationSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(calibrationAsset)), calibrationAsset, resourceServiceProvider);
         }
 
         public static Task<S1L1AssetProduct> CreateData(IAsset annotationAsset)

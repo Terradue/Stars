@@ -15,7 +15,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         public override string Label => "Sentinel-2 (ESA) mission product metadata extractor";
 
-        public Sentinel2MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger) : base(logger)
+        public Sentinel2MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
             this.loggerS2 = logger;
         }
@@ -38,11 +38,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         protected override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
             if ( stacFactory.Manifest.informationPackageMap.contentUnit[0].unitType == "Product_Level-1C" ){
-                Sentinel2Level1MetadataExtractor metadataExtractor = new Sentinel2Level1MetadataExtractor(loggerS2);
+                Sentinel2Level1MetadataExtractor metadataExtractor = new Sentinel2Level1MetadataExtractor(loggerS2, resourceServiceProvider);
                 return metadataExtractor.AddAssets(stacItem, item, stacFactory);
             }
             if ( stacFactory.Manifest.informationPackageMap.contentUnit[0].unitType == "Product_Level-2A" ){
-                Sentinel2Level2MetadataExtractor metadataExtractor = new Sentinel2Level2MetadataExtractor(loggerS2);
+                Sentinel2Level2MetadataExtractor metadataExtractor = new Sentinel2Level2MetadataExtractor(loggerS2, resourceServiceProvider);
                 return metadataExtractor.AddAssets(stacItem, item, stacFactory);
             }
             return null;

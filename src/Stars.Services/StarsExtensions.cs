@@ -53,7 +53,7 @@ namespace Terradue.Stars.Services
             return (array == null || array.Length == 0);
         }
 
-        public async static Task<string> ReadAsString(this IStreamable streamable)
+        public async static Task<string> ReadAsString(this IStreamResource streamable)
         {
             StreamReader sr = new StreamReader(await streamable.GetStreamAsync());
             return sr.ReadToEnd();

@@ -5,12 +5,13 @@ using System.Net;
 using Stac;
 using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
     public class StacCatalogNode : StacNode, ICatalog
     {
-        public StacCatalogNode(IStacCatalog stacCatalog, Uri uri, ICredentials credentials = null) : base(stacCatalog, uri, credentials)
+        public StacCatalogNode(IStacCatalog stacCatalog, Uri uri) : base(stacCatalog, uri)
         {
         }
 
@@ -27,11 +28,13 @@ namespace Terradue.Stars.Services.Model.Stac
             }
         }
 
-        public override IReadOnlyList<IResource> GetRoutes(ICredentials credentials)
+        public override IReadOnlyList<IResource> GetRoutes(IRouter router)
         {
-            StacRouter stacRouter = new StacRouter(credentials);
-            return StacCatalog.GetChildren(this.Uri, stacRouter).Select(child => new StacCatalogNode(child.Value, child.Key)).Cast<IResource>()
-                    .Concat(StacCatalog.GetItems(this.Uri, stacRouter).Select(item => new StacItemNode(item.Value, item.Key)))
+            StacRouter stacRouter = router as StacRouter;
+            if (stacRouter == null)
+                throw new Exception("Router is not a StacRouter");
+            return this.GetChildren(stacRouter).Cast<IResource>()
+                    .Concat(this.GetItems(stacRouter).Cast<IResource>())
                     .ToList();
         }
     }

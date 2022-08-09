@@ -7,7 +7,7 @@ using Stac;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Model.Atom;
 
-namespace Terradue.Data.Test.Harvesters
+namespace Terradue.Data.Tests.Harvesters
 {
     public class StacItemToAtomItemTests : TestBase
     {
@@ -20,7 +20,7 @@ namespace Terradue.Data.Test.Harvesters
 
             StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
 
-            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(null, ServiceProvider);
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
             StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-d0534740-b97b-11eb-82cf-0a580a830350/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808.json"));
 
@@ -39,7 +39,7 @@ namespace Terradue.Data.Test.Harvesters
 
             StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
 
-            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(null, ServiceProvider);
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
             StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
 

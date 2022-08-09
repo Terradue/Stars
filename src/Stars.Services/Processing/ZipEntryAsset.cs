@@ -9,7 +9,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
 {
-    internal class ZipEntryAsset : IAsset, IStreamable
+    internal class ZipEntryAsset : IAsset, IStreamResource
     {
         private ZipEntry entry;
         private readonly ZipFile zipFile;
@@ -56,14 +56,11 @@ namespace Terradue.Stars.Services.Processing
             }
         }
 
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
+
         public Task<Stream> GetStreamAsync()
         {
             return Task.FromResult(entry.OpenReader() as Stream);
-        }
-
-        public IStreamable GetStreamable()
-        {
-            return this;
         }
 
         public Task<Stream> GetStreamAsync(long start, long end = -1)
@@ -71,9 +68,9 @@ namespace Terradue.Stars.Services.Processing
             throw new NotImplementedException();
         }
 
-        public Task CacheHeaders(bool force = false)
+        public override string ToString()
         {
-            return Task.CompletedTask;
+            return string.Format("Zip Entry {0}", entry.FileName);
         }
     }
 }
