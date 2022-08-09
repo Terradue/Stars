@@ -145,11 +145,20 @@ namespace Terradue.Stars.Services.Resources
                 }
             }
 
-            AWSCredentials credentials = new EnvironmentVariablesAWSCredentials();
-            if ( credentials.GetCredentials() != null)
+            AWSCredentials credentials = null;
+
+            try
             {
-                logger?.LogInformation("Using AWS credentials found in the environment");
-                return credentials;
+                credentials = new EnvironmentVariablesAWSCredentials();
+                if (credentials.GetCredentials() != null)
+                {
+                    logger?.LogInformation("Using AWS credentials found in the environment");
+                    return credentials;
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                logger?.LogInformation(e.Message);
             }
 
             credentials = FallbackCredentialsFactory.GetCredentials(true);
