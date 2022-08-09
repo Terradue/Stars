@@ -47,11 +47,19 @@ namespace Terradue.Stars.Services.Resources
                 return new LocalFileResource(_serviceProvider.GetRequiredService<IFileSystem>(), resource.Uri.AbsolutePath, ResourceType.Unknown);
             }
 
-            S3Url s3Url = S3Url.ParseUri(resource.Uri);
+            S3Url s3Url = null;
             bool triedS3 = false;
+            // Try to parse S3 URL
+            try
+            {
+                s3Url = S3Url.ParseUri(resource.Uri);
+            }
+            catch
+            {
+            }
 
             // S3
-            if (resource.Uri.Scheme == "s3" || s3Url.Endpoint.Contains("s3."))
+            if (s3Url != null && (resource.Uri.Scheme == "s3" || s3Url.Endpoint.Contains("s3.")))
             {
                 IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
                 try
@@ -72,36 +80,42 @@ namespace Terradue.Stars.Services.Resources
             }
 
             // HTTP
-            var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
-            if (clientFactory == null)
-                throw new SystemException("HttpClient Factory not provided");
-
-            var client = clientFactory.CreateClient("stars");
-
-            HttpResponseMessage response = await client.GetAsync(resource.Uri);
-
-            // S3 resource case
-            if (!triedS3 && response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
+            if (resource.Uri.Scheme.StartsWith("http"))
             {
-                try
+                var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
+                if (clientFactory == null)
+                    throw new SystemException("HttpClient Factory not provided");
+
+                var client = clientFactory.CreateClient("stars");
+
+                HttpResponseMessage response = await client.GetAsync(resource.Uri);
+
+                // S3 resource case
+                if (s3Url != null && !triedS3 && response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
                 {
-                    IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
-                    if (resource is IAsset)
-                        return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
-                    return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                    try
+                    {
+                        IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
+                        if (resource is IAsset)
+                            return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
+                        return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                    }
+                    catch (AmazonS3Exception e)
+                    {
+                        logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError(e, e.Message);
+                    }
+                    triedS3 = true;
                 }
-                catch (AmazonS3Exception e)
-                {
-                    logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
-                }
-                catch (Exception e)
-                {
-                    logger.LogError(e, e.Message);
-                }
-                triedS3 = true;
+
+                return new HttpResource(resource.Uri, client, response.Content.Headers);
             }
 
-            return new HttpResource(resource.Uri, client, response.Content.Headers);
+            // Unknown
+            throw new SystemException("Unknown resource type");
         }
 
         public async Task<Stream> GetAssetStreamAsync(IAsset asset)

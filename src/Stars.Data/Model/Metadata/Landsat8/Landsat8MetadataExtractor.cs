@@ -24,11 +24,11 @@ using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Geometry.GeoJson;
 
-namespace Terradue.Stars.Data.Model.Metadata.Landsat
+namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 {
 
     [PluginPriority(1000)]
-    public class LandsatMetadataExtraction : MetadataExtraction
+    public class Landsat8MetadataExtraction : MetadataExtraction
     {
 
         public override string Label => "Landsat-8 (NASA) mission product metadata extractor";
@@ -36,7 +36,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat
         private const string ASCENDING = "Ascending Orbit";
         private const string DESCENDING = "Descending Orbit";
 
-        public LandsatMetadataExtraction(ILogger<LandsatMetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
+        public Landsat8MetadataExtraction(ILogger<Landsat8MetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat
                 throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
-
+            
             IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
@@ -64,7 +64,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat
             IAsset auxSpatialResolutionFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_ANG\\.txt)$");
             if (auxSpatialResolutionFile != null) {
                 logger.LogDebug(String.Format("ANG.txt file is {0}", auxSpatialResolutionFile.Uri));
-                IStreamable auxSpatialiResolutionFileStreamable = auxSpatialResolutionFile.GetStreamable();
+                IStreamResource auxSpatialiResolutionFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxSpatialResolutionFile);
                 if (auxSpatialiResolutionFileStreamable == null) {
                     logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
                     return null;
@@ -363,7 +363,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat
         /// <summary>Deserialize Auxiliary from xml to class</summary>
         /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<AuxiliarySpatialResolution> DeserializeAuxiliarySpatialResolution(IStreamable auxiliaryFile)
+        public static async Task<AuxiliarySpatialResolution> DeserializeAuxiliarySpatialResolution(IStreamResource auxiliaryFile)
         {
             AuxiliarySpatialResolution auxiliary = new AuxiliarySpatialResolution();
             using (var stream = await auxiliaryFile.GetStreamAsync())
@@ -385,13 +385,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat
 
             try
             {
-                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
-                return auxiliary.IsLandsat8() || auxiliary.IsLandsat9();
+                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.CreateStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                return auxiliary.IsLandsat8();
             }
             catch (Exception e)
             {
                 return false;
             }
+
+            return true;
         }
 
 
