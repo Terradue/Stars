@@ -69,19 +69,19 @@
         "data"
       ],
       "title": "Acquisition Enclosure",
-      "href": "s3://cpe-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif"
+      "href": "s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif"
     }
   },
   "links": [
     {
       "type": "application/geo+json",
       "rel": "self",
-      "href": "s3://cpe-acceptance-catalog/calls/call-857/acquisitions/test505/test505.json"
+      "href": "s3://local-acceptance-catalog/calls/call-857/acquisitions/test505/test505.json"
     },
     {
       "type": "application/json",
       "rel": "root",
-      "href": "s3://cpe-acceptance-catalog/catalog.json"
+      "href": "s3://local-acceptance-catalog/catalog.json"
     }
   ]
 }

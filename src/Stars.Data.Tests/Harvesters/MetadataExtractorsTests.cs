@@ -53,7 +53,7 @@ namespace Terradue.Data.Tests.Harvesters
                 stacItemNodes.Add(await stacRouter.Route(stacResource) as StacItemNode);
             if (stacResource is StacCatalogNode)
                 stacItemNodes.AddRange((stacResource as StacCatalogNode)
-                                        .GetRoutes(null)
+                                        .GetRoutes(stacRouter)
                                         .Where(r => r.ResourceType == ResourceType.Item)
                                         .Select(r => r as StacItemNode)
                                       );
