@@ -4,7 +4,7 @@ using System.Linq;
 using Humanizer;
 using Kajabity.Tools.Java;
 
-namespace Terradue.Stars.Data.Model.Metadata.Landsat
+namespace Terradue.Stars.Data.Model.Metadata.Landsat9
 {
     public class Auxiliary : JavaProperties
     {
@@ -15,16 +15,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat
             return r;
         }
 
-        public bool IsLandsat8()
-        {
-            return SpaceCraftID == "LANDSAT_8";
-        }
-
         public bool IsLandsat9()
         {
             return SpaceCraftID == "LANDSAT_9";
         }
-
         //properties
         public string SpaceCraftID => GetProperty("SPACECRAFT_ID");
         public string SceneId => GetProperty("LANDSAT_SCENE_ID");

@@ -12,6 +12,7 @@ using Newtonsoft.Json.Schema;
 using Stac.Schemas;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Supplier.Carrier;
@@ -42,6 +43,7 @@ namespace Terradue.Data.Tests
             Collection.AddSingleton<ICarrier, LocalStreamingCarrier>();
             Collection.AddSingleton<IFileSystem, FileSystem>();
             Collection.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
+            Collection.AddSingleton<StacRouter, StacRouter>();
         }
 
         protected TestBase()
@@ -50,6 +52,7 @@ namespace Terradue.Data.Tests
             Collection.AddLogging();
             Collection.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
             Collection.AddSingleton<IFileSystem, FileSystem>();
+            Collection.AddSingleton<StacRouter, StacRouter>();
             Collection.AddHttpClient();
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
