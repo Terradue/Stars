@@ -14,7 +14,7 @@
                 "ServiceURL": "http://s3.eu-west-1.localhost.localstack.cloud:4566/"
             },
             "localstack": {
-                "UrlPattern": "s3:\/\/local.*",
+                "UrlPattern": "s3:\/\/local-.*",
                 "Region": "eu-central-1",
                 "UseHttp": true,
                 "AccessKey": "localkey",

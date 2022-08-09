@@ -31,14 +31,6 @@ namespace Stars.Tests
         }
 
         [Fact]
-        public void DefaultS3Client()
-        {
-            IAmazonS3 S3Client = serviceProvider.GetRequiredService<IAmazonS3>();
-            Assert.NotNull(S3Client);
-            Assert.Equal("http://localhost:4566/", S3Client.Config.ServiceURL);
-        }
-
-        [Fact]
         public async Task NamedS3ClientAsync()
         {
             var s3Client = s3ClientFactory.CreateS3Client("geohazards-tep");

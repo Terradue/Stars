@@ -64,8 +64,8 @@ namespace Stars.Tests
         [Fact]
         public async Task ImportUnlimitedStreamabletoS3()
         {
-            await CreateBucketAsync("s3://unlimited");
-            S3Url s3Url = S3Url.Parse("s3://unlimited/test.bin");
+            await CreateBucketAsync("s3://local-unlimited");
+            S3Url s3Url = S3Url.Parse("s3://local-unlimited/test.bin");
             S3Resource s3Route = await s3ClientFactory.CreateAsync(s3Url);
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
@@ -81,8 +81,8 @@ namespace Stars.Tests
         [Fact]
         public async Task ImportHttpStreamabletoS3()
         {
-            await CreateBucketAsync("s3://http");
-            S3Resource s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
+            await CreateBucketAsync("s3://local-http");
+            S3Resource s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://local-http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
             var httpRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg")));
@@ -94,22 +94,22 @@ namespace Stars.Tests
         [Fact]
         public async Task AdaptRegion()
         {
-            await CreateBucketAsync("nogoodregion", "localstack-eu-west-1");
-            var client = s3ClientFactory.CreateS3Client(S3Url.Parse("http://nogoodregion.s3.eu-west-1.localhost.localstack.cloud:4566/"));
-            var bucketlocation = await client.GetBucketLocationAsync("nogoodregion");
+            await CreateBucketAsync("local-nogoodregion", "localstack-eu-west-1");
+            var client = s3ClientFactory.CreateS3Client(S3Url.Parse("http://local-nogoodregion.s3.eu-west-1.localhost.localstack.cloud:4566/"));
+            var bucketlocation = await client.GetBucketLocationAsync("local-nogoodregion");
             Assert.Equal(Amazon.S3.S3Region.EU, bucketlocation.Location);
-            client = s3ClientFactory.CreateS3Client(S3Url.Parse("http://nogoodregion.s3.eu-central-1.localhost.localstack.cloud:4566/"));
+            client = s3ClientFactory.CreateS3Client(S3Url.Parse("http://local-nogoodregion.s3.eu-central-1.localhost.localstack.cloud:4566/"));
             var listing = await client.ListObjectsV2Async(new ListObjectsV2Request()
             {
-                BucketName = "nogoodregion",
+                BucketName = "local-nogoodregion",
             });
             await client.PutObjectAsync(new PutObjectRequest
             {
-                BucketName = "nogoodregion",
+                BucketName = "local-nogoodregion",
                 Key = "test.json",
                 ContentBody = File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json"))
             });
-            var s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://nogoodregion/test.json"));
+            var s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://local-nogoodregion/test.json"));
         }
 
     }
