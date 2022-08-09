@@ -7,7 +7,6 @@ using Stac;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Model.Atom;
 using System.Xml;
-using Terradue.Data.Test;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -62,7 +61,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
 
-            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(null, ServiceProvider);
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
             StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
 
