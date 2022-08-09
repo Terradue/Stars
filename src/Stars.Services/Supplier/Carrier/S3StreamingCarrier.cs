@@ -110,7 +110,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
                 // If streamable cannot be ranged, pass by a blocking stream
                 Stream sourceStream = await streamable.GetStreamAsync();
-                int partSize = 10 * 1024 * 1024;
+                int partSize = 100 * 1024 * 1024;
                 S3WebRequest s3WebRequest = (S3WebRequest)(s3Resource.Request as S3WebRequest).CloneRequest(s3Resource.Uri);
                 bool uploadStream = false;
                 try
@@ -125,11 +125,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 if (streamable.ContentLength == 0 || uploadStream)
                 {
                     S3UploadStream s3UploadStream = new S3UploadStream(s3WebRequest.S3Client, S3UriParser.GetBucketName(s3Resource.Uri), S3UriParser.GetKey(s3Resource.Uri), partSize);
-                    await StartSourceCopy(sourceStream, s3UploadStream, partSize);
+                    await StartSourceCopy(sourceStream, s3UploadStream, partSize / 1024);
                 }
                 else
                 {
-
                     var tx = new TransferUtility(s3WebRequest.S3Client);
                     TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
                     ur.PartSize = partSize;

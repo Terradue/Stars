@@ -60,7 +60,7 @@ namespace Stars.Tests
             s3StreamingCarrier.StartSourceCopy(
                                     File.OpenRead(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")),
                                     stream);
-            IStreamable streamable = new TestStreamable(stream, 0);
+            IStreamable streamable = new TestStreamable(stream, 0, "test.bin");
             var newRoute = await s3StreamingCarrier.StreamToS3Object(streamable, s3Route);
             System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://unlimited/test.bin");
             s3WebRequest.Method = "GET";
@@ -81,6 +81,23 @@ namespace Stars.Tests
             s3WebRequest.Method = "GET";
             System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
             Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(s3WebResponse.ContentLength));
+        }
+
+        [Fact]
+        public async Task UploadVeryLargeFile()
+        {
+            await CreateBucketAsync("s3://unlimited");
+            WebRoute s3Route = WebRoute.Create(new Uri("s3://unlimited/test2.bin"));
+            BlockingStream stream = new BlockingStream(0, 1000);
+            S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
+            var copyTask = CopyRandomFileToStream(stream, 6442450944, 1024 * 1024);
+            IStreamable streamable = new TestStreamable(stream, 0, "test2.bin");
+            var newRoute = await s3StreamingCarrier.StreamToS3Object(streamable, s3Route);
+            System.Net.S3.S3WebRequest s3WebRequest = (System.Net.S3.S3WebRequest)WebRequest.Create("s3://unlimited/test2.bin");
+            s3WebRequest.Method = "GET";
+            Assert.Equal("unlimited", s3WebRequest.BucketName);
+            System.Net.S3.S3WebResponse s3WebResponse = (System.Net.S3.S3WebResponse)await s3WebRequest.GetResponseAsync();
+            Assert.Equal(6442450944UL, Convert.ToUInt64(s3WebResponse.ContentLength));
         }
     }
 }

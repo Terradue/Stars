@@ -11,11 +11,13 @@ namespace Stars.Tests
     {
         private Stream stream;
         private readonly ulong contentLength;
+        private readonly string filename;
 
-        public TestStreamable(Stream stream, ulong contentLength)
+        public TestStreamable(Stream stream, ulong contentLength, string filename)
         {
             this.stream = stream;
             this.contentLength = contentLength;
+            this.filename = filename;
         }
 
         public bool CanBeRanged => false;
@@ -26,9 +28,9 @@ namespace Stars.Tests
 
         public ulong ContentLength => contentLength;
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = "test.bin" };
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = filename };
 
-        public Uri Uri => new Uri("http://localhost/test.bin");
+        public Uri Uri => new Uri("http://localhost/" + filename);
 
         public Task<Stream> GetStreamAsync()
         {
