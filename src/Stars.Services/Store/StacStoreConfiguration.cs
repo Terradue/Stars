@@ -13,6 +13,7 @@ namespace Terradue.Stars.Services.Store
                 Url = string.Format("file://{0}/catalog.json", Directory.GetCurrentDirectory()),
                 DestinationUrl = string.Format("file://{0}", Directory.GetCurrentDirectory())
             };
+            AbsoluteAssetsUrl = true;
         }
 
         public StacCatalogueConfiguration RootCatalogue { get; set; }

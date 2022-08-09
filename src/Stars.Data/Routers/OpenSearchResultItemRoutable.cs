@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Terradue.Stars.Data.Routers
 {
-    public class OpenSearchResultItemRoutable : IResource, IAssetsContainer, IStreamable
+    public class OpenSearchResultItemRoutable : IResource, IAssetsContainer, IStreamResource
     {
         protected IOpenSearchResultItem osItem;
 

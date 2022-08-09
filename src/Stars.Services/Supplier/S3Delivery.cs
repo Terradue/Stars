@@ -27,10 +27,15 @@ namespace Terradue.Stars.Services.Supplier
 
         public IDestination Destination => s3ObjectDestination;
 
-        public IResource Route => route;
+        public IResource Resource => route;
 
         public ICarrier Carrier => carrier;
 
         public string LocalPath => s3ObjectDestination.Uri.AbsolutePath;
+
+        public override string ToString()
+        {
+            return string.Format("{0} from {1} to {2} ({3})", Carrier.Id, Resource, Destination, Cost);
+        }
     }
 }

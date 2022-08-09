@@ -6,7 +6,7 @@ using Stac;
 
 namespace Terradue.Stars.Interface
 {
-    public interface IStreamable : IResource
+    public interface IStreamResource : IResource
     {
         bool CanBeRanged { get; }
 

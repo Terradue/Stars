@@ -33,7 +33,17 @@ namespace Terradue.Stars.Services.Supplier
 
         public IReadOnlyList<string> Roles => roles;
 
-        public Uri Uri => uri;
+        public Uri Uri
+        {
+            get
+            {
+                return uri;
+            }
+            private set
+            {
+                uri = value;
+            }
+        }
 
         public ContentType ContentType => route.ContentType;
 
@@ -45,10 +55,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public IReadOnlyDictionary<string, object> Properties => properties;
 
-        public IStreamable GetStreamable()
-        {
-            return route as IStreamable;
-        }
+        public IEnumerable<IAsset> Alternates => new IAsset[] { };
 
         internal void MergeProperties(IReadOnlyDictionary<string, object> props)
         {
@@ -59,10 +66,5 @@ namespace Terradue.Stars.Services.Supplier
             }
         }
 
-        public async Task CacheHeaders(bool force = false)
-        {
-            if ( route is WebRoute )
-                await (route as WebRoute).CacheHeadersAsync(force);
-        }
     }
 }

@@ -21,7 +21,7 @@ namespace Terradue.Stars.Services.Supplier
         public ICarrier Carrier { get; }
         public IDelivery VoucherDelivery { get; }
         public OrderVoucher OrderVoucher { get; }
-        public IResource Route => OrderVoucher;
+        public IResource Resource => OrderVoucher;
         public ISupplier Supplier => OrderVoucher.Supplier;
         public int Cost { get; }
 

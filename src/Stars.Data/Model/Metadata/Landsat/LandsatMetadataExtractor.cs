@@ -24,11 +24,11 @@ using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Geometry.GeoJson;
 
-namespace Terradue.Stars.Data.Model.Metadata.Landsat8
+namespace Terradue.Stars.Data.Model.Metadata.Landsat
 {
 
     [PluginPriority(1000)]
-    public class Landsat8MetadataExtraction : MetadataExtraction
+    public class LandsatMetadataExtraction : MetadataExtraction
     {
 
         public override string Label => "Landsat-8 (NASA) mission product metadata extractor";
@@ -36,7 +36,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
         private const string ASCENDING = "Ascending Orbit";
         private const string DESCENDING = "Descending Orbit";
 
-        public Landsat8MetadataExtraction(ILogger<Landsat8MetadataExtraction> logger) : base(logger)
+        public LandsatMetadataExtraction(ILogger<LandsatMetadataExtraction> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -50,7 +50,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamable auxFileStreamable = auxFile.GetStreamable();
+            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -350,7 +350,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
         /// <summary>Deserialize Auxiliary from xml to class</summary>
         /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
-        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamable auxiliaryFile)
+        public static async Task<Auxiliary> DeserializeAuxiliary(IStreamResource auxiliaryFile)
         {
             Auxiliary auxiliary = new Auxiliary();
             using (var stream = await auxiliaryFile.GetStreamAsync())
@@ -385,15 +385,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 
             try
             {
-                var auxiliary = DeserializeAuxiliary(auxFile.GetStreamable()).GetAwaiter().GetResult();
-                return auxiliary.IsLandsat8();
+                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                return auxiliary.IsLandsat8() || auxiliary.IsLandsat9();
             }
             catch (Exception e)
             {
                 return false;
             }
-
-            return true;
         }
 
 

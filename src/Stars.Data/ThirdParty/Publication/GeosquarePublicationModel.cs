@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Xml;
-using Terradue.ServiceModel.Syndication;
+using Stac;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Model;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -12,7 +15,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
     /// Publication Model
     /// </summary>
     [DataContract]
-    public class GeosquarePublicationModel
+    public class GeosquarePublicationModel : IPublicationModel
     {
         private AuthenticationHeaderValue authorizationHeaderValue;
 
@@ -25,8 +28,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             Url = publishCatalogModel.Url;
             authorizationHeaderValue = publishCatalogModel.authorizationHeaderValue;
             Index = publishCatalogModel.Index;
-            Links = publishCatalogModel.Links;
-            Categories = publishCatalogModel.Categories;
+            AdditionalLinks = publishCatalogModel.AdditionalLinks;
+            SubjectsList = publishCatalogModel.Subjects.Select(s => new Subject(s)).ToList();
             CreateIndex = publishCatalogModel.CreateIndex;
         }
 
@@ -42,7 +45,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         /// Authorization Header used to publish on the catalog
         /// </summary>
         [DataMember]
-        public string AuthorizationHeader { get => authorizationHeaderValue?.ToString(); set => authorizationHeaderValue = AuthenticationHeaderValue.Parse(value); }
+        public string AuthorizationHeader { get => authorizationHeaderValue?.ToString(); set => authorizationHeaderValue = value != null ? AuthenticationHeaderValue.Parse(value) : default(AuthenticationHeaderValue); }
 
         /// <summary>
         /// Index used to publish on the catalog
@@ -57,18 +60,29 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public bool CreateIndex { get; set; }
 
         /// <summary>
+        /// Collection used to publish on the catalog
+        /// </summary>
+        [DataMember]
+        public string Collection { get; set; }
+
+        /// <summary>
         /// Links to be added to the catalog items
         /// </summary>
         [DataMember]
-        public List<SyndicationLinkModel> Links { get; set; }
+        public List<StacLink> AdditionalLinks { get; set; }
 
         /// <summary>
-        /// Categories to be added to the catalog items
+        /// Subjects to be added to the catalog items
         /// </summary>
-        [DataMember]
-        public List<SyndicationCategoryModel> Categories { get; set; }
+        [DataMember(Name = "subjects")]
+        public List<Subject> SubjectsList { get; set; }
+
+        [IgnoreDataMember]
+        public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
         
         public AuthenticationHeaderValue AuthorizationHeaderValue { get => authorizationHeaderValue; set => authorizationHeaderValue = value; }
+
+        public string ApiKey { get;  set; }
 
         public void SetAuthorizationHeader(string Username, string Password)
         {
@@ -78,35 +92,5 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         }
     }
-
-    public class SyndicationCategoryModel
-    {
-        public string Name { get; set; }
-        public string Label { get; set; }
-        public string Scheme { get; set; }
-        public SyndicationCategory ToSyndicationCategory()
-        {
-            var category = new SyndicationCategory(Name, Scheme, Label);
-            return category;
-        }
-    }
-
-    public class SyndicationLinkModel
-    {
-        public string Title { get; set; }
-        public string Rel { get; set; }
-        public string Href { get; set; }
-        public string Type { get; set; }
-        public List<KeyValuePair<string, string>> Attributes { get; set; }
-
-        public SyndicationLink ToSyndicationLink()
-        {
-            var link = new SyndicationLink(new System.Uri(Href), Rel, Title, Type, 0);
-            if (Attributes != null)
-            {
-                foreach (var attr in Attributes) link.AttributeExtensions.Add(new XmlQualifiedName(attr.Key), attr.Value);
-            }
-            return link;
-        }
-    }
+   
 }

@@ -30,7 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
 
         public override string Label => "Gaofen-1/2 High-resolution Imaging Satellite (CNSA) missions product metadata extractor";
 
-        public GaofenMetadataExtractor(ILogger<GaofenMetadataExtractor> logger) : base(logger) { }
+        public GaofenMetadataExtractor(ILogger<GaofenMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) { }
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
@@ -42,7 +42,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 return false;
             }
 
-            IStreamable metadataFileStreamable = metadataFile.GetStreamable();
+            IStreamResource metadataFileStreamable = resourceServiceProvider.GetStreamResourceAsync(metadataFile).Result;
             if (metadataFileStreamable == null)
             {
                 return false;
@@ -50,7 +50,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
 
             try
             {
-                DeserializeProductMetadata(metadataFile.GetStreamable()).GetAwaiter().GetResult();
+                DeserializeProductMetadata(metadataFileStreamable).GetAwaiter().GetResult();
             }
             catch
             {
@@ -157,7 +157,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
             {
                 logger.LogDebug("Metadata file is {0}", metadataFile.Uri);
 
-                IStreamable metadataFileStreamable = metadataFile.GetStreamable();
+                IStreamResource metadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(metadataFile);
                 if (metadataFileStreamable == null)
                 {
                     logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -332,7 +332,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(metadataAsset.FirstOrDefault().GetStreamable());
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, mssBandName, sensorName, asset, satelliteId, metadata);
@@ -349,7 +349,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(metadataAsset.FirstOrDefault().GetStreamable());
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, mssBandName, sensorName, asset, satelliteId, metadata);
@@ -365,7 +365,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(metadataAsset.FirstOrDefault().GetStreamable());
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 string panBandName = "PAN";
@@ -381,7 +381,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(metadataAsset.FirstOrDefault().GetStreamable());
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, null, sensorName, asset, satelliteId, metadata);
@@ -392,11 +392,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
             if (filename.StartsWith("GF4_IRS", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".tiff", true, CultureInfo.InvariantCulture))
             {
-                var metadataAsset = FindAssetsFromFileNameRegex(assetsContainer, ".*" + filename.Replace(".tiff", ".xml"));
+                var metadataAssets = FindAssetsFromFileNameRegex(assetsContainer, ".*" + filename.Replace(".tiff", ".xml"));
                 ProductMetaData metadata = null;
                 try
                 {
-                    metadata = await DeserializeProductMetadata(metadataAsset.FirstOrDefault().GetStreamable());
+                    metadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAssets.FirstOrDefault()));
                 }
                 catch { }
                 var bandAsset = GetBandAsset(stacItem, null, sensorName, asset, satelliteId, metadata);
@@ -826,7 +826,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
         }
 
 
-        public static async Task<ProductMetaData> DeserializeProductMetadata(IStreamable productMetadataFile)
+        public static async Task<ProductMetaData> DeserializeProductMetadata(IStreamResource productMetadataFile)
         {
             XmlSerializer ser = new XmlSerializer(typeof(ProductMetaData));
             ProductMetaData auxiliary;

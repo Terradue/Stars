@@ -29,9 +29,9 @@
           "projectId": "cdab-282908",
           "AccountFile": "/home/emathot/Workspace/Terradue/Components/systems/cdab-cli/cdab-282908-8d011fc74cdf.json"
         },
-        "ASF":{
-          "Type":"Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
-          "ServiceUrl":"https://api.daac.asf.alaska.edu"
+        "ASF": {
+          "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+          "ServiceUrl": "https://api.daac.asf.alaska.edu"
         }
       },
       "Translators": {
@@ -65,10 +65,10 @@
           "Type": "Terradue.Stars.Data.Model.Metadata.Gaofen3.Gaofen3MetadataExtractor"
         },
         "LANDSAT8": {
-          "Type": "Terradue.Stars.Data.Model.Metadata.Landsat8.Landsat8MetadataExtraction"
+          "Type": "Terradue.Stars.Data.Model.Metadata.Landsat.LandsatMetadataExtraction"
         },
         "LANDSAT9": {
-          "Type": "Terradue.Stars.Data.Model.Metadata.Landsat9.Landsat9MetadataExtraction"
+          "Type": "Terradue.Stars.Data.Model.Metadata.Landsat.LandsatMetadataExtraction"
         },
         "DIMAP": {
           "Type": "Terradue.Stars.Data.Model.Metadata.Dimap.DimapMetadataExtractor"

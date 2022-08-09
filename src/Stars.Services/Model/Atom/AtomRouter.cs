@@ -9,6 +9,9 @@ using Terradue.Stars.Services.Plugins;
 using Terradue.OpenSearch.Result;
 using Terradue.Stars.Services.Router;
 using System.Linq;
+using Terradue.Stars.Services.Resources;
+using Terradue.Stars.Services.Supplier;
+using System.IO;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -18,11 +21,11 @@ namespace Terradue.Stars.Services.Model.Atom
 
         private static string[] supportedTypes = new string[] { "application/atom+xml", "application/xml", "text/xml" };
 
-        private ICredentials credentials;
+        private readonly IResourceServiceProvider resourceServiceProvider;
 
-        public AtomRouter(ICredentials credentials)
+        public AtomRouter(IResourceServiceProvider resourceServiceProvider)
         {
-            this.credentials = credentials;
+            this.resourceServiceProvider = resourceServiceProvider;
         }
 
         public int Priority { get; set; }
@@ -32,18 +35,19 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public bool CanRoute(IResource node)
         {
-            if ( !supportedTypes.Contains(node.ContentType.MediaType) ) return false;
+            var affinedRoute = AffineRouteAsync(node).Result;
+            if (!supportedTypes.Contains(affinedRoute.ContentType.MediaType)) return false;
             try
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                feedFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result));
+                feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result));
                 return true;
             }
             catch { }
             try
             {
                 Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
-                itemFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result));
+                itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result));
                 return true;
             }
             catch { }
@@ -51,21 +55,33 @@ namespace Terradue.Stars.Services.Model.Atom
             return false;
         }
 
+        private async Task<IResource> AffineRouteAsync(IResource route)
+        {
+            if (supportedTypes.Contains(route.ContentType.MediaType)
+                && route is IStreamResource)
+            {
+                return route;
+            }
+            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())));
+            return newRoute;
+        }
+
         public async Task<IResource> Route(IResource node)
         {
+            var affinedRoute = AffineRouteAsync(node).Result;
             try
             {
                 Atom10FeedFormatter feedFormatter = new Atom10FeedFormatter();
-                await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result)));
-                return new AtomFeedCatalog(new AtomFeed(feedFormatter.Feed), node.Uri, credentials);
+                await Task.Run(() => feedFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result)));
+                return new AtomFeedCatalog(new AtomFeed(feedFormatter.Feed), affinedRoute.Uri);
             }
             catch (Exception)
             {
                 try
                 {
                     Atom10ItemFormatter itemFormatter = new Atom10ItemFormatter();
-                    await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create(FetchResource(node).GetStreamAsync().Result)));
-                    return new AtomItemNode(new AtomItem(itemFormatter.Item), node.Uri, credentials);
+                    await Task.Run(() => itemFormatter.ReadFrom(XmlReader.Create(FetchResourceAsync(affinedRoute).Result.GetStreamAsync().Result)));
+                    return new AtomItemNode(new AtomItem(itemFormatter.Item), affinedRoute.Uri);
                 }
                 catch (Exception)
                 {
@@ -74,16 +90,27 @@ namespace Terradue.Stars.Services.Model.Atom
             }
         }
 
-        public IStreamable FetchResource(IResource node)
+        public async Task<IStreamResource> FetchResourceAsync(IResource node)
         {
-            if (node is WebRoute && node.Uri.Query.Contains("format=json"))
+            if (node is HttpResource && node.Uri.Query.Contains("format=json"))
             {
-                return (node as WebRoute).CloneRoute(new Uri (node.Uri.ToString().Replace("format=json", "format=atom")));
+                return await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(node.Uri.ToString().Replace("format=json", "format=atom"))));
             }
 
-            if (node is IStreamable) return node as IStreamable;
+            if (node is IStreamResource) return node as IStreamResource;
 
-            return WebRoute.Create(node.Uri);
+            return await resourceServiceProvider.GetStreamResourceAsync(node);
+        }
+
+        public Task<IResource> RouteLink(IResource resource, IResourceLink childLink)
+        {
+            if (!(resource is AtomFeedCatalog) 
+                && !(resource is AtomItemNode))
+            {
+                throw new Exception("Cannot route link from non-atom resource");
+            }
+            var link = resourceServiceProvider.ComposeLinkUri(childLink, resource);
+            return Route(new GenericResource(link));
         }
 
     }

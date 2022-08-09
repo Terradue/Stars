@@ -28,7 +28,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
 
         public override string Label => "Planet Imaging constellation product metadata extractor";
 
-        public PlanetScopeMetadataExtractor(ILogger<PlanetScopeMetadataExtractor> logger) : base(logger)
+        public PlanetScopeMetadataExtractor(ILogger<PlanetScopeMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -287,7 +287,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
         {
             PlanetScopeMetadata metadata = new PlanetScopeMetadata(manifestAsset);
 
-            await metadata.ReadMetadata();
+            await metadata.ReadMetadata(resourceServiceProvider);
 
             return metadata;
         }
@@ -305,9 +305,9 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
                 this.summaryAsset = summaryAsset;
             }
 
-            public async Task ReadMetadata()
+            public async Task ReadMetadata(IResourceServiceProvider resourceServiceProvider)
             {
-                using (var stream = await summaryAsset.GetStreamable().GetStreamAsync())
+                using (var stream = await resourceServiceProvider.GetAssetStreamAsync(summaryAsset))
                 {
                     using (XmlReader reader = XmlReader.Create(stream))
                     {

@@ -2,7 +2,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
-namespace Terradue.Data.Test
+namespace Terradue.Data.Tests
 {
     /// <summary>
     ///     Assertions for json strings

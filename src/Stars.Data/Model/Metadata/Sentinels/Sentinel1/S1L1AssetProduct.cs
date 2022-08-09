@@ -17,19 +17,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
         private readonly IAsset annotationAsset;
         private readonly IAsset dataAsset;
 
-        public S1L1AssetProduct(l1ProductType l1ProductType, IAsset annotationAsset, IAsset dataAsset)
+        public S1L1AssetProduct(l1ProductType l1ProductType, IAsset annotationAsset, IAsset dataAsset, IResourceServiceProvider resourceServiceProvider): base(resourceServiceProvider)
         {
             this.l1Product = l1ProductType;
             this.annotationAsset = annotationAsset;
             this.dataAsset = dataAsset;
         }
 
-        public async static Task<S1L1AssetProduct> Create(IAsset annotationAsset, IAsset dataAsset)
+        public async static Task<S1L1AssetProduct> Create(IAsset annotationAsset, IAsset dataAsset, IResourceServiceProvider resourceServiceProvider)
         {
-            var streamable = annotationAsset.GetStreamable();
-            if (streamable == null)
-                throw new InvalidDataException("Cannot stream data from " + annotationAsset.Uri);
-            return new S1L1AssetProduct((l1ProductType)s1L1ProductSerializer.Deserialize(await streamable.GetStreamAsync()), annotationAsset, dataAsset);
+            return new S1L1AssetProduct((l1ProductType)s1L1ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset)), annotationAsset, dataAsset, resourceServiceProvider);
         }
 
         protected string GetPixelValueLabel()

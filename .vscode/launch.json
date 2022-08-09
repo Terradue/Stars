@@ -653,8 +653,7 @@
                 "--output",
                 "/tmp/charter"
             ],
-            "env": {
-            },
+            "env": {},
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "integratedTerminal",
@@ -737,14 +736,14 @@
                 "copy",
                 "-si",
                 "CREO",
-                "-si",
-                "Native",
+                // "-si",
+                // "Native",
                 "-v",
                 "-r",
                 "4",
                 "--output",
                 "/tmp/stars",
-                "https://catalog.terradue.com/sentinel2/search?format=atom&uid=S2A_MSIL2A_20211111T073141_N0301_R049_T36JVQ_20211111T102411"
+                "https://catalog.terradue.com/sentinel2/search?format=atom&uid=S2A_MSIL1C_20220609T044341_N0400_R047_T43FEB_20220609T062321"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -766,10 +765,10 @@
                 "-v",
                 "-r",
                 "4",
-                "--nocopy-cog",
+                // "--nocopy-cog",
                 "--output",
                 "/tmp/stars",
-                "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2B_53HPA_20210723_0_L2A"
+                "https://earth-search.s3.us-west-2.amazonaws.com/sentinel-s2-l1c/10/T/FK/2021/7/S2B_10TFK_20210713_0_L1C/S2B_10TFK_20210713_0_L1C.json"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
@@ -803,7 +802,17 @@
             "stopAtEntry": false,
             "logging": {
                 "moduleLoad": false
-            }
+            },
+            "justMyCode": false,
+            "requireExactSource": false,
+            // "symbolOptions": {
+            //     // "searchPaths": [
+            //     //     "/data/workspace/Others/aws-sdk-net/sdk/src"
+            //     // ],
+            //     "searchMicrosoftSymbolServer": true,
+            //     "searchNuGetOrgSymbolServer": true
+            // },
+            "enableStepFiltering": false
         },
         {
             "name": ".NET Core Attach",

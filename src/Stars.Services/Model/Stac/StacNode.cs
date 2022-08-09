@@ -9,23 +9,22 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stac;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public abstract class StacNode : IResource, IStreamable, ILocatable
+    public abstract class StacNode : IResource, IStreamResource, ILocatable
     {
         protected IStacObject stacObject;
-        protected readonly ICredentials credentials;
         private Uri uri;
 
-        protected StacNode(IStacObject stacObject, Uri uri = null, ICredentials credentials = null)
+        protected StacNode(IStacObject stacObject, Uri uri = null)
         {
             if (stacObject == null)
                 throw new ArgumentNullException("stacObject");
             if (!uri.IsAbsoluteUri)
                 throw new ArgumentException("STAC uri must be an absolute uri");
             this.stacObject = stacObject;
-            this.credentials = credentials;
             this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;
         }
 
@@ -93,7 +92,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanBeRanged => false;
 
-        public abstract IReadOnlyList<IResource> GetRoutes(ICredentials credentials);
+        public abstract IReadOnlyList<IResource> GetRoutes(IRouter router);
 
         public async Task<Stream> GetStreamAsync()
         {
@@ -113,5 +112,6 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             throw new NotImplementedException();
         }
+        
     }
 }

@@ -97,6 +97,7 @@ namespace Terradue.Stars.Console.Operations
         private SupplierManager supplierManager;
         private StacStoreService storeService;
         private StacLinkTranslator stacLinkTranslator;
+        private IResourceServiceProvider resourceServiceProvider;
         private string[] inputs = new string[0];
         private int recursivity = 1;
         private string output = "file://" + Directory.GetCurrentDirectory();
@@ -115,7 +116,7 @@ namespace Terradue.Stars.Console.Operations
             // routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
             routingService.OnBeforeBranching((node, router, state) => CreateCatalog(node, router, state));
             routingService.OnItem((node, router, state) => CopyNode(node, router, state));
-            routingService.OnBranching((parentRoute, route, siblings, state) => Task.FromResult((object)PrepareNewRoute(parentRoute, route, siblings, state)));
+            routingService.OnBranching(async (parentRoute, route, siblings, state) => await PrepareNewRouteAsync(parentRoute, route, siblings, state));
             routingService.OnAfterBranching(async (parentRoute, router, parentState, subStates) => await UpdateCatalog(parentRoute, router, parentState, subStates));
         }
 
@@ -149,10 +150,9 @@ namespace Terradue.Stars.Console.Operations
             return operationState;
         }
 
-        private CopyOperationState PrepareNewRoute(IResource parentRoute, IResource newRoute, IEnumerable<IResource> siblings, object state)
+        private async Task<CopyOperationState> PrepareNewRouteAsync(IResource parentRoute, IResource newRoute, IEnumerable<IResource> siblings, object state)
         {
-            if (newRoute is WebRoute)
-                (newRoute as WebRoute).CacheHeadersAsync().GetAwaiter().GetResult();
+            newRoute = await resourceServiceProvider.GetStreamResourceAsync(newRoute);
             if (state == null)
             {
                 return new CopyOperationState(1, storeService, storeService.RootCatalogDestination);
@@ -250,7 +250,7 @@ namespace Terradue.Stars.Console.Operations
 
                     if (!SkipAssets)
                     {
-                        AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFilters);
+                        AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFilters);
                         if (NoCopyCog)
                         {
                             Dictionary<string, string> cogParameters = new Dictionary<string, string>();
@@ -295,7 +295,7 @@ namespace Terradue.Stars.Console.Operations
 
                 if (AssetsFiltersOut != null && AssetsFiltersOut.Count() > 0)
                 {
-                    AssetFilters assetFilters = CreateAssetFiltersFromOptions(AssetsFiltersOut);
+                    AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFiltersOut);
                     FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(stacNode as IItem, assetFilters);
                     var assets = filteredAssetContainer.Assets.ToDictionary(a => a.Key, a => (a.Value as StacAssetAsset).StacAsset);
                     (stacNode as StacItemNode).StacItem.Assets.Clear();
@@ -307,46 +307,6 @@ namespace Terradue.Stars.Console.Operations
 
             return operationState;
         }
-
-        private AssetFilters CreateAssetFiltersFromOptions(string[] assetFiltersStr)
-        {
-            AssetFilters assetFilters = new AssetFilters();
-            if (assetFiltersStr == null)
-                return assetFilters;
-            Regex propertyRegex = new Regex(@"^\{(?'key'[\w:]*)\}(?'value'.*)$");
-            foreach (var assetFilterStr in assetFiltersStr)
-            {
-                Match propertyMatch = propertyRegex.Match(assetFilterStr);
-                if (propertyMatch.Success)
-                {
-                    if (propertyMatch.Groups["key"].Value == "roles")
-                    {
-                        assetFilters.Add(new RolesAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
-                        continue;
-                    }
-                    if (propertyMatch.Groups["key"].Value == "uri")
-                    {
-                        assetFilters.Add(new UriAssetFilter(new Regex(propertyMatch.Groups["value"].Value)));
-                        continue;
-                    }
-                    if (propertyMatch.Groups["key"].Value == "type")
-                    {
-                        assetFilters.Add(new ContentTypeAssetFilter(propertyMatch.Groups["value"].Value, null));
-                        continue;
-                    }
-                    Dictionary<string, Regex> dic = new Dictionary<string, Regex>();
-                    dic.Add(propertyMatch.Groups["key"].Value, new Regex(propertyMatch.Groups["value"].Value));
-                    assetFilters.Add(new PropertyAssetFilter(dic));
-                    continue;
-                }
-                else
-                {
-                    assetFilters.Add(new KeyAssetFilter(new Regex("^" + assetFilterStr + "$")));
-                }
-            }
-            return assetFilters;
-        }
-
         private PluginList<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
         {
             if (route is IItem)
@@ -364,14 +324,17 @@ namespace Terradue.Stars.Console.Operations
             this.translatorManager = ServiceProvider.GetService<TranslatorManager>();
             this.supplierManager = ServiceProvider.GetService<SupplierManager>();
             this.stacLinkTranslator = ServiceProvider.GetService<StacLinkTranslator>();
+            this.resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
+            var stacRouter = ServiceProvider.GetService<StacRouter>();
             await this.storeService.Init(!AppendCatalog);
             InitRoutingTask();
-            PrepareNewRoute(null, storeService.RootCatalogNode, null, null);
+            await PrepareNewRouteAsync(null, storeService.RootCatalogNode, null, null);
             routingService.OnRoutingException((res, router, ex, state) => Task.FromResult(OnRoutingException(res, router, ex, state)));
             List<IResource> routes = null;
             try
             {
-                routes = Inputs.Select(input => (IResource)WebRoute.Create(new Uri(input), credentials: ServiceProvider.GetService<ICredentials>())).ToList();
+                var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(input))));
+                routes = (await Task.WhenAll(tasks)).Cast<IResource>().ToList();
             }
             catch (Exception e)
             {
@@ -381,7 +344,7 @@ namespace Terradue.Stars.Console.Operations
             List<StacNode> stacNodes = new List<StacNode>();
             foreach (var route in routes)
             {
-                CopyOperationState state = PrepareNewRoute(null, route, null, null);
+                CopyOperationState state = await PrepareNewRouteAsync(null, route, null, null);
                 state = await routingService.Route(route, recursivity, null, (object)state) as CopyOperationState;
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
@@ -389,7 +352,7 @@ namespace Terradue.Stars.Console.Operations
             storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.SelectMany<StacNode, IResource>(sn =>
             {
                 if (sn is StacItemNode) return new IResource[] { sn };
-                if (sn is StacCatalogNode) return sn.GetRoutes(ServiceProvider.GetService<ICredentials>());
+                if (sn is StacCatalogNode) return sn.GetRoutes(stacRouter);
                 return new IResource[0];
             }));
             var rootCat = await storeService.StoreCatalogNodeAtDestination(storeService.RootCatalogNode, storeService.RootCatalogDestination);

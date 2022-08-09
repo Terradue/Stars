@@ -26,7 +26,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
 
         public override string Label => "ICEYE SAR X-band microsatellites constellation product metadata extractor";
 
-        public IceyeMetadataExtractor(ILogger<IceyeMetadataExtractor> logger) : base(logger)
+        public IceyeMetadataExtractor(ILogger<IceyeMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -319,7 +319,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await manifestAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
