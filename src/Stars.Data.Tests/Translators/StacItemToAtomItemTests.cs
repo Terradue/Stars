@@ -9,7 +9,7 @@ using Terradue.Stars.Services.Model.Atom;
 using System.Xml;
 using Terradue.Data.Test;
 
-namespace Terradue.Data.Tests.Harvesters
+namespace Terradue.Data.Tests.Translators
 {
     public class StacItemToAtomItemTests : TestBase
     {
