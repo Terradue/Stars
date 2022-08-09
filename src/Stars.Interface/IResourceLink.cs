@@ -3,16 +3,11 @@ using System.Net.Mime;
 
 namespace Terradue.Stars.Interface
 {
-    public interface IResourceLink
+    public interface IResourceLink : IResource
     {
-        Uri Uri { get; }
-
         string Relationship { get; }
-
-        ContentType ContentType { get; }
 
         string Title { get; }
 
-        ulong ContentLength { get; }
     }
 }

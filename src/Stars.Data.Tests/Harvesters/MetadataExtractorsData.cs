@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
-namespace Terradue.Data.Test.Harvesters
+namespace Terradue.Data.Tests.Harvesters
 {
     public class MetadataExtractorsData : TestBase, IEnumerable<object[]>
     {

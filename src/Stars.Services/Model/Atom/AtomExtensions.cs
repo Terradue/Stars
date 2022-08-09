@@ -5,6 +5,8 @@ using Terradue.OpenSearch.Result;
 using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
 using GeoJSON.Net.Geometry;
 using Terradue.Stars.Services.Model.EOP;
+using Stac;
+using System.Xml;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -206,6 +208,17 @@ namespace Terradue.Stars.Services.Model.Atom
             feed.Items = items.ToArray();
 
             return feed;
+        }
+
+
+        public static SyndicationLink ToSyndicationLink(this StacLink stacLink)
+        {
+            var link = new SyndicationLink(stacLink.Uri, stacLink.RelationshipType, stacLink.Title, stacLink.Type, Convert.ToInt64(stacLink.Length));
+            if (stacLink.AdditionalProperties != null)
+            {
+                foreach (var prop in stacLink.AdditionalProperties) link.AttributeExtensions.Add(new XmlQualifiedName(prop.Key), prop.Value.ToString());
+            }
+            return link;
         }
 
     }

@@ -13,9 +13,9 @@ namespace Terradue.Stars.Console
     {
         private readonly ConcurrentDictionary<string, StarsConsoleReporter> _loggers = new ConcurrentDictionary<string, StarsConsoleReporter>();
         private readonly IConsole console;
-        private readonly bool verbose;
+        private readonly int verbose;
 
-        public StarsConsoleLoggerProvider(IConsole console, bool verbose)
+        public StarsConsoleLoggerProvider(IConsole console, int verbose)
         {
             this.console = console;
             this.verbose = verbose;

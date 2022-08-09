@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Processing
 {
-    public class GzipEntryAsset : IAsset, IStreamable
+    public class GzipEntryAsset : IAsset, IStreamResource
     {
         private string name;
         private BlockingStream blockingStream;
@@ -60,12 +61,14 @@ namespace Terradue.Stars.Services.Processing
 
         public bool CanBeRanged => false;
 
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
+
         public Task CacheHeaders(bool force = false)
         {
             return Task.CompletedTask;
         }
 
-        public IStreamable GetStreamable()
+        public IStreamResource GetStreamable()
         {
             return this;
         }

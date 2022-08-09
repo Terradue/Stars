@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Stac;
+using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Interface
 {
@@ -17,6 +18,6 @@ namespace Terradue.Stars.Interface
 
         IReadOnlyList<IResourceLink> GetLinks();
 
-        IReadOnlyList<IResource> GetRoutes(ICredentials credentials);
+        IReadOnlyList<IResource> GetRoutes(IRouter router);
     }
 }

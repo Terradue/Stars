@@ -36,9 +36,9 @@ namespace Terradue.Stars.Services.Processing
             "application/zip"
         };
 
-        internal async static Task<Archive> Read(IAsset asset, ILogger logger, IFileSystem fileSystem)
+        internal async static Task<Archive> Read(IAsset asset, ILogger logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem)
         {
-            IStreamable streamableAsset = asset.GetStreamable();
+            IStreamResource streamableAsset = await resourceServiceProvider.GetStreamResourceAsync(asset);
 
             if (streamableAsset == null)
                 throw new System.IO.InvalidDataException("Asset must be streamable to be read as an archive");
@@ -48,11 +48,11 @@ namespace Terradue.Stars.Services.Processing
             switch (compression)
             {
                 case ArchiveType.Zip:
-                    return new ZipArchiveAsset(asset, logger, fileSystem);
+                    return new ZipArchiveAsset(asset, logger, resourceServiceProvider, fileSystem);
                 case ArchiveType.TarGzip:
-                    return new TarGzipArchive(asset, logger);
+                    return new TarGzipArchive(asset, resourceServiceProvider, logger);
                 case ArchiveType.Gzip:
-                    return new GzipArchive(asset, logger, fileSystem);
+                    return new GzipArchive(asset, logger, resourceServiceProvider, fileSystem);
 
                 default:
                     throw new System.IO.InvalidDataException("Asset is not recognized as an archive");

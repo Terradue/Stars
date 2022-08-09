@@ -30,7 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         public override string Label => "Generic DIMAP product metadata extractor";
 
-        public DimapMetadataExtractor(ILogger<DimapMetadataExtractor> logger) : base(logger)
+        public DimapMetadataExtractor(ILogger<DimapMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
 
@@ -325,7 +325,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await manifestAsset.GetStreamable().GetStreamAsync())
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

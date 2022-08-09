@@ -368,3 +368,4 @@ src/MSBuild_Logs/
 src/.idea
 src/global.json
 
+build/

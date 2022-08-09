@@ -55,6 +55,7 @@ namespace Terradue.Stars.Services.Processing
                 catch (Exception e)
                 {
                     logger.LogWarning("Exception extracting archive assets in {0} : {1}", newItemNode.Uri, e.Message);
+                    logger.LogDebug(e.StackTrace);
                     continue;
                 }
                 newItemNode = await storeService.StoreItemNodeAtDestination(newStacItemNode, destination);

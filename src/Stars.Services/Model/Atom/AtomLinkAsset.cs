@@ -18,15 +18,11 @@ namespace Terradue.Stars.Services.Model.Atom
     {
         private SyndicationLink link;
         private SyndicationItem item;
-        private readonly ICredentials credentials;
-        private readonly WebRoute webRoute;
 
-        public AtomLinkAsset(SyndicationLink link, SyndicationItem item, System.Net.ICredentials credentials = null)
+        public AtomLinkAsset(SyndicationLink link, SyndicationItem item)
         {
             this.link = link;
             this.item = item;
-            this.credentials = credentials;
-            this.webRoute = WebRoute.Create(Uri, Convert.ToUInt64(link.Length), credentials);
         }
 
         public Uri Uri => link.Uri;
@@ -47,7 +43,7 @@ namespace Terradue.Stars.Services.Model.Atom
             }
         }
 
-        public ulong ContentLength => link.Length == 0 ? webRoute.ContentLength : Convert.ToUInt64(link.Length);
+        public ulong ContentLength => Convert.ToUInt64(link.Length);
 
         public string Title => link.Title == null ? Path.GetFileName(link.Uri.AbsolutePath) : link.Title.ToString();
 
@@ -58,7 +54,7 @@ namespace Terradue.Stars.Services.Model.Atom
             get
             {
                 List<string> roles = new List<string>() { link.RelationshipType };
-                switch(link.RelationshipType)
+                switch (link.RelationshipType)
                 {
                     case "enclosure":
                         roles.Add("data");
@@ -71,40 +67,10 @@ namespace Terradue.Stars.Services.Model.Atom
             }
         }
 
-        public ContentDisposition ContentDisposition => webRoute.ContentDisposition;
+        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileName(link.Uri.AbsolutePath) };
 
         public IReadOnlyDictionary<string, object> Properties => link.AttributeExtensions.ToDictionary(k => k.Key.ToString(), k => k.Value as object);
 
-        public IStreamable GetStreamable()
-        {
-            return webRoute;
-        }
-
-        public static IDictionary<string, IAsset> ResolveEnclosure(SyndicationLink link, SyndicationItem item, ICredentials credentials, string key)
-        {
-            Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-            WebRoute webRoute = WebRoute.Create(link.Uri, Convert.ToUInt64(link.Length), credentials);
-            if (webRoute.IsFolder)
-            {
-                IEnumerable<WebRoute> childrenRoutes = webRoute.ListFolder();
-                int i = 0;
-                foreach (var childRoute in childrenRoutes)
-                {
-                    i++;
-                    assets.Add(key + "-" + i, new GenericAsset(childRoute,
-                        link.Title + " " + childRoute.Uri.ToString().Replace(webRoute.Uri.ToString(), ""),
-                         new string[] { link.RelationshipType }));
-                }
-            }
-            else
-                assets.Add(key, new AtomLinkAsset(link, item, credentials));
-
-            return assets;
-        }
-
-        public async Task CacheHeaders(bool force = false)
-        {
-            await webRoute.CacheHeadersAsync(force);
-        }
+        public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
     }
 }

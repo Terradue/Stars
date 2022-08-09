@@ -26,6 +26,7 @@ namespace Terradue.Stars.Services
         protected readonly SupplierManager suppliersManager;
         protected readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
+        private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ICredentials credentials;
 
         public AssetService(ILogger<AssetService> logger,
@@ -33,6 +34,7 @@ namespace Terradue.Stars.Services
                             SupplierManager suppliersManager,
                             TranslatorManager translatorManager,
                             CarrierManager carrierManager,
+                            IResourceServiceProvider resourceServiceProvider,
                             ICredentials credentials)
         {
             this.logger = logger;
@@ -40,6 +42,7 @@ namespace Terradue.Stars.Services
             this.suppliersManager = suppliersManager;
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
+            this.resourceServiceProvider = resourceServiceProvider;
             this.credentials = credentials;
         }
 
@@ -82,7 +85,7 @@ namespace Terradue.Stars.Services
                 // OK
                 if (importedResource != null)
                 {
-                    IAsset importedAsset = MakeAsset(importedResource, (IAsset)assetDeliveries.Value.First().Route);
+                    IAsset importedAsset = MakeAsset(importedResource, (IAsset)assetDeliveries.Value.First().Resource);
                     report.ImportedAssets.Add(assetDeliveries.Key, importedAsset);
                 }
             }
@@ -103,7 +106,7 @@ namespace Terradue.Stars.Services
                 int j = 1;
                 foreach (var delivery in item.Value)
                 {
-                    logger.LogDebug("  #{0}{1} to {2} : {3}$", j, delivery.Carrier.Id, delivery.Destination.ToString(), delivery.Cost);
+                    logger.LogDebug("  #{0} {1}", j, delivery);
                     j++;
                 }
             }
@@ -129,7 +132,7 @@ namespace Terradue.Stars.Services
             List<Exception> exceptions = new List<Exception>();
             foreach (var delivery in deliveries)
             {
-                logger.LogInformation("Delivering asset {0} {1} {2} ({3}) to {4}...", key, delivery.Route.ResourceType, delivery.Route.Uri, delivery.Carrier.Id, delivery.Destination);
+                logger.LogInformation("Delivering asset {0} {1} {2} ({3}) to {4}...", key, delivery.Resource.ResourceType, delivery.Resource.Uri, delivery.Carrier.Id, delivery.Destination);
                 try
                 {
                     delivery.Destination.PrepareDestination();
@@ -143,6 +146,7 @@ namespace Terradue.Stars.Services
                 catch (Exception e)
                 {
                     logger.LogError("Error delivering asset {0} ({1}) : {2}", key, delivery.Carrier.Id, e.Message);
+                    logger.LogDebug(e.StackTrace);
                     exceptions.Add(e);
                 }
             }
@@ -158,8 +162,7 @@ namespace Terradue.Stars.Services
             foreach (var asset in assetsContainer.Assets)
             {
                 try {
-                    WebRoute assetRoute = WebRoute.Create(asset.Value.Uri, 0, credentials);
-                    await assetRoute.Remove();
+                    await resourceServiceProvider.Delete(asset.Value);
                 }
                 catch(Exception e)
                 {

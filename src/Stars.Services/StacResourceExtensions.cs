@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Stac;
+using Stac.Extensions.Alternate;
 using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model.Stac;
@@ -70,7 +71,6 @@ namespace Terradue.Stars.Services
                     catalogNode.Links.Add(StacLink.CreateItemLink(resource.Uri, resource.ContentType.ToString()));
             }
         }
-
     }
 
 }

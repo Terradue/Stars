@@ -13,7 +13,7 @@ using Terradue.Stars.Interface.Supplier;
 namespace Terradue.Stars.Services.Supplier
 {
     [JsonObject]
-    public class OrderVoucher : IResource, IStreamable, IOrder, IAsset
+    public class OrderVoucher : IResource, IOrder, IAsset
     {
         private IOrderable orderableRoute;
         private readonly string orderId;
@@ -69,6 +69,8 @@ namespace Terradue.Stars.Services.Supplier
         [JsonProperty]
         public IReadOnlyDictionary<string, object> Properties => new Dictionary<string, object>();
 
+        public IEnumerable<IAsset> Alternates => new List<IAsset>();
+
         public async Task<Stream> GetStreamAsync()
         {
             return await Task<Stream>.Run(() =>
@@ -83,25 +85,10 @@ namespace Terradue.Stars.Services.Supplier
             });
         }
 
-
         internal async Task<IOrder> Order()
         {
             return await Supplier.Order(orderableRoute);
         }
 
-        public IStreamable GetStreamable()
-        {
-            return this;
-        }
-
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task CacheHeaders(bool force = false)
-        {
-            return Task.CompletedTask;
-        }
     }
 }

@@ -13,6 +13,20 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             BaseUrl = "https://api.cogeo.xyz/";
         }
 
+        public TitilerConfiguration(TitilerConfiguration configuration)
+        {
+            BaseUrl = configuration.BaseUrl;
+            Identifier = configuration.Identifier;
+            UriMaps = configuration.UriMaps;
+        }
+
+        public void SetValues(TitilerConfiguration configuration)
+        {
+            BaseUrl = configuration.BaseUrl;
+            Identifier = configuration.Identifier;
+            UriMaps = configuration.UriMaps;
+        }
+
         public string BaseUrl { get; set; }
 
         [JsonIgnore]
