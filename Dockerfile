@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/microsoft-dotnet
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
@@ -16,7 +16,7 @@ RUN ls -l src/Stars.Services/
 RUN dotnet publish -c release -o /app -r linux-x64 -f net6.0 --self-contained true --no-restore src/Stars.Console/
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:5.0-bullseye-slim-amd64
+FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-bullseye-slim-amd64
 WORKDIR /app
 COPY --from=build /app ./
 COPY src/scripts/stars /bin/Stars
