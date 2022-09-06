@@ -105,6 +105,7 @@ namespace Terradue.Stars.Services.Resources
                 throw new InvalidOperationException("Cannot copy between different endpoints");
             }
             await Client.CopyObjectAsync(s3Url.Bucket, s3Url.Key, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key);
+            await s3outputStreamResource.LoadMetadata();
             return s3outputStreamResource;
         }
 

@@ -1,11 +1,13 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Stac;
+using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
@@ -59,6 +61,25 @@ namespace Stars.Tests
             }
             var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/calls/857/notifications/500x477.tif"));
             Assert.Equal(s3Resource.ContentLength, s3dest.ContentLength);
+        }
+
+        [Fact]
+        public async Task ImportAssetsS30SizedtoS3()
+        {
+            await CreateBucketAsync("s3://local-acceptance-catalog/indices_cog");
+            await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif");
+            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif")));
+            StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/cci_fss_CFD_1993.json")));
+            S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog/indices_cog/copy/cci_fss_CFD_1993.json");
+            StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
+            var importReport = await assetService.ImportAssets(itemNode, s3ObjectDestination, AssetFilters.SkipRelative);
+            foreach (var ex in importReport.AssetsExceptions)
+            {
+                throw ex.Value;
+            }
+            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/indices_cog/copy/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif"));
+            Assert.Equal(s3Resource.ContentLength, s3dest.ContentLength);
+            Assert.NotEqual(item.Assets.First().Value.FileExtension().Size, importReport.Assets.First().Value.ContentLength);
         }
 
         [Fact]
