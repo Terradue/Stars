@@ -13,7 +13,7 @@ RUN dotnet restore src/Stars.Console/
 # copy everything else and build app
 COPY . .
 RUN ls -l src/Stars.Services/
-RUN dotnet publish -c release -o /app -r linux-x64 -f net5.0 --self-contained true --no-restore src/Stars.Console/
+RUN dotnet publish -c release -o /app -r linux-x64 -f net6.0 --self-contained true --no-restore src/Stars.Console/
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:5.0-bullseye-slim-amd64

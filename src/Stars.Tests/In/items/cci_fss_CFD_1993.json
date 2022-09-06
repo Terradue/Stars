@@ -1,0 +1,59 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/file/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "cci_fss_CFD_1993",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    96.75,
+                    48.25
+                ],
+                [
+                    96.75,
+                    52.25
+                ],
+                [
+                    103.0,
+                    52.25
+                ],
+                [
+                    103.0,
+                    48.25
+                ],
+                [
+                    96.75,
+                    48.25
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "title": "Consecutive frost days index (CFD) - 1993",
+        "start_datetime": "1992-12-01",
+        "end_datetime": "1993-05-31"
+    },
+    "bbox": [
+        96.75,
+        48.25,
+        103.0,
+        52.25
+    ],
+    "assets": {
+        "cci_fss_CFD_1993": {
+            "href": "s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif",
+            "type": "image/tiff; application=geotiff",
+            "title": "Consecutive frost days index (CFD) - 1993",
+            "description": "Seasonal largest number of consecutive days where surface state flag shows frozen conditions.",
+            "roles": [
+                "data",
+                "overview"
+            ],
+        }
+    },
+    "links": []
+}

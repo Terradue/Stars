@@ -1,0 +1,141 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "20160831_212705_0c43_3B_AnalyticMS",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -121.4547222459,
+          38.1354779221
+        ],
+        [
+          -121.4547222459,
+          37.9547694063
+        ],
+        [
+          -121.2585168259,
+          37.9547694063
+        ],
+        [
+          -121.2585168259,
+          38.1354779221
+        ],
+        [
+          -121.4547222459,
+          38.1354779221
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2016-08-31T21:27:05+00:00",
+    "start_datetime": "2016-08-31T21:27:05+00:00",
+    "end_datetime": "2016-08-31T21:27:05+00:00",
+    "mission": "planetscope",
+    "platform": "planetscope",
+    "instruments": [
+      "ps2"
+    ],
+    "sensor_type": "optical",
+    "gsd": 3.0,
+    "sat:orbit_state": "descending",
+    "sat:absolute_orbit": 232154,
+    "view:sun_elevation": 54.95731,
+    "view:sun_azimuth": 217.1322,
+    "view:incidence_angle": 1.889876,
+    "view:off_nadir": 1.787131,
+    "proj:epsg": 32610,
+    "processing:level": "L3B",
+    "title": "PLANETSCOPE PS2 L3B 2016-08-31 21:27:05"
+  },
+  "bbox": [
+    -121.4547222459,
+    37.9547694063,
+    -121.2585168259,
+    38.1354779221
+  ],
+  "assets": {
+    "data": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/20160831_212705_0c43_ortho_analytic_4b/20160831_212705_0c43_3B_AnalyticMS.tif",
+      "filename": "20160831_212705_0c43_3B_AnalyticMS.tif",
+      "file:size": 112527776,
+      "proj:shape": [
+        5663,
+        6726
+      ],
+      "raster:bands": [
+        {
+          "scale": 1.96831468518E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 2.11127222982E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 2.33772293772E-05,
+          "radiometric_scale": 0.01
+        },
+        {
+          "scale": 3.58086677059E-05,
+          "radiometric_scale": 0.01
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "blue",
+          "description": "blue 485nm TOA",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1997.46
+        },
+        {
+          "name": "green",
+          "description": "green 545nm TOA",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "solar_illumination": 1832.09
+        },
+        {
+          "name": "red",
+          "description": "red 630nm TOA",
+          "common_name": "red",
+          "center_wavelength": 0.63,
+          "solar_illumination": 1631.38
+        },
+        {
+          "name": "nir",
+          "description": "nir 820nm TOA",
+          "common_name": "nir",
+          "center_wavelength": 0.82,
+          "solar_illumination": 1066.31
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/20160831_212705_0c43_ortho_analytic_4b/20160831_212705_0c43_3B_AnalyticMS_metadata.xml",
+      "filename": "20160831_212705_0c43_3B_AnalyticMS_metadata.xml",
+      "file:size": 10366
+    }
+  },
+  "links": []
+}
