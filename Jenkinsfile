@@ -12,7 +12,7 @@ pipeline {
     stage('.Net Core') {
       agent { 
           docker { 
-              image 'mcr.microsoft.com/dotnet/sdk:6.0-buster-slim'
+              image 'mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-amd64'
               args '-v /var/run/docker.sock:/var/run/docker.sock --group-add 2057'
           } 
       }
