@@ -7,6 +7,10 @@ namespace Terradue.Stars.Services.Model
     [DataContract]
     public class Subject
     {
+        public Subject()
+        {
+        }
+
         public Subject(ISubject s)
         {
             this.Id = s.Id;

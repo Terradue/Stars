@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Store
         private readonly DestinationManager destinationManager;
         private readonly TranslatorManager translatorManager;
         private readonly CarrierManager carrierManager;
-        private readonly IResourceServiceProvider resourceServiceProvider;
+        protected readonly IResourceServiceProvider resourceServiceProvider;
         protected readonly ICredentials credentials;
         private readonly StacRouter _stacRouter;
         private readonly AssetService assetService;
