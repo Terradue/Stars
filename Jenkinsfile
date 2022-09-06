@@ -92,8 +92,6 @@ pipeline {
         script {
           def descriptor = readDescriptor()
           def mType=getTypeOfVersion(env.BRANCH_NAME)
-          def baseImage = docker.image('centos:latest')
-          baseImage.pull()
           def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--no-cache .")
           testsuite.tag("${mType}latest")
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
