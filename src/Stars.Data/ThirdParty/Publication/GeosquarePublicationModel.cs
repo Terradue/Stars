@@ -20,7 +20,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         private AuthenticationHeaderValue authorizationHeaderValue;
 
         public GeosquarePublicationModel(){
-            
+            SubjectsList = new List<Subject>();
         }
 
         public GeosquarePublicationModel(GeosquarePublicationModel publishCatalogModel)
