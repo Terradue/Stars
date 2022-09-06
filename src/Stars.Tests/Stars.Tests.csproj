@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -11,11 +11,11 @@
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.*" />
     <PackageReference Include="Xunit.DependencyInjection" Version="8.1.0" />
     <PackageReference Include="Xunit.DependencyInjection.Logging" Version="8.0.0" />
     <PackageReference Include="DotNet.Testcontainers" Version="1.6.0-beta.2028" />

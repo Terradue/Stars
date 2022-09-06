@@ -139,7 +139,7 @@ namespace Terradue.Stars.Services
                     IResource delivered = await delivery.Carrier.Deliver(delivery);
                     if (delivered != null)
                     {
-                        logger.LogInformation("Delivery asset complete to {0}", delivered.Uri);
+                        logger.LogInformation("Delivery asset complete to {0} ({1})", delivered.Uri, Humanizer.ByteSizeExtensions.Humanize(Humanizer.ByteSizeExtensions.Bytes(delivered.ContentLength)));
                         return delivered;
                     }
                 }

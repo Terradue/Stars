@@ -10,6 +10,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.ThirdParty.Titiler;
 using Xunit;
 using Xunit.DependencyInjection;
 using Xunit.DependencyInjection.Logging;
@@ -32,6 +33,7 @@ namespace Stars.Tests
             services.Configure<LocalStackOptions>(Configuration.GetSection("LocalStack"));
             services.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
             services.AddSingleton<S3StreamingCarrier, S3StreamingCarrier>();
+            services.AddSingleton<TitilerService, TitilerService>();
             services.AddStarsManagedServices(builder =>
                 {
                     builder.UseDefaultConfiguration(Configuration);

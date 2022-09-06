@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net5.0</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <Version>2.0.1</Version>
     <!-- <VersionSuffix>beta.8</VersionSuffix> -->
     <Description>Stars is a CLI for working with Spatio Temporal Catalog such as STAC but not only</Description>
@@ -21,15 +21,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.*" />
     <PackageReference Include="YamlDotNet" Version="8.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.*" />
     <PackageReference Include="AWSSDK.Core" Version="3.7.*"/>
   </ItemGroup>
   <ItemGroup>

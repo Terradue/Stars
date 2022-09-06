@@ -41,10 +41,10 @@ pipeline {
             sh "dotnet rpm install"
             sh "dotnet deb install"
             sh "dotnet zip install"
-            sh "dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net5.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
-            sh "dotnet publish -f net5.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj"
+            sh "dotnet publish -f net6.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj"
             stash name: 'stars-packages', includes: 'src/Stars.Console/bin/**/*.rpm'
             stash name: 'stars-exe', includes: 'src/Stars.Console/bin/**/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json'
             stash name: 'stars-zips', includes: 'src/Stars.Console/bin/**/linux**/*.zip'
@@ -125,8 +125,8 @@ pipeline {
           sh "github-release release --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name 'Stars v${env.VERSION_TOOL}'"
 
           echo "Uploading the artifacts into github"
-          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-${env.VERSION_TOOL}-linux-x64 --file src/Stars.Console/bin/Release/net5.0/linux-x64/publish/Stars"
-          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-${env.VERSION_TOOL}-linux-x64.zip --file src/Stars.Console/bin/Release/net5.0/linux-x64/Stars.*.linux-x64.zip"
+          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-${env.VERSION_TOOL}-linux-x64 --file src/Stars.Console/bin/Release/net6.0/linux-x64/publish/Stars"
+          sh "github-release upload --user ${env.GITHUB_ORGANIZATION} --repo ${env.GITHUB_REPO} --tag ${env.VERSION_TOOL} --name Stars-${env.VERSION_TOOL}-linux-x64.zip --file src/Stars.Console/bin/Release/net6.0/linux-x64/Stars.*.linux-x64.zip"
         }
       }
         
