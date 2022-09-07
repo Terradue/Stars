@@ -381,7 +381,7 @@
       ],
       "href": "data/urn_ogc_def_EOP_USGS__LANDSAT9_LS091660722022020300000000MS00-product/vendor_metadata/LC09_L1TP_166072_20220203_20220203_02_T1_ANG.txt",
       "filename": "vendor_metadata/LC09_L1TP_166072_20220203_20220203_02_T1_ANG.txt",
-      "file:size": 0
+      "file:size": 117265
     },
     "metadata": {
       "type": "text/plain",
