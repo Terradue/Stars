@@ -9,7 +9,6 @@
     <AssemblyName>Stars</AssemblyName>
     <UserSecretsId>f195eead-6dad-49d2-ad76-d9dbf6662371</UserSecretsId>
     <RuntimeIdentifiers>win-x64;linux-x64;osx-x64;centos.7-x64</RuntimeIdentifiers>
-    <InvariantGlobalization>true</InvariantGlobalization>
     <DebugType>embedded</DebugType>
     <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
@@ -22,7 +21,7 @@
   <ItemGroup>
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.*" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="5.0.*" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.*" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.*" />
