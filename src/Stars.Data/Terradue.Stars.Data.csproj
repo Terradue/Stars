@@ -12,7 +12,6 @@
     <PackageId>Terradue.Data.Stars</PackageId>
     <PackageTags>STAC;OpenSearch;Terradue;Geo;Json</PackageTags>
     <PackageIcon>Stars_logo.png</PackageIcon>
-    <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>Git</RepositoryType>
     <Authors>emmanuelmathot</Authors>
     <RepositoryUrl>https://github.com/Terradue/Stars</RepositoryUrl>

@@ -17,8 +17,6 @@
     <RepositoryUrl>https://github.com/Terradue/Stars</RepositoryUrl>
     <Copyright>Copyright (c) 2010-2022 by Terradue</Copyright>
     <Company>Terradue</Company>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <InvariantGlobalization>true</InvariantGlobalization>
     <LangVersion>8.0</LangVersion>
     <NoWarn>$(NoWarn);NU1605</NoWarn>
