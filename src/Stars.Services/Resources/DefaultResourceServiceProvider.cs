@@ -139,7 +139,7 @@ namespace Terradue.Stars.Services.Resources
                 return sresource;
             if (sresource.ContentType.MediaType != resource.ContentType.MediaType)
             {
-                throw new Exception($"Requested Stream type '{sresource.ContentType}' is different from the reference type '{resource.ContentType}'");
+                logger.LogWarning($"Requested Stream type '{sresource.ContentType}' is different from the reference type '{resource.ContentType}'");
             }
             return sresource;
         }
