@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -104,9 +105,87 @@ namespace Terradue.Stars.Services.Resources
             {
                 throw new InvalidOperationException("Cannot copy between different endpoints");
             }
+            if (this.ContentLength > (ulong)5 * 1024 * 1024 * 1024)
+            {
+                return await CopyToMultiPart(s3outputStreamResource);
+            }
             await Client.CopyObjectAsync(s3Url.Bucket, s3Url.Key, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key);
             await s3outputStreamResource.LoadMetadata();
             return s3outputStreamResource;
+        }
+
+        private async Task<S3Resource> CopyToMultiPart(S3Resource s3outputStreamResource)
+        {
+            // Create a list to store the upload part responses.
+            List<UploadPartResponse> uploadResponses = new List<UploadPartResponse>();
+            List<CopyPartResponse> copyResponses = new List<CopyPartResponse>();
+
+            // Setup information required to initiate the multipart upload.
+            InitiateMultipartUploadRequest initiateRequest =
+                new InitiateMultipartUploadRequest
+                {
+                    BucketName = s3outputStreamResource.S3Uri.Bucket,
+                    Key = s3outputStreamResource.S3Uri.Key
+                };
+
+            // Initiate the upload.
+            InitiateMultipartUploadResponse initResponse =
+                await Client.InitiateMultipartUploadAsync(initiateRequest);
+
+            // Save the upload ID.
+            String uploadId = initResponse.UploadId;
+
+            // Get the size of the object.
+            GetObjectMetadataRequest metadataRequest = new GetObjectMetadataRequest
+            {
+                BucketName = this.S3Uri.Bucket,
+                Key = this.S3Uri.Key
+            };
+
+            GetObjectMetadataResponse metadataResponse =
+                await Client.GetObjectMetadataAsync(metadataRequest);
+            long objectSize = metadataResponse.ContentLength; // Length in bytes.
+
+            // Copy the parts.
+            long partSize = 5 * (long)Math.Pow(2, 20); // Part size is 5 MB.
+
+            long bytePosition = 0;
+            for (int i = 1; bytePosition < objectSize; i++)
+            {
+                CopyPartRequest copyRequest = new CopyPartRequest
+                {
+                    DestinationBucket = s3outputStreamResource.S3Uri.Bucket,
+                    DestinationKey = s3outputStreamResource.S3Uri.Key,
+                    SourceBucket = this.S3Uri.Bucket,
+                    SourceKey = this.S3Uri.Key,
+                    UploadId = uploadId,
+                    FirstByte = bytePosition,
+                    LastByte = bytePosition + partSize - 1 >= objectSize ? objectSize - 1 : bytePosition + partSize - 1,
+                    PartNumber = i
+                };
+
+                copyResponses.Add(await Client.CopyPartAsync(copyRequest));
+
+                bytePosition += partSize;
+            }
+
+            // Set up to complete the copy.
+            CompleteMultipartUploadRequest completeRequest =
+            new CompleteMultipartUploadRequest
+            {
+                BucketName = s3outputStreamResource.S3Uri.Bucket,
+                Key = s3outputStreamResource.S3Uri.Key,
+                UploadId = initResponse.UploadId
+            };
+            completeRequest.AddPartETags(copyResponses);
+
+            // Complete the copy.
+            CompleteMultipartUploadResponse completeUploadResponse =
+                await Client.CompleteMultipartUploadAsync(completeRequest);
+
+            await s3outputStreamResource.LoadMetadata();
+            return s3outputStreamResource;
+
         }
 
         public async Task Delete()
