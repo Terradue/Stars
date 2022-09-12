@@ -76,38 +76,6 @@
     15.388663
   ],
   "assets": {
-    "amplitude-vv-iw-001": {
-      "type": "image/x.geotiff",
-      "roles": [
-        "amplitude",
-        "data"
-      ],
-      "title": "IW VV Amplitude pixel values",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
-      "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
-      "file:size": 0,
-      "sar:polarizations": [
-        "VV"
-      ],
-      "proj:epsg": null,
-      "proj:shape": [
-        25183,
-        16805
-      ]
-    },
-    "annotation-vv-iw-001": {
-      "type": "text/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Annotation VV IW 001",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
-      "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
-      "file:size": 1571711,
-      "sar:polarizations": [
-        "VV"
-      ]
-    },
     "amplitude-vh-iw-002": {
       "type": "image/x.geotiff",
       "roles": [
@@ -140,16 +108,34 @@
         "VH"
       ]
     },
-    "calibration-vv-iw-001": {
-      "type": "text/xml",
+    "amplitude-vv-iw-001": {
+      "type": "image/x.geotiff",
       "roles": [
-        "calibration",
+        "amplitude",
         "data"
       ],
-      "title": "Calibration VV IW",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
-      "filename": "annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
-      "file:size": 989778,
+      "title": "IW VV Amplitude pixel values",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
+      "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.tiff",
+      "file:size": 0,
+      "sar:polarizations": [
+        "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25183,
+        16805
+      ]
+    },
+    "annotation-vv-iw-001": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VV IW 001",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "filename": "annotation/s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "file:size": 1571711,
       "sar:polarizations": [
         "VV"
       ]
@@ -166,6 +152,20 @@
       "file:size": 989778,
       "sar:polarizations": [
         "VH"
+      ]
+    },
+    "calibration-vv-iw-001": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VV IW",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "filename": "annotation/calibration/calibration-s1a-iw-grd-vv-20160822t182823-20160822t182848-012717-013ffe-001.xml",
+      "file:size": 989778,
+      "sar:polarizations": [
+        "VV"
       ]
     },
     "noise-vh-iw-002": {
@@ -195,6 +195,137 @@
       "sar:polarizations": [
         "VV"
       ]
+    },
+    "support-s1-product-preview": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-product-preview",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-product-preview.xsd",
+      "filename": "support/s1-product-preview.xsd",
+      "file:size": 440
+    },
+    "support-s1-level-1-product": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-product",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-product.xsd",
+      "filename": "support/s1-level-1-product.xsd",
+      "file:size": 147374
+    },
+    "support-s1-level-1-noise": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-noise",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-noise.xsd",
+      "filename": "support/s1-level-1-noise.xsd",
+      "file:size": 3956
+    },
+    "support-s1-level-1-calibration": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-calibration",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-calibration.xsd",
+      "filename": "support/s1-level-1-calibration.xsd",
+      "file:size": 6427
+    },
+    "support-s1-level-1-quicklook": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-quicklook",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-quicklook.xsd",
+      "filename": "support/s1-level-1-quicklook.xsd",
+      "file:size": 469
+    },
+    "support-s1-level-1-measurement": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-measurement",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-measurement.xsd",
+      "filename": "support/s1-level-1-measurement.xsd",
+      "file:size": 471
+    },
+    "support-s1-object-types": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-object-types",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-object-types.xsd",
+      "filename": "support/s1-object-types.xsd",
+      "file:size": 62654
+    },
+    "support-s1-map-overlay": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-map-overlay",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-map-overlay.xsd",
+      "filename": "support/s1-map-overlay.xsd",
+      "file:size": 450
+    },
+    "preview-product-preview": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data"
+      ],
+      "title": "Preview file preview-product-preview",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/preview/product-preview.html",
+      "filename": "preview/product-preview.html",
+      "file:size": 3196
+    },
+    "preview-map-overlay": {
+      "type": "application/vnd.google-earth.kml+xml",
+      "roles": [
+        "data",
+        "kml"
+      ],
+      "title": "Preview file preview-map-overlay",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/preview/map-overlay.kml",
+      "filename": "preview/map-overlay.kml",
+      "file:size": 1018
+    },
+    "preview-quick-look": {
+      "type": "image/png",
+      "roles": [
+        "data",
+        "thumbnail"
+      ],
+      "title": "Preview file preview-quick-look",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/preview/quick-look.png",
+      "filename": "preview/quick-look.png",
+      "file:size": 311958
+    },
+    "preview-logo": {
+      "type": "image/png",
+      "roles": [
+        "data",
+        "logo"
+      ],
+      "title": "Preview file preview-logo",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/preview/icons/logo.png",
+      "filename": "preview/icons/logo.png",
+      "file:size": 95280
     },
     "manifest": {
       "type": "text/xml",

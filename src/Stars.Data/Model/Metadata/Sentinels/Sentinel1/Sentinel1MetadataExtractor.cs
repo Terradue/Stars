@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
+using Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Preview;
+using Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Support;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
@@ -47,6 +49,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             foreach (var noiseAsset in FindAllAssetsFromFileNameRegex(item, @"^(.*\/+|)noise.*\.xml$"))
             {
                 var noiseStacAsset = await AddNoiseAsset(stacItem, noiseAsset.Value, stacFactory);
+            }
+
+            // support folder
+            foreach (var supportAsset in FindAssetsFromFilePathRegex(item, @"^(.*\/support\/).*\.xsd$"))
+            {
+                var supportStacAsset = await AddSupportAsset(stacItem, supportAsset, stacFactory);
+            }
+
+            // preview folder
+            foreach (var previewAsset in FindAssetsFromFilePathRegex(item, @"^(.*\/preview\/).*$"))
+            {
+                var previewStacAsset = await AddPreviewAsset(stacItem, previewAsset, stacFactory);
             }
 
             stacItem.Assets.Add("manifest", CreateManifestAsset(stacItem, GetManifestAsset(item)).Value);
@@ -117,6 +131,22 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
                 assetFactory = await S1L2AssetProduct.CreateData(asset, resourceServiceProvider);
             else
                 assetFactory = await Noise.S1L1AssetNoise.Create(asset, resourceServiceProvider);
+
+            stacItem.Assets.Add(assetFactory.GetId(), assetFactory.CreateDataAsset(stacItem));
+            return assetFactory.GetId();
+        }
+
+        private async Task<string> AddSupportAsset(StacItem stacItem, IAsset asset, SentinelSafeStacFactory stacFactory)
+        {
+            SentinelAssetFactory assetFactory = S1AssetSupport.CreateMetadata(asset, resourceServiceProvider);
+
+            stacItem.Assets.Add(assetFactory.GetId(), assetFactory.CreateMetadataAsset(stacItem));
+            return assetFactory.GetId();
+        }
+
+        private async Task<string> AddPreviewAsset(StacItem stacItem, IAsset asset, SentinelSafeStacFactory stacFactory)
+        {
+            SentinelAssetFactory assetFactory = S1AssetPreview.CreateMetadata(asset, resourceServiceProvider);
 
             stacItem.Assets.Add(assetFactory.GetId(), assetFactory.CreateDataAsset(stacItem));
             return assetFactory.GetId();

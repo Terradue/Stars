@@ -76,38 +76,6 @@
     13.40823
   ],
   "assets": {
-    "amplitude-vv-iw-001": {
-      "type": "image/x.geotiff",
-      "roles": [
-        "amplitude",
-        "data"
-      ],
-      "title": "IW VV Amplitude pixel values",
-      "href": "data/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/measurement/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.tiff",
-      "filename": "usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/measurement/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.tiff",
-      "file:size": 0,
-      "sar:polarizations": [
-        "VV"
-      ],
-      "proj:epsg": null,
-      "proj:shape": [
-        25147,
-        16785
-      ]
-    },
-    "annotation-vv-iw-001": {
-      "type": "text/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Annotation VV IW 001",
-      "href": "data/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/annotation/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.xml",
-      "filename": "usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/annotation/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.xml",
-      "file:size": 1576073,
-      "sar:polarizations": [
-        "VV"
-      ]
-    },
     "amplitude-vh-iw-002": {
       "type": "image/x.geotiff",
       "roles": [
@@ -138,6 +106,38 @@
       "file:size": 1576050,
       "sar:polarizations": [
         "VH"
+      ]
+    },
+    "amplitude-vv-iw-001": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "title": "IW VV Amplitude pixel values",
+      "href": "data/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/measurement/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.tiff",
+      "filename": "usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/measurement/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.tiff",
+      "file:size": 0,
+      "sar:polarizations": [
+        "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25147,
+        16785
+      ]
+    },
+    "annotation-vv-iw-001": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VV IW 001",
+      "href": "data/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/annotation/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.xml",
+      "filename": "usr/local/gmp/rep/pac2/S1A_IW_GRDH_1SDV_20201127T111357_20201127T111422_035433_04242A_FBC9.SAFE/annotation/s1a-iw-grd-vv-20201127t111357-20201127t111422-035433-04242a-001.xml",
+      "file:size": 1576073,
+      "sar:polarizations": [
+        "VV"
       ]
     },
     "manifest": {
