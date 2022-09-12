@@ -76,70 +76,6 @@
     38.629936
   ],
   "assets": {
-    "magnitude-vh-iw3-003": {
-      "type": "image/x.geotiff",
-      "roles": [
-        "data",
-        "magnitude"
-      ],
-      "title": "IW3 VH Magnitude pixel values",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.tiff",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.tiff",
-      "file:size": 1,
-      "sar:polarizations": [
-        "VH"
-      ],
-      "proj:epsg": null,
-      "proj:shape": [
-        25657,
-        13716
-      ]
-    },
-    "annotation-vh-iw3-003": {
-      "type": "text/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Annotation VH IW3 003",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
-      "file:size": 817793,
-      "sar:polarizations": [
-        "VH"
-      ]
-    },
-    "magnitude-vv-iw2-005": {
-      "type": "image/x.geotiff",
-      "roles": [
-        "data",
-        "magnitude"
-      ],
-      "title": "IW2 VV Magnitude pixel values",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.tiff",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.tiff",
-      "file:size": 1,
-      "sar:polarizations": [
-        "VV"
-      ],
-      "proj:epsg": null,
-      "proj:shape": [
-        26698,
-        13671
-      ]
-    },
-    "annotation-vv-iw2-005": {
-      "type": "text/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Annotation VV IW2 005",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
-      "file:size": 910422,
-      "sar:polarizations": [
-        "VV"
-      ]
-    },
     "magnitude-vh-iw1-001": {
       "type": "image/x.geotiff",
       "roles": [
@@ -236,6 +172,70 @@
         "VH"
       ]
     },
+    "magnitude-vv-iw2-005": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW2 VV Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VV"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        26698,
+        13671
+      ]
+    },
+    "annotation-vv-iw2-005": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VV IW2 005",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "file:size": 910422,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "magnitude-vh-iw3-003": {
+      "type": "image/x.geotiff",
+      "roles": [
+        "data",
+        "magnitude"
+      ],
+      "title": "IW3 VH Magnitude pixel values",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.tiff",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/measurement/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.tiff",
+      "file:size": 1,
+      "sar:polarizations": [
+        "VH"
+      ],
+      "proj:epsg": null,
+      "proj:shape": [
+        25657,
+        13716
+      ]
+    },
+    "annotation-vh-iw3-003": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Annotation VH IW3 003",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "file:size": 817793,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
     "magnitude-vv-iw3-006": {
       "type": "image/x.geotiff",
       "roles": [
@@ -268,16 +268,16 @@
         "VV"
       ]
     },
-    "calibration-vh-iw2-002": {
+    "calibration-vh-iw1-001": {
       "type": "text/xml",
       "roles": [
         "calibration",
         "data"
       ],
-      "title": "Calibration VH IW2",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
-      "file:size": 1126960,
+      "title": "Calibration VH IW1",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
+      "file:size": 968852,
       "sar:polarizations": [
         "VH"
       ]
@@ -296,44 +296,16 @@
         "VV"
       ]
     },
-    "calibration-vh-iw1-001": {
+    "calibration-vh-iw2-002": {
       "type": "text/xml",
       "roles": [
         "calibration",
         "data"
       ],
-      "title": "Calibration VH IW1",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vh-20210615t050457-20210615t050522-038346-048680-001.xml",
-      "file:size": 968852,
-      "sar:polarizations": [
-        "VH"
-      ]
-    },
-    "calibration-vv-iw3-006": {
-      "type": "text/xml",
-      "roles": [
-        "calibration",
-        "data"
-      ],
-      "title": "Calibration VV IW3",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
-      "file:size": 1083227,
-      "sar:polarizations": [
-        "VV"
-      ]
-    },
-    "calibration-vh-iw3-003": {
-      "type": "text/xml",
-      "roles": [
-        "calibration",
-        "data"
-      ],
-      "title": "Calibration VH IW3",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
-      "file:size": 1083227,
+      "title": "Calibration VH IW2",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "file:size": 1126960,
       "sar:polarizations": [
         "VH"
       ]
@@ -352,16 +324,30 @@
         "VV"
       ]
     },
-    "noise-vv-iw2-005": {
+    "calibration-vh-iw3-003": {
       "type": "text/xml",
       "roles": [
-        "data",
-        "noise"
+        "calibration",
+        "data"
       ],
-      "title": "Noise VV IW2",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
-      "file:size": 144842,
+      "title": "Calibration VH IW3",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vh-20210615t050456-20210615t050521-038346-048680-003.xml",
+      "file:size": 1083227,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "calibration-vv-iw3-006": {
+      "type": "text/xml",
+      "roles": [
+        "calibration",
+        "data"
+      ],
+      "title": "Calibration VV IW3",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/calibration-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "file:size": 1083227,
       "sar:polarizations": [
         "VV"
       ]
@@ -380,20 +366,6 @@
         "VH"
       ]
     },
-    "noise-vv-iw3-006": {
-      "type": "text/xml",
-      "roles": [
-        "data",
-        "noise"
-      ],
-      "title": "Noise VV IW3",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
-      "file:size": 145010,
-      "sar:polarizations": [
-        "VV"
-      ]
-    },
     "noise-vv-iw1-004": {
       "type": "text/xml",
       "roles": [
@@ -404,6 +376,34 @@
       "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
       "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw1-slc-vv-20210615t050457-20210615t050522-038346-048680-004.xml",
       "file:size": 134410,
+      "sar:polarizations": [
+        "VV"
+      ]
+    },
+    "noise-vh-iw2-002": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VH IW2",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
+      "file:size": 144842,
+      "sar:polarizations": [
+        "VH"
+      ]
+    },
+    "noise-vv-iw2-005": {
+      "type": "text/xml",
+      "roles": [
+        "data",
+        "noise"
+      ],
+      "title": "Noise VV IW2",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vv-20210615t050458-20210615t050523-038346-048680-005.xml",
+      "file:size": 144842,
       "sar:polarizations": [
         "VV"
       ]
@@ -422,19 +422,150 @@
         "VH"
       ]
     },
-    "noise-vh-iw2-002": {
+    "noise-vv-iw3-006": {
       "type": "text/xml",
       "roles": [
         "data",
         "noise"
       ],
-      "title": "Noise VH IW2",
-      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
-      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw2-slc-vh-20210615t050458-20210615t050523-038346-048680-002.xml",
-      "file:size": 144842,
+      "title": "Noise VV IW3",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/annotation/calibration/noise-s1a-iw3-slc-vv-20210615t050456-20210615t050521-038346-048680-006.xml",
+      "file:size": 145010,
       "sar:polarizations": [
-        "VH"
+        "VV"
       ]
+    },
+    "support-s1-product-preview": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-product-preview",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-product-preview.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-product-preview.xsd",
+      "file:size": 440
+    },
+    "support-s1-level-1-product": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-product",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-product.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-product.xsd",
+      "file:size": 147374
+    },
+    "support-s1-level-1-noise": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-noise",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-noise.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-noise.xsd",
+      "file:size": 7290
+    },
+    "support-s1-level-1-calibration": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-calibration",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-calibration.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-calibration.xsd",
+      "file:size": 6427
+    },
+    "support-s1-level-1-quicklook": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-quicklook",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-quicklook.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-quicklook.xsd",
+      "file:size": 469
+    },
+    "support-s1-level-1-measurement": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-measurement",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-measurement.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-level-1-measurement.xsd",
+      "file:size": 471
+    },
+    "support-s1-object-types": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-object-types",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-object-types.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-object-types.xsd",
+      "file:size": 60608
+    },
+    "support-s1-map-overlay": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-map-overlay",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-map-overlay.xsd",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/support/s1-map-overlay.xsd",
+      "file:size": 450
+    },
+    "preview-product-preview": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data"
+      ],
+      "title": "Preview file preview-product-preview",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/product-preview.html",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/product-preview.html",
+      "file:size": 6264
+    },
+    "preview-map-overlay": {
+      "type": "application/vnd.google-earth.kml+xml",
+      "roles": [
+        "data",
+        "kml"
+      ],
+      "title": "Preview file preview-map-overlay",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/map-overlay.kml",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/map-overlay.kml",
+      "file:size": 1018
+    },
+    "preview-quick-look": {
+      "type": "image/png",
+      "roles": [
+        "data",
+        "thumbnail"
+      ],
+      "title": "Preview file preview-quick-look",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/quick-look.png",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/quick-look.png",
+      "file:size": 1
+    },
+    "preview-logo": {
+      "type": "image/png",
+      "roles": [
+        "data",
+        "logo"
+      ],
+      "title": "Preview file preview-logo",
+      "href": "data/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D/S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/icons/logo.png",
+      "filename": "S1A_IW_SLC__1SDV_20210615T050456_20210615T050523_038346_048680_CE6D.SAFE/preview/icons/logo.png",
+      "file:size": 95280
     },
     "manifest": {
       "type": "text/xml",

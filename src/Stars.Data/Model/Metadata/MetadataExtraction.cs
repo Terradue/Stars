@@ -70,7 +70,7 @@ namespace Terradue.Stars.Data.Model.Metadata
             });
         }
 
-         internal IEnumerable<IAsset> FindAssetsFromFileNameRegex(IAssetsContainer assetsContainer, string pattern)
+        protected IEnumerable<IAsset> FindAssetsFromFileNameRegex(IAssetsContainer assetsContainer, string pattern)
         {
             return assetsContainer.Assets.Values.Where(a =>
             {
@@ -81,6 +81,14 @@ namespace Terradue.Stars.Data.Model.Metadata
         internal IAsset FindFirstAssetFromFilePathRegex(IAssetsContainer assetsContainer, string pattern)
         {
             return assetsContainer.Assets.Values.FirstOrDefault(a =>
+            {
+                return Regex.IsMatch(a.Uri.ToString(), pattern);
+            });
+        }
+
+        protected IEnumerable<IAsset> FindAssetsFromFilePathRegex(IAssetsContainer assetsContainer, string pattern)
+        {
+            return assetsContainer.Assets.Values.Where(a =>
             {
                 return Regex.IsMatch(a.Uri.ToString(), pattern);
             });
