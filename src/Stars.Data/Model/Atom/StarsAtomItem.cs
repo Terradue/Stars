@@ -32,15 +32,15 @@ namespace Terradue.Stars.Data.Model.Atom
         public static StarsAtomItem Create(StacItem stacItem, Uri stacItemUri)
         {
             AtomItem item = new AtomItem(stacItem.Title,
-                                 stacItem.Description,
+                                 stacItem.Title,
                                  null,
                                  stacItem.Id,
                                  new DateTimeOffset(stacItem.DateTime.Start.ToUniversalTime(), new TimeSpan(0))
                                 );
 
             StarsAtomItem starsAtomItem = new StarsAtomItem(item);
-            if (!string.IsNullOrEmpty(stacItem.Description))
-                starsAtomItem.Summary = new TextSyndicationContent(Markdown.ToHtml(stacItem.Description, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build()), TextSyndicationContentKind.Html);
+            if (!string.IsNullOrEmpty(stacItem.Title))
+                starsAtomItem.Summary = new TextSyndicationContent(Markdown.ToHtml(stacItem.Title, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build()), TextSyndicationContentKind.Html);
             starsAtomItem.Title = new TextSyndicationContent(stacItem.Title, TextSyndicationContentKind.Html);
             starsAtomItem.Identifier = stacItem.Id;
 

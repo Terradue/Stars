@@ -12,7 +12,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Router
 {
-    public class LocalFileResource : IAsset, IStreamResource, IDeletableResource
+    public class LocalFileResource : IStreamResource, IDeletableResource
     {
         private readonly ResourceType resourceType;
         private IFileInfo fileInfo;
