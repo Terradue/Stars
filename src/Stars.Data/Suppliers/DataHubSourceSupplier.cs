@@ -81,6 +81,18 @@ namespace Terradue.Stars.Data.Suppliers
                 wrapper = new Terradue.OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
             }
 
+            if (target_uri.Host == "api.daac.asf.alaska.edu")
+            {
+                wrapper = new Terradue.OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
+            }
+
+            // USGS case
+            if (target_uri.Host  == "earthexplorer.usgs.gov")
+            {
+                // usgsOpenSearchable
+                wrapper = new Terradue.OpenSearch.Usgs.UsgsDataWrapper(new Uri("https://m2m.cr.usgs.gov"), target_creds);
+            }
+
             if (target_uri.Host.EndsWith("copernicus.eu"))
             {
                 wrapper = new DHuSWrapper(target_uri, target_creds);
@@ -116,7 +128,7 @@ namespace Terradue.Stars.Data.Suppliers
 
             Uri sourceUri = wrapper.Settings.ServiceUrl;
             var sourceLink = result.Links.FirstOrDefault(l => l.RelationshipType == "self");
-            if ( sourceLink != null )
+            if (sourceLink != null)
                 sourceUri = sourceLink.Uri;
 
             return CreateDataHubResultItem(result, sourceUri);

@@ -5,7 +5,7 @@ using Terradue.Stars.Interface;
 namespace Terradue.Stars.Services.Model
 {
     [DataContract]
-    public class Subject
+    public class Subject : ISubject
     {
         public Subject()
         {
