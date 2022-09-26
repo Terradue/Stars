@@ -85,7 +85,7 @@ namespace Terradue.Stars.Services
                 // OK
                 if (importedResource != null)
                 {
-                    IAsset importedAsset = MakeAsset(importedResource, (IAsset)assetDeliveries.Value.First().Resource);
+                    IAsset importedAsset = MakeAsset(importedResource, assetsContainer.Assets[assetDeliveries.Key]);
                     report.ImportedAssets.Add(assetDeliveries.Key, importedAsset);
                 }
             }
