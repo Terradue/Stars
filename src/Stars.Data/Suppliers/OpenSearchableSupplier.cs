@@ -12,6 +12,7 @@ using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface;
 using System.Text.RegularExpressions;
+using Stac;
 
 namespace Terradue.Stars.Data.Suppliers
 {
@@ -107,6 +108,23 @@ namespace Terradue.Stars.Data.Suppliers
             }
 
             parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", identifier);
+
+            // USGS: Setting the collection to parentIdentifier parameter
+            if (item is StacItemNode)
+            {
+                var stacItem = item as StacItemNode;
+                if (stacItem.StacItem.StacExtensions.Any(e => e.Contains("landsat")) && stacItem.StacItem.GetProperty<string>("landsat:collection_category") != null)
+                {
+                    if (stacItem.StacItem.GetProperty<string>("landsat:collection_category").StartsWith("T")
+                        && stacItem.StacItem.GetProperty<string>("landsat:collection_category") != "C2")
+                    {
+                        if (stacItem.StacItem.GetProperty<string>("landsat:correction").StartsWith("L1"))
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", "landsat_ot_c2_l1");
+                        if (stacItem.StacItem.GetProperty<string>("landsat:correction").StartsWith("L2"))
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", "landsat_ot_c2_l2");
+                    }
+                }
+            }
 
             return parameters;
         }

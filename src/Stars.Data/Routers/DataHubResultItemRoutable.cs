@@ -48,6 +48,7 @@ namespace Terradue.Stars.Data.Routers
                 catch (Exception e)
                 {
                     logger.LogWarning("Exception trying to get assets for {0}: {1}", this.Id, e.Message);
+                    logger.LogDebug(e.StackTrace);
                 }
                 return assets;
             }

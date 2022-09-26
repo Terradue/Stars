@@ -99,7 +99,7 @@ namespace Terradue.Stars.Services.Model.Stac
                 return routeFound as StacItemNode;
             if (!(routeFound is IStreamResource))
                 return null;
-            if (routeFound.ContentType.MediaType.Contains("application/json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
+            if (routeFound.ContentType.MediaType.Contains("application/json") || routeFound.ContentType.MediaType.Contains("application/geo+json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
                 IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamResource).ReadAsString());
                 if (stacObject is IStacCatalog)
