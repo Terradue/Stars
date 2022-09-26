@@ -72,6 +72,33 @@
     10.58288
   ],
   "assets": {
+    "IRS-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "file:size": 3148
+    },
+    "IRS-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "file:size": 1
+    },
+    "IRS-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "file:size": 1
+    },
     "IRS": {
       "type": "image/tiff",
       "roles": [
@@ -84,6 +111,42 @@
         1024,
         1024
       ]
+    },
+    "IRS-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "file:size": 2493
+    },
+    "PMS-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "file:size": 15363
+    },
+    "PMS-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "file:size": 1
+    },
+    "PMS-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "file:size": 1
     },
     "PMS": {
       "type": "image/tiff",
@@ -146,6 +209,15 @@
           "offset": -0.7233
         }
       ]
+    },
+    "PMS-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "file:size": 2579
     }
   },
   "links": []

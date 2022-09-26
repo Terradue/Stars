@@ -14,12 +14,15 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.NewtonsoftJson" Version="5.0.*" />
     <PackageReference Include="Terradue.OpenSearch" Version="1.17.4" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.*" />
-    <PackageReference Include="AWSSDK.Core" Version="3.7.*"/>
+    <PackageReference Include="AWSSDK.Core" Version="3.7.*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stars.Data\Terradue.Stars.Data.csproj" />
     <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj" />
     <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />
     <ProjectReference Include="..\Stars.Geometry\Terradue.Stars.Geometry.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\CNSA\GAOFEN-1\PMS1\data" />
   </ItemGroup>
 </Project>

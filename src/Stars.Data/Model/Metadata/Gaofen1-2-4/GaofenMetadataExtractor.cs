@@ -208,6 +208,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
         {
             string filename = Path.GetFileName(asset.Uri.ToString());
             string sensorName = filename.Split('_')[1];
+            string satelliteImagery = RetrieveSatelliteImageryFromFilename(filename);
+            string type = filename.Split('_')[1];
+            
             // thumbnail
             if (filename.EndsWith("-MSS1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2_thumb.jpg", true, CultureInfo.InvariantCulture)
@@ -219,7 +222,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 return;
             }
 
-            if (filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
+            if (filename.EndsWith("-PAN1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
+                filename.EndsWith("-PAN2_thumb.jpg", true, CultureInfo.InvariantCulture))
+            {
+                stacItem.Assets.Add("PAN-thumbnail",
+                    GetGenericAsset(stacItem, asset.Uri, "thumbnail"));
+                stacItem.Assets["PAN-thumbnail"].Properties.AddRange(asset.Properties);
+                return;
+            }
+            
+            // some GF1 does not have the satellite imagery in the filename
+            // for example : GF1_WFV3_E89.0_N23.9_20200523_L1A0004819525_thumb.jpg
+            if (satelliteImagery == null && 
+                filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith("thumb.jpg", true, CultureInfo.InvariantCulture))
             {
                 stacItem.Assets.Add("MSS-thumbnail",
@@ -228,13 +243,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 return;
             }
 
-
-            if (filename.EndsWith("-PAN1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
-                filename.EndsWith("-PAN2_thumb.jpg", true, CultureInfo.InvariantCulture))
-            {
-                stacItem.Assets.Add("PAN-thumbnail",
+            if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith("thumb.jpg", true, CultureInfo.InvariantCulture)) {
+                stacItem.Assets.Add($"{type}-thumbnail",
                     GetGenericAsset(stacItem, asset.Uri, "thumbnail"));
-                stacItem.Assets["PAN-thumbnail"].Properties.AddRange(asset.Properties);
+                stacItem.Assets[$"{type}-thumbnail"].Properties.AddRange(asset.Properties);
                 return;
             }
 
@@ -248,14 +261,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 return;
             }
 
-            if (filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
-                filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture))
-            {
-                stacItem.Assets.TryAdd("MSS-overview",
-                    GetGenericAsset(stacItem, asset.Uri, "overview"));
-                stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
-                return;
-            }
 
             if (filename.EndsWith("-PAN1.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-PAN2.jpg", true, CultureInfo.InvariantCulture))
@@ -266,19 +271,28 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 return;
             }
 
+            if (satelliteImagery == null &&
+                filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture))
+            {
+                stacItem.Assets.TryAdd("MSS-overview",
+                    GetGenericAsset(stacItem, asset.Uri, "overview"));
+                stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
+                return;
+            }
+            
+            if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture))
+            {
+                stacItem.Assets.TryAdd($"{type}-overview",
+                    GetGenericAsset(stacItem, asset.Uri, "overview"));
+                stacItem.Assets[$"{type}-overview"].Properties.AddRange(asset.Properties);
+                return;
+            }
+            
             // metadata
             if (filename.EndsWith("-MSS1.xml", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.xml", true, CultureInfo.InvariantCulture))
-            {
-                stacItem.Assets.Add("MSS-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
-                stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
-                return;
-            }
-
-
-            if (filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
-               filename.EndsWith(".xml", true, CultureInfo.InvariantCulture))
             {
                 stacItem.Assets.Add("MSS-metadata",
                     GetGenericAsset(stacItem, asset.Uri, "metadata"));
@@ -294,19 +308,29 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 stacItem.Assets["PAN-metadata"].Properties.AddRange(asset.Properties);
                 return;
             }
+            
+            if (satelliteImagery == null &&
+                filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".xml", true, CultureInfo.InvariantCulture))
+            {
+                stacItem.Assets.Add("MSS-metadata",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
+                return;
+            }
+            
+            if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".xml", true, CultureInfo.InvariantCulture))
+            {
+                stacItem.Assets.TryAdd($"{type}-metadata",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                stacItem.Assets[$"{type}-metadata"].Properties.AddRange(asset.Properties);
+                return;
+            }
 
             // rpb metadata
             if (filename.EndsWith("-MSS1.rpb", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.rpb", true, CultureInfo.InvariantCulture))
-            {
-                stacItem.Assets.Add("MSS-rpb",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
-                stacItem.Assets["MSS-rpb"].Properties.AddRange(asset.Properties);
-                return;
-            }
-
-            if (filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
-               filename.EndsWith(".rpb", true, CultureInfo.InvariantCulture))
             {
                 stacItem.Assets.Add("MSS-rpb",
                     GetGenericAsset(stacItem, asset.Uri, "metadata"));
@@ -322,8 +346,27 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 stacItem.Assets["PAN-rpb"].Properties.AddRange(asset.Properties);
                 return;
             }
+            
+            if (satelliteImagery == null &&
+                filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".rpb", true, CultureInfo.InvariantCulture))
+            {
+                stacItem.Assets.Add("MSS-rpb",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                stacItem.Assets["MSS-rpb"].Properties.AddRange(asset.Properties);
+                return;
+            }
+            
+            if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
+                filename.EndsWith(".rpb", true, CultureInfo.InvariantCulture))
+            {
+                stacItem.Assets.TryAdd($"{type}-rpb",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                stacItem.Assets[$"{type}-rpb"].Properties.AddRange(asset.Properties);
+                return;
+            }
 
-
+            // tiff
             if (filename.EndsWith("-MSS1.tiff", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.tiff", true, CultureInfo.InvariantCulture))
             {
@@ -403,6 +446,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                 stacItem.Assets.Add("IRS", bandAsset);
                 return;
             }
+        }
+
+        private string RetrieveSatelliteImageryFromFilename(string filename) {
+
+            if (filename.EndsWith("_thumb.jpg")) {
+                filename = filename.Replace("_thumb.jpg", ".jpg");
+            }
+            string[] imagerySplit1 = filename.Split('-');
+            if (imagerySplit1.Length < 2) {
+                return null;
+            }
+            string imagery = imagerySplit1.Last().Split('.')[0];
+            
+            return imagery;
         }
 
 
