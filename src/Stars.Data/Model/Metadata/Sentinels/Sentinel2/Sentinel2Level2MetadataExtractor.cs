@@ -49,16 +49,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             if (mtdtlAsset != null)
                 mtdTile = (Level2A_Tile)s2L2AProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset));
 
-            Level2A_User_Product Level2A_User_Product = (Level2A_User_Product)s2L2AProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
+            Level2A_User_Product level2A_User_Product = (Level2A_User_Product)s2L2AProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
             StacAsset mtdStacAsset = StacAsset.CreateMetadataAsset(stacItem, mtdAsset.Uri, new ContentType(MimeTypes.GetMimeType(mtdAsset.Uri.ToString())));
             mtdStacAsset.Properties.AddRange(mtdAsset.Properties);
             stacItem.Assets.Add("mtd", mtdStacAsset);
+
+            stacItem.Properties.Add("processing:baseline", level2A_User_Product.General_Info.L2A_Product_Info.PROCESSING_BASELINE);
 
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, @"(?!MSK).*\.jp2$").OrderBy(a => Path.GetFileName(a.Value.Uri.ToString()), StringComparer.InvariantCultureIgnoreCase))
             {
                 try
                 {
-                    var bandStacAsset = AddJp2BandAsset(stacItem, bandAsset.Value, item, Level2A_User_Product, mtdTile);
+                    var bandStacAsset = AddJp2BandAsset(stacItem, bandAsset.Value, item, level2A_User_Product, mtdTile);
 
                 }
                 catch (Exception)

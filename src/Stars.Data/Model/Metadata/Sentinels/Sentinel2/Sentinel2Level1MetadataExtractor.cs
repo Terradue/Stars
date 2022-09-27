@@ -54,6 +54,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             mtdStacAsset.Properties.AddRange(mtdAsset.Properties);
             stacItem.Assets.Add("mtd", mtdStacAsset);
 
+            stacItem.Properties.Add("processing:baseline", level1C_User_Product.General_Info.Product_Info.PROCESSING_BASELINE);
+
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, "^(?!MSK).*.jp2$").OrderBy(a => Path.GetFileName(a.Value.Uri.ToString()), StringComparer.InvariantCultureIgnoreCase))
             {
                 AddJp2BandAsset(stacItem, bandAsset.Value, item, level1C_User_Product, mtdTile);
@@ -179,5 +181,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         {
             return S2SafeStacFactory.Create(manifest, item, identifier);
         }
+
     }
 }
