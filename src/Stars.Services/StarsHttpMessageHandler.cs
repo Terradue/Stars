@@ -10,7 +10,7 @@ namespace Terradue.Stars.Services
         public StarsHttpMessageHandler(ICredentials credentials)
         {
             Credentials = credentials;
-            UseDefaultCredentials = true;
+            // UseDefaultCredentials = true;
             AllowAutoRedirect = true;
         }
 
