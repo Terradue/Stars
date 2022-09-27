@@ -47,10 +47,10 @@ namespace Stars.Services.Model.Stac
                     IResource itemRoute = await router.RouteLink(stacCatalog, itemLink);
                     items.Add(itemRoute as StacItemNode);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     if (throwOnError)
-                        throw e;
+                        throw;
                 }
             }
             return items;

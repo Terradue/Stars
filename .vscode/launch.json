@@ -671,7 +671,7 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net6.0/Stars.dll",
             "args": [
                 "copy",
-                "s3://cpe-production-catalog/calls/call-890/calibratedDatasets/S2A_MSIL2A_20220801T055651_N0400_R091_T42RUR_20220801T092156-calibrated/S2A_MSIL2A_20220801T055651_N0400_R091_T42RUR_20220801T092156-calibrated.json",
+                "https://catalog.charter.uat.esaportal.eu/charter/cat/[chartercalibrateddataset,!excluded,{callid932}]/search?format=atom&uid=call932_S2B_MSIL1C_20220521T110619_N0400_R137_T30STF_20220521T120141-calibrated&do=[terradue]",
                 "-v",
                 "-r",
                 "4",
@@ -683,9 +683,9 @@
             "cwd": "${workspaceFolder}/src",
             "env": {
                 "AWS__Profile": "scw-cpe-prod",
-                "AWS__ServiceURL": "https://s3.pl-waw.scw.cloud",
-                "AWS__Region": "pl-waw",
-                "AWS__AuthenticationRegion": "pl-waw",
+                "AWS__ServiceURL": "https://s3.fr-par.scw.cloud",
+                "AWS__Region": "fr-par",
+                "AWS__AuthenticationRegion": "fr-par",
             },
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
