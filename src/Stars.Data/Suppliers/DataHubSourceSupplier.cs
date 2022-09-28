@@ -18,6 +18,7 @@ using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
+using System.Threading;
 
 namespace Terradue.Stars.Data.Suppliers
 {
@@ -121,9 +122,9 @@ namespace Terradue.Stars.Data.Suppliers
             return new NetworkCredential(credentials["Username"], credentials["Password"]);
         }
 
-        public override async Task<IResource> SearchFor(IResource node, string identifierRegex = null)
+        public override async Task<IResource> SearchForAsync(IResource node, CancellationToken ct, string identifierRegex = null)
         {
-            var result = await Query(node, identifierRegex);
+            var result = await QueryAsync(node, ct, identifierRegex);
             if (result == null) return null;
 
             Uri sourceUri = wrapper.Settings.ServiceUrl;

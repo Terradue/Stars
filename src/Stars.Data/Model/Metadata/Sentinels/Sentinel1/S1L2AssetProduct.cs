@@ -23,7 +23,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public async static Task<S1L2AssetProduct> CreateData(IAsset annotationAsset, IResourceServiceProvider resourceServiceProvider)
         {
-            return new S1L2AssetProduct((level2ProductType)s1L2ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset)), "data", resourceServiceProvider);
+            return new S1L2AssetProduct((level2ProductType)s1L2ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset, System.Threading.CancellationToken.None)), "data", resourceServiceProvider);
         }
 
         public override StacAsset CreateDataAsset(IStacObject stacObject)

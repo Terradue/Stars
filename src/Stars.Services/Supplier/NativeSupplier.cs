@@ -7,6 +7,7 @@ using Terradue.Stars.Services.Supplier.Carrier;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -27,7 +28,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public string Label => "Native Supplier (self resource)";
 
-        public Task<IResource> SearchFor(IResource resource, string identifierRegex = null)
+        public Task<IResource> SearchForAsync(IResource resource, CancellationToken ct, string identifierRegex = null)
         {
             return Task.FromResult<IResource>(resource);
         }

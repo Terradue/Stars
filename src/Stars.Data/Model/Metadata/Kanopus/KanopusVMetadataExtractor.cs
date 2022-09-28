@@ -300,7 +300,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         {
             string key = null;
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(summaryAsset))
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(summaryAsset, System.Threading.CancellationToken.None))
             {
 
                 using (StreamReader reader = new StreamReader(stream))

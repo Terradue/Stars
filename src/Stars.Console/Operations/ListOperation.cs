@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using Terradue.Stars.Interface;
 using System.IO;
+using System.Threading;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -45,13 +46,13 @@ namespace Terradue.Stars.Console.Operations
                 Recursivity = Recursivity,
                 SkipAssets = SkippAssets
             };
-            routingService.OnRoutingException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
-            routingService.OnBeforeBranching((node, router, state) => PrintBranchingNode(node, router, state));
-            routingService.OnItem((node, router, state) => PrintItem(node, router, state));
-            routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
+            routingService.OnRoutingException((route, router, exception, state, ct) => PrintRouteInfo(route, router, exception, state, ct));
+            routingService.OnBeforeBranching((node, router, state, ct) => PrintBranchingNode(node, router, state, ct));
+            routingService.OnItem((node, router, state, ct) => PrintItem(node, router, state, ct));
+            routingService.OnBranching((parentRoute, route, siblings, state, ct) => PrepareNewRoute(parentRoute, route, siblings, state, ct));
         }
 
-        private Task<object> PrepareNewRoute(IResource parentRoute, IResource route, IEnumerable<IResource> siblings, object state)
+        private Task<object> PrepareNewRoute(IResource parentRoute, IResource route, IEnumerable<IResource> siblings, object state, System.Threading.CancellationToken ct)
         {
             if (state == null) return Task.FromResult<object>(new ListOperationState("", 1));
 
@@ -69,7 +70,7 @@ namespace Terradue.Stars.Console.Operations
             return Task.FromResult<object>(new ListOperationState(newPrefix, operationState.Depth + 1));
         }
 
-        private async Task<object> PrintItem(IItem node, IRouter router, object state)
+        private async Task<object> PrintItem(IItem node, IRouter router, object state, System.Threading.CancellationToken ct)
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
@@ -82,7 +83,7 @@ namespace Terradue.Stars.Console.Operations
             return state;
         }
 
-        private async Task<object> PrintBranchingNode(ICatalog node, IRouter router, object state)
+        private async Task<object> PrintBranchingNode(ICatalog node, IRouter router, object state, System.Threading.CancellationToken ct)
         {
             _console.ForegroundColor = GetColorFromType(node.ResourceType);
             // Print the information about the resource
@@ -96,7 +97,7 @@ namespace Terradue.Stars.Console.Operations
             return state;
         }
 
-        private async Task<object> PrintRouteInfo(IResource route, IRouter router, Exception exception, object state)
+        private async Task<object> PrintRouteInfo(IResource route, IRouter router, Exception exception, object state, System.Threading.CancellationToken ct)
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
@@ -115,18 +116,18 @@ namespace Terradue.Stars.Console.Operations
             return state;
         }
 
-        protected override async Task ExecuteAsync()
+        protected override async Task ExecuteAsync(CancellationToken ct)
         {
             this.routingService = ServiceProvider.GetService<RouterService>();
             this.resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
             InitRoutingTask();
-            var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(input))));
+            var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(input)), ct));
             List<IResource> routes = (await Task.WhenAll(tasks)).Cast<IResource>().ToList();
 
             foreach (var route in routes)
             {
-                object state = await PrepareNewRoute(null, route, null, null);
-                await routingService.RouteAsync(route, recursivity, null, state);
+                object state = await PrepareNewRoute(null, route, null, null, ct);
+                await routingService.RouteAsync(route, recursivity, null, state, ct);
             }
 
         }

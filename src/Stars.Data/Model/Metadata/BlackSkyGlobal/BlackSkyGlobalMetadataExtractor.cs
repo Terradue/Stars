@@ -91,7 +91,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset))
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {

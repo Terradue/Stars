@@ -257,7 +257,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             if (fileAsset == null)
                 throw new FileNotFoundException(string.Format("Coordinates file not found "));
 
-            coordinatesDocument.Load(resourceServiceProvider.GetAssetStreamAsync(fileAsset).GetAwaiter().GetResult());
+            coordinatesDocument.Load(resourceServiceProvider.GetAssetStreamAsync(fileAsset, System.Threading.CancellationToken.None).GetAwaiter().GetResult());
 
 
             return coordinatesDocument;
@@ -411,7 +411,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

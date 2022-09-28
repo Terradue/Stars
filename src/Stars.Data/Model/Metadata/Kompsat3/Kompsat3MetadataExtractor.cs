@@ -51,7 +51,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
+            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -384,7 +384,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         {
             XmlSerializer ser = new XmlSerializer(typeof(Auxiliary));
             Auxiliary auxiliary;
-            using (var stream = await auxiliaryFile.GetStreamAsync())
+            using (var stream = await auxiliaryFile.GetStreamAsync(System.Threading.CancellationToken.None))
             {
                 using (XmlReader reader = XmlReader.Create(stream))
                 {
@@ -411,7 +411,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                Auxiliary metadata = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(metadataAsset).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                Auxiliary metadata = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(metadataAsset, System.Threading.CancellationToken.None).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return metadata.General.Satellite.StartsWith("KOMPSAT-3");
             }
             catch

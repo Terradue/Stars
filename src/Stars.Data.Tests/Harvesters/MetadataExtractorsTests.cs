@@ -16,6 +16,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Store;
+using System.Threading;
 
 namespace Terradue.Data.Tests.Harvesters
 {
@@ -46,11 +47,11 @@ namespace Terradue.Data.Tests.Harvesters
             destination.PrepareDestination();
 
             Assert.True(extractor.CanProcess(route, destination));
-            IResource stacResource = await extractor.ProcessAsync(route, destination);
+            IResource stacResource = await extractor.ProcessAsync(route, destination, CancellationToken.None);
             Assert.NotNull(stacResource);
             List<StacItemNode> stacItemNodes = new List<StacItemNode>();
             if (stacResource is StacItemNode)
-                stacItemNodes.Add(await stacRouter.RouteAsync(stacResource) as StacItemNode);
+                stacItemNodes.Add(await stacRouter.RouteAsync(stacResource, CancellationToken.None) as StacItemNode);
             if (stacResource is StacCatalogNode)
                 stacItemNodes.AddRange((stacResource as StacCatalogNode)
                                         .GetRoutes(stacRouter)

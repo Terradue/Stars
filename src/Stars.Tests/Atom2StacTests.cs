@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,7 +40,7 @@ namespace Stars.Tests
             AtomFeed atomFeed = AtomFeed.Load(XmlReader.Create(uri.AbsolutePath));
             AtomItemNode item = new AtomItemNode(atomFeed.Items.First() as AtomItem, uri);
             TranslatorManager translatorManager = new TranslatorManager(serviceProvider.GetService<ILogger<TranslatorManager>>(), serviceProvider);
-            var stacNode = translatorManager.TranslateAsync<StacItemNode>(item).GetAwaiter().GetResult();
+            var stacNode = translatorManager.TranslateAsync<StacItemNode>(item, CancellationToken.None).GetAwaiter().GetResult();
             var stacItem = stacNode.StacItem;
             Assert.Equal("call864_S2B_MSIL1C_20210303T095029_N0209_R079_T33SWB_20210303T105137", stacItem.Id);
             Assert.Equal("optical", stacItem.GetProperty("sensor_type"));
@@ -51,9 +52,9 @@ namespace Stars.Tests
             var routersManager = serviceProvider.GetService<RoutersManager>();
             var translatorManager = serviceProvider.GetService<TranslatorManager>();
             var resourceServiceProvider = serviceProvider.GetService<IResourceServiceProvider>();
-            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=[terradue]")));
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://catalog.terradue.com/sentinel1/search?format=atom&uid=S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A&do=[terradue]")), CancellationToken.None);
             var router = await routersManager.GetRouterAsync(route);
-            var resource = await router.Route(route);
+            var resource = await router.RouteAsync(route, CancellationToken.None);
             while (resource is ICatalog)
             {
                 var children = (resource as ICatalog).GetRoutes(null);
@@ -63,7 +64,7 @@ namespace Stars.Tests
                 }
                 resource = children.First();
             }
-            var stacItemNode = await translatorManager.Translate<StacItemNode>(resource);
+            var stacItemNode = await translatorManager.TranslateAsync<StacItemNode>(resource, CancellationToken.None);
             Assert.Equal("S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A", stacItemNode.StacItem.Id);
             Assert.Equal(2, stacItemNode.StacItem.Assets.Count);
             Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("data")).Count());

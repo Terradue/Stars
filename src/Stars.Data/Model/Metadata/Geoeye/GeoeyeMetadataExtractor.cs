@@ -60,7 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 
             //  loading properties in dictionary
             IAsset isdMetadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.XML)$");
-            IStreamResource isdMetadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(isdMetadataFile);
+            IStreamResource isdMetadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(isdMetadataFile, System.Threading.CancellationToken.None);
             if (isdMetadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -69,7 +69,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 
             logger.LogDebug("Deserializing metadata files");
             var metadata = new JavaProperties();
-            metadata.Load(await resourceServiceProvider.GetAssetStreamAsync(metadataFile));
+            metadata.Load(await resourceServiceProvider.GetAssetStreamAsync(metadataFile, System.Threading.CancellationToken.None));
 
             Isd isdMetadata = await DeserializeProductMetadata(isdMetadataFileStreamable);
             logger.LogDebug("Metadata files deserialized. Starting metadata generation");
@@ -285,7 +285,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
         {
             XmlSerializer ser = new XmlSerializer(typeof(Isd));
             Isd auxiliary;
-            using (var stream = await productMetadataFile.GetStreamAsync())
+            using (var stream = await productMetadataFile.GetStreamAsync(System.Threading.CancellationToken.None))
             {
                 using (XmlReader reader = XmlReader.Create(stream))
                 {

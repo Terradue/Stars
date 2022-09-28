@@ -50,7 +50,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
             Level1C_Tile mtdTile = null;
             if (mtdtlAsset != null)
-                mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset));
+                mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset, System.Threading.CancellationToken.None));
 
             await GetUserProduct(item);
 
@@ -197,7 +197,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             if (mtdAsset == null)
                 throw new FileNotFoundException("Product metadata file 'MTD_MSIL1C.xml' not found");
             if (level1C_User_Product != null) return;
-            level1C_User_Product = (Level1C_User_Product)s2L1CProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
+            level1C_User_Product = (Level1C_User_Product)s2L1CProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset, System.Threading.CancellationToken.None));
         }
     }
 }

@@ -38,13 +38,13 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
 
         public string Label => "Astrium Geodelivery (FTP)";
 
-        public async Task<IResource> SearchFor(IResource node, string identifierRegex = null)
+        public async Task<IResource> SearchForAsync(IResource node, CancellationToken ct, string identifierRegex = null)
         {
             // TEMP skipping catalog for the moment
             if (!(node is IItem)) return null;
 
             // Let's translate the node to STAC
-            var stacNode = await translatorManager.TranslateAsync<StacNode>(node);
+            var stacNode = await translatorManager.TranslateAsync<StacNode>(node, ct);
             if (stacNode == null || !(stacNode is StacItemNode)) return null;
             StacItemNode stacItemNode = stacNode as StacItemNode;
 

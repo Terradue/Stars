@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,16 +51,16 @@ namespace Stars.Tests
         {
             await CreateBucketAsync("s3://local-acceptance-catalog/test");
             await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif");
-            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif")));
+            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif")), CancellationToken.None);
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog/calls/857/notifications/test502.json");
             StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
-            var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative);
+            var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative, CancellationToken.None);
             foreach (var ex in importReport.AssetsExceptions)
             {
                 throw ex.Value;
             }
-            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/calls/857/notifications/500x477.tif"));
+            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/calls/857/notifications/500x477.tif"), CancellationToken.None);
             Assert.Equal(s3Resource.ContentLength, s3dest.ContentLength);
         }
 
@@ -68,16 +69,16 @@ namespace Stars.Tests
         {
             await CreateBucketAsync("s3://local-acceptance-catalog/indices_cog");
             await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif");
-            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif")));
+            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif")), CancellationToken.None);
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/cci_fss_CFD_1993.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog/indices_cog/copy/cci_fss_CFD_1993.json");
             StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
-            var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative);
+            var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative, CancellationToken.None);
             foreach (var ex in importReport.AssetsExceptions)
             {
                 throw ex.Value;
             }
-            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/indices_cog/copy/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif"));
+            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/indices_cog/copy/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif"), CancellationToken.None);
             Assert.Equal(s3Resource.ContentLength, s3dest.ContentLength);
             Assert.NotEqual(item.Assets.First().Value.FileExtension().Size, importReport.Assets.First().Value.ContentLength);
         }
@@ -94,7 +95,7 @@ namespace Stars.Tests
                                     File.OpenRead(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")),
                                     stream);
             IStreamResource streamable = new TestStreamable(stream, 0);
-            var newRoute = await s3StreamingCarrier.StreamToS3Object(streamable, s3Route);
+            var newRoute = await s3StreamingCarrier.StreamToS3Object(streamable, s3Route, CancellationToken.None);
             var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Url.Bucket, s3Url.Key);
             Assert.Equal(new FileInfo(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")).Length, metadata.ContentLength);
         }
@@ -106,8 +107,8 @@ namespace Stars.Tests
             S3Resource s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://local-http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
             BlockingStream stream = new BlockingStream(0, 100);
             S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
-            var httpRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg")));
-            var newRoute = await s3StreamingCarrier.StreamToS3Object(httpRoute, s3Route);
+            var httpRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://store.terradue.com/api/scihub/sentinel2/S2MSI2A/2021/10/22/quicklooks/v1/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg")), CancellationToken.None);
+            var newRoute = await s3StreamingCarrier.StreamToS3Object(httpRoute, s3Route, CancellationToken.None);
             var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Route.S3Uri.Bucket, s3Route.S3Uri.Key);
             Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(metadata.ContentLength));
         }

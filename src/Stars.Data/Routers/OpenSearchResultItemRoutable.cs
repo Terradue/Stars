@@ -49,7 +49,7 @@ namespace Terradue.Stars.Data.Routers
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsStringAsync()).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsStringAsync(System.Threading.CancellationToken.None)).Length);
 
         public bool IsCatalog => false;
 

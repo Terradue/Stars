@@ -26,7 +26,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public async static Task<S1L1AssetProduct> Create(IAsset annotationAsset, IAsset dataAsset, IResourceServiceProvider resourceServiceProvider)
         {
-            return new S1L1AssetProduct((l1ProductType)s1L1ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset)), annotationAsset, dataAsset, resourceServiceProvider);
+            return new S1L1AssetProduct((l1ProductType)s1L1ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset, System.Threading.CancellationToken.None)), annotationAsset, dataAsset, resourceServiceProvider);
         }
 
         protected string GetPixelValueLabel()

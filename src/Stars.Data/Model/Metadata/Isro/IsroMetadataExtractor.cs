@@ -49,7 +49,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                JavaProperties metadata = ReadMetadata(resourceServiceProvider.GetStreamResourceAsync(metadataAsset).Result).GetAwaiter().GetResult();
+                JavaProperties metadata = ReadMetadata(resourceServiceProvider.GetStreamResourceAsync(metadataAsset, System.Threading.CancellationToken.None).Result).GetAwaiter().GetResult();
                 return (metadata.AllKeys.Contains("SatID") && satelitteIds.Contains(metadata["SatID"]));
             }
             catch
@@ -67,7 +67,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             }
             logger.LogDebug(String.Format("Metadata file is {0}", metadataAsset.Uri));
             logger.LogDebug("Reading metadata");
-            JavaProperties metadata = await ReadMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset));
+            JavaProperties metadata = await ReadMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset, System.Threading.CancellationToken.None));
             logger.LogDebug("Metadata deserialized. Starting metadata generation");
 
             StacItem stacItem = new StacItem(string.Format("{0}_{1}_{2}_{3}",
@@ -451,7 +451,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         public static async Task<JavaProperties> ReadMetadata(IStreamResource metadataFile)
         {
             var metadata = new JavaProperties();
-            metadata.Load(await metadataFile.GetStreamAsync());
+            metadata.Load(await metadataFile.GetStreamAsync(System.Threading.CancellationToken.None));
             return metadata;
         }
 

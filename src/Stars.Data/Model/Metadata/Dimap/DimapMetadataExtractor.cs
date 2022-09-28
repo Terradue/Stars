@@ -325,7 +325,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

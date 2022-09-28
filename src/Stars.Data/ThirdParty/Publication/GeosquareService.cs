@@ -72,11 +72,11 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (geosquareModel.CreateIndex) await CreateIndexIfNotExist(geosquareModel.Index);
             InitRoutingTask();
             var guid = CalculateHash(geosquareModel.Url.ToString());
-            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(geosquareModel.Url)));
+            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(geosquareModel.Url)), ct);
 
             GeosquarePublicationState state = new GeosquarePublicationState(geosquareModel);
             state.Hash = guid;
-            routingService.Route(route, 4, null, state);
+            await routingService.RouteAsync(route, 4, null, state, ct);
 
             return new Uri(GeosquareConfiguration.BaseUri,
                             string.Format("{0}/cat/{1}/description", geosquareModel.Index, guid.Value));
@@ -115,17 +115,17 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             };
             // routingService.OnRoutingException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
             // routingService.OnBeforeBranching((node, router, state) => PrintBranchingNode(node, router, state));
-            routingService.OnItem((node, router, state) => PostItemToCatalog(node, router, state));
+            routingService.OnItem((node, router, state, ct) => PostItemToCatalog(node, router, state, ct));
             // routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
         }
 
-        public async Task<object> PostItemToCatalog(IItem itemNode, IRouter router, object state)
+        public async Task<object> PostItemToCatalog(IItem itemNode, IRouter router, object state, CancellationToken ct)
         {
             GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
             AtomItemNode atomItemNode = null;
             try
             {
-                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(itemNode);
+                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(itemNode, ct);
             }
             catch (Exception e)
             {
@@ -225,8 +225,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             {
                 var template = geosquareConfiguration.GetOpenSearchForUri(link.Uri);
                 if (string.IsNullOrEmpty(template)) return null;
-                var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(new AtomResourceLink(link));
-                IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync());
+                var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(new AtomResourceLink(link), System.Threading.CancellationToken.None);
+                IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync(System.Threading.CancellationToken.None));
                 var osUrl = template.ReplaceMacro<IStacObject>("stacObject", linkedStacObject);
                 osUrl = osUrl.ReplaceMacro<string>("index", catalogPublicationState.GeosquarePublicationModel.Index);
                 var osUri = new Uri(osUrl);

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -58,7 +59,7 @@ namespace Terradue.Stars.Console.Operations
                 return Path.GetDirectoryName(processModule?.FileName);
         }
 
-        public async Task<int> OnExecuteAsync()
+        public async Task<int> OnExecuteAsync(CancellationToken ct)
         {
             try
             {
@@ -68,7 +69,7 @@ namespace Terradue.Stars.Console.Operations
                         .ServerCertificateValidationCallback +=
                         (sender, cert, chain, sslPolicyErrors) => true;
                 }
-                await ExecuteAsync();
+                await ExecuteAsync(ct);
             }
             catch (CommandParsingException cpe)
             {
@@ -81,7 +82,7 @@ namespace Terradue.Stars.Console.Operations
             return 0;
         }
 
-        protected abstract Task ExecuteAsync();
+        protected abstract Task ExecuteAsync(CancellationToken ct);
 
 
         private ServiceCollection RegisterServices()
