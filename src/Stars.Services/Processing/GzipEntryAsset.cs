@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 
@@ -11,12 +12,12 @@ namespace Terradue.Stars.Services.Processing
     public class GzipEntryAsset : IAsset, IStreamResource
     {
         private string name;
-        private BlockingStream blockingStream;
+        private Stream inputStream;
 
-        public GzipEntryAsset(string name, BlockingStream blockingStream)
+        public GzipEntryAsset(string name, Stream inputStream)
         {
             this.name = name;
-            this.blockingStream = blockingStream;
+            this.inputStream = inputStream;
         }
 
         public string Name => name;
@@ -50,7 +51,7 @@ namespace Terradue.Stars.Services.Processing
         {
             get
             {
-                try { return Convert.ToUInt64(blockingStream.Length); }
+                try { return Convert.ToUInt64(inputStream.Length); }
                 catch { return 0; }
             }
         }
@@ -73,12 +74,12 @@ namespace Terradue.Stars.Services.Processing
             return this;
         }
 
-        public Task<Stream> GetStreamAsync()
+        public Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return Task<Stream>.FromResult((Stream)blockingStream);
+            return Task<Stream>.FromResult((Stream)inputStream);
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }

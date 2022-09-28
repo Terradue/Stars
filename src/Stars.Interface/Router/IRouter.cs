@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface.Router
@@ -9,8 +10,8 @@ namespace Terradue.Stars.Interface.Router
 
         bool CanRoute(IResource node);
 
-        Task<IResource> Route(IResource node);
+        Task<IResource> RouteAsync(IResource node, CancellationToken ct);
 
-        Task<IResource> RouteLink(IResource resource, IResourceLink childLink);
+        Task<IResource> RouteLinkAsync(IResource resource, IResourceLink childLink, CancellationToken ct);
     }
 }

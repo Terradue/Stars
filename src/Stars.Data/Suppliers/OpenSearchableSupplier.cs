@@ -51,7 +51,7 @@ namespace Terradue.Stars.Data.Suppliers
             if (!(node is IItem)) return null;
 
             // Let's translate the node to STAC
-            var stacNode = await translatorManager.Translate<StacNode>(node);
+            var stacNode = await translatorManager.TranslateAsync<StacNode>(node);
 
             IOpenSearchResultCollection results = null;
 

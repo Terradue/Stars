@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Abstractions;
+using System.Threading;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.GZip;
 using Microsoft.Extensions.Logging;
@@ -31,43 +33,24 @@ namespace Terradue.Stars.Services.Processing
 
         public override Uri Uri => asset.Uri;
 
-        protected BlockingStream GetStream(IAsset asset)
+        protected async Task<Stream> GetStreamAsync(IAsset asset, CancellationToken ct)
         {
-            const int chunk = 4096;
-            BlockingStream blockingStream = new BlockingStream(1000);
-            resourceServiceProvider.GetStreamResourceAsync(asset)
-                .ContinueWith(task => task.Result.GetStreamAsync()
-                    .ContinueWith(task =>
-                    {
-                        var stream = new ICSharpCode.SharpZipLib.GZip.GZipInputStream(task.GetAwaiter().GetResult());
-                        // blockingStream.SetLength(stream.Length);
-                        Task.Factory.StartNew(() =>
-                        {
-                            int read;
-                            var buffer = new byte[chunk];
-                            do
-                            {
-                                read = stream.Read(buffer, 0, chunk);
-                                blockingStream.Write(buffer, 0, read);
-                            } while (read == chunk);
-                            blockingStream.Close();
-                        });
-                    })
-                );
-            return blockingStream;
+            var streamResource = await resourceServiceProvider.GetStreamResourceAsync(asset, ct);
+            var stream = new ICSharpCode.SharpZipLib.GZip.GZipInputStream(await streamResource.GetStreamAsync(ct));
+            return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
 
-        internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
+        internal async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
-            var blockingStream = GetStream(asset);
+            var inputStream = await GetStreamAsync(asset, ct);
             string name = asset.ContentDisposition.FileName.Replace(".gz", "");
 
-            GzipEntryAsset gzipEntryAsset = new GzipEntryAsset(name, blockingStream);
+            GzipEntryAsset gzipEntryAsset = new GzipEntryAsset(name, inputStream);
 
             try
             {
-                var newArchive = await Archive.Read(gzipEntryAsset, logger, resourceServiceProvider, fileSystem);
-                return await newArchive.ExtractToDestination(destination, carrierManager);
+                var newArchive = await Archive.Read(gzipEntryAsset, logger, resourceServiceProvider, fileSystem, ct);
+                return await newArchive.ExtractToDestinationAsync(destination, carrierManager, ct);
             }
             catch { }
 
@@ -79,7 +62,7 @@ namespace Terradue.Stars.Services.Processing
             logger.LogDebug(gzipEntryAsset.Name);
             foreach (var delivery in assetDeliveries)
             {
-                var assetExtracted = await delivery.Carrier.Deliver(delivery);
+                var assetExtracted = await delivery.Carrier.DeliverAsync(delivery, ct);
                 if (assetExtracted != null)
                 {
                     assetsExtracted.Add(gzipEntryAsset.Name, new GenericAsset(assetExtracted, gzipEntryAsset.Title, gzipEntryAsset.Roles));

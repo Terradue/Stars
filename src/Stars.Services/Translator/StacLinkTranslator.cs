@@ -8,6 +8,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Router;
 using System.Net;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -32,7 +33,7 @@ namespace Terradue.Stars.Services.Translator
             this.credentials = credentials;
         }
 
-        public async Task<T> Translate<T>(IResource route) where T : IResource
+        public async Task<T> TranslateAsync<T>(IResource route, CancellationToken ct) where T : IResource
         {
             if (typeof(T) == typeof(StacNode) || typeof(T) == typeof(StacCatalogNode))
             {
@@ -43,8 +44,8 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink);
-                            var stacCatalog = StacConvert.Deserialize<IStacCatalog>(await stacRoute.ReadAsString());
+                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink, ct);
+                            var stacCatalog = StacConvert.Deserialize<IStacCatalog>(await stacRoute.ReadAsStringAsync(ct));
                             if (stacCatalog != null)
                                 return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri) as IResource);
                         }
@@ -64,8 +65,8 @@ namespace Terradue.Stars.Services.Translator
                     {
                         try
                         {
-                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink);
-                            var stacItem = StacConvert.Deserialize<StacItem>(await stacRoute.ReadAsString());
+                            var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink, ct);
+                            var stacItem = StacConvert.Deserialize<StacItem>(await stacRoute.ReadAsStringAsync(ct));
                             if (stacItem != null)
                                 return (T)(new StacItemNode(stacItem, stacRoute.Uri) as IResource);
                         }

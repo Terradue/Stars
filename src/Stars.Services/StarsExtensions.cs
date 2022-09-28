@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -53,9 +54,9 @@ namespace Terradue.Stars.Services
             return (array == null || array.Length == 0);
         }
 
-        public async static Task<string> ReadAsString(this IStreamResource streamable)
+        public async static Task<string> ReadAsStringAsync(this IStreamResource streamable, CancellationToken ct)
         {
-            StreamReader sr = new StreamReader(await streamable.GetStreamAsync());
+            StreamReader sr = new StreamReader(await streamable.GetStreamAsync(ct));
             return sr.ReadToEnd();
         }
 

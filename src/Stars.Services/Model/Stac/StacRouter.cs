@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -33,7 +34,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public bool CanRoute(IResource route)
         {
-            var routeFound = AffineRouteAsync(route).Result;
+            var routeFound = AffineRouteAsync(route, CancellationToken.None).Result;
             if (routeFound is StacNode) return true;
             if (!(routeFound is IStreamResource)) return false;
             if ((routeFound.ContentType.MediaType.Contains("application/json")
@@ -41,7 +42,7 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 try
                 {
-                    StacConvert.Deserialize<IStacObject>((routeFound as IStreamResource).ReadAsString().Result);
+                    StacConvert.Deserialize<IStacObject>((routeFound as IStreamResource).ReadAsStringAsync(CancellationToken.None).Result);
                     return true;
                 }
                 catch (Exception e)
@@ -52,17 +53,17 @@ namespace Terradue.Stars.Services.Model.Stac
             return false;
         }
 
-        public Task<IResource> RouteLink(IResource resource, IResourceLink childLink)
+        public Task<IResource> RouteLinkAsync(IResource resource, IResourceLink childLink, CancellationToken ct)
         {
             if (!(resource is StacNode))
             {
                 throw new Exception("Cannot route link from non-stac resource");
             }
             var link = resourceServiceProvider.ComposeLinkUri(childLink, resource);
-            return Route(new GenericResource(link));
+            return RouteAsync(new GenericResource(link), ct);
         }
 
-        private async Task<IResource> AffineRouteAsync(IResource route)
+        private async Task<IResource> AffineRouteAsync(IResource route, CancellationToken ct)
         {
             if ((route.ContentType.MediaType.Contains("application/json")
                     || route.ContentType.MediaType.Contains("application/geo+json"))
@@ -70,13 +71,13 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 return route;
             }
-            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())));
+            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())), ct);
             // maybe the route is a folder
             if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())))
             {
                 try
                 {
-                    newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString() + "/catalog.json")));
+                    newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString() + "/catalog.json")), ct);
                     if (newRoute.ContentType.MediaType.Contains("application/json"))
                     {
                         return newRoute;
@@ -90,9 +91,9 @@ namespace Terradue.Stars.Services.Model.Stac
             return newRoute;
         }
 
-        public async Task<IResource> Route(IResource route)
+        public async Task<IResource> RouteAsync(IResource route, CancellationToken ct)
         {
-            var routeFound = await AffineRouteAsync(route);
+            var routeFound = await AffineRouteAsync(route, ct);
             if (routeFound is StacCatalogNode)
                 return routeFound as StacCatalogNode;
             if (routeFound is StacItemNode)
@@ -101,7 +102,7 @@ namespace Terradue.Stars.Services.Model.Stac
                 return null;
             if (routeFound.ContentType.MediaType.Contains("application/json") || routeFound.ContentType.MediaType.Contains("application/geo+json") || Path.GetExtension(routeFound.Uri.ToString()) == ".json")
             {
-                IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamResource).ReadAsString());
+                IStacObject stacObject = StacConvert.Deserialize<IStacObject>(await (routeFound as IStreamResource).ReadAsStringAsync(ct));
                 if (stacObject is IStacCatalog)
                     return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri);
                 else

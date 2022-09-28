@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
@@ -39,12 +40,12 @@ namespace Terradue.Stars.Services.Supplier.Destination
             try
             {
                 s3Url = S3Url.Parse(output);
-                s3ClientFactory.CreateAndLoadAsync(s3Url).GetAwaiter().GetResult();
+                s3ClientFactory.CreateAndLoadAsync(s3Url, CancellationToken.None).GetAwaiter().GetResult();
                 return true;
             }
             catch (AmazonS3Exception e)
             {
-                if ( e.StatusCode == HttpStatusCode.NotFound)
+                if (e.StatusCode == HttpStatusCode.NotFound)
                 {
                     return true;
                 }
@@ -56,7 +57,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 logger.LogWarning(e.Message);
                 return false;
             }
-            
+
         }
 
         public Task<IDestination> Guide(string output, IResource route)

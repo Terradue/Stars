@@ -125,7 +125,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             AtomItemNode atomItemNode = null;
             try
             {
-                atomItemNode = await translatorManager.Translate<AtomItemNode>(itemNode);
+                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(itemNode);
             }
             catch (Exception e)
             {

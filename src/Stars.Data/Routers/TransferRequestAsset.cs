@@ -7,6 +7,7 @@ using Terradue.Stars.Interface.Router;
 using Terradue.OpenSearch.DataHub;
 using Terradue.Stars.Interface;
 using System.Linq;
+using System.Threading;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -48,13 +49,13 @@ namespace Terradue.Stars.Data.Routers
             return this;
         }
 
-        public async Task<Stream> GetStreamAsync()
+        public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             var response = await tr.GetResponseAsync();
             return response.GetResponseStream();
         }
 
-        public async Task<Stream> GetStreamAsync(long start, long end = -1)
+        public async Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             tr.AddRange(start, end);
             var response = await tr.GetResponseAsync();

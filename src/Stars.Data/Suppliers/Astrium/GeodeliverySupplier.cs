@@ -44,7 +44,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
             if (!(node is IItem)) return null;
 
             // Let's translate the node to STAC
-            var stacNode = await translatorManager.Translate<StacNode>(node);
+            var stacNode = await translatorManager.TranslateAsync<StacNode>(node);
             if (stacNode == null || !(stacNode is StacItemNode)) return null;
             StacItemNode stacItemNode = stacNode as StacItemNode;
 

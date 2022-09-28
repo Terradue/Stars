@@ -35,7 +35,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             return S2SafeStacFactory.Create(manifest, item, identifier);
         }
 
-        protected override SentinelMetadataExtractor GetMatchingExtractorInstance(SentinelSafeStacFactory stacFactory)
+        protected SentinelMetadataExtractor GetMatchingExtractorInstance(SentinelSafeStacFactory stacFactory)
         {
             if ( stacFactory.Manifest.informationPackageMap.contentUnit[0].unitType == "Product_Level-1C" )
             {

@@ -14,6 +14,7 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Interface;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -42,11 +43,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return new OrderVoucher(route, orderId);
         }
 
-        public async Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
+        public async Task<IResource> DeliverAsync(IDelivery delivery, CancellationToken ct, bool overwrite = false)
         {
             OrderedDelivery orderedDelivery = delivery as OrderedDelivery;
             IOrder order = await orderedDelivery.Supplier.Order(orderedDelivery.OrderableRoute);
-            return await orderedDelivery.VoucherDelivery.Carrier.Deliver(orderedDelivery.VoucherDelivery, overwrite);
+            return await orderedDelivery.VoucherDelivery.Carrier.DeliverAsync(orderedDelivery.VoucherDelivery, ct, overwrite);
         }
 
         public IDelivery QuoteDelivery(IResource route, IDestination destination)

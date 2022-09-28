@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Tar;
 using Ionic.Zip;
@@ -31,44 +32,26 @@ namespace Terradue.Stars.Services.Processing
 
         public override System.Uri Uri => asset.Uri;
 
-        protected virtual BlockingStream GetTarStream(IAsset asset)
+        protected virtual async Task<Stream> GetTarStreamAsync(IAsset asset, CancellationToken ct)
         {
-            const int chunk = 4096;
-            BlockingStream blockingStream = new BlockingStream(1000);
-            resourceServiceProvider.GetStreamResourceAsync(asset)
-                .ContinueWith(task => task.Result.GetStreamAsync()
-                    .ContinueWith(task =>
-                    {
-                        var stream = task.GetAwaiter().GetResult();
-                        Task.Factory.StartNew(() =>
-                        {
-                            int read;
-                            var buffer = new byte[chunk];
-                            do
-                            {
-                                read = stream.Read(buffer, 0, chunk);
-                                blockingStream.Write(buffer, 0, read);
-                            } while (read == chunk);
-                            blockingStream.Close();
-                        });
-                    })
-                );
-            return blockingStream;
+            var streamResource = await resourceServiceProvider.GetStreamResourceAsync(asset, ct);
+            var stream = await streamResource.GetStreamAsync(ct);
+            return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
 
-        internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
+        internal async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
-            IDictionary<string, IAsset> assets = await ExtractTar(GetTarStream(asset), DeliverTarEntry, destination, carrierManager);
+            IDictionary<string, IAsset> assets = await ExtractTarAsync(await GetTarStreamAsync(asset, ct), DeliverTarEntryAsync, destination, carrierManager, ct);
             return new GenericAssetContainer(destination, assets);
         }
 
-        private async Task<IAsset> DeliverTarEntry(TarEntryAsset tarEntryAsset, IDestination destination, CarrierManager carrierManager)
+        private async Task<IAsset> DeliverTarEntryAsync(TarEntryAsset tarEntryAsset, IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             var archiveAssetDestination = destination.To(tarEntryAsset);
             archiveAssetDestination.PrepareDestination();
             var assetDeliveries = carrierManager.GetSingleDeliveryQuotations(tarEntryAsset, archiveAssetDestination);
             logger.LogDebug(tarEntryAsset.Name);
-            var assetExtracted = await assetDeliveries.First().Carrier.Deliver(assetDeliveries.First());
+            var assetExtracted = await assetDeliveries.First().Carrier.DeliverAsync(assetDeliveries.First(), ct);
             var entryAsset = new GenericAsset(assetExtracted, tarEntryAsset.Name, new string[] { "data" });
             if (assetDeliveries.First().Resource is IAsset)
             {
@@ -84,7 +67,11 @@ namespace Terradue.Stars.Services.Processing
         /// </summary>
         /// <param name="tarStream">The <i>.tar</i> to extract.</param>
         /// <param name="outputDir">Output directory to write the files.</param>
-        public Task<IDictionary<string, IAsset>> ExtractTar(Stream tarStream, Func<TarEntryAsset, IDestination, CarrierManager, Task<IAsset>> tarEntryAction, IDestination destination, CarrierManager carrierManager)
+        public Task<IDictionary<string, IAsset>> ExtractTarAsync(Stream tarStream,
+                                                                 Func<TarEntryAsset, IDestination, CarrierManager, CancellationToken, Task<IAsset>> tarEntryAction,
+                                                                 IDestination destination,
+                                                                 CarrierManager carrierManager,
+                                                                 CancellationToken ct)
         {
             Dictionary<string, IAsset> extractedAssets = new Dictionary<string, IAsset>();
             string longLink = null;
@@ -158,7 +145,7 @@ namespace Terradue.Stars.Services.Processing
                         blockingStream.Close();
                     }, null, TaskCreationOptions.AttachedToParent);
 
-                    extractedAssets.Add(name, tarEntryAction(tarEntryAsset, destination, carrierManager).GetAwaiter().GetResult());
+                    extractedAssets.Add(name, tarEntryAction(tarEntryAsset, destination, carrierManager, ct).GetAwaiter().GetResult());
 
                     if (!extractTask.IsCompleted)
                     {

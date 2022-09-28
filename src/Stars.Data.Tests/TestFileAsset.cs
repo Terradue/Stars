@@ -53,12 +53,12 @@ namespace Terradue.Data.Tests
 
         public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
 
-        public Task<Stream> GetStreamAsync()
+        public Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             return Task.FromResult<Stream>(fileInfo.OpenRead());
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }

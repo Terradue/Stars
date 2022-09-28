@@ -10,6 +10,7 @@ using System;
 using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading;
 
 namespace Terradue.Stars.Data.Translators
 {
@@ -30,7 +31,7 @@ namespace Terradue.Stars.Data.Translators
 
         public string Label => "STAC Item to ATOM Entry";
 
-        public async Task<T> Translate<T>(IResource node) where T : IResource
+        public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
             if ( typeof(T) != typeof(AtomItemNode) ) return default(T);
             if ( node is T ) return (T)node;

@@ -15,6 +15,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -39,7 +40,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return (route != null);
         }
 
-        public Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
+        public Task<IResource> DeliverAsync(IDelivery delivery, CancellationToken ct, bool overwrite = false)
         {
             return Task.FromResult<IResource>(delivery.Resource);
         }

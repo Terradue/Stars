@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -26,16 +27,17 @@ namespace Terradue.Stars.Services.Resources
             this._cachedHeaders = cachedHeaders;
         }
 
-        public async Task<Stream> GetStreamAsync()
+        public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return await this._client.GetStreamAsync(this._url);
+            var res = await this._client.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead, ct);
+            return await res.Content.ReadAsStreamAsync();
         }
 
-        public async Task<Stream> GetStreamAsync(long start, long end = -1)
+        public async Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             var request = new HttpRequestMessage { RequestUri = _url };
             request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(0, 1000);
-            return await (await this._client.SendAsync(request)).Content.ReadAsStreamAsync();
+            return await (await this._client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct)).Content.ReadAsStreamAsync();
         }
 
         public ContentType ContentType => new ContentType(CachedHeaders.ContentType.ToString());

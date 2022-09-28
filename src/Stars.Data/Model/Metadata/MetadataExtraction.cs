@@ -15,6 +15,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Sar;
+using System.Threading;
 
 namespace Terradue.Stars.Data.Model.Metadata
 {
@@ -44,7 +45,7 @@ namespace Terradue.Stars.Data.Model.Metadata
             return "";
         }
 
-        public async Task<IResource> Process(IResource resource, IDestination destination, string suffix = null)
+        public async Task<IResource> ProcessAsync(IResource resource, IDestination destination, CancellationToken ct, string suffix = null)
         {
             IItem item = resource as IItem;
             if (item == null) return resource;

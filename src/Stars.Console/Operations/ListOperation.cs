@@ -126,7 +126,7 @@ namespace Terradue.Stars.Console.Operations
             foreach (var route in routes)
             {
                 object state = await PrepareNewRoute(null, route, null, null);
-                await routingService.Route(route, recursivity, null, state);
+                await routingService.RouteAsync(route, recursivity, null, state);
             }
 
         }

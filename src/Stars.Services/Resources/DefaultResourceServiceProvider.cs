@@ -6,6 +6,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
@@ -33,7 +34,7 @@ namespace Terradue.Stars.Services.Resources
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource)
+        public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource, CancellationToken ct)
         {
 
             if (resource is IStreamResource)
@@ -65,8 +66,8 @@ namespace Terradue.Stars.Services.Resources
                 try
                 {
                     if (resource is IAsset)
-                        return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
-                    return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                        return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset, ct);
+                    return await s3ClientFactory.CreateAndLoadAsync(s3Url, ct);
                 }
                 catch (AmazonS3Exception e)
                 {
@@ -88,7 +89,7 @@ namespace Terradue.Stars.Services.Resources
 
                 var client = clientFactory.CreateClient("stars");
 
-                HttpResponseMessage response = await client.GetAsync(resource.Uri);
+                HttpResponseMessage response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct);
 
                 // S3 resource case
                 if (s3Url != null && !triedS3 && response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
@@ -97,8 +98,8 @@ namespace Terradue.Stars.Services.Resources
                     {
                         IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
                         if (resource is IAsset)
-                            return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
-                        return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                            return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset, ct);
+                        return await s3ClientFactory.CreateAndLoadAsync(s3Url, ct);
                     }
                     catch (AmazonS3Exception e)
                     {
@@ -118,23 +119,23 @@ namespace Terradue.Stars.Services.Resources
             throw new SystemException("Unknown resource type");
         }
 
-        public async Task<Stream> GetAssetStreamAsync(IAsset asset)
+        public async Task<Stream> GetAssetStreamAsync(IAsset asset, CancellationToken ct)
         {
-            return await (await CreateStreamResourceAsync(asset)).GetStreamAsync();
+            return await (await CreateStreamResourceAsync(asset, ct)).GetStreamAsync(ct);
         }
 
-        public Task<IAssetsContainer> GetAssetsInFolder(IResource resource)
+        public Task<IAssetsContainer> GetAssetsInFolderAsync(IResource resource, CancellationToken ct)
         {
             return Task.FromResult<IAssetsContainer>(new LocalDirectoryResource(_serviceProvider.GetService<IFileSystem>(), resource.Uri.AbsolutePath));
         }
 
-        public async Task<IStreamResource> GetStreamResourceAsync(IResource resource)
+        public async Task<IStreamResource> GetStreamResourceAsync(IResource resource, CancellationToken ct)
         {
             if (resource is IStreamResource)
             {
                 return (IStreamResource)resource;
             }
-            IStreamResource sresource = await CreateStreamResourceAsync(resource);
+            IStreamResource sresource = await CreateStreamResourceAsync(resource, ct);
             if (resource.ContentType == null || resource.ContentType.MediaType == null || resource.ContentType.MediaType.EndsWith("octet-stream") || sresource.ContentType.MediaType.EndsWith("octet-stream"))
                 return sresource;
             if (sresource.ContentType.MediaType != resource.ContentType.MediaType)
@@ -144,12 +145,12 @@ namespace Terradue.Stars.Services.Resources
             return sresource;
         }
 
-        public async Task Delete(IResource resource)
+        public async Task DeleteAsync(IResource resource, CancellationToken ct)
         {
-            IStreamResource streamResource = await GetStreamResourceAsync(resource);
+            IStreamResource streamResource = await GetStreamResourceAsync(resource, ct);
             if (streamResource is IDeletableResource)
             {
-                await ((IDeletableResource)streamResource).Delete();
+                await ((IDeletableResource)streamResource).DeleteAsync(ct);
                 return;
             }
             throw new SystemException("Resource cannot be deleted");

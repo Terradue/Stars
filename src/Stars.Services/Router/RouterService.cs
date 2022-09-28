@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
@@ -30,7 +31,7 @@ namespace Terradue.Stars.Services.Router
             this.credentialsManager = credentialsManager;
         }
 
-        public async Task<object> Route(IResource route, int recursivity, IRouter prevRouter, object state)
+        public async Task<object> RouteAsync(IResource route, int recursivity, IRouter prevRouter, object state, CancellationToken ct)
         {
             // Stop here if there is no route
             if (route == null)
@@ -70,7 +71,7 @@ namespace Terradue.Stars.Services.Router
                 else
                 {
                     // New route from new router!
-                    var newRoute = await router.Route(route);
+                    var newRoute = await router.RouteAsync(route, ct);
                     if (newRoute is IItem)
                     {
                         return await onItemFunction.Invoke(newRoute as IItem, prevRouter, state);
@@ -101,7 +102,7 @@ namespace Terradue.Stars.Services.Router
             {
                 var subRoute = subroutes.ElementAt(i);
                 var newState = await onBranchingFunction.Invoke(route, subRoute, subroutes, state);
-                var substate = await Route(subRoute, recursivity - 1, router, newState);
+                var substate = await RouteAsync(subRoute, recursivity - 1, router, newState, ct);
                 substates.Add(substate);
             }
             return await afterBranchingFunction.Invoke(catalogNode, router, state, substates);

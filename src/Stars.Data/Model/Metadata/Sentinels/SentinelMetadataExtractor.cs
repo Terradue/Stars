@@ -96,7 +96,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (Stream stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
+            using (Stream stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

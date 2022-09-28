@@ -24,7 +24,7 @@ namespace Terradue.Data.Tests.Harvesters
 
             StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-d0534740-b97b-11eb-82cf-0a580a830350/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808.json"));
 
-            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.Translate<AtomItemNode>(stacItemNode);
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode);
 
             Assert.Equal("S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808", atomItemNode.AtomItem.Identifier);
 
@@ -43,7 +43,7 @@ namespace Terradue.Data.Tests.Harvesters
 
             StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
 
-            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.Translate<AtomItemNode>(stacItemNode);
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode);
 
             ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
 

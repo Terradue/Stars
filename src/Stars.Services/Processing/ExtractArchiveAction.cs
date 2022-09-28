@@ -13,6 +13,7 @@ using Terradue.Stars.Interface;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.IO.Abstractions;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -81,7 +82,7 @@ namespace Terradue.Stars.Services.Processing
             return asset.ContentType != null && Archive.ArchiveContentTypes.Contains(asset.ContentType.MediaType);
         }
 
-        public async Task<IResource> Process(IResource route, IDestination destination, string suffix = null)
+        public async Task<IResource> ProcessAsync(IResource route, IDestination destination, CancellationToken ct, string suffix = null)
         {
             IItem item = route as IItem;
             if (item == null) return route;
@@ -103,7 +104,7 @@ namespace Terradue.Stars.Services.Processing
                     continue;
                 }
                 logger.LogInformation("Extracting asset {0}...", asset.Value.Uri);
-                IAssetsContainer extractedAssets = await ExtractArchive(asset, destination);
+                IAssetsContainer extractedAssets = await ExtractArchiveAsync(asset, destination, ct);
                 int i = 0;
                 foreach (var extractedAsset in extractedAssets.Assets)
                 {
@@ -122,11 +123,11 @@ namespace Terradue.Stars.Services.Processing
 
         }
 
-        private async Task<IAssetsContainer> ExtractArchive(KeyValuePair<string, IAsset> asset, IDestination destination)
+        private async Task<IAssetsContainer> ExtractArchiveAsync(KeyValuePair<string, IAsset> asset, IDestination destination, CancellationToken ct)
         {
-            Archive archive = await Archive.Read(asset.Value, logger, resourceServiceProvider, fileSystem);
+            Archive archive = await Archive.Read(asset.Value, logger, resourceServiceProvider, fileSystem, ct);
 
-            return await archive.ExtractToDestination(destination, carrierManager);
+            return await archive.ExtractToDestinationAsync(destination, carrierManager, ct);
         }
 
         public string GetRelativePath(IResource route, IDestination destination)

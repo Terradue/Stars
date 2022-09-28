@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
@@ -36,9 +37,9 @@ namespace Terradue.Stars.Services.Processing
             "application/zip"
         };
 
-        internal async static Task<Archive> Read(IAsset asset, ILogger logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem)
+        internal async static Task<Archive> Read(IAsset asset, ILogger logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem, CancellationToken ct)
         {
-            IStreamResource streamableAsset = await resourceServiceProvider.GetStreamResourceAsync(asset);
+            IStreamResource streamableAsset = await resourceServiceProvider.GetStreamResourceAsync(asset, ct);
 
             if (streamableAsset == null)
                 throw new System.IO.InvalidDataException("Asset must be streamable to be read as an archive");
@@ -104,6 +105,6 @@ namespace Terradue.Stars.Services.Processing
             return res;
         }
 
-        internal abstract Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager);
+        internal abstract Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct);
     }
 }

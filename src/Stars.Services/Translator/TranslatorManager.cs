@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router.Translator;
@@ -13,7 +14,7 @@ namespace Terradue.Stars.Services.Translator
         {
         }
 
-        public async Task<T> Translate<T>(IResource node) where T : IResource
+        public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
             Dictionary<ITranslator, T> translations = new Dictionary<ITranslator, T>();
             if (node is T) return (T)node;
@@ -21,7 +22,7 @@ namespace Terradue.Stars.Services.Translator
             {
                 try
                 {
-                    T translation = await translator.Translate<T>(node);
+                    T translation = await translator.TranslateAsync<T>(node, ct);
                     if (translation != null)
                         return translation;
                 }

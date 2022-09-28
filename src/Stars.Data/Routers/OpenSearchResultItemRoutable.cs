@@ -11,6 +11,7 @@ using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
 using Microsoft.Extensions.Logging;
+using System.Threading;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -48,7 +49,7 @@ namespace Terradue.Stars.Data.Routers
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsString()).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsStringAsync()).Length);
 
         public bool IsCatalog => false;
 
@@ -56,13 +57,13 @@ namespace Terradue.Stars.Data.Routers
 
         public bool CanBeRanged => false;
 
-        public string ReadAsString()
+        public string ReadAsStringAsync(CancellationToken ct)
         {
-            StreamReader sr = new StreamReader(GetStreamAsync().Result);
+            StreamReader sr = new StreamReader(GetStreamAsync(ct).Result);
             return sr.ReadToEnd();
         }
 
-        public async Task<Stream> GetStreamAsync()
+        public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             return await Task<Stream>.Run(() =>
             {
@@ -103,7 +104,7 @@ namespace Terradue.Stars.Data.Routers
             }
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }
