@@ -281,19 +281,17 @@ namespace Terradue.Stars.Services
             const int chunk = 4096;
             BlockingStream blockingStream = new BlockingStream(Convert.ToUInt64(contentLength), 1000);
             Task.Run(() =>
-                    {
-                        Task.Factory.StartNew(() =>
                         {
+                            long totalBytesRead = 0;
                             int read;
                             var buffer = new byte[chunk];
-                            do
+                            while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0)
                             {
-                                read = inputStream.Read(buffer, 0, chunk);
                                 blockingStream.Write(buffer, 0, read);
-                            } while (read == chunk);
+                                totalBytesRead += read;
+                            }
                             blockingStream.Close();
-                        });
-                    }, ct);
+                        }, ct);
             return blockingStream;
         }
     }

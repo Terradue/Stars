@@ -57,7 +57,7 @@ namespace Terradue.Stars.Services
         public async static Task<string> ReadAsStringAsync(this IStreamResource streamable, CancellationToken ct)
         {
             StreamReader sr = new StreamReader(await streamable.GetStreamAsync(ct));
-            return sr.ReadToEnd();
+            return await sr.ReadToEndAsync();
         }
 
         public static CredentialsConfigurationSection ToCredentialsConfigurationSection(this ICredentials cred, Uri uri, string authType)
