@@ -35,17 +35,35 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             return S2SafeStacFactory.Create(manifest, item, identifier);
         }
 
+        protected override SentinelMetadataExtractor GetMatchingExtractorInstance(SentinelSafeStacFactory stacFactory)
+        {
+            if ( stacFactory.Manifest.informationPackageMap.contentUnit[0].unitType == "Product_Level-1C" )
+            {
+                return new Sentinel2Level1MetadataExtractor(loggerS2, resourceServiceProvider);
+            }
+            if ( stacFactory.Manifest.informationPackageMap.contentUnit[0].unitType == "Product_Level-2A" )
+            {
+                return new Sentinel2Level2MetadataExtractor(loggerS2, resourceServiceProvider);
+            }
+            return base.GetMatchingExtractorInstance(stacFactory);
+        }
+        
+        // This method is not normally used, subclass method is called directly with the proper instance
         protected override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
-            if ( stacFactory.Manifest.informationPackageMap.contentUnit[0].unitType == "Product_Level-1C" ){
-                Sentinel2Level1MetadataExtractor metadataExtractor = new Sentinel2Level1MetadataExtractor(loggerS2, resourceServiceProvider);
-                return metadataExtractor.AddAssets(stacItem, item, stacFactory);
-            }
-            if ( stacFactory.Manifest.informationPackageMap.contentUnit[0].unitType == "Product_Level-2A" ){
-                Sentinel2Level2MetadataExtractor metadataExtractor = new Sentinel2Level2MetadataExtractor(loggerS2, resourceServiceProvider);
-                return metadataExtractor.AddAssets(stacItem, item, stacFactory);
-            }
-            return null;
+            Sentinel2MetadataExtractor metadataExtractor = GetMatchingExtractorInstance(stacFactory) as Sentinel2MetadataExtractor;
+            if (metadataExtractor == null) return Task.CompletedTask;
+
+            return metadataExtractor.AddAssets(stacItem, item, stacFactory);
+        }
+
+        // This method is not normally used, subclass method is called directly with the proper instance
+        protected override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        {
+            Sentinel2MetadataExtractor metadataExtractor = GetMatchingExtractorInstance(stacFactory) as Sentinel2MetadataExtractor;
+            if (metadataExtractor == null) return Task.CompletedTask;
+
+            return metadataExtractor.AddAdditionalProperties(stacItem, item, stacFactory);
         }
     }
 }

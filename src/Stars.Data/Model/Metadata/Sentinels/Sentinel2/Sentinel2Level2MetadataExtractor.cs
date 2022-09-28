@@ -22,6 +22,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         public static XmlSerializer s2L2AProductSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level2.Level2A_User_Product));
         public static XmlSerializer s2L2AProductTileSerializer = new XmlSerializer(typeof(Level2A_Tile));
 
+        private IAsset mtdAsset;
+        private Level2A_User_Product level2A_User_Product;
 
         public Sentinel2Level2MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
@@ -41,20 +43,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         protected async override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
-            var mtdAsset = FindFirstAssetFromFileNameRegex(item, "MTD_MSIL2A.xml$");
-            if (mtdAsset == null)
-                throw new FileNotFoundException("Product metadata file 'MTD_MSIL2A.xml' not found");
             var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
             Level2A_Tile mtdTile = null;
             if (mtdtlAsset != null)
                 mtdTile = (Level2A_Tile)s2L2AProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset));
 
-            Level2A_User_Product level2A_User_Product = (Level2A_User_Product)s2L2AProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
+            await GetUserProduct(item);
+
             StacAsset mtdStacAsset = StacAsset.CreateMetadataAsset(stacItem, mtdAsset.Uri, new ContentType(MimeTypes.GetMimeType(mtdAsset.Uri.ToString())));
             mtdStacAsset.Properties.AddRange(mtdAsset.Properties);
             stacItem.Assets.Add("mtd", mtdStacAsset);
-
-            stacItem.Properties.Add("processing:baseline", level2A_User_Product.General_Info.L2A_Product_Info.PROCESSING_BASELINE);
 
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, @"(?!MSK).*\.jp2$").OrderBy(a => Path.GetFileName(a.Value.Uri.ToString()), StringComparer.InvariantCultureIgnoreCase))
             {
@@ -72,6 +70,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
             stacItem.Assets.Add("manifest", CreateManifestAsset(stacItem, GetManifestAsset(item)).Value);
 
+        }
+
+        protected async override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        {
+            await GetUserProduct(item);
+            stacItem.Properties.Add("processing_baseline", level2A_User_Product.General_Info.L2A_Product_Info.PROCESSING_BASELINE);
         }
 
         private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level2A_User_Product level2AUserProduct, Level2A_Tile? mtdTile)
@@ -140,6 +144,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         protected override SentinelSafeStacFactory CreateSafeStacFactory(XFDUType manifest, IItem item, string identifier)
         {
             return S2SafeStacFactory.Create(manifest, item, identifier);
+        }
+
+        private async Task GetUserProduct(IItem item)
+        {
+            mtdAsset = FindFirstAssetFromFileNameRegex(item, "MTD_MSIL2A.xml$");
+            if (mtdAsset == null)
+                throw new FileNotFoundException("Product metadata file 'MTD_MSIL2A.xml' not found");
+            if (level2A_User_Product != null) return;
+            level2A_User_Product = (Level2A_User_Product)s2L2AProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
         }
     }
 }

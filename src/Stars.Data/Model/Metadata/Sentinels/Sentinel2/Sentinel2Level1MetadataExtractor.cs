@@ -24,6 +24,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         public static XmlSerializer s2L1CProductSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Level1C_User_Product));
         public static XmlSerializer s2L1CProductTileSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile));
 
+        private IAsset mtdAsset;
+        private Level1C_User_Product level1C_User_Product;
+
         public Sentinel2Level1MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
         }
@@ -49,12 +52,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             if (mtdtlAsset != null)
                 mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset));
 
-            Level1C_User_Product level1C_User_Product = (Level1C_User_Product)s2L1CProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
+            await GetUserProduct(item);
+
             StacAsset mtdStacAsset = StacAsset.CreateMetadataAsset(stacItem, mtdAsset.Uri, new ContentType(MimeTypes.GetMimeType(mtdAsset.Uri.ToString())));
             mtdStacAsset.Properties.AddRange(mtdAsset.Properties);
             stacItem.Assets.Add("mtd", mtdStacAsset);
-
-            stacItem.Properties.Add("processing:baseline", level1C_User_Product.General_Info.Product_Info.PROCESSING_BASELINE);
 
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, "^(?!MSK).*.jp2$").OrderBy(a => Path.GetFileName(a.Value.Uri.ToString()), StringComparer.InvariantCultureIgnoreCase))
             {
@@ -63,6 +65,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
             stacItem.Assets.Add("manifest", CreateManifestAsset(stacItem, GetManifestAsset(item)).Value);
 
+        }
+
+        protected async override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        {
+            await GetUserProduct(item);
+            stacItem.Properties.Add("processing_baseline", level1C_User_Product.General_Info.Product_Info.PROCESSING_BASELINE);
         }
 
         private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level1C_User_Product level1CUserProduct, Level1C_Tile? mtdTile)
@@ -182,5 +190,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             return S2SafeStacFactory.Create(manifest, item, identifier);
         }
 
+        private async Task GetUserProduct(IItem item)
+        {
+            if (level1C_User_Product != null) return;
+            mtdAsset = FindFirstAssetFromFileNameRegex(item, "MTD_MSIL1C.xml$");
+            if (mtdAsset == null)
+                throw new FileNotFoundException("Product metadata file 'MTD_MSIL1C.xml' not found");
+            if (level1C_User_Product != null) return;
+            level1C_User_Product = (Level1C_User_Product)s2L1CProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdAsset));
+        }
     }
 }
