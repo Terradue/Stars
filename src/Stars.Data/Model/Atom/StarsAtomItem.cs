@@ -32,16 +32,16 @@ namespace Terradue.Stars.Data.Model.Atom
         public static StarsAtomItem Create(StacItem stacItem, Uri stacItemUri)
         {
             AtomItem item = new AtomItem(stacItem.Title,
-                                 stacItem.Title,
+                                 stacItem.Description,
                                  null,
                                  stacItem.Id,
                                  new DateTimeOffset(stacItem.DateTime.Start.ToUniversalTime(), new TimeSpan(0))
                                 );
 
             StarsAtomItem starsAtomItem = new StarsAtomItem(item);
-            if (!string.IsNullOrEmpty(stacItem.Title))
-                starsAtomItem.Summary = new TextSyndicationContent(Markdown.ToHtml(stacItem.Title, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build()), TextSyndicationContentKind.Html);
-            starsAtomItem.Title = new TextSyndicationContent(stacItem.Title, TextSyndicationContentKind.Html);
+            if (!string.IsNullOrEmpty(stacItem.Description))
+                starsAtomItem.Summary = new TextSyndicationContent(Markdown.ToHtml(stacItem.Description, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build()), TextSyndicationContentKind.Html);
+            starsAtomItem.Title = new TextSyndicationContent(stacItem.Title, TextSyndicationContentKind.Plaintext);
             starsAtomItem.Identifier = stacItem.Id;
 
             // Links are tricky because they can be relative and we must render them absolute in Atom
