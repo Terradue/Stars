@@ -129,6 +129,10 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             }
             catch (Exception e)
             {
+                logger.LogWarning(e, "Unable to translate item {0} to AtomItemNode", itemNode);
+                if ( catalogPublicationState.GeosquarePublicationModel.ThrowPublicationException )
+                    throw;
+                
                 atomItemNode = null;
             }
             if (atomItemNode == null) return state;
@@ -149,6 +153,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             foreach (var link in atomItem.Links)
             {
                 link.Uri = geosquareConfiguration.MapUri(link.Uri);
+                link.Uri = geosquarePublicationState.GeosquarePublicationModel.ChangeUri(link.Uri);
             }
 
             // create eventual opensearch link

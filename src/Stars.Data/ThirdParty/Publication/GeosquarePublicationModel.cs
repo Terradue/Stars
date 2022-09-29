@@ -91,6 +91,13 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             authorizationHeaderValue = new AuthenticationHeaderValue("Basic", base64EncodedAuthenticationString);
 
         }
+
+        internal Uri ChangeUri(Uri uri)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ThrowPublicationException { get; set; } = true;
     }
    
 }
