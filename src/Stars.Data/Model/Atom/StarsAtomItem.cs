@@ -62,7 +62,7 @@ namespace Terradue.Stars.Data.Model.Atom
                 catch { continue; }
 
                 var rel = link.RelationshipType;
-                var mediatype = link.ContentType;
+                var mediatype = link.ContentType ?? new ContentType(MimeTypes.GetMimeType(link.Uri.ToString()));
 
                 starsAtomItem.Links.Add(new SyndicationLink(linkUri,
                                                                   rel,
