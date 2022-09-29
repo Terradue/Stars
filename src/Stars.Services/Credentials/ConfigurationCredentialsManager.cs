@@ -29,6 +29,7 @@ namespace Terradue.Stars.Services.Credentials
 
         private bool MatchUriAndAuth(CredentialsOption v, Uri uri, string authType)
         {
+            if ( v.Uri == null ) return false;
             return v.Uri.IsBaseOf(uri) && v.AuthType.Equals(authType, StringComparison.InvariantCultureIgnoreCase);
         }
 
