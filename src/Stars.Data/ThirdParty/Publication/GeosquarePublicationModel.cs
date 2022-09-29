@@ -19,7 +19,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
     {
         private AuthenticationHeaderValue authorizationHeaderValue;
 
-        public GeosquarePublicationModel(){
+        public GeosquarePublicationModel()
+        {
             SubjectsList = new List<Subject>();
         }
 
@@ -79,10 +80,10 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         [IgnoreDataMember]
         public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
-        
+
         public AuthenticationHeaderValue AuthorizationHeaderValue { get => authorizationHeaderValue; set => authorizationHeaderValue = value; }
 
-        public string ApiKey { get;  set; }
+        public string ApiKey { get; set; }
 
         public void SetAuthorizationHeader(string Username, string Password)
         {
@@ -92,12 +93,16 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         }
 
+        public Func<Uri, Uri> CustomUriChanger { get; set; }
+
         internal Uri ChangeUri(Uri uri)
         {
-            throw new NotImplementedException();
+            if (CustomUriChanger != null)
+                return CustomUriChanger(uri);
+            return uri;
         }
 
         public bool ThrowPublicationException { get; set; } = true;
     }
-   
+
 }
