@@ -50,12 +50,13 @@ namespace Terradue.Stars.Services
             {
                 var httpClientHandler = sp.GetRequiredService<StarsHttpMessageHandler>();
 
-                httpClientHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                httpClientHandler.ServerCertificateCustomValidationCallback =
-                (httpRequestMessage, cert, cetChain, policyErrors) =>
-                {
-                    return true;
-                };
+                // TODO add option for certificate skip
+                // httpClientHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                // httpClientHandler.ServerCertificateCustomValidationCallback =
+                // (httpRequestMessage, cert, cetChain, policyErrors) =>
+                // {
+                //     return true;
+                // };
                 var cacheExpirationPerHttpResponseCode = CacheExpirationProvider.CreateSimple(TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(5));
                 return new InMemoryCacheHandler(httpClientHandler, cacheExpirationPerHttpResponseCode);
             });
