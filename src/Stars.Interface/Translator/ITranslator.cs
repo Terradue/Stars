@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface.Router.Translator
@@ -6,6 +7,6 @@ namespace Terradue.Stars.Interface.Router.Translator
     {
         string Label { get; }
 
-        Task<T> Translate<T>(IResource node) where T : IResource;
+        Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource;
     }
 }

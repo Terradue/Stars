@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Stac;
 using Stars.Services.Exceptions;
@@ -18,15 +19,15 @@ namespace Stars.Services.Model.Stac
 
         public static IEnumerable<StacCatalogNode> GetChildren(this StacCatalogNode stacCatalog, StacRouter router)
         {
-            return GetChildrenAsync(stacCatalog, router).GetAwaiter().GetResult();
+            return GetChildrenAsync(stacCatalog, router, CancellationToken.None).GetAwaiter().GetResult();
         }
 
-        public static async Task<IEnumerable<StacCatalogNode>> GetChildrenAsync(this StacCatalogNode catalog, StacRouter router)
+        public static async Task<IEnumerable<StacCatalogNode>> GetChildrenAsync(this StacCatalogNode catalog, StacRouter router, CancellationToken ct)
         {
             List<StacCatalogNode> children = new List<StacCatalogNode>();
             foreach (var childLink in catalog.GetLinks().Where(l => !string.IsNullOrEmpty(l.Relationship) && l.Relationship == "child"))
             {
-                IResource childRoute = await router.RouteLink(catalog, childLink);
+                IResource childRoute = await router.RouteLinkAsync(catalog, childLink, ct);
                 children.Add(childRoute as StacCatalogNode);
             }
             return children;
@@ -34,17 +35,17 @@ namespace Stars.Services.Model.Stac
 
         public static IEnumerable<StacItemNode> GetItems(this StacCatalogNode stacCatalog, StacRouter router)
         {
-            return GetItemsAsync(stacCatalog, router).GetAwaiter().GetResult();
+            return GetItemsAsync(stacCatalog, router, CancellationToken.None).GetAwaiter().GetResult();
         }
 
-        public static async Task<IEnumerable<StacItemNode>> GetItemsAsync(this StacCatalogNode stacCatalog, StacRouter router, bool throwOnError = false)
+        public static async Task<IEnumerable<StacItemNode>> GetItemsAsync(this StacCatalogNode stacCatalog, StacRouter router, CancellationToken ct, bool throwOnError = false)
         {
             List<StacItemNode> items = new List<StacItemNode>();
             foreach (var itemLink in stacCatalog.GetLinks().Where(l => !string.IsNullOrEmpty(l.Relationship) && l.Relationship == "item"))
             {
                 try
                 {
-                    IResource itemRoute = await router.RouteLink(stacCatalog, itemLink);
+                    IResource itemRoute = await router.RouteLinkAsync(stacCatalog, itemLink, ct);
                     items.Add(itemRoute as StacItemNode);
                 }
                 catch (Exception)

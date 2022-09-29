@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
@@ -30,12 +31,12 @@ namespace Stars.Tests
 
         public Uri Uri => new Uri("http://localhost/test.bin");
 
-        public Task<Stream> GetStreamAsync()
+        public Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             return Task.FromResult(stream);
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }

@@ -218,7 +218,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset))
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);

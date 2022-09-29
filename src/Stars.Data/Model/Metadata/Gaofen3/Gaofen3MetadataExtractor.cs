@@ -59,7 +59,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 
             logger.LogDebug("Metadata file is {0}", metadataFile.Uri);
 
-            IStreamResource metadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(metadataFile);
+            IStreamResource metadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(metadataFile, System.Threading.CancellationToken.None);
             if (metadataFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -387,7 +387,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
         {
             XmlSerializer ser = new XmlSerializer(typeof(ProductMetadata));
             ProductMetadata auxiliary;
-            using (var stream = await productMetadataFile.GetStreamAsync())
+            using (var stream = await productMetadataFile.GetStreamAsync(System.Threading.CancellationToken.None))
             {
                 using (XmlReader reader = XmlReader.Create(stream))
                 {

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
@@ -32,6 +33,8 @@ namespace Terradue.Stars.Services.Supplier
         public ICarrier Carrier => carrier;
 
         public string LocalPath => fileDestination.Uri.AbsolutePath;
+
+        public Func<IDelivery, IResource, Task> PreCheckDeliveryFunction { get; set; }
 
         public override string ToString()
         {

@@ -5,7 +5,9 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.Runtime.Internal;
@@ -33,8 +35,10 @@ namespace Terradue.Stars.Services.Resources
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource)
+        public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource, CancellationToken ct)
         {
+
+            Exception finalException = null;
 
             if (resource is IStreamResource)
             {
@@ -54,8 +58,9 @@ namespace Terradue.Stars.Services.Resources
             {
                 s3Url = S3Url.ParseUri(resource.Uri);
             }
-            catch
+            catch (Exception e)
             {
+                finalException = e;
             }
 
             // S3
@@ -65,16 +70,18 @@ namespace Terradue.Stars.Services.Resources
                 try
                 {
                     if (resource is IAsset)
-                        return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
-                    return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                        return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset, ct);
+                    return await s3ClientFactory.CreateAndLoadAsync(s3Url, ct);
                 }
                 catch (AmazonS3Exception e)
                 {
                     logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
+                    finalException = e;
                 }
                 catch (Exception e)
                 {
                     logger.LogError(e, e.Message);
+                    finalException = e;
                 }
                 triedS3 = true;
             }
@@ -88,53 +95,80 @@ namespace Terradue.Stars.Services.Resources
 
                 var client = clientFactory.CreateClient("stars");
 
-                HttpResponseMessage response = await client.GetAsync(resource.Uri);
+                HttpContentHeaders contentHeaders = null;
+
+                try
+                {
+                    // First try head request
+                    var headResponse = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct);
+                    headResponse.EnsureSuccessStatusCode();
+                    contentHeaders = headResponse.Content.Headers;
+                }
+                catch (HttpRequestException e)
+                {
+                    finalException = e;
+                }
+                if (contentHeaders == null)
+                {
+                    try
+                    {
+                        var response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct);
+                        response.EnsureSuccessStatusCode();
+                        contentHeaders = response.Content.Headers;
+                    }
+                    catch (Exception e)
+                    {
+                        finalException = e;
+                    }
+                }
 
                 // S3 resource case
-                if (s3Url != null && !triedS3 && response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
+                if (s3Url != null && !triedS3 && contentHeaders.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
                 {
                     try
                     {
                         IS3ClientFactory s3ClientFactory = _serviceProvider.GetService<IS3ClientFactory>();
                         if (resource is IAsset)
-                            return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset);
-                        return await s3ClientFactory.CreateAndLoadAsync(s3Url);
+                            return await s3ClientFactory.CreateAndLoadAsync(resource as IAsset, ct);
+                        return await s3ClientFactory.CreateAndLoadAsync(s3Url, ct);
                     }
                     catch (AmazonS3Exception e)
                     {
                         logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
+                        finalException = e;
                     }
                     catch (Exception e)
                     {
                         logger.LogError(e, e.Message);
+                        finalException = e;
                     }
                     triedS3 = true;
                 }
 
-                return new HttpResource(resource.Uri, client, response.Content.Headers);
+                return new HttpResource(resource.Uri, client, contentHeaders);
             }
 
             // Unknown
-            throw new SystemException("Unknown resource type");
+            throw finalException;
         }
 
-        public async Task<Stream> GetAssetStreamAsync(IAsset asset)
+        public async Task<Stream> GetAssetStreamAsync(IAsset asset, CancellationToken ct)
         {
-            return await (await CreateStreamResourceAsync(asset)).GetStreamAsync();
+            return await (await CreateStreamResourceAsync(asset, ct)).GetStreamAsync(ct);
         }
 
-        public Task<IAssetsContainer> GetAssetsInFolder(IResource resource)
+        public Task<IAssetsContainer> GetAssetsInFolderAsync(IResource resource, CancellationToken ct)
         {
             return Task.FromResult<IAssetsContainer>(new LocalDirectoryResource(_serviceProvider.GetService<IFileSystem>(), resource.Uri.AbsolutePath));
         }
 
-        public async Task<IStreamResource> GetStreamResourceAsync(IResource resource)
+        public async Task<IStreamResource> GetStreamResourceAsync(IResource resource, CancellationToken ct)
         {
             if (resource is IStreamResource)
             {
                 return (IStreamResource)resource;
             }
-            IStreamResource sresource = await CreateStreamResourceAsync(resource);
+            IStreamResource sresource = await CreateStreamResourceAsync(resource, ct);
             if (resource.ContentType == null || resource.ContentType.MediaType == null || resource.ContentType.MediaType.EndsWith("octet-stream") || sresource.ContentType.MediaType.EndsWith("octet-stream"))
                 return sresource;
             if (sresource.ContentType.MediaType != resource.ContentType.MediaType)
@@ -144,12 +178,12 @@ namespace Terradue.Stars.Services.Resources
             return sresource;
         }
 
-        public async Task Delete(IResource resource)
+        public async Task DeleteAsync(IResource resource, CancellationToken ct)
         {
-            IStreamResource streamResource = await GetStreamResourceAsync(resource);
+            IStreamResource streamResource = await GetStreamResourceAsync(resource, ct);
             if (streamResource is IDeletableResource)
             {
-                await ((IDeletableResource)streamResource).Delete();
+                await ((IDeletableResource)streamResource).DeleteAsync(ct);
                 return;
             }
             throw new SystemException("Resource cannot be deleted");

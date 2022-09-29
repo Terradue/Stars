@@ -147,7 +147,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset))
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
             {
                 XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
                 var reader = XmlReader.Create(stream, settings);

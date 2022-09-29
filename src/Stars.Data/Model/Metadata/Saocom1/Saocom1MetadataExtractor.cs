@@ -309,7 +309,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         private string ReadFilename(IItem item)
         {
             var parameterFile = FindFirstAssetFromFileNameRegex(item, @".*parameter.*\.xml");
-            var xDoc = XDocument.Load(resourceServiceProvider.GetAssetStreamAsync(parameterFile).GetAwaiter().GetResult());
+            var xDoc = XDocument.Load(resourceServiceProvider.GetAssetStreamAsync(parameterFile, System.Threading.CancellationToken.None).GetAwaiter().GetResult());
             XNamespace np = "http://www.conae.gov.ar/CGSS/XPNet";
             XName xoutput = np + "output";
             XName nValue = np + "value";
@@ -382,7 +382,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 if (metadataAsset != null)
                 {
                     L1BFileData = new XmlDocument();
-                    L1BFileData.Load(resourceServiceProvider.GetAssetStreamAsync(metadataAsset).GetAwaiter().GetResult());
+                    L1BFileData.Load(resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None).GetAwaiter().GetResult());
                     var aa = L1BFileData.SelectSingleNode("/SAOCOM_XMLProduct/Channel/SwathInfo/Polarization");
                     polarizationList.Add(aa.InnerText.Replace("/", "").ToString());
                 }
@@ -410,7 +410,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);

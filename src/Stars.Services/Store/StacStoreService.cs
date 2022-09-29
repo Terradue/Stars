@@ -15,6 +15,7 @@ using System.Net;
 using System.Linq;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Store
 {
@@ -77,89 +78,89 @@ namespace Terradue.Stars.Services.Store
         }
 
 
-        public async Task Init(bool @new = false)
+        public async Task InitAsync(CancellationToken ct, bool @new = false)
         {
             if (@new)
-                await InitRootCatalogNode();
+                await InitRootCatalogNodeAsync(ct);
             else
-                await LoadOrInitRootCatalogNode();
+                await LoadOrInitRootCatalogNodeAsync(ct);
             rootCatalogDestination = await destinationManager.CreateDestination(storeOptions.RootCatalogue.DestinationUrl, RootCatalogNode);
             CheckSynchronization();
         }
 
-        public async Task<StacNode> Load(Uri uri)
+        public async Task<StacNode> LoadAsync(Uri uri, CancellationToken ct)
         {
-            var resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(uri));
-            return (await _stacRouter.Route(resource)) as StacNode;
+            var resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(uri), ct);
+            return (await _stacRouter.RouteAsync(resource, ct)) as StacNode;
         }
 
         private void CheckSynchronization()
         {
         }
 
-        private async Task LoadOrInitRootCatalogNode()
+        private async Task LoadOrInitRootCatalogNodeAsync(CancellationToken ct)
         {
             logger.LogInformation("Loading Root Catalog {0} at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri);
             try
             {
-                await LoadRootCatalogNode();
+                await LoadRootCatalogNodeAsync(ct);
             }
             catch (Exception e)
             {
                 logger.LogInformation("No Root Catalog at {0}: {1}", storeOptions.RootCatalogue.Uri, e.Message);
-                await InitRootCatalogNode();
+                await InitRootCatalogNodeAsync(ct);
             }
         }
 
-        private async Task LoadRootCatalogNode()
+        private async Task LoadRootCatalogNodeAsync(CancellationToken ct)
         {
-            var rootCatalogRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(storeOptions.RootCatalogue.Uri));
-            IStacCatalog rootCatalog = StacConvert.Deserialize<IStacCatalog>(await rootCatalogRoute.ReadAsString());
+            var rootCatalogRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(storeOptions.RootCatalogue.Uri), ct);
+            IStacCatalog rootCatalog = StacConvert.Deserialize<IStacCatalog>(await rootCatalogRoute.ReadAsStringAsync(ct));
             if (!rootCatalog.Id.Equals(storeOptions.RootCatalogue.Identifier))
                 throw new KeyNotFoundException(string.Format("No catalog with ID {0} at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri));
             rootCatalogNode = new StacCatalogNode(rootCatalog, storeOptions.RootCatalogue.Uri);
         }
 
-        private async Task InitRootCatalogNode()
+        private async Task InitRootCatalogNodeAsync(CancellationToken ct)
         {
             StacCatalog stacCatalog = new StacCatalog(storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Description);
             StacCatalogNode catalogNode = new StacCatalogNode(stacCatalog, storeOptions.RootCatalogue.DestinationUri);
             logger.LogInformation("Trying to init a root catalog {0} on {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.DestinationUri);
             rootCatalogDestination = await destinationManager.CreateDestination(storeOptions.RootCatalogue.DestinationUrl, catalogNode);
             rootCatalogDestination.PrepareDestination();
-            await StoreResourceAtDestination(catalogNode, rootCatalogDestination);
+            await StoreResourceAtDestinationAsync(catalogNode, rootCatalogDestination, ct);
             logger.LogInformation("Root catalog {0} created at {1}", storeOptions.RootCatalogue.Identifier, storeOptions.RootCatalogue.Uri);
-            await LoadRootCatalogNode();
+            await LoadRootCatalogNodeAsync(ct);
         }
 
-        public async Task<StacNode> StoreStacNodeAtDestination(StacNode stacNode, IDestination destination)
+        public async Task<StacNode> StoreStacNodeAtDestinationAsync(StacNode stacNode, IDestination destination, CancellationToken ct)
         {
             if (stacNode is StacItemNode)
                 PrepareStacItemForDestination(stacNode as StacItemNode, destination);
             if (stacNode is StacCatalogNode)
                 PrepareStacCatalogueForDestination(stacNode as StacCatalogNode, destination);
-            return await _stacRouter.Route(await StoreResourceAtDestination(stacNode, destination)) as StacNode;
+            return await _stacRouter.RouteAsync(await StoreResourceAtDestinationAsync(stacNode, destination, ct), ct) as StacNode;
         }
 
-        public async Task<StacItemNode> StoreItemNodeAtDestination(StacItemNode stacItemNode, IDestination destination)
+        public async Task<StacItemNode> StoreItemNodeAtDestinationAsync(StacItemNode stacItemNode, IDestination destination, CancellationToken ct)
         {
             PrepareStacItemForDestination(stacItemNode, destination);
-            return await _stacRouter.Route(await StoreResourceAtDestination(stacItemNode, destination)) as StacItemNode;
+            return await _stacRouter.RouteAsync(await StoreResourceAtDestinationAsync(stacItemNode, destination, ct), ct) as StacItemNode;
         }
 
-        public async Task<StacCatalogNode> StoreCatalogNodeAtDestination(StacCatalogNode stacCatalogNode, IDestination destination)
+        public async Task<StacCatalogNode> StoreCatalogNodeAtDestinationAsync(StacCatalogNode stacCatalogNode, IDestination destination, CancellationToken ct)
         {
             PrepareStacCatalogueForDestination(stacCatalogNode, destination);
-            return await _stacRouter.Route(await StoreResourceAtDestination(stacCatalogNode, destination)) as StacCatalogNode;
+            return await _stacRouter.RouteAsync(await StoreResourceAtDestinationAsync(stacCatalogNode, destination, ct), ct) as StacCatalogNode;
         }
 
-        public async Task<IResource> StoreResourceAtDestination(IResource resource, IDestination destination)
+        public async Task<IResource> StoreResourceAtDestinationAsync(IResource resource, IDestination destination, CancellationToken ct)
         {
             var stacDeliveries = carrierManager.GetSingleDeliveryQuotations(resource, destination);
             IResource deliveredResource = null;
             foreach (var delivery in stacDeliveries)
             {
-                deliveredResource = await delivery.Carrier.Deliver(delivery, true);
+                deliveredResource = await delivery.Carrier.DeliverAsync(delivery, ct, true);
                 if (deliveredResource != null) break;
             }
 
@@ -172,12 +173,12 @@ namespace Terradue.Stars.Services.Store
                 Uri relativeCatalogUri = RootCatalogDestination.Uri.MakeRelativeUri(deliveredResource.Uri);
                 Uri frontUri = new Uri(RootCatalogNode.Uri, relativeCatalogUri);
                 // First read the resource from its front uri
-                var frontResource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(frontUri));
+                var frontResource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(frontUri), ct);
                 if (!_stacRouter.CanRoute(frontResource))
                 {
                     throw new InvalidOperationException(string.Format("Front Resource {0} cannot be routed", frontUri));
                 }
-                deliveredResource = await _stacRouter.Route(frontResource);
+                deliveredResource = await _stacRouter.RouteAsync(frontResource, ct);
 
                 return frontResource;
             }
@@ -212,11 +213,6 @@ namespace Terradue.Stars.Services.Store
                 stacObject.Links.Add(StacLink.CreateRootLink(RootCatalogNode.Uri, RootCatalogNode.ContentType.ToString()));
 
             RemoveDuplicateLinks(stacNode);
-        }
-
-        public async Task<AssetImportReport> ImportAssets(IItem node, StacItemNode stacItemNode, string path, AssetFilters assetFilters)
-        {
-            return await assetService.ImportAssets(node, RootCatalogDestination.To(stacItemNode, path) , assetFilters);
         }
 
         private void MakeAllLinksRelative(IStacObject stacObject, IDestination destination)
@@ -352,9 +348,9 @@ namespace Terradue.Stars.Services.Store
             }
         }
 
-        public async Task<IAssetsContainer> GetAssetsInFolder(string relPath)
+        public async Task<IAssetsContainer> GetAssetsInFolderAsync(string relPath, CancellationToken ct)
         {
-            return await resourceServiceProvider.GetAssetsInFolder(new GenericResource(new Uri(RootCatalogDestination.Uri, relPath)));
+            return await resourceServiceProvider.GetAssetsInFolderAsync(new GenericResource(new Uri(RootCatalogDestination.Uri, relPath)), ct);
             // var assetsFolder = WebRoute.Create(new Uri(RootCatalogDestination.Uri, relPath));
             // return assetsFolder.ListFolder().Select(a => WebRoute.Create(MapToFrontUri(a.Uri)));
         }

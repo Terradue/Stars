@@ -9,6 +9,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
 using Stac.Extensions.File;
 using System.Net;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -27,7 +28,7 @@ namespace Terradue.Stars.Services.Translator
             this.logger = logger;
         }
 
-        public Task<T> Translate<T>(IResource route) where T : IResource
+        public Task<T> TranslateAsync<T>(IResource route, CancellationToken ct) where T : IResource
         {
             ICatalog catalogRoute = route as ICatalog;
             if (catalogRoute != null)

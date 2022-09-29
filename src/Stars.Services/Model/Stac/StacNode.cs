@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Stac;
@@ -42,7 +43,7 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             get
             {
-                MemoryStream ms = (MemoryStream)GetStreamAsync().GetAwaiter().GetResult();
+                MemoryStream ms = (MemoryStream)GetStreamAsync(CancellationToken.None).GetAwaiter().GetResult();
                 return Convert.ToUInt64(ms.Length);
             }
         }
@@ -94,7 +95,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public abstract IReadOnlyList<IResource> GetRoutes(IRouter router);
 
-        public async Task<Stream> GetStreamAsync()
+        public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             MemoryStream ms = new MemoryStream();
             return await Task<Stream>.Run(() =>
@@ -104,11 +105,11 @@ namespace Terradue.Stars.Services.Model.Stac
                 sw.Flush();
                 ms.Seek(0, SeekOrigin.Begin);
                 return ms as Stream;
-            });
+            }, ct);
 
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }

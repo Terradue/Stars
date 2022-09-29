@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
@@ -37,5 +38,7 @@ namespace Terradue.Stars.Services.Supplier
         {
             return string.Format("{0} from {1} to {2} ({3})", Carrier.Id, Resource, Destination, Cost);
         }
+
+        public Func<IDelivery, IResource, Task> PreCheckDeliveryFunction { get; set; }
     }
 }

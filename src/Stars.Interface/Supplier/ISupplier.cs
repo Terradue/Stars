@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
@@ -10,7 +11,7 @@ namespace Terradue.Stars.Interface.Supplier
         string Id { get; }
         string Label { get; }
 
-        Task<IResource> SearchFor(IResource item, string identifierRegex = null);
+        Task<IResource> SearchForAsync(IResource item, CancellationToken ct, string identifierRegex = null);
 
         Task<IOrder> Order(IOrderable orderableRoute);
     }

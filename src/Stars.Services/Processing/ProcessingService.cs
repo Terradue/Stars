@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
@@ -28,7 +29,7 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<StacNode> ExtractArchive(StacItemNode stacItemNode, IDestination destination, StacStoreService storeService)
+        public async Task<StacNode> ExtractArchiveAsync(StacItemNode stacItemNode, IDestination destination, StacStoreService storeService, CancellationToken ct)
         {
             StacNode newItemNode = stacItemNode;
             foreach (var processing in processingManager.GetProcessings(ProcessingType.ArchiveExtractor))
@@ -39,7 +40,7 @@ namespace Terradue.Stars.Services.Processing
                 StacItemNode newStacItemNode = null;
                 try
                 {
-                    var processedResource = await processing.Process(newItemNode, procDestination);
+                    var processedResource = await processing.ProcessAsync(newItemNode, procDestination, ct);
                     if (processedResource == null) continue;
                     newStacItemNode = processedResource as StacItemNode;
 
@@ -47,7 +48,7 @@ namespace Terradue.Stars.Services.Processing
                     if (newStacItemNode == null)
                     {
                         // No? Let's try to translate it to Stac
-                        newStacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
+                        newStacItemNode = await translatorManager.TranslateAsync<StacItemNode>(processedResource, ct);
                         if (newStacItemNode == null)
                             throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
                     }
@@ -58,13 +59,13 @@ namespace Terradue.Stars.Services.Processing
                     logger.LogDebug(e.StackTrace);
                     continue;
                 }
-                newItemNode = await storeService.StoreItemNodeAtDestination(newStacItemNode, destination);
+                newItemNode = await storeService.StoreItemNodeAtDestinationAsync(newStacItemNode, destination, ct);
                 break;
             }
             return newItemNode;
         }
 
-        public async Task<StacNode> ExtractMetadata(StacItemNode itemNode, IDestination destination, StacStoreService storeService)
+        public async Task<StacNode> ExtractMetadataAsync(StacItemNode itemNode, IDestination destination, StacStoreService storeService, CancellationToken ct)
         {
             StacNode newItemNode = itemNode;
             foreach (var processing in processingManager.GetProcessings(ProcessingType.MetadataExtractor))
@@ -79,13 +80,13 @@ namespace Terradue.Stars.Services.Processing
                 }
                 // Create a new destination for each processing
                 IDestination procDestination = destination.To(itemNode, processing.GetRelativePath(itemNode, destination));
-                var processedResource = await processing.Process(newItemNode, procDestination);
+                var processedResource = await processing.ProcessAsync(newItemNode, procDestination, ct);
                 StacItemNode stacItemNode = processedResource as StacItemNode;
                 // Maybe the node is already a stac node
                 if (stacItemNode == null)
                 {
                     // No? Let's try to translate it to Stac
-                    stacItemNode = await translatorManager.Translate<StacItemNode>(processedResource);
+                    stacItemNode = await translatorManager.TranslateAsync<StacItemNode>(processedResource, ct);
                     if (stacItemNode == null)
                         throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", processedResource.Uri));
                 }
@@ -93,7 +94,7 @@ namespace Terradue.Stars.Services.Processing
                 {
                     stacItemNode.StacItem.MergeAssets(itemNode);
                 }
-                newItemNode = await storeService.StoreItemNodeAtDestination(stacItemNode, destination);
+                newItemNode = await storeService.StoreItemNodeAtDestinationAsync(stacItemNode, destination, ct);
                 break;
             }
             return newItemNode;

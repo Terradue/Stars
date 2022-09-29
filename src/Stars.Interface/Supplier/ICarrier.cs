@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Interface.Router;
@@ -12,7 +13,7 @@ namespace Terradue.Stars.Interface.Supplier
         
         bool CanDeliver(IResource route, IDestination destination);
 
-        Task<IResource> Deliver (IDelivery delivery, bool overwrite = false);
+        Task<IResource> DeliverAsync (IDelivery delivery, CancellationToken ct, bool overwrite = false);
         
         IDelivery QuoteDelivery(IResource route, IDestination destination);
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Ionic.Zip;
 using Microsoft.Extensions.Logging;
@@ -35,18 +36,18 @@ namespace Terradue.Stars.Services.Processing
             this.resourceServiceProvider = resourceServiceProvider;
         }
 
-        protected async Task<Stream> GetZipStreamAsync(IAsset asset, CarrierManager carrierManager)
+        protected async Task<Stream> GetZipStreamAsync(IAsset asset, CarrierManager carrierManager, CancellationToken ct)
         {
             if (asset.Uri.Scheme == "file")
             {
-                return await (await resourceServiceProvider.GetStreamResourceAsync(asset)).GetStreamAsync();
+                return await (await resourceServiceProvider.GetStreamResourceAsync(asset, ct)).GetStreamAsync(ct);
             }
             var tmpDestination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory(Path.GetTempPath()), asset);
             var tmpArchiveAssetDestination = tmpDestination.To(asset, Guid.NewGuid().ToString());
             tmpArchiveAssetDestination.PrepareDestination();
             var localZipDelivery = carrierManager.GetSingleDeliveryQuotations(asset, tmpArchiveAssetDestination).First();
-            localStreamable = await localZipDelivery.Carrier.Deliver(localZipDelivery) as LocalFileResource;
-            return await localStreamable.GetStreamAsync();
+            localStreamable = await localZipDelivery.Carrier.DeliverAsync(localZipDelivery, ct) as LocalFileResource;
+            return await localStreamable.GetStreamAsync(ct);
         }
 
         public IReadOnlyDictionary<string, IAsset> Assets
@@ -80,10 +81,10 @@ namespace Terradue.Stars.Services.Processing
             return Path.GetFileNameWithoutExtension(asset.Uri.ToString());
         }
 
-        internal async override Task<IAssetsContainer> ExtractToDestination(IDestination destination, CarrierManager carrierManager)
+        internal async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager));
+            zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
             string subFolder = AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)
@@ -94,7 +95,7 @@ namespace Terradue.Stars.Services.Processing
                 logger.LogDebug(archiveAsset.Key);
                 foreach (var delivery in assetDeliveries)
                 {
-                    var assetExtracted = await delivery.Carrier.Deliver(delivery);
+                    var assetExtracted = await delivery.Carrier.DeliverAsync(delivery, ct);
                     if (assetExtracted != null)
                     {
                         var extractedAsset = new GenericAsset(assetExtracted, archiveAsset.Value.Title, archiveAsset.Value.Roles);

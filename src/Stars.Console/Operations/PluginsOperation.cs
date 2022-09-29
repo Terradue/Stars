@@ -16,6 +16,7 @@ using System.IO;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Processing;
 using Terradue.Stars.Services.Translator;
+using System.Threading;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -29,7 +30,7 @@ namespace Terradue.Stars.Console.Operations
             this.app = app;
         }
 
-        protected override async Task ExecuteAsync()
+        protected override async Task ExecuteAsync(CancellationToken ct)
         {
             _console.Out.WriteLine(app.Parent.GetVersionText());
             _console.Out.WriteLine($"Loaded plugins");

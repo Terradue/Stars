@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 
@@ -56,12 +57,12 @@ namespace Terradue.Stars.Services.Processing
 
         public bool CanBeRanged => false;
 
-        public Task<Stream> GetStreamAsync()
+        public Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             return Task.FromResult<Stream>(blockingStream);
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }

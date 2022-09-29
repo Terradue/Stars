@@ -13,6 +13,7 @@ using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface;
 using System.Text.RegularExpressions;
 using Stac;
+using System.Threading;
 
 namespace Terradue.Stars.Data.Suppliers
 {
@@ -40,18 +41,18 @@ namespace Terradue.Stars.Data.Suppliers
 
         public virtual string Label => "Generic data supplier for OpenSearch interfaces";
 
-        public virtual async Task<IResource> SearchFor(IResource node, string identifierRegex = null)
+        public virtual async Task<IResource> SearchForAsync(IResource node, CancellationToken ct, string identifierRegex = null)
         {
-            return (IResource)new OpenSearchResultItemRoutable((await Query(node, identifierRegex)).Items.FirstOrDefault(), new Uri("os://" + openSearchable.Identifier), logger);
+            return (IResource)new OpenSearchResultItemRoutable((await QueryAsync(node, ct, identifierRegex)).Items.FirstOrDefault(), new Uri("os://" + openSearchable.Identifier), logger);
         }
 
-        public virtual async Task<IOpenSearchResultCollection> Query(IResource node, string identifierRegex = null)
+        public virtual async Task<IOpenSearchResultCollection> QueryAsync(IResource node, CancellationToken ct, string identifierRegex = null)
         {
             // TEMP skipping catalog for the moment
             if (!(node is IItem)) return null;
 
             // Let's translate the node to STAC
-            var stacNode = await translatorManager.Translate<StacNode>(node);
+            var stacNode = await translatorManager.TranslateAsync<StacNode>(node, ct);
 
             IOpenSearchResultCollection results = null;
 

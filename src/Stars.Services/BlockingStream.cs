@@ -260,10 +260,10 @@ namespace Terradue.Stars.Services
                 throw new NotSupportedException();
             if (!destination.CanWrite)
                 throw new NotSupportedException();
- 
+
             return CopyToAsyncInternal(destination, bufferSize, cancellationToken);
         }
- 
+
         private async Task CopyToAsyncInternal(Stream destination, Int32 bufferSize, CancellationToken cancellationToken)
         {
             byte[] buffer = new byte[bufferSize];
@@ -274,6 +274,25 @@ namespace Terradue.Stars.Services
                 await destination.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
                 bytesRead = Read(buffer, 0, buffer.Length);
             }
+        }
+
+        internal static Stream StartBufferedStreamAsync(Stream inputStream, long? contentLength, CancellationToken ct)
+        {
+            const int chunk = 4096;
+            BlockingStream blockingStream = new BlockingStream(Convert.ToUInt64(contentLength), 1000);
+            Task.Run(() =>
+                        {
+                            long totalBytesRead = 0;
+                            int read;
+                            var buffer = new byte[chunk];
+                            while ((read = inputStream.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                blockingStream.Write(buffer, 0, read);
+                                totalBytesRead += read;
+                            }
+                            blockingStream.Close();
+                        }, ct);
+            return blockingStream;
         }
     }
 

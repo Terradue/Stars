@@ -307,7 +307,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
 
             public async Task ReadMetadata(IResourceServiceProvider resourceServiceProvider)
             {
-                using (var stream = await resourceServiceProvider.GetAssetStreamAsync(summaryAsset))
+                using (var stream = await resourceServiceProvider.GetAssetStreamAsync(summaryAsset, System.Threading.CancellationToken.None))
                 {
                     using (XmlReader reader = XmlReader.Create(stream))
                     {

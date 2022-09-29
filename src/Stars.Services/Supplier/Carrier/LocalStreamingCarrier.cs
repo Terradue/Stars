@@ -11,6 +11,7 @@ using Terradue.Stars.Interface;
 using System.Security.AccessControl;
 using System.Net;
 using System.IO.Abstractions;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -43,12 +44,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return true;
         }
 
-        public override async Task<IResource> Deliver(IDelivery delivery, bool overwrite = false)
+        public override async Task<IResource> DeliverAsync(IDelivery delivery, CancellationToken ct, bool overwrite = false)
         {
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileResource localRoute = new LocalFileResource(fileSystem, localDelivery.LocalPath, localDelivery.Resource.ResourceType);
 
-            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(delivery.Resource);
+            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(delivery.Resource, ct);
 
             if (inputStreamResource == null)
                 throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Resource.Uri));
@@ -59,14 +60,14 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 logger.LogDebug("File {0} exists with the same size. Skipping download", localRoute.File.Name);
                 return localRoute;
             }
-            await StreamToFile(inputStreamResource, localRoute, overwrite);
+            await StreamToFile(inputStreamResource, localRoute, ct, overwrite);
             localRoute.File.Refresh();
             if (inputStreamResource.ContentLength > 0 && Convert.ToUInt64(localRoute.File.Length) != inputStreamResource.ContentLength)
                 throw new InvalidDataException(string.Format("Data transferred size ({0}) does not correspond with stream content length ({1})", localRoute.File.Length, inputStreamResource.ContentLength));
             return localRoute;
         }
 
-        private async Task StreamToFile(IStreamResource streamable, LocalFileResource localResource, bool overwrite = false)
+        private async Task StreamToFile(IStreamResource streamable, LocalFileResource localResource, CancellationToken ct, bool overwrite = false)
         {
             IFileInfo file = localResource.File;
             Stream stream = null;
@@ -78,7 +79,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 if (!overwrite && file.Exists && file.Length > 0 && Convert.ToUInt64(file.Length) < streamable.ContentLength && streamable.CanBeRanged)
                 {
                     logger.LogDebug("Trying to resume from {0}", file.Length);
-                    stream = await streamable.GetStreamAsync(file.Length);
+                    stream = await streamable.GetStreamAsync(file.Length, ct);
                     using (Stream fileStream = file.Open(FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                     {
                         // fileStream.Seek(0, SeekOrigin.End);
@@ -88,7 +89,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 else
                 {
-                    stream = await streamable.GetStreamAsync();
+                    stream = await streamable.GetStreamAsync(ct);
                     using (FileStream fileStream = new FileStream(file.FullName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                     {
                         await stream.CopyToAsync(fileStream, 5 * 1024 * 1024).ConfigureAwait(false);

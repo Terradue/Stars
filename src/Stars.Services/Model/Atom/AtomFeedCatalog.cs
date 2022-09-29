@@ -11,6 +11,7 @@ using System.Net;
 using Terradue.Stars.Interface;
 using Terradue.OpenSearch.Result;
 using Terradue.Stars.Interface.Router;
+using System.Threading;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -39,7 +40,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(this.ReadAsString().Result).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(this.ReadAsStringAsync(CancellationToken.None).Result).Length);
 
         public bool IsCatalog => true;
 
@@ -57,7 +58,7 @@ namespace Terradue.Stars.Services.Model.Atom
             return feed.Items.Cast<AtomItem>().Select(item => new AtomItemNode(item, new Uri(Uri, item.Id))).Cast<IResource>().ToList();
         }
 
-        public async Task<Stream> GetStreamAsync()
+        public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             MemoryStream ms = new MemoryStream();
             return await Task<Stream>.Run(() =>
@@ -68,10 +69,10 @@ namespace Terradue.Stars.Services.Model.Atom
                 sw.Flush();
                 ms.Seek(0, SeekOrigin.Begin);
                 return ms as Stream;
-            });
+            }, ct);
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }

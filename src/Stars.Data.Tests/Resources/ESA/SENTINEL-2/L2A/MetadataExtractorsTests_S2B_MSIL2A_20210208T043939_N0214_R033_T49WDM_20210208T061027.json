@@ -75,6 +75,7 @@
     "sat:absolute_orbit": 20508,
     "sat:relative_orbit": 33,
     "sat:platform_international_designator": "2015-000A",
+    "processing_baseline": "02.14",
     "processing:level": "L2A",
     "processing:lineage": "Generation of Level-2A User Product",
     "proj:epsg": null,

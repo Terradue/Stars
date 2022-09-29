@@ -671,12 +671,11 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net6.0/Stars.dll",
             "args": [
                 "copy",
-                "https://catalog.charter.uat.esaportal.eu/charter/cat/[chartercalibrateddataset,!excluded,{callid932}]/search?format=atom&uid=call932_S2B_MSIL1C_20220521T110619_N0400_R137_T30STF_20220521T120141-calibrated&do=[terradue]",
+                "-k",
+                "https://localhost:5001/api/users/t2_test/products/t2_test-product-wf4acb65a038e911edabbbb278e1bf3ef6.json",
                 "-v",
                 "-r",
                 "4",
-                "-af",
-                "nir08",
                 "--output",
                 "/tmp/stars"
             ],
@@ -791,10 +790,10 @@
                 "-k",
                 "-r",
                 "4",
-                "--nocopy-cog",
+                "-nohtml",
                 "--output",
                 "/tmp/stars",
-                "https://landsatlook.usgs.gov/stac-server/collections/landsat-c2l2-sr/items/LC09_L2SP_088084_20220405_20220407_02_T2_SR"
+                "https://catalog.terradue.com/landsat8/search?format=atom&uid=LC09_L1TP_163003_20220926_20220926_02_T1"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

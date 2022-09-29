@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
@@ -30,5 +31,7 @@ namespace Terradue.Stars.Services.Supplier
         public IDestination Destination => VoucherDelivery.Destination;
 
         public override string ToString() => string.Format("[Order] {0}: {1} for {2}$", Supplier.Id, OrderVoucher.OrderId, Cost);
+
+        public Func<IDelivery, IResource, Task> PreCheckDeliveryFunction { get; set; }
     }
 }

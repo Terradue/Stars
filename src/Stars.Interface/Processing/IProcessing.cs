@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -12,7 +13,7 @@ namespace Terradue.Stars.Interface.Processing
 
         bool CanProcess(IResource resource, IDestination destination);
 
-        Task<IResource> Process(IResource resource, IDestination destination, string suffix = null);
+        Task<IResource> ProcessAsync(IResource resource, IDestination destination, CancellationToken ct, string suffix = null);
 
         string GetRelativePath(IResource resource, IDestination destination);
     }

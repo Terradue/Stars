@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -49,18 +50,18 @@ namespace Terradue.Stars.Services.Router
 
         public IEnumerable<IAsset> Alternates => Enumerable.Empty<IAsset>();
 
-        public Task Delete()
+        public Task DeleteAsync(CancellationToken ct)
         {
             fileInfo.Delete();
             return Task.CompletedTask;
         }
 
-        public Task<Stream> GetStreamAsync()
+        public Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             return Task.FromResult(fileInfo.OpenRead());
         }
 
-        public Task<Stream> GetStreamAsync(long start, long end = -1)
+        public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
         }

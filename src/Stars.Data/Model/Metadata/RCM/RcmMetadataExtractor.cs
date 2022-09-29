@@ -54,7 +54,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             }
             logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
 
-            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile);
+            IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
@@ -64,7 +64,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             Product auxiliary = await DeserializeProduct(auxFileStreamable);
             logger.LogDebug("Metadata deserialized. Starting metadata generation");
 
-            IStreamResource kmlFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(kmlFile);
+            IStreamResource kmlFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(kmlFile, System.Threading.CancellationToken.None);
             Kml kml = null;
             if (kmlFileStreamable != null)
                 kml = await DeserializeKml(kmlFileStreamable);
@@ -417,7 +417,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
         {
             XmlSerializer ser = new XmlSerializer(typeof(Product));
             Product auxiliary;
-            using (var stream = await auxiliaryFile.GetStreamAsync())
+            using (var stream = await auxiliaryFile.GetStreamAsync(System.Threading.CancellationToken.None))
             {
                 using (XmlReader reader = XmlReader.Create(stream))
                 {
@@ -431,7 +431,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
         {
             XmlSerializer ser = new XmlSerializer(typeof(Kml));
             Kml auxiliary;
-            using (var stream = await auxiliaryFile.GetStreamAsync())
+            using (var stream = await auxiliaryFile.GetStreamAsync(System.Threading.CancellationToken.None))
             {
                 using (XmlReader reader = XmlReader.Create(stream))
                 {
@@ -448,7 +448,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(product.xml)$");
             try
             {
-                DeserializeProduct(resourceServiceProvider.GetStreamResourceAsync(auxFile).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                DeserializeProduct(resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None).GetAwaiter().GetResult()).GetAwaiter().GetResult();
             }
             catch (Exception e)
             {

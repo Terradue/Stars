@@ -63,7 +63,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 
             SentinelSafeStacFactory stacFactory = CreateSafeStacFactory(manifest, item, identifier);
             StacItem stacItem = stacFactory.CreateStacItem();
-            await AddAssets(stacItem, item, stacFactory);
+            
+            // Get the proper instance for assets and additional properties
+            // (can be this instance or a subclass instance, e.g. for Sentinel-2)
+            SentinelMetadataExtractor metadataExtractor = GetMatchingExtractorInstance(stacFactory);
+
+            await metadataExtractor.AddAssets(stacItem, item, stacFactory);
+            await metadataExtractor.AddAdditionalProperties(stacItem, item, stacFactory);
 
             // AddEoBandPropertyInItem(stacItem);
 
@@ -79,7 +85,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             eo.Bands = stacItem.Assets.Values.Where(a => a.EoExtension().Bands != null).SelectMany(a => a.EoExtension().Bands).ToArray();
         }
 
+        protected virtual SentinelMetadataExtractor GetMatchingExtractorInstance(SentinelSafeStacFactory stacFactory)
+        {
+            return this;
+        }
+        
         protected abstract Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory);
+
+        protected virtual Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        {
+            return Task.CompletedTask;
+        }
 
         protected virtual IAsset GetManifestAsset(IItem item)
         {
@@ -96,7 +112,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
-            using (Stream stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset))
+            using (Stream stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
             {
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
@@ -104,7 +120,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 return (XFDUType)xfduSerializer.Deserialize(reader);
             }
         }
-
 
         protected KeyValuePair<string, StacAsset> CreateManifestAsset(IStacObject stacObject, IAsset asset)
         {

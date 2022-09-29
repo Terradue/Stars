@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -30,14 +31,14 @@ namespace Terradue.Stars.Services.Resources
             Client = client;
         }
 
-        internal async Task LoadMetadata()
+        internal async Task LoadMetadata(CancellationToken ct)
         {
             GetObjectMetadataRequest gomr = new GetObjectMetadataRequest();
             gomr.BucketName = s3Url.Bucket;
             gomr.Key = string.IsNullOrEmpty(s3Url.Key) ? "/" : s3Url.Key;
             if (requester_pays.HasValue && requester_pays.Value)
                 gomr.RequestPayer = RequestPayer.Requester;
-            ObjectMetadata = await Client.GetObjectMetadataAsync(gomr);
+            ObjectMetadata = await Client.GetObjectMetadataAsync(gomr, ct);
         }
 
         public ContentType ContentType => ObjectMetadata?.Headers.ContentType != null ? new ContentType(ObjectMetadata?.Headers.ContentType) : null;
@@ -71,17 +72,18 @@ namespace Terradue.Stars.Services.Resources
             }
         }
 
-        public async Task<Stream> GetStreamAsync()
+        public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             GetObjectRequest gor = new GetObjectRequest();
             gor.BucketName = s3Url.Bucket;
             gor.Key = s3Url.Key;
             if (requester_pays.HasValue && requester_pays.Value)
                 gor.RequestPayer = RequestPayer.Requester;
-            return (await Client.GetObjectAsync(gor)).ResponseStream;
+            var gores = await Client.GetObjectAsync(gor, ct);
+            return BlockingStream.StartBufferedStreamAsync(gores.ResponseStream, gores.ContentLength, ct);
         }
 
-        public async Task<Stream> GetStreamAsync(long start, long end = -1)
+        public async Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             var rangeRequest = new GetObjectRequest()
             {
@@ -91,7 +93,8 @@ namespace Terradue.Stars.Services.Resources
             };
             if (requester_pays.HasValue && requester_pays.Value)
                 rangeRequest.RequestPayer = RequestPayer.Requester;
-            return (await Client.GetObjectAsync(rangeRequest)).ResponseStream;
+            var gores = await Client.GetObjectAsync(rangeRequest, ct);
+            return BlockingStream.StartBufferedStreamAsync(gores.ResponseStream, gores.ContentLength, ct);
         }
 
         internal bool SameBucket(S3Resource s3outputStreamResource)
@@ -99,7 +102,7 @@ namespace Terradue.Stars.Services.Resources
             return S3Uri.Bucket == s3outputStreamResource.S3Uri.Bucket;
         }
 
-        internal async Task<S3Resource> CopyTo(S3Resource s3outputStreamResource)
+        internal async Task<S3Resource> CopyTo(S3Resource s3outputStreamResource, CancellationToken ct)
         {
             if (S3Uri.Endpoint != s3outputStreamResource.S3Uri.Endpoint)
             {
@@ -107,14 +110,14 @@ namespace Terradue.Stars.Services.Resources
             }
             if (this.ContentLength > (ulong)5 * 1024 * 1024 * 1024)
             {
-                return await CopyToMultiPart(s3outputStreamResource);
+                return await CopyToMultiPartAsync(s3outputStreamResource, ct);
             }
-            await Client.CopyObjectAsync(s3Url.Bucket, s3Url.Key, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key);
-            await s3outputStreamResource.LoadMetadata();
+            await Client.CopyObjectAsync(s3Url.Bucket, s3Url.Key, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key, ct);
+            await s3outputStreamResource.LoadMetadata(ct);
             return s3outputStreamResource;
         }
 
-        private async Task<S3Resource> CopyToMultiPart(S3Resource s3outputStreamResource)
+        private async Task<S3Resource> CopyToMultiPartAsync(S3Resource s3outputStreamResource, CancellationToken ct)
         {
             // Create a list to store the upload part responses.
             List<UploadPartResponse> uploadResponses = new List<UploadPartResponse>();
@@ -183,14 +186,14 @@ namespace Terradue.Stars.Services.Resources
             CompleteMultipartUploadResponse completeUploadResponse =
                 await Client.CompleteMultipartUploadAsync(completeRequest);
 
-            await s3outputStreamResource.LoadMetadata();
+            await s3outputStreamResource.LoadMetadata(ct);
             return s3outputStreamResource;
 
         }
 
-        public async Task Delete()
+        public async Task DeleteAsync(CancellationToken ct)
         {
-            await Client.DeleteObjectAsync(s3Url.Bucket, s3Url.Key);
+            await Client.DeleteObjectAsync(s3Url.Bucket, s3Url.Key, ct);
         }
 
         public override string ToString()
