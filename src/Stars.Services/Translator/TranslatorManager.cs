@@ -18,6 +18,7 @@ namespace Terradue.Stars.Services.Translator
         {
             Dictionary<ITranslator, T> translations = new Dictionary<ITranslator, T>();
             if (node is T) return (T)node;
+            List<Exception> exceptions = new List<Exception>();
             foreach (var translator in GetPlugins().Values)
             {
                 try
@@ -26,9 +27,12 @@ namespace Terradue.Stars.Services.Translator
                     if (translation != null)
                         return translation;
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    exceptions.Add(e);
+                }
             }
-            return default(T);
+            throw new AggregateException(exceptions);
         }
     }
 }
