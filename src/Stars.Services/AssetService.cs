@@ -47,23 +47,28 @@ namespace Terradue.Stars.Services
             this.credentials = credentials;
         }
 
-        public async Task<AssetImportReport> ImportAssetsAsync(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetsFilters, CancellationToken ct)
+        public async Task<AssetImportReport> ImportAssetsAsync(IAssetsContainer assetsContainer,
+                                                               IDestination destination,
+                                                               AssetFilters assetsFilters,
+                                                               AssetChecks assetChecks,
+                                                               CancellationToken ct)
         {
             FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(assetsContainer, assetsFilters);
 
-            if (filteredAssetContainer.Assets.Count() == 0) {
+            if (filteredAssetContainer.Assets.Count() == 0)
+            {
                 logger.LogDebug("No asset to import. Check filters: " + assetsFilters.ToString());
                 return new AssetImportReport(null, destination);
             }
 
             logger.LogDebug("Importing {0} assets to {1}", filteredAssetContainer.Assets.Count(), destination);
 
-            IDeliveryQuotation deliveryQuotation = await QuoteAssetsDeliveryAsync(filteredAssetContainer, destination, assetsFilters);
+            IDeliveryQuotation deliveryQuotation = await QuoteAssetsDeliveryAsync(filteredAssetContainer, destination, assetsFilters, assetChecks, ct);
             AssetImportReport report = new AssetImportReport(deliveryQuotation, destination);
 
             logger.LogDebug("Delivery quotation for {0} assets ({1} exceptions)", deliveryQuotation.AssetsDeliveryQuotes.Count, deliveryQuotation.AssetsExceptions.Count);
 
-            CheckDelivery(deliveryQuotation);
+            CheckDeliveryQuotation(deliveryQuotation);
 
             foreach (var assetDeliveries in deliveryQuotation.AssetsDeliveryQuotes)
             {
@@ -76,7 +81,7 @@ namespace Terradue.Stars.Services
                 try
                 {
                     importedResource = await ImportAsync(assetDeliveries.Key, assetDeliveries.Value, ct);
-                    if ( importedResource == null )
+                    if (importedResource == null)
                         throw new AssetImportException("Imported asset is null");
                 }
                 catch (AggregateException ae)
@@ -94,7 +99,7 @@ namespace Terradue.Stars.Services
             return report;
         }
 
-        private void CheckDelivery(IDeliveryQuotation deliveryQuotation)
+        private void CheckDeliveryQuotation(IDeliveryQuotation deliveryQuotation)
         {
             foreach (var item in deliveryQuotation.AssetsDeliveryQuotes)
             {
@@ -116,7 +121,8 @@ namespace Terradue.Stars.Services
         private IAsset MakeAsset(IResource route, IAsset assetOrigin)
         {
             if (route is IAsset) return route as IAsset;
-            if (assetOrigin is StacAssetAsset){
+            if (assetOrigin is StacAssetAsset)
+            {
                 var clonedAsset = new StacAsset((assetOrigin as StacAssetAsset).StacAsset, null);
                 clonedAsset.Uri = route.Uri;
                 clonedAsset.FileExtension().Size = route.ContentLength > 0 ? route.ContentLength : clonedAsset.FileExtension().Size;
@@ -138,6 +144,7 @@ namespace Terradue.Stars.Services
                 {
                     delivery.Destination.PrepareDestination();
                     IResource delivered = await delivery.Carrier.DeliverAsync(delivery, ct);
+
                     if (delivered != null)
                     {
                         logger.LogInformation("Delivery asset complete to {0} ({1})", delivered.Uri, Humanizer.ByteSizeExtensions.Humanize(Humanizer.ByteSizeExtensions.Bytes(delivered.ContentLength)));
@@ -162,10 +169,11 @@ namespace Terradue.Stars.Services
 
             foreach (var asset in assetsContainer.Assets)
             {
-                try {
+                try
+                {
                     await resourceServiceProvider.DeleteAsync(asset.Value, ct);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     logger.LogWarning("Cannot delete asset {0}({2}) : {1}", asset.Key, e.Message, asset.Value.Uri);
                     assetDeleteReport.AssetsExceptions.Add(asset.Key, e);
@@ -175,9 +183,9 @@ namespace Terradue.Stars.Services
             return assetDeleteReport;
         }
 
-        private async Task<IDeliveryQuotation> QuoteAssetsDeliveryAsync(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters)
+        private async Task<IDeliveryQuotation> QuoteAssetsDeliveryAsync(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters, AssetChecks assetChecks, CancellationToken ct)
         {
-            return await carrierManager.GetAssetsDeliveryQuotationsAsync(assetsContainer, destination);
+            return await carrierManager.GetAssetsDeliveryQuotationsAsync(assetsContainer, destination, assetChecks, true, ct);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Stac;
@@ -16,9 +17,13 @@ namespace Terradue.Stars.Services.Supplier.Carrier
     public class CarrierManager : AbstractManager<ICarrier>
     {
         private readonly ILogger logger;
+        private readonly IResourceServiceProvider resourceServiceProvider;
 
-        public CarrierManager(ILogger<CarrierManager> logger, IServiceProvider serviceProvider) : base(logger, serviceProvider)
+        public CarrierManager(ILogger<CarrierManager> logger,
+                              IServiceProvider serviceProvider,
+                              IResourceServiceProvider resourceServiceProvider) : base(logger, serviceProvider)
         {
+            this.resourceServiceProvider = resourceServiceProvider;
             this.logger = logger;
         }
 
@@ -27,7 +32,11 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             return GetPlugins().Where(r => r.Value.CanDeliver(route, destination)).Select(r => r.Value);
         }
 
-        public async Task<IDeliveryQuotation> GetAssetsDeliveryQuotationsAsync(IAssetsContainer assetsContainer, IDestination destination, bool includeAlternates = true)
+        public async Task<IDeliveryQuotation> GetAssetsDeliveryQuotationsAsync(IAssetsContainer assetsContainer,
+                                                                               IDestination destination,
+                                                                               AssetChecks assetChecks,
+                                                                               bool includeAlternates = true,
+                                                                               CancellationToken ct = default(CancellationToken))
         {
             Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
             Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
@@ -49,8 +58,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     {
                         try
                         {
-                            var length = possibleAsset.ContentLength;
-                            length = possibleAsset.ContentLength;
+                            var possibleAssetStreamResource = await resourceServiceProvider.GetStreamResourceAsync(possibleAsset, ct);
+                            var length = possibleAssetStreamResource.ContentLength > 0 ? possibleAssetStreamResource.ContentLength : possibleAsset.ContentLength;
                             if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
                             {
                                 var relUri = assetsContainer.Uri.MakeRelativeUri(possibleAsset.Uri);
@@ -58,26 +67,61 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                                 if (!relUri.IsAbsoluteUri && !relUri.ToString().StartsWith(".."))
                                     relPath = Path.GetDirectoryName(relUri.ToString());
                             }
-                            // If the asset contains a content disposition, use it as the filename
-                            if (possibleAsset.ContentDisposition != null && !string.IsNullOrEmpty(possibleAsset.ContentDisposition.FileName))
+                            IResource assetForDestination = null;
+                            // If the remote asset contains a content disposition, use it as the filename
+                            if (possibleAssetStreamResource.ContentDisposition != null && !string.IsNullOrEmpty(possibleAssetStreamResource.ContentDisposition.FileName))
                             {
+                                assetForDestination = possibleAssetStreamResource;
+                                if (possibleAssetStreamResource.ContentDisposition.FileName.Contains("/"))
+                                    relPath = "";
+                            }
+                            // If the asset contains a content disposition, use it as the filename
+                            if (assetForDestination == null && possibleAsset.ContentDisposition != null && !string.IsNullOrEmpty(possibleAsset.ContentDisposition.FileName))
+                            {
+                                assetForDestination = possibleAsset;
                                 if (possibleAsset.ContentDisposition.FileName.Contains("/"))
                                     relPath = "";
                             }
-                            assetsDeliveryQuotations.AddRange(GetSingleDeliveryQuotations(possibleAsset, destination.To(possibleAsset, relPath)));
+                            IEnumerable<IDelivery> deliveries = GetSingleDeliveryQuotations(possibleAssetStreamResource, destination.To(assetForDestination, relPath));
+                            deliveries = await FilterDeliveriesByAssetChecksAsync(deliveries, possibleAsset, assetChecks);
+                            assetsDeliveryQuotations.AddRange(deliveries);
                         }
-                        catch (WebException we)
+                        catch (Exception e)
                         {
-                            logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, we.Message);
-                            if (we.InnerException != null)
-                                logger.LogWarning(we.InnerException.Message);
-                            assetsExceptions.Add(asset.Key, we);
+                            logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
+                            if (e.InnerException != null)
+                                logger.LogWarning(e.InnerException.Message);
+                            assetsExceptions.Add(asset.Key, e);
                         }
                     }
                 }
                 assetsQuotes.Add(asset.Key, assetsDeliveryQuotations.OrderBy(d => d.Cost));
             }
             return new DeliveryQuotation(assetsQuotes, assetsExceptions);
+        }
+
+        private async Task<IEnumerable<IDelivery>> FilterDeliveriesByAssetChecksAsync(IEnumerable<IDelivery> deliveries, IAsset reference, AssetChecks assetChecks)
+        {
+            List<IDelivery> filteredDeliveries = new List<IDelivery>(deliveries);
+            if (assetChecks != null)
+            {
+                foreach (var delivery in deliveries)
+                {
+                    foreach (var check in assetChecks)
+                    {
+                        try
+                        {
+                            await check.Check(reference, delivery.Resource);
+                        }
+                        catch (Exception e)
+                        {
+                            logger.LogWarning("Excluding delivery option {0}: {1}", delivery, e.Message);
+                            filteredDeliveries.Remove(delivery);
+                        }
+                    }
+                }
+            }
+            return filteredDeliveries;
         }
 
         public IOrderedEnumerable<IDelivery> GetSingleDeliveryQuotations(IResource route, IDestination destination)
@@ -94,7 +138,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 {
                     var qDelivery = carrier.QuoteDelivery(route, destination);
                     if (qDelivery == null) continue;
+
                     quotes.Add(qDelivery);
+
                 }
                 catch (Exception e)
                 {

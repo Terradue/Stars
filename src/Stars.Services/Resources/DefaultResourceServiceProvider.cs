@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace Terradue.Stars.Services.Resources
         public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource, CancellationToken ct)
         {
 
+            Exception finalException = null;
+
             if (resource is IStreamResource)
             {
                 return resource as IStreamResource;
@@ -55,8 +58,9 @@ namespace Terradue.Stars.Services.Resources
             {
                 s3Url = S3Url.ParseUri(resource.Uri);
             }
-            catch
+            catch (Exception e)
             {
+                finalException = e;
             }
 
             // S3
@@ -72,10 +76,12 @@ namespace Terradue.Stars.Services.Resources
                 catch (AmazonS3Exception e)
                 {
                     logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
+                    finalException = e;
                 }
                 catch (Exception e)
                 {
                     logger.LogError(e, e.Message);
+                    finalException = e;
                 }
                 triedS3 = true;
             }
@@ -89,10 +95,35 @@ namespace Terradue.Stars.Services.Resources
 
                 var client = clientFactory.CreateClient("stars");
 
-                HttpResponseMessage response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct);
+                HttpContentHeaders contentHeaders = null;
+
+                try
+                {
+                    // First try head request
+                    var headResponse = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct);
+                    headResponse.EnsureSuccessStatusCode();
+                    contentHeaders = headResponse.Content.Headers;
+                }
+                catch (HttpRequestException e)
+                {
+                    finalException = e;
+                }
+                if (contentHeaders == null)
+                {
+                    try
+                    {
+                        var response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct);
+                        response.EnsureSuccessStatusCode();
+                        contentHeaders = response.Content.Headers;
+                    }
+                    catch (Exception e)
+                    {
+                        finalException = e;
+                    }
+                }
 
                 // S3 resource case
-                if (s3Url != null && !triedS3 && response.Headers.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
+                if (s3Url != null && !triedS3 && contentHeaders.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
                 {
                     try
                     {
@@ -104,19 +135,21 @@ namespace Terradue.Stars.Services.Resources
                     catch (AmazonS3Exception e)
                     {
                         logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
+                        finalException = e;
                     }
                     catch (Exception e)
                     {
                         logger.LogError(e, e.Message);
+                        finalException = e;
                     }
                     triedS3 = true;
                 }
 
-                return new HttpResource(resource.Uri, client, response.Content.Headers);
+                return new HttpResource(resource.Uri, client, contentHeaders);
             }
 
             // Unknown
-            throw new SystemException("Unknown resource type");
+            throw finalException;
         }
 
         public async Task<Stream> GetAssetStreamAsync(IAsset asset, CancellationToken ct)

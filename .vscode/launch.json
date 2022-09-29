@@ -671,7 +671,8 @@
             "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net6.0/Stars.dll",
             "args": [
                 "copy",
-                "https://supervisor.charter.uat.esaportal.eu/api/users/t2_test/products/t2_test-product-wf4acb65a038e911edabbbb278e1bf3ef6.json",
+                "-k",
+                "https://localhost:5001/api/users/t2_test/products/t2_test-product-wf4acb65a038e911edabbbb278e1bf3ef6.json",
                 "-v",
                 "-r",
                 "4",
@@ -789,10 +790,10 @@
                 "-k",
                 "-r",
                 "4",
-                "--nocopy-cog",
+                "-nohtml",
                 "--output",
                 "/tmp/stars",
-                "https://landsatlook.usgs.gov/stac-server/collections/landsat-c2l2-sr/items/LC09_L2SP_088084_20220405_20220407_02_T2_SR"
+                "https://catalog.terradue.com/landsat8/search?format=atom&uid=LC09_L1TP_163003_20220926_20220926_02_T1"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

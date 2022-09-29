@@ -88,6 +88,9 @@ namespace Terradue.Stars.Console.Operations
         [Option("-afo|--asset-filter-out", "Asset filters to match to be included in the Items after the extraction and harvesting (default to all)", CommandOptionType.MultipleValue)]
         public string[] AssetsFiltersOut { get; set; }
 
+        [Option("-nohtml|--do-not-accept-html-asset", "Do not accept html assets delivery. Skip supply if HTML. (Do not apply when asset is clearly identified as html)", CommandOptionType.NoValue)]
+        public bool NoHtmlAsset { get; set; } = false;
+
         [Option("--empty", "Empty argument", CommandOptionType.NoValue)]
         public bool Empty { get; set; }
 
@@ -260,7 +263,8 @@ namespace Terradue.Stars.Console.Operations
                             assetFilters.Add(new NotAssetFilter(new ContentTypeAssetFilter(null, cogParameters)));
                             KeepOriginalAssets = true;
                         }
-                        AssetImportReport deliveryReport = await assetService.ImportAssetsAsync(supplierNode as IAssetsContainer, destination, assetFilters, ct);
+                        AssetChecks assetChecks = GetAssetChecks();
+                        AssetImportReport deliveryReport = await assetService.ImportAssetsAsync(supplierNode as IAssetsContainer, destination, assetFilters, assetChecks, ct);
                         if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
                             throw new AggregateException(deliveryReport.AssetsExceptions.Values);
 
@@ -308,6 +312,15 @@ namespace Terradue.Stars.Console.Operations
 
             return operationState;
         }
+
+        private AssetChecks GetAssetChecks()
+        {
+            if ( NoHtmlAsset )
+                return AssetChecks.NoHtml;
+            
+            return AssetChecks.None;
+        }
+
         private PluginList<ISupplier> InitSuppliersEnumerator(IResource route, SupplierFilters filters)
         {
             if (route is IItem)

@@ -46,7 +46,7 @@ namespace Terradue.Stars.Services.Resources
 
         public ulong ContentLength => Convert.ToUInt64(CachedHeaders.ContentLength);
 
-        public ContentDisposition ContentDisposition => new ContentDisposition(CachedHeaders.ContentDisposition.ToString());
+        public ContentDisposition ContentDisposition => CachedHeaders.ContentDisposition == null ? null : new ContentDisposition(CachedHeaders.ContentDisposition.ToString());
 
         public Uri Uri => _url;
 
