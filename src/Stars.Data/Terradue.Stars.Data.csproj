@@ -62,5 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="stars-data.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    <Content Include="Model/Metadata/Gaofen1-2-4/GF4_bands.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
   </ItemGroup>
 </Project>
