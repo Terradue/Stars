@@ -4,7 +4,7 @@
     <ProjectName>Terradue.Stars.Data</ProjectName>
     <Title>Terradue.Stars.Data</Title>
     <Description>Collection of data Plugins for Terradue.Stars</Description>
-    <Version>2.4.3</Version>
+    <Version>2.4.4</Version>
     <!-- <VersionSuffix>beta.8</VersionSuffix> -->
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <NoWarn>NU1603</NoWarn>
@@ -62,5 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="stars-data.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+    <Content Include="Model/Metadata/Gaofen1-2-4/GF4_bands.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
   </ItemGroup>
 </Project>

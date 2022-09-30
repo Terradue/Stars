@@ -88,7 +88,11 @@ using System.Xml.Serialization;
 		public string SatelliteAzimuth { get; set; }
 		[XmlElement(ElementName="SatelliteZenith")]
 		public string SatelliteZenith { get; set; }
-		[XmlElement(ElementName="GainMode")]
+        [XmlElement(ElementName="Gain")]
+        public string Gain { get; set; }
+        [XmlElement(ElementName="Bias")]
+        public string Bias { get; set; }
+        [XmlElement(ElementName="GainMode")]
 		public string GainMode { get; set; }
 		[XmlElement(ElementName="IntegrationTime")]
 		public string IntegrationTime { get; set; }
