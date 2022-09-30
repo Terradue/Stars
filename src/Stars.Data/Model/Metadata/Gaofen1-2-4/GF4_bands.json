@@ -1,0 +1,338 @@
+{
+    "GF4": {
+        "PMS": {
+            "2ms": [
+                {
+                    "name": "B01",
+                    "CBN": "pan",
+                    "center_wavelength": 675,
+                    "bandwidth": 450,
+                    "gsd": 50,
+                    "gain": null,
+                    "offset": null,
+                    "ESUN": 1258.38
+                },
+                {
+                    "name": "B02"
+                },
+                {
+                    "name": "B03"
+                },
+                {
+                    "name": "B04"
+                },
+                {
+                    "name": "B05"
+                }
+            ],
+            "4ms": [
+                {
+                    "name": "B01",
+                    "CBN": "pan",
+                    "center_wavelength": 675,
+                    "bandwidth": 450,
+                    "gsd": 50,
+                    "gain": null,
+                    "offset": null,
+                    "ESUN": 1258.38
+                },
+                {
+                    "name": "B02"
+                },
+                {
+                    "name": "B03",
+                    "CBN": "green",
+                    "center_wavelength": 560,
+                    "bandwidth": 80,
+                    "gsd": 50,
+                    "gain": 0.796,
+                    "offset": 30.579,
+                    "ESUN": 1815.42
+                },
+                {
+                    "name": "B04"
+                },
+                {
+                    "name": "B05"
+                }
+            ],
+            "6ms": [
+                {
+                    "name": "B01",
+                    "CBN": "pan",
+                    "center_wavelength": 675,
+                    "bandwidth": 450,
+                    "gsd": 50,
+                    "gain": null,
+                    "offset": null,
+                    "ESUN": 1258.38
+                },
+                {
+                    "name": "B02",
+                    "CBN": "blue",
+                    "center_wavelength": 485,
+                    "bandwidth": 70,
+                    "gsd": 50,
+                    "gain": 0.952,
+                    "offset": 12.027,
+                    "ESUN": 1907.88
+                },
+                {
+                    "name": "B04",
+                    "CBN": "red",
+                    "center_wavelength": 660,
+                    "bandwidth": 60,
+                    "gsd": 50,
+                    "gain": 1.904,
+                    "offset": 26.387,
+                    "ESUN": 1580.18
+                },
+                {
+                    "name": "B05",
+                    "CBN": "nir",
+                    "center_wavelength": 780,
+                    "bandwidth": 30,
+                    "gsd": 50,
+                    "gain": 0.865,
+                    "offset": 34.5,
+                    "ESUN": 1098.79
+                }
+            ],
+            "8ms": [
+                {
+                    "name": "B01",
+                    "CBN": "pan",
+                    "center_wavelength": 675,
+                    "bandwidth": 450,
+                    "gsd": 50,
+                    "gain": 8.996,
+                    "offset": 4.968,
+                    "ESUN": 1258.38
+                },
+                {
+                    "name": "B02"
+                },
+                {
+                    "name": "B03"
+                },
+                {
+                    "name": "B04"
+                },
+                {
+                    "name": "B05"
+                }
+            ],
+            "12ms": [
+                {
+                    "name": "B01"
+                },
+                {
+                    "name": "B02"
+                },
+                {
+                    "name": "B03",
+                    "CBN": "green",
+                    "center_wavelength": 560,
+                    "bandwidth": 80,
+                    "gsd": 50,
+                    "gain": 3.08,
+                    "offset": 6.735,
+                    "ESUN": 1815.42
+                },
+                {
+                    "name": "B04"
+                },
+                {
+                    "name": "B05"
+                }
+            ],
+            "16ms": [
+                {
+                    "name": "B01"
+                },
+                {
+                    "name": "B02",
+                    "CBN": "blue",
+                    "center_wavelength": 485,
+                    "bandwidth": 70,
+                    "gsd": 50,
+                    "gain": 2.517,
+                    "offset": 5.973,
+                    "ESUN": 1907.88
+                },
+                {
+                    "name": "B03",
+                    "CBN": "green",
+                    "center_wavelength": 560,
+                    "bandwidth": 80,
+                    "gsd": 50,
+                    "gain": 4.128,
+                    "offset": 4.705,
+                    "ESUN": 1815.42
+                },
+                {
+                    "name": "B04",
+                    "CBN": "red",
+                    "center_wavelength": 660,
+                    "bandwidth": 60,
+                    "gsd": 50,
+                    "gain": 3.36,
+                    "offset": 8.057,
+                    "ESUN": 1580.18
+                },
+                {
+                    "name": "B05",
+                    "CBN": "nir",
+                    "center_wavelength": 780,
+                    "bandwidth": 30,
+                    "gsd": 50,
+                    "gain": 4.443,
+                    "offset": 11.355,
+                    "ESUN": 1098.79
+                }
+            ],
+            "20ms": [
+                {
+                    "name": "B01"
+                },
+                {
+                    "name": "B02",
+                    "CBN": "blue",
+                    "center_wavelength": 485,
+                    "bandwidth": 70,
+                    "gsd": 50,
+                    "gain": 2.9,
+                    "offset": 11.4,
+                    "ESUN": 1907.88
+                },
+                {
+                    "name": "B03",
+                    "CBN": "green",
+                    "center_wavelength": 560,
+                    "bandwidth": 80,
+                    "gsd": 50,
+                    "gain": 5.223,
+                    "offset": 1.439,
+                    "ESUN": 1815.42
+                },
+                {
+                    "name": "B04",
+                    "CBN": "red",
+                    "center_wavelength": 660,
+                    "bandwidth": 60,
+                    "gsd": 50,
+                    "gain": 4.261,
+                    "offset": 4.207,
+                    "ESUN": 1580.18
+                },
+                {
+                    "name": "B05",
+                    "CBN": "nir",
+                    "center_wavelength": 780,
+                    "bandwidth": 30,
+                    "gsd": 50,
+                    "gain": 5.657,
+                    "offset": 7.257,
+                    "ESUN": 1098.79
+                }
+            ],
+            "30ms": [
+                {
+                    "name": "B01"
+                },
+                {
+                    "name": "B02",
+                    "CBN": "blue",
+                    "center_wavelength": 485,
+                    "bandwidth": 70,
+                    "gsd": 50,
+                    "gain": 4.598,
+                    "offset": 4.14,
+                    "ESUN": 1907.88
+                },
+                {
+                    "name": "B03",
+                    "CBN": "green",
+                    "center_wavelength": 560,
+                    "bandwidth": 80,
+                    "gsd": 50,
+                    "gain": 7.921,
+                    "offset": 0.256,
+                    "ESUN": 1815.42
+                },
+                {
+                    "name": "B04",
+                    "CBN": "red",
+                    "center_wavelength": 660,
+                    "bandwidth": 60,
+                    "gsd": 50,
+                    "gain": 6.375,
+                    "offset": 3.605,
+                    "ESUN": 1580.18
+                },
+                {
+                    "name": "B05",
+                    "CBN": "nir",
+                    "center_wavelength": 780,
+                    "bandwidth": 30,
+                    "gsd": 50,
+                    "gain": 8.681,
+                    "offset": 0.331,
+                    "ESUN": 1098.79
+                }
+            ],
+            "40ms": [
+                {
+                    "name": "B01"
+                },
+                {
+                    "name": "B02",
+                    "CBN": "blue",
+                    "center_wavelength": 485,
+                    "bandwidth": 70,
+                    "gsd": 50,
+                    "gain": 5.792,
+                    "offset": 17.133,
+                    "ESUN": 1907.88
+                },
+                {
+                    "name": "B03"
+                },
+                {
+                    "name": "B04",
+                    "CBN": "red",
+                    "center_wavelength": 660,
+                    "bandwidth": 60,
+                    "gsd": 50,
+                    "gain": 8.538,
+                    "offset": 1.679,
+                    "ESUN": 1580.18
+                },
+                {
+                    "name": "B05",
+                    "CBN": "nir",
+                    "center_wavelength": 780,
+                    "bandwidth": 30,
+                    "gsd": 50,
+                    "gain": 11.579,
+                    "offset": -1.004,
+                    "ESUN": 1098.79
+                }
+            ]
+        },
+        "IRS": {
+            "15ms": [
+                {
+                    "name": "B01",
+                    "CBN": "mwir38",
+                    "center_wavelength": 3800,
+                    "bandwidth": 600,
+                    "gsd": 400,
+                    "gain": 280.59,
+                    "offset": 873.21,
+                    "ESUN": 1734.53
+                }
+            ]
+        }
+    }
+}
