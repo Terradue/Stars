@@ -138,7 +138,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (atomItemNode == null) return state;
 
             atomItemNode.AtomItem.Identifier = catalogPublicationState.Hash.Key + "-" + atomItemNode.Identifier;
-            atomItemNode.AtomItem.Categories.Add(new SyndicationCategory(catalogPublicationState.Hash.Value));
+            atomItemNode.AtomItem.Categories.Add(new SyndicationCategory(catalogPublicationState.Hash.Value, "http://www.terradue.com/opensearch/hash", catalogPublicationState.Hash.Value));
 
             await PrepareAtomItem(atomItemNode.AtomItem, catalogPublicationState, itemNode);
 
