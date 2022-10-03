@@ -62,7 +62,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             this.logger = logger;
         }
 
-        public async Task<Uri> PublishAsync(IPublicationModel publicationModel, CancellationToken ct)
+        public async Task<IPublicationState> PublishAsync(IPublicationModel publicationModel, CancellationToken ct)
         {
             GeosquarePublicationModel geosquareModel = publicationModel as GeosquarePublicationModel;
             if ( geosquareModel == null )
@@ -78,8 +78,10 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             state.Hash = guid;
             await routingService.RouteAsync(route, 4, null, state, ct);
 
-            return new Uri(GeosquareConfiguration.BaseUri,
+            state.OsdUri = new Uri(GeosquareConfiguration.BaseUri,
                             string.Format("{0}/cat/{1}/description", geosquareModel.Index, guid.Value));
+
+            return state;
         }
 
         private GeosquarePublicationModel CreateModelFromPublication(IPublicationModel publicationModel)
@@ -138,7 +140,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (atomItemNode == null) return state;
 
             atomItemNode.AtomItem.Identifier = catalogPublicationState.Hash.Key + "-" + atomItemNode.Identifier;
-            atomItemNode.AtomItem.Categories.Add(new SyndicationCategory(catalogPublicationState.Hash.Value));
+            atomItemNode.AtomItem.Categories.Add(new SyndicationCategory(catalogPublicationState.Hash.Value, "http://www.terradue.com/opensearch/hash", catalogPublicationState.Hash.Value));
 
             await PrepareAtomItem(atomItemNode.AtomItem, catalogPublicationState, itemNode);
 

@@ -6,6 +6,6 @@ namespace Terradue.Stars.Interface
 {
     public interface ICatalogService
     {
-        Task<Uri> PublishAsync(IPublicationModel publicationModel, CancellationToken cancellationToken);
+        Task<IPublicationState> PublishAsync(IPublicationModel publicationModel, CancellationToken cancellationToken);
     }
 }
