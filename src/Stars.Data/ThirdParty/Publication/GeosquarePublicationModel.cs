@@ -6,6 +6,8 @@ using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Xml;
 using Stac;
+using Terradue.OpenSearch.Result;
+using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model;
 
@@ -93,13 +95,12 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         }
 
-        public Func<Uri, Uri> CustomUriChanger { get; set; }
+        public Action<SyndicationLink, AtomItem, IItem> CustomLinkUpdater { get; set; }
 
-        internal Uri ChangeUri(Uri uri)
+        internal void UpdateLink(SyndicationLink link, AtomItem item, IItem itemNode)
         {
-            if (CustomUriChanger != null)
-                return CustomUriChanger(uri);
-            return uri;
+            if (CustomLinkUpdater != null)
+                CustomLinkUpdater(link, item, itemNode);
         }
 
         public bool ThrowPublicationException { get; set; } = true;

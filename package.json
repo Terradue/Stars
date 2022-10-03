@@ -8,7 +8,7 @@
     "unreleased": false,
     "commitLimit": false,
     "hideEmptyReleases": true,
-    "ignoreCommitPattern": "^(.{0,5}|bump.*|ready.*|.*changelog.*|.*formatting.*|.*typo.*)$",
+    "ignoreCommitPattern": "^(.{0,5}|.*bump.*|ready.*|.*changelog.*|.*formatting.*|.*typo.*)$",
     "releaseSummary": true
   }
 }

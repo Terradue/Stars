@@ -802,6 +802,9 @@
             "logging": {
                 "moduleLoad": false
             },
+            "env": {
+                "AWS__Profile": "aws-usgs"
+            },
             "justMyCode": false,
             "requireExactSource": false,
             // "symbolOptions": {
