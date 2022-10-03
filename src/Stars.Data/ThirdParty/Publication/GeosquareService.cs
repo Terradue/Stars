@@ -140,20 +140,20 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             atomItemNode.AtomItem.Identifier = catalogPublicationState.Hash.Key + "-" + atomItemNode.Identifier;
             atomItemNode.AtomItem.Categories.Add(new SyndicationCategory(catalogPublicationState.Hash.Value));
 
-            await PrepareAtomItem(atomItemNode.AtomItem, catalogPublicationState);
+            await PrepareAtomItem(atomItemNode.AtomItem, catalogPublicationState, itemNode);
 
             await PublishAtomFeed(atomItemNode.AtomItem.ToAtomFeed(), catalogPublicationState.GeosquarePublicationModel);
 
             return state;
         }
 
-        public async Task PrepareAtomItem(AtomItem atomItem, GeosquarePublicationState geosquarePublicationState)
+        public async Task PrepareAtomItem(AtomItem atomItem, GeosquarePublicationState geosquarePublicationState, IItem itemNode)
         {
             // remap all link
             foreach (var link in atomItem.Links)
             {
                 link.Uri = geosquareConfiguration.MapUri(link.Uri);
-                link.Uri = geosquarePublicationState.GeosquarePublicationModel.ChangeUri(link.Uri);
+                geosquarePublicationState.GeosquarePublicationModel.UpdateLink(link, atomItem, itemNode);
             }
 
             // create eventual opensearch link

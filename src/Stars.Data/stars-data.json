@@ -128,10 +128,5 @@
                 }
             }
         }
-    },
-    "Translators": {
-        "AtomToStac": {
-            "Type": "Terradue.Stars.Data.Translators.AtomToStacTranslator"
-        }
     }
 }
