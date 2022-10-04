@@ -27,6 +27,8 @@ using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services;
 using System.Threading;
 using Terradue.Stars.Services.Model;
+using System.Collections.Specialized;
+using System.Web;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -65,14 +67,14 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public async Task<IPublicationState> PublishAsync(IPublicationModel publicationModel, CancellationToken ct)
         {
             GeosquarePublicationModel geosquareModel = publicationModel as GeosquarePublicationModel;
-            if ( geosquareModel == null )
+            if (geosquareModel == null)
             {
                 geosquareModel = CreateModelFromPublication(publicationModel);
             }
             if (geosquareModel.CreateIndex) await CreateIndexIfNotExist(geosquareModel.Index);
             InitRoutingTask();
             var guid = CalculateHash(geosquareModel.Url.ToString());
-            var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(geosquareModel.Url)), ct);
+            var route = await resourceServiceProvider.GetStreamResourceAsync(new GenericResource(new Uri(geosquareModel.Url)), ct);
 
             GeosquarePublicationState state = new GeosquarePublicationState(geosquareModel);
             state.Hash = guid;
@@ -132,9 +134,9 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             catch (Exception e)
             {
                 logger.LogWarning(e, "Unable to translate item {0} to AtomItemNode", itemNode);
-                if ( catalogPublicationState.GeosquarePublicationModel.ThrowPublicationException )
+                if (catalogPublicationState.GeosquarePublicationModel.ThrowPublicationException)
                     throw;
-                
+
                 atomItemNode = null;
             }
             if (atomItemNode == null) return state;
@@ -186,7 +188,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (wr.StatusCode == HttpStatusCode.OK) return;
 
             logger.LogDebug("Creating index {0}", index);
-            if ( !string.IsNullOrEmpty(GeosquareConfiguration.AuthorizationHeader))
+            if (!string.IsNullOrEmpty(GeosquareConfiguration.AuthorizationHeader))
                 httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(GeosquareConfiguration.AuthorizationHeader);
             var webresponse = await httpClient.PutAsync(new Uri(GeosquareConfiguration.BaseUri, index), null);
             string response = await webresponse.Content.ReadAsStringAsync();
@@ -200,7 +202,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             var content = GetAtomContent(atomFeed);
             httpClient.DefaultRequestHeaders.Authorization = pubModel.AuthorizationHeaderValue;
             UriBuilder postUri = new UriBuilder(new Uri(GeosquareConfiguration.BaseUri, pubModel.Index));
-            if ( !string.IsNullOrEmpty(pubModel.ApiKey) ){
+            if (!string.IsNullOrEmpty(pubModel.ApiKey))
+            {
                 postUri.Query = string.Format("apikey={0}", pubModel.ApiKey);
             }
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/atom+xml");
@@ -232,7 +235,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             {
                 var template = geosquareConfiguration.GetOpenSearchForUri(link.Uri);
                 if (string.IsNullOrEmpty(template)) return null;
-                var webRoute = await resourceServiceProvider.CreateStreamResourceAsync(new AtomResourceLink(link), System.Threading.CancellationToken.None);
+                var webRoute = await resourceServiceProvider.GetStreamResourceAsync(new AtomResourceLink(link), System.Threading.CancellationToken.None);
                 IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync(System.Threading.CancellationToken.None));
                 var osUrl = template.ReplaceMacro<IStacObject>("stacObject", linkedStacObject);
                 osUrl = osUrl.ReplaceMacro<string>("index", catalogPublicationState.GeosquarePublicationModel.Index);
@@ -248,6 +251,33 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             }
             catch { }
             return null;
+        }
+
+        public async Task RemoveAsync(string index, NameValueCollection osParameters)
+        {
+            HttpClient httpClient = httpClientFactory.CreateClient();
+
+            //Init
+            var uriBuilder = new UriBuilder(new Uri(GeosquareConfiguration.BaseUri, index + "/query"));
+            var queryString = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+            //Extend
+            queryString.Add(osParameters);
+
+            //Overwrite original
+            uriBuilder.Query = queryString.ToString();
+            var deleteUri = uriBuilder.ToString();
+
+            logger.LogDebug("Removing items in index {0} ({1})", index, deleteUri.ToString());
+
+            if (!string.IsNullOrEmpty(GeosquareConfiguration.AuthorizationHeader))
+                httpClient.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(GeosquareConfiguration.AuthorizationHeader);
+            
+            var webresponse = await httpClient.DeleteAsync(deleteUri);
+            webresponse.EnsureSuccessStatusCode();
+            string response = await webresponse.Content.ReadAsStringAsync();
+            logger.LogDebug(response);
+            
         }
     }
 }

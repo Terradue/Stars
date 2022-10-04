@@ -385,7 +385,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 
             try
             {
-                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.CreateStreamResourceAsync(auxFile, System.Threading.CancellationToken.None).GetAwaiter().GetResult()).GetAwaiter().GetResult();
+                var auxiliary = DeserializeAuxiliary(resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None).GetAwaiter().GetResult()).GetAwaiter().GetResult();
                 return auxiliary.IsLandsat8();
             }
             catch (Exception e)
