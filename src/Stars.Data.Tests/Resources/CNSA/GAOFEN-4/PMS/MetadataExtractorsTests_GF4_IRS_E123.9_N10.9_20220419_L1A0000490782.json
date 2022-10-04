@@ -77,7 +77,7 @@
       "roles": [
         "thumbnail"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
+      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
       "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
       "file:size": 3534
     },
@@ -86,7 +86,7 @@
       "roles": [
         "overview"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.jpg",
+      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.jpg",
       "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.jpg",
       "file:size": 0
     },
@@ -95,7 +95,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.rpb",
+      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.rpb",
       "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.rpb",
       "file:size": 2709
     },
@@ -104,7 +104,7 @@
       "roles": [
         "data"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.tiff",
+      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.tiff",
       "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.tiff",
       "file:size": 0,
       "proj:shape": [
@@ -113,7 +113,7 @@
       ],
       "eo:bands": [
         {
-          "name": "B01",
+          "name": "mwir38",
           "center_wavelength": 3.8,
           "solar_illumination": 1734.53,
           "full_width_half_max": 6.0
@@ -122,7 +122,7 @@
       "raster:bands": [
         {
           "scale": 280.59,
-          "offset": 873.21
+          "offset": 0.0
         }
       ],
       "gsd": 400
@@ -132,7 +132,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.xml",
+      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.xml",
       "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.xml",
       "file:size": 2496
     },
@@ -141,7 +141,7 @@
       "roles": [
         "thumbnail"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
+      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
       "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
       "file:size": 22342
     },
@@ -150,7 +150,7 @@
       "roles": [
         "overview"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.jpg",
+      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.jpg",
       "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.jpg",
       "file:size": 0
     },
@@ -159,7 +159,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.rpb",
+      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.rpb",
       "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.rpb",
       "file:size": 2715
     },
@@ -168,7 +168,7 @@
       "roles": [
         "data"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.tiff",
+      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.tiff",
       "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.tiff",
       "file:size": 0,
       "proj:shape": [
@@ -177,35 +177,35 @@
       ],
       "eo:bands": [
         {
-          "name": "B01",
+          "name": "pan",
           "common_name": "pan",
           "center_wavelength": 0.675,
           "solar_illumination": 1258.38,
           "full_width_half_max": 4.5
         },
         {
-          "name": "B02",
+          "name": "blue",
           "common_name": "blue",
           "center_wavelength": 0.485,
           "solar_illumination": 1907.88,
           "full_width_half_max": 0.7
         },
         {
-          "name": "B03",
+          "name": "green",
           "common_name": "green",
           "center_wavelength": 0.56,
           "solar_illumination": 1815.42,
           "full_width_half_max": 0.8
         },
         {
-          "name": "B04",
+          "name": "red",
           "common_name": "red",
           "center_wavelength": 0.66,
           "solar_illumination": 1580.18,
           "full_width_half_max": 0.6
         },
         {
-          "name": "B05",
+          "name": "nir",
           "common_name": "nir",
           "center_wavelength": 0.78,
           "solar_illumination": 1098.79,
@@ -214,24 +214,24 @@
       ],
       "raster:bands": [
         {
-          "scale": 6.864,
-          "offset": 2.986
+          "scale": 0.1753,
+          "offset": 0.0
         },
         {
-          "scale": 4.598,
-          "offset": 4.14
+          "scale": 0.1843,
+          "offset": 0.0
         },
         {
-          "scale": 5.223,
-          "offset": 1.439
+          "scale": 0.2041,
+          "offset": 0.0
         },
         {
-          "scale": 6.375,
-          "offset": 3.605
+          "scale": 0.1625,
+          "offset": 0.0
         },
         {
-          "scale": 8.681,
-          "offset": 0.331
+          "scale": 0.1144,
+          "offset": 0.0
         }
       ],
       "gsd": 50
@@ -241,7 +241,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/urn_ogc_def_EOP_CNSA_GF4PMI490782-product/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.xml",
+      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.xml",
       "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.xml",
       "file:size": 2583
     }
