@@ -14,16 +14,16 @@ using Terradue.Stars.Interface.Supplier;
 namespace Terradue.Stars.Data.Suppliers.PlanetScope
 {
     [JsonObject]
-    public class ItemTypeInformation
+    public class AssetInformation
     {
         [JsonProperty("expires_at")]
         public string ExpiresAt { get; set; }
 
         [JsonProperty("_links")]
-        public Dictionary<string, ItemTypeLink> Links { get; set; }
+        public AssetLinks Links { get; set; }
 
         [JsonProperty("_permissions")]
-        public Dictionary<string, string> Permissions { get; set; }
+        public List<string> Permissions { get; set; }
 
         [JsonProperty("location")]
         public string Location { get; set; }
@@ -40,7 +40,7 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
 
 
     [JsonObject]
-    public class ItemTypeLink
+    public class AssetLinks
     {
         [JsonProperty("_self")]
         public string Self { get; set; }

@@ -78,10 +78,54 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
                     HttpResponseMessage response =  await httpClient.GetAsync($"{baseUrl}/item-types/{itemType}/items/{itemNode.Id}/assets");
                     string content = await response.Content.ReadAsStringAsync();
 
-                    Dictionary<string, ItemTypeInformation> itemTypes = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, ItemTypeInformation>>(content);
+                    Dictionary<string, AssetInformation> itemTypes = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, AssetInformation>>(content);
 
-                    
+                    List<string> activationLinks = new List<string>();
 
+                    foreach (KeyValuePair<string, AssetInformation> kvp in itemTypes)
+                    {
+                        string assetType = kvp.Key;
+                        AssetInformation assetInformation = kvp.Value;
+
+                        // Ignore if no download permission
+                        if (!assetInformation.Permissions.Contains("download")) continue;
+
+                        // Activate assets that are not yet active
+                        if (assetInformation.Status == "active")
+                        {
+                            //itemNode.Assets.Add()
+                        }
+                        else
+                        {
+                            activationLinks.Add(assetInformation.Links.Activate);
+                        }
+                    }
+
+                    foreach (string activationLink in activationLinks)
+                    {
+                        response =  await httpClient.GetAsync(activationLink);
+                        string c = await response.Content.ReadAsStringAsync();
+                        // ...
+                    }
+
+                    // Poll until all activated
+                    // ...
+
+                    // Finally add all assets
+                    foreach (KeyValuePair<string, AssetInformation> kvp in itemTypes)
+                    {
+                        Uri enclosure = null;
+                        itemNode.StacItem.Assets.Add(
+                            kvp.Key,
+                            new StacAsset(
+                                itemNode.StacItem,
+                                enclosure,
+                                new string[] { "data" },
+                                String.Format("Astrium Charter data {0} for call {1}"),
+                                new System.Net.Mime.ContentType("application/zip")
+                            )
+                        );
+                    }
 
                 }            
             }
