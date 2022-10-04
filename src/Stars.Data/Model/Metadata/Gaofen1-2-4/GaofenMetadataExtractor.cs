@@ -731,9 +731,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
         private void GetGF4BandAssets(StacAsset stacAsset, ProductMetaData metadata,
             string sensorName) {
+            var acquisitionYear = metadata.StartTime.Split('-')[0];
             var msList = metadata.IntegrationTime.Split(',').ToList();
-            var gainList = metadata.Gain.Split(',').ToList();
-            var offsetList = metadata.Bias.Split(',').ToList();
             JObject gf4Aux = null;
             using (StreamReader r = new StreamReader("Model/Metadata/Gaofen1-2-4/GF4_bands.json")) {
                 string json = r.ReadToEnd();
@@ -754,7 +753,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
                 stacAsset.EoExtension().Bands[i] = eoBandObject;
 
                 RasterBand rasterBandObject =
-                    CreateRasterBandObject(double.Parse(offsetList[i]), double.Parse(gainList[i]));
+                    CreateRasterBandObject(0, band["gain"][acquisitionYear].Value<double>());
                 stacAsset.RasterExtension().Bands[i] = rasterBandObject;
             }
         }
