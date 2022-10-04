@@ -34,6 +34,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             AdditionalLinks = publishCatalogModel.AdditionalLinks;
             SubjectsList = publishCatalogModel.Subjects.Select(s => new Subject(s)).ToList();
             CreateIndex = publishCatalogModel.CreateIndex;
+            Collection = publishCatalogModel.Collection;
+            CustomLinkUpdater = publishCatalogModel.CustomLinkUpdater;
         }
 
         /// <summary>
