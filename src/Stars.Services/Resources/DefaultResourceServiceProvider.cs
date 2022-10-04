@@ -40,11 +40,6 @@ namespace Terradue.Stars.Services.Resources
 
             Exception finalException = null;
 
-            if (resource is IStreamResource)
-            {
-                return resource as IStreamResource;
-            }
-
             // Local file
             if (resource.Uri.IsFile)
             {
@@ -180,7 +175,7 @@ namespace Terradue.Stars.Services.Resources
 
         public async Task DeleteAsync(IResource resource, CancellationToken ct)
         {
-            IStreamResource streamResource = await GetStreamResourceAsync(resource, ct);
+            IStreamResource streamResource = await CreateStreamResourceAsync(resource, ct);
             if (streamResource is IDeletableResource)
             {
                 await ((IDeletableResource)streamResource).DeleteAsync(ct);
