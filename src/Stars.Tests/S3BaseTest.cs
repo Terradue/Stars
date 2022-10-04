@@ -45,7 +45,7 @@ namespace Stars.Tests
         request.InputStream = File.Open(filename, FileMode.Open, FileAccess.Read);
 
         var response = await client.PutObjectAsync(request);
-
+        
     }
 
 }
