@@ -99,7 +99,7 @@ namespace Terradue.Stars.Services.Resources
                     headResponse.EnsureSuccessStatusCode();
                     contentHeaders = headResponse.Content.Headers;
                 }
-                catch (HttpRequestException e)
+                catch (Exception e)
                 {
                     finalException = e;
                 }
