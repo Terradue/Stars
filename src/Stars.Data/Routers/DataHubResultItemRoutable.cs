@@ -6,6 +6,8 @@ using Terradue.OpenSearch.Result;
 using Terradue.Stars.Data.Suppliers;
 using Terradue.Stars.Interface;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -50,6 +52,22 @@ namespace Terradue.Stars.Data.Routers
                     logger.LogWarning("Exception trying to get assets for {0}: {1}", this.Id, e.Message);
                     logger.LogDebug(e.StackTrace);
                 }
+
+                if (osItem.Links != null)
+                {
+                    var icon = osItem.Links.FirstOrDefault(l => l.RelationshipType == "icon");
+                    if (icon != null)
+                    {
+                        var resource = new GenericResource(icon.Uri);
+                        var roles = new List<string>();
+                        if (icon.Title != null && icon.Title.ToLower().Contains("thumbnail"))
+                            roles.Add("thumbnail");
+                        if (icon.Title != null && icon.Title.ToLower().Contains("browse"))
+                            roles.Add("overview");
+                        assets.Add("browse", new GenericAsset(resource, icon.Title, roles));
+                    }
+                }
+
                 return assets;
             }
 

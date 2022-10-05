@@ -111,9 +111,7 @@ namespace Terradue.Stars.Data.Model.Atom
 
         private static string GetRelationshipFromRoles(ICollection<string> semanticRoles)
         {
-            if (semanticRoles.Any(r => r == "overview"))
-                return "image";
-            if (semanticRoles.Any(r => r == "thumbnail" || r == "icon"))
+            if (semanticRoles.Any(r => r == "thumbnail" || r == "icon" || r == "overview"))
                 return "icon";
             if (semanticRoles.Any(r => r == "legend"))
                 return "legend";
