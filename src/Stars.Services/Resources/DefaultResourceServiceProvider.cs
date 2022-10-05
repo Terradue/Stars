@@ -90,14 +90,16 @@ namespace Terradue.Stars.Services.Resources
 
                 var client = clientFactory.CreateClient("stars");
 
-                HttpContentHeaders contentHeaders = null;
+                HttpCachedHeaders contentHeaders = null;
 
                 try
                 {
                     // First try head request
-                    var headResponse = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct);
-                    headResponse.EnsureSuccessStatusCode();
-                    contentHeaders = headResponse.Content.Headers;
+                    using (var headResponse = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct))
+                    {
+                        headResponse.EnsureSuccessStatusCode();
+                        contentHeaders = new HttpCachedHeaders(headResponse.Content.Headers);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -107,9 +109,11 @@ namespace Terradue.Stars.Services.Resources
                 {
                     try
                     {
-                        var response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct);
-                        response.EnsureSuccessStatusCode();
-                        contentHeaders = response.Content.Headers;
+                        using (var response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct))
+                        {
+                            response.EnsureSuccessStatusCode();
+                            contentHeaders = new HttpCachedHeaders(response.Content.Headers);
+                        }
                     }
                     catch (Exception e)
                     {

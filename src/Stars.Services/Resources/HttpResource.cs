@@ -18,9 +18,9 @@ namespace Terradue.Stars.Services.Resources
     {
         private readonly Uri _url;
         private readonly HttpClient _client;
-        private HttpContentHeaders _cachedHeaders;
+        private HttpCachedHeaders _cachedHeaders;
 
-        internal HttpResource(Uri url, HttpClient httpClient, HttpContentHeaders cachedHeaders = null)
+        internal HttpResource(Uri url, HttpClient httpClient, HttpCachedHeaders cachedHeaders = null)
         {
             this._url = url;
             this._client = httpClient;
@@ -37,7 +37,7 @@ namespace Terradue.Stars.Services.Resources
         {
             var request = new HttpRequestMessage { RequestUri = _url };
             request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(0, 1000);
-            return await (await this._client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct)).Content.ReadAsStreamAsync();
+            return await (await this._client.SendAsync(request, HttpCompletionOption.ResponseContentRead, ct)).Content.ReadAsStreamAsync();
         }
 
         public ContentType ContentType => new ContentType(CachedHeaders.ContentType.ToString());
@@ -60,13 +60,16 @@ namespace Terradue.Stars.Services.Resources
             }
         }
 
-        public HttpContentHeaders CachedHeaders
+        public HttpCachedHeaders CachedHeaders
         {
             get
             {
                 if (_cachedHeaders == null)
                 {
-                    _cachedHeaders = _client.GetAsync(_url).GetAwaiter().GetResult().Content.Headers;
+                    using (var res = _client.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
+                    {
+                        _cachedHeaders = new HttpCachedHeaders(_client.GetAsync(_url).GetAwaiter().GetResult().Content.Headers);
+                    }
                 }
                 return _cachedHeaders;
             }
