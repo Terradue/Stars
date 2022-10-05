@@ -672,7 +672,9 @@
             "args": [
                 "copy",
                 "-k",
-                "https://localhost:5001/api/users/t2_test/products/t2_test-product-wf4acb65a038e911edabbbb278e1bf3ef6.json",
+                "-si",
+                "Native",
+                "https://catalog.charter.uat.esaportal.eu//charter/cat/[chartercalibrateddataset,!excluded,{callid932}]/search?format=atom&uid=call932_S1A_IW_GRDH_1SDV_20220926T173754_20220926T173819_045179_05665D_A9D3-calibrated&do=[terradue]",
                 "-v",
                 "-r",
                 "4",
