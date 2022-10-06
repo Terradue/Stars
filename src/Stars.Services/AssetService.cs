@@ -108,12 +108,24 @@ namespace Terradue.Stars.Services
                     logger.LogDebug("No delivery for asset {0}", item.Key);
                 }
 
-                logger.LogDebug("Asset {0} : {1} possible deliveries", item.Key, item.Value.Count());
-                int j = 1;
-                foreach (var delivery in item.Value)
+                if (item.Value.Count() > 0)
                 {
-                    logger.LogDebug("  #{0} {1}", j, delivery);
-                    j++;
+                    logger.LogDebug("Asset {0} : {1} possible deliveries", item.Key, item.Value.Count());
+                    int j = 1;
+                    foreach (var delivery in item.Value)
+                    {
+                        logger.LogDebug("  #{0} {1}", j, delivery);
+                        j++;
+                    }
+                }
+                else
+                {
+                    logger.LogWarning("Asset {0} : no possible deliveries", item.Key, item.Value.Count());
+                    if (deliveryQuotation.AssetsExceptions.ContainsKey(item.Key))
+                    {
+                        logger.LogWarning("  " + deliveryQuotation.AssetsExceptions[item.Key].Message);
+                        logger.LogDebug(deliveryQuotation.AssetsExceptions[item.Key].StackTrace);
+                    }
                 }
             }
         }
