@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
+using Newtonsoft.Json;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Model.Stac;
@@ -26,6 +27,16 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
         private readonly TranslatorManager translatorManager;
         private ICredentials credentials;
         private string baseUrl;
+
+        // These are the asset types to be supported initially
+        public static Dictionary<string, AssetTypeInformation> assetTypes = new Dictionary<string, AssetTypeInformation>()
+        {
+            { "ortho_analytic_3b", new AssetTypeInformation("Orthorectified top of atmosphere radiance (3 Band)", "data", "image/tiff") },
+            { "ortho_analytic_3b_xml", new AssetTypeInformation("Orthorectified top of atmosphere radiance (3 Band) metadata", "metadata", "application/xml") },
+            { "ortho_analytic_4b", new AssetTypeInformation("Orthorectified top of atmosphere radiance (4 Band)", "data", "image/tiff") },
+            { "ortho_analytic_4b_xml", new AssetTypeInformation("Orthorectified atmospherically corrected surface reflectance (4 Band) metadata", "metadata", "application/xml") },
+            { "ortho_visual", new AssetTypeInformation("Orthorectified color corrected visual image product (3 Band)", "data", "image/tiff") },
+        };
 
         public PlanetScopeSupplier(ILogger<PlanetScopeSupplier> logger, TranslatorManager translatorManager, ICredentials credentials, IPluginOption pluginOption)
         {
@@ -67,63 +78,62 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
 
         private async Task AddAssets(string itemType, StacItemNode itemNode)
         {
-            Uri uri = new Uri($"{baseUrl}/item-types/{itemType}/items/{itemNode.Id}/assets");
-
             HttpClientHandler handler = new HttpClientHandler() { Credentials = credentials };
 
             try
             {
                 using (HttpClient httpClient = new HttpClient(handler))
                 {
-                    HttpResponseMessage response =  await httpClient.GetAsync($"{baseUrl}/item-types/{itemType}/items/{itemNode.Id}/assets");
+                    // The API Base URL is https://api.planet.com/data/v1
+                    var request = new HttpRequestMessage() { RequestUri = new Uri($"{baseUrl}/item-types/{itemType}/items/{itemNode.Id}/assets") };
+
+                    HttpResponseMessage response =  await httpClient.SendAsync(request);
                     string content = await response.Content.ReadAsStringAsync();
 
-                    Dictionary<string, AssetInformation> itemTypes = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, AssetInformation>>(content);
+                    Dictionary<string, AssetInformation> itemTypes = JsonConvert.DeserializeObject<Dictionary<string, AssetInformation>>(content);
 
-                    List<string> activationLinks = new List<string>();
+                    Dictionary<string, string> assetLinks = new Dictionary<string, string>();
+                    Dictionary<string, StacAsset> assets = new Dictionary<string, StacAsset>();
 
                     foreach (KeyValuePair<string, AssetInformation> kvp in itemTypes)
                     {
-                        string assetType = kvp.Key;
+                        string assetTypeId = kvp.Key;
                         AssetInformation assetInformation = kvp.Value;
+
+                        // Ignore if asset type is not required
+                        if (!assetTypes.ContainsKey(assetTypeId)) continue;
+
+                        AssetTypeInformation assetType = assetTypes[assetTypeId];
 
                         // Ignore if no download permission
                         if (!assetInformation.Permissions.Contains("download")) continue;
 
-                        // Activate assets that are not yet active
-                        if (assetInformation.Status == "active")
-                        {
-                            //itemNode.Assets.Add()
-                        }
-                        else
-                        {
-                            activationLinks.Add(assetInformation.Links.Activate);
-                        }
+                        string url = (assetInformation.Status == "active" ? assetInformation.Links.Activate : null);
+                        assetLinks.Add(assetTypeId, url);
+                        assets.Add(
+                            assetTypeId,
+                            new StacAsset(
+                                itemNode.StacItem,
+                                new Uri(url),
+                                new string[] { assetType.Role },
+                                assetType.Title,
+                                new System.Net.Mime.ContentType(assetType.ContentType)
+                            )
+                        );
                     }
 
-                    foreach (string activationLink in activationLinks)
-                    {
-                        response =  await httpClient.GetAsync(activationLink);
-                        string c = await response.Content.ReadAsStringAsync();
-                        // ...
-                    }
+                    // Activate assets that are not yet active
+                    
 
                     // Poll until all activated
                     // ...
 
                     // Finally add all assets
-                    foreach (KeyValuePair<string, AssetInformation> kvp in itemTypes)
+                    foreach (KeyValuePair<string, StacAsset> kvp in assets)
                     {
-                        Uri enclosure = null;
                         itemNode.StacItem.Assets.Add(
                             kvp.Key,
-                            new StacAsset(
-                                itemNode.StacItem,
-                                enclosure,
-                                new string[] { "data" },
-                                String.Format("Astrium Charter data {0} for call {1}"),
-                                new System.Net.Mime.ContentType("application/zip")
-                            )
+                            kvp.Value
                         );
                     }
 
@@ -142,4 +152,21 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
             throw new NotSupportedException();
         }
     }
+
+
+    public class AssetTypeInformation
+    {
+        public string Title { get; set; }
+        public string Role { get; set; }
+        public string ContentType { get; set; }
+        
+        public AssetTypeInformation(string title, string role, string contentType)
+        {
+            this.Title = title;
+            this.Role = role;
+            this.ContentType = contentType;
+        }
+    }
+
+
 }
