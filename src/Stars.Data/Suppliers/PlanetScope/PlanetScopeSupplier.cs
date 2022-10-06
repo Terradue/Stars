@@ -66,12 +66,10 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
 
             string itemType = "PSScene";
 
-            IDictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-
             logger.LogDebug($"Searching for {itemType} for product {stacItemNode.Id}");
             await AddAssets(itemType, stacItemNode);
 
-            if (assets.Count == 0) return null;
+            //if (stacItemNode.Assets.Count == 0) return null;
 
             return stacItemNode;
         }
@@ -108,7 +106,7 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
                         // Ignore if no download permission
                         if (!assetInformation.Permissions.Contains("download")) continue;
 
-                        string url = (assetInformation.Status == "active" ? assetInformation.Links.Activate : null);
+                        string url = (assetInformation.Status == "active" ? assetInformation.Location : null);
                         assetLinks.Add(assetTypeId, url);
                         assets.Add(
                             assetTypeId,
