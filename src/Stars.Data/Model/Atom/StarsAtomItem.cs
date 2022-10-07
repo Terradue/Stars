@@ -82,23 +82,15 @@ namespace Terradue.Stars.Data.Model.Atom
             // Same problem as per link, make uri absolute
             foreach (var asset in stacItem.Assets)
             {
-                Uri assetUri = asset.Value.Uri;
-                try
-                {
-                    // if relative
-                    if (!assetUri.IsAbsoluteUri)
-                        // then make absolute from item
-                        assetUri = new Uri(stacItemUri, assetUri);
-                }
-                catch { continue; }
-                var rel = GetRelationshipFromRoles(asset.Value.Roles);
-                var atitle = GetTitleFromRoles(asset);
+                Uri assetUri = GetAssetUri(stacItemUri, asset.Value);
+                var atitle = string.IsNullOrEmpty(asset.Value.Title) ? asset.Key.Split('!')[0] : asset.Value.Title;
                 var type = asset.Value.MediaType.ToString();
                 long length = Convert.ToInt64(asset.Value.FileExtension().Size);
-                starsAtomItem.Links.Add(new SyndicationLink(assetUri, rel, atitle, type, length));
-                if (rel == "icon" && asset.Value.Roles.Any(r => r == "overview"))
-                    starsAtomItem.Links.Add(new SyndicationLink(assetUri, "enclosure", atitle, type, length));
+                starsAtomItem.Links.Add(new SyndicationLink(assetUri, "enclosure", atitle, type, length));
             }
+
+            // Add functional links
+            starsAtomItem.Links.AddRange(GetFunctionalLinks(stacItem, stacItemUri));
 
             starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", string.Format("{0}", stacItem.DateTime.Start.ToString("O")));
             starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", stacItem.Geometry.ToWkt());
@@ -109,21 +101,51 @@ namespace Terradue.Stars.Data.Model.Atom
             return starsAtomItem;
         }
 
+        private static IEnumerable<SyndicationLink> GetFunctionalLinks(StacItem stacItem, Uri stacItemUri)
+        {
+            List<SyndicationLink> links = new List<SyndicationLink>();
+
+            var overviews = stacItem.Assets.Where(a => a.Value.Roles.Contains("overview") || a.Value.Roles.Contains("thumbnail") || a.Value.Roles.Contains("legend"));
+            links.AddRange(overviews.Select(o => new SyndicationLink(GetAssetUri(stacItemUri, o.Value),
+                                                                     GetRelationshipFromRoles(o.Value.Roles),
+                                                                     GetTitleFromRoles(o),
+                                                                     o.Value.MediaType.ToString(),
+                                                                     Convert.ToInt64(o.Value.FileExtension().Size))));
+
+            return links;
+        }
+
+        private static Uri GetAssetUri(Uri stacItemUri, StacAsset asset)
+        {
+            Uri assetUri = asset.Uri;
+            try
+            {
+                // if relative
+                if (!assetUri.IsAbsoluteUri)
+                    // then make absolute from item
+                    return new Uri(stacItemUri, asset.Uri);
+            }
+            catch { }
+            return asset.Uri;
+        }
+
         private static string GetRelationshipFromRoles(ICollection<string> semanticRoles)
         {
-            if (semanticRoles.Any(r => r == "thumbnail" || r == "icon" || r == "overview"))
-                return "icon";
             if (semanticRoles.Any(r => r == "legend"))
                 return "legend";
+            if (semanticRoles.Any(r => r == "thumbnail" || r == "icon" || r == "overview"))
+                return "icon";
             return "enclosure";
         }
 
         private static string GetTitleFromRoles(KeyValuePair<string, StacAsset> stacAsset)
         {
-            if (stacAsset.Value.Roles.Any(r => r == "overview"))
-                return "Browse";
             if (stacAsset.Value.Roles.Any(r => r == "thumbnail"))
                 return "Thumbnail";
+            if (stacAsset.Value.Roles.Any(r => r == "legend"))
+                return "Legend";
+            if (stacAsset.Value.Roles.Any(r => r == "overview"))
+                return "Browse";
             return string.IsNullOrEmpty(stacAsset.Value.Title) ? stacAsset.Key.Split('!')[0] : stacAsset.Value.Title;
         }
 
