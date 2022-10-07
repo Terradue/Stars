@@ -80,20 +80,43 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
 
             try
             {
+                string content = String.Empty;
                 using (HttpClient httpClient = new HttpClient(handler))
                 {
                     // The API Base URL is https://api.planet.com/data/v1
                     var request = new HttpRequestMessage() { RequestUri = new Uri($"{baseUrl}/item-types/{itemType}/items/{itemNode.Id}/assets") };
 
                     HttpResponseMessage response =  await httpClient.SendAsync(request);
-                    string content = await response.Content.ReadAsStringAsync();
+                    content = await response.Content.ReadAsStringAsync();
 
-                    Dictionary<string, AssetInformation> itemTypes = JsonConvert.DeserializeObject<Dictionary<string, AssetInformation>>(content);
+                    if (content.StartsWith(@"{""general"":"))
+                    {
+                        if (content.Contains("Could not find the requested item"))
+                        {
+                            throw new Exception($"Item not found: {itemNode.Id}");
+                        }
+                        GeneralMessageObject error = JsonConvert.DeserializeObject<GeneralMessageObject>(content);
+                        if (error.Messages != null && error.Messages.Length != 0)
+                        {
+                            throw new Exception(error.Messages[0].Message);
+                        }
+                        throw new Exception($"Error during asset retrieval for {itemNode.Id}");
+                    }
+                    else if (content.StartsWith(@"{""message"":"))
+                    {
+                        if (content.Contains("Please enter a valid API key"))
+                        {
+                            throw new UnauthorizedAccessException("Invalid API key");
+                        }
+                        MessageObject error = JsonConvert.DeserializeObject<MessageObject>(content);
+                        throw new Exception(error.Message);
+                    }
 
-                    Dictionary<string, string> assetLinks = new Dictionary<string, string>();
+                    Dictionary<string, AssetInformation> itemAssets = JsonConvert.DeserializeObject<Dictionary<string, AssetInformation>>(content);
+
                     Dictionary<string, StacAsset> assets = new Dictionary<string, StacAsset>();
 
-                    foreach (KeyValuePair<string, AssetInformation> kvp in itemTypes)
+                    foreach (KeyValuePair<string, AssetInformation> kvp in itemAssets)
                     {
                         string assetTypeId = kvp.Key;
                         AssetInformation assetInformation = kvp.Value;
@@ -107,7 +130,6 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
                         if (!assetInformation.Permissions.Contains("download")) continue;
 
                         string url = (assetInformation.Status == "active" ? assetInformation.Location : null);
-                        assetLinks.Add(assetTypeId, url);
                         assets.Add(
                             assetTypeId,
                             new StacAsset(
@@ -120,13 +142,7 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
                         );
                     }
 
-                    // Activate assets that are not yet active
-                    
-
-                    // Poll until all activated
-                    // ...
-
-                    // Finally add all assets
+                    // Add all assets
                     foreach (KeyValuePair<string, StacAsset> kvp in assets)
                     {
                         itemNode.StacItem.Assets.Add(
@@ -137,12 +153,23 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
 
                 }            
             }
-            catch (Exception e)
+            catch (WebException e)
             {
-                throw;
+                if (e.Response != null)
+                {
+                    string errorContent = (new StreamReader(e.Response.GetResponseStream())).ReadToEnd();
+                    try
+                    {
+                        MessageObject error = JsonConvert.DeserializeObject<MessageObject>(errorContent);
+                        throw new Exception(error.Message);
+                    }
+                    catch (Exception)
+                    {
+                        logger.LogDebug(errorContent);
+                        throw new Exception($"Error during asset retrieval for {itemNode.Id}");
+                    }
+                }
             }
-
-
         }
 
         public virtual Task<IOrder> Order(IOrderable orderableRoute)

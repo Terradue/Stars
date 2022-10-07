@@ -51,4 +51,20 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
         [JsonProperty("type")]
         public string Type { get; set; }
     }
+
+
+    [JsonObject]
+    public class GeneralMessageObject
+    {
+        [JsonProperty("general")]
+        public MessageObject[] Messages { get; set; }
+    }
+
+
+    [JsonObject]
+    public class MessageObject
+    {
+        [JsonProperty("message")]
+        public string Message { get; set; }
+    }
 }
