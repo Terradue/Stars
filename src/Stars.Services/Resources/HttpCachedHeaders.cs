@@ -11,7 +11,11 @@ namespace Terradue.Stars.Services.Resources
         {
             foreach (var header in source)
             {
-                Add(header.Key, header.Value.ToArray());
+                try
+                {
+                    Add(header.Key, header.Value.ToArray());
+                }
+                catch { }
             }
         }
 
