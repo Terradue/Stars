@@ -142,8 +142,9 @@ namespace Terradue.Stars.Data.Model.Atom
         {
             if (stacAsset.Value.Roles.Any(r => r == "thumbnail"))
                 return "Thumbnail";
-            if (stacAsset.Value.Roles.Any(r => r == "legend"))
-                return "Legend";
+            if (stacAsset.Value.Roles.Any(r => r == "legend")){
+                return stacAsset.Key;
+            }
             if (stacAsset.Value.Roles.Any(r => r == "overview"))
                 return "Browse";
             return string.IsNullOrEmpty(stacAsset.Value.Title) ? stacAsset.Key.Split('!')[0] : stacAsset.Value.Title;
