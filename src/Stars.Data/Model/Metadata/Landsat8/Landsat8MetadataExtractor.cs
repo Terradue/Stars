@@ -204,6 +204,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
         {
             stacItem.Properties.Add("product_type", auxiliary.DataType);
             FillBasicsProperties(auxiliary, stacItem.Properties);
+            StacProvider provider = new StacProvider(
+                "NASA",
+                new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor }
+            );
+            provider.Description = "Landsat 8, a collaboration between NASA and the U.S. Geological Survey, provides moderate-resolution (15 m–100 m, depending on spectral frequency) measurements of the Earth’s terrestrial and polar regions in the visible, near-infrared, short wave infrared, and thermal infrared.";
+            provider.Uri = new Uri("https://www.usgs.gov/landsat-missions/landsat-8");
+            stacItem.Properties.Add("providers", new StacProvider[] { provider });
         }
 
         private void AddViewStacExtension(Auxiliary auxiliary, StacItem stacItem)

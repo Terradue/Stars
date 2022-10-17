@@ -68,7 +68,19 @@
     "view:sun_elevation": 66.41274969,
     "processing:level": "L1TP",
     "product_type": "L1TP",
-    "title": "LANDSAT-8 OLI TIRS L1TP 2021-07-08 10:01:03"
+    "title": "LANDSAT-8 OLI TIRS L1TP 2021-07-08 10:01:03",
+    "providers": [
+      {
+        "name": "NASA",
+        "description": "Landsat 8, a collaboration between NASA and the U.S. Geological Survey, provides moderate-resolution (15 m–100 m, depending on spectral frequency) measurements of the Earth’s terrestrial and polar regions in the visible, near-infrared, short wave infrared, and thermal infrared.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.usgs.gov/landsat-missions/landsat-8"
+      }
+    ]
   },
   "bbox": [
     7.50914,
