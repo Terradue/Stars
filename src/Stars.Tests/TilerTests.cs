@@ -54,5 +54,20 @@ namespace Stars.Tests
             var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
             Assert.True(starsAtomItem.ElementExtensions.Any(i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0"));
         }
+
+        [Fact]
+        public async Task SnowHeightTest()
+        {
+            StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/snowgrid_meanHS_1953.json")));
+            StacItemNode stacItemNode = new StacItemNode(item, new Uri("https://catalog.terradue.com/snowgrid_meanHS_1953.json"));
+            var assets = _titilerService.SelectOverviewCombinationAssets(item);
+            StarsAtomItem starsAtomItem = StarsAtomItem.Create(item, new Uri("https://catalog.terradue.com/snowgrid_meanHS_1953.json"));
+            // Add EO Profile if possible
+            Assert.True(starsAtomItem.TryAddEarthObservationProfile(stacItemNode.StacItem));
+
+            // Add TMS offering via titiler if possible
+            var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
+            Assert.True(starsAtomItem.ElementExtensions.Any(i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0"));
+        }
     }
 }
