@@ -1,0 +1,92 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/version/v1.0.0/schema.json",
+        "https://terradue.github.io/disaster/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "cci_fss_CFD_2002",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    96.75,
+                    48.25
+                ],
+                [
+                    96.75,
+                    52.25
+                ],
+                [
+                    103.0,
+                    52.25
+                ],
+                [
+                    103.0,
+                    48.25
+                ],
+                [
+                    96.75,
+                    48.25
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "start_datetime": "2001-12-01",
+        "end_datetime": "2002-05-31",
+        "description": "Name | Value\n---- | -----\nAgency | ****\nSatellite  | ****\nInstruments  | ****\nSensor Type  | ****\nAcquisition Date  | **01/01/0001 00:00:00**\nResolution  | **VLR**\nCOS2 Id  | ****\nLicense  | ****\nCreated  | **01/01/0001 00:00:00**\nUpdated  | **17/10/2022 11:35:10**\n",
+        "title": "Consecutive frost days index (CFD) - 2002",
+        "disaster:class": "Acquisition",
+        "cpe:status": {
+            "stage": "calibratedDataset",
+            "message": "1 assets imported",
+            "link": "https://supervisor.mcube.terradue.com/hangfire/jobs/details/46887"
+        },
+        "updated": "2022-10-17T11:35:32.7826502Z",
+        "disaster:call_ids": [
+            3
+        ],
+        "cpe:notified": [
+            "2022-10-17T11:35:10.7066493Z"
+        ],
+        "version": "1"
+    },
+    "bbox": [
+        96.75,
+        48.25,
+        103.0,
+        52.25
+    ],
+    "assets": {
+        "cci_fss_CFD_2002": {
+            "type": "image/tiff; application=geotiff",
+            "roles": [
+                "data",
+                "overview"
+            ],
+            "title": "Consecutive frost days index (CFD) - 2002",
+            "href": "s3://mcube-catalodg/calls/call-3/calibratedDatasets/cci_fss_CFD_2002/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-2001.tif",
+            "description": "Seasonal largest number of consecutive days where surface state flag shows frozen conditions.",
+            "file:size": 2144
+        }
+    },
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "parent",
+            "href": "../catalog.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "href": "s3://mcube-catalog/calls/call-3/calibratedDatasets/cci_fss_CFD_2002/cci_fss_CFD_2002.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "s3://mcube-catalog/catalog.json"
+        }
+    ]
+}

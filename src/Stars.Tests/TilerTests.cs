@@ -12,6 +12,8 @@ using MELT;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.ThirdParty.Titiler;
+using Terradue.Stars.Data.Model.Atom;
+using System.Linq;
 
 namespace Stars.Tests
 {
@@ -36,6 +38,21 @@ namespace Stars.Tests
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/cci_fss_CFD_1993.json")));
             var assets = _titilerService.SelectOverviewCombinationAssets(item);
             Assert.True(assets.ContainsKey("cci_fss_CFD_1993"));
+        }
+
+        [Fact]
+        public async Task OverviewAssets()
+        {
+            StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/cci_fss_CFD_2002.json")));
+            StacItemNode stacItemNode = new StacItemNode(item, new Uri("https://catalog.terradue.com/cci_fss_CFD_2002.json"));
+            var assets = _titilerService.SelectOverviewCombinationAssets(item);
+            StarsAtomItem starsAtomItem = StarsAtomItem.Create(item, new Uri("https://catalog.terradue.com/cci_fss_CFD_2002.json"));
+            // Add EO Profile if possible
+            starsAtomItem.TryAddEarthObservationProfile(stacItemNode.StacItem);
+
+            // Add TMS offering via titiler if possible
+            var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
+            Assert.True(starsAtomItem.ElementExtensions.Any(i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0"));
         }
     }
 }
