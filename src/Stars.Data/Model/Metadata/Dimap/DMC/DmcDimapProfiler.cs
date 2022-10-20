@@ -97,5 +97,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
         {
             return "optical";
         }
+
     }
 }

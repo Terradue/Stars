@@ -201,6 +201,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         private void AddOtherProperties(Auxiliary auxiliary, StacItem stacItem)
         {
             stacItem.Properties.Add("product_type", "PAN_MS_" + auxiliary.General.ProductLevel.Replace("Level", "L"));
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "KARI", 
+                    "KOMPSAT-3 is an optical high-resolution Korean observation mission. The objective is to provide observation continuity from the KOMPSAT-1 and KOMPSAT-2 missions to meet the nation's needs for high-resolution optical imagery required for GIS and other environmental, agricultural and oceanographic monitoring applications.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.eoportal.org/satellite-missions/kompsat-3")
+                );
+            }
         }
 
         private void AddViewStacExtension(Auxiliary auxiliary, StacItem stacItem)

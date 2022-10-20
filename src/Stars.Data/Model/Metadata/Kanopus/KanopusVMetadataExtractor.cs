@@ -63,6 +63,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             AddProcessingStacExtension(metadata, stacItem);
             AddEoStacExtension(metadata, stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
+
             return stacItem;
         }
 
@@ -113,6 +115,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
                 properties.GetProperty<string>("processing:level").ToUpper(),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
             );
+        }
+
+        private void AddOtherProperties(KanopusVMetadata metadata, IDictionary<String, object> properties)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "Roscosmos", 
+                    "Kanopus-V is an Earth observation minisatellite mission of the Russian Space Agency, Roscosmos and ROSHYDROMET/Planeta. The overall objective is to monitor Earth's surface, the atmosphere, ionosphere, and magnetosphere to detect and study the probability of strong earthquake occurrence.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.eoportal.org/satellite-missions/kanopus-v-1")
+                );
+            }
         }
 
 

@@ -168,6 +168,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             // TODO Provider
             FillInstrument(properties, metadata);
             FillBasicsProperties(properties, metadata);
+            AddOtherProperties(properties, metadata);
 
             return properties;
         }
@@ -219,6 +220,20 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                 metadata.ProcessingInfo.ProcessingLevel,
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
+        }
+
+        private void AddOtherProperties(IDictionary<String, object> properties, Schemas.Metadata metadata)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "ASI", 
+                    "COSMO-SkyMed (Constellation of Small Satellites for Mediterranean basin Observation) is a 4 spacecraft constellation. Each of the 4 satellites is equipped with the SAR-2000 Synthetic Aperture Radar, which observes in the X-band to provide global observation under all weather and visibility conditions.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.asi.it/en/earth-science/cosmo-skymed/")
+                );
+            }
         }
 
         private void FillAdditionalSarProperties(IDictionary<String, object> properties, Schemas.Metadata metadata, Match identifierMatch) {

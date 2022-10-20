@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Stac;
 using Stac.Extensions.Eo;
 using Terradue.Stars.Data.Model.Metadata.Airbus.Schemas;
 
@@ -47,5 +49,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return null;
         }
 
+        internal override StacProvider GetStacProvider()
+        {
+            StacProvider provider = new StacProvider("Airbus", new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor });
+            provider.Description = "The identical Pléiades 1A and Pléiades 1B satellites deliver 50cm imagery products with a 20km swath. The product's location accuracy and excellent image quality make it an ideal source for data for any civil or military project.";
+            provider.Uri = new Uri("https://www.intelligence-airbusds.com/imagery/constellation/pleiades/");
+            return provider;
+        }
     }
 }

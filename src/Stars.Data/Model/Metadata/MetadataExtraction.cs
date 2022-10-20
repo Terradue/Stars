@@ -13,6 +13,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model.Stac;
+using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Sar;
 using System.Threading;
@@ -29,6 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata
         {
             this.logger = logger;
             this.resourceServiceProvider = resourceServiceProvider;
+            this.IncludeProviderProperty = true;
         }
 
         public int Priority { get; set; }
@@ -37,6 +39,8 @@ namespace Terradue.Stars.Data.Model.Metadata
         public ProcessingType ProcessingType => ProcessingType.MetadataExtractor;
 
         public abstract string Label { get; }
+
+        public virtual bool IncludeProviderProperty { get; set; }
 
         public abstract bool CanProcess(IResource route, IDestination destination);
 
@@ -145,6 +149,14 @@ namespace Terradue.Stars.Data.Model.Metadata
                 return ObservationDirection.Left;
 
             return null;
+        }
+
+        protected void AddSingleProvider(IDictionary<string, object> properties, string name, string description, IEnumerable<StacProviderRole> roles, Uri uri)
+        {
+            StacProvider provider = new StacProvider(name, roles);
+            provider.Description = description;
+            provider.Uri = uri;
+            properties.Add("providers", new StacProvider[] { provider });
         }
     }
 }

@@ -74,6 +74,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             AddViewStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
 
             return StacItemNode.Create(stacItem, item.Uri);;
         }
@@ -211,6 +212,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
                 GetProcessingLevel(metadata),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
+        }
+
+        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "ABAE", 
+                    "The Venezuelan VRSS missions provide high-resolution land and vegetation observations to assess Venezuela's soil and water resources, collect images to help urban planners, monitor illegal mining and drug activities, and strengthen national defense, and support of disaster monitoring.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.eoportal.org/satellite-missions/vrss-1")
+                );
+            }
         }
 
 

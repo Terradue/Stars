@@ -131,7 +131,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 sat.AbsoluteOrbit = absOrbit;
         }
 
-
         private string GetProductType(SAOCOM_XMLProduct metadata)
         {
             string fileName = metadata.Channel[0].RasterInfo.FileName;
@@ -218,6 +217,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             FillDateTimeProperties(metadata, properties);
             FillInstrument(metadata, properties);
             FillBasicsProperties(metadata, properties, item);
+            AddOtherProperties(metadata, properties, item);
 
             return properties;
         }
@@ -277,6 +277,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 // remove previous values
                 properties.Remove("created");
                 properties.Add("created", creationdatetime.ToUniversalTime());
+            }
+        }
+
+        private void AddOtherProperties(SAOCOM_XMLProduct metadata, IDictionary<String, object> properties, IItem item)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "CONAE", 
+                    "The SAOCOM satellite series represents Argentina's approved polarimetric L-band SAR (Synthetic Aperture Radar) constellation of two spacecraft. The SAOCOM-1 mission is composed of two satellites (SAOCOM-1A and -1B) launched consecutively. The overall objective of SAOCOM is to provide an effective Earth observation and disaster monitoring capability.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("http://saocom.invap.com.ar")
+                );
             }
         }
 

@@ -34,7 +34,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         private const string ASCENDING = "Ascending Orbit";
         private const string DESCENDING = "Descending Orbit";
 
-        private static string[] satelitteIds = new string[] { "CARTOSAT-2", "IRS-R2", "IRS-R2A" };
+        private static string[] satelliteIds = new string[] { "CARTOSAT-2", "IRS-R2", "IRS-R2A" };
 
         public override string Label => "ResourceSat/CartoSat (ISRO) constellation product metadata extractor";
 
@@ -50,7 +50,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
                 JavaProperties metadata = ReadMetadata(resourceServiceProvider.GetStreamResourceAsync(metadataAsset, System.Threading.CancellationToken.None).Result).GetAwaiter().GetResult();
-                return (metadata.AllKeys.Contains("SatID") && satelitteIds.Contains(metadata["SatID"]));
+                return (metadata.AllKeys.Contains("SatID") && satelliteIds.Contains(metadata["SatID"]));
             }
             catch
             {
@@ -88,6 +88,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
 
             // AddEoBandPropertyInItem(stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
 
             return StacItemNode.Create(stacItem, item.Uri); ;
 
@@ -427,6 +428,37 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
                 properties.GetProperty<string>("processing:level").ToUpper(),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
             );
+        }
+
+        private void AddOtherProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        {
+            string description = null;
+            string url = null;
+            switch (metadata["SatID"])
+            {
+                case "CARTOSAT-2":
+                    description = "Cartosat-2 was an advanced remote sensing satellite capable of providing scene-specific spot imagery. The data from the satellite was mainly used for detailed mapping and other cartographic applications at the cadastral level, urban/rural infrastructure development and management, as well as Land Information System (LIS) and Geographic Information System (GIS) applications.";
+                    url = "https://www.isro.gov.in/CARTOSAT_2.html";
+                    break;
+                case "IRS-R2":
+                    description = "ResourceSat-2 is an environmental satellite from the Indian Space Research Organisation (ISRO). ResourceSat-2 is intended to continue the remote sensing data services to global users provided by RESOURCESAT-1, and to provide data with enhanced multispectral and spatial coverage as well.";
+                    url = "https://www.isro.gov.in/RESOURCESAT_2.html";
+                    break;
+                case "IRS-R2A":
+                    description = "ResourceSat-2A is an environmental satellite from the Indian Space Research Organisation (ISRO). ResourceSat-2A is intended to continue the remote sensing data services to global users provided by ResourceSat-1 and ResourceSat-2.";
+                    url = "https://www.isro.gov.in/RESOURCESAT_2A.html";
+                    break;
+            }
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "ISRO", 
+                    description,
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri(url)
+                );
+            }
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(JavaProperties metadata)

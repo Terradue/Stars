@@ -156,5 +156,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
         {
             return S1SafeStacFactory.Create(manifest, item, identifier);
         }
+
+        // This method is not normally used, subclass method is called directly with the proper instance
+        protected override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "ESA/EC (Copernicus)", 
+                    "The Sentinel-1 mission comprises a constellation of two polar-orbiting satellites, operating day and night performing C-band synthetic aperture radar imaging, enabling them to acquire imagery regardless of the weather.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://sentinel.esa.int/web/sentinel/missions/sentinel-1")
+                );
+            }
+            return Task.CompletedTask;
+        }
     }
 }

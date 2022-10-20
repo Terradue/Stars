@@ -218,6 +218,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         {
             stacItem.Properties.Add("product_type", auxiliary.DataType);
             FillBasicsProperties(auxiliary, stacItem.Properties);
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "USGS/NASA", 
+                    "Landsat 9 continues Landsat’s record of Earth’s land surface and largely replicates its predecessor Landsat 8.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.usgs.gov/landsat-missions/landsat-9")
+                );
+            }
         }
 
         private void AddViewStacExtension(Auxiliary auxiliary, StacItem stacItem)
