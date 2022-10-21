@@ -71,12 +71,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             AddProjStacExtension(auxiliary, stacItem);
             AddViewStacExtension(auxiliary, stacItem);
             AddProcessingStacExtension(auxiliary, stacItem);
-            AddOtherProperties(auxiliary, stacItem);
 
             AddAssets(stacItem, auxiliary, item);
 
             // AddEoBandPropertyInItem(stacItem);
             FillBasicsProperties(auxiliary, stacItem.Properties);
+            AddOtherProperties(auxiliary, stacItem);
 
             return StacItemNode.Create(stacItem, item.Uri);; ;
 

@@ -72,7 +72,20 @@
       26719,
       28763
     ],
-    "title": "GAOFEN-3 SAR L2 2021-01-07 09:54:49"
+    "title": "GAOFEN-3 SAR L2 2021-01-07 09:54:49",
+    "providers": [
+      {
+        "name": "CNSA",
+        "description": "The main goal of the CHEOS (China High-Resolution Earth Observation System) series is to provide NRT (Near-Real-Time) observations for disaster prevention and relief, climate change monitoring, geographical mapping, environment and resource surveying, and precision agricultural support.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "http://www.cnsa.gov.cn/english/n6465715/n6465716/c6840350/content.html"
+      }
+    ]
+
   },
   "bbox": [
     -65.649846,

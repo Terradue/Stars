@@ -89,12 +89,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             AddSatStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
-            AddOtherProperties(metadata, stacItem);
             AddProjStacExtension(metadata, stacItem);
 
             AddAssets(stacItem, metadata, item);
 
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem);
 
             return StacItemNode.Create(stacItem, item.Uri);;
         }

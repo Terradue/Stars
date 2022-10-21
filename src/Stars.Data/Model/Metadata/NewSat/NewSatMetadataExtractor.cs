@@ -192,7 +192,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
         
         private void AddOtherProperties(StacItem stacItem)
         {
-            if (IncludeProviderProperty)
+            if (IncludeProviderProperty && !stacItem.Properties.ContainsKey("providers"))
             {
                 AddSingleProvider(
                     stacItem.Properties,

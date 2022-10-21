@@ -64,7 +64,19 @@
     "processing:level": "L1T",
     "processing:software": {
       "Keystone": "4.7.16"
-    }
+    },
+    "providers": [
+      {
+        "name": "DMC",
+        "description": "UK-DMC2 is based on the SSTL-100 satellite platform. It provides high resolution (22m) imagery from a sun-synchronous orbit over very large areas (650km swath, 2000km along track), with a daily revisit to global targets.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/uk-dmc-2"
+      }
+    ]
   },
   "bbox": [
     122.345820746,

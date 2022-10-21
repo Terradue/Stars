@@ -68,7 +68,19 @@
     "view:sun_elevation": 58.58710476,
     "processing:level": "L1TP",
     "product_type": null,
-    "title": "LANDSAT-9 OLI TIRS L1TP 2022-02-03 07:35:28"
+    "title": "LANDSAT-9 OLI TIRS L1TP 2022-02-03 07:35:28",
+    "providers": [
+      {
+        "name": "USGS/NASA",
+        "description": "Landsat 9 continues Landsat’s record of Earth’s land surface and largely replicates its predecessor Landsat 8.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.usgs.gov/landsat-missions/landsat-9"
+      }
+    ]
   },
   "bbox": [
     35.61741,

@@ -71,6 +71,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             AddViewStacExtension(stacItem, metadata);
             AddProcessingStacExtension(stacItem, metadata);
             AddEoStacExtension(stacItem, metadata);
+            AddOtherProperties(stacItem, metadata);
 
             return StacItemNode.Create(stacItem, item.Uri);
         }
@@ -116,7 +117,6 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             FillDateTimeProperties(properties, metadata);
             FillInstrument(properties, metadata);
             FillBasicsProperties(properties, metadata);
-            AddOtherProperties(properties, metadata);
 
             StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), properties);
             
@@ -270,12 +270,12 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             );
         }
 
-        private void AddOtherProperties(IDictionary<String, object> properties, Schemas.Metadata metadata)
+        private void AddOtherProperties(StacItem stacItem, Schemas.Metadata metadata)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
-                    properties,
+                    stacItem.Properties,
                     "BlackSky", 
                     "BlackSky Constellation is a commercially owned and operated constellation of 60 high resolution imaging microsatellites developed by BlackSky Global. The constellation aims to provide higher temporal resolution and lower cost Earth imaging, and currently contains 17 operational microsatellites, each with an expected lifetime of 4 years.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },

@@ -9,37 +9,37 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782",
+  "id": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          121.47642,
-          9.582641
+          78.103878,
+          6.717527
         ],
         [
-          125.585941,
-          9.581573
+          82.526602,
+          6.642176
         ],
         [
-          125.957493,
-          13.463972
+          82.243556,
+          10.479674
         ],
         [
-          121.767747,
-          13.446533
+          77.745313,
+          10.58288
         ],
         [
-          121.47642,
-          9.582641
+          78.103878,
+          6.717527
         ]
       ]
     ]
   },
   "properties": {
-    "datetime": "2022-04-19T11:30:16Z",
-    "created": "2022-04-19T11:50:44Z",
+    "datetime": "2021-11-21T13:45:06Z",
+    "created": "2021-11-21T15:03:50Z",
     "platform": "gaofen-4",
     "constellation": "gaofen-4",
     "mission": "gaofen-4",
@@ -48,22 +48,22 @@
     ],
     "sensor_type": "optical",
     "gsd": 50.0,
-    "eo:cloud_cover": 0.16,
-    "sat:absolute_orbit": 38583,
-    "sat:relative_orbit": 38583,
+    "eo:cloud_cover": 0.03,
+    "sat:absolute_orbit": 34580,
+    "sat:relative_orbit": 34580,
     "sat:orbit_state": "descending",
     "view:off_nadir": 0.0,
     "view:incidence_angle": 0.0,
-    "view:sun_azimuth": 95.31,
-    "view:sun_elevation": 86.5452,
+    "view:sun_azimuth": 161.305,
+    "view:sun_elevation": 59.839,
     "proj:epsg": null,
     "proj:shape": [
       1024,
       1024
     ],
     "processing:level": "L1A",
+    "title": "GAOFEN-4 PMI L1A 2021-11-21 13:45:06",
     "product_type": "PAN_MS_L1A",
-    "title": "GAOFEN-4 PMI L1A 2022-04-19 11:30:16",
     "providers": [
       {
         "name": "CNSA",
@@ -78,10 +78,10 @@
     ]
   },
   "bbox": [
-    121.47642,
-    9.581573,
-    125.957493,
-    13.463972
+    77.745313,
+    6.642176,
+    82.526602,
+    10.58288
   ],
   "assets": {
     "IRS-thumbnail": {
@@ -89,36 +89,36 @@
       "roles": [
         "thumbnail"
       ],
-      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
-      "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
-      "file:size": 3534
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "file:size": 3148
     },
     "IRS-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
       ],
-      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.jpg",
-      "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.jpg",
-      "file:size": 0
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "file:size": 1
     },
     "IRS-rpb": {
       "type": "application/octet-stream",
       "roles": [
         "metadata"
       ],
-      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.rpb",
-      "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.rpb",
-      "file:size": 2709
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "file:size": 1
     },
     "IRS": {
       "type": "image/tiff",
       "roles": [
         "data"
       ],
-      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.tiff",
-      "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.tiff",
-      "file:size": 0,
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.tiff",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.tiff",
+      "file:size": 1,
       "proj:shape": [
         1024,
         1024
@@ -144,45 +144,45 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/GF4PMI490782/GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.xml",
-      "filename": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782.xml",
-      "file:size": 2496
+      "href": "data/GF4PMI439105/GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "filename": "GF4_IRS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "file:size": 2493
     },
     "PMS-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
       ],
-      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
-      "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782_thumb.jpg",
-      "file:size": 22342
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105_thumb.jpg",
+      "file:size": 15363
     },
     "PMS-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
       ],
-      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.jpg",
-      "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.jpg",
-      "file:size": 0
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.jpg",
+      "file:size": 1
     },
     "PMS-rpb": {
       "type": "application/octet-stream",
       "roles": [
         "metadata"
       ],
-      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.rpb",
-      "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.rpb",
-      "file:size": 2715
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.rpb",
+      "file:size": 1
     },
     "PMS": {
       "type": "image/tiff",
       "roles": [
         "data"
       ],
-      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.tiff",
-      "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.tiff",
-      "file:size": 0,
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.tiff",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.tiff",
+      "file:size": 1,
       "proj:shape": [
         10240,
         10240
@@ -253,9 +253,9 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/GF4PMI490782/GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.xml",
-      "filename": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782.xml",
-      "file:size": 2583
+      "href": "data/GF4PMI439105/GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "filename": "GF4_PMS_E80.6_N8.0_20211121_L1A0000439105.xml",
+      "file:size": 2579
     }
   },
   "links": []

@@ -102,6 +102,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             AddViewStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
 
             return StacItemNode.Create(stacItem, item.Uri);;
         }
@@ -237,13 +238,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         private IDictionary<string, object> GetCommonMetadata(Schemas.Metadata metadata)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
-
             FillDateTimeProperties(metadata, properties);
             // TODO Licensing
             // TODO Provider
             FillInstrument(metadata, properties);
             FillBasicsProperties(metadata, properties);
-            AddOtherProperties(metadata, properties);
 
             return properties;
         }

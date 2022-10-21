@@ -50,7 +50,19 @@
     "view:azimuth": 191.79635279,
     "view:incidence_angle": 15.74005824,
     "processing:level": "GEO",
-    "title": "CARTOSAT-2 PAN GEO 2018-12-28 02:15:56"
+    "title": "CARTOSAT-2 PAN GEO 2018-12-28 02:15:56",
+    "providers": [
+      {
+        "name": "ISRO",
+        "description": "Cartosat-2 was an advanced remote sensing satellite capable of providing scene-specific spot imagery. The data from the satellite was mainly used for detailed mapping and other cartographic applications at the cadastral level, urban/rural infrastructure development and management, as well as Land Information System (LIS) and Geographic Information System (GIS) applications.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.isro.gov.in/CARTOSAT_2.html"
+      }
+    ]
   },
   "bbox": [
     106.4116103,

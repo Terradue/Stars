@@ -65,12 +65,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
         internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, IItem item)
         {
-            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(metadata), GetCommonMetadata(metadata, item));
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(metadata), properties);
             AddSatStacExtension(metadata, stacItem);
             AddProjStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, stacItem);
             AddSarStacExtension(metadata, stacItem, item);
             AddProcessingStacExtension(metadata, stacItem);
+            GetCommonMetadata(metadata, properties, item);
             return stacItem;
         }
 
@@ -210,10 +212,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             
         }
 
-        private IDictionary<string, object> GetCommonMetadata(SAOCOM_XMLProduct metadata, IItem item)
+        private IDictionary<string, object> GetCommonMetadata(SAOCOM_XMLProduct metadata, Dictionary<string, object> properties, IItem item)
         {
-            Dictionary<string, object> properties = new Dictionary<string, object>();
-
             FillDateTimeProperties(metadata, properties);
             FillInstrument(metadata, properties);
             FillBasicsProperties(metadata, properties, item);
