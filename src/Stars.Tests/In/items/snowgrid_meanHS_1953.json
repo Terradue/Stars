@@ -1,0 +1,76 @@
+{
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "id": "snowgrid_meanHS_1953",
+    "properties": {
+        "start_datetime": "1952-12-01",
+        "end_datetime": "1953-05-31",
+        "datetime": "1952-12-01T00:00:00Z",
+        "description": "Name | Value \n---- | ----- \nAgency | **ZAMG** \n            Product | **snowgrid_meanHS_1953** \nDescription | **Seasonal mean of snow height.** \n Start Date | **1952-12-01** \nEnd Date | **1953-05-31** \n",
+        "title": "Mean snow height (HS) (meanHS) - 1953",
+        "mission": "SNOWGRID-CL",
+        "platform": "SNOWGRID",
+        "license": "CC-BY-SA 3.0"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    96.69999999999999,
+                    48.19999999999973
+                ],
+                [
+                    96.69999999999999,
+                    52.19999999999999
+                ],
+                [
+                    102.80000000000038,
+                    52.19999999999999
+                ],
+                [
+                    102.80000000000038,
+                    48.19999999999973
+                ],
+                [
+                    96.69999999999999,
+                    48.19999999999973
+                ]
+            ]
+        ]
+    },
+    "links": [
+        {
+            "rel": "root",
+            "href": "../catalog.json",
+            "type": "application/json"
+        },
+        {
+            "rel": "parent",
+            "href": "../catalog.json",
+            "type": "application/json"
+        }
+    ],
+    "assets": {
+        "snowgrid_meanHS_1953": {
+            "href": "https://store.terradue.com/temporary-uploads/livio/indices_cog/snowgrid/meanHS/GDA-AID-DR_UC7-ADBMON_Product_SNOWGRID-CL-meanHS-V01_IronDzud-Khuvsgul-1953.tif",
+            "type": "image/tiff; application=geotiff",
+            "title": "Mean snow height (HS) (meanHS) - 1953",
+            "description": "Seasonal mean of snow height.",
+            "roles": [
+                "data",
+                "overview"
+            ]
+        }
+    },
+    "bbox": [
+        96.69999999999999,
+        48.19999999999973,
+        102.80000000000038,
+        52.19999999999999
+    ],
+    "stac_extensions": [
+        "https://stac-extensions.github.io/version/v1.0.0/schema.json",
+        "https://terradue.github.io/disaster/v1.0.0/schema.json"
+    ]
+}

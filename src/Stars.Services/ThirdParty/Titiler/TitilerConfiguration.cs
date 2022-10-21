@@ -38,6 +38,7 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
 
         public Uri MapUri(Uri uri)
         {
+            if (UriMaps == null) return uri;
             var mapping = UriMaps.FirstOrDefault(kvp =>
             {
                 try

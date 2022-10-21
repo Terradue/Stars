@@ -92,13 +92,21 @@ namespace Terradue.Stars.Data.Model.Atom
             // Add functional links
             starsAtomItem.Links.AddRange(GetFunctionalLinks(stacItem, stacItemUri));
 
-            starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", string.Format("{0}", stacItem.DateTime.Start.ToString("O")));
+            starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", GetDcDateFormat(stacItem));
             starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", stacItem.Geometry.ToWkt());
 
             starsAtomItem.LastUpdatedTime = new DateTimeOffset(stacItem.Updated, new TimeSpan(0));
             starsAtomItem.PublishDate = new DateTimeOffset(stacItem.Created, new TimeSpan(0));
 
             return starsAtomItem;
+        }
+
+        private static object GetDcDateFormat(StacItem stacItem)
+        {
+            string datestr = stacItem.DateTime.Start.ToString("O");
+            if ( stacItem.DateTime.End != null && stacItem.DateTime.End != DateTime.MaxValue && stacItem.DateTime.End != stacItem.DateTime.Start)
+                datestr += "/" + stacItem.DateTime.End.ToString("O");
+            return datestr;
         }
 
         private static IEnumerable<SyndicationLink> GetFunctionalLinks(StacItem stacItem, Uri stacItemUri)
