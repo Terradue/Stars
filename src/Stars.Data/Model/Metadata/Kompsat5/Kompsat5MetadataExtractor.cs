@@ -158,7 +158,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
 
         private void AddOtherProperties(Auxiliary auxiliary, StacItem stacItem)
         {
-
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "KARI", 
+                    "KOMPSAT-5 has as primary mission objective the development, launch and operation of an Earth observation SAR (Synthetic Aperture Radar) satellite system to provide imagery for geographic information applications and to monitor environmental disasters.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.eoportal.org/satellite-missions/kompsat-5")
+                );
+            }
         }
 
         private void AddViewStacExtension(Auxiliary auxiliary, StacItem stacItem)

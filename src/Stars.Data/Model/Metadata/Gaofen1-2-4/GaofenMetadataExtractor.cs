@@ -89,9 +89,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
             // AddEoBandPropertyInItem(stacItem);
             FillBasicsProperties(productMetadataList[0], stacItem.Properties);
+            AddOtherProperties(productMetadataList[0], stacItem);
 
             return StacItemNode.Create(stacItem, item.Uri);
-            ;
         }
 
 
@@ -110,7 +110,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             AddViewStacExtension(productMetadata, stacItem);
             AddProjStacExtension(productMetadata, stacItem);
             AddProcessingStacExtension(productMetadata, stacItem);
-            AddOtherProperties(productMetadata, stacItem);
 
             return stacItem;
         }
@@ -794,6 +793,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
         private void AddOtherProperties(ProductMetaData productMetadata, StacItem stacItem) {
             stacItem.Properties.Add("product_type", "PAN_MS_" + productMetadata.ProductLevel.Replace("LEVEL", "L"));
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "CNSA", 
+                    "The main goal of the CHEOS (China High-Resolution Earth Observation System) series is to provide NRT (Near-Real-Time) observations for disaster prevention and relief, climate change monitoring, geographical mapping, environment and resource surveying, and precision agricultural support.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("http://www.cnsa.gov.cn/english/n6465715/n6465716/c6840350/content.html")
+                );
+            }
         }
 
         private void AddProcessingStacExtension(ProductMetaData productMetadata, StacItem stacItem) {

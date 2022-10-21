@@ -89,6 +89,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             await AddAssetsAsync(stacItem, item, gsd, productMetadata);
 
             FillBasicsProperties(stacItem.Properties);
+            AddOtherProperties(stacItem.Properties);
 
             return StacItemNode.Create(stacItem, item.Uri);
         }
@@ -406,6 +407,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
                 properties.GetProperty<string[]>("instruments").First().ToUpper(),
                 properties.GetProperty<string>("processing:level").ToUpper(),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)));
+        }
+
+
+        private void AddOtherProperties(IDictionary<string, object> properties) {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "Roscosmos", 
+                    "Resurs-P is a series of Russian commercial Earth observation satellites capable of acquiring high-resolution hyperspectral, wide-field multispectral, and panchromatic imagery.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.eoportal.org/satellite-missions/resurs-p")
+                );
+            }
         }
     }
 }

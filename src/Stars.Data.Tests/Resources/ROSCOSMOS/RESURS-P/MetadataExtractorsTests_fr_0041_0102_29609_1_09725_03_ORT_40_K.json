@@ -69,7 +69,19 @@
     "view:sun_elevation": 61.46144606305556,
     "proj:epsg": 32750,
     "processing:level": "4B",
-    "title": "RESURS-P KSHMSA 4B 2018-10-10 04:55:48"
+    "title": "RESURS-P KSHMSA 4B 2018-10-10 04:55:48",
+    "providers": [
+      {
+        "name": "Roscosmos",
+        "description": "Resurs-P is a series of Russian commercial Earth observation satellites capable of acquiring high-resolution hyperspectral, wide-field multispectral, and panchromatic imagery.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/resurs-p"
+      }
+    ]
   },
   "bbox": [
     119.29035823586005,

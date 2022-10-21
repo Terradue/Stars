@@ -93,6 +93,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
             AddProcessingStacExtension(metadata, stacItem);
 
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
 
             AddAssets(stacItem, metadata, isdMetadata, item);
 
@@ -566,6 +567,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
                 properties.GetProperty<string>("processing:level").ToUpper(),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
             );
+        }
+
+        private void AddOtherProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "DigitalGlobe/Maxar", 
+                    "WorldView are commercial imaging satellites of DigitalGlobe Inc. of Longmont, CO, USA. The overall objective is to meet the growing commercial demand for high-resolution satellite imagery.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://gisgeography.com/digitalglobe-satellite-imagery/")
+                );
+            }
         }
 
 

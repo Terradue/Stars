@@ -157,7 +157,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         private void AddOtherProperties(Product auxiliary, StacItem stacItem)
         {
-
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "CSA", 
+                    "The RADARSAT Constellation Mission (RCM) is Canada's new generation of Earth observation satellites. The RCM uses a trio of satellites to take daily scans of the country and its waters.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.asc-csa.gc.ca/eng/satellites/radarsat/what-is-rcm.asp")
+                );
+            }
         }
 
         private void AddViewStacExtension(Product auxiliary, StacItem stacItem)

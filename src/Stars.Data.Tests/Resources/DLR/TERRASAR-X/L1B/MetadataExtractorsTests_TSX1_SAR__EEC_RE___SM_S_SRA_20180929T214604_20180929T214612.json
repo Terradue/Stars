@@ -69,7 +69,19 @@
     "sar:product_type": "EEC",
     "sar:observation_direction": "right",
     "sar:center_frequency": 9649998358.0,
-    "processing:level": "L1B"
+    "processing:level": "L1B",
+    "providers": [
+      {
+        "name": "DLR",
+        "description": "TerraSAR-X is a German Earth-observation satellite. Its primary payload is an X-band radar sensor with a range of different modes of operation, allowing it to record images with different swath widths, resolutions and polarisations.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.dlr.de/content/en/articles/missions-projects/terrasar-x/terrasar-x-earth-observation-satellite.html"
+      }
+    ]
   },
   "bbox": [
     119.59287743075,

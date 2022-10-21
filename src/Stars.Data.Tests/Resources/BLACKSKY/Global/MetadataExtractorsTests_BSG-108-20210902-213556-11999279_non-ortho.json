@@ -75,7 +75,19 @@
       "view:sun_azimuth": 262.15057,
       "view:sun_elevation": 20.95552,
       "view:off_nadir": 13.258979,
-      "processing:level": "ORTHO"
+      "processing:level": "ORTHO",
+      "providers": [
+        {
+          "name": "BlackSky",
+          "description": "BlackSky Constellation is a commercially owned and operated constellation of 60 high resolution imaging microsatellites developed by BlackSky Global. The constellation aims to provide higher temporal resolution and lower cost Earth imaging, and currently contains 17 operational microsatellites, each with an expected lifetime of 4 years.",
+          "roles": [
+            "producer",
+            "processor",
+            "licensor"
+          ],
+          "url": "https://www.blacksky.com"
+        }
+      ]
     },
     "bbox": [
       -75.20606168353703,

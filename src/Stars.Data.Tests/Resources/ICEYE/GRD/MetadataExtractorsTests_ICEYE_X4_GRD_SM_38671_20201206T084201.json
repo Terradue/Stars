@@ -72,7 +72,19 @@
     "processing:level": "L1C",
     "processing:software": {
       "ICEYE": "ICEYE_P_1.22"
-    }
+    },
+    "providers": [
+      {
+        "name": "https://www.iceye.com/sar-data",
+        "description": "The ICEYE constellation is a constellation of X-band Synthetic Aperture Radar (SAR) Satellites. The ICEYE constellation is designed to provide persistent monitoring capabilities and a high resolution view of the Earth’s surface, with an overall mission objective to enable better decision making by providing timely and reliable Earth observation data.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.iceye.com/sar-data"
+      }
+    ]
   },
   "bbox": [
     -81.63303964724004,

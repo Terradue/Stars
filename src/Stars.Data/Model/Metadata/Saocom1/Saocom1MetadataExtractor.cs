@@ -65,12 +65,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
         internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, IItem item)
         {
-            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(metadata), GetCommonMetadata(metadata, item));
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(metadata), properties);
             AddSatStacExtension(metadata, stacItem);
             AddProjStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, stacItem);
             AddSarStacExtension(metadata, stacItem, item);
             AddProcessingStacExtension(metadata, stacItem);
+            GetCommonMetadata(metadata, properties, item);
             return stacItem;
         }
 
@@ -130,7 +132,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             if (int.TryParse(metadata.Channel[0].StateVectorData.OrbitNumber, out absOrbit))
                 sat.AbsoluteOrbit = absOrbit;
         }
-
 
         private string GetProductType(SAOCOM_XMLProduct metadata)
         {
@@ -211,13 +212,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             
         }
 
-        private IDictionary<string, object> GetCommonMetadata(SAOCOM_XMLProduct metadata, IItem item)
+        private IDictionary<string, object> GetCommonMetadata(SAOCOM_XMLProduct metadata, Dictionary<string, object> properties, IItem item)
         {
-            Dictionary<string, object> properties = new Dictionary<string, object>();
-
             FillDateTimeProperties(metadata, properties);
             FillInstrument(metadata, properties);
             FillBasicsProperties(metadata, properties, item);
+            AddOtherProperties(metadata, properties, item);
 
             return properties;
         }
@@ -277,6 +277,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 // remove previous values
                 properties.Remove("created");
                 properties.Add("created", creationdatetime.ToUniversalTime());
+            }
+        }
+
+        private void AddOtherProperties(SAOCOM_XMLProduct metadata, IDictionary<String, object> properties, IItem item)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "CONAE", 
+                    "The SAOCOM satellite series represents Argentina's approved polarimetric L-band SAR (Synthetic Aperture Radar) constellation of two spacecraft. The SAOCOM-1 mission is composed of two satellites (SAOCOM-1A and -1B) launched consecutively. The overall objective of SAOCOM is to provide an effective Earth observation and disaster monitoring capability.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("http://saocom.invap.com.ar")
+                );
             }
         }
 

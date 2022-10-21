@@ -60,7 +60,19 @@
     "view:off_nadir": 17.163,
     "view:sun_azimuth": 95.7233,
     "view:sun_elevation": 66.525,
-    "processing:level": "L2"
+    "processing:level": "L2",
+    "providers": [
+      {
+        "name": "INPE/CAST",
+        "description": "The China-Brazil Earth Resources Satellite mission is to provide remote sensing images to observe and monitor vegetation - especially deforestation in the Amazon region - the monitoring of water resources, agriculture, urban growth, land use and education.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "http://www.dgi.inpe.br/en"
+      }
+    ]
   },
   "bbox": [
     86.032584,

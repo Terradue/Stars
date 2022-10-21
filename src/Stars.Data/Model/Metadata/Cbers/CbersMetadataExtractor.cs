@@ -102,6 +102,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             AddViewStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
 
             return StacItemNode.Create(stacItem, item.Uri);;
         }
@@ -237,7 +238,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         private IDictionary<string, object> GetCommonMetadata(Schemas.Metadata metadata)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
-
             FillDateTimeProperties(metadata, properties);
             // TODO Licensing
             // TODO Provider
@@ -307,6 +307,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                 GetProcessingLevel(metadata),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
+        }
+
+        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "INPE/CAST", 
+                    "The China-Brazil Earth Resources Satellite mission is to provide remote sensing images to observe and monitor vegetation - especially deforestation in the Amazon region - the monitoring of water resources, agriculture, urban growth, land use and education.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("http://www.dgi.inpe.br/en")
+                );
+            }
         }
 
 

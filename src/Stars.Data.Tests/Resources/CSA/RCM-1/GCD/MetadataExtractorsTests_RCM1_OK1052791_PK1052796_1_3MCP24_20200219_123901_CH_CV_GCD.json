@@ -67,7 +67,19 @@
       30676,
       41156
     ],
-    "view:incidence_angle": 41.597970962524414
+    "view:incidence_angle": 41.597970962524414,
+    "providers": [
+      {
+        "name": "CSA",
+        "description": "The RADARSAT Constellation Mission (RCM) is Canada's new generation of Earth observation satellites. The RCM uses a trio of satellites to take daily scans of the country and its waters.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.asc-csa.gc.ca/eng/satellites/radarsat/what-is-rcm.asp"
+      }
+    ]
   },
   "bbox": [
     -97.281779166139,

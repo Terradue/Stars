@@ -73,7 +73,19 @@
       "PMS": "HPLevelProcessor_K3_v1.2_2020-03-09"
     },
     "product_type": "PAN_MS_L1G",
-    "title": "KOMPSAT-3 AEISS L1G 2020-12-21 01:39:41"
+    "title": "KOMPSAT-3 AEISS L1G 2020-12-21 01:39:41",
+    "providers": [
+      {
+        "name": "KARI",
+        "description": "KOMPSAT-3 is an optical high-resolution Korean observation mission. The objective is to provide observation continuity from the KOMPSAT-1 and KOMPSAT-2 missions to meet the nation's needs for high-resolution optical imagery required for GIS and other environmental, agricultural and oceanographic monitoring applications.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/kompsat-3"
+      }
+    ]
   },
   "bbox": [
     178.58476313,

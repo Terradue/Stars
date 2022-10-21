@@ -63,6 +63,9 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
             
             // Adds missing properties
             FillMissingProperties(stacItem);
+
+            // Adds other properties (provider)
+            AddOtherProperties(stacItem);
             
             // changes unit of measures in band properties
             UpdateBandsValues(stacItem);
@@ -187,6 +190,19 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
             stacItem.Assets.Remove("quicklook");
         }
         
+        private void AddOtherProperties(StacItem stacItem)
+        {
+            if (IncludeProviderProperty && !stacItem.Properties.ContainsKey("providers"))
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "Satellogic", 
+                    "Satellogic aims to provide real-time imaging of the entire planet on a daily basis.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://satellogic.com/technology/constellation/")
+                );
+            }
+        }
         
         private void AddL3Assets(IItem item,StacItem stacItem) {
             IAsset l3Tif = FindFirstAssetFromFileNameRegex(item, @".*L3.*\.tif");

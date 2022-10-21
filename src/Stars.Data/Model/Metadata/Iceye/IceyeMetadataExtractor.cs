@@ -67,6 +67,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
             AddSarStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
             return stacItem;
         }
 
@@ -214,6 +215,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
                 string.Join("/", GetPolarizations(metadata)),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture))
             );
+        }
+
+        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "https://www.iceye.com/sar-data", 
+                    "The ICEYE constellation is a constellation of X-band Synthetic Aperture Radar (SAR) Satellites. The ICEYE constellation is designed to provide persistent monitoring capabilities and a high resolution view of the Earth’s surface, with an overall mission objective to enable better decision making by providing timely and reliable Earth observation data.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.iceye.com/sar-data")
+                );
+            }
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)

@@ -74,7 +74,19 @@
     ],
     "view:incidence_angle": 43.23731173045056,
     "view:off_nadir": 39.02018880844116,
-    "processing:level": "L1D"
+    "processing:level": "L1D",
+    "providers": [
+      {
+        "name": "KARI",
+        "description": "KOMPSAT-5 has as primary mission objective the development, launch and operation of an Earth observation SAR (Synthetic Aperture Radar) satellite system to provide imagery for geographic information applications and to monitor environmental disasters.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/kompsat-5"
+      }
+    ]
   },
   "bbox": [
     34.68470494442572,

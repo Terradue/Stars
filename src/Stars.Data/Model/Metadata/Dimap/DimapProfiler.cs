@@ -285,5 +285,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 Dimap.Data_Processing.SPECTRAL_PROCESSING?.ToLower().Titleize());
             return title;
         }
+
+        internal virtual StacProvider GetStacProvider()
+        {
+            return null;
+        }
     }
 }

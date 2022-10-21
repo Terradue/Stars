@@ -56,7 +56,19 @@
     "view:off_nadir": 1.775957,
     "view:sun_azimuth": 113.788,
     "view:sun_elevation": 45.355,
-    "processing:level": "L2B"
+    "processing:level": "L2B",
+    "providers": [
+      {
+        "name": "ABAE",
+        "description": "The Venezuelan VRSS missions provide high-resolution land and vegetation observations to assess Venezuela's soil and water resources, collect images to help urban planners, monitor illegal mining and drug activities, and strengthen national defense, and support of disaster monitoring.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/vrss-1"
+      }
+    ]
   },
   "bbox": [
     122.173,

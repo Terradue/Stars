@@ -63,7 +63,19 @@
     ],
     "processing:level": "L1A",
     "product_type": "PAN_MS_L1A",
-    "title": "GAOFEN-4 PMI L1A 2021-11-21 13:45:06"
+    "title": "GAOFEN-4 PMI L1A 2021-11-21 13:45:06",
+    "providers": [
+      {
+        "name": "CNSA",
+        "description": "The main goal of the CHEOS (China High-Resolution Earth Observation System) series is to provide NRT (Near-Real-Time) observations for disaster prevention and relief, climate change monitoring, geographical mapping, environment and resource surveying, and precision agricultural support.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "http://www.cnsa.gov.cn/english/n6465715/n6465716/c6840350/content.html"
+      }
+    ]
   },
   "bbox": [
     77.745313,

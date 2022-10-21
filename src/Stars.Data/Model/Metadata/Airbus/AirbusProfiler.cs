@@ -362,5 +362,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 dataFile.Tile_R, dataFile.Tile_C);
             return title;
         }
+
+        internal virtual StacProvider GetStacProvider()
+        {
+            return null;
+        }
     }
 }

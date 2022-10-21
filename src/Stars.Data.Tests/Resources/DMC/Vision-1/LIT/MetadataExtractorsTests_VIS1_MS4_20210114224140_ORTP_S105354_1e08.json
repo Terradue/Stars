@@ -67,7 +67,19 @@
     "view:incidence_angle": 29.84419762114,
     "processing:software": {
       "Keystone": "4.8.8"
-    }
+    },
+    "providers": [
+      {
+        "name": "DMC/Airbus",
+        "description": "Vision-1 provides 0.9m resolution imagery in the panchromatic band and 3.5m in the multispectral bands (NIR, RGB), with a 20.8km swath width.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.intelligence-airbusds.com/imagery/constellation/vision1/"
+      }
+    ]
   },
   "bbox": [
     178.023620909,

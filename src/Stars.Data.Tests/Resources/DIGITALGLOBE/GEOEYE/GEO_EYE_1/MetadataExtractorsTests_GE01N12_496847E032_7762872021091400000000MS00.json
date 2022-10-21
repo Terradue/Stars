@@ -52,7 +52,19 @@
     "view:sun_elevation": 68.8,
     "proj:epsg": null,
     "processing:level": "LV1B",
-    "title": "GEOEYE-1 MSI LV1B 2021-09-14 08:27:09"
+    "title": "GEOEYE-1 MSI LV1B 2021-09-14 08:27:09",
+    "providers": [
+      {
+        "name": "DigitalGlobe/Maxar",
+        "description": "GeoEye-1 is a high-resolution imaging satellite. GeoEye-1 imagery is used for air and marine transportation, defence, disaster response, oil and gas exploration, mining exploration and production, mapping of remote regions, insurance and risk management, location-based services and agricultural crop management.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://gisgeography.com/digitalglobe-satellite-imagery/"
+      }
+    ]
   },
   "bbox": [
     32.6985048688606,
