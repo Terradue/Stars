@@ -68,7 +68,19 @@
     ],
     "view:off_nadir": 28.6,
     "processing:level": "L1.5",
-    "product_type": "FBD"
+    "product_type": "FBD",
+    "providers": [
+      {
+        "name": "JAXA",
+        "description": "The Advanced Land Observing Satellite-2 is a follow-on mission from the ALOS. ALOS has contributed to cartography, regional observation, disaster monitoring, and resource surveys, since its launch in 2006. ALOS-2 will succeed this mission with enhanced capabilities.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eorc.jaxa.jp/ALOS/en/alos-2/a2_about_e.htm"
+      }
+    ]
   },
   "bbox": [
     -70.663,

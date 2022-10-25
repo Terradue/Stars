@@ -129,7 +129,19 @@
       4980
     ],
     "processing:level": "L2B",
-    "title": "KANOPUS-V MSS-PSS L2B 2021-01-09 15:54:00"
+    "title": "KANOPUS-V MSS-PSS L2B 2021-01-09 15:54:00",
+    "providers": [
+      {
+        "name": "Roscosmos",
+        "description": "Kanopus-V is an Earth observation minisatellite mission of the Russian Space Agency, Roscosmos and ROSHYDROMET/Planeta. The overall objective is to monitor Earth's surface, the atmosphere, ionosphere, and magnetosphere to detect and study the probability of strong earthquake occurrence.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/kanopus-v-1"
+      }
+    ]
   },
   "bbox": [
     -65.4173902651187,

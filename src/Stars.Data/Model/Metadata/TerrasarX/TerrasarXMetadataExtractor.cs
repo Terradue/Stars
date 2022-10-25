@@ -72,6 +72,8 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             AddSarStacExtension(metadata, stacItem);
             AddProcessingStacExtension(metadata, stacItem);
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem);
+
             return stacItem;
         }
 
@@ -247,6 +249,21 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
             //TSX-1 SAR L1B SM 164 HH 2018-09-29T21:46:04.680000
         }
+
+        private void AddOtherProperties(level1Product metadata, StacItem stacItem)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "DLR", 
+                    "TerraSAR-X is a German Earth-observation satellite. Its primary payload is an X-band radar sensor with a range of different modes of operation, allowing it to record images with different swath widths, resolutions and polarisations.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.dlr.de/content/en/articles/missions-projects/terrasar-x/terrasar-x-earth-observation-satellite.html")
+                );
+            }
+        }
+
 
 
 

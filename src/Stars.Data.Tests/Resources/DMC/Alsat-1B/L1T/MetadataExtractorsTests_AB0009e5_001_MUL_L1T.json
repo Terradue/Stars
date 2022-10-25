@@ -64,7 +64,19 @@
     "processing:level": "L1T",
     "processing:software": {
       "Keystone": "4.7.16"
-    }
+    },
+    "providers": [
+      {
+        "name": "DMC/ASAL",
+        "description": "AlSat-1B is based on the SSTL-100 platform, hosting a 24m multispectral imager and a 12m panchromatic imager. The satellite is used for agricultural and disaster monitoring.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://asal.dz/?page_id=76"
+      }
+    ]
   },
   "bbox": [
     119.1754205411,

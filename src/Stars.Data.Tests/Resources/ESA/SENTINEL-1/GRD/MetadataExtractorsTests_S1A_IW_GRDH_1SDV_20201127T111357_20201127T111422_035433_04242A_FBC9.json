@@ -67,7 +67,19 @@
       "VV",
       "VH"
     ],
-    "sar:product_type": "GRD"
+    "sar:product_type": "GRD",
+    "providers": [
+      {
+        "name": "ESA/EC (Copernicus)",
+        "description": "The Sentinel-1 mission comprises a constellation of two polar-orbiting satellites, operating day and night performing C-band synthetic aperture radar imaging, enabling them to acquire imagery regardless of the weather.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://sentinel.esa.int/web/sentinel/missions/sentinel-1"
+      }
+    ]
   },
   "bbox": [
     -82.307686,

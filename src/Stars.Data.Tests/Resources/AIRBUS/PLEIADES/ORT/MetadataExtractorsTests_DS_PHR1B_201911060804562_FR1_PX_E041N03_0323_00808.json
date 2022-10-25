@@ -62,7 +62,19 @@
     "processing:level": "ORTHO/BASIC",
     "processing:software": {
       "IPU V_05_03": "V_05_03"
-    }
+    },
+    "providers": [
+      {
+        "name": "Airbus",
+        "description": "The identical Pléiades 1A and Pléiades 1B satellites deliver 50cm imagery products with a 20km swath. The product's location accuracy and excellent image quality make it an ideal source for data for any civil or military project.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.intelligence-airbusds.com/imagery/constellation/pleiades/"
+      }
+    ]
   },
   "bbox": [
     41.16877719943526,

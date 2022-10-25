@@ -71,7 +71,19 @@
     "sar:looks_equivalent_number": 3.0,
     "sar:resolution_range": 10.0,
     "sar:resolution_azimuth": 10.0,
-    "processing:level": "L1C"
+    "processing:level": "L1C",
+    "providers": [
+      {
+        "name": "CONAE",
+        "description": "The SAOCOM satellite series represents Argentina's approved polarimetric L-band SAR (Synthetic Aperture Radar) constellation of two spacecraft. The SAOCOM-1 mission is composed of two satellites (SAOCOM-1A and -1B) launched consecutively. The overall objective of SAOCOM is to provide an effective Earth observation and disaster monitoring capability.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "http://saocom.invap.com.ar"
+      }
+    ]
   },
   "bbox": [
     119.694166666667,

@@ -93,6 +93,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
             AddProcessingStacExtension(metadata, stacItem);
 
             FillBasicsProperties(metadata, stacItem.Properties);
+            AddOtherProperties(metadata, stacItem.Properties);
 
             AddAssets(stacItem, metadata, isdMetadata, item);
 
@@ -379,6 +380,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
             );
         }
 
+
+        private void AddOtherProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        {
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    properties,
+                    "DigitalGlobe/Maxar", 
+                    "GeoEye-1 is a high-resolution imaging satellite. GeoEye-1 imagery is used for air and marine transportation, defence, disaster response, oil and gas exploration, mining exploration and production, mapping of remote regions, insurance and risk management, location-based services and agricultural crop management.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://gisgeography.com/digitalglobe-satellite-imagery/")
+                );
+            }
+        }
 
         private void AddViewStacExtension(Isd productMetadata, StacItem stacItem)
         {

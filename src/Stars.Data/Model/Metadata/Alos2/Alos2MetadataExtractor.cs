@@ -195,6 +195,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
         private void AddOtherProperties(Alos2Metadata metadata, StacItem stacItem)
         {
             stacItem.Properties.Add("product_type", metadata.GetString("Ext_ObservationMode"));
+            if (IncludeProviderProperty)
+            {
+                AddSingleProvider(
+                    stacItem.Properties,
+                    "JAXA", 
+                    "The Advanced Land Observing Satellite-2 is a follow-on mission from the ALOS. ALOS has contributed to cartography, regional observation, disaster monitoring, and resource surveys, since its launch in 2006. ALOS-2 will succeed this mission with enhanced capabilities.",
+                    new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
+                    new Uri("https://www.eorc.jaxa.jp/ALOS/en/alos-2/a2_about_e.htm")
+                );
+            }
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Alos2Metadata metadata)

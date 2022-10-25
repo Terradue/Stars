@@ -1,3 +1,4 @@
+using System;
 using Stac.Extensions.Eo;
 using Stac;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
@@ -58,6 +59,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
         internal override string GetSensorMode()
         {
             return "optical";
+        }
+
+        internal override StacProvider GetStacProvider()
+        {
+            StacProvider provider = new StacProvider("DMC/ASAL", new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor });
+            provider.Description = "AlSat-1B is based on the SSTL-100 platform, hosting a 24m multispectral imager and a 12m panchromatic imager. The satellite is used for agricultural and disaster monitoring.";
+            provider.Uri = new Uri("https://asal.dz/?page_id=76");
+            return provider;
         }
     }
 }

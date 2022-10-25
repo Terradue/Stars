@@ -54,7 +54,19 @@
     "view:sun_azimuth": 59.889207,
     "view:sun_elevation": 60.335428,
     "processing:level": "STD",
-    "title": "RESOURCESAT-2A L3 STD 2019-09-30 14:01:58"
+    "title": "RESOURCESAT-2A L3 STD 2019-09-30 14:01:58",
+    "providers": [
+      {
+        "name": "ISRO",
+        "description": "ResourceSat-2A is an environmental satellite from the Indian Space Research Organisation (ISRO). ResourceSat-2A is intended to continue the remote sensing data services to global users provided by ResourceSat-1 and ResourceSat-2.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.isro.gov.in/RESOURCESAT_2A.html"
+      }
+    ]
   },
   "bbox": [
     -59.242109,

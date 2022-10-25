@@ -73,7 +73,16 @@ namespace Terradue.Data.Tests.Harvesters
                 stacValidator.ValidateJson(actualJson);
                 // Dot NOT uncomment unless you are changing the expected JSON
                 // WriteJson(Path.Join(datadir, "../.."), actualJson, stacItem.Id);
-                var expectedJson = GetJson(Path.Join(datadir, "../.."), stacItem.Id);
+                string expectedJson = null;
+                try
+                {
+                    expectedJson = GetJson(Path.Join(datadir, "../.."), stacItem.Id);
+                }
+                catch (System.Exception)
+                {
+                    System.Console.WriteLine(actualJson);
+                    throw;
+                } 
                 // stacValidator.ValidateJson(expectedJson);
                 
                 try

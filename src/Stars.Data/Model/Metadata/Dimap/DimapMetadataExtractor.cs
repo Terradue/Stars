@@ -96,6 +96,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             AddProcessingStacExtension(dimapProfiler, stacItem);
             AddEoStacExtension(dimapProfiler, stacItem);
             FillBasicsProperties(dimapProfiler, stacItem.Properties);
+            AddOtherProperties(dimapProfiler, stacItem.Properties);
             return stacItem;
         }
 
@@ -235,6 +236,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             // title
             properties.Remove("title");
             properties.Add("title", dimapProfiler.GetTitle(properties));
+        }
+
+        private void AddOtherProperties(DimapProfiler dimapProfiler, IDictionary<string, object> properties)
+        {
+            if (IncludeProviderProperty)
+            {
+                StacProvider provider = dimapProfiler.GetStacProvider();
+                if (provider != null) properties.Add("providers", new StacProvider[] { provider });
+            }
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(DimapProfiler dimapProfiler)

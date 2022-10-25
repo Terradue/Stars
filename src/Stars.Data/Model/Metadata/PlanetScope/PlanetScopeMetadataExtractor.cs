@@ -42,8 +42,9 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
                 PlanetScopeMetadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine("ERROR-XXX {0}\n{1}", e.Message, e.StackTrace);
                 return false;
             }
         }
@@ -62,7 +63,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
 
         internal virtual StacItem CreateStacItem(PlanetScopeMetadata metadata, IItem item)
         {
-            string identifier = FindFirstAssetFromFileNameRegex(item, @".*PT.*\.tif").Uri.ToString();
+            string identifier = FindFirstAssetFromFileNameRegex(item, @".*\.tif").Uri.ToString();
             string filename = identifier.Substring(identifier.LastIndexOf('/') + 1).Split('.')[0];
 
             StacItem stacItem = new StacItem(filename, GetGeometry(metadata), GetCommonMetadata(metadata));
@@ -253,7 +254,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
             }
 
 
-            IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, @".*PT.*\.tif");
+            IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, @".*\.tif");
             if (dataAsset != null)
             {
                 AddBandAsset(stacItem, metadata, dataAsset);
@@ -272,7 +273,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*AnalyticMS.*\.xml");
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*Analytic(MS)?_metadata.*\.xml");
 
             if (manifestAsset == null)
             {

@@ -97,5 +97,22 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
         {
             return "optical";
         }
+
+        internal override StacProvider GetStacProvider()
+        {
+            string platform = GetPlatform().ToLower();
+            if (platform.Substring(0, 6) == "uk-dmc")
+            {
+                StacProvider provider = new StacProvider("DMC", new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor });
+                provider.Description = "UK-DMC2 is based on the SSTL-100 satellite platform. It provides high resolution (22m) imagery from a sun-synchronous orbit over very large areas (650km swath, 2000km along track), with a daily revisit to global targets.";
+                provider.Uri = new Uri("https://www.eoportal.org/satellite-missions/uk-dmc-2");
+                return provider;
+            }
+            else if (platform == "alsat-1b")
+            {
+                return (new Alsat1BDimapProfiler(null)).GetStacProvider();
+            }
+            return null;
+        }
     }
 }
