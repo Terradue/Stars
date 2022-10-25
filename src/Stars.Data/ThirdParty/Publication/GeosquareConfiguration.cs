@@ -64,6 +64,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             return uri.ToString();
         }
 
+        [Obsolete("Use GeosquareService.CreateModelFromPublication instead")]
         public GeosquarePublicationModel CreatePublicationModel(GeosquarePublicationModel publishCatalogModel, ClaimsPrincipal user)
         {
             GeosquarePublicationModel geosquarePublicationModel = new GeosquarePublicationModel(publishCatalogModel);
