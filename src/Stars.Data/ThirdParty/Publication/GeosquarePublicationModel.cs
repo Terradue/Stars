@@ -36,6 +36,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             CreateIndex = publishCatalogModel.CreateIndex;
             Collection = publishCatalogModel.Collection;
             CustomLinkUpdater = publishCatalogModel.CustomLinkUpdater;
+            GeosquareBaseUrl = publishCatalogModel.GeosquareBaseUrl;
         }
 
         /// <summary>
@@ -106,6 +107,12 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         }
 
         public bool ThrowPublicationException { get; set; } = true;
+
+        public string GeosquareBaseUrl { get; set; }
+
+        public Uri GeosquareBaseUri => new Uri(GeosquareBaseUrl);
+
+        public string CatalogId => GeosquareBaseUrl;
     }
 
 }
