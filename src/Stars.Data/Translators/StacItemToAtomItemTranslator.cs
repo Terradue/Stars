@@ -10,6 +10,7 @@ using System;
 using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 using Microsoft.Extensions.DependencyInjection;
+using Terradue.Stars.Services.ThirdParty.Egms;
 using System.Threading;
 
 namespace Terradue.Stars.Data.Translators
@@ -58,8 +59,19 @@ namespace Terradue.Stars.Data.Translators
             }
 
             // if no previous image offering set, then let's try a simple overlay offering
+            // if (!imageOfferingSet)
+            //     atomItem.AddImageOverlayOffering(stacItemNode, titilerService);
+
+            // Add offering via egms if possible
+            EgmsService egmsService = serviceProvider.GetService<EgmsService>();                        
+            if (egmsService != null)
+            {
+                imageOfferingSet = imageOfferingSet || atomItem.TryAddEGMSOffering(stacItemNode, egmsService);
+            }
+
+            // if no previous image offering set, then let's try a simple overlay offering
             if (!imageOfferingSet)
-                atomItem.AddImageOverlayOffering(stacItemNode, titilerService);
+                atomItem.AddImageOverlayOffering(stacItemNode);
 
             return atomItem;
         }
