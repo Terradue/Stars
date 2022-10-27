@@ -30,7 +30,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 
         public Uri GetCoverageLink(StacItem stacItem)
         {
-            var link = stacItem.Links.Where(a => a.RelationshipType == "datacube").First();
+            var link = stacItem.Links.Where(a => a.RelationshipType == "tsapi").First();
             if(link != null) return link.Uri;
             return null;
         }
