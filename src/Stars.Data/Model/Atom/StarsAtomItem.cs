@@ -208,7 +208,7 @@ namespace Terradue.Stars.Data.Model.Atom
 
         public bool TryAddEGMSOffering(StacItemNode stacItemNode, EgmsService egmsService)
         {
-            var egmsServiceUri = egmsService.GetCoverageLink(stacItemNode.StacItem);
+            var egmsServiceUri = egmsService.GetEgmsApiLink(stacItemNode.StacItem);
             if (egmsServiceUri != null)
             {                
                 ElementExtensions.Add(new OwcOffering()

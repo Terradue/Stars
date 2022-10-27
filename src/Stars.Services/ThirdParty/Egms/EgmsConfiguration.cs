@@ -22,22 +22,6 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 
         public Dictionary<string, UriMap> UriMaps { get; set; }
 
-        public Uri MapUri(Uri uri)
-        {
-            var mapping = UriMaps.FirstOrDefault(kvp =>
-            {
-                try
-                {
-                    Regex regex = new Regex(kvp.Value.Pattern);
-                    return regex.IsMatch(uri.ToString());
-                }
-                catch { }
-                return false;
-            });
-            if (mapping.Value != null && !string.IsNullOrEmpty(mapping.Value.Replacement))
-                return new Uri(Regex.Replace(uri.ToString(), mapping.Value.Pattern, mapping.Value.Replacement));
-            return uri;
-        }
     }
 
     public class UriMap
