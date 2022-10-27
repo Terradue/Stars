@@ -18,6 +18,7 @@ using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 using Stac.Extensions.File;
 using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.ThirdParty.Egms;
 
 namespace Terradue.Stars.Data.Model.Atom
 {
@@ -205,7 +206,7 @@ namespace Terradue.Stars.Data.Model.Atom
             return false;
         }
 
-        public bool AddImageOverlayOffering(StacItemNode stacItemNode, TitilerService titilerService)
+        public bool AddImageOverlayOffering(StacItemNode stacItemNode)
         {
             var imageOverview = SelectOverlayOverviewAssets(stacItemNode.StacItem).FirstOrDefault();
             if (imageOverview.Key != null)
@@ -228,6 +229,27 @@ namespace Terradue.Stars.Data.Model.Atom
                         Type = imageOverview.Value.MediaType.ToString()
                         }},
                     Code = "http://www.opengis.net/spec/owc-atom/1.0/req/img"
+                }.CreateReader());
+                return true;
+            }
+            return false;
+        }
+
+        public bool TryAddEGMSOffering(StacItemNode stacItemNode, EgmsService egmsService)
+        {
+            var egmsServiceUri = egmsService.GetEgmsApiLink(stacItemNode.StacItem);
+            if (egmsServiceUri != null)
+            {                
+                ElementExtensions.Add(new OwcOffering()
+                {
+                    Operations = new OwcOperation[]{new OwcOperation()
+                        {
+                            Href = egmsServiceUri.ToString(),
+                            Type = "application/prs.coverage+json",
+                            Code = "egms",
+                            Method = "GET"
+                        }},
+                    Code = "http://www.terradue.com/egms"
                 }.CreateReader());
                 return true;
             }

@@ -7,8 +7,9 @@ using Stac;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Model.Atom;
 using System.Threading;
+using System.Xml;
 
-namespace Terradue.Data.Tests.Harvesters
+namespace Terradue.Data.Tests.Translators
 {
     public class StacItemToAtomItemTests : TestBase
     {
@@ -46,10 +47,49 @@ namespace Terradue.Data.Tests.Harvesters
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
-            ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
+            Terradue.ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
 
             Assert.NotNull(legendLink);
             Assert.Equal("https://test.com/legend.png", legendLink.Uri.AbsoluteUri);
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task EGMS()
+        {
+            string json = GetJson("Translators");
+
+            ValidateJson(json);
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.Translate<AtomItemNode>(stacItemNode);
+
+            bool egmsIsPresent = false;
+            if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
+			{
+
+				foreach (var ext in atomItemNode.AtomItem.ElementExtensions)
+				{
+
+					XmlReader xr = ext.GetReader();
+
+					switch (xr.NamespaceURI)
+					{
+						// 1) search for georss
+						case "http://www.terradue.com/egms":
+                            egmsIsPresent = true;
+                        break;
+                        default:
+                        break;
+                    }
+                }
+            }
+
+            Assert.True(egmsIsPresent);            
         }
 
     }
