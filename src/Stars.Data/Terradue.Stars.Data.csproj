@@ -4,7 +4,7 @@
         <ProjectName>Terradue.Stars.Data</ProjectName>
         <Title>Terradue.Stars.Data</Title>
         <Description>Collection of data Plugins for Terradue.Stars</Description>
-        <Version>2.5.0</Version>
+        <Version>2.5.1</Version>
         <!-- <VersionSuffix>beta.8</VersionSuffix> -->
         <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
         <NoWarn>NU1603</NoWarn>
@@ -26,7 +26,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.*" />
         <PackageReference Include="Html2Markdown" Version="3.3.1.407" />
         <PackageReference Include="Markdig" Version="0.22.0" />
-        <PackageReference Include="Humanizer" Version="2.8.26" />
+        <PackageReference Include="Humanizer" Version="2.13.*" />
         <PackageReference Include="Terradue.MetadataExtractor" Version="1.3.0" />
         <PackageReference Include="ProjNet" Version="2.0.0" />
         <PackageReference Include="MimeTypes" Version="2.0.2" />
