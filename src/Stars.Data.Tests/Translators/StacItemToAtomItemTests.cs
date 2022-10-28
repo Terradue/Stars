@@ -66,7 +66,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
 
-            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.Translate<AtomItemNode>(stacItemNode);
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
             bool egmsIsPresent = false;
             if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
