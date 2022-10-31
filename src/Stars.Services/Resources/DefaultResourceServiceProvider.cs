@@ -150,6 +150,11 @@ namespace Terradue.Stars.Services.Resources
             // Unknown
             if ( finalException is AmazonS3Exception amazonS3Exception){
                 logger.LogDebug(amazonS3Exception.ResponseBody);
+                if ( amazonS3Exception.InnerException is Amazon.Runtime.Internal.HttpErrorResponseException httpErrorResponseException){
+                    var responseStream = httpErrorResponseException.Response.ResponseBody.OpenResponseAsync();
+                    var reader = new StreamReader(responseStream.Result);
+                    logger.LogDebug(reader.ReadToEnd());
+                }
             }
             throw finalException;
         }
