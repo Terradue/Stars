@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
@@ -39,24 +38,7 @@ namespace Terradue.Stars.Services.Resources
             gomr.Key = string.IsNullOrEmpty(s3Url.Key) ? "/" : s3Url.Key;
             if (requester_pays.HasValue && requester_pays.Value)
                 gomr.RequestPayer = RequestPayer.Requester;
-            try
-            {
-                ObjectMetadata = await Client.GetObjectMetadataAsync(gomr, ct);
-            }
-            catch (AmazonS3Exception e)
-            {
-                if (e is AmazonS3Exception amazonS3Exception)
-                {
-                    Console.WriteLine(amazonS3Exception.ResponseBody);
-                    if (amazonS3Exception.InnerException is Amazon.Runtime.Internal.HttpErrorResponseException httpErrorResponseException)
-                    {
-                        var responseStream = httpErrorResponseException.Response.ResponseBody.OpenResponseAsync();
-                        var reader = new StreamReader(responseStream.Result);
-                        Console.WriteLine(reader.ReadToEnd());
-                    }
-                }
-                throw;
-            }
+            ObjectMetadata = await Client.GetObjectMetadataAsync(gomr, ct);
         }
 
         public ContentType ContentType => ObjectMetadata?.Headers.ContentType != null ? new ContentType(ObjectMetadata?.Headers.ContentType) : null;

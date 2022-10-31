@@ -148,6 +148,10 @@ namespace Terradue.Stars.Services.Resources
             }
 
             // Unknown
+            if (finalException is AmazonS3Exception amazonS3Exception)
+            {
+                logger.LogDebug(amazonS3Exception.ResponseBody);
+            }
             throw finalException;
         }
 
