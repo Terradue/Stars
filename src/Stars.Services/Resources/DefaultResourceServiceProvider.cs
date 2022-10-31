@@ -37,6 +37,7 @@ namespace Terradue.Stars.Services.Resources
 
         public async Task<IStreamResource> CreateStreamResourceAsync(IResource resource, CancellationToken ct)
         {
+
             Exception finalException = null;
 
             // Local file
@@ -70,16 +71,6 @@ namespace Terradue.Stars.Services.Resources
                 catch (AmazonS3Exception e)
                 {
                     logger.LogError(e, "Error loading S3 resource {0} : {1}", resource.Uri, e.Message);
-                    if (e is AmazonS3Exception amazonS3Exception)
-                    {
-                        logger.LogDebug(amazonS3Exception.ResponseBody);
-                        if (amazonS3Exception.InnerException is Amazon.Runtime.Internal.HttpErrorResponseException httpErrorResponseException)
-                        {
-                            var responseStream = httpErrorResponseException.Response.ResponseBody.OpenResponseAsync();
-                            var reader = new StreamReader(responseStream.Result);
-                            logger.LogDebug(reader.ReadToEnd());
-                        }
-                    }
                     finalException = e;
                 }
                 catch (Exception e)
@@ -157,7 +148,6 @@ namespace Terradue.Stars.Services.Resources
             }
 
             // Unknown
-
             throw finalException;
         }
 
