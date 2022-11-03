@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Terradue.Stars.Interface;
 using Stac.Common;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Terradue.Stars.Services.ThirdParty.Egms
 {
@@ -38,7 +39,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 
         public bool IsAvailable => Configuration != null;
 
-        public async Task<StacObjectLink> CreateNewTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> ingestionRequest, CancellationToken cancellationToken)
+        public async Task<StacCollection> CreateNewTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> ingestionRequest, CancellationToken cancellationToken)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = Configuration.BaseUri;
@@ -51,16 +52,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             var response = await client.SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            return GetCollectionLink(await GetCollectionFromResponseAsync(response), response.Headers.Location);
-        }
-
-        private StacObjectLink GetCollectionLink(StacCollection collection, Uri uri)
-        {
-            StacObjectLink collectionLink = (StacObjectLink)StacLink.CreateObjectLink(collection, uri);
-            collectionLink.RelationshipType = "tsapi";
-            collectionLink.Title = collection.Title;
-            collectionLink.Type = collection.MediaType.ToString();
-            return collectionLink;
+            return await GetCollectionFromResponseAsync(response);
         }
 
         private async Task<StacCollection> GetCollectionFromResponseAsync(HttpResponseMessage response)
@@ -68,7 +60,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             return StacConvert.Deserialize<StacCollection>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<StacObjectLink> UpdateTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> updateRequest, CancellationToken cancellationToken)
+        public async Task<StacCollection> UpdateTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> updateRequest, CancellationToken cancellationToken)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = Configuration.BaseUri;
@@ -81,12 +73,11 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             response.EnsureSuccessStatusCode();
 
             collection = await GetCollectionFromResponseAsync(response);
-            var uri = new Uri(Configuration.BaseUri, $"api/ns/${updateRequest.NamespaceId}/cs/{collection.Id}");
 
-            return GetCollectionLink(collection, uri);
+            return collection;
         }
 
-        public async Task<StacObjectLink> PatchTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<Patch> patchRequest, CancellationToken cancellationToken)
+        public async Task<StacCollection> PatchTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<Patch> patchRequest, CancellationToken cancellationToken)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = Configuration.BaseUri;
@@ -99,9 +90,8 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             response.EnsureSuccessStatusCode();
 
             StacCollection collection = await GetCollectionFromResponseAsync(response);
-            var uri = new Uri(Configuration.BaseUri, $"api/ns/${patchRequest.NamespaceId}/cs/{collection.Id}");
 
-            return GetCollectionLink(collection, uri);
+            return collection;
         }
 
         public async Task DeleteTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> deleteRequest, CancellationToken cancellationToken)
@@ -123,5 +113,22 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             return null;
         }
 
+        public async Task<IAbstractTimeSeriesOperationStatus<T>> GetTimeSeriesOperationStatusAsync<T>(StacCollection collection, CancellationToken cancellationToken)
+        {
+            var statusLinks = collection.Links.Where(a => a.RelationshipType == "ts:status");
+            if (statusLinks.Count() == 0)
+                throw new Exception("No timeseries status link found in collection");
+            var client = _httpClientFactory.CreateClient();
+            List<EgmsTimeSeriesImportTask> statuses = new List<EgmsTimeSeriesImportTask>();
+
+            foreach (var statusLink in statusLinks)
+            {
+                var json = await client.GetStringAsync(statusLink.Uri);
+                statuses.Add(JsonConvert.DeserializeObject<EgmsTimeSeriesImportTask>(json));
+            }
+
+            return new EgmsTimeSeriesOperationStatus(collection, statuses) as IAbstractTimeSeriesOperationStatus<T>;
+
+        }
     }
 }

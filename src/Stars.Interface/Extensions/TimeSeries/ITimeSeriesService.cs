@@ -8,12 +8,14 @@ namespace Terradue.Stars.Interface.Extensions.TimeSeries
 {
     public interface ITimeSeriesService
     {
-        Task<StacObjectLink> CreateNewTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> request, CancellationToken cancellationToken);
+        Task<StacCollection> CreateNewTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> request, CancellationToken cancellationToken);
 
-        Task<StacObjectLink> UpdateTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> request, CancellationToken cancellationToken);
+        Task<StacCollection> UpdateTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> request, CancellationToken cancellationToken);
 
-        Task<StacObjectLink> PatchTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<Patch> request, CancellationToken cancellationToken);
+        Task<StacCollection> PatchTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<Patch> request, CancellationToken cancellationToken);
 
         Task DeleteTimeSeriesCollectionAsync(IAbstractTimeSeriesOperationRequest<StacCollection> request, CancellationToken cancellationToken);
+
+        Task<IAbstractTimeSeriesOperationStatus<T>> GetTimeSeriesOperationStatusAsync<T>(StacCollection collection, CancellationToken cancellationToken);
     }
 }
