@@ -205,24 +205,31 @@ namespace Terradue.Stars.Services.Resources
                 awsOptions.DefaultClientConfig.ServiceURL = s3Url.EndpointUrl.ToString();
             }
 
+            // Case of credentials in the configuration
             if (!string.IsNullOrEmpty(s3Configuration.Value?.AccessKey) && !string.IsNullOrEmpty(s3Configuration.Value?.SecretKey))
             {
                 awsOptions.Credentials = new BasicAWSCredentials(s3Configuration.Value.AccessKey, s3Configuration.Value.SecretKey);
             }
 
-            AmazonS3Config amazonS3Config = CreateS3Configuration(awsOptions);
+            // Case of region not in the configuration but in the S3Url
+            if (awsOptions.Region == null && !string.IsNullOrEmpty(s3Url.Region))
+            {
+                awsOptions.Region = RegionEndpoint.GetBySystemName(s3Url.Region);
+            }
+
+            AmazonCustomS3Config amazonS3Config = CreateS3Configuration(awsOptions);
 
             if (s3Configuration.Value?.ForcePathStyle == true || s3Url.PathStyle)
             {
                 amazonS3Config.ForcePathStyle = true;
             }
 
-            if (string.IsNullOrEmpty(amazonS3Config.ServiceURL))
-            {
-                logger?.LogInformation($"No Service URL configured, defaulting to {Amazon.RegionEndpoint.USEast1}");
-                amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.USEast1;
-                // amazonS3Config.ServiceURL = "https://s3.us-east-1.amazonaws.com";
-            }
+            // if (string.IsNullOrEmpty(amazonS3Config.ServiceURL))
+            // {
+            //     logger?.LogInformation($"No Service URL configured, defaulting to {Amazon.RegionEndpoint.USEast1}");
+            //     amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.USEast1;
+            //     // amazonS3Config.ServiceURL = "https://s3.us-east-1.amazonaws.com";
+            // }
 
             amazonS3Config.AllowAutoRedirect = true;
             amazonS3Config.RetryMode = RequestRetryMode.Standard;
@@ -240,9 +247,9 @@ namespace Terradue.Stars.Services.Resources
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static AmazonS3Config CreateS3Configuration(AWSOptions options)
+        private static AmazonCustomS3Config CreateS3Configuration(AWSOptions options)
         {
-            AmazonS3Config config = new AmazonS3Config();
+            AmazonCustomS3Config config = new AmazonCustomS3Config();
 
             if (options == null)
             {
@@ -292,9 +299,14 @@ namespace Terradue.Stars.Services.Resources
             // Setting RegionEndpoint only if ServiceURL was not set, because ServiceURL value will be lost otherwise
             if (options.Region != null)
             {
+                config.ForceCustomRegion(options.Region.SystemName);
                 if (string.IsNullOrEmpty(defaultConfig.ServiceURL))
                 {
                     config.RegionEndpoint = options.Region;
+                }
+                else
+                {
+                    config.SetServiceURL(defaultConfig.ServiceURL);
                 }
             }
 
