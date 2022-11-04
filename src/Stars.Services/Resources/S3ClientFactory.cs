@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Amazon;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
@@ -59,14 +60,9 @@ namespace Terradue.Stars.Services.Resources
             {
                 s3Config.AmazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(region);
             }
-            s3Config.AWSCredentials = CreateCredentials(s3Url);
+            s3Config.AWSCredentials = GetConfiguredCredentials(s3Url);
 
             return CreateS3Client(asset, s3Config);
-        }
-
-        public string GetPersonalStoragePolicyName(IIdentityProvider identityProvider)
-        {
-            return string.Format(s3Options.CurrentValue.Policies.PrivateWorkspacePolicyId, identityProvider.Name);
         }
 
         private IAmazonS3 CreateS3Client(IAsset asset, S3Configuration s3Config)
@@ -87,20 +83,31 @@ namespace Terradue.Stars.Services.Resources
         public IAmazonS3 CreateS3Client(S3Url s3Url)
         {
             var s3Config = GetAmazonS3Config(s3Url);
-            s3Config.AWSCredentials = CreateCredentials(s3Url);
+            s3Config.AWSCredentials = GetConfiguredCredentials(s3Url);
 
             return CreateS3Client(s3Config);
         }
 
+        /// <summary>
+        /// Get the S3 Client using the identity provider
+        /// </summary>
+        /// <param name="s3Url"></param>
+        /// <param name="identityProvider"></param>
+        /// <param name="policy"></param>
+        /// <returns></returns>
         public async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url,
-                                                         IIdentityProvider identityProvider)
+                                                         IIdentityProvider identityProvider,
+                                                         string policy = null)
         {
             var s3Config = GetAmazonS3Config(s3Url);
-            s3Config.AWSCredentials = await GetWebIdentityCredentialsAsync(s3Config.ServiceURL,
-                                                                          identityProvider.GetIdToken(),
-                                                                          null);
+            if (s3Config.UseWebIdentity)
+            {
+                s3Config.AWSCredentials = await GetWebIdentityCredentialsAsync(s3Config.ServiceURL,
+                                                                              identityProvider.GetIdToken(),
+                                                                              null);
+            }
             if (s3Config.AWSCredentials == null)
-                s3Config.AWSCredentials = CreateCredentials(s3Url);
+                s3Config.AWSCredentials = GetConfiguredCredentials(s3Url, identityProvider);
 
             return CreateS3Client(s3Config);
         }
@@ -111,9 +118,9 @@ namespace Terradue.Stars.Services.Resources
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        public AWSCredentials CreateCredentials(S3Url s3Url)
+        public AWSCredentials GetConfiguredCredentials(S3Url s3Url, IIdentityProvider identityProvider = null)
         {
-            var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString());
+            var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString(), identityProvider?.GetPrincipal());
 
             if (!string.IsNullOrEmpty(s3Configuration.Value?.AccessKey) != null && !string.IsNullOrEmpty(s3Configuration.Value?.SecretKey))
             {

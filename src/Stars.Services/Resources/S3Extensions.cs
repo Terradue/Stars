@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Amazon.S3;
+using Amazon.S3.Model;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Resources
@@ -80,6 +82,17 @@ namespace Terradue.Stars.Services.Resources
                 s3Resource.RequesterPays = true;
             await s3Resource.LoadMetadata(ct);
             return s3Resource;
+        }
+
+        public static string GeneratePreSignedURL(this IAmazonS3 client, S3Url s3Url, double duration = 168)
+        {
+            GetPreSignedUrlRequest request1 = new GetPreSignedUrlRequest
+            {
+                BucketName = s3Url.Bucket,
+                Key = s3Url.Key,
+                Expires = DateTime.UtcNow.AddHours(duration)
+            };
+            return client.GetPreSignedURL(request1);
         }
 
 
