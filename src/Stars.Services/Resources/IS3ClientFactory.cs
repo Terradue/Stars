@@ -11,10 +11,11 @@ namespace Terradue.Stars.Services.Resources
     {
         IAmazonS3 CreateS3Client(S3Url s3Url);
         IAmazonS3 CreateS3Client(IAsset asset);
-        Task<IAmazonS3> CreateS3ClientAsync(S3Url url, IIdentityProvider identityProvider);
-        AWSCredentials CreateCredentials(S3Url s3Url);
+        Task<IAmazonS3> CreateS3ClientAsync(S3Url url, IIdentityProvider identityProvider, string policy = null);
+        AWSCredentials GetConfiguredCredentials(S3Url s3Url, IIdentityProvider identityProvider = null);
         IAmazonS3 CreateS3Client(string name);
         Task<AWSCredentials> GetWebIdentityCredentialsAsync(string url, JwtSecurityToken jwt, string policy);
-        string GetPersonalStoragePolicyName(IIdentityProvider identityProvider);
+
+        
     }
 }

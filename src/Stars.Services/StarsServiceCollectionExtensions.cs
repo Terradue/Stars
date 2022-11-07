@@ -73,7 +73,9 @@ namespace Terradue.Stars.Services
             services.AddSingleton<TranslatorManager, TranslatorManager>();
             services.AddSingleton<ProcessingManager, ProcessingManager>();
 
-            // 3. Let's Configure
+            
+
+            // 4. Let's Configure
             var builder = new StarsBuilder(services);
             configure(builder);
 

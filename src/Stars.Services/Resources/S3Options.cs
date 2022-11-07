@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Amazon.Runtime;
 using Amazon.S3;
@@ -26,9 +27,12 @@ namespace Terradue.Stars.Services.Resources
 
         public IConfiguration RootConfiguration { get; set; }
 
-        public KeyValuePair<string, S3Configuration> GetS3Configuration(string url)
+        public KeyValuePair<string, S3Configuration> GetS3Configuration(string url, ClaimsPrincipal claimsPrincipal = null)
         {
-            var kv = Services.Where(c => Regex.Match(url, c.Value.UrlPattern, RegexOptions.Singleline).Success).FirstOrDefault();
+            var kv = Services
+                        .Where(c => claimsPrincipal == null || (c.Value.ScopeRoles?.Any(r => claimsPrincipal.IsInRole(r)) ?? true))
+                        .Where(c => Regex.Match(url, c.Value.UrlPattern, RegexOptions.Singleline).Success)
+                        .FirstOrDefault();
             if (kv.Key != null)
                 return kv;
             return default(KeyValuePair<string, S3Configuration>);
@@ -62,10 +66,11 @@ namespace Terradue.Stars.Services.Resources
             this.AuthenticationRegion = s3Configuration?.AuthenticationRegion;
             this.UseHttp = s3Configuration == null ? false : s3Configuration.UseHttp;
             this.ForcePathStyle = s3Configuration == null ? false : s3Configuration.ForcePathStyle;
-            this.UserScoped = s3Configuration == null ? false : s3Configuration.UserScoped;
+            this.ScopeRoles = s3Configuration?.ScopeRoles;
             this.TryAdaptRegion = s3Configuration == null ? false : s3Configuration.TryAdaptRegion;
             this.AmazonS3Config = s3Configuration?.AmazonS3Config;
             this.AWSCredentials = s3Configuration?.AWSCredentials;
+            this.UseWebIdentity = s3Configuration == null ? false : s3Configuration.UseWebIdentity;
         }
 
         public string UrlPattern { get; set; }
@@ -76,8 +81,9 @@ namespace Terradue.Stars.Services.Resources
         public string AuthenticationRegion { get; set; }
         public bool UseHttp { get; set; }
         public bool ForcePathStyle { get; set; }
-        public bool UserScoped { get; set; }
+        public string[] ScopeRoles { get; set; }
         public bool TryAdaptRegion { get; set; } = true;
+        public bool UseWebIdentity { get; set; } = false;
 
         [JsonIgnore]
         public AmazonS3Config AmazonS3Config { get; set; }

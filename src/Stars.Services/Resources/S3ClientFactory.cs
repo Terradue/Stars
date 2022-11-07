@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Amazon;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
@@ -59,14 +60,9 @@ namespace Terradue.Stars.Services.Resources
             {
                 s3Config.AmazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(region);
             }
-            s3Config.AWSCredentials = CreateCredentials(s3Url);
+            s3Config.AWSCredentials = GetConfiguredCredentials(s3Url);
 
             return CreateS3Client(asset, s3Config);
-        }
-
-        public string GetPersonalStoragePolicyName(IIdentityProvider identityProvider)
-        {
-            return string.Format(s3Options.CurrentValue.Policies.PrivateWorkspacePolicyId, identityProvider.Name);
         }
 
         private IAmazonS3 CreateS3Client(IAsset asset, S3Configuration s3Config)
@@ -87,20 +83,31 @@ namespace Terradue.Stars.Services.Resources
         public IAmazonS3 CreateS3Client(S3Url s3Url)
         {
             var s3Config = GetAmazonS3Config(s3Url);
-            s3Config.AWSCredentials = CreateCredentials(s3Url);
+            s3Config.AWSCredentials = GetConfiguredCredentials(s3Url);
 
             return CreateS3Client(s3Config);
         }
 
+        /// <summary>
+        /// Get the S3 Client using the identity provider
+        /// </summary>
+        /// <param name="s3Url"></param>
+        /// <param name="identityProvider"></param>
+        /// <param name="policy"></param>
+        /// <returns></returns>
         public async Task<IAmazonS3> CreateS3ClientAsync(S3Url s3Url,
-                                                         IIdentityProvider identityProvider)
+                                                         IIdentityProvider identityProvider,
+                                                         string policy = null)
         {
             var s3Config = GetAmazonS3Config(s3Url);
-            s3Config.AWSCredentials = await GetWebIdentityCredentialsAsync(s3Config.ServiceURL,
-                                                                          identityProvider.GetIdToken(),
-                                                                          null);
+            if (s3Config.UseWebIdentity)
+            {
+                s3Config.AWSCredentials = await GetWebIdentityCredentialsAsync(s3Config.ServiceURL,
+                                                                              identityProvider.GetIdToken(),
+                                                                              null);
+            }
             if (s3Config.AWSCredentials == null)
-                s3Config.AWSCredentials = CreateCredentials(s3Url);
+                s3Config.AWSCredentials = GetConfiguredCredentials(s3Url, identityProvider);
 
             return CreateS3Client(s3Config);
         }
@@ -111,9 +118,9 @@ namespace Terradue.Stars.Services.Resources
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        public AWSCredentials CreateCredentials(S3Url s3Url)
+        public AWSCredentials GetConfiguredCredentials(S3Url s3Url, IIdentityProvider identityProvider = null)
         {
-            var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString());
+            var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString(), identityProvider?.GetPrincipal());
 
             if (!string.IsNullOrEmpty(s3Configuration.Value?.AccessKey) != null && !string.IsNullOrEmpty(s3Configuration.Value?.SecretKey))
             {
@@ -198,24 +205,31 @@ namespace Terradue.Stars.Services.Resources
                 awsOptions.DefaultClientConfig.ServiceURL = s3Url.EndpointUrl.ToString();
             }
 
+            // Case of credentials in the configuration
             if (!string.IsNullOrEmpty(s3Configuration.Value?.AccessKey) && !string.IsNullOrEmpty(s3Configuration.Value?.SecretKey))
             {
                 awsOptions.Credentials = new BasicAWSCredentials(s3Configuration.Value.AccessKey, s3Configuration.Value.SecretKey);
             }
 
-            AmazonS3Config amazonS3Config = CreateS3Configuration(awsOptions);
+            // Case of region not in the configuration but in the S3Url
+            if (awsOptions.Region == null && !string.IsNullOrEmpty(s3Url.Region))
+            {
+                awsOptions.Region = RegionEndpoint.GetBySystemName(s3Url.Region);
+            }
+
+            AmazonCustomS3Config amazonS3Config = CreateS3Configuration(awsOptions);
 
             if (s3Configuration.Value?.ForcePathStyle == true || s3Url.PathStyle)
             {
                 amazonS3Config.ForcePathStyle = true;
             }
 
-            if (string.IsNullOrEmpty(amazonS3Config.ServiceURL))
-            {
-                logger?.LogInformation($"No Service URL configured, defaulting to {Amazon.RegionEndpoint.USEast1}");
-                amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.USEast1;
-                // amazonS3Config.ServiceURL = "https://s3.us-east-1.amazonaws.com";
-            }
+            // if (string.IsNullOrEmpty(amazonS3Config.ServiceURL))
+            // {
+            //     logger?.LogInformation($"No Service URL configured, defaulting to {Amazon.RegionEndpoint.USEast1}");
+            //     amazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.USEast1;
+            //     // amazonS3Config.ServiceURL = "https://s3.us-east-1.amazonaws.com";
+            // }
 
             amazonS3Config.AllowAutoRedirect = true;
             amazonS3Config.RetryMode = RequestRetryMode.Standard;
@@ -233,9 +247,9 @@ namespace Terradue.Stars.Services.Resources
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static AmazonS3Config CreateS3Configuration(AWSOptions options)
+        private static AmazonCustomS3Config CreateS3Configuration(AWSOptions options)
         {
-            AmazonS3Config config = new AmazonS3Config();
+            AmazonCustomS3Config config = new AmazonCustomS3Config();
 
             if (options == null)
             {
@@ -285,9 +299,14 @@ namespace Terradue.Stars.Services.Resources
             // Setting RegionEndpoint only if ServiceURL was not set, because ServiceURL value will be lost otherwise
             if (options.Region != null)
             {
+                config.ForceCustomRegion(options.Region.SystemName);
                 if (string.IsNullOrEmpty(defaultConfig.ServiceURL))
                 {
                     config.RegionEndpoint = options.Region;
+                }
+                else
+                {
+                    config.SetServiceURL(defaultConfig.ServiceURL);
                 }
             }
 
