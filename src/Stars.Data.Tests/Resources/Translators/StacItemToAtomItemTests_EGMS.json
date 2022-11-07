@@ -42,7 +42,7 @@
         "size": 1000
       },
       "datacube": {
-        "type": "datacube",
+        "type": "text/csv",
         "roles": [
           "data"
         ],

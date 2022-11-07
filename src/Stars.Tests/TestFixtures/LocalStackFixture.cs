@@ -47,7 +47,7 @@ namespace Stars.Tests
             if (s3ClientFactory != null)
             {
                 S3Url s3Url = S3Url.Parse("s3://test");
-                var credentials = s3ClientFactory.CreateCredentials(s3Url);
+                var credentials = s3ClientFactory.GetConfiguredCredentials(s3Url);
                 if (credentials != null)
                 {
                     var creds = credentials.GetCredentials();
