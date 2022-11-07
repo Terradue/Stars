@@ -65,7 +65,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 if (subroute.Uri.IsAbsoluteUri)
                 {
                     // Let's see if the 2 routes are relative
-                    var relUri = subroute.Uri.MakeRelativeUri(Uri);
+                    var relUri = Uri.MakeRelativeUri(subroute.Uri);
                     // If not, let's see if they have a common pattern
                     if (relUri.IsAbsoluteUri)
                     {
