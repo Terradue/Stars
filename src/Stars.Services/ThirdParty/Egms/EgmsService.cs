@@ -108,7 +108,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 
         public Uri GetEgmsApiLink(StacItem stacItem)
         {
-            var link = stacItem.Links.Where(a => a.RelationshipType == "tsapi").First();
+            var link = stacItem.Links.Where(a => a.RelationshipType == "tsapi").FirstOrDefault();
             if (link != null) return link.Uri;
             return null;
         }

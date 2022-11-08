@@ -8,6 +8,8 @@ using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Model.Atom;
 using System.Threading;
 using System.Xml;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using System;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -71,22 +73,13 @@ namespace Terradue.Data.Tests.Translators
             bool egmsIsPresent = false;
             if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
 			{
+                var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
 
-				foreach (var ext in atomItemNode.AtomItem.ElementExtensions)
+				foreach (var offering in offerings)
 				{
-
-					XmlReader xr = ext.GetReader();
-
-					switch (xr.NamespaceURI)
-					{
-						// 1) search for georss
-						case "http://www.terradue.com/egms":
-                            egmsIsPresent = true;
-                        break;
-                        default:
-                        break;
-                    }
+                    if(offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
                 }
+              
             }
 
             Assert.True(egmsIsPresent);            
