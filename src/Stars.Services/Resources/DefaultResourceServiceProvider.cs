@@ -97,8 +97,8 @@ namespace Terradue.Stars.Services.Resources
                     // First try head request
                     using (var headResponse = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct))
                     {
+                        contentHeaders = new HttpCachedHeaders(headResponse.Headers);
                         headResponse.EnsureSuccessStatusCode();
-                        contentHeaders = new HttpCachedHeaders(headResponse.Content.Headers);
                     }
                 }
                 catch (Exception e)
@@ -111,8 +111,8 @@ namespace Terradue.Stars.Services.Resources
                     {
                         using (var response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct))
                         {
+                            contentHeaders = new HttpCachedHeaders(response.Headers);
                             response.EnsureSuccessStatusCode();
-                            contentHeaders = new HttpCachedHeaders(response.Content.Headers);
                         }
                     }
                     catch (Exception e)
@@ -143,11 +143,18 @@ namespace Terradue.Stars.Services.Resources
                     }
                     triedS3 = true;
                 }
-
-                return new HttpResource(resource.Uri, client, contentHeaders);
+                
+                if ( !triedS3 )
+                {
+                    return new HttpResource(resource.Uri, client, contentHeaders);
+                }
             }
 
             // Unknown
+            if (finalException is AmazonS3Exception amazonS3Exception)
+            {
+                logger.LogDebug(amazonS3Exception.ResponseBody);
+            }
             throw finalException;
         }
 

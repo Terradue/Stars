@@ -47,7 +47,7 @@
     ],
     "assets": {
         "cci_fss_CFD_1993": {
-            "href": "s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif",
+            "href": "s3://local-acceptance-catalog2/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif",
             "type": "image/tiff; application=geotiff",
             "title": "Consecutive frost days index (CFD) - 1993",
             "description": "Seasonal largest number of consecutive days where surface state flag shows frozen conditions.",

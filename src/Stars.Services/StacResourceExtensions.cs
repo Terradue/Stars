@@ -71,6 +71,27 @@ namespace Terradue.Stars.Services
                     catalogNode.Links.Add(StacLink.CreateItemLink(resource.Uri, resource.ContentType.ToString()));
             }
         }
+
+        public static IResource CreateResource(this StacLink stacLink)
+        {
+            if ( stacLink is StacObjectLink stacObjectLink){
+                return stacObjectLink.StacObject.CreateResource(stacObjectLink.Uri);
+            }
+
+            return new GenericResource(stacLink.Uri);
+        }
+
+        public static IResource CreateResource(this IStacObject stacObject, Uri uri)
+        {
+            if (stacObject is StacItem stacItem)
+                return new StacItemNode(stacItem, uri);
+            if (stacObject is StacCollection stacCollection)
+                return new StacCollectionNode(stacCollection, uri);
+            if (stacObject is StacCatalog stacCatalog)
+                return new StacCatalogNode(stacCatalog, uri);
+            
+            return new GenericResource(uri);
+        }
     }
 
 }

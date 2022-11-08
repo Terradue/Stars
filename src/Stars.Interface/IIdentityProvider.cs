@@ -12,5 +12,6 @@ namespace Terradue.Stars.Interface
         JwtSecurityToken GetIdToken();
 
         ClaimsPrincipal GetPrincipal();
+
     }
 }

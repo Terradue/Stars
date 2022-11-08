@@ -4,7 +4,7 @@
         <ProjectName>Terradue.Stars.Data</ProjectName>
         <Title>Terradue.Stars.Data</Title>
         <Description>Collection of data Plugins for Terradue.Stars</Description>
-        <Version>2.5.1</Version>
+        <Version>2.6.0</Version>
         <!-- <VersionSuffix>beta.8</VersionSuffix> -->
         <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
         <NoWarn>NU1603</NoWarn>
@@ -37,7 +37,7 @@
         <PackageReference Include="Terradue.GeoJson" Version="1.12.1" />
         <PackageReference Include="MaxRev.Gdal.Core" Version="3.3.3.110" />
         <PackageReference Include="MaxRev.Gdal.LinuxRuntime.Minimal" Version="3.3.3.120" />
-        <PackageReference Include="AWSSDK.Core" Version="3.7.*" />
+        <PackageReference Include="AWSSDK.Core" Version="3.7.13.*" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj">

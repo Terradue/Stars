@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net6.0</TargetFrameworks>
-    <Version>2.5.1</Version>
+    <Version>2.6.0</Version>
     <!-- <VersionSuffix>beta.8</VersionSuffix> -->
     <Description>Stars is a CLI for working with Spatio Temporal Catalog such as STAC but not only</Description>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
@@ -29,7 +29,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.*" />
     <PackageReference Include="YamlDotNet" Version="8.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.*" />
-    <PackageReference Include="AWSSDK.Core" Version="3.7.*"/>
+    <PackageReference Include="AWSSDK.Core" Version="3.7.13.*"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />

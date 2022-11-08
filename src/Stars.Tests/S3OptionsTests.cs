@@ -40,7 +40,8 @@ namespace Stars.Tests
             s3Client = s3ClientFactory.CreateS3Client(s3url);
             Assert.NotNull(s3Client);
             Assert.Equal("fr-par", s3Client.Config.AuthenticationRegion);
-            Assert.Equal("https://s3.geohazards-tep.eu/", s3Client.Config.ServiceURL);
+            // the serviceUrl will be null as the new Custom config will use the DetermineServiceURL method
+            Assert.Equal(null, s3Client.Config.ServiceURL);
         }
 
     }

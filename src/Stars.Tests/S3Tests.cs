@@ -67,18 +67,18 @@ namespace Stars.Tests
         [Fact]
         public async Task ImportAssetsS30SizedtoS3()
         {
-            await CreateBucketAsync("s3://local-acceptance-catalog/indices_cog");
-            await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif");
-            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif")), CancellationToken.None);
+            await CreateBucketAsync("s3://local-acceptance-catalog2/indices_cog");
+            await CopyLocalDataToBucketAsync(Path.Join(Environment.CurrentDirectory, "../../../In/assets/test.tif"), "s3://local-acceptance-catalog2/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif");
+            var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog2/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif")), CancellationToken.None);
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/cci_fss_CFD_1993.json")));
-            S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog/indices_cog/copy/cci_fss_CFD_1993.json");
+            S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog2/indices_cog/copy/cci_fss_CFD_1993.json");
             StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
             var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative, AssetChecks.None, CancellationToken.None);
             foreach (var ex in importReport.AssetsExceptions)
             {
                 throw ex.Value;
             }
-            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog/indices_cog/copy/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif"), CancellationToken.None);
+            var s3dest = await s3ClientFactory.CreateAndLoadAsync(S3Url.Parse("s3://local-acceptance-catalog2/indices_cog/copy/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif"), CancellationToken.None);
             Assert.Equal(s3Resource.ContentLength, s3dest.ContentLength);
             Assert.NotEqual(item.Assets.First().Value.FileExtension().Size, importReport.Assets.First().Value.ContentLength);
         }

@@ -6,9 +6,11 @@ using Amazon.Runtime.CredentialManagement;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Terradue.Stars.Interface.Extensions.TimeSeries;
 using Terradue.Stars.Services.Credentials;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Resources;
+using Terradue.Stars.Services.ThirdParty.Egms;
 
 namespace Terradue.Stars.Services
 {
@@ -52,6 +54,13 @@ namespace Terradue.Stars.Services
             var pluginsOptions = configurationSection.Get<PluginsOptions>();
             // Add Plugins from config
             starsBuilder.Services.Configure<PluginsOptions>(co => co.Load(pluginsOptions));
+            return starsBuilder;
+        }
+
+        public static IStarsBuilder UseEgmsTimeseries(this IStarsBuilder starsBuilder, IConfiguration configuration)
+        {
+            starsBuilder.Services.AddSingleton<ITimeSeriesService, EgmsService>();
+            starsBuilder.Services.Configure<EgmsConfiguration>(configuration);
             return starsBuilder;
         }
     }
