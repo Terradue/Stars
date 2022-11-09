@@ -47,7 +47,7 @@ namespace Terradue.Stars.Console.Operations
                 SkipAssets = SkippAssets
             };
             routingService.OnRoutingException((route, router, exception, state, ct) => PrintRouteInfo(route, router, exception, state, ct));
-            routingService.OnBeforeBranching((node, router, state, ct) => PrintBranchingNode(node, router, state, ct));
+            routingService.OnBeforeBranching((node, router, state, subroutes, ct) => PrintBranchingNode(node, router, state, ct));
             routingService.OnItem((node, router, state, ct) => PrintItem(node, router, state, ct));
             routingService.OnBranching((parentRoute, route, siblings, state, ct) => PrepareNewRoute(parentRoute, route, siblings, state, ct));
         }
@@ -77,7 +77,7 @@ namespace Terradue.Stars.Console.Operations
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
             _console.ForegroundColor = GetColorFromType(node.ResourceType);
-            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
+            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Title).Truncate(99), node.ContentType));
             _console.ForegroundColor = ConsoleColor.White;
             await PrintAssets(node, router, operationState.Prefix);
             return state;
@@ -91,7 +91,7 @@ namespace Terradue.Stars.Console.Operations
             string resourcePrefix1 = operationState.Prefix;
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
-            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Label).Truncate(99), node.ContentType));
+            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Title).Truncate(99), node.ContentType));
             // await PrintAssets(node, router, operationState.Prefix);
 
             return state;

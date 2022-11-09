@@ -98,12 +98,12 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         }
 
-        public Action<SyndicationLink, AtomItem, IItem> CustomLinkUpdater { get; set; }
+        public Action<SyndicationLink, AtomItem, IAssetsContainer> CustomLinkUpdater { get; set; }
 
-        internal void UpdateLink(SyndicationLink link, AtomItem item, IItem itemNode)
+        internal void UpdateLink(SyndicationLink link, AtomItem item, IAssetsContainer assetsContainer)
         {
             if (CustomLinkUpdater != null)
-                CustomLinkUpdater(link, item, itemNode);
+                CustomLinkUpdater(link, item, assetsContainer);
         }
 
         public bool ThrowPublicationException { get; set; } = true;

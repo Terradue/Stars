@@ -10,14 +10,8 @@ using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Interface
 {
-    public interface ICatalog : IResource
+    public interface ICollection : ICatalog, IAssetsContainer
     {
-        string Title { get; }
         
-        string Id { get; }
-
-        IReadOnlyList<IResourceLink> GetLinks();
-
-        IReadOnlyList<IResource> GetRoutes(IRouter router);
     }
 }

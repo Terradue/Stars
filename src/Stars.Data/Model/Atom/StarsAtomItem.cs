@@ -19,6 +19,7 @@ using Terradue.Stars.Services.ThirdParty.Titiler;
 using Stac.Extensions.File;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.ThirdParty.Egms;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Atom
 {
@@ -91,7 +92,7 @@ namespace Terradue.Stars.Data.Model.Atom
             }
 
             // Add functional links
-            starsAtomItem.Links.AddRange(GetFunctionalLinks(stacItem, stacItemUri));
+            starsAtomItem.Links.AddRange(GetFunctionalLinks(stacItem.Assets, stacItemUri));
 
             starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", GetDcDateFormat(stacItem));
             starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", stacItem.Geometry.ToWkt());
@@ -102,20 +103,98 @@ namespace Terradue.Stars.Data.Model.Atom
             return starsAtomItem;
         }
 
+        public static StarsAtomItem Create(StacCollection stacCollection, Uri stacCollectionUri)
+        {
+            AtomItem item = new AtomItem(stacCollection.Title,
+                                 stacCollection.Description,
+                                 null,
+                                 stacCollection.Id,
+                                 new DateTimeOffset(stacCollection.DateTime.Start.ToUniversalTime(), new TimeSpan(0))
+                                );
+
+            StarsAtomItem starsAtomItem = new StarsAtomItem(item);
+            if (!string.IsNullOrEmpty(stacCollection.Description))
+                starsAtomItem.Summary = new TextSyndicationContent(Markdown.ToHtml(stacCollection.Description, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build()), TextSyndicationContentKind.Html);
+            starsAtomItem.Title = new TextSyndicationContent(stacCollection.Title, TextSyndicationContentKind.Plaintext);
+            starsAtomItem.Identifier = stacCollection.Id;
+
+            // Links are tricky because they can be relative and we must render them absolute in Atom
+            foreach (var link in stacCollection.Links)
+            {
+                if (link.RelationshipType == "self")
+                    continue;
+                Uri linkUri = link.Uri;
+                try
+                {
+                    // if relative
+                    if (!linkUri.IsAbsoluteUri)
+                        // then make absolute from item
+                        linkUri = new Uri(stacCollectionUri, linkUri);
+                    // then make sure this is the from uri
+                    linkUri = linkUri;
+                }
+                catch { continue; }
+
+                var rel = link.RelationshipType;
+                var mediatype = link.ContentType ?? new ContentType(MimeTypes.GetMimeType(link.Uri.ToString()));
+
+                starsAtomItem.Links.Add(new SyndicationLink(linkUri,
+                                                                  rel,
+                                                                  link.Title,
+                                                                  mediatype.ToString(),
+                                                                  Convert.ToInt64(link.Length)));
+            }
+
+            // Add Alternate
+            starsAtomItem.Links.Add(new SyndicationLink(stacCollectionUri,
+                                                              "alternate",
+                                                              "Stac Collection",
+                                                              stacCollection.MediaType.ToString(),
+                                                              0));
+
+            // Add Assets
+            // Same problem as per link, make uri absolute
+            foreach (var asset in stacCollection.Assets)
+            {
+                Uri assetUri = GetAssetUri(stacCollectionUri, asset.Value);
+                var atitle = string.IsNullOrEmpty(asset.Value.Title) ? asset.Key.Split('!')[0] : asset.Value.Title;
+                var type = asset.Value.MediaType.ToString();
+                long length = Convert.ToInt64(asset.Value.FileExtension().Size);
+                starsAtomItem.Links.Add(new SyndicationLink(assetUri, "enclosure", atitle, type, length));
+            }
+
+            // Add functional links
+            starsAtomItem.Links.AddRange(GetFunctionalLinks(stacCollection.Assets, stacCollectionUri));
+
+            starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", GetDcDateFormat(stacCollection));
+            starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", stacCollection.Extent.Spatial.ToWkt());
+
+            starsAtomItem.LastUpdatedTime = new DateTimeOffset(DateTime.UtcNow, new TimeSpan(0));
+
+            return starsAtomItem;
+        }
+
         private static object GetDcDateFormat(StacItem stacItem)
         {
             string datestr = stacItem.DateTime.Start.ToString("O");
-            if ( stacItem.DateTime.End != null && stacItem.DateTime.End != DateTime.MaxValue && stacItem.DateTime.End != stacItem.DateTime.Start)
+            if (stacItem.DateTime.End != null && stacItem.DateTime.End != DateTime.MaxValue && stacItem.DateTime.End != stacItem.DateTime.Start)
                 datestr += "/" + stacItem.DateTime.End.ToString("O");
             return datestr;
         }
 
-        private static IEnumerable<SyndicationLink> GetFunctionalLinks(StacItem stacItem, Uri stacItemUri)
+        private static object GetDcDateFormat(StacCollection stacCollection)
+        {
+            string datestr = stacCollection.Extent.Temporal.Interval.Min(d => d[0] ?? DateTime.MinValue).ToString("O");
+            datestr += "/" + stacCollection.Extent.Temporal.Interval.Max(d => d[1] ?? DateTime.MaxValue).ToString("O");
+            return datestr;
+        }
+
+        private static IEnumerable<SyndicationLink> GetFunctionalLinks(IDictionary<string, StacAsset> assets, Uri stacObjectUri)
         {
             List<SyndicationLink> links = new List<SyndicationLink>();
 
-            var overviews = stacItem.Assets.Where(a => a.Value.Roles.Contains("overview") || a.Value.Roles.Contains("thumbnail") || a.Value.Roles.Contains("legend"));
-            links.AddRange(overviews.Select(o => new SyndicationLink(GetAssetUri(stacItemUri, o.Value),
+            var overviews = assets.Where(a => a.Value.Roles.Contains("overview") || a.Value.Roles.Contains("thumbnail") || a.Value.Roles.Contains("legend"));
+            links.AddRange(overviews.Select(o => new SyndicationLink(GetAssetUri(stacObjectUri, o.Value),
                                                                      GetRelationshipFromRoles(o.Value.Roles),
                                                                      GetTitleFromRoles(o),
                                                                      o.Value.MediaType.ToString(),
@@ -151,7 +230,8 @@ namespace Terradue.Stars.Data.Model.Atom
         {
             if (stacAsset.Value.Roles.Any(r => r == "thumbnail"))
                 return "Thumbnail";
-            if (stacAsset.Value.Roles.Any(r => r == "legend")){
+            if (stacAsset.Value.Roles.Any(r => r == "legend"))
+            {
                 return stacAsset.Key;
             }
             if (stacAsset.Value.Roles.Any(r => r == "overview"))
@@ -206,6 +286,29 @@ namespace Terradue.Stars.Data.Model.Atom
             return false;
         }
 
+        public bool TryAddTitilerOffering(StacCollectionNode stacCollectionNode, TitilerService titilerService)
+        {
+            var overviewAssets = titilerService.SelectOverviewCombinationAssets(stacCollectionNode.StacCollection);
+            if (overviewAssets.Count() > 0)
+            {
+                var stacItemUri = stacCollectionNode.Uri;
+                Uri titilerServiceUri = titilerService.BuildServiceUri(stacItemUri, overviewAssets);
+                ElementExtensions.Add(new OwcOffering()
+                {
+                    Operations = new OwcOperation[]{new OwcOperation()
+                        {
+                            Href = titilerServiceUri.ToString(),
+                            Type = "image/png",
+                            Code = "GetMap",
+                            Method = "GET"
+                        }},
+                    Code = "http://www.terradue.com/twm"
+                }.CreateReader());
+                return true;
+            }
+            return false;
+        }
+
         public bool AddImageOverlayOffering(StacItemNode stacItemNode)
         {
             var imageOverview = SelectOverlayOverviewAssets(stacItemNode.StacItem).FirstOrDefault();
@@ -235,17 +338,17 @@ namespace Terradue.Stars.Data.Model.Atom
             return false;
         }
 
-        public bool TryAddEGMSOffering(StacItemNode stacItemNode, EgmsService egmsService)
+        public bool TryAddEGMSOffering(StacCollectionNode stacCollectionNode, EgmsService egmsService)
         {
-            var egmsServiceUri = egmsService.GetEgmsApiLink(stacItemNode.StacItem);
+            var egmsServiceUri = stacCollectionNode.StacCollection.Links.FirstOrDefault(l => l.RelationshipType == "self").Uri;
             if (egmsServiceUri != null)
-            {                
+            {
                 ElementExtensions.Add(new OwcOffering()
                 {
                     Operations = new OwcOperation[]{new OwcOperation()
                         {
                             Href = egmsServiceUri.ToString(),
-                            Type = "application/prs.coverage+json",
+                            Type = "application/json",
                             Code = "egms",
                             Method = "GET"
                         }},

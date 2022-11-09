@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -93,9 +94,9 @@ namespace Terradue.Stars.Services.Router
             }
 
             // Let's get sub routes
-            IReadOnlyList<IResource> subroutes = catalogNode.GetRoutes(router);
+            ICollection<IResource> subroutes = catalogNode.GetRoutes(router).ToList();
 
-            state = await beforeBranchingFunction.Invoke(catalogNode, router, state, ct);
+            state = await beforeBranchingFunction.Invoke(catalogNode, router, state, subroutes, ct);
 
             List<object> substates = new List<object>();
             for (int i = 0; i < subroutes.Count(); i++)
@@ -115,8 +116,8 @@ namespace Terradue.Stars.Services.Router
             this.afterBranchingFunction = afterBranchingFunction;
         }
 
-        private Func<ICatalog, IRouter, object, CancellationToken, Task<object>> beforeBranchingFunction = (node, router, state, ct) => { return Task.FromResult<object>(state); };
-        public void OnBeforeBranching(Func<ICatalog, IRouter, object, CancellationToken, Task<object>> beforeBranchingFunction)
+        private Func<ICatalog, IRouter, object, ICollection<IResource>, CancellationToken, Task<object>> beforeBranchingFunction = (node, router, state, subroutes, ct) => { return Task.FromResult<object>(state); };
+        public void OnBeforeBranching(Func<ICatalog, IRouter, object, ICollection<IResource>, CancellationToken, Task<object>> beforeBranchingFunction)
         {
             this.beforeBranchingFunction = beforeBranchingFunction;
         }

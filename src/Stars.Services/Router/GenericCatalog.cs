@@ -20,7 +20,7 @@ namespace Terradue.Stars.Services.Router
             this.id = id;
         }
 
-        public string Label => id;
+        public string Title => id;
 
         public ContentType ContentType => new ContentType("application/catalog");
 

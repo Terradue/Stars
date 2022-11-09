@@ -1,0 +1,207 @@
+{
+    "id": "0000024-220301000006171-oozie-oozi-W",
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/datacube/v2.1.0/schema.json"
+    ],
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "item",
+            "href": "https://localhost:5001/api/ns/emathot/ts/04f92e73-942d-4997-bb5a-477eeb44c0a4"
+        },
+        {
+            "type": "application/json",
+            "rel": "self",
+            "href": "https://localhost:5001/api/ns/emathot/cs/0000024-220301000006171-oozie-oozi-W"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "https://localhost:5001/api/ns/emathot"
+        },
+        {
+            "type": "application/vnd.oai.openapi+json",
+            "rel": "tsapi",
+            "title": "Time Series Open API",
+            "href": "https://localhost:5001/api/v1/service.json"
+        }
+    ],
+    "type": "Collection",
+    "extent": {
+        "spatial": {
+            "bbox": [
+                [
+                    -97.234167,
+                    29.779444,
+                    -94.523611,
+                    30.933611
+                ]
+            ]
+        },
+        "temporal": {
+            "interval": [
+                [
+                    "2021-10-02T12:23:14Z",
+                    "2022-03-07T12:23:10Z"
+                ]
+            ]
+        }
+    },
+    "keywords": [],
+    "assets": {
+        "enclosure-3": {
+            "type": "application/octet-stream",
+            "roles": [
+                "data",
+                "enclosure",
+                "timeseries"
+            ],
+            "title": "File (csv)",
+            "href": "https://gep-users-1.s3.fr-par.scw.cloud/emathot/timeseries/DTSLOS_ldonnini_20211002_20220307_UIDH.csv",
+            "file:size": 209231423,
+            "ts:format": "PSBAS"
+        }
+    },
+    "license": "proprietary",
+    "title": "Time Series Collection 0000024-220301000006171-oozie-oozi-W",
+    "description": "Time Series Collection 0000024-220301000006171-oozie-oozi-W",
+    "ts:ns_id": "emathot",
+    "cube:variables": {
+        "cosu-1188264944": {
+            "dimensions": [
+                "x",
+                "y"
+            ],
+            "type": "data",
+            "description": "CosU",
+            "extent": [
+                0.6997899,
+                0.8589463
+            ],
+            "unit": "N/A"
+        },
+        "cosn-58321755": {
+            "dimensions": [
+                "x",
+                "y"
+            ],
+            "type": "data",
+            "description": "CosN",
+            "extent": [
+                -0.1186522,
+                -0.0953031
+            ],
+            "unit": "N/A"
+        },
+        "topography-45811051": {
+            "dimensions": [
+                "x",
+                "y"
+            ],
+            "type": "data",
+            "description": "Topography",
+            "extent": [
+                -27.22,
+                180.84
+            ],
+            "unit": "m"
+        },
+        "displacement-608842020": {
+            "dimensions": [
+                "time",
+                "x",
+                "y"
+            ],
+            "type": "data",
+            "description": "Displacement",
+            "extent": [
+                -8.934200286865234,
+                4.734899997711182
+            ],
+            "unit": "cm"
+        },
+        "velocity-940887636": {
+            "dimensions": [
+                "x",
+                "y"
+            ],
+            "type": "data",
+            "description": "Velocity",
+            "extent": [
+                -25.3313,
+                9.9955
+            ],
+            "unit": "cm/yr"
+        },
+        "cose-756841983": {
+            "dimensions": [
+                "x",
+                "y"
+            ],
+            "type": "data",
+            "description": "CosE",
+            "extent": [
+                0.5031177,
+                0.7044459
+            ],
+            "unit": "N/A"
+        },
+        "coherence-2112618628": {
+            "dimensions": [
+                "x",
+                "y"
+            ],
+            "type": "data",
+            "description": "Coherence",
+            "extent": [
+                0.8500003,
+                0.9989528
+            ],
+            "unit": "N/A"
+        }
+    },
+    "cube:dimensions": {
+        "x": {
+            "axis": "x",
+            "type": "spatial",
+            "extent": [
+                -97.21875007264316,
+                -94.52375002205372
+            ]
+        },
+        "time": {
+            "type": "temporal",
+            "values": [
+                "2021-10-02T12:23:14.0000000Z",
+                "2021-10-08T12:22:32.0000000Z",
+                "2021-10-14T12:23:14.0000000Z",
+                "2021-10-20T12:22:33.0000000Z",
+                "2021-10-26T12:23:14.0000000Z",
+                "2021-11-01T12:22:33.0000000Z",
+                "2021-11-07T12:23:14.0000000Z",
+                "2021-11-13T12:22:32.0000000Z",
+                "2021-11-19T12:23:14.0000000Z",
+                "2021-11-25T12:22:32.0000000Z",
+                "2021-12-01T12:23:13.0000000Z",
+                "2021-12-07T12:22:31.0000000Z",
+                "2021-12-13T12:23:13.0000000Z",
+                "2021-12-19T12:22:31.0000000Z",
+                "2021-12-25T12:23:12.0000000Z",
+                "2022-01-06T12:23:12.0000000Z",
+                "2022-01-30T12:23:11.0000000Z",
+                "2022-02-11T12:23:11.0000000Z",
+                "2022-02-23T12:23:11.0000000Z",
+                "2022-03-07T12:23:10.0000000Z"
+            ]
+        },
+        "y": {
+            "axis": "y",
+            "type": "spatial",
+            "extent": [
+                29.807919985614717,
+                30.90874998830259
+            ]
+        }
+    }
+}

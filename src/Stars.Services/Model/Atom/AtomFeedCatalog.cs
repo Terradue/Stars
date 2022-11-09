@@ -28,7 +28,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public AtomFeed AtomFeed => feed;
 
-        public string Label => feed.Title != null ? feed.Title.Text : feed.Id;
+        public string Title => feed.Title != null ? feed.Title.Text : feed.Id;
 
         public ContentType ContentType => new ContentType("application/atom+xml");
 

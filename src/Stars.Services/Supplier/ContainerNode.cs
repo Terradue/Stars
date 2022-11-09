@@ -35,7 +35,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public ulong ContentLength => item.ContentLength;
 
-        public string Label => item.Label;
+        public string Title => item.Title;
 
         public string Id => item.Id + suffix;
 

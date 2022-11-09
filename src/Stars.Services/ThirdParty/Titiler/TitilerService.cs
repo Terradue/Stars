@@ -117,6 +117,43 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             return new Dictionary<string, StacAsset>();
         }
 
+        public Dictionary<string, StacAsset> SelectOverviewCombinationAssets(StacCollection stacCollection)
+        {
+
+            Dictionary<string, StacAsset> overviewAssets = stacCollection.Assets
+                                                            .Where(a => a.Value.Roles != null)
+                                                            .Where(a => a.Value.Roles.Contains("overview") ||
+                                                                        a.Value.Roles.Contains("visual"))
+                                                            .Where(a => a.Key.Contains("overview"))
+                                                            .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                                                            .Take(1)
+                                                            .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            overviewAssets = stacCollection.Assets.Where(a => a.Value.Roles != null)
+                                                            .Where(a => a.Value.Roles.Contains("overview") ||
+                                                                        a.Value.Roles.Contains("visual"))
+                                                            .OrderBy(a => a.Value.GetProperty<long>("size"))
+                                                            .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                                                            .Take(1)
+                                                            .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            overviewAssets = stacCollection.Assets
+                .Where(a => a.Key == "overview")
+                .Where(a => TITILER_VALID_TYPE.Contains(a.Value.MediaType?.MediaType))
+                .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            overviewAssets = stacCollection.Assets
+                .Where(a => a.Key == "composite")
+                .Where(a => TITILER_VALID_TYPE
+                .Contains(a.Value.MediaType?.MediaType)).ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            return new Dictionary<string, StacAsset>();
+        }
+
         public Uri BuildServiceUri(Uri stacItemUri, IDictionary<string, StacAsset> overviewAssets)
         {
             Uri finalItemUri = Configuration.MapUri(stacItemUri);
