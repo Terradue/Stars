@@ -19,6 +19,20 @@ namespace Terradue.Stars.Services.Resources
             }
         }
 
+        public void AddRange(HttpHeaders source)
+        {
+            foreach (var header in source)
+            {
+                try
+                {
+                    Add(header.Key, header.Value.ToArray());
+                }
+                catch { }
+            }
+        }
+
+
+
 
         public MediaTypeHeaderValue ContentType
         {

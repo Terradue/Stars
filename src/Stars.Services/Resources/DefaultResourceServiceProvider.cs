@@ -103,6 +103,7 @@ namespace Terradue.Stars.Services.Resources
                 }
                 catch (Exception e)
                 {
+                    contentHeaders = null;
                     finalException = e;
                 }
                 if (contentHeaders == null)
@@ -112,6 +113,7 @@ namespace Terradue.Stars.Services.Resources
                         using (var response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct))
                         {
                             contentHeaders = new HttpCachedHeaders(response.Headers);
+                            contentHeaders.AddRange(response.Content.Headers);
                             response.EnsureSuccessStatusCode();
                         }
                     }
