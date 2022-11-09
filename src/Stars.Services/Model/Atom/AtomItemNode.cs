@@ -35,7 +35,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public AtomItem AtomItem => item;
 
-        public string Label => item.Title != null ? item.Title.Text : item.Id;
+        public string Title => item.Title != null ? item.Title.Text : item.Id;
 
         public ContentType ContentType => new ContentType("application/atom+xml");
 

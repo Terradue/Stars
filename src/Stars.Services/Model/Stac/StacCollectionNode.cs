@@ -8,7 +8,7 @@ using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
-    public class StacCollectionNode : StacCatalogNode, ICatalog, IAssetsContainer
+    public class StacCollectionNode : StacCatalogNode, ICollection, IAssetsContainer
     {
         public StacCollectionNode(StacCollection stacCollection, Uri uri) : base(stacCollection, uri)
         {
@@ -16,5 +16,6 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public IReadOnlyDictionary<string, IAsset> Assets => (stacObject as StacCollection).Assets.ToDictionary(asset => asset.Key, asset => (IAsset)new StacAssetAsset(asset.Value, this));
 
+        public StacCollection StacCollection => stacObject as StacCollection;
     }
 }

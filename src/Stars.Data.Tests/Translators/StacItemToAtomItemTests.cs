@@ -8,6 +8,8 @@ using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Model.Atom;
 using System.Threading;
 using System.Xml;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using System;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -53,44 +55,6 @@ namespace Terradue.Data.Tests.Translators
             Assert.Equal("https://test.com/legend.png", legendLink.Uri.AbsoluteUri);
         }
 
-        [Fact]
-        public async System.Threading.Tasks.Task EGMS()
-        {
-            string json = GetJson("Translators");
-
-            ValidateJson(json);
-
-            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
-
-            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
-
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
-
-            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
-
-            bool egmsIsPresent = false;
-            if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
-			{
-
-				foreach (var ext in atomItemNode.AtomItem.ElementExtensions)
-				{
-
-					XmlReader xr = ext.GetReader();
-
-					switch (xr.NamespaceURI)
-					{
-						// 1) search for georss
-						case "http://www.terradue.com/egms":
-                            egmsIsPresent = true;
-                        break;
-                        default:
-                        break;
-                    }
-                }
-            }
-
-            Assert.True(egmsIsPresent);            
-        }
 
     }
 

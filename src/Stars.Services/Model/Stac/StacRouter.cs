@@ -65,13 +65,15 @@ namespace Terradue.Stars.Services.Model.Stac
 
         private async Task<IResource> AffineRouteAsync(IResource route, CancellationToken ct)
         {
-            if ((route.ContentType.MediaType.Contains("application/json")
-                    || route.ContentType.MediaType.Contains("application/geo+json"))
-                && route is IStreamResource)
+            IResource newRoute = route;
+            if ( !(route is IStreamResource) )
+                newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())), ct);
+            if ((newRoute.ContentType.MediaType.Contains("application/json")
+                    || newRoute.ContentType.MediaType.Contains("application/geo+json"))
+                && newRoute is IStreamResource)
             {
-                return route;
+                return newRoute;
             }
-            IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())), ct);
             // maybe the route is a folder
             if (string.IsNullOrEmpty(Path.GetExtension(route.Uri.ToString())))
             {

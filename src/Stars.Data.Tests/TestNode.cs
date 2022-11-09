@@ -22,7 +22,7 @@ namespace Terradue.Data.Tests
             this.directory = new DirectoryInfo(folderPath);
         }
 
-        public string Label => directory.FullName;
+        public string Title => directory.FullName;
 
         public string Id => directory.Name;
 

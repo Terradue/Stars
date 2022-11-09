@@ -149,9 +149,9 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.Properties["gsd"] = metadata.gsd;
                 stacAsset.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
-                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
                     new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 0.645, FullWidthHalfMax = 0.11 },
+                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
+                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
                 };
             }
 
@@ -177,9 +177,9 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.Properties["gsd"] = metadata.gsd;
                 stacAsset.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
-                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
                     new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 0.645, FullWidthHalfMax = 0.11 },
+                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
+                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
                 };
             }
 

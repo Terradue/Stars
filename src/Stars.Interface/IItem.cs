@@ -10,7 +10,7 @@ namespace Terradue.Stars.Interface
 {
     public interface IItem : IResource, IAssetsContainer
     {
-        string Label { get; }
+        string Title { get; }
         string Id { get; }
         IGeometryObject Geometry { get; }
         IDictionary<string, object> Properties { get; }

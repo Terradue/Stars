@@ -118,7 +118,7 @@ namespace Terradue.Stars.Console.Operations
                 SkipAssets = SkipAssets
             };
             // routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
-            routingService.OnBeforeBranching((node, router, state, ct) => CreateCatalog(node, router, state, ct));
+            routingService.OnBeforeBranching((node, router, state, subroutes, ct) => CreateCatalog(node, router, state, ct));
             routingService.OnItem((node, router, state, ct) => CopyNodeAsync(node, router, state, ct));
             routingService.OnBranching(async (parentRoute, route, siblings, state, ct) => await PrepareNewRouteAsync(parentRoute, route, siblings, state, ct));
             routingService.OnAfterBranching(async (parentRoute, router, parentState, subStates, ct) => await UpdateCatalog(parentRoute, router, parentState, subStates, ct));

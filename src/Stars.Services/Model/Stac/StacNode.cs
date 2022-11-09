@@ -29,7 +29,7 @@ namespace Terradue.Stars.Services.Model.Stac
             this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;
         }
 
-        public string Label => stacObject.Id;
+        public string Title => stacObject.Title;
 
         public ContentType ContentType => stacObject.MediaType;
 

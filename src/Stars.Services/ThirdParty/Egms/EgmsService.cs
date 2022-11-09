@@ -113,25 +113,30 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 
         }
 
-        public Uri GetEgmsApiLink(StacItem stacItem)
+        public Uri GetEgmsApiLink(StacCollection stacCollection)
         {
-            var link = stacItem.Links.Where(a => a.RelationshipType == "tsapi").First();
+            var link = stacCollection.Links.Where(a => a.RelationshipType == "tsapi").FirstOrDefault();
             if (link != null) return link.Uri;
             return null;
         }
 
         public async Task<IAbstractTimeSeriesOperationStatus<T>> GetTimeSeriesOperationStatusAsync<T>(StacCollection collection, CancellationToken cancellationToken)
         {
-            var statusLinks = collection.Links.Where(a => a.RelationshipType == "ts:status");
-            if (statusLinks.Count() == 0)
-                throw new Exception("No timeseries status link found in collection");
-            var client = _httpClientFactory.CreateClient();
+            // Get all time series links
+            var itemLinks = collection.GetItemLinks();
+            if (itemLinks.Count() == 0)
+                throw new Exception("No timeseries link found in collection");
+            var client = _httpClientFactory.CreateClient("egms");
             List<EgmsTimeSeriesImportTask> statuses = new List<EgmsTimeSeriesImportTask>();
 
-            foreach (var statusLink in statusLinks)
+            foreach (var itemLink in itemLinks)
             {
-                var json = await client.GetStringAsync(statusLink.Uri);
-                statuses.Add(JsonConvert.DeserializeObject<EgmsTimeSeriesImportTask>(json));
+                var json = await client.GetStringAsync(itemLink.Uri);
+                StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+                var importJobId = stacItem.GetProperty<string>("ts:import_job_id");
+                Uri importJobStatus = new Uri($"{itemLink.Uri}/import/jobs/{importJobId}/status");
+                var statusJson = await client.GetStringAsync(importJobStatus);
+                statuses.Add(JsonConvert.DeserializeObject<EgmsTimeSeriesImportTask>(statusJson));
             }
 
             return new EgmsTimeSeriesOperationStatus(collection, statuses) as IAbstractTimeSeriesOperationStatus<T>;

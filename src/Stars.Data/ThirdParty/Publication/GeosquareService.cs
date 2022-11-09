@@ -119,9 +119,52 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 SkipAssets = true
             };
             // routingService.OnRoutingException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
-            // routingService.OnBeforeBranching((node, router, state) => PrintBranchingNode(node, router, state));
+            routingService.OnBeforeBranching((node, router, state, subroutes, ct) => OnBeforeBranching(node, router, state, subroutes, ct));
             routingService.OnItem((node, router, state, ct) => PostItemToCatalog(node, router, state, ct));
             // routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
+        }
+
+        private async Task<object> OnBeforeBranching(ICatalog node, IRouter router, object state, ICollection<IResource> subroutes, CancellationToken ct)
+        {
+            var collection = (node as StacCatalogNode).StacCatalog as StacCollection;
+            if ( collection == null ){
+                return state;
+            }
+
+            // If Collection has assets, we consider it as a single item
+            if ( collection.Assets.Count > 0 ){
+                await PostCollectionToCatalog(new StacCollectionNode(collection, node.Uri), router, state, ct);
+            }
+
+            return state;
+        }
+
+        public async Task<object> PostCollectionToCatalog(Terradue.Stars.Interface.ICollection collectionNode, IRouter router, object state, CancellationToken ct)
+        {
+            GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
+            AtomItemNode atomItemNode = null;
+            try
+            {
+                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(collectionNode, ct);
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning(e, "Unable to translate item {0} to AtomItemNode", collectionNode);
+                if (catalogPublicationState.GeosquarePublicationModel.ThrowPublicationException)
+                    throw;
+
+                atomItemNode = null;
+            }
+            if (atomItemNode == null) return state;
+
+            atomItemNode.AtomItem.Identifier = catalogPublicationState.Hash.Key + "-" + atomItemNode.Identifier;
+            atomItemNode.AtomItem.Categories.Add(new SyndicationCategory(catalogPublicationState.Hash.Value, "http://www.terradue.com/opensearch/hash", catalogPublicationState.Hash.Value));
+
+            await PrepareAtomItem(atomItemNode.AtomItem, catalogPublicationState, collectionNode);
+
+            await PublishAtomFeed(atomItemNode.AtomItem.ToAtomFeed(), catalogPublicationState.GeosquarePublicationModel);
+
+            return state;
         }
 
         public async Task<object> PostItemToCatalog(IItem itemNode, IRouter router, object state, CancellationToken ct)
@@ -152,13 +195,13 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             return state;
         }
 
-        public async Task PrepareAtomItem(AtomItem atomItem, GeosquarePublicationState geosquarePublicationState, IItem itemNode)
+        public async Task PrepareAtomItem(AtomItem atomItem, GeosquarePublicationState geosquarePublicationState, IAssetsContainer assetsContainer)
         {
             // remap all link
             foreach (var link in atomItem.Links)
             {
                 link.Uri = geosquareConfiguration.MapUri(link.Uri);
-                geosquarePublicationState.GeosquarePublicationModel.UpdateLink(link, atomItem, itemNode);
+                geosquarePublicationState.GeosquarePublicationModel.UpdateLink(link, atomItem, assetsContainer);
             }
 
             // create eventual opensearch link

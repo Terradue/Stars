@@ -15,52 +15,52 @@ using System.Threading;
 
 namespace Terradue.Stars.Data.Translators
 {
-    public class StacItemToAtomItemTranslator : ITranslator
+    public class StacCollectionToAtomItemTranslator : ITranslator
     {
         private readonly IServiceProvider serviceProvider;
         private AtomRouter atomRouter;
         
-        public StacItemToAtomItemTranslator(IServiceProvider serviceProvider)
+        public StacCollectionToAtomItemTranslator(IServiceProvider serviceProvider)
         {
             this.atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
             this.serviceProvider = serviceProvider;
-            Key = "stac-to-atom";
+            Key = "staccollection-to-atom";
         }
 
         public int Priority { get; set; }
         public string Key { get; set; }
 
-        public string Label => "STAC Item to ATOM Entry";
+        public string Label => "STAC Collection to ATOM Entry";
 
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
             if ( typeof(T) != typeof(AtomItemNode) ) return default(T);
             if ( node is T ) return (T)node;
-            if ( !(node is StacItemNode) ) return default(T);
+            if ( !(node is StacCollectionNode) ) return default(T);
 
-            IResource atomItemNode = new AtomItemNode(CreateAtomItem(node as StacItemNode), node.Uri);
+            IResource atomItemNode = new AtomItemNode(CreateAtomItem(node as StacCollectionNode), node.Uri);
             return (T)atomItemNode;
         }
 
-        private StarsAtomItem CreateAtomItem(StacItemNode stacItemNode)
+        private StarsAtomItem CreateAtomItem(StacCollectionNode stacCollectionNode)
         {
             // First, let's create our atomItem
-            StarsAtomItem atomItem = StarsAtomItem.Create(stacItemNode.StacItem, stacItemNode.Uri);
-
-            // Add EO Profile if possible
-            atomItem.TryAddEarthObservationProfile(stacItemNode.StacItem);
+            StarsAtomItem atomItem = StarsAtomItem.Create(stacCollectionNode.StacCollection, stacCollectionNode.Uri);
 
             // Add TMS offering via titiler if possible
             TitilerService titilerService = serviceProvider.GetService<TitilerService>();
             bool imageOfferingSet = false;
             if (titilerService != null)
             {
-                imageOfferingSet = atomItem.TryAddTitilerOffering(stacItemNode, titilerService);
+                imageOfferingSet = atomItem.TryAddTitilerOffering(stacCollectionNode, titilerService);
             }
 
-            // if no previous image offering set, then let's try a simple overlay offering
-            if (!imageOfferingSet)
-                atomItem.AddImageOverlayOffering(stacItemNode);
+            // Add offering via egms if possible
+            EgmsService egmsService = serviceProvider.GetService<EgmsService>();                        
+            if (egmsService != null)
+            {
+                imageOfferingSet = imageOfferingSet || atomItem.TryAddEGMSOffering(stacCollectionNode, egmsService);
+            }
 
             return atomItem;
         }
