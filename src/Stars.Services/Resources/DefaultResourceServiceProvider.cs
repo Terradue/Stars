@@ -81,6 +81,8 @@ namespace Terradue.Stars.Services.Resources
                 triedS3 = true;
             }
 
+            bool badStatusCode = false;
+
             // HTTP
             if (resource.Uri.Scheme.StartsWith("http"))
             {
@@ -114,7 +116,15 @@ namespace Terradue.Stars.Services.Resources
                         {
                             contentHeaders = new HttpCachedHeaders(response.Headers);
                             contentHeaders.AddRange(response.Content.Headers);
-                            response.EnsureSuccessStatusCode();
+                            try
+                            {
+                                response.EnsureSuccessStatusCode();
+                            }
+                            catch (Exception e)
+                            {
+                                badStatusCode = true;
+                                throw;
+                            }
                         }
                     }
                     catch (Exception e)
@@ -145,8 +155,8 @@ namespace Terradue.Stars.Services.Resources
                     }
                     triedS3 = true;
                 }
-                
-                if ( !triedS3 )
+
+                if (!triedS3 && !badStatusCode)
                 {
                     return new HttpResource(resource.Uri, client, contentHeaders);
                 }
