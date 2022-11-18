@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Resources
             return await (await this._client.SendAsync(request, HttpCompletionOption.ResponseContentRead, ct)).Content.ReadAsStreamAsync();
         }
 
-        public ContentType ContentType => new ContentType(CachedHeaders.ContentType.ToString());
+        public ContentType ContentType => new ContentType(CachedHeaders.ContentType == null ? "application/octet-stream" : CachedHeaders.ContentType.MediaType);
 
         public ResourceType ResourceType => ResourceType.Unknown;
 
