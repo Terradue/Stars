@@ -29,14 +29,13 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public GeosquarePublicationModel(GeosquarePublicationModel publishCatalogModel)
         {
             Url = publishCatalogModel.Url;
-            authorizationHeaderValue = publishCatalogModel.authorizationHeaderValue;
             Index = publishCatalogModel.Index;
             AdditionalLinks = publishCatalogModel.AdditionalLinks;
             SubjectsList = publishCatalogModel.Subjects.Select(s => new Subject(s)).ToList();
             CreateIndex = publishCatalogModel.CreateIndex;
             Collection = publishCatalogModel.Collection;
             CustomLinkUpdater = publishCatalogModel.CustomLinkUpdater;
-            GeosquareBaseUrl = publishCatalogModel.GeosquareBaseUrl;
+            CatalogId = publishCatalogModel.CatalogId;
         }
 
         /// <summary>
@@ -46,12 +45,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         [Required]
         [DataMember]
         public string Url { get; set; }
-
-        /// <summary>
-        /// Authorization Header used to publish on the catalog
-        /// </summary>
-        [DataMember]
-        public string AuthorizationHeader { get => authorizationHeaderValue?.ToString(); set => authorizationHeaderValue = value != null ? AuthenticationHeaderValue.Parse(value) : default(AuthenticationHeaderValue); }
 
         /// <summary>
         /// Index used to publish on the catalog
@@ -86,18 +79,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         [IgnoreDataMember]
         public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
 
-        public AuthenticationHeaderValue AuthorizationHeaderValue { get => authorizationHeaderValue; set => authorizationHeaderValue = value; }
-
-        public string ApiKey { get; set; }
-
-        public void SetAuthorizationHeader(string Username, string Password)
-        {
-            var authenticationString = $"{Username}:{Password}";
-            var base64EncodedAuthenticationString = Convert.ToBase64String(System.Text.ASCIIEncoding.UTF8.GetBytes(authenticationString));
-            authorizationHeaderValue = new AuthenticationHeaderValue("Basic", base64EncodedAuthenticationString);
-
-        }
-
         public Action<SyndicationLink, AtomItem, IAssetsContainer> CustomLinkUpdater { get; set; }
 
         internal void UpdateLink(SyndicationLink link, AtomItem item, IAssetsContainer assetsContainer)
@@ -108,11 +89,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         public bool ThrowPublicationException { get; set; } = true;
 
-        public string GeosquareBaseUrl { get; set; }
-
-        public Uri GeosquareBaseUri => new Uri(GeosquareBaseUrl);
-
-        public string CatalogId => GeosquareBaseUrl;
+        public string CatalogId { get; set; }
     }
 
 }

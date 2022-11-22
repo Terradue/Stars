@@ -7,9 +7,11 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
     public class GeosquarePublicationState : IPublicationState
     {
+        public System.Net.Http.HttpClient Client { get; set; }
 
-        public GeosquarePublicationState(GeosquarePublicationModel model)
+        public GeosquarePublicationState(GeosquarePublicationModel model, System.Net.Http.HttpClient client)
         {
+            this.Client = client;
             this.GeosquarePublicationModel = model;
         }
         public KeyValuePair<string, string> Hash { get; internal set; }
