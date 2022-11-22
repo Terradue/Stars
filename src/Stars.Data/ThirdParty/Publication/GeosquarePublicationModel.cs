@@ -26,6 +26,19 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             SubjectsList = new List<Subject>();
         }
 
+        public GeosquarePublicationModel(IPublicationModel pubModel)
+        {
+            Url = pubModel.Url;
+            AdditionalLinks = pubModel.AdditionalLinks;
+            SubjectsList = new List<Subject>();
+            if (pubModel.Subjects != null)
+            {
+                SubjectsList.AddRange(pubModel.Subjects.Select(s => new Subject(s)));
+            }
+            Collection = pubModel.Collection;
+            CatalogId = pubModel.CatalogId;
+        }
+
         public GeosquarePublicationModel(GeosquarePublicationModel publishCatalogModel)
         {
             Url = publishCatalogModel.Url;

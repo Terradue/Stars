@@ -239,7 +239,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         public async Task CreateIndexIfNotExist(GeosquarePublicationModel pubModel, HttpClient client)
         {
-            var wr = await client.GetAsync(pubModel.Index + "/_exists");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(client.BaseAddress, pubModel.Index + "/_exists"));
+            var wr = await client.SendAsync(request);
             if (wr.StatusCode == HttpStatusCode.OK) return;
 
             if (wr.StatusCode == HttpStatusCode.Unauthorized || wr.StatusCode == HttpStatusCode.Forbidden)
