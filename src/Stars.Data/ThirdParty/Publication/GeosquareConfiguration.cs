@@ -10,20 +10,10 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
     public class GeosquareConfiguration
     {
-        public GeosquareConfiguration()
-        {
-        }
-
-        public string BaseUrl { get; set; }
-
-        [JsonIgnore]
-        public Uri BaseUri => new Uri(BaseUrl);
 
         public string DefaultIndex { get; set; }
 
         public bool CreateIndex { get; set; }
-
-        public string AuthorizationHeader { get; set; }
 
         public Dictionary<string, UriMap> UriMaps { get; set; }
 
@@ -46,7 +36,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         }
 
         public Dictionary<string, UriMap> OpenSearchTemplatesMap { get; internal set; }
-        public string ApiKey { get; set; }
 
         public string GetOpenSearchForUri(Uri uri)
         {
@@ -62,32 +51,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (mapping.Value != null && !string.IsNullOrEmpty(mapping.Value.Replacement))
                 return Regex.Replace(uri.ToString(), mapping.Value.Pattern, mapping.Value.Replacement);
             return uri.ToString();
-        }
-
-        [Obsolete("Use GeosquareService.CreateModelFromPublication instead")]
-        public GeosquarePublicationModel CreatePublicationModel(GeosquarePublicationModel publishCatalogModel, ClaimsPrincipal user)
-        {
-            GeosquarePublicationModel geosquarePublicationModel = new GeosquarePublicationModel(publishCatalogModel);
-
-            //if index not set in the body, we use the username as index
-            if (string.IsNullOrEmpty(geosquarePublicationModel.Index))
-            {
-                if (user != null)
-                    geosquarePublicationModel.Index = user.Identity.Name;
-                else if (!string.IsNullOrEmpty(DefaultIndex))
-                    geosquarePublicationModel.Index = DefaultIndex;
-            }
-            if (geosquarePublicationModel.AuthorizationHeaderValue == null)
-            {
-                if (!string.IsNullOrWhiteSpace(AuthorizationHeader))
-                    geosquarePublicationModel.AuthorizationHeader = AuthorizationHeader;
-                // TODO pass user identity auth
-            }
-            geosquarePublicationModel.Index = geosquarePublicationModel.Index.ToLower();
-
-            geosquarePublicationModel.CreateIndex |= CreateIndex;
-
-            return geosquarePublicationModel;
         }
     }
 

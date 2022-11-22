@@ -10,7 +10,6 @@ namespace Terradue.Stars.Services
         public StarsHttpMessageHandler(ICredentials credentials)
         {
             Credentials = credentials;
-            // UseDefaultCredentials = true;
             AllowAutoRedirect = true;
         }
 
@@ -19,7 +18,7 @@ namespace Terradue.Stars.Services
             if (request.RequestUri.Host == "store.terradue.com")
             {
                 request.Headers.Remove("User-Agent");
-                request.Headers.Add("User-Agent", "Curl (TerrApi)");
+                request.Headers.Add("User-Agent", "Curl (Stars)");
             }
 
             return base.SendAsync(request, cancellationToken);

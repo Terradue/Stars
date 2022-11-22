@@ -100,6 +100,7 @@ namespace Terradue.Stars.Services.Resources
                     using (var headResponse = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct))
                     {
                         contentHeaders = new HttpCachedHeaders(headResponse.Headers);
+                        contentHeaders.AddRange(headResponse.Content.Headers);
                         headResponse.EnsureSuccessStatusCode();
                     }
                 }
