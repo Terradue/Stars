@@ -20,7 +20,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         public StacLink GetPublicationLink()
         {
-            return new StacLink(OsdUri, "search", "OpenSearch Description", "application/xml+opensearchdescription", 0);
+            return new StacLink(OsdUri, "search", "OpenSearch Description", "application/opensearchdescription+xml", 0);
         }
     }
 }
