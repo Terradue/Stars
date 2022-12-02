@@ -107,7 +107,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 AdditionalLinks = publicationModel.AdditionalLinks,
                 CreateIndex = true,
                 SubjectsList = publicationModel.Subjects?.Select(s => new Subject(s)).ToList(),
-                CatalogId = publicationModel.CatalogId
+                CatalogId = publicationModel.CatalogId ?? geosquareConfiguration.BaseUri.ToString()
             };
         }
 
