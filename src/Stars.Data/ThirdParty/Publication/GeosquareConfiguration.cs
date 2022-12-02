@@ -43,7 +43,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         {
             get
             {
-                return BaseUri.ToString();
+                return BaseUri?.ToString();
             }
             set
             {
