@@ -109,7 +109,7 @@ namespace Terradue.Stars.Data.Model.Atom
                                  stacCollection.Description,
                                  null,
                                  stacCollection.Id,
-                                 new DateTimeOffset(stacCollection.DateTime.Start.ToUniversalTime(), new TimeSpan(0))
+                                 new DateTimeOffset(stacCollection.Extent.Temporal.Interval[0][0].Value.ToUniversalTime(), new TimeSpan(0))
                                 );
 
             StarsAtomItem starsAtomItem = new StarsAtomItem(item);
