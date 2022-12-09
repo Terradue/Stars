@@ -63,6 +63,7 @@ namespace Terradue.Data.Tests.Harvesters
                 Assert.NotNull(stacItemNode);
                 StacItem stacItem = stacItemNode.StacObject as StacItem;
                 Assert.NotNull(stacItem);
+                Assert.NotNull(stacItem.Providers);
                 stacItem.Properties.Remove("updated");
                 stacItemNode.MakeAssetUriRelative();
                 CheckAssetLocalPath(stacItem, key);
