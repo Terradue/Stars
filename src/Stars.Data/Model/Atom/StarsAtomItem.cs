@@ -94,8 +94,16 @@ namespace Terradue.Stars.Data.Model.Atom
             // Add functional links
             starsAtomItem.Links.AddRange(GetFunctionalLinks(stacItem.Assets, stacItemUri));
 
-            starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", GetDcDateFormat(stacItem));
-            starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", stacItem.Geometry.ToWkt());
+            var datestr = GetDcDateFormat(stacItem);
+            if (datestr != null)
+            {
+                starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", datestr);
+            }
+            var geom = stacItem.Geometry;
+            if (geom != null)
+            {
+                starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", geom.ToWkt());
+            }
 
             starsAtomItem.LastUpdatedTime = new DateTimeOffset(stacItem.Updated, new TimeSpan(0));
             starsAtomItem.PublishDate = new DateTimeOffset(stacItem.Created, new TimeSpan(0));
@@ -166,8 +174,16 @@ namespace Terradue.Stars.Data.Model.Atom
             // Add functional links
             starsAtomItem.Links.AddRange(GetFunctionalLinks(stacCollection.Assets, stacCollectionUri));
 
-            starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", GetDcDateFormat(stacCollection));
-            starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", stacCollection.Extent.Spatial.ToWkt());
+            var datestr = GetDcDateFormat(stacCollection);
+            if (datestr != null)
+            {
+                starsAtomItem.ElementExtensions.Add("date", "http://purl.org/dc/elements/1.1/", datestr);
+            }
+            var geom = stacCollection.Extent.Spatial;
+            if (geom != null)
+            {
+                starsAtomItem.ElementExtensions.Add("spatial", "http://purl.org/dc/terms/", geom.ToWkt());
+            }
 
             starsAtomItem.LastUpdatedTime = new DateTimeOffset(DateTime.UtcNow, new TimeSpan(0));
 
