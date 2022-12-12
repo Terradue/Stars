@@ -36,6 +36,10 @@
                 "USGS": {
                     "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
                     "ServiceUrl": "https://earthexplorer.usgs.gov"
+                },
+                "PLANETSCOPE": {
+                    "Type": "Terradue.Stars.Data.Suppliers.PlanetScope.PlanetScopeSupplier",
+                    "ServiceUrl": "https://api.planet.com/data/v1"
                 }
             },
             "Translators": {

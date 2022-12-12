@@ -57,15 +57,28 @@ namespace Terradue.Stars.Services.Translator
         private IItem CreateStacItemNode(IItem node)
         {
             StacItem stacItem = new StacItem(node.Id, node.Geometry, node.Properties);
+            MakeStacItemValid(stacItem);
             foreach (var asset in node.Assets)
             {
-
                 Uri relativeUri = asset.Value.Uri;
                 if (asset.Value.Uri.IsAbsoluteUri)
                     relativeUri = node.Uri.MakeRelativeUri(asset.Value.Uri);
                 stacItem.Assets.Add(asset.Key, CreateStacAsset(asset.Value, stacItem, relativeUri));
             }
             return new StacItemNode(stacItem, node.Uri);
+        }
+
+        private void MakeStacItemValid(StacItem stacItem)
+        {
+            Itenso.TimePeriod.ITimePeriod dateTime = Itenso.TimePeriod.TimeInterval.Anytime;
+            try
+            {
+                dateTime = stacItem.DateTime;
+            }
+            catch
+            {
+                stacItem.DateTime = dateTime;
+            }
         }
 
         private StacAsset CreateStacAsset(IAsset asset, StacItem stacItem, Uri uri)
