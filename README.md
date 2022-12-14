@@ -41,7 +41,7 @@ All [services are built around the **Catalog Resource**](#catalog-resource) :
 
 ## Services
 
-**Stars** is basically a collection of services implemented in .Net that can be used to implement command line tools, web services or any programmtic logic arounf Spatio Temporal Catalogs.
+**Stars** is basically a collection of services implemented in .Net that can be used to implement command line tools, web services or any programmtic logic around Spatio Temporal Catalogs.
 They can be combined togheter to perform simples operations like listing a catalog to complex processing of assets.
 
 <h4 align="center">
@@ -52,7 +52,7 @@ They can be combined togheter to perform simples operations like listing a catal
 
 ### Router
 
-This is a recursive function for trigger functions during the navigation of a Catalog. Basically it reads a catalog as a tree and crawl in every node of the catalog allowing the programmer to set functions to be executed when it meets a new node, before and after branching to the node children or when the parser comes to a leaf node.
+This is a recursive function for trigger functions during the navigation of a Catalog. Basically it reads a catalog as a tree and crawls in every node of the catalog allowing the programmer to set functions to be executed when it meets a new node, before and after branching to the node children or when the parser comes to a leaf node.
 This service uses the plugins manager to find the appropriate router for a catalog data model and encoding.
 
 > :mag: plugins implementing routers may reader various catalog data model and encoding. [Stars Tools](#Stars-Tools) implements natively
