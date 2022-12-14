@@ -74,7 +74,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 geosquareModel = CreateModelFromPublication(publicationModel);
             }
             if (geosquareModel.CreateIndex) await CreateIndexIfNotExist(geosquareModel, client);
-            InitRoutingTask();
+            InitRoutingTask(geosquareModel);
             var guid = CalculateHash(geosquareModel.Url.ToString());
             var route = await resourceServiceProvider.GetStreamResourceAsync(new GenericResource(new Uri(geosquareModel.Url)), ct);
 
@@ -121,11 +121,11 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             }
         }
 
-        private void InitRoutingTask()
+        private void InitRoutingTask(GeosquarePublicationModel geosquareModel)
         {
             routingService.Parameters = new RouterServiceParameters()
             {
-                Recursivity = 4,
+                Recursivity = geosquareModel.Depth,
                 SkipAssets = true
             };
             // routingService.OnRoutingException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
