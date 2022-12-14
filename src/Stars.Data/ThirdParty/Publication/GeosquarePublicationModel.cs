@@ -37,6 +37,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             }
             Collection = pubModel.Collection;
             CatalogId = pubModel.CatalogId;
+            Depth = pubModel.Depth;
         }
 
         public GeosquarePublicationModel(GeosquarePublicationModel publishCatalogModel)
@@ -49,6 +50,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             Collection = publishCatalogModel.Collection;
             CustomLinkUpdater = publishCatalogModel.CustomLinkUpdater;
             CatalogId = publishCatalogModel.CatalogId;
+            Depth = publishCatalogModel.Depth;
         }
 
         /// <summary>
@@ -76,6 +78,12 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         /// </summary>
         [DataMember]
         public string Collection { get; set; }
+
+        /// <summary>
+        /// Recursivity Depth of the catalog to publish
+        /// </summary>
+        [DataMember]
+        public int Depth { get; set; } = 4;
 
         /// <summary>
         /// Links to be added to the catalog items

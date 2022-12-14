@@ -14,5 +14,7 @@ namespace Terradue.Stars.Interface
         List<ISubject> Subjects { get; }
 
         string Collection { get; }
+
+        int Depth { get; }
     }
 }
