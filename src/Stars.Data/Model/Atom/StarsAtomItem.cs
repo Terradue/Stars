@@ -105,11 +105,12 @@ namespace Terradue.Stars.Data.Model.Atom
 
         public static StarsAtomItem Create(StacCollection stacCollection, Uri stacCollectionUri)
         {
+            DateTime date = stacCollection.Extent.Temporal.Interval[0][0].HasValue ? stacCollection.Extent.Temporal.Interval[0][0].Value : DateTime.MinValue;
             AtomItem item = new AtomItem(stacCollection.Title,
                                  stacCollection.Description,
                                  null,
                                  stacCollection.Id,
-                                 new DateTimeOffset(stacCollection.DateTime.Start.ToUniversalTime(), new TimeSpan(0))
+                                 new DateTimeOffset(date.ToUniversalTime(), new TimeSpan(0))
                                 );
 
             StarsAtomItem starsAtomItem = new StarsAtomItem(item);
