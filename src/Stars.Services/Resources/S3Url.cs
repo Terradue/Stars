@@ -35,6 +35,9 @@ namespace Terradue.Stars.Services.Resources
         // Pattern used to parse multiple path and host style S3 endpoint URLs.
         private static Regex s3URLPattern = new Regex(@"^(.+\.)?s3[.-](?:(accelerated|dualstack|website)[.-])?([a-z0-9-]+)\.(?:[a-z0-9-\.]+)");
 
+        // Pattern to extract S3 bucket
+        private static Regex s3BucketRegex = new Regex(@"^s3://(?'bucket'[^/]+).*");
+
         public S3Url(string bucketName, string key)
         {
             Scheme = "s3";
@@ -107,7 +110,13 @@ namespace Terradue.Stars.Services.Resources
                 {
                     throw new EntryPointNotFoundException($"bucket not found in the url : {uri}");
                 }
-                s3Url.Bucket = uri.Host;
+                // .NET transform hostnames to lowercase.
+                // This is fine with correctly named buckets (all lowercase),
+                // but buckets can also be wrongly contain uppercase letters.
+                // s3Url.Bucket = uri.Host;
+                Match bucketMatch = s3BucketRegex.Match(uri.OriginalString);
+                if (bucketMatch.Success) s3Url.Bucket = bucketMatch.Groups["bucket"].Value;
+                else s3Url.Bucket = uri.Host;
 
                 if (!string.IsNullOrEmpty(uri.LocalPath) && uri.LocalPath != "/")
                 {
