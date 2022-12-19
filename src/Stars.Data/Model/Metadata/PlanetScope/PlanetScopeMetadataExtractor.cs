@@ -44,7 +44,6 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
             }
             catch (Exception e)
             {
-                Console.WriteLine("ERROR-XXX {0}\n{1}", e.Message, e.StackTrace);
                 return false;
             }
         }
