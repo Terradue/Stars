@@ -134,7 +134,7 @@ pipeline {
 }
 
 def getTypeOfVersion(branchName) {
-  def matcher = (branchName =~ /(v[\d.]+|(release\/[\d.]+|master)/)
+  def matcher = (branchName =~ /(v[\d.]+|release\/[\d.]+|master)/)
   if (matcher.matches())
     return ""
   
@@ -142,7 +142,7 @@ def getTypeOfVersion(branchName) {
 }
 
 def getConfiguration(branchName) {
-  def matcher = (branchName =~ /(release\/[\d.]+|master)/)
+  def matcher = (branchName =~ /(v[\d.]+|release\/[\d.]+|master)/)
   if (matcher.matches())
     return "Release"
   
