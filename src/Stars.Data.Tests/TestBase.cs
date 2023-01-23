@@ -48,6 +48,7 @@ namespace Terradue.Data.Tests
             Collection.AddSingleton<StacRouter, StacRouter>();
             Collection.AddSingleton<TitilerService, TitilerService>();
             Collection.AddSingleton<EgmsService, EgmsService>();
+            Collection.AddSingleton<IVectorService, TestVectorService>();
         }
 
         protected TestBase()
@@ -59,6 +60,7 @@ namespace Terradue.Data.Tests
             Collection.AddSingleton<StacRouter, StacRouter>();
             Collection.AddSingleton<TitilerService, TitilerService>();
             Collection.AddSingleton<EgmsService, EgmsService>();
+            Collection.AddSingleton<IVectorService, TestVectorService>();
             Collection.AddHttpClient();
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file

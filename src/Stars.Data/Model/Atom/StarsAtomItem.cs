@@ -375,6 +375,30 @@ namespace Terradue.Stars.Data.Model.Atom
             return false;
         }
 
+        public bool TryAddVectorOffering(StacItemNode stacItemNode, IVectorService vectorService)
+        {
+            var vectorAssets = vectorService.SelectVectorAssets(stacItemNode.StacItem);
+            foreach(var asset in vectorAssets)
+            {
+                var stacItemUri = stacItemNode.Uri;
+                Uri titilerServiceUri = vectorService.BuildServiceUri(stacItemNode, asset);
+                ElementExtensions.Add(new OwcOffering()
+                {
+                    Operations = new OwcOperation[]{new OwcOperation()
+                        {
+                            Href = titilerServiceUri.ToString(),
+                            Type = asset.Value.MediaType.ToString(),
+                            Code = "GetMap",
+                            Method = "GET"
+                        }},
+                    Code = "http://www.terradue.com/fgb"
+                }.CreateReader());
+            }
+            return vectorAssets.Count() > 0;
+        }
+
+        
+
         public async Task CreateOpenSearchLinks(Func<SyndicationLink, object, Task<SyndicationLink>> mapOpensearchUri, object state)
         {
             foreach (var link in Links.Where(l =>
