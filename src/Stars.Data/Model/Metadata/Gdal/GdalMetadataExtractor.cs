@@ -26,7 +26,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gdal
 
         public GdalMetadataExtractor(ILogger<GdalMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
-            GdalBase.ConfigureAll();
+            //GdalBase.ConfigureAll();
         }
 
         public override bool CanProcess(IResource route, IDestination destination)
