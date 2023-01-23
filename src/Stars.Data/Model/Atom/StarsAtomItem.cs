@@ -381,7 +381,7 @@ namespace Terradue.Stars.Data.Model.Atom
             foreach(var asset in vectorAssets)
             {
                 var stacItemUri = stacItemNode.Uri;
-                Uri titilerServiceUri = vectorService.BuildServiceUri(stacItemUri, asset);
+                Uri titilerServiceUri = vectorService.BuildServiceUri(stacItemNode, asset);
                 ElementExtensions.Add(new OwcOffering()
                 {
                     Operations = new OwcOperation[]{new OwcOperation()

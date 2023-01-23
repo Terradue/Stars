@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Stac;
+using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 
 namespace Terradue.Data.Tests
@@ -11,7 +12,7 @@ namespace Terradue.Data.Tests
     {
         public bool IsAvailable => true;
 
-        public Uri BuildServiceUri(Uri stacItemUri, KeyValuePair<string, StacAsset> vectorAsset)
+        public Uri BuildServiceUri(StacItemNode stacItemNode, KeyValuePair<string, StacAsset> vectorAsset)
         {
             return new Uri(Path.Combine("https://example.com/s3g", vectorAsset.Value.Uri.IsAbsoluteUri ? vectorAsset.Value.Uri.LocalPath : vectorAsset.Value.Uri.ToString()));
         }
