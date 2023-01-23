@@ -35,6 +35,33 @@ namespace Terradue.Data.Tests.Translators
         }
 
         [Fact]
+        public async System.Threading.Tasks.Task VectorResults()
+        {
+            string json = GetJson("Translators");
+
+            ValidateJson(json);
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
+
+            // Get the vector offering
+            var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
+            var vectorOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/fgb");
+
+            Assert.NotNull(vectorOfferings);
+            Assert.Equal(2, vectorOfferings.Count());
+            Assert.Equal("GetMap", vectorOfferings.ElementAt(0).Operations.First().Code);
+            Assert.Equal("application/flatgeobuf", vectorOfferings.ElementAt(0).Operations.First().Type);
+            Assert.Equal("GetMap", vectorOfferings.ElementAt(1).Operations.First().Code);
+            Assert.Equal("application/geo+json", vectorOfferings.ElementAt(1).Operations.First().Type);
+        }
+
+        [Fact]
         public async System.Threading.Tasks.Task LegendTest()
         {
             string json = GetJson("Translators");

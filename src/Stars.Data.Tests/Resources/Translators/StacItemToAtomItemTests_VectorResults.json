@@ -1,0 +1,88 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "vectorized",
+  "properties": {
+    "start_datetime": "2022-08-02T17:46:05Z",
+    "end_datetime": "2022-10-13T17:46:07Z",
+    "title": "HASARD flood bitmask derived from S1A_IW_GRDH_1SDV_20220802T174605_20220802T174630_044377_054BBD_CCC7-calibrated and S1A_IW_GRDH_1SDV_20221013T174607_20221013T174632_045427_056EAB_1409-calibrated",
+    "description": "Name | Value\n---- | -----\nInput dataset (pre-event)| S1A_IW_GRDH_1SDV_20220802T174605_20220802T174630_044377_054BBD_CCC7-calibrated\nSensing time (pre-event)| **02/08/2022 17:46:05**\nInput dataset (post-event)| S1A_IW_GRDH_1SDV_20221013T174607_20221013T174632_045427_056EAB_1409-calibrated\nSensing time (post-event)| **13/10/2022 17:46:07**\nCreated  | **20/12/22 11:34:10**\n",
+    "datetime": "2022-08-02T17:46:05.420611Z",
+    "disaster:class": "UserProduct",
+    "cpe:status": {
+      "stage": "notificationNew",
+      "message": null,
+      "link": null
+    },
+    "updated": "2022-12-20T11:36:53.4341072Z",
+    "cpe:owner": "VA_ESA_MArcorace",
+    "disaster:activation_id": 777,
+    "version": "1"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          5.860153,
+          8.589134
+        ],
+        [
+          6.171112,
+          7.076905
+        ],
+        [
+          8.411235,
+          7.533321
+        ],
+        [
+          8.109407,
+          9.041512
+        ],
+        [
+          5.860153,
+          8.589134
+        ]
+      ]
+    ]
+  },
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    }
+  ],
+  "assets": {
+    "vectorized-octet": {
+      "href": "result.fgb",
+      "type": "application/flatgeobuf",
+      "title": "Vectorized FlatGeoBuf",
+      "roles": [
+        "visual",
+        "data"
+      ]
+    },
+    "vectorized": {
+      "href": "result.json",
+      "type": "application/geo+json",
+      "title": "Vectorized GeoJSON",
+      "roles": [
+        "visual",
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    5.860153,
+    7.076905,
+    8.411235,
+    9.041512
+  ],
+  "stac_extensions": []
+}

@@ -19,7 +19,7 @@ namespace Terradue.Stars.Data.Translators
     {
         private readonly IServiceProvider serviceProvider;
         private AtomRouter atomRouter;
-        
+
         public StacItemToAtomItemTranslator(IServiceProvider serviceProvider)
         {
             this.atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
@@ -34,9 +34,9 @@ namespace Terradue.Stars.Data.Translators
 
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
-            if ( typeof(T) != typeof(AtomItemNode) ) return default(T);
-            if ( node is T ) return (T)node;
-            if ( !(node is StacItemNode) ) return default(T);
+            if (typeof(T) != typeof(AtomItemNode)) return default(T);
+            if (node is T) return (T)node;
+            if (!(node is StacItemNode)) return default(T);
 
             IResource atomItemNode = new AtomItemNode(CreateAtomItem(node as StacItemNode), node.Uri);
             return (T)atomItemNode;
@@ -61,6 +61,13 @@ namespace Terradue.Stars.Data.Translators
             // if no previous image offering set, then let's try a simple overlay offering
             if (!imageOfferingSet)
                 atomItem.AddImageOverlayOffering(stacItemNode);
+
+            // Try to add vector offering
+            IVectorService vectorService = serviceProvider.GetService<IVectorService>();
+            if (vectorService != null)
+            {
+                atomItem.TryAddVectorOffering(stacItemNode, vectorService);
+            }
 
             return atomItem;
         }
