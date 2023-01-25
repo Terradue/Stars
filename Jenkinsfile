@@ -32,7 +32,7 @@ pipeline {
           steps {
             script {
               def sdf = sh(returnStdout: true, script: 'date -u +%Y%m%dT%H%M%S').trim()
-              if (env.BRANCH_NAME =~ /(release\/[\d.]+|master)/) 
+              if (env.BRANCH_NAME =~ /(v[\\d\\.]+|release\/[\d.]+|master)/) 
                 env.DOTNET_ARGS = ""
               else
                 env.DOTNET_ARGS = "--version-suffix SNAPSHOT" + sdf
@@ -55,7 +55,7 @@ pipeline {
         }
         stage('Publish NuGet') {
           when{
-            branch pattern: "(release\\/[\\d.]+|master)", comparator: "REGEXP"
+            branch pattern: "(v[\\d\\.]+|release\\/[\\d.]+|master)", comparator: "REGEXP"
           }
           steps {
             withCredentials([string(credentialsId: 'nuget_token', variable: 'NUGET_TOKEN')]) {
@@ -109,7 +109,7 @@ pipeline {
           } 
       }
       when {
-        branch pattern: "(release\\/[\\d.]+|master)", comparator: "REGEXP"
+        branch pattern: "(v[\\d\\.]+|release\\/[\\d.]+|master)", comparator: "REGEXP"
       }
       steps {
         withCredentials([string(credentialsId: '11f06c51-2f47-43be-aef4-3e4449be5cf0', variable: 'GITHUB_TOKEN')]) {
