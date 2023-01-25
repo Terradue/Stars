@@ -58,8 +58,10 @@ namespace Terradue.Stars.Services
                         return true;
                     return policyErrors == System.Net.Security.SslPolicyErrors.None;
                 };
-                var cacheExpirationPerHttpResponseCode = CacheExpirationProvider.CreateSimple(TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(5));
-                return new InMemoryCacheHandler(httpClientHandler, cacheExpirationPerHttpResponseCode);
+                return httpClientHandler;
+                // REMOVED to allow direct streaming
+                // var cacheExpirationPerHttpResponseCode = CacheExpirationProvider.CreateSimple(TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(5));
+                // return new InMemoryCacheHandler(httpClientHandler, cacheExpirationPerHttpResponseCode);
             });
 
             //  ## Add plugins
