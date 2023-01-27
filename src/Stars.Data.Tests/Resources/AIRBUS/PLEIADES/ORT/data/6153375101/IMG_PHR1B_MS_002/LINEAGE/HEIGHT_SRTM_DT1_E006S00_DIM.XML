@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Dimap_Document>
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.15">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>PHR_ORTHO</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>HEIGHT</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Source_Identification>
+    <SOURCE_ID>E006S00</SOURCE_ID>
+    <SOURCE_TYPE>DEM</SOURCE_TYPE>
+    <SOURCE_NAME>SRTM</SOURCE_NAME>
+    <SOURCE_DESCRIPTION>SRTM DTED1</SOURCE_DESCRIPTION>
+  </Source_Identification>
+  <Source_Content>
+    <SOURCE_LOCATION>E006S00</SOURCE_LOCATION>
+  </Source_Content>
+  <Source_Information>
+    <Producer_Information>
+      <PRODUCER_NAME>CGIAR-CSI</PRODUCER_NAME>
+      <PRODUCER_URL href="http://srtm.csi.cgiar.org"/>
+      <PRODUCER_ADDRESS/>
+    </Producer_Information>
+  </Source_Information>
+  <Coordinate_Reference_System>
+    <Geodetic_CRS>
+      <GEODETIC_CRS_TYPE>GEOGRAPHIC2D</GEODETIC_CRS_TYPE>
+      <GEODETIC_CRS_NAME>WGS 1984</GEODETIC_CRS_NAME>
+      <GEODETIC_CRS_CODE>urn:ogc:def:crs:EPSG::4326</GEODETIC_CRS_CODE>
+    </Geodetic_CRS>
+    <Vertical_CS>
+      <VERTICAL_CRS_TYPE>ORTHOMETRIC</VERTICAL_CRS_TYPE>
+      <VERTICAL_CRS_NAME>EGM96 geoid height</VERTICAL_CRS_NAME>
+      <VERTICAL_CRS_CODE>urn:ogc:def:crs:EPSG::5773</VERTICAL_CRS_CODE>
+    </Vertical_CS>
+  </Coordinate_Reference_System>
+  <Processing_Information>
+    <PROCESSING_LEVEL>ORTHO</PROCESSING_LEVEL>
+    <GEOMETRIC_PROCESSING>ORTHO</GEOMETRIC_PROCESSING>
+    <Adjustment_Method>
+      <VERTICAL_ADJUSTMENT>ELEVATION</VERTICAL_ADJUSTMENT>
+    </Adjustment_Method>
+  </Processing_Information>
+</Dimap_Document>
