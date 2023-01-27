@@ -92,6 +92,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 return stacItemNodes.First() as StacItemNode;
             }
 
+            // Merge MS (multispectral) assets into P (pan-chromatic) STAC item
+            StacItemNode baseNode = stacItemNodes.FirstOrDefault(n => n.StacItem.Assets.ContainsKey("P-metadata"));
+            if (baseNode == null) baseNode = stacItemNodes[0];
+            //StacItem mergedStacItem = baseNode.StacItem;
+
+            foreach (StacItemNode n in stacItemNodes.FindAll(n => n != baseNode))
+            {
+                baseNode.StacItem.Assets.AddRange(n.StacItem.Assets);
+            }
+
+            return baseNode;
+
+            /*
+            // Below is complicated code to deal with more than one item (involving a StacCatalog) which does not work
+
             var mergedItems = stacItemNodes.OfType<StacItemNode>().GroupBy<StacItemNode, string, StacItemNode>(item => item.Id,
                 (id, items) => new StacItemNode(
                                         StacItemMerger.Merge(items), items.First().Uri
@@ -115,7 +130,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                    return link;
                }).ToList()).ToList()));
 
-            return StacCatalogNode.Create(catalog, item.Uri);
+            return StacCatalogNode.Create(catalog, item.Uri);*/
         }
 
         internal StacItemNode ExtractMetadata(IItem item,
