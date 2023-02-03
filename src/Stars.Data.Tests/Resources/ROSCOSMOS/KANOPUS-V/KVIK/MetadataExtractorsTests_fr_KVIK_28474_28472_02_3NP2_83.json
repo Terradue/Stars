@@ -105,7 +105,7 @@
       ],
       "href": "data/KVIK_PSS_MSS_28472_02_United_Kingdom_191122/fr_KVIK_MSS_28472_02_United_Kingdom_191122.tiff",
       "filename": "fr_KVIK_MSS_28472_02_United_Kingdom_191122.tiff",
-      "file:size": 12453487,
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "blue",
@@ -136,7 +136,7 @@
       ],
       "href": "data/KVIK_PSS_MSS_28472_02_United_Kingdom_191122/fr_KVIK_PSS_28472_02_United_Kingdom_191122.tiff",
       "filename": "fr_KVIK_PSS_28472_02_United_Kingdom_191122.tiff",
-      "file:size": 83982733,
+      "file:size": 0,
       "eo:bands": [
         {
           "name": "pan",
