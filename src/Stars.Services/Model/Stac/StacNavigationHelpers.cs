@@ -33,28 +33,25 @@ namespace Stars.Services.Model.Stac
             return children;
         }
 
-        public static IEnumerable<StacItemNode> GetItems(this StacCatalogNode stacCatalog, StacRouter router)
+        public static IEnumerable<StacItemNode> GetItems(this StacCatalogNode stacCatalog, StacRouter router, bool throwOnError = false)
         {
-            return GetItemsAsync(stacCatalog, router, CancellationToken.None).GetAwaiter().GetResult();
-        }
-
-        public static async Task<IEnumerable<StacItemNode>> GetItemsAsync(this StacCatalogNode stacCatalog, StacRouter router, CancellationToken ct, bool throwOnError = false)
-        {
-            List<StacItemNode> items = new List<StacItemNode>();
-            foreach (var itemLink in stacCatalog.GetLinks().Where(l => !string.IsNullOrEmpty(l.Relationship) && l.Relationship == "item"))
-            {
-                try
+            return stacCatalog.GetLinks().Where(l => !string.IsNullOrEmpty(l.Relationship) && l.Relationship == "item")
+                .AsParallel()
+                .WithDegreeOfParallelism(Environment.ProcessorCount)
+                .WithExecutionMode(ParallelExecutionMode.ForceParallelism)
+                .Select(itemLink =>
                 {
-                    IResource itemRoute = await router.RouteLinkAsync(stacCatalog, itemLink, ct);
-                    items.Add(itemRoute as StacItemNode);
-                }
-                catch (Exception)
-                {
-                    if (throwOnError)
-                        throw;
-                }
-            }
-            return items;
+                    try
+                    {
+                        return router.RouteLinkAsync(stacCatalog, itemLink, CancellationToken.None).GetAwaiter().GetResult() as StacItemNode;
+                    }
+                    catch (Exception)
+                    {
+                        if (throwOnError)
+                            throw;
+                    }
+                    return null;
+                }).Where(i => i != null);
         }
 
     }
