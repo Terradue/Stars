@@ -1,0 +1,284 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "DS_PHR1B_202201301007553_FR1_PX_E006N00_0710_00860",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          6.485654507968316,
+          0.09722084714601158
+        ],
+        [
+          6.485658072141134,
+          0.009397827031830997
+        ],
+        [
+          6.632080018265347,
+          0.009398857864623925
+        ],
+        [
+          6.632076661163533,
+          0.09723151117158928
+        ],
+        [
+          6.485654507968316,
+          0.09722084714601158
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2022-01-30T10:08:27.1Z",
+    "created": "2022-01-30T12:03:48.039Z",
+    "platform": "pleiades-1b",
+    "constellation": "pleiades",
+    "mission": "pleiades-1b",
+    "instruments": [
+      "phr-1b"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.7174823500843115,
+    "title": "PLEIADES-1B PHR-1B RASTER_ORTHO 2022-01-30 10:08:27",
+    "sat:platform_international_designator": "2012-068A",
+    "proj:epsg": 32632,
+    "proj:shape": [
+      32617,
+      19434
+    ],
+    "view:azimuth": 180.2895063261423,
+    "view:sun_azimuth": 127.2333029146828,
+    "view:sun_elevation": 59.91398471812082,
+    "view:incidence_angle": 12.9470361048349,
+    "processing:level": "ORTHO/BASIC",
+    "processing:software": {
+      "DRS-MM V2.9": "V2.9"
+    },
+    "providers": [
+      {
+        "name": "Airbus",
+        "description": "The identical Pléiades 1A and Pléiades 1B satellites deliver 50cm imagery products with a 20km swath. The product's location accuracy and excellent image quality make it an ideal source for data for any civil or military project.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.intelligence-airbusds.com/imagery/constellation/pleiades/"
+      }
+    ]
+  },
+  "bbox": [
+    6.485654507968316,
+    0.009397827031830997,
+    6.632080018265347,
+    0.09723151117158928
+  ],
+  "assets": {
+    "P-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic P Ortho R1 C1",
+      "href": "data/6153375101/IMG_PHR1B_P_001/IMG_PHR1B_P_202201301008271_ORT_6153375101-1_R1C1.JP2",
+      "filename": "IMG_PHR1B_P_001/IMG_PHR1B_P_202201301008271_ORT_6153375101-1_R1C1.JP2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "P",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "pan",
+          "solar_illumination": 1540.9
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.0851063829787234,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "P",
+      "proj:shape": [
+        32617,
+        19434
+      ]
+    },
+    "P-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/6153375101/IMG_PHR1B_P_001/IMG_PHR1B_P_202201301008271_ORT_6153375101-1_R1C1.J2W",
+      "filename": "IMG_PHR1B_P_001/IMG_PHR1B_P_202201301008271_ORT_6153375101-1_R1C1.J2W",
+      "file:size": 0
+    },
+    "metadata-P": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/6153375101/IMG_PHR1B_P_001/DIM_PHR1B_P_202201301008271_ORT_6153375101-1.XML",
+      "filename": "IMG_PHR1B_P_001/DIM_PHR1B_P_202201301008271_ORT_6153375101-1.XML",
+      "file:size": 36073
+    },
+    "overview-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/6153375101/IMG_PHR1B_P_001/PREVIEW_PHR1B_P_202201301008271_ORT_6153375101-1.JPG",
+      "filename": "IMG_PHR1B_P_001/PREVIEW_PHR1B_P_202201301008271_ORT_6153375101-1.JPG",
+      "file:size": 0
+    },
+    "thumbnail-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/6153375101/IMG_PHR1B_P_001/ICON_PHR1B_P_202201301008271_ORT_6153375101-1.JPG",
+      "filename": "IMG_PHR1B_P_001/ICON_PHR1B_P_202201301008271_ORT_6153375101-1.JPG",
+      "file:size": 0
+    },
+    "MS-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS Ortho R1 C1",
+      "href": "data/6153375101/IMG_PHR1B_MS_002/IMG_PHR1B_MS_202201301008271_ORT_6153375101-2_R1C1.JP2",
+      "filename": "IMG_PHR1B_MS_002/IMG_PHR1B_MS_202201301008271_ORT_6153375101-2_R1C1.JP2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B2",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1547.8
+        },
+        {
+          "name": "B1",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1835.6
+        },
+        {
+          "name": "B0",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1912.0
+        },
+        {
+          "name": "B3",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1041.4
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09165902841429881,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10256410256410256,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10319917440660475,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.05892751915144373,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS",
+      "proj:shape": [
+        8155,
+        4860
+      ]
+    },
+    "MS-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/6153375101/IMG_PHR1B_MS_002/IMG_PHR1B_MS_202201301008271_ORT_6153375101-2_R1C1.J2W",
+      "filename": "IMG_PHR1B_MS_002/IMG_PHR1B_MS_202201301008271_ORT_6153375101-2_R1C1.J2W",
+      "file:size": 0
+    },
+    "metadata-MS": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/6153375101/IMG_PHR1B_MS_002/DIM_PHR1B_MS_202201301008271_ORT_6153375101-2.XML",
+      "filename": "IMG_PHR1B_MS_002/DIM_PHR1B_MS_202201301008271_ORT_6153375101-2.XML",
+      "file:size": 80980
+    },
+    "overview-MS": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/6153375101/IMG_PHR1B_MS_002/PREVIEW_PHR1B_MS_202201301008271_ORT_6153375101-2.JPG",
+      "filename": "IMG_PHR1B_MS_002/PREVIEW_PHR1B_MS_202201301008271_ORT_6153375101-2.JPG",
+      "file:size": 0
+    },
+    "thumbnail-MS": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/6153375101/IMG_PHR1B_MS_002/ICON_PHR1B_MS_202201301008271_ORT_6153375101-2.JPG",
+      "filename": "IMG_PHR1B_MS_002/ICON_PHR1B_MS_202201301008271_ORT_6153375101-2.JPG",
+      "file:size": 0
+    }
+  },
+  "links": []
+}

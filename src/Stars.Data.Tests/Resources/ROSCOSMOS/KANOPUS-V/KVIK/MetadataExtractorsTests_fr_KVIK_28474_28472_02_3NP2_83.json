@@ -1,0 +1,150 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "fr_KVIK_28474_28472_02_3NP2_83",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -2.17135381698608,
+          57.1094589233398
+        ],
+        [
+          -2.17204666137695,
+          57.1093406677246
+        ],
+        [
+          -2.22063159942627,
+          57.1962242126465
+        ],
+        [
+          -2.22141146659851,
+          57.1960906982422
+        ],
+        [
+          -2.26408034444283,
+          57.2719764767727
+        ],
+        [
+          -2.3335599899292,
+          57.2793273925781
+        ],
+        [
+          -2.37065291404724,
+          57.2782135009766
+        ],
+        [
+          -2.42079710960388,
+          57.2555541992188
+        ],
+        [
+          -2.25525403022766,
+          57.084602355957
+        ],
+        [
+          -2.17007899284363,
+          57.0737762451172
+        ],
+        [
+          -2.15422816774058,
+          57.0787332255149
+        ],
+        [
+          -2.17135381698608,
+          57.1094589233398
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2022-09-01T10:40:39.0000000Z",
+    "mission": "kanopus-v",
+    "platform": "kanopus-v",
+    "constellation": "kanopus-v",
+    "instruments": [
+      "mss-pss"
+    ],
+    "sensor_type": "optical",
+    "proj:epsg": 32630,
+    "proj:shape": [
+      1494,
+      2083
+    ],
+    "processing:level": "L2B",
+    "title": "KANOPUS-V MSS-PSS L2B 2022-09-01 10:40:39",
+    "providers": [
+      {
+        "name": "Roscosmos",
+        "description": "Kanopus-V is an Earth observation minisatellite mission of the Russian Space Agency, Roscosmos and ROSHYDROMET/Planeta. The overall objective is to monitor Earth's surface, the atmosphere, ionosphere, and magnetosphere to detect and study the probability of strong earthquake occurrence.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/kanopus-v-1"
+      }
+    ]
+  },
+  "bbox": [
+    -2.42079710960388,
+    57.0737762451172,
+    -2.15422816774058,
+    57.2793273925781
+  ],
+  "assets": {
+    "mss": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/KVIK_PSS_MSS_28472_02_United_Kingdom_191122/fr_KVIK_MSS_28472_02_United_Kingdom_191122.tiff",
+      "filename": "fr_KVIK_MSS_28472_02_United_Kingdom_191122.tiff",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "blue",
+          "common_name": "blue",
+          "description": "blue"
+        },
+        {
+          "name": "green",
+          "common_name": "green",
+          "description": "green"
+        },
+        {
+          "name": "red",
+          "common_name": "red",
+          "description": "red"
+        },
+        {
+          "name": "nir",
+          "common_name": "nir",
+          "description": "nir"
+        }
+      ]
+    },
+    "pan": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/KVIK_PSS_MSS_28472_02_United_Kingdom_191122/fr_KVIK_PSS_28472_02_United_Kingdom_191122.tiff",
+      "filename": "fr_KVIK_PSS_28472_02_United_Kingdom_191122.tiff",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "pan",
+          "common_name": "pan",
+          "description": "pan"
+        }
+      ]
+    }
+  },
+  "links": []
+}

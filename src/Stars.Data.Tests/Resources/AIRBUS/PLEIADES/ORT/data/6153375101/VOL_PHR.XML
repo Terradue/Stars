@@ -1,0 +1,48 @@
+<?xml-stylesheet href="LIBRARY/VOL_STYL.XSL" type="text/xsl"?><Dimap_Document>
+  <Metadata_Identification>
+    <METADATA_FORMAT version="2.15">DIMAP</METADATA_FORMAT>
+    <METADATA_PROFILE>VOLUME</METADATA_PROFILE>
+    <METADATA_SUBPROFILE>SINGLE_VOLUME</METADATA_SUBPROFILE>
+    <METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+  </Metadata_Identification>
+  <Dataset_Identification>
+    <DATASET_NAME>PHR Volume Description</DATASET_NAME>
+    <DATASET_ID>PHR_PRO_6153375101_20220130115853675_1_1</DATASET_ID>
+  </Dataset_Identification>
+  <Product_Information>
+    <Producer_Information>
+      <PRODUCER_NAME>AIRBUS DS GEO</PRODUCER_NAME>
+      <PRODUCER_URL href="http://www.geo-airbusds.com"/>
+      <PRODUCER_CONTACT>contact@geo-airbus.com</PRODUCER_CONTACT>
+      <PRODUCER_ADDRESS>5 rue des Satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</PRODUCER_ADDRESS>
+    </Producer_Information>
+    <Delivery_Identification>
+      <PRODUCTION_DATE>2022-01-30T12:03:48.039</PRODUCTION_DATE>
+    </Delivery_Identification>
+  </Product_Information>
+  <Dataset_Content>
+    <Dataset_Components>
+      <Component>
+        <COMPONENT_TITLE>SYSTEM_ORTHO P DS_PHR1B_202201301007553_FR1_PX_E006N00_0710_00860</COMPONENT_TITLE>
+        <COMPONENT_TYPE>DIMAP</COMPONENT_TYPE>
+        <COMPONENT_PATH href="IMG_PHR1B_P_001/DIM_PHR1B_P_202201301008271_ORT_6153375101-1.XML"/>
+        <COMPONENT_TN_PATH href="IMG_PHR1B_P_001/ICON_PHR1B_P_202201301008271_ORT_6153375101-1.JPG"/>
+        <COMPONENT_TN_FORMAT>image/jpeg</COMPONENT_TN_FORMAT>
+      </Component>
+      <Component>
+        <COMPONENT_TITLE>SYSTEM_ORTHO MS DS_PHR1B_202201301007553_FR1_PX_E006N00_0710_00860</COMPONENT_TITLE>
+        <COMPONENT_TYPE>DIMAP</COMPONENT_TYPE>
+        <COMPONENT_PATH href="IMG_PHR1B_MS_002/DIM_PHR1B_MS_202201301008271_ORT_6153375101-2.XML"/>
+        <COMPONENT_TN_PATH href="IMG_PHR1B_MS_002/ICON_PHR1B_MS_202201301008271_ORT_6153375101-2.JPG"/>
+        <COMPONENT_TN_FORMAT>image/jpeg</COMPONENT_TN_FORMAT>
+      </Component>
+      <Component>
+        <COMPONENT_TITLE>Digital Documentation about DIMAP Format</COMPONENT_TITLE>
+        <COMPONENT_TYPE>ENCAPSULATED</COMPONENT_TYPE>
+        <COMPONENT_PATH href="http://www.geo-airbusds.com/dimapv2"/>
+        <COMPONENT_TN_PATH href="LIBRARY/LOGO.JPG"/>
+        <COMPONENT_TN_FORMAT>image/jpeg</COMPONENT_TN_FORMAT>
+      </Component>
+    </Dataset_Components>
+  </Dataset_Content>
+</Dimap_Document>

@@ -33,7 +33,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
                 KanopusVMetadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
-                return metadata.GetString("<PASP_ROOT>/cDataFileName").StartsWith("KV");
+                return metadata.GetString("<PASP_ROOT>/cDataFileName").StartsWith("KV") || metadata.GetString("<PASP_ROOT>/cDataFileName").StartsWith("fr_KV");
             }
             catch (Exception e)
             {
@@ -279,8 +279,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"KV.*\.xml");
-            if (manifestAsset != null) return manifestAsset;
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"^(KV|fr_KV).*\.xml");
+            if (manifestAsset != null)
+                return manifestAsset;
             manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*MSS.*\.xml");
             if (manifestAsset != null) return manifestAsset;
 
