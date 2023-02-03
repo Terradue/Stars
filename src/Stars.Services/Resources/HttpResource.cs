@@ -68,7 +68,7 @@ namespace Terradue.Stars.Services.Resources
                 {
                     using (var res = _client.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
                     {
-                        _cachedHeaders = new HttpCachedHeaders(_client.GetAsync(_url).GetAwaiter().GetResult().Content.Headers);
+                        _cachedHeaders = new HttpCachedHeaders(_client.GetAsync(_url).GetAwaiter().GetResult());
                     }
                 }
                 return _cachedHeaders;

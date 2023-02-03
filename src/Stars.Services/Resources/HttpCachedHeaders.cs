@@ -1,15 +1,24 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 
 namespace Terradue.Stars.Services.Resources
 {
     public class HttpCachedHeaders : HttpHeaders
     {
-        public HttpCachedHeaders(HttpHeaders source)
+        public HttpCachedHeaders(HttpResponseMessage message)
         {
-            foreach (var header in source)
+            foreach (var header in message.Content.Headers)
+            {
+                try
+                {
+                    Add(header.Key, header.Value.ToArray());
+                }
+                catch { }
+            }
+            foreach (var header in message.Headers)
             {
                 try
                 {
