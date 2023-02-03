@@ -1,9 +1,10 @@
 using System;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Docker.DotNet.Models;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
-using DotNet.Testcontainers.Network;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,14 +13,15 @@ using Terradue.Stars.Services.Resources;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Stars.Tests
+namespace Stars.Tests.TestFixtures
 {
     public class LocalStackFixture : IAsyncLifetime
     {
         private readonly TestcontainersContainer _localStackContainer;
         private readonly IOptions<LocalStackOptions> options;
-        private readonly string _networkName;
-        private readonly IDockerNetwork _network;
+        private readonly IS3ClientFactory _s3ClientFactory;
+
+        public string LocalstackUri => "http://localhost:4566";
 
         public LocalStackFixture(IOptions<LocalStackOptions> options, IS3ClientFactory s3ClientFactory)
         {
@@ -33,16 +35,19 @@ namespace Stars.Tests
             //   .Build();
 
             var localStackBuilder = new TestcontainersBuilder<TestcontainersContainer>()
-                .WithImage("localstack/localstack:0.14.4")
+                .WithImage("localstack/localstack:1.3.1")
                 .WithCleanUp(true)
                 .WithOutputConsumer(Consume.RedirectStdoutAndStderrToConsole())
                 .WithEnvironment("SERVICES", "s3")
                 .WithEnvironment("DOCKER_HOST", "unix:///var/run/docker.sock")
                 .WithEnvironment("DEBUG", "1")
-                .WithPortBinding(4566, 4566)    
-                // .WithNetwork(_network)
+                .WithPortBinding(4566, 4566)
+                .WithWaitStrategy(Wait.ForUnixContainer()
+                    .UntilPortIsAvailable(4566)
+                    .AddCustomWaitStrategy(new LocalstackContainerHealthCheck(LocalstackUri))
+                )
                 .WithName("localstack");
-                
+
 
             if (s3ClientFactory != null)
             {
@@ -58,13 +63,15 @@ namespace Stars.Tests
 
             _localStackContainer = localStackBuilder.Build();
             this.options = options;
+            _s3ClientFactory = s3ClientFactory;
         }
+
         public async Task InitializeAsync()
         {
             if (options.Value.Enabled)
             {
-                // await _network.CreateAsync();
-                await _localStackContainer.StartAsync();
+                using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+                await _localStackContainer.StartAsync(cts.Token);
             }
         }
 
@@ -73,7 +80,6 @@ namespace Stars.Tests
             if (options.Value.Enabled)
             {
                 await _localStackContainer.StopAsync();
-                // await _network.DeleteAsync();
             }
         }
     }
