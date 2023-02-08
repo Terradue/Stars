@@ -223,7 +223,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
             {
                 AddSingleProvider(
                     properties,
-                    "https://www.iceye.com/sar-data", 
+                    "ICEYE", 
                     "The ICEYE constellation is a constellation of X-band Synthetic Aperture Radar (SAR) Satellites. The ICEYE constellation is designed to provide persistent monitoring capabilities and a high resolution view of the Earth’s surface, with an overall mission objective to enable better decision making by providing timely and reliable Earth observation data.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.iceye.com/sar-data")
