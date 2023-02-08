@@ -51,7 +51,7 @@ namespace Stars.Tests.TestFixtures
 
             if (s3ClientFactory != null)
             {
-                S3Url s3Url = S3Url.Parse("s3://test");
+                S3Url s3Url = S3Url.Parse("s3://local-test");
                 var credentials = s3ClientFactory.GetConfiguredCredentials(s3Url);
                 if (credentials != null)
                 {
