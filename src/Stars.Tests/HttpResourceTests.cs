@@ -31,7 +31,7 @@ namespace Stars.Tests
             logger = loggerFactory.CreateLogger<StacTests>();
         }
 
-        [Fact]
+        [Fact (Skip = "External resource")]
         public async Task LargeHttpResourceTest()
         {
             GenericResource genericResource = new GenericResource(new Uri("https://download.disasterscharter.org/cos-api/service/acquisition/916/CSA/RCM-1/urn_ogc_def_EOP_CSA_RCM1_OK2417781_PK2421038_1_FSL25_20230119_105132_HH_HV_GRD/urn_ogc_def_EOP_CSA_RCM1_OK2417781_PK2421038_1_FSL25_20230119_105132_HH_HV_GRD-product.zip"));
