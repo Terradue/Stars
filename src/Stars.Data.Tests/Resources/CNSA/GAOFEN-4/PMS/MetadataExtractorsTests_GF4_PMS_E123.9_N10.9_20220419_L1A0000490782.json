@@ -9,7 +9,7 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "GF4_IRS_E123.9_N10.9_20220419_L1A0000490782",
+  "id": "GF4_PMS_E123.9_N10.9_20220419_L1A0000490782",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
