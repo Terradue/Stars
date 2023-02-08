@@ -25,7 +25,7 @@ pipeline {
             echo "Build .NET application"
             sh "dotnet restore src/"
             sh "dotnet build -c ${env.CONFIGURATION} --no-restore src/"
-            // sh "dotnet test src/"
+            sh "dotnet test src/"
           }
         }
         stage("Make CLI packages"){
