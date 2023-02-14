@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 using Terradue.Stars.Services.Resources;
 using Microsoft.Extensions.Options;
 using System.Threading;
+using Amazon.Runtime;
+using Amazon.S3.Model;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -134,7 +136,28 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
                     ur.InputStream = sourceStream;
                     ur.ContentType = inputStreamResource.ContentType.MediaType;
-                    await tx.UploadAsync(ur);
+                    
+                    try {
+                        await tx.UploadAsync(ur);
+                    }
+                    // in case of Amazon.Runtime.AmazonClientException: Expected hash not equal to calculated hash 
+                    catch (AmazonClientException e) {
+                        // if message returned is "Expected hash not equal to calculated hash", try to upload with a simple put object
+                        if (e.Message.Contains("Expected hash not equal to calculated hash")) {
+                            logger.LogWarning("Error uploading with multipart upload. Trying simple upload");
+                            // Create a PutObjectRequest and set UseChunkEncoding to false
+                            PutObjectRequest request = new PutObjectRequest();
+                            request.BucketName = s3outputStreamResource.S3Uri.Bucket;
+                            request.Key = s3outputStreamResource.S3Uri.Key;
+                            sourceStream.Dispose();
+                            sourceStream = await inputStreamResource.GetStreamAsync(ct);
+                            request.ContentType = inputStreamResource.ContentType.MediaType;
+                            request.InputStream = sourceStream;
+                            request.UseChunkEncoding = false;
+                            await s3outputStreamResource.Client.PutObjectAsync(request);
+                        }
+                        else throw;
+                    }
                 }
 
                 // refresh metadata
