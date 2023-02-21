@@ -176,7 +176,7 @@ namespace Terradue.Stars.Services.Store
                 var frontResource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(frontUri), ct);
                 if (!_stacRouter.CanRoute(frontResource))
                 {
-                    throw new InvalidOperationException(string.Format("Front Resource {0} cannot be routed", frontUri));
+                    return deliveredResource;
                 }
                 deliveredResource = await _stacRouter.RouteAsync(frontResource, ct);
 
