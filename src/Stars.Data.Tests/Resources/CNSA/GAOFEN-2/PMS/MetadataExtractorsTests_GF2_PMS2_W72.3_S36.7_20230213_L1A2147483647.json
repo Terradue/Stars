@@ -9,62 +9,62 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969",
+  "id": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          -91.1291,
-          17.5161
+          -72.46616523640958,
+          -36.77548826562271
         ],
         [
-          -90.8998,
-          17.4683
+          -72.19992128928683,
+          -36.820845067142976
         ],
         [
-          -90.8515,
-          17.6806
+          -72.14526890864765,
+          -36.61057752686644
         ],
         [
-          -91.081,
-          17.7284
+          -72.41076656333765,
+          -36.5652710359906
         ],
         [
-          -91.1291,
-          17.5161
+          -72.46616523640958,
+          -36.77548826562271
         ]
       ]
     ]
   },
   "properties": {
-    "datetime": "2020-05-11T01:03:18Z",
-    "start_datetime": "2020-05-11T01:03:18Z",
-    "end_datetime": "2020-05-11T01:03:21Z",
-    "created": "2020-05-11T06:22:18Z",
+    "datetime": "2023-02-13T22:17:08Z",
+    "start_datetime": "2023-02-13T22:17:08Z",
+    "end_datetime": "2023-02-13T22:17:12Z",
+    "created": "2023-02-14T08:43:41Z",
     "platform": "gaofen-2",
     "constellation": "gaofen-2",
     "mission": "gaofen-2",
     "instruments": [
-      "pms1"
+      "pms2"
     ],
     "sensor_type": "optical",
     "gsd": 0.81,
-    "eo:cloud_cover": 0.02,
-    "sat:absolute_orbit": 30951,
-    "sat:relative_orbit": 30951,
+    "eo:cloud_cover": 1.01,
+    "sat:absolute_orbit": 45882,
+    "sat:relative_orbit": 45882,
     "sat:orbit_state": "descending",
     "view:off_nadir": 0.0,
     "view:incidence_angle": 0.0,
-    "view:sun_azimuth": 86.6824,
-    "view:sun_elevation": 13.5727,
+    "view:sun_azimuth": 68.80602423796597,
+    "view:sun_elevation": 43.81150436401367,
     "proj:epsg": null,
     "proj:shape": [
       7300,
       6908
     ],
     "processing:level": "L1A",
-    "title": "GAOFEN-2 PMS1 L1A 2020-05-11 01:03:18",
+    "title": "GAOFEN-2 PMS2 L1A 2023-02-13 22:17:08",
     "product_type": "PAN_MS_L1A",
     "providers": [
       {
@@ -80,10 +80,10 @@
     ]
   },
   "bbox": [
-    -91.1291,
-    17.4683,
-    -90.8515,
-    17.7284
+    -72.46616523640958,
+    -36.820845067142976,
+    -72.14526890864765,
+    -36.5652710359906
   ],
   "assets": {
     "MSS-thumbnail": {
@@ -91,36 +91,36 @@
       "roles": [
         "thumbnail"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1_thumb.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1_thumb.jpg",
-      "file:size": 19325
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2_thumb.jpg",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2_thumb.jpg",
+      "file:size": 0
     },
     "MSS-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.jpg",
-      "file:size": 377356
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.jpg",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.jpg",
+      "file:size": 0
     },
     "MSS-rpb": {
       "type": "application/octet-stream",
       "roles": [
         "metadata"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.rpb",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.rpb",
-      "file:size": 2714
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.rpb",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.rpb",
+      "file:size": 0
     },
     "MSS": {
       "type": "image/tiff",
       "roles": [
         "data"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.tiff",
-      "file:size": 1,
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.tiff",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.tiff",
+      "file:size": 0,
       "proj:shape": [
         7300,
         6908
@@ -131,47 +131,47 @@
           "name": "B01",
           "common_name": "blue",
           "center_wavelength": 0.485,
-          "solar_illumination": 1966.811,
+          "solar_illumination": 1967.309,
           "full_width_half_max": 0.07
         },
         {
           "name": "B02",
           "common_name": "green",
           "center_wavelength": 0.555,
-          "solar_illumination": 1822.607,
+          "solar_illumination": 1822.157,
           "full_width_half_max": 0.07
         },
         {
           "name": "B03",
           "common_name": "red",
           "center_wavelength": 0.66,
-          "solar_illumination": 1523.189,
+          "solar_illumination": 1524.103,
           "full_width_half_max": 0.06
         },
         {
           "name": "B04",
           "common_name": "nir",
           "center_wavelength": 0.83,
-          "solar_illumination": 1066.547,
+          "solar_illumination": 1067.72,
           "full_width_half_max": 0.12
         }
       ],
       "raster:bands": [
         {
-          "scale": 0.1585,
-          "offset": -0.8765
+          "scale": 0.1748,
+          "offset": -0.593
         },
         {
-          "scale": 0.1883,
-          "offset": -0.9742
+          "scale": 0.1817,
+          "offset": -0.2717
         },
         {
-          "scale": 0.174,
-          "offset": -0.7652
+          "scale": 0.1741,
+          "offset": -0.2717
         },
         {
-          "scale": 0.1897,
-          "offset": -0.7233
+          "scale": 0.1975,
+          "offset": -0.2773
         }
       ]
     },
@@ -180,45 +180,45 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml",
-      "file:size": 2519
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.xml",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-MSS2.xml",
+      "file:size": 3570
     },
     "PAN-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1_thumb.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1_thumb.jpg",
-      "file:size": 20414
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2_thumb.jpg",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2_thumb.jpg",
+      "file:size": 0
     },
     "PAN-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.jpg",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.jpg",
-      "file:size": 1581212
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.jpg",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.jpg",
+      "file:size": 2767331
     },
     "PAN-rpb": {
       "type": "application/octet-stream",
       "roles": [
         "metadata"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.rpb",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.rpb",
-      "file:size": 2717
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.rpb",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.rpb",
+      "file:size": 2718
     },
     "PAN": {
       "type": "image/tiff",
       "roles": [
         "data"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.tiff",
-      "file:size": 1,
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.tiff",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.tiff",
+      "file:size": 0,
       "proj:shape": [
         29200,
         27620
@@ -229,14 +229,14 @@
           "name": "PAN",
           "common_name": "pan",
           "center_wavelength": 0.67,
-          "solar_illumination": 1361.43,
+          "solar_illumination": 1363.494,
           "full_width_half_max": 0.44
         }
       ],
       "raster:bands": [
         {
-          "scale": 0.163,
-          "offset": -0.6077
+          "scale": 0.1823,
+          "offset": 0.1654
         }
       ]
     },
@@ -245,9 +245,9 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/GF2PMS4793969/GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.xml",
-      "filename": "GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-PAN1.xml",
-      "file:size": 2498
+      "href": "data/GF2PMS12889847001/GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.xml",
+      "filename": "GF2_PMS2_W72.3_S36.7_20230213_L1A2147483647-PAN2.xml",
+      "file:size": 3536
     }
   },
   "links": []

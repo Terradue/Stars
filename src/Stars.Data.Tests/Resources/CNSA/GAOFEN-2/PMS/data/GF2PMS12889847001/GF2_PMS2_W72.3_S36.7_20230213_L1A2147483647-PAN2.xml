@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ProductMetaData>
+    <SatelliteID>GF2</SatelliteID>
+    <ReceiveStationID>KRN</ReceiveStationID>
+    <SensorID>PMS2</SensorID>
+    <ReceiveTime>2023-02-13 14:17:10</ReceiveTime>
+    <OrbitID>45882</OrbitID>
+    <OrbitType>GPS</OrbitType>
+    <AttType>DMA</AttType>
+    <StripID>464621</StripID>
+    <ProduceType>STANDARD</ProduceType>
+    <SceneID>12889847</SceneID>
+    <DDSFlag>TRUE</DDSFlag>
+    <ProductID>12889847001</ProductID>
+    <ProductQuality></ProductQuality>
+    <ProductQualityReport></ProductQualityReport>
+    <ProductLevel>LEVEL1A</ProductLevel>
+    <ProductFormat>GEOTIFF</ProductFormat>
+    <ProduceTime>2023-02-14 08:52:42</ProduceTime>
+    <Bands>5</Bands>
+    <ScenePath>484</ScenePath>
+    <SceneRow>352</SceneRow>
+    <SatPath>484</SatPath>
+    <SatRow>352</SatRow>
+    <SceneCount>1</SceneCount>
+    <SceneShift>1</SceneShift>
+    <StartTime>2023-02-13 22:17:09</StartTime>
+    <EndTime>2023-02-13 22:17:12</EndTime>
+    <CenterTime>2023-02-13 22:17:10</CenterTime>
+    <StartLine></StartLine>
+    <EndLine></EndLine>
+    <ImageGSD>0.81</ImageGSD>
+    <WidthInPixels>29200</WidthInPixels>
+    <HeightInPixels>27620</HeightInPixels>
+    <WidthInMeters></WidthInMeters>
+    <HeightInMeters></HeightInMeters>
+    <RegionName>CH</RegionName>
+    <CloudPercent>101</CloudPercent>
+    <DataSize>1538</DataSize>
+    <RollViewingAngle>0.000000000000000</RollViewingAngle>
+    <PitchViewingAngle>0.000000000000000</PitchViewingAngle>
+    <RollSatelliteAngle>8.972036727831156</RollSatelliteAngle>
+    <PitchSatelliteAngle>0.033487686930029</PitchSatelliteAngle>
+    <YawSatelliteAngle>3.018961569164207</YawSatelliteAngle>
+    <SolarAzimuth>68.807772040217060</SolarAzimuth>
+    <SolarZenith>43.809650421142578</SolarZenith>
+    <SatelliteAzimuth>282.767679335080402</SatelliteAzimuth>
+    <SatelliteZenith>79.302195782799814</SatelliteZenith>
+    <GainMode>G2</GainMode>
+    <IntegrationTime>0.000119644700001</IntegrationTime>
+    <IntegrationLevel>S4</IntegrationLevel>
+    <MapProjection></MapProjection>
+    <EarthEllipsoid>WGS84</EarthEllipsoid>
+    <ZoneNo></ZoneNo>
+    <ResamplingKernel></ResamplingKernel>
+    <HeightMode></HeightMode>
+    <EphemerisData>GPS</EphemerisData>
+    <AttitudeData>DMA</AttitudeData>
+    <RadiometricMethod>LAB</RadiometricMethod>
+    <MtfCorrection>LAB</MtfCorrection>
+    <Denoise>MOMENT</Denoise>
+    <RayleighCorrection>N</RayleighCorrection>
+    <UsedGCPNo>0</UsedGCPNo>
+    <CenterLatitude>-36.692772437354876</CenterLatitude>
+    <CenterLongitude>-72.308772092657634</CenterLongitude>
+    <TopLeftLatitude>-36.564889811508394</TopLeftLatitude>
+    <TopLeftLongitude>-72.410125029515697</TopLeftLongitude>
+    <TopRightLatitude>-36.610148033986377</TopRightLatitude>
+    <TopRightLongitude>-72.144509531244793</TopRightLongitude>
+    <BottomRightLatitude>-36.814754931593633</BottomRightLatitude>
+    <BottomRightLongitude>-72.197975204146474</BottomRightLongitude>
+    <BottomLeftLatitude>-36.769445057602617</BottomLeftLatitude>
+    <BottomLeftLongitude>-72.464312163101823</BottomLeftLongitude>
+    <TopLeftMapX></TopLeftMapX>
+    <TopLeftMapY></TopLeftMapY>
+    <TopRightMapX></TopRightMapX>
+    <TopRightMapY></TopRightMapY>
+    <BottomRightMapX></BottomRightMapX>
+    <BottomRightMapY></BottomRightMapY>
+    <BottomLeftMapX></BottomLeftMapX>
+    <BottomLeftMapY></BottomLeftMapY>
+    <DataArchiveFile></DataArchiveFile>
+    <BrowseFileLocation></BrowseFileLocation>
+    <ThumbFileLocation></ThumbFileLocation>
+</ProductMetaData>

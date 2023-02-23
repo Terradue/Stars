@@ -37,7 +37,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
         public override bool CanProcess(IResource route, IDestination destination) {
             IItem item = route as IItem;
             if (item == null) return false;
-            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.xml)$");
+            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "^(?!order)[\\w_\\-\\.]+(?<!\\.rpb\\.aux)\\.xml$");
             if (metadataFile == null) {
                 return false;
             }
@@ -63,7 +63,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             logger.LogDebug("Retrieving the metadata files in the product package");
 
 
-            List<IAsset> metadatafiles = FindAssetsFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.xml)$").ToList();
+            List<IAsset> metadatafiles = FindAssetsFromFileNameRegex(item, "^(?!order)[\\w_\\-\\.]+(?<!\\.rpb\\.aux)\\.xml$").ToList();
 
 
             if (metadatafiles == null || metadatafiles.Count == 0) {
@@ -194,6 +194,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
         private async Task AddAssetAsync(StacItem stacItem, string satelliteId, IAsset asset,
             IAssetsContainer assetsContainer) {
             string filename = Path.GetFileName(asset.Uri.ToString());
+            if (filename.Split('_').Length == 1) {
+                // file that does not respect the naming convention (eg. order.xml)
+                return;
+            }
             string sensorName = filename.Split('_')[1];
             string satelliteImagery = RetrieveSatelliteImageryFromFilename(filename);
             string type = filename.Split('_')[1];
