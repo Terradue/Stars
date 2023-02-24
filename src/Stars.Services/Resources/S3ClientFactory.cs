@@ -234,6 +234,10 @@ namespace Terradue.Stars.Services.Resources
             amazonS3Config.AllowAutoRedirect = true;
             amazonS3Config.RetryMode = RequestRetryMode.Standard;
             amazonS3Config.LogResponse = true;
+            string serviceUrl = System.Environment.GetEnvironmentVariable("AWS__ServiceURL");
+            if (!String.IsNullOrEmpty(serviceUrl)) amazonS3Config.ServiceURL = serviceUrl;
+            string signatureVersion = System.Environment.GetEnvironmentVariable("AWS__SignatureVersion");
+            amazonS3Config.SignatureVersion = signatureVersion;
 
             var config = new S3Configuration(s3Configuration.Value);
             config.AmazonS3Config = amazonS3Config;
