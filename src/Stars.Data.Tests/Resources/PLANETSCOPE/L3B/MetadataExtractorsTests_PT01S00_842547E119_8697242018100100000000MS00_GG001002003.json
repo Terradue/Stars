@@ -111,7 +111,7 @@
           "description": "blue 485nm TOA",
           "common_name": "blue",
           "center_wavelength": 0.485,
-          "solar_illumination": 1997.46
+          "solar_illumination": 1997.87
         },
         {
           "name": "green",

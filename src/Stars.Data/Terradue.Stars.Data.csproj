@@ -68,5 +68,8 @@
         <Content Include="Model/Metadata/Gaofen1-2-4/GF4_bands.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always">
             <PackageCopyToOutput>true</PackageCopyToOutput>
         </Content>
+        <Content Include="Model/Metadata/PlanetScope/Planetscope_bands.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always">
+            <PackageCopyToOutput>true</PackageCopyToOutput>
+        </Content>
     </ItemGroup>
 </Project>

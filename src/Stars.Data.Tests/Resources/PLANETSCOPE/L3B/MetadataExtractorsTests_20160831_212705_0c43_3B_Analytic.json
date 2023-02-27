@@ -98,7 +98,7 @@
           "description": "blue 485nm TOA",
           "common_name": "blue",
           "center_wavelength": 0.485,
-          "solar_illumination": 1997.46
+          "solar_illumination": 1997.87
         },
         {
           "name": "green",
@@ -113,6 +113,13 @@
           "common_name": "red",
           "center_wavelength": 0.63,
           "solar_illumination": 1631.38
+        },
+        {
+          "name": "nir",
+          "description": "nir 820nm TOA",
+          "common_name": "nir",
+          "center_wavelength": 0.82,
+          "solar_illumination": 1066.31
         }
       ]
     },

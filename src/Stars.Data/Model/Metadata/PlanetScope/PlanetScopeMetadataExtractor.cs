@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
@@ -205,32 +206,50 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
 
         private void AddBandAsset(StacItem stacItem, PlanetScopeMetadata metadata, IAsset asset)
         {
-            int numberOfBands = metadata.nav.Select("/ps:EarthObservation/gml:resultOf/ps:EarthObservationResult/ps:bandSpecificMetadata", metadata.nsmgr).Count;
-            double[] centerWaveLength = new double[] { 0.485, 0.545, 0.63, 0.82 };
-            double[] esun = new double[] { 1997.46, 1832.09, 1631.38, 1066.31 };
+            JObject planetScopeBandAux = null;
+            using (StreamReader r = new StreamReader("Model/Metadata/PlanetScope/Planetscope_bands.json")) {
+                string json = r.ReadToEnd();
+                planetScopeBandAux = JObject.Parse(json);
+            }
 
-            EoBandCommonName[] bandCommonNames = new EoBandCommonName[] { EoBandCommonName.blue, EoBandCommonName.green, EoBandCommonName.red, EoBandCommonName.nir };
-            EoBandObject[] bands = new EoBandObject[numberOfBands];
-            var BandSpecificMetadata = metadata.nav.Select("/ps:EarthObservation/gml:resultOf/ps:EarthObservationResult/ps:bandSpecificMetadata", metadata.nsmgr);
+            string sensor = metadata.nav.SelectSingleNode("/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:instrument/eop:Instrument/eop:shortName", metadata.nsmgr).Value;
+            EoBandCommonName[] bandCommonNames;
+            EoBandObject[] bands;
+            if (sensor == "PS2" || sensor == "PS2.SD") {
+                bandCommonNames = new EoBandCommonName[] { EoBandCommonName.blue, EoBandCommonName.green, EoBandCommonName.red, EoBandCommonName.nir };
+                bands = new EoBandObject[4];
+            } else if (sensor == "PSB.SD") {
+                bandCommonNames = new EoBandCommonName[] { EoBandCommonName.coastal, EoBandCommonName.blue, EoBandCommonName.green, EoBandCommonName.yellow, EoBandCommonName.red, EoBandCommonName.rededge, EoBandCommonName.nir };
+                bands = new EoBandObject[7];
+            } else {
+                throw new InvalidDataException("Sensor not found or not recognized");  
+            }
 
             for (int i = 0; i < bands.Length; i++)
             {
                 bands[i] = new EoBandObject(bandCommonNames[i].ToString(), bandCommonNames[i]);
-                bands[i].Description = string.Format("{0} {1}nm TOA", bandCommonNames[i], Math.Round(centerWaveLength[i] * 1000));
-                bands[i].CenterWavelength = centerWaveLength[i];
-                bands[i].SolarIllumination = esun[i];
+                double centerWaveLength = planetScopeBandAux["planetscope"][sensor][i]["center_wavelength"].Value<double>() / 1000;
+                double esun = planetScopeBandAux["planetscope"][sensor][i]["ESUN"].Value<double>();
+                bands[i].Description = string.Format("{0} {1}nm TOA", bandCommonNames[i], Math.Round(centerWaveLength * 1000));
+                bands[i].CenterWavelength = centerWaveLength;
+                bands[i].SolarIllumination = esun;
             }
-
+            
+            var BandSpecificMetadata = metadata.nav.Select("/ps:EarthObservation/gml:resultOf/ps:EarthObservationResult/ps:bandSpecificMetadata", metadata.nsmgr);
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, asset.Uri, new ContentType("image/tiff; application=geotiff"));
             stacAsset.Properties.AddRange(asset.Properties);
             stacAsset.Roles.Add("dn");
             List<RasterBand> rasterbands = new List<RasterBand>();
             while (BandSpecificMetadata.MoveNext())
             {
+                // band Green I from sensor PSB.SD has to be skipped
+                if (sensor == "PSB.SD" &&
+                    BandSpecificMetadata.Current.SelectSingleNode("ps:bandNumber", metadata.nsmgr).Value == "3") {
+                    BandSpecificMetadata.MoveNext();
+                }
                 RasterBand rasterband = new RasterBand();
                 rasterband.Scale = Double.Parse(BandSpecificMetadata.Current.SelectSingleNode("ps:reflectanceCoefficient", metadata.nsmgr).Value);
                 rasterband.Properties.Add("radiometric_scale", Double.Parse(BandSpecificMetadata.Current.SelectSingleNode("ps:radiometricScaleFactor", metadata.nsmgr).Value));
-                // bands[index].Properties.Add("reflectance_coeffcient", Double.Parse(BandSpecificMetadata.Current.SelectSingleNode("ps:reflectanceCoefficient", metadata.nsmgr).Value));
                 rasterbands.Add(rasterband);
             }
             var numRows = int.Parse(metadata.nav.SelectSingleNode("/ps:EarthObservation/gml:resultOf/ps:EarthObservationResult/eop:product/ps:ProductInformation/ps:numRows", metadata.nsmgr).Value.ToString());
@@ -272,7 +291,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*Analytic(MS)?_metadata.*\.xml");
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*Analytic(MS)?.*metadata.*\.xml");
 
             if (manifestAsset == null)
             {
