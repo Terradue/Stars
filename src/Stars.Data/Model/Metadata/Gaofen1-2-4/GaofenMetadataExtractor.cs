@@ -116,7 +116,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
         private void AddProjStacExtension(ProductMetaData productMetaData, StacItem stacItem) {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            if (string.IsNullOrEmpty(productMetaData.MapProjection)) {
+            if(!string.IsNullOrEmpty(productMetaData.MapProjection) && productMetaData.MapProjection == "WGS84"){
+                proj.SetCoordinateSystem(ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84);
+            }
+            else {
                 proj.Epsg = null;
             }
 
