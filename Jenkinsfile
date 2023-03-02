@@ -92,11 +92,11 @@ pipeline {
         script {
           def descriptor = readDescriptor()
           def mType=getTypeOfVersion(env.BRANCH_NAME)
-          def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}", "--no-cache .")
-          testsuite.tag("${mType}latest")
+          def testsuite = docker.build(descriptor.docker_image_name + ":${mType}${env.VERSION_TOOL}-e6", "--no-cache .")
+          testsuite.tag("${mType}latest-e6")
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            testsuite.push("${mType}${env.VERSION_TOOL}")
-            testsuite.push("${mType}latest")
+            testsuite.push("${mType}${env.VERSION_TOOL}-e6")
+            testsuite.push("${mType}latest-e6")
           }
         }
       }
@@ -134,7 +134,7 @@ pipeline {
 }
 
 def getTypeOfVersion(branchName) {
-    return ".e6"
+    return ""
 }
 
 def getConfiguration(branchName) {
