@@ -134,7 +134,7 @@ pipeline {
 }
 
 def getTypeOfVersion(branchName) {
-    return "-e6"
+    return ".e6"
 }
 
 def getConfiguration(branchName) {
