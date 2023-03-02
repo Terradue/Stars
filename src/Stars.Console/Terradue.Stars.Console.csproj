@@ -3,7 +3,7 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Version>2.10.8</Version>
-    <VersionSuffix>googles3case</VersionSuffix>
+    <VersionSuffix>e6</VersionSuffix>
     <Description>Stars is a CLI for working with Spatio Temporal Catalog such as STAC but not only</Description>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <AssemblyName>Stars</AssemblyName>
