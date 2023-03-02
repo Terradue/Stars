@@ -1,0 +1,100 @@
+{
+    "planetscope": {
+        "PS2": [
+            {
+                "name": "blue",
+                "CBN": "blue",
+                "center_wavelength": 485,
+                "ESUN": 1997.87
+            },
+            {
+                "name": "green",
+                "CBN": "green",
+                "center_wavelength": 545,
+                "ESUN": 1832.09
+            },
+            {
+                "name": "red",
+                "CBN": "red",
+                "center_wavelength": 630,
+                "ESUN": 1631.38
+            },
+            {
+                "name": "nir",
+                "CBN": "nir",
+                "center_wavelength": 820,
+                "ESUN": 1066.31
+            }
+        ],
+        "PS2.SD": [
+            {
+                "name": "blue",
+                "CBN": "blue",
+                "center_wavelength": 490,
+                "ESUN": 1969.21
+            },
+            {
+                "name": "green",
+                "CBN": "green",
+                "center_wavelength": 566,
+                "ESUN": 1815.28
+            },
+            {
+                "name": "red",
+                "CBN": "red",
+                "center_wavelength": 666,
+                "ESUN": 1509.16
+            },
+            {
+                "name": "nir",
+                "CBN": "nir",
+                "center_wavelength": 867,
+                "ESUN": 941.78
+            }
+        ],
+        "PSB.SD": [
+            {
+                "name": "coastal",
+                "CBN": "coastal",
+                "center_wavelength": 443,
+                "ESUN": 1839.82
+            },
+            {
+                "name": "blue",
+                "CBN": "blue",
+                "center_wavelength": 490,
+                "ESUN": 1978.50
+            },
+            {
+                "name": "green",
+                "CBN": "green",
+                "center_wavelength": 565,
+                "ESUN": 1815.91
+            },
+            {
+                "name": "yellow",
+                "CBN": "yellow",
+                "center_wavelength": 610,
+                "ESUN": 1692.89
+            },
+            {
+                "name": "red",
+                "CBN": "red",
+                "center_wavelength": 665,
+                "ESUN": 1511.49
+            },
+            {
+                "name": "rededge",
+                "CBN": "rededge",
+                "center_wavelength": 705,
+                "ESUN": 1573.91
+            },
+            {
+                "name": "nir",
+                "CBN": "nir",
+                "center_wavelength": 865,
+                "ESUN": 947.77
+            }
+        ]
+    }
+}
