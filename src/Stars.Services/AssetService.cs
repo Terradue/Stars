@@ -74,7 +74,12 @@ namespace Terradue.Stars.Services
             {
                 if (assetDeliveries.Value.Count() == 0)
                 {
-                    report.AssetsExceptions.Add(assetDeliveries.Key, new AssetImportException("No delivery possible"));
+                    string reason = "No possible delivery for asset";
+                    if ( deliveryQuotation.AssetsExceptions.ContainsKey(assetDeliveries.Key))
+                    {
+                        reason += " : " + deliveryQuotation.AssetsExceptions[assetDeliveries.Key].Message;
+                    }
+                    report.AssetsExceptions.Add(assetDeliveries.Key, new AssetImportException(reason));
                     continue;
                 }
                 IResource importedResource = null;
