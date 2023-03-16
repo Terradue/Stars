@@ -26,3 +26,21 @@ jobs:
       run: dotnet build --no-restore src/
     - name: Test
       run: dotnet test --no-build --verbosity normal src/
+    - name: Make CLI packages
+      run: |
+        dotnet tool restore
+        dotnet rpm install
+        dotnet deb install
+        dotnet zip install
+        dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet publish -f net6.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj
+    - name: Archive CLI packages artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist-without-markdown
+        path: |
+          src/Stars.Console/bin/**/*.rpm
+          src/Stars.Console/bin/**/linux**/publish/Stars, src/Stars.Console/bin/linux**/publish/*.json
+          src/Stars.Console/bin/**/linux**/*.zip

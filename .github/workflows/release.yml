@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags: [ '*.*.*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    # Read the version from the XML file
+    - name: Get XML
+      id: getxml
+      uses: mavrosxristoforos/get-xml-info@1.0
+      with:
+        xml-file: 'src/Stars.Services/Terradue.Stars.Services.csproj'
+        xpath: '//Project/PropertyGroup/Version'
+    # Check that version in the xml and in the tag are the same
+    - name: Check version
+      run: |
+        if [ "${{ steps.getxml.outputs.info }}" != "${{ github.ref }}" ]; then
+          echo "Version in the XML file and in the tag are not the same"
+          exit 1
+        fi
+    # Create the release
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Stars ${{ steps.getxml.outputs.value }}
+        draft: false
+        prerelease: false
