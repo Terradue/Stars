@@ -47,6 +47,7 @@ namespace Terradue.Stars.Services.Resources
             {
                 throw new Exception($"Service {serviceName} not found in S3 configuration");
             }
+            awsOptions.Credentials = GetConfiguredCredentials(serviceName);
             return awsOptions.CreateServiceClient<IAmazonS3>();
         }
 
@@ -152,6 +153,51 @@ namespace Terradue.Stars.Services.Resources
                 }
             }
 
+            return GetCredentials();
+        }
+
+        public AWSCredentials GetConfiguredCredentials(string serviceName)
+        {
+            if (s3Options.CurrentValue.Services.ContainsKey(serviceName))
+            {
+                var s3Configuration = s3Options.CurrentValue.Services[serviceName];
+                if (!string.IsNullOrEmpty(s3Configuration.AccessKey) != null && !string.IsNullOrEmpty(s3Configuration.SecretKey))
+                {
+                    return new BasicAWSCredentials(s3Configuration.AccessKey, s3Configuration.SecretKey);
+                }
+            }
+
+            AWSOptions options = GetNamedAWSOptionsOrDefault(serviceName);
+
+            if (options != null)
+            {
+                if (options.Credentials != null)
+                {
+                    logger?.LogInformation("Using AWS credentials specified with the AWSOptions.Credentials property");
+                    return options.Credentials;
+                }
+                if (!string.IsNullOrEmpty(options.Profile))
+                {
+                    var chain = new CredentialProfileStoreChain(options.ProfilesLocation);
+                    AWSCredentials result;
+                    if (chain.TryGetAWSCredentials(options.Profile, out result))
+                    {
+                        logger?.LogInformation($"Found AWS credentials for the profile {options.Profile}");
+                        return result;
+                    }
+                    else
+                    {
+                        logger?.LogInformation($"Failed to find AWS credentials for the profile {options.Profile}");
+                    }
+                }
+            }
+
+            return GetCredentials();
+
+        }
+
+        private AWSCredentials GetCredentials()
+        {
             AWSCredentials credentials = null;
 
             try
