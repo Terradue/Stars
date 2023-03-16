@@ -26,16 +26,35 @@ jobs:
       run: dotnet build --no-restore src/
     - name: Test
       run: dotnet test --no-build --verbosity normal src/
+    - name: Get XML
+      id: getxml
+      uses: mavrosxristoforos/get-xml-info@1.0
+      with:
+        xml-file: 'src/Stars.Services/Terradue.Stars.Services.csproj'
+        xpath: '//Project/PropertyGroup/VersionSuffix'
+    # Set up the environment variables for the next steps
+    - name: Set up environment variables
+      run: |
+        # if there is a version suffix, then it is a pre-release
+        if [ "${{ steps.getxml.outputs.info }}" != "" ]; then
+          echo "DOTNET_ARGS=--version-suffix ${{ steps.getxml.outputs.info }}" >> $GITHUB_ENV
+        fi
+        # If the branch is master or release, then the configuration is Release
+        if (${GITHUB_REF##*/} =~ /develop/) 
+            echo "CONFIGURATION=Debug" >> $GITHUB_ENV
+        else
+            echo "CONFIGURATION=Release" >> $GITHUB_ENV
+        fi
     - name: Make CLI packages
       run: |
         dotnet tool restore
         dotnet rpm install
         dotnet deb install
         dotnet zip install
-        dotnet rpm -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
-        dotnet deb -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
-        dotnet zip -c ${env.CONFIGURATION} -r linux-x64 -f net6.0 ${env.DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
-        dotnet publish -f net6.0 -r linux-x64 -p:PublishSingleFile=true ${env.DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet rpm -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet deb -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet zip -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet publish -f net6.0 -r linux-x64 -p:PublishSingleFile=true ${DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj
     - name: Archive CLI packages artifacts
       uses: actions/upload-artifact@v3
       with:
