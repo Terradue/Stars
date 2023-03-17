@@ -17,12 +17,14 @@ RUN dotnet publish -c release -o /app -r linux-x64 -f net6.0 --self-contained tr
 
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-bullseye-slim-amd64
-WORKDIR /app
-COPY --from=build /app ./
-COPY src/scripts/stars /bin/Stars
-COPY src/scripts/stars /bin/stars
 
 RUN apt-get update \
   && apt-get upgrade -y \
   && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 ca-certificates \
   && rm -rf /var/lib/apt/lists/* /tmp/*
+  
+WORKDIR /app
+COPY --from=build /app ./
+COPY src/scripts/stars /bin/Stars
+
+

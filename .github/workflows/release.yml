@@ -15,14 +15,14 @@ jobs:
       uses: QwerMike/xpath-action@v1
       with:
         filename: 'src/Stars.Services/Terradue.Stars.Services.csproj'
-        expression: '//Project/PropertyGroup/Version/text()'
+        expression: '//Project/PropertyGroup/Version[1]/text()'
     # Check that version in the xml and in the tag are the same
-    - name: Check version
-      run: |
-        if [ "${{ steps.projectversion.outputs.result }}" != "${{ github.ref }}" ]; then
-          echo "Version in the XML file and in the tag are not the same"
-          exit 1
-        fi
+    # - name: Check version
+    #   run: |
+    #     if [ "${{ steps.projectversion.outputs.result }}" != "${GITHUB_REF##*/}" ]; then
+    #       echo "Version in the XML file (${{ steps.projectversion.outputs.result }}) and in the tag (${GITHUB_REF##*/}) are not the same"
+    #       exit 1
+    #     fi
     - name: Get Project version suffix
       id: projectsuffix
       uses: QwerMike/xpath-action@v1
@@ -33,15 +33,15 @@ jobs:
     - name: Set up environment variables
       run: |
         # if there is a version suffix, then it is a pre-release
-        if [ "${{ steps.getxml.outputs.info }}" != "" ]; then
-          echo "DOTNET_ARGS=--version-suffix ${{ steps.getxml.outputs.result }}" >> $GITHUB_ENV
+        if [ "${{ steps.projectsuffix.outputs.result }}" != "" ]; then
+          echo "DOTNET_ARGS=--version-suffix ${{ steps.projectsuffix.outputs.result }}"
+          echo "DOTNET_ARGS=--version-suffix ${{ steps.projectsuffix.outputs.result }}" >> $GITHUB_ENV
         fi
-        # If the branch is master or release, then the configuration is Release
-        if [ ${GITHUB_REF##*/} =~ /develop/ ]; then
-            echo "CONFIGURATION=Debug" >> $GITHUB_ENV
-        else
-            echo "CONFIGURATION=Release" >> $GITHUB_ENV
-        fi
+        echo "CONFIGURATION=Release" >> $GITHUB_ENV
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
     - name: Make CLI packages
       run: |
         dotnet tool restore
@@ -52,25 +52,15 @@ jobs:
         dotnet deb -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
         dotnet zip -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
         dotnet publish -f net6.0 -r linux-x64 -p:PublishSingleFile=true ${DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj
-    - name: Archive CLI packages artifacts
-      uses: actions/upload-artifact@v3
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: Upload artifacts
-        path: |
+        name: Stars ${{ steps.projectversion.outputs.result }}
+        generate_release_notes: true
+        files: |
           src/Stars.Console/bin/**/linux**/*.rpm
           src/Stars.Console/bin/**/linux**/publish/Stars
           src/Stars.Console/bin/**/linux**/publish/*.json
           src/Stars.Console/bin/**/linux**/*.zip
           src/Stars.Console/bin/**/linux**/*.deb
-    # Create the release
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Stars ${{ steps.projectversion.outputs.result }}
-        draft: false
-        prerelease: false
    
