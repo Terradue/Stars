@@ -18,6 +18,7 @@ using Terradue.Stars.Services.Resources;
 
 namespace Stars.Tests
 {
+    [Collection(nameof(StarsCollection))]
     public class HttpResourceTests
     {
         private readonly ITestLoggerFactory loggerFactory;

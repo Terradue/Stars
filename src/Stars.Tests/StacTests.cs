@@ -15,6 +15,7 @@ using System.Threading;
 
 namespace Stars.Tests
 {
+    [Collection(nameof(StarsCollection))]
     public class StacTests
     {
         private readonly ITestLoggerFactory loggerFactory;
