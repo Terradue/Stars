@@ -42,7 +42,7 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         global-json-file: global.json
-    - name: Make CLI packages
+    - name: Make packages
       run: |
         dotnet tool restore
         dotnet rpm install
@@ -52,6 +52,13 @@ jobs:
         dotnet deb -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
         dotnet zip -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
         dotnet publish -f net6.0 -r linux-x64 -p:PublishSingleFile=true ${DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet pack src/Stars.Services -c ${CONFIGURATION} -o publish
+        dotnet pack src/Stars.Data -c ${CONFIGURATION} -o publish
+    ## Publish to NuGet
+    - name: Publish the package to Nuget
+      run: dotnet nuget push publish/*.nupkg -s https://www.nuget.org/api/v2/package -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+    - name: Publish the package to GPR
+      run: dotnet nuget push publish/*.nupkg -s https://nuget.pkg.github.com/Terradue/index.json -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
