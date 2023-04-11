@@ -70,7 +70,7 @@
       "roles": [
         "overview"
       ],
-      "href": "data/PT01N36_974343E035_3381682023021700000000MS00-product/PT01N36_974343E035_3381682023021700000000MS00_BG006004002.jpg",
+      "href": "data/PT01N36_974343E035_3381682023021700000000MS00_GG006004002/PT01N36_974343E035_3381682023021700000000MS00_BG006004002.jpg",
       "filename": "PT01N36_974343E035_3381682023021700000000MS00_BG006004002.jpg",
       "file:size": 0
     },
@@ -80,7 +80,7 @@
         "data",
         "dn"
       ],
-      "href": "data/PT01N36_974343E035_3381682023021700000000MS00-product/PT01N36_974343E035_3381682023021700000000MS00_GG006004002.tif",
+      "href": "data/PT01N36_974343E035_3381682023021700000000MS00_GG006004002/PT01N36_974343E035_3381682023021700000000MS00_GG006004002.tif",
       "filename": "PT01N36_974343E035_3381682023021700000000MS00_GG006004002.tif",
       "file:size": 0,
       "proj:shape": [
@@ -174,7 +174,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/PT01N36_974343E035_3381682023021700000000MS00-product/vendor_metadata/20230217_080024_64_24a3_3B_AnalyticMS_8b_metadata_clip.xml",
+      "href": "data/PT01N36_974343E035_3381682023021700000000MS00_GG006004002/vendor_metadata/20230217_080024_64_24a3_3B_AnalyticMS_8b_metadata_clip.xml",
       "filename": "vendor_metadata/20230217_080024_64_24a3_3B_AnalyticMS_8b_metadata_clip.xml",
       "file:size": 11025
     }
