@@ -19,7 +19,7 @@ using Xunit;
 
 namespace Stars.Tests
 {
-    [Collection(nameof(S3AWSTestCollection))]
+    [Collection(nameof(S3TestCollection))]
     public class S3AWSTests : S3BaseTest
     {
         private readonly AssetService assetService;

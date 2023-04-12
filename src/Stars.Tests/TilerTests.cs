@@ -17,6 +17,7 @@ using System.Linq;
 
 namespace Stars.Tests
 {
+    [Collection(nameof(StarsCollection))]
     public class TilerTests
     {
         private readonly ITestLoggerFactory loggerFactory;

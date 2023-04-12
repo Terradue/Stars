@@ -5,11 +5,6 @@ using Stars.Tests.TestFixtures;
 
 namespace Stars.Tests
 {
-    [CollectionDefinition(nameof(S3AWSTestCollection))]
-    public class S3AWSTestCollection : ICollectionFixture<Logging>
-    {
-
-    }
 
     [CollectionDefinition(nameof(S3TestCollection))]
     public class S3TestCollection : ICollectionFixture<LocalStackFixture>, ICollectionFixture<Logging>

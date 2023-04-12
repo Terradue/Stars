@@ -22,7 +22,7 @@ using Xunit;
 
 namespace Stars.Tests
 {
-    [Collection(nameof(Atom2StacCollection))]
+    [Collection(nameof(StarsCollection))]
     public class Atom2StacTests
     {
         private readonly IServiceProvider serviceProvider;

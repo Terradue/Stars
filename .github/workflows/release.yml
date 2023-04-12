@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  push:
+    tags: [ '*.*.*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Get Project version
+      id: projectversion
+      uses: QwerMike/xpath-action@v1
+      with:
+        filename: 'src/Stars.Services/Terradue.Stars.Services.csproj'
+        expression: '//Project/PropertyGroup/Version[1]/text()'
+    # Check that version in the xml and in the tag are the same
+    # - name: Check version
+    #   run: |
+    #     if [ "${{ steps.projectversion.outputs.result }}" != "${GITHUB_REF##*/}" ]; then
+    #       echo "Version in the XML file (${{ steps.projectversion.outputs.result }}) and in the tag (${GITHUB_REF##*/}) are not the same"
+    #       exit 1
+    #     fi
+    - name: Get Project version suffix
+      id: projectsuffix
+      uses: QwerMike/xpath-action@v1
+      with:
+        filename: 'src/Stars.Services/Terradue.Stars.Services.csproj'
+        expression: '//Project/PropertyGroup/VersionSuffix/text()'
+    # Set up the environment variables for the next steps
+    - name: Set up environment variables
+      run: |
+        # if there is a version suffix, then it is a pre-release
+        if [ "${{ steps.projectsuffix.outputs.result }}" != "" ]; then
+          echo "DOTNET_ARGS=--version-suffix ${{ steps.projectsuffix.outputs.result }}"
+          echo "DOTNET_ARGS=--version-suffix ${{ steps.projectsuffix.outputs.result }}" >> $GITHUB_ENV
+        fi
+        echo "CONFIGURATION=Release" >> $GITHUB_ENV
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        global-json-file: global.json
+    - name: Make packages
+      run: |
+        dotnet tool restore
+        dotnet rpm install
+        dotnet deb install
+        dotnet zip install
+        dotnet rpm -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet deb -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet zip -c ${CONFIGURATION} -r linux-x64 -f net6.0 ${DOTNET_ARGS} src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet publish -f net6.0 -r linux-x64 -p:PublishSingleFile=true ${DOTNET_ARGS} --self-contained true src/Stars.Console/Terradue.Stars.Console.csproj
+        dotnet pack src/Stars.Services -c ${CONFIGURATION} -o publish
+        dotnet pack src/Stars.Data -c ${CONFIGURATION} -o publish
+    ## Publish to NuGet
+    - name: Publish the package to Nuget
+      run: dotnet nuget push publish/*.nupkg -s https://www.nuget.org/api/v2/package -k ${{secrets.NUGET_API_KEY}} --skip-duplicate
+    - name: Publish the package to GPR
+      run: dotnet nuget push publish/*.nupkg -s https://nuget.pkg.github.com/Terradue/index.json -k ${{secrets.GITHUB_TOKEN}} --skip-duplicate
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: Stars ${{ steps.projectversion.outputs.result }}
+        generate_release_notes: true
+        files: |
+          src/Stars.Console/bin/**/linux**/*.rpm
+          src/Stars.Console/bin/**/linux**/publish/Stars
+          src/Stars.Console/bin/**/linux**/publish/*.json
+          src/Stars.Console/bin/**/linux**/*.zip
+          src/Stars.Console/bin/**/linux**/*.deb
+   

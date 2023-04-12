@@ -29,7 +29,7 @@ namespace Stars.Tests
             var response = await client.PutBucketAsync(new PutBucketRequest()
                 {
                     BucketName = bucketName,
-                    UseClientRegion = true
+                    UseClientRegion = true,
                 }
             );
         }

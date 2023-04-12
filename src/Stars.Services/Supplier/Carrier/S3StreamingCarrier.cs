@@ -13,6 +13,8 @@ using System.Text.RegularExpressions;
 using Terradue.Stars.Services.Resources;
 using Microsoft.Extensions.Options;
 using System.Threading;
+using Polly;
+using Amazon.S3;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -121,8 +123,19 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 }
                 if (inputStreamResource.ContentLength == 0 || uploadStream)
                 {
-                    S3UploadStream s3UploadStream = new S3UploadStream(s3outputStreamResource.Client, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key, partSize);
-                    await StartSourceCopy(sourceStream, s3UploadStream, partSize);
+                    await Policy.Handle<AmazonS3Exception>(
+                        ex => ex.StatusCode == HttpStatusCode.Conflict ||
+                              ex.StatusCode == HttpStatusCode.ServiceUnavailable ||
+                              ex.StatusCode == HttpStatusCode.RequestTimeout ||
+                              ex.StatusCode == HttpStatusCode.GatewayTimeout
+                    )
+                        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, (retryAttempt * 500))), (exception, timeSpan, retryCount, context) =>
+                        {
+                            logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
+                        }).ExecuteAsync(async () =>
+                        {
+                            await StreamUpload(s3outputStreamResource, sourceStream, partSize);
+                        });
                 }
                 else
                 {
@@ -134,7 +147,20 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
                     ur.InputStream = sourceStream;
                     ur.ContentType = inputStreamResource.ContentType.MediaType;
-                    await tx.UploadAsync(ur);
+                    await Policy.Handle<AmazonS3Exception>(
+                        ex => ex.StatusCode == HttpStatusCode.Conflict ||
+                              ex.StatusCode == HttpStatusCode.ServiceUnavailable ||
+                              ex.StatusCode == HttpStatusCode.RequestTimeout ||
+                              ex.StatusCode == HttpStatusCode.GatewayTimeout
+                    )
+                        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, (retryAttempt * 500))), (exception, timeSpan, retryCount, context) =>
+                        {
+                            logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
+                        }).ExecuteAsync(async () =>
+                        {
+                            await tx.UploadAsync(ur);
+                        });
+                    
                 }
 
                 // refresh metadata
@@ -157,6 +183,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
         }
 
+        private async Task StreamUpload(S3Resource s3outputStreamResource, Stream sourceStream, int partSize)
+        {
+            S3UploadStream s3UploadStream = new S3UploadStream(s3outputStreamResource.Client, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key, partSize);
+            await StartSourceCopy(sourceStream, s3UploadStream, partSize);
+        }
+
         public async Task StartSourceCopy(Stream sourceStream, Stream destStream, int chunkSize = 80 * 1024)
         {
             ulong totalRead = 0;
@@ -164,15 +196,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             var buffer = new byte[chunkSize];
             do
             {
-                try
-                {
-                    read = await sourceStream.ReadAsync(buffer, 0, chunkSize).ConfigureAwait(false);
-                    await destStream.WriteAsync(buffer, 0, read).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    logger.LogWarning(e.Message);
-                }
+                read = await sourceStream.ReadAsync(buffer, 0, chunkSize).ConfigureAwait(false);
+                await destStream.WriteAsync(buffer, 0, read).ConfigureAwait(false);
                 totalRead += Convert.ToUInt32(read);
             } while (read > 0);
             destStream.Close();
