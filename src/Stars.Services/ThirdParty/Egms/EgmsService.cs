@@ -46,7 +46,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 
             StacCollection collection = await ingestionRequest.GetOperationPayloadAsync(cancellationToken);
 
-            var request = new HttpRequestMessage(HttpMethod.Post, $"api/ns/{ingestionRequest.NamespaceId}/cs");
+            var request = new HttpRequestMessage(HttpMethod.Post, $"ns/{ingestionRequest.NamespaceId}/cs");
             logger.LogDebug(JsonConvert.SerializeObject(collection));
             request.Content = new StringContent(JsonConvert.SerializeObject(collection), System.Text.Encoding.UTF8, collection.MediaType.ToString());
 
@@ -73,7 +73,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             client.BaseAddress = Configuration.BaseUri;
             StacCollection collection = await updateRequest.GetOperationPayloadAsync(cancellationToken);
 
-            var request = new HttpRequestMessage(HttpMethod.Put, $"api/ns/${updateRequest.NamespaceId}/cs/{collection.Id}");
+            var request = new HttpRequestMessage(HttpMethod.Put, $"ns/${updateRequest.NamespaceId}/cs/{collection.Id}");
             request.Content = new StringContent(JsonConvert.SerializeObject(collection));
 
             var response = await client.SendAsync(request, cancellationToken);
@@ -90,7 +90,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             client.BaseAddress = Configuration.BaseUri;
             Patch patch = await patchRequest.GetOperationPayloadAsync(cancellationToken);
 
-            var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"api/ns/${patchRequest.NamespaceId}/cs/{patchRequest.CollectionId}");
+            var request = new HttpRequestMessage(new HttpMethod("PATCH"), $"ns/${patchRequest.NamespaceId}/cs/{patchRequest.CollectionId}");
             request.Content = new StringContent(JsonConvert.SerializeObject(patch));
 
             var response = await client.SendAsync(request, cancellationToken);
@@ -106,7 +106,7 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = Configuration.BaseUri;
 
-            var request = new HttpRequestMessage(HttpMethod.Delete, $"api/ns/${deleteRequest.NamespaceId}/cs/{deleteRequest.CollectionId}");
+            var request = new HttpRequestMessage(HttpMethod.Delete, $"ns/${deleteRequest.NamespaceId}/cs/{deleteRequest.CollectionId}");
 
             var response = await client.SendAsync(request, cancellationToken);
             response.EnsureSuccessStatusCode();
