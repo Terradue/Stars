@@ -24,5 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\CNSA\GAOFEN-1\PMS1\data" />
+    <Folder Include="Resources\PLANETSCOPE\L3B\data\PT01S09_896895W067_8132432022040400000000MS00_GG003002001\" />
   </ItemGroup>
 </Project>
