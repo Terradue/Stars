@@ -278,7 +278,12 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
 
             EoBandCommonName[] bandCommonNames;
             EoBandObject[] bands;
-            if (numberOfBands == 4) {
+            if (numberOfBands == 3) {
+                bandCommonNames = new[]
+                    { EoBandCommonName.red, EoBandCommonName.green, EoBandCommonName.blue };
+                bands = new EoBandObject[numberOfBands];
+            }
+            else if (numberOfBands == 4) {
                 bandCommonNames = new[]
                     { EoBandCommonName.blue, EoBandCommonName.green, EoBandCommonName.red, EoBandCommonName.nir };
                 bands = new EoBandObject[numberOfBands];
@@ -286,8 +291,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
             else if (numberOfBands == 8) {
                 // we are changing the number of bands to 7 because we are not using the green 1 band
                 numberOfBands = 7;
-                bandCommonNames = new[]
-                {
+                bandCommonNames = new[] {
                     EoBandCommonName.coastal, EoBandCommonName.blue, EoBandCommonName.green, EoBandCommonName.yellow,
                     EoBandCommonName.red, EoBandCommonName.rededge, EoBandCommonName.nir
                 };
