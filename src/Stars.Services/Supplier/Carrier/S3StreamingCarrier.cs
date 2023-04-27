@@ -111,7 +111,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
                 // If streamable cannot be ranged, pass by a blocking stream
                 Stream sourceStream = await inputStreamResource.GetStreamAsync(ct);
-                int partSize = 20 * 1024 * 1024;
+                int partSize = 50 * 1024 * 1024;
                 try
                 {
                     var l = sourceStream.Length;
