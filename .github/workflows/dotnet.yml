@@ -25,5 +25,5 @@ jobs:
     - name: Build
       run: dotnet build --no-restore src/
     - name: Test
-      run: dotnet test --no-build --verbosity normal src/
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --settings:src/coverlet.runsettings --results-directory:TestResults src/
   
