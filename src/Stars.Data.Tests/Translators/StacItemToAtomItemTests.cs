@@ -97,8 +97,6 @@ namespace Terradue.Data.Tests.Translators
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
-            Terradue.ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
-
             // Get the vector offering
             var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
             var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
