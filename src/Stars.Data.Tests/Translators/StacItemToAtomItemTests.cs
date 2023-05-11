@@ -82,6 +82,30 @@ namespace Terradue.Data.Tests.Translators
             Assert.Equal("https://test.com/legend.png", legendLink.Uri.AbsoluteUri);
         }
 
+        [Fact]
+        public async System.Threading.Tasks.Task TWMTest()
+        {
+            string json = GetJson("Translators");
+
+            ValidateJson(json);
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
+
+            // Get the vector offering
+            var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
+            var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
+
+            Assert.NotNull(twmOfferings);
+            Assert.Equal(1, twmOfferings.Count());
+            Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
+            Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
+        }
 
     }
 

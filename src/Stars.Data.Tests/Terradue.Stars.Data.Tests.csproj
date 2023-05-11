@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <NoWarn>$(NoWarn);NU1605</NoWarn>
-    <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
+    <!-- <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir> -->
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MartinCostello.Logging.XUnit" Version="0.1.0" />
@@ -21,9 +21,5 @@
     <ProjectReference Include="..\Stars.Services\Terradue.Stars.Services.csproj" />
     <ProjectReference Include="..\Stars.Interface\Terradue.Stars.Interface.csproj" />
     <ProjectReference Include="..\Stars.Geometry\Terradue.Stars.Geometry.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\CNSA\GAOFEN-1\PMS1\data" />
-    <Folder Include="Resources\PLANETSCOPE\L3B\data\PT01S09_896895W067_8132432022040400000000MS00_GG003002001\" />
   </ItemGroup>
 </Project>

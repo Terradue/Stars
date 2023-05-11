@@ -4,5 +4,5 @@
     ],
     "omnisharp.disableMSBuildDiagnosticWarning": true,
     "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)",
-    "jira-plugin.workingProject": ""
+    "jira-plugin.workingProject": "TERRAPI"
 }

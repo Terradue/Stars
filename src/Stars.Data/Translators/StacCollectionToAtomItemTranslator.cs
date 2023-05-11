@@ -62,6 +62,19 @@ namespace Terradue.Stars.Data.Translators
                 imageOfferingSet = imageOfferingSet || atomItem.TryAddEGMSOffering(stacCollectionNode, egmsService);
             }
 
+            // Add offering if a web-map link is available
+            if (stacCollectionNode.StacCollection.Links != null)
+            {
+                foreach (StacLink link in stacCollectionNode.StacCollection.Links)
+                {
+                    // WMS link -> WMS offering
+                    if (link.RelationshipType == "wms" && link.Uri != null)
+                    {
+                        atomItem.AddWMSOffering(link);
+                    }
+                }
+            }
+
             return atomItem;
         }
     }

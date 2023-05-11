@@ -71,5 +71,23 @@ namespace Stars.Tests
             Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("thumbnail")).Count());
             Assert.Equal("radar", stacItemNode.StacItem.GetProperty("sensor_type"));
         }
+
+        [Fact]
+        public void AutoAtom2Stac2()
+        {
+            AtomRouter router = new AtomRouter(null);
+            var uri = new Uri("file://" + Path.Combine(Environment.CurrentDirectory, "../../../In/call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.atom"));
+            AtomFeed atomFeed = AtomFeed.Load(XmlReader.Create(uri.AbsolutePath));
+            AtomItemNode item = new AtomItemNode(atomFeed.Items.First() as AtomItem, uri);
+            TranslatorManager translatorManager = new TranslatorManager(serviceProvider.GetService<ILogger<TranslatorManager>>(), serviceProvider);
+            var stacNode = translatorManager.TranslateAsync<StacItemNode>(item, CancellationToken.None).GetAwaiter().GetResult();
+            var stacItem = stacNode.StacItem;
+            Assert.Equal("call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated", stacItem.Id);
+            Assert.Equal("optical", stacItem.GetProperty("sensor_type"));
+            Assert.Contains(stacItem.Links, l => l.RelationshipType == "xyz" && l.Uri == new Uri("https://titiler.disasterscharter.org/stac/tiles/WebMercatorQuad/{z}/{x}/{y}.png?url=s3://cpe-operations-catalog/calls/call-922/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json&assets=overview-trc&rescale=0,255&color_formula=&resampling_method=average"));
+            // File.WriteAllText("../../../Out/call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json", StacConvert.Serialize(stacItem));
+        }
+
+        
     }
 }

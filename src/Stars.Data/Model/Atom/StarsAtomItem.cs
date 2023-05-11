@@ -375,10 +375,78 @@ namespace Terradue.Stars.Data.Model.Atom
             return false;
         }
 
+        public void AddWMSOffering(StacLink link)
+        {
+            if (link != null)
+            {
+                // Find another offering first
+                var offering = ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)))
+                                                .FirstOrDefault(o => o.Code == "http://www.opengis.net/spec/owc-atom/1.0/req/wms");
+                if (offering == null)
+                {
+                    ElementExtensions.Add(new OwcOffering()
+                    {
+                        Operations = new OwcOperation[]{new OwcOperation()
+                        {
+                            Href = link.Uri.ToString(),
+                            Type = link.ContentType.ToString(),
+                            Code = "GetMap",
+                            Method = "GET"
+                        }},
+                        Code = "http://www.opengis.net/spec/owc-atom/1.0/req/wms"
+                    }.CreateReader());
+                }
+                else
+                {
+                    offering.Operations = offering.Operations.Concat(new OwcOperation[]{new OwcOperation()
+                        {
+                            Href = link.Uri.ToString(),
+                            Type = link.ContentType.ToString(),
+                            Code = "GetMap",
+                            Method = "GET"
+                        }}).ToArray();
+                }
+            }
+        }
+
+        public void AddTWMOffering(StacLink link)
+        {
+            if (link != null)
+            {
+                // Find another offering first
+                var offering = ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)))
+                                                .FirstOrDefault(o => o.Code == "http://www.terradue.com/twm");
+                if (offering == null)
+                {
+                    ElementExtensions.Add(new OwcOffering()
+                    {
+                        Operations = new OwcOperation[]{new OwcOperation()
+                        {
+                            Href = link.Uri.ToString(),
+                            Type = link.ContentType.ToString(),
+                            Code = "GetMap",
+                            Method = "GET"
+                        }},
+                        Code = "http://www.terradue.com/twm"
+                    }.CreateReader());
+                }
+                else
+                {
+                    offering.Operations = offering.Operations.Concat(new OwcOperation[]{new OwcOperation()
+                        {
+                            Href = link.Uri.ToString(),
+                            Type = link.ContentType.ToString(),
+                            Code = "GetMap",
+                            Method = "GET"
+                        }}).ToArray();
+                }
+            }
+        }
+
         public bool TryAddVectorOffering(StacItemNode stacItemNode, IVectorService vectorService)
         {
             var vectorAssets = vectorService.SelectVectorAssets(stacItemNode.StacItem);
-            foreach(var asset in vectorAssets)
+            foreach (var asset in vectorAssets)
             {
                 var stacItemUri = stacItemNode.Uri;
                 Uri titilerServiceUri = vectorService.BuildServiceUri(stacItemNode, asset);
@@ -397,7 +465,7 @@ namespace Terradue.Stars.Data.Model.Atom
             return vectorAssets.Count() > 0;
         }
 
-        
+
 
         public async Task CreateOpenSearchLinks(Func<SyndicationLink, object, Task<SyndicationLink>> mapOpensearchUri, object state)
         {
