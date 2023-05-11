@@ -25,7 +25,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore src/
     - name: Console Test
-      run: dotnet test --no-build --verbosity normal src/Stars.Console.Tests/BaseCommandLineTests.cs
+      run: dotnet test --no-build --verbosity normal src/Stars.Console.Tests/Stars.Console.Tests.csproj
     - name: Services Test
       run: dotnet test --no-build --verbosity normal src/Stars.Tests/Stars.Tests.csproj
     - name: Data Test
