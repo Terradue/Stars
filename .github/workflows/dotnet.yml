@@ -25,5 +25,18 @@ jobs:
     - name: Build
       run: dotnet build --no-restore src/
     - name: Test
-      run: dotnet test --no-build --verbosity normal src/
-  
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --settings:src/coverlet.runsettings --results-directory:TestResults src/
+    - uses: codecov/codecov-action@v1
+      with:
+        directory: TestResults
+        fail_ci_if_error: false # optional (default = false)
+        verbose: true # optional (default = false)
+        flags: unittests
+        name: .NET Test Coverage
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: dotnet-results
+        path: TestResults
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}

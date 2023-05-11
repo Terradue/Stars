@@ -18,7 +18,10 @@ using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.ThirdParty.Egms;
 using Terradue.Stars.Services.ThirdParty.Titiler;
+using Xunit;
 using Xunit.Abstractions;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace Terradue.Data.Tests
 {

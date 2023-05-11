@@ -36,6 +36,7 @@ namespace Terradue.Data.Tests.Translators
             fs.Close();
 
             bool egmsIsPresent = false;
+            bool wmsIsPresent = false;
             if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
 			{
                 var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
@@ -43,11 +44,13 @@ namespace Terradue.Data.Tests.Translators
 				foreach (var offering in offerings)
 				{
                     if(offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
+                    if(offering != null && offering.Code == "http://www.opengis.net/spec/owc-atom/1.0/req/wms") wmsIsPresent = true;
                 }
               
             }
 
-            Assert.True(egmsIsPresent);            
+            Assert.True(egmsIsPresent);   
+            Assert.True(wmsIsPresent);           
         }
 
     }
