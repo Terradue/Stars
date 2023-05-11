@@ -69,6 +69,24 @@ namespace Terradue.Stars.Data.Translators
                 atomItem.TryAddVectorOffering(stacItemNode, vectorService);
             }
 
+            // Add offering if a web-map link is available
+            if (stacItemNode.StacItem.Links != null)
+            {
+                foreach (StacLink link in stacItemNode.StacItem.Links)
+                {
+                    // WMS link -> WMS offering
+                    if (link.RelationshipType == "wms" && link.Uri != null)
+                    {
+                        atomItem.AddWMSOffering(link);
+                    }
+                    // XYZ link -> TWM offering
+                    if (link.RelationshipType == "xyz" && link.Uri != null)
+                    {
+                        atomItem.AddTWMOffering(link);
+                    }
+                }
+            }
+
             return atomItem;
         }
     }

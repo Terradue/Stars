@@ -84,7 +84,8 @@ namespace Stars.Tests
             var stacItem = stacNode.StacItem;
             Assert.Equal("call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated", stacItem.Id);
             Assert.Equal("optical", stacItem.GetProperty("sensor_type"));
-            Assert.Contains(stacItem.Links, l => l.RelationshipType == "wms" && l.Uri == new Uri("https://titiler.disasterscharter.org/stac/tiles/WebMercatorQuad/{z}/{x}/{y}.png?url=s3://cpe-operations-catalog/calls/call-922/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json&amp;assets=overview-trc&amp;rescale=0,255&amp;color_formula=&amp;resampling_method=average"));
+            Assert.Contains(stacItem.Links, l => l.RelationshipType == "xyz" && l.Uri == new Uri("https://titiler.disasterscharter.org/stac/tiles/WebMercatorQuad/{z}/{x}/{y}.png?url=s3://cpe-operations-catalog/calls/call-922/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json&assets=overview-trc&rescale=0,255&color_formula=&resampling_method=average"));
+            File.WriteAllText("../../../Out/call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json", StacConvert.Serialize(stacItem));
         }
 
         

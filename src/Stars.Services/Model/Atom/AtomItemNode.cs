@@ -117,7 +117,8 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IReadOnlyList<IResourceLink> GetLinks()
         {
-            return item.Links.Select(l => new AtomResourceLink(l))
+            return item.Links.Where(link => link.RelationshipType != "enclosure" && link.RelationshipType != "icon").OrderBy(i => i.RelationshipType)
+                             .Select(l => new AtomResourceLink(l))
                              .Concat(GenerateWebMapLinks())
                              .ToList();
         }
@@ -140,6 +141,22 @@ namespace Terradue.Stars.Services.Model.Atom
                             {
                                 links.Add(new AtomResourceLink(
                                     new SyndicationLink(new Uri(operation.Href), "wms", "WMS GetMap", operation.Type, 0)));
+                            }
+                        }
+                    }
+                }
+                // Tile WebMap offering
+                if (offering != null && offering.Code == "http://www.terradue.com/twm")
+                {
+                    if (offering.Operations != null && offering.Operations.Count() > 0)
+                    {
+                        foreach (var operation in offering.Operations)
+                        {
+                            // Tile GetMap operation
+                            if (operation != null && operation.Code == "GetMap")
+                            {
+                                links.Add(new AtomResourceLink(
+                                    new SyndicationLink(new Uri(operation.Href), "xyz", "Tile GetMap", operation.Type, 0)));
                             }
                         }
                     }
