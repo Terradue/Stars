@@ -3,6 +3,10 @@
         "Terradue": {
             "Assembly": "Terradue.Stars.Data",
             "Suppliers": {
+                "CDS": {
+                    "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
+                    "ServiceUrl": "https://catalogue.dataspace.copernicus.eu/odata/v1"
+                },
                 "ONDA": {
                     "Type": "Terradue.Stars.Data.Suppliers.DataHubSourceSupplier",
                     "ServiceUrl": "https://catalogue.onda-dias.eu/dias-catalogue"
