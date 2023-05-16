@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:os="http://a9.com/-/spec/opensearch/1.1/"
+    xmlns="http://www.w3.org/2005/Atom">
+    <id>https://catalog.disasterscharter.org:443//charter/cat/[charteracquisition,chartercalibrateddataset]/search?count=&amp;startPage=&amp;startIndex=&amp;q=&amp;lang=&amp;update=&amp;do=&amp;start=&amp;stop=&amp;trel=&amp;bbox=&amp;uid=call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated&amp;geom=&amp;lat=&amp;lon=&amp;radius=&amp;rel=&amp;loc=&amp;cat=&amp;ext=&amp;source=&amp;pt=&amp;pm=&amp;psn=&amp;psi=&amp;isn=&amp;st=&amp;ct=&amp;pl=&amp;ot=&amp;sr=&amp;wl=&amp;hsc=&amp;dis=&amp;title=&amp;tc=&amp;ab=&amp;org=&amp;or=&amp;la=&amp;ul=&amp;acl=&amp;oc=&amp;class=&amp;lg=&amp;pi=&amp;ps=&amp;at=&amp;on=&amp;od=&amp;track=&amp;cycle=&amp;frame=&amp;swath=&amp;cc=&amp;sc=&amp;pqs=&amp;pqdt=&amp;pqdp=&amp;pn=&amp;pc=&amp;pd=&amp;som=&amp;res=&amp;ac=&amp;atime=&amp;as=&amp;asut=&amp;stfan=&amp;ctfan=&amp;iaa=&amp;iza=&amp;iea=&amp;polm=&amp;polc=&amp;ald=&amp;minia=&amp;maxia=&amp;df=&amp;iav=&amp;pgrpi=&amp;pfn=&amp;psize=&amp;opmd=&amp;lc=&amp;dcg=&amp;vs=&amp;sort=&amp;profile=&amp;format=atom</id>
+    <link rel="self" type="application/atom+xml" title="Reference link" href="https://catalog.disasterscharter.org//charter/cat/[charteracquisition,chartercalibrateddataset]/search?count=&amp;startPage=&amp;startIndex=&amp;q=&amp;lang=&amp;update=&amp;do=&amp;start=&amp;stop=&amp;trel=&amp;bbox=&amp;uid=call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated&amp;geom=&amp;lat=&amp;lon=&amp;radius=&amp;rel=&amp;loc=&amp;cat=&amp;ext=&amp;source=&amp;pt=&amp;pm=&amp;psn=&amp;psi=&amp;isn=&amp;st=&amp;ct=&amp;pl=&amp;ot=&amp;sr=&amp;wl=&amp;hsc=&amp;dis=&amp;title=&amp;tc=&amp;ab=&amp;org=&amp;or=&amp;la=&amp;ul=&amp;acl=&amp;oc=&amp;class=&amp;lg=&amp;pi=&amp;ps=&amp;at=&amp;on=&amp;od=&amp;track=&amp;cycle=&amp;frame=&amp;swath=&amp;cc=&amp;sc=&amp;pqs=&amp;pqdt=&amp;pqdp=&amp;pn=&amp;pc=&amp;pd=&amp;som=&amp;res=&amp;ac=&amp;atime=&amp;as=&amp;asut=&amp;stfan=&amp;ctfan=&amp;iaa=&amp;iza=&amp;iea=&amp;polm=&amp;polc=&amp;ald=&amp;minia=&amp;maxia=&amp;df=&amp;iav=&amp;pgrpi=&amp;pfn=&amp;psize=&amp;opmd=&amp;lc=&amp;dcg=&amp;vs=&amp;sort=&amp;profile=&amp;format=atom" />
+    <link rel="search" type="application/opensearchdescription+xml" title="OpenSearch Description link" href="https://catalog.disasterscharter.org//charter/cat/[charteracquisition,chartercalibrateddataset]/description" />
+    <title type="text">Results for series [charteracquisition,chartercalibrateddataset]</title>
+    <updated>2023-05-05T07:16:38.510505Z</updated>
+    <debugRequest xmlns="http://purl.org/dc/elements/1.1/" />
+    <debugResponse xmlns="http://purl.org/dc/elements/1.1/" />
+    <dc:queryTime>57.9757</dc:queryTime>
+    <os:totalResults>1</os:totalResults>
+    <os:startIndex>1</os:startIndex>
+    <os:itemsPerPage>20</os:itemsPerPage>
+    <os:Query role="request"
+        xmlns:cor="http://a9.com/-/opensearch/extensions/correlation/1.0/"
+        xmlns:eop="http://a9.com/-/opensearch/extensions/eo/1.0/"
+        xmlns:dct="http://purl.org/dc/terms/"
+        xmlns:time="http://a9.com/-/opensearch/extensions/time/1.0/"
+        xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/"
+        xmlns:t2="http://www.terradue.com/opensearch"
+        xmlns:param="http://a9.com/-/spec/opensearch/extensions/parameters/1.0/"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:os="http://a9.com/-/spec/opensearch/1.1/" os:count="" os:startPage="" os:startIndex="" os:searchTerms="" os:language="" dct:modified="" t2:downloadOrigin="" time:start="" time:end="" time:relation="" geo:box="" geo:uid="call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated" geo:geometry="" geo:lat="" geo:lon="" geo:radius="" geo:relation="" geo:name="" dct:subject="" t2:extension="" dct:source="" eop:productType="" eop:processingMode="" eop:platform="" eop:platformSerialIdentifier="" eop:instrument="" eop:sensorType="" eop:compositeType="" eop:processingLevel="" eop:orbitType="" eop:spectralRange="" eop:wavelength="" eop:hasSecurityConstraints="" eop:dissemination="" eop:title="" eop:topicCategory="" eop:abstract="" eop:organizationName="" eop:organizationRole="" eop:lineage="" eop:useLimitation="" eop:accessConstraint="" eop:otherConstraint="" eop:classification="" eop:language="" eop:parentIdentifier="" eop:productionStatus="" eop:acquisitionType="" eop:orbitNumber="" eop:orbitDirection="" eop:track="" eop:cycle="" eop:frame="" eop:swathIdentifier="" eop:cloudCover="" eop:snowCover="" eop:productQualityStatus="" eop:productQualityDegradationTag="" eop:productQualityDegradationPerc="" eop:processorName="" eop:processingCenter="" eop:processingDate="" eop:sensorMode="" eop:sensorResolution="" eop:archivingCenter="" eop:availabilityTime="" eop:acquisitionStation="" eop:acquisitionSubType="" eop:startTimeFromAscendingNode="" eop:completionTimeFromAscendingNode="" eop:illuminationAzimuthAngle="" eop:illuminationZenithAngle="" eop:illuminationElevationAngle="" eop:polarisationMode="" eop:polarizationChannels="" eop:antennaLookDirection="" eop:minimumIncidenceAngle="" eop:maximumIncidenceAngle="" eop:dopplerFrequency="" eop:incidenceAngleVariation="" eop:productGroupId="" eop:productFilename="" eop:productSize="" eop:operationMode="" t2:landCover="" t2:doubleCheckGeometry="" t2:vendorSpecifics="" t2:sort="" />
+    <entry>
+        <id>https://catalog.disasterscharter.org:443//charter/cat/[charteracquisition,chartercalibrateddataset]/search?format=atom&amp;uid=call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated</id>
+        <title type="html">[CD] SENTINEL-2B MSI L1C 92 2023-05-03 07:36:19</title>
+        <summary type="html">&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Agency&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;ESA/EC (Copernicus)&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Satellite&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;sentinel-2b&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Instruments&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;msi&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sensor Type&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;optical&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Acquisition Date&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;03/05/2023 07:36:19&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Resolution&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;MR&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;COS2 Id&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;922-ESA-SENTINEL_2B-S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;CC-BY-SA-3.0-IGO&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Created&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;03/05/2023 13:03:11&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Updated&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;03/05/2023 13:16:40&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Status&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Calibrated Dataset&lt;/strong&gt; &lt;a href="https://supervisor.disasterscharter.org/hangfire/jobs/details/289698"&gt;Completed (data staging...)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+        </summary>
+        <published>2023-05-03T13:03:11.7337865Z</published>
+        <updated>2023-05-03T13:16:44.372262Z</updated>
+        <category term="callid922" label="Call Id 922" scheme="https://www.disasterscharter.org" />
+        <category term="922-ESA-SENTINEL_2B-S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437" label="COS2 Id: 922-ESA-SENTINEL_2B-S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437" scheme="https://www.disasterscharter.org" />
+        <category term="statuscalibratedDataset" label="Status Calibrated Dataset" scheme="https://www.disasterscharter.org" />
+        <category term="chartercalibrateddataset" label="Charter Calibrated Dataset" scheme="https://www.disasterscharter.org" />
+        <category term="charteracquisition" label="Charter Acquisition" scheme="https://www.disasterscharter.org" />
+        <category term="mission_sentinel_2" label="Mission:Sentinel 2" scheme="https://www.disasterscharter.org" />
+        <category term="platform_sentinel_2b" label="Platform:Sentinel 2b" scheme="https://www.disasterscharter.org" />
+        <category term="sensor_type_optical" label="Sensor Type:Optical" scheme="https://www.disasterscharter.org" />
+        <link rel="parent" type="application/json" href="s3://cpe-operations-catalog/calls/call-922/calibratedDatasets/catalog.json" />
+        <link rel="root" type="application/json" href="https://supervisor.disasterscharter.org/api/catalog.json" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="coastal" length="1237281" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-coastal.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="blue" length="41516956" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-blue.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="green" length="41732475" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-green.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="red" length="42520534" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-red.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="rededge70" length="10975017" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-rededge70.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="rededge74" length="11020216" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-rededge74.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="rededge78" length="11095252" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-rededge78.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="nir" length="42921110" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-nir.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="nir08" length="11159210" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-nir08.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="nir09" length="1110961" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-nir09.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="cirrus" length="700323" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-cirrus.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="swir16" length="11037647" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-swir16.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="swir22" length="10768886" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-swir22.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-trc" length="42914580" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-trc.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-civ" length="43991982" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-civ.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-sir" length="14301003" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-sir.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-atp" length="14918801" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-atp.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-fcu" length="15081416" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-fcu.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-vea" length="13643273" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-vea.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-law" length="13607763" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-law.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-wad" length="1574361" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-wad.tif" />
+        <link rel="enclosure" type="image/tiff; profile=cloud-optimized; application=geotiff" title="overview-trc-low-res" length="530522" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-trc-low-res.tif" />
+        <link rel="icon" type="image/tiff; profile=cloud-optimized; application=geotiff" title="Browse" length="530522" href="https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-trc-low-res.tif" />
+        <link rel="alternate" type="application/xml" title="EOP profile" href="https://catalog.disasterscharter.org//eop/charter/profile/xml?uid=call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated" />
+        <link rel="self" type="application/atom+xml" title="Reference link" href="https://catalog.disasterscharter.org//charter/cat/[charteracquisition,chartercalibrateddataset]/search?format=atom&amp;uid=call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated" />
+        <content type="html">&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Agency&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;ESA/EC (Copernicus)&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Satellite&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;sentinel-2b&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Instruments&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;msi&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Sensor Type&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;optical&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Acquisition Date&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;03/05/2023 07:36:19&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Resolution&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;MR&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;COS2 Id&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;922-ESA-SENTINEL_2B-S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;CC-BY-SA-3.0-IGO&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Created&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;03/05/2023 13:03:11&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Updated&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;03/05/2023 13:16:40&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Status&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Calibrated Dataset&lt;/strong&gt; &lt;a href="https://supervisor.disasterscharter.org/hangfire/jobs/details/289698"&gt;Completed (data staging...)&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+        </content>
+        <callid xmlns="https://www.disasterscharter.org">922</callid>
+        <cos2Id xmlns="https://www.disasterscharter.org">922-ESA-SENTINEL_2B-S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437</cos2Id>
+        <status xmlns="https://www.disasterscharter.org">Completed (data staging...)</status>
+        <owc:offering code="http://www.terradue.com/twm"
+            xmlns:owc="http://www.opengis.net/owc/1.0">
+            <owc:operation code="GetMap" href="https://titiler.disasterscharter.org/stac/tiles/WebMercatorQuad/{z}/{x}/{y}.png?url=s3://cpe-operations-catalog/calls/call-922/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json&amp;assets=overview-trc&amp;rescale=0,255&amp;color_formula=&amp;resampling_method=average" method="GET" type="image/png" />
+        </owc:offering>
+        <georss:polygon xmlns:georss="http://www.georss.org/georss">-26.8880080529026 31.9926640875942 -27.2071267739584 31.9898599334268 -27.2094954565969 32.7181759251729 -27.0713207696678 32.7523073026798 -27.0084593242086 32.5006775914516 -27.0060849479478 32.5012679301763 -26.9662466777792 32.3302006847146 -26.9464015771465 32.2438309369491 -26.9465188116035 32.2438014488146 -26.9464898352895 32.2436760824988 -26.9467032262401 32.2436222876734 -26.946654706203 32.2434127344728 -26.9469277881749 32.2433438994057 -26.9469127948204 32.2432792590841 -26.9474535182172 32.2431432127943 -26.9474162939075 32.2429835545743 -26.9477571325961 32.2428977084607 -26.947731766234 32.2427891123303 -26.9482151764463 32.2426676102655 -26.9482062898757 32.2426297756388 -26.9484543754523 32.2425673435299 -26.8953226134783 32.0168168537319 -26.893473709872 32.0172798111266 -26.8880080529026 31.9926640875942</georss:polygon>
+        <box xmlns="http://www.georss.org/georss">-27.2094954565969 31.9898599334268 -26.8880080529026 32.7523073026798</box>
+        <dc:date>2023-05-03T07:36:19.0240000Z</dc:date>
+        <spatial xmlns="http://purl.org/dc/terms/">POLYGON((31.9926640875942 -26.8880080529026,31.9898599334268 -27.2071267739584,32.7181759251729 -27.2094954565969,32.7523073026798 -27.0713207696678,32.5006775914516 -27.0084593242086,32.5012679301763 -27.0060849479478,32.3302006847146 -26.9662466777792,32.2438309369491 -26.9464015771465,32.2438014488146 -26.9465188116035,32.2436760824988 -26.9464898352895,32.2436222876734 -26.9467032262401,32.2434127344728 -26.946654706203,32.2433438994057 -26.9469277881749,32.2432792590841 -26.9469127948204,32.2431432127943 -26.9474535182172,32.2429835545743 -26.9474162939075,32.2428977084607 -26.9477571325961,32.2427891123303 -26.947731766234,32.2426676102655 -26.9482151764463,32.2426297756388 -26.9482062898757,32.2425673435299 -26.9484543754523,32.0168168537319 -26.8953226134783,32.0172798111266 -26.893473709872,31.9926640875942 -26.8880080529026))</spatial>
+        <opt:EarthObservation xmlns:gml="http://www.opengis.net/gml/3.2"
+            xmlns:om="http://www.opengis.net/om"
+            xmlns:eop="http://www.opengis.net/eop/2.1"
+            xmlns:opt="http://www.opengis.net/opt/2.1">
+            <resultTime xmlns="http://www.opengis.net/om/2.0">
+                <gml:TimeInstant>
+                    <gml:timePosition>2023-05-03T07:36:19.0240000Z</gml:timePosition>
+                </gml:TimeInstant>
+            </resultTime>
+            <procedure xmlns="http://www.opengis.net/om/2.0">
+                <eop:EarthObservationEquipment>
+                    <eop:platform>
+                        <eop:Platform>
+                            <eop:shortName>sentinel-2b</eop:shortName>
+                        </eop:Platform>
+                    </eop:platform>
+                    <eop:instrument>
+                        <eop:Instrument>
+                            <eop:shortName>msi</eop:shortName>
+                        </eop:Instrument>
+                    </eop:instrument>
+                    <eop:sensor>
+                        <eop:Sensor>
+                            <eop:sensorType>OPTICAL</eop:sensorType>
+                            <eop:resolution>10</eop:resolution>
+                        </eop:Sensor>
+                    </eop:sensor>
+                    <eop:acquisitionParameters>
+                        <eop:Acquisition>
+                            <eop:orbitNumber />
+                            <eop:lastOrbitNumber />
+                        </eop:Acquisition>
+                    </eop:acquisitionParameters>
+                </eop:EarthObservationEquipment>
+            </procedure>
+            <featureOfInterest xmlns="http://www.opengis.net/om/2.0">
+                <eop:Footprint>
+                    <eop:multiExtentOf>
+                        <gml:MultiSurface>
+                            <gml:surfaceMembers>
+                                <gml:Polygon>
+                                    <gml:exterior>
+                                        <gml:LinearRing>
+                                            <gml:posList count="24">-26.8880080529026 31.9926640875942 -27.2071267739584 31.9898599334268 -27.2094954565969 32.7181759251729 -27.0713207696678 32.7523073026798 -27.0084593242086 32.5006775914516 -27.0060849479478 32.5012679301763 -26.9662466777792 32.3302006847146 -26.9464015771465 32.2438309369491 -26.9465188116035 32.2438014488146 -26.9464898352895 32.2436760824988 -26.9467032262401 32.2436222876734 -26.946654706203 32.2434127344728 -26.9469277881749 32.2433438994057 -26.9469127948204 32.2432792590841 -26.9474535182172 32.2431432127943 -26.9474162939075 32.2429835545743 -26.9477571325961 32.2428977084607 -26.947731766234 32.2427891123303 -26.9482151764463 32.2426676102655 -26.9482062898757 32.2426297756388 -26.9484543754523 32.2425673435299 -26.8953226134783 32.0168168537319 -26.893473709872 32.0172798111266 -26.8880080529026 31.9926640875942</gml:posList>
+                                        </gml:LinearRing>
+                                    </gml:exterior>
+                                </gml:Polygon>
+                            </gml:surfaceMembers>
+                        </gml:MultiSurface>
+                    </eop:multiExtentOf>
+                </eop:Footprint>
+            </featureOfInterest>
+            <result xmlns="http://www.opengis.net/om/2.0">
+                <opt:EarthObservationResult />
+            </result>
+            <eop:metaDataProperty>
+                <eop:EarthObservationMetaData>
+                    <eop:identifier>call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated</eop:identifier>
+                    <eop:parentIdentifier>sentinel-2</eop:parentIdentifier>
+                    <eop:acquisitionType>OTHER</eop:acquisitionType>
+                    <eop:statusSubType>ON-LINE</eop:statusSubType>
+                    <eop:imageQualityStatus>NOMINAL</eop:imageQualityStatus>
+                    <eop:productQualityStatus>DEGRADED</eop:productQualityStatus>
+                </eop:EarthObservationMetaData>
+            </eop:metaDataProperty>
+        </opt:EarthObservation>
+        <dc:identifier>call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated</dc:identifier>
+    </entry>
+</feed>

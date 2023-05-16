@@ -19,6 +19,7 @@ using Terradue.Stars.Interface;
 using Terradue.OpenSearch.Result;
 using Itenso.TimePeriod;
 using System.Threading;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -99,7 +100,7 @@ namespace Terradue.Stars.Services.Model.Atom
                 foreach (var link in item.Links.Where(link => link.RelationshipType == "enclosure" || link.RelationshipType == "icon").OrderBy(i => i.RelationshipType))
                 {
                     string key = link.RelationshipType;
-                    if ( keysCount[key] > 1 )
+                    if (keysCount[key] > 1)
                         key += "-" + keysIndex[key]++;
                     assets.Add(key, new AtomLinkAsset(link, this.AtomItem));
                 }
@@ -116,7 +117,52 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public IReadOnlyList<IResourceLink> GetLinks()
         {
-            return item.Links.Select(l => new AtomResourceLink(l)).ToList();
+            return item.Links.Where(link => link.RelationshipType != "enclosure" && link.RelationshipType != "icon").OrderBy(i => i.RelationshipType)
+                             .Select(l => new AtomResourceLink(l))
+                             .Concat(GenerateWebMapLinks())
+                             .ToList();
+        }
+
+        private IEnumerable<AtomResourceLink> GenerateWebMapLinks()
+        {
+            List<AtomResourceLink> links = new List<AtomResourceLink>();
+            var offerings = item.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
+            foreach (var offering in offerings)
+            {
+                // OGC WMS offering
+                if (offering != null && offering.Code == "http://www.opengis.net/spec/owc-atom/1.0/req/wms")
+                {
+                    if (offering.Operations != null && offering.Operations.Count() > 0)
+                    {
+                        foreach (var operation in offering.Operations)
+                        {
+                            // WMS GetMap operation
+                            if (operation != null && operation.Code == "GetMap")
+                            {
+                                links.Add(new AtomResourceLink(
+                                    new SyndicationLink(new Uri(operation.Href), "wms", "WMS GetMap", operation.Type, 0)));
+                            }
+                        }
+                    }
+                }
+                // Tile WebMap offering
+                if (offering != null && offering.Code == "http://www.terradue.com/twm")
+                {
+                    if (offering.Operations != null && offering.Operations.Count() > 0)
+                    {
+                        foreach (var operation in offering.Operations)
+                        {
+                            // Tile GetMap operation
+                            if (operation != null && operation.Code == "GetMap")
+                            {
+                                links.Add(new AtomResourceLink(
+                                    new SyndicationLink(new Uri(operation.Href), "xyz", "Tile GetMap", operation.Type, 0)));
+                            }
+                        }
+                    }
+                }
+            }
+            return links;
         }
     }
 }

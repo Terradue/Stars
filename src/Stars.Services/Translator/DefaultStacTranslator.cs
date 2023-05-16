@@ -58,12 +58,20 @@ namespace Terradue.Stars.Services.Translator
         {
             StacItem stacItem = new StacItem(node.Id, node.Geometry, node.Properties);
             MakeStacItemValid(stacItem);
+            // Assets
             foreach (var asset in node.Assets)
             {
                 Uri relativeUri = asset.Value.Uri;
                 if (asset.Value.Uri.IsAbsoluteUri)
                     relativeUri = node.Uri.MakeRelativeUri(asset.Value.Uri);
                 stacItem.Assets.Add(asset.Key, CreateStacAsset(asset.Value, stacItem, relativeUri));
+            }
+            // Links
+            foreach (var link in node.GetLinks())
+            {
+                if (!link.Uri.IsAbsoluteUri)
+                    continue;
+                stacItem.Links.Add(new StacLink(link.Uri, link.Relationship, link.Title, link.ContentType.ToString()));
             }
             return new StacItemNode(stacItem, node.Uri);
         }

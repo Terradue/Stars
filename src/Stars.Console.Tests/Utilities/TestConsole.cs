@@ -25,7 +25,7 @@ namespace Stars.Console.Tests
 
         public TextReader In => throw new NotImplementedException();
 
-        public bool IsInputRedirected => throw new NotImplementedException();
+        public bool IsInputRedirected => true;
 
         public bool IsOutputRedirected => true;
 
