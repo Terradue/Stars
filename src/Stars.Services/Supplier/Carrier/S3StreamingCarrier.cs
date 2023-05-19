@@ -153,7 +153,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                               ex.StatusCode == HttpStatusCode.RequestTimeout ||
                               ex.StatusCode == HttpStatusCode.GatewayTimeout
                     )
-                        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, (retryAttempt * 500))), (exception, timeSpan, retryCount, context) =>
+                        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMilliseconds(2000), (exception, timeSpan, retryCount, context) =>
                         {
                             logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
                         }).ExecuteAsync(async () =>
