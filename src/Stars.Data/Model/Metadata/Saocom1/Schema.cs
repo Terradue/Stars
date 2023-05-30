@@ -231,36 +231,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public List<Val> Val { get; set; }
     }
 
-    [XmlRoot(ElementName = "NorthWest")]
-    public class NorthWest
-    {
-        [XmlElement(ElementName = "Point")]
-        public Point Point { get; set; }
-    }
-
-    [XmlRoot(ElementName = "NorthEast")]
-    public class NorthEast
-    {
-        [XmlElement(ElementName = "Point")]
-        public Point Point { get; set; }
-    }
-
-    [XmlRoot(ElementName = "SouthWest")]
-    public class SouthWest
-    {
-        [XmlElement(ElementName = "Point")]
-        public Point Point { get; set; }
-    }
-
-    [XmlRoot(ElementName = "SouthEast")]
-    public class SouthEast
-    {
-        [XmlElement(ElementName = "Point")]
-        public Point Point { get; set; }
-    }
-
-    [XmlRoot(ElementName = "Center")]
-    public class Center
+    public class Coordinates
     {
         [XmlElement(ElementName = "Point")]
         public Point Point { get; set; }
@@ -274,15 +245,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         [XmlElement(ElementName = "NorthingGridSize")]
         public string NorthingGridSize { get; set; }
         [XmlElement(ElementName = "NorthWest")]
-        public NorthWest NorthWest { get; set; }
+        public Coordinates NorthWest { get; set; }
         [XmlElement(ElementName = "NorthEast")]
-        public NorthEast NorthEast { get; set; }
+        public Coordinates NorthEast { get; set; }
         [XmlElement(ElementName = "SouthWest")]
-        public SouthWest SouthWest { get; set; }
+        public Coordinates SouthWest { get; set; }
         [XmlElement(ElementName = "SouthEast")]
-        public SouthEast SouthEast { get; set; }
+        public Coordinates SouthEast { get; set; }
         [XmlElement(ElementName = "Center")]
-        public Center Center { get; set; }
+        public Coordinates Center { get; set; }
     }
 
     [XmlRoot(ElementName = "TEC")]

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Stac;
@@ -18,7 +19,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Geometry.GeoJson;
-using System.Xml.Linq;
+using Terradue.Stars.Data.Model.Shared;
 
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {
@@ -55,7 +56,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             IAsset metadataAsset = GetMetadataAsset(item);
             SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
 
-            StacItem stacItem = CreateStacItem(metadata, item);
+            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*\.kml");
+            if (kmlAsset == null) return null;
+
+            Kml kml = null;
+            IStreamResource kmlFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(kmlAsset, System.Threading.CancellationToken.None);
+            if (kmlFileStreamable != null)
+            {
+                kml = await DeserializeKml(kmlFileStreamable);
+            }
+            else
+            {
+                logger.LogError("KML file asset is not streamable, skipping geometry extraction");
+            }
+
+            StacItem stacItem = CreateStacItem(metadata, item, kml);
             await AddAssets(stacItem, item, metadata);
 
             var stacNode = StacItemNode.Create(stacItem, item.Uri);
@@ -63,10 +78,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             return stacNode;
         }
 
-        internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, IItem item)
+        internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, IItem item, Kml kml)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(metadata), properties);
+            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(item, kml, metadata), properties);
             AddSatStacExtension(metadata, stacItem);
             AddProjStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, stacItem);
@@ -294,30 +309,66 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             }
         }
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(SAOCOM_XMLProduct metadata)
+        private async Task<Kml> DeserializeKml(IStreamResource kmlFileStreamable)
         {
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
-                new GeoJSON.Net.Geometry.Position[5]{
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.NorthEast.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.NorthEast.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.SouthEast.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.SouthEast.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.SouthWest.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.SouthWest.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[1].Text)),
+            Kml kml = null;
+            XmlSerializer ser = new XmlSerializer(typeof(Kml));
+            using (var stream = await kmlFileStreamable.GetStreamAsync(System.Threading.CancellationToken.None))
+            {
+                using (XmlReader reader = XmlReader.Create(stream))
+                {
+                    kml = (Kml)ser.Deserialize(reader);
                 }
-            );
+            }
 
+            return kml;
+        }
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(IItem item, Kml kml, SAOCOM_XMLProduct metadata)
+        {
+            GeoJSON.Net.Geometry.Position[] lineStringPositions = null;
+            if (metadata.Channel != null && metadata.Channel.Length != 0 && metadata.Channel[0].GroundCornerPoints != null)
+            {
+                lineStringPositions = new GeoJSON.Net.Geometry.Position[5];
+                GroundCornerPoints groundCornerPoints = metadata.Channel[0].GroundCornerPoints;
+                Coordinates[] coordinates = new Coordinates[] {
+                    groundCornerPoints.NorthWest,
+                    groundCornerPoints.NorthEast,
+                    groundCornerPoints.SouthEast,
+                    groundCornerPoints.SouthWest,
+                };
+                for (int i = 0; i < coordinates.Length; i++)
+                {
+                    double lat = Double.Parse(coordinates[i].Point.Val[0].Text);
+                    double lon = Double.Parse(coordinates[i].Point.Val[1].Text);
+                    lineStringPositions[i] = new GeoJSON.Net.Geometry.Position(lat, lon);
+                }
+                lineStringPositions[coordinates.Length] = lineStringPositions[0];
+            }
+            else if (kml != null)
+            {
+                string coordStr = kml.GroundOverlay.LatLonQuad.Coordinates;
+                string[] coordStrArray = coordStr.Split(' ');
+
+                lineStringPositions = new GeoJSON.Net.Geometry.Position[coordStrArray.Length + 1];
+
+                for (int i = 0; i < coordStrArray.Length; i++)
+                {
+                    string[] parts = coordStrArray[i].Split(',');
+                    double lon = Double.Parse(parts[0]);
+                    double lat = Double.Parse(parts[1]);
+                    lineStringPositions[i] = new GeoJSON.Net.Geometry.Position(lat, lon);
+                }
+                lineStringPositions[coordStrArray.Length] = lineStringPositions[0];
+            }
+
+            if (lineStringPositions != null)
+            {
+                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(lineStringPositions);
+                return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            }
+
+            return null;
         }
 
         private string ReadFilename(IItem item)
@@ -338,10 +389,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                     var nameField = node.Descendants(nName).FirstOrDefault().Value;
                     char processingLevelChar = nameField.Substring(nameField.IndexOf("L1"))[2];
 
-                    if (nameField.Contains("L1") && minimumChar.CompareTo(processingLevelChar) < 0)
+                    if (nameField.Contains("L1") && minimumChar.CompareTo(processingLevelChar) <= 0)
                     {
                         var input = node.Descendants(nValue).FirstOrDefault().Value;
                         output = input.Substring(input.LastIndexOf('/') + 1, input.IndexOf(".") - input.IndexOf('/') - 1);
+                        break;
                     }
                 }
             }
@@ -359,7 +411,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             StacAsset stacAsset;
             foreach (var val in new string[] { "vv", "vh", "hh", "hv" })
             {
-                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di-|gec|gtc).*" + val + @".*\.xml");
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*" + val + @".*\.xml");
                 if (metadataAsset == null) continue;
                 stacItem.Assets.Add("metadata-" + val, StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
                         new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString()))));
@@ -376,7 +428,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 }
             }
 
-            var overview = FindFirstAssetFromFileNameRegex(item, @".*gtc-acqId.*\.png");
+            var overview = FindFirstAssetFromFileNameRegex(item, @".*(gtc)-acqId.*\.png");
             if (overview != null){
                 stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, overview.Uri,
                             new ContentType(MimeTypes.GetMimeType(overview.Uri.ToString()))));
@@ -392,7 +444,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             {
                 IAsset metadataAsset = null;
                 XmlDocument L1BFileData;
-                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di-|gec|gtc).*" + val + @".*\.xml");
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*" + val + @".*\.xml");
                 if (metadataAsset != null)
                 {
                     L1BFileData = new XmlDocument();
@@ -412,7 +464,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
             IAsset manifestAsset = null;
-            manifestAsset = FindFirstAssetFromFileNameRegex(item, @"(di-|gec|gtc).*\.xml");
+            manifestAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*\.xml");
             if (manifestAsset == null)
                 throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
 
