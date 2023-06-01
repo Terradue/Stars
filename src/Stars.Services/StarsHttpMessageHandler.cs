@@ -15,6 +15,7 @@ namespace Terradue.Stars.Services
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            // Exception for store.terradue.com that requires to be called with curl user agent
             if (request.RequestUri.Host == "store.terradue.com")
             {
                 request.Headers.Remove("User-Agent");
