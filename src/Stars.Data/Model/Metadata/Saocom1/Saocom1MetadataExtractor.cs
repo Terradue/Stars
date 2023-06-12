@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Stac;
@@ -18,13 +19,14 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Geometry.GeoJson;
-using System.Xml.Linq;
+using Terradue.Stars.Data.Model.Shared;
 
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {
     public class Saocom1MetadataExtractor : MetadataExtraction
     {
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(SAOCOM_XMLProduct));
+        public static XmlSerializer manifestSerializer = new XmlSerializer(typeof(XEMT));
 
         public override string Label => "SAR Observation & Communications Satellite (CONAE) constellation product metadata extractor";
 
@@ -43,7 +45,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 SAOCOM_XMLProduct metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
@@ -53,26 +55,42 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             IAsset metadataAsset = GetMetadataAsset(item);
+            IAsset manifestAsset = GetManifestAsset(item);
             SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
+            XEMT manifest = await ReadManifest(manifestAsset);
 
-            StacItem stacItem = CreateStacItem(metadata, item);
-            await AddAssets(stacItem, item, metadata);
+            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.kml");
+            if (kmlAsset == null) return null;
+
+            Kml kml = null;
+            IStreamResource kmlFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(kmlAsset, System.Threading.CancellationToken.None);
+            if (kmlFileStreamable != null)
+            {
+                kml = await DeserializeKml(kmlFileStreamable);
+            }
+            else
+            {
+                logger.LogError("KML file asset is not streamable, skipping geometry extraction");
+            }
+
+            StacItem stacItem = CreateStacItem(metadata, manifest, item, kml);
+            await AddAssets(stacItem, item, manifestAsset);
 
             var stacNode = StacItemNode.Create(stacItem, item.Uri);
 
             return stacNode;
         }
 
-        internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, IItem item)
+        internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, XEMT manifest, IItem item, Kml kml)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(metadata), properties);
+            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(item, kml, metadata), properties);
             AddSatStacExtension(metadata, stacItem);
             AddProjStacExtension(metadata, stacItem);
-            AddViewStacExtension(metadata, stacItem);
+            AddViewStacExtension(metadata, manifest, stacItem);
             AddSarStacExtension(metadata, stacItem, item);
             AddProcessingStacExtension(metadata, stacItem);
-            GetCommonMetadata(metadata, properties, item);
+            GetCommonMetadata(metadata, manifest, properties, item);
             return stacItem;
         }
 
@@ -108,11 +126,70 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             proj.Shape = new int[2] { metadata.Channel[0].RasterInfo.Samples, metadata.Channel[0].RasterInfo.Lines };
         }
 
-        private void AddViewStacExtension(SAOCOM_XMLProduct metadata, StacItem stacItem)
+        private void AddViewStacExtension(SAOCOM_XMLProduct metadata, XEMT manifest, StacItem stacItem)
         {
             var view = new ViewStacExtension(stacItem);
             view.OffNadir = (15 + 50) / 2;
-            view.IncidenceAngle = (24.9 + 48.7) / 2;
+
+            double incidenceAngle = GetIncidenceAngle(manifest);
+            if (incidenceAngle != 0)
+            {
+                view.IncidenceAngle = incidenceAngle;
+            }
+        }
+
+        private double GetIncidenceAngle(XEMT manifest)
+        {
+            if (manifest == null || manifest.Product == null || manifest.Product.Features == null || manifest.Product.Features.Acquisition == null ||
+                manifest.Product.Features.Acquisition.Parameters == null || manifest.Product.Features.Acquisition.Parameters.BeamId == null)
+            {
+                return 0;
+            }
+            string beamId = manifest.Product.Features.Acquisition.Parameters.BeamId;
+            Dictionary<string, double[]> incidenceAngles = new Dictionary<string, double[]> {
+                {"S1SP", new double[] {20.7, 25.0}},
+                {"S2SP", new double[] {24.9, 29.2}},
+                {"S3SP", new double[] {29.1, 33.8}},
+                {"S4SP", new double[] {33.7, 38.3}},
+                {"S5SP", new double[] {38.2, 41.3}},
+                {"S6SP", new double[] {41.3, 44.5}},
+                {"S7SP", new double[] {44.6, 47.1}},
+                {"S8SP", new double[] {47.2, 48.7}},
+                {"S9SP", new double[] {48.8, 50.2}},
+                {"S1DP", new double[] {20.7, 25.0}},
+                {"S2DP", new double[] {24.9, 29.2}},
+                {"S3DP", new double[] {29.1, 33.8}},
+                {"S4DP", new double[] {33.7, 38.3}},
+                {"S5DP", new double[] {38.2, 41.3}},
+                {"S6DP", new double[] {41.3, 44.5}},
+                {"S7DP", new double[] {44.6, 47.1}},
+                {"S8DP", new double[] {47.2, 48.7}},
+                {"S9DP", new double[] {48.8, 50.2}},
+                {"S1QP", new double[] {17.6, 19.6}},
+                {"S2QP", new double[] {19.5, 21.5}},
+                {"S3QP", new double[] {21.4, 23.3}},
+                {"S4QP", new double[] {23.2, 25.4}},
+                {"S5QP", new double[] {25.3, 27.3}},
+                {"S6QP", new double[] {27.2, 29.6}},
+                {"S7QP", new double[] {29.6, 31.2}},
+                {"S8QP", new double[] {31.2, 33.0}},
+                {"S9QP", new double[] {33.0, 34.6}},
+                {"S10QP", new double[] {34.6, 35.5}},
+                {"TNASP", new double[] {24.9, 38.3}},
+                {"TNBSP", new double[] {38.2, 47.1}},
+                {"TNADP", new double[] {24.9, 38.3}},
+                {"TNBDP", new double[] {38.2, 47.1}},
+                {"TNAQP", new double[] {17.6, 27.3}},
+                {"TNBQP", new double[] {27.2, 35.5}},
+                {"TWSP", new double[] {24.9, 48.7}},
+                {"TWDP", new double[] {24.9, 48.7}},
+                {"TWQP", new double[] {17.6, 35.5}},
+            };
+            if (incidenceAngles.Keys.Contains(beamId))
+            {
+                return (incidenceAngles[beamId][0] + incidenceAngles[beamId][1]) / 2;
+            }
+            return 0;
         }
 
         private void AddSatStacExtension(SAOCOM_XMLProduct metadata, StacItem stacItem)
@@ -167,12 +244,25 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             sar.FrequencyBand = SarCommonFrequencyBandName.L;
             sar.PixelSpacingRange = Math.Abs(double.Parse(metadata.Channel[0].RasterInfo.LinesStep.Text));
             sar.PixelSpacingAzimuth = double.Parse(metadata.Channel[0].RasterInfo.SamplesStep.Text);
-            sar.InstrumentMode = fileName.Split('-')[3].ToUpper().Substring(0,2);
+            // Overwrite with sampling constants values if available
+            if (metadata.Channel[0].SamplingConstants != null)
+            {
+                if (metadata.Channel[0].SamplingConstants.PSrg_m != null)
+                {
+                    sar.PixelSpacingRange = metadata.Channel[0].SamplingConstants.PSrg_m.Value;
+                }
+                if (metadata.Channel[0].SamplingConstants.PSaz_m != null)
+                {
+                    sar.PixelSpacingAzimuth = metadata.Channel[0].SamplingConstants.PSaz_m.Value;
+                }
+            }
+            sar.InstrumentMode = fileName.Split('-')[3].ToUpper().Substring(0, 2);
             sar.LooksEquivalentNumber = 3;
 
-            string acquisitionMode = fileName.Split('-')[3].ToUpper().Substring(0,2);
-            int resolutionRange;
-            int resolutionAzimuth;
+            string acquisitionMode = fileName.Split('-')[3].ToUpper().Substring(0, 2);
+            double resolutionRange;
+            double resolutionAzimuth;
+            
             switch (acquisitionMode) {
                 case "SM":
                     resolutionRange = 10;
@@ -207,15 +297,29 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                     resolutionAzimuth = 0;
                     break;
             }
+
+            // Overwrite with actual values if available
+            if (metadata.Channel[0].SwathInfo.NominalResolution != null)
+            {
+                if (metadata.Channel[0].SwathInfo.NominalResolution.Range != null)
+                {
+                    resolutionRange = metadata.Channel[0].SwathInfo.NominalResolution.Range.Value;
+                }
+                if (metadata.Channel[0].SwathInfo.NominalResolution.Azimuth != null)
+                {
+                    resolutionAzimuth = metadata.Channel[0].SwathInfo.NominalResolution.Azimuth.Value;
+                }
+            }
+
             sar.ResolutionRange = resolutionRange;
             sar.ResolutionAzimuth = resolutionAzimuth;
             
         }
 
-        private IDictionary<string, object> GetCommonMetadata(SAOCOM_XMLProduct metadata, Dictionary<string, object> properties, IItem item)
+        private IDictionary<string, object> GetCommonMetadata(SAOCOM_XMLProduct metadata, XEMT manifest, Dictionary<string, object> properties, IItem item)
         {
             FillDateTimeProperties(metadata, properties);
-            FillInstrument(metadata, properties);
+            FillInstrument(metadata, manifest, properties);
             FillBasicsProperties(metadata, properties, item);
             AddOtherProperties(metadata, properties, item);
 
@@ -236,7 +340,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                                                   properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)));
         }
 
-        private void FillInstrument(SAOCOM_XMLProduct metadata, Dictionary<string, object> properties)
+        private void FillInstrument(SAOCOM_XMLProduct metadata, XEMT manifest, Dictionary<string, object> properties)
         {
             properties.Remove("platform");
             string sensorName = metadata.Channel[0].DataSetInfo.SensorName;
@@ -254,7 +358,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             properties.Add("sensor_type", "radar");
 
             properties.Remove("gsd");
-            properties.Add("gsd", GetGroundSampleDistance(metadata));
+            double gsd = GetGroundSampleDistance(metadata, manifest);
+            if (gsd != 0) properties.Add("gsd", gsd);
         }
 
         private void FillDateTimeProperties(SAOCOM_XMLProduct metadata, Dictionary<string, object> properties)
@@ -294,30 +399,66 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             }
         }
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(SAOCOM_XMLProduct metadata)
+        private async Task<Kml> DeserializeKml(IStreamResource kmlFileStreamable)
         {
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
-                new GeoJSON.Net.Geometry.Position[5]{
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.NorthEast.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.NorthEast.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.SouthEast.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.SouthEast.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.SouthWest.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.SouthWest.Point.Val[1].Text)),
-
-                        new GeoJSON.Net.Geometry.Position(double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[0].Text),
-                        double.Parse(metadata.Channel[0].GroundCornerPoints.NorthWest.Point.Val[1].Text)),
+            Kml kml = null;
+            XmlSerializer ser = new XmlSerializer(typeof(Kml));
+            using (var stream = await kmlFileStreamable.GetStreamAsync(System.Threading.CancellationToken.None))
+            {
+                using (XmlReader reader = XmlReader.Create(stream))
+                {
+                    kml = (Kml)ser.Deserialize(reader);
                 }
-            );
+            }
 
+            return kml;
+        }
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(IItem item, Kml kml, SAOCOM_XMLProduct metadata)
+        {
+            GeoJSON.Net.Geometry.Position[] lineStringPositions = null;
+            if (metadata.Channel != null && metadata.Channel.Length != 0 && metadata.Channel[0].GroundCornerPoints != null)
+            {
+                lineStringPositions = new GeoJSON.Net.Geometry.Position[5];
+                GroundCornerPoints groundCornerPoints = metadata.Channel[0].GroundCornerPoints;
+                Coordinates[] coordinates = new Coordinates[] {
+                    groundCornerPoints.NorthWest,
+                    groundCornerPoints.NorthEast,
+                    groundCornerPoints.SouthEast,
+                    groundCornerPoints.SouthWest,
+                };
+                for (int i = 0; i < coordinates.Length; i++)
+                {
+                    double lat = Double.Parse(coordinates[i].Point.Val[0].Text);
+                    double lon = Double.Parse(coordinates[i].Point.Val[1].Text);
+                    lineStringPositions[i] = new GeoJSON.Net.Geometry.Position(lat, lon);
+                }
+                lineStringPositions[coordinates.Length] = lineStringPositions[0];
+            }
+            else if (kml != null)
+            {
+                string coordStr = kml.GroundOverlay.LatLonQuad.Coordinates;
+                string[] coordStrArray = coordStr.Split(' ');
+
+                lineStringPositions = new GeoJSON.Net.Geometry.Position[coordStrArray.Length + 1];
+
+                for (int i = 0; i < coordStrArray.Length; i++)
+                {
+                    string[] parts = coordStrArray[i].Split(',');
+                    double lon = Double.Parse(parts[0]);
+                    double lat = Double.Parse(parts[1]);
+                    lineStringPositions[i] = new GeoJSON.Net.Geometry.Position(lat, lon);
+                }
+                lineStringPositions[coordStrArray.Length] = lineStringPositions[0];
+            }
+
+            if (lineStringPositions != null)
+            {
+                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(lineStringPositions);
+                return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            }
+
+            return null;
         }
 
         private string ReadFilename(IItem item)
@@ -338,10 +479,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                     var nameField = node.Descendants(nName).FirstOrDefault().Value;
                     char processingLevelChar = nameField.Substring(nameField.IndexOf("L1"))[2];
 
-                    if (nameField.Contains("L1") && minimumChar.CompareTo(processingLevelChar) < 0)
+                    if (nameField.Contains("L1") && minimumChar.CompareTo(processingLevelChar) <= 0)
                     {
                         var input = node.Descendants(nValue).FirstOrDefault().Value;
                         output = input.Substring(input.LastIndexOf('/') + 1, input.IndexOf(".") - input.IndexOf('/') - 1);
+                        break;
                     }
                 }
             }
@@ -350,16 +492,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
 
 
-        protected async Task AddAssets(StacItem stacItem, IItem item, SAOCOM_XMLProduct metadata)
+        protected async Task AddAssets(StacItem stacItem, IItem item, IAsset manifestAsset)
         {
 
             logger.LogDebug("Retrieving the metadata files");
             IAsset dataAsset, metadataAsset;
             KeyValuePair<string, StacAsset> bandStacAsset;
             StacAsset stacAsset;
+            
+            if (manifestAsset != null)
+            {
+                stacItem.Assets.Add("manifest", StacAsset.CreateMetadataAsset(stacItem, manifestAsset.Uri, new ContentType("application/xml"), "Manifest (XEMT)"));
+                stacItem.Assets["manifest"].Properties.AddRange(manifestAsset.Properties);
+            }
+
             foreach (var val in new string[] { "vv", "vh", "hh", "hv" })
             {
-                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di-|gec|gtc).*" + val + @".*\.xml");
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*" + val + @".*\.xml");
                 if (metadataAsset == null) continue;
                 stacItem.Assets.Add("metadata-" + val, StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
                         new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString()))));
@@ -376,7 +525,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 }
             }
 
-            var overview = FindFirstAssetFromFileNameRegex(item, @".*gtc-acqId.*\.png");
+            var overview = FindFirstAssetFromFileNameRegex(item, @".*(gtc)-acqId.*\.png");
             if (overview != null){
                 stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, overview.Uri,
                             new ContentType(MimeTypes.GetMimeType(overview.Uri.ToString()))));
@@ -392,7 +541,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             {
                 IAsset metadataAsset = null;
                 XmlDocument L1BFileData;
-                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di-|gec|gtc).*" + val + @".*\.xml");
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*" + val + @".*\.xml");
                 if (metadataAsset != null)
                 {
                     L1BFileData = new XmlDocument();
@@ -404,31 +553,88 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             return polarizationList.ToArray();
         }
 
-        private double GetGroundSampleDistance(SAOCOM_XMLProduct metadata)
+        private double GetGroundSampleDistance(SAOCOM_XMLProduct metadata, XEMT manifest)
         {
-            return 50;
+            AcquisitionParameters parameters = null;
+
+            if (manifest != null && manifest.Product != null && manifest.Product.Features != null && 
+                manifest.Product.Features.Acquisition != null && manifest.Product.Features.Acquisition.Parameters != null)
+            {
+                parameters = manifest.Product.Features.Acquisition.Parameters;
+
+                if (parameters.AcquisitionMode == "SM")
+                {
+                    return 10;
+                }
+                if (parameters.AcquisitionMode == "TN")
+                {
+                    if (parameters.PolarizationMode == "SP" || parameters.PolarizationMode == "DP") return 30;
+                    if (parameters.PolarizationMode == "QP") return 50;
+                }
+                if (parameters.AcquisitionMode == "TW")
+                {
+                    if (parameters.PolarizationMode == "SP" || parameters.PolarizationMode == "DP") return 50;
+                    if (parameters.PolarizationMode == "QP") return 100;
+                }
+                return 0;
+            }
+            else
+            {
+                string fileName = GetInstrumentMode(metadata);
+                string acquisitionMode = fileName.Split('-')[3].ToUpper().Substring(0, 2);
+                if (acquisitionMode == "SM") {
+                    return 10;
+                }
+                return 0;
+            }
         }
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = null;
-            manifestAsset = FindFirstAssetFromFileNameRegex(item, @"(di-|gec|gtc).*\.xml");
-            if (manifestAsset == null)
+            IAsset metadataAsset = null;
+            metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.xml");
+            if (metadataAsset == null)
                 throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
 
+            return metadataAsset;
+        }
+
+
+        protected virtual IAsset GetManifestAsset(IItem item)
+        {
+            IAsset manifestAsset = null;
+            manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*\.xemt");
             return manifestAsset;
         }
 
 
-        public virtual async Task<SAOCOM_XMLProduct> ReadMetadata(IAsset manifestAsset)
+        public virtual async Task<SAOCOM_XMLProduct> ReadMetadata(IAsset metadataAsset)
         {
-            logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
+            logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
+
+            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
+            {
+                var reader = XmlReader.Create(stream);
+                logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
+                return (SAOCOM_XMLProduct)metadataSerializer.Deserialize(reader);
+            }
+        }
+
+        public virtual async Task<XEMT> ReadManifest(IAsset manifestAsset)
+        {
+            if (manifestAsset == null)
+            {
+                logger.LogDebug("No manifest file (XEMT) available");
+                return null;
+            }
+            logger.LogDebug("Opening manifest {0}", manifestAsset.Uri);
 
             using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
             {
+                //return null;
                 var reader = XmlReader.Create(stream);
-                logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
-                return (SAOCOM_XMLProduct)metadataSerializer.Deserialize(reader);
+                logger.LogDebug("Deserializing manifest {0}", manifestAsset.Uri);
+                return (XEMT)manifestSerializer.Deserialize(reader);
             }
         }
     }
