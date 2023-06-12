@@ -34,8 +34,6 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             this.logger = logger;
         }
 
-        public Uri Uri => Configuration?.BaseUri;
-
         public TitilerConfiguration Configuration => options.Value;
 
         public bool IsAvailable => Configuration != null;
@@ -158,13 +156,18 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
         {
             Uri finalItemUri = Configuration.MapUri(stacItemUri);
 
-            return new Uri(this.Uri,
+            return new Uri(GetTilerUri(finalItemUri, overviewAssets),
                 string.Format("/stac/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}.png?url={0}&assets={1}&rescale={2}&color_formula=&resampling_method=average",
                     finalItemUri,
                     string.Join(",", overviewAssets.Keys.Take(3)),
                     string.Join(",", GetScale(overviewAssets.Values.First())),
                     GetColorFormula(overviewAssets)
                     ));
+        }
+
+        private Uri GetTilerUri(Uri finalItemUri, IDictionary<string, StacAsset> overviewAssets)
+        {
+            return Configuration.GetService(finalItemUri);
         }
 
         private static double?[] GetScale(StacAsset stacAsset)
