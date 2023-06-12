@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using Stac;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
@@ -11,13 +12,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
     public class S2SafeStacFactory : SentinelSafeStacFactory
     {
 
-        public S2SafeStacFactory(XFDUType xfdu, IItem route, string identifier) : base(xfdu, route, identifier)
+        private readonly OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile mtdTile;
+
+        public S2SafeStacFactory(XFDUType xfdu, IItem route, string identifier, OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile mtdTile) : base(xfdu, route, identifier)
         {
+            this.mtdTile = mtdTile;
         }
 
-        public static S2SafeStacFactory Create(XFDUType xfdu, IItem route, string identifier)
+        public static S2SafeStacFactory Create(XFDUType xfdu, IItem route, string identifier, OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile mtdTile)
         {
-            return new S2SafeStacFactory(xfdu, route, identifier);
+            return new S2SafeStacFactory(xfdu, route, identifier, mtdTile);
         }
 
         internal override StacItem CreateStacItem()
@@ -86,12 +90,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         protected override void AddProjectionStacExtension(StacItem stacItem)
         {
-            // var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
-            // Level1C_Tile mtdTile = null;
-            // if (mtdtlAsset != null)
-            //     mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset));
-            // stacAsset.ProjectionExtension().Epsg = int.Parse(mtdTile.Geometric_Info.Tile_Geocoding.HORIZONTAL_CS_CODE.Replace("EPSG:", ""));
-            stacItem.ProjectionExtension().Epsg = null;
+            if ( mtdTile?.Geometric_Info?.Tile_Geocoding == null ) return;
+            stacItem.ProjectionExtension().Epsg = int.Parse(mtdTile.Geometric_Info.Tile_Geocoding.HORIZONTAL_CS_CODE.Replace("EPSG:", ""));
+            // stacItem.ProjectionExtension().Epsg = null;
         }
     }
 }
