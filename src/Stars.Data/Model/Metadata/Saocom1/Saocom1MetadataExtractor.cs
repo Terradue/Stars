@@ -26,6 +26,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
     public class Saocom1MetadataExtractor : MetadataExtraction
     {
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(SAOCOM_XMLProduct));
+        public static XmlSerializer manifestSerializer = new XmlSerializer(typeof(XEMT));
 
         public override string Label => "SAR Observation & Communications Satellite (CONAE) constellation product metadata extractor";
 
@@ -44,7 +45,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 SAOCOM_XMLProduct metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
@@ -140,7 +141,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         private double GetIncidenceAngle(XEMT manifest)
         {
             if (manifest == null || manifest.Product == null || manifest.Product.Features == null || manifest.Product.Features.Acquisition == null ||
-                manifest.Product.Features.Acquisition.Parameters == null || manifest.Product.Features.Acquisition.Parameters.BeamId != null)
+                manifest.Product.Features.Acquisition.Parameters == null || manifest.Product.Features.Acquisition.Parameters.BeamId == null)
             {
                 return 0;
             }
@@ -501,7 +502,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             
             if (manifestAsset != null)
             {
-                stacItem.Assets.Add("manifest", StacAsset.CreateOverviewAsset(stacItem, manifestAsset.Uri, new ContentType("application/xml")));
+                stacItem.Assets.Add("manifest", StacAsset.CreateMetadataAsset(stacItem, manifestAsset.Uri, new ContentType("application/xml"), "Manifest (XEMT)"));
+                stacItem.Assets["manifest"].Properties.AddRange(manifestAsset.Properties);
             }
 
             foreach (var val in new string[] { "vv", "vh", "hh", "hv" })
@@ -554,31 +556,37 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         private double GetGroundSampleDistance(SAOCOM_XMLProduct metadata, XEMT manifest)
         {
             AcquisitionParameters parameters = null;
+
             if (manifest != null && manifest.Product != null && manifest.Product.Features != null && 
                 manifest.Product.Features.Acquisition != null && manifest.Product.Features.Acquisition.Parameters != null)
             {
                 parameters = manifest.Product.Features.Acquisition.Parameters;
+
+                if (parameters.AcquisitionMode == "SM")
+                {
+                    return 10;
+                }
+                if (parameters.AcquisitionMode == "TN")
+                {
+                    if (parameters.PolarizationMode == "SP" || parameters.PolarizationMode == "DP") return 30;
+                    if (parameters.PolarizationMode == "QP") return 50;
+                }
+                if (parameters.AcquisitionMode == "TW")
+                {
+                    if (parameters.PolarizationMode == "SP" || parameters.PolarizationMode == "DP") return 50;
+                    if (parameters.PolarizationMode == "QP") return 100;
+                }
+                return 0;
             }
             else
             {
+                string fileName = GetInstrumentMode(metadata);
+                string acquisitionMode = fileName.Split('-')[3].ToUpper().Substring(0, 2);
+                if (acquisitionMode == "SM") {
+                    return 10;
+                }
                 return 0;
             }
-
-            if (parameters.AcquisitionMode == "SM")
-            {
-                return 10;
-            }
-            if (parameters.AcquisitionMode == "TN")
-            {
-                if (parameters.PolarizationMode == "SP" || parameters.PolarizationMode == "DP") return 30;
-                if (parameters.PolarizationMode == "QP") return 50;
-            }
-            if (parameters.AcquisitionMode == "TW")
-            {
-                if (parameters.PolarizationMode == "SP" || parameters.PolarizationMode == "DP") return 50;
-                if (parameters.PolarizationMode == "QP") return 100;
-            }
-            return 0;
         }
 
         protected virtual IAsset GetMetadataAsset(IItem item)
@@ -596,7 +604,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         {
             IAsset manifestAsset = null;
             manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*\.xemt");
-            Console.WriteLine("MANIFEST ASSET: {0}", manifestAsset);
             return manifestAsset;
         }
 
@@ -624,9 +631,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
             using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
             {
+                //return null;
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing manifest {0}", manifestAsset.Uri);
-                return (XEMT)metadataSerializer.Deserialize(reader);
+                return (XEMT)manifestSerializer.Deserialize(reader);
             }
         }
     }

@@ -45,7 +45,6 @@
       "sao1a"
     ],
     "sensor_type": "radar",
-    "gsd": 50.0,
     "title": "SAOCOM-1A SAO1A GTC VV/VH 2020-08-19 21:17:26",
     "sat:orbit_state": "ascending",
     "proj:epsg": null,
@@ -54,7 +53,6 @@
       12621
     ],
     "view:off_nadir": 32.0,
-    "view:incidence_angle": 36.8,
     "sar:instrument_mode": "TW",
     "sar:frequency_band": "L",
     "sar:polarizations": [

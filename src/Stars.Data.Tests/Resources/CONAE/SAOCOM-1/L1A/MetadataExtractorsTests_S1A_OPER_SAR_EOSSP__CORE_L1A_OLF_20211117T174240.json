@@ -44,7 +44,7 @@
       32596
     ],
     "view:off_nadir": 32.0,
-    "view:incidence_angle": 36.8,
+    "view:incidence_angle": 39.75,
     "sar:instrument_mode": "SM",
     "sar:frequency_band": "L",
     "sar:polarizations": [
@@ -54,11 +54,11 @@
     "sar:product_type": "SLC",
     "sar:observation_direction": "right",
     "sar:center_frequency": 12.75,
-    "sar:pixel_spacing_range": 0.000460193281178095,
-    "sar:pixel_spacing_azimuth": 3.33333333334E-08,
+    "sar:pixel_spacing_range": 4.99654096667666,
+    "sar:pixel_spacing_azimuth": 3.19838775503902,
     "sar:looks_equivalent_number": 3.0,
-    "sar:resolution_range": 10.0,
-    "sar:resolution_azimuth": 10.0,
+    "sar:resolution_range": 6.05820514079381,
+    "sar:resolution_azimuth": 4.98814376176766,
     "processing:level": "L1A",
     "datetime": "2021-11-14T22:17:15.468Z",
     "created": "2021-11-18T10:29:28Z",
@@ -68,7 +68,7 @@
       "sao1a"
     ],
     "sensor_type": "radar",
-    "gsd": 50.0,
+    "gsd": 10.0,
     "title": "SAOCOM-1A SAO1A SLC HH/HV 2021-11-14 22:17:15",
     "providers": [
       {
@@ -90,6 +90,16 @@
     -0.975631
   ],
   "assets": {
+    "manifest": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Manifest (XEMT)",
+      "href": "data/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240.xemt",
+      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240.xemt",
+      "file:size": 39524
+    },
     "metadata-hh": {
       "type": "application/xml",
       "roles": [

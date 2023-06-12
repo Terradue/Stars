@@ -365,7 +365,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
     [XmlRoot(ElementName = "xemt", Namespace = "http://www.conae.gov.ar/CUSS/XEMT")]
     public class XEMT
     {
-        [XmlElement(ElementName = "product")]
+        [XmlElement(ElementName = "product", Namespace = "")]
         public Product Product { get; set; }
     }
 
@@ -380,7 +380,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public Features Features { get; set; }
     }
 
-    [XmlRoot(ElementName = "product")]
+    [XmlRoot(ElementName = "productType")]
     public class ProductType
     {
         [XmlElement(ElementName = "main")]
@@ -406,27 +406,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public string Title { get; set; }
         [XmlElement(ElementName = "abstract")]
         public string Abstract { get; set; }
-        [XmlElement(ElementName = "topics")]
-        public object Topics { get; set; }
         [XmlElement(ElementName = "scene")]
-        public Scene Scene { get; set; }
-        [XmlElement(ElementName = "production")]
         public Production Production { get; set; }
         [XmlElement(ElementName = "acquisition")]
         public Acquisition Acquisition { get; set; }
 
     }
 
-    [XmlRoot(ElementName = "scene")]
-    public class Scene
-    {
-        [XmlElement(ElementName = "frame")]
-        public object Frame { get; set; }
-        [XmlElement(ElementName = "timeFrame")]
-        public object TimeFrame { get; set; }
-    }
-
-    [XmlRoot(ElementName = "product")]
+    [XmlRoot(ElementName = "production")]
     public class Production
     {
         [XmlElement(ElementName = "countryID")]
@@ -437,7 +424,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public string FacilityId { get; set; }
         [XmlElement(ElementName = "serviceID")]
         public string ServiceId { get; set; }
-        [XmlElement(ElementName = "serviceID")]
+        [XmlElement(ElementName = "productionTime")]
         public DateTime ProductionTime { get; set; }
     }
 
@@ -457,7 +444,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public string ReferenceId { get; set; }
         [XmlElement(ElementName = "fc")]
         public string Fc { get; set; }
-        [XmlElement(ElementName = "aquMode")]
+        [XmlElement(ElementName = "acqMode")]
         public string AcquisitionMode { get; set; }
         [XmlElement(ElementName = "polMode")]
         public string PolarizationMode { get; set; }
