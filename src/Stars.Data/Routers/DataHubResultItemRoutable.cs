@@ -25,10 +25,10 @@ namespace Terradue.Stars.Data.Routers
         {
             get
             {
+                var enclosureAccess = supplier.Wrapper.GetEnclosureAccess(osItem);
                 Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
                 try
                 {
-                    var enclosureAccess = supplier.Wrapper.GetEnclosureAccess(osItem);
                     foreach (var dr in enclosureAccess.GetDownloadRequests())
                     {
                         string key = "download";

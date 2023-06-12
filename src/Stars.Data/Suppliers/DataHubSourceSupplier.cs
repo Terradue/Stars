@@ -58,7 +58,7 @@ namespace Terradue.Stars.Data.Suppliers
             if (target_uri.Host == "catalogue.dataspace.copernicus.eu")
             {
                 wrapper = new CopernicusOdataWrapper(
-                    target_creds.GetCredential(new Uri("https://identity.dataspace.copernicus.eu"), "Basic"),
+                    target_creds,
                     "https://catalogue.dataspace.copernicus.eu/odata/v1"
                 );
             }
