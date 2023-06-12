@@ -59,7 +59,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
             XEMT manifest = await ReadManifest(manifestAsset);
 
-            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*\.kml");
+            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.kml");
             if (kmlAsset == null) return null;
 
             Kml kml = null;
@@ -508,7 +508,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
             foreach (var val in new string[] { "vv", "vh", "hh", "hv" })
             {
-                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*" + val + @".*\.xml");
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*" + val + @".*\.xml");
                 if (metadataAsset == null) continue;
                 stacItem.Assets.Add("metadata-" + val, StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
                         new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString()))));
@@ -541,7 +541,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             {
                 IAsset metadataAsset = null;
                 XmlDocument L1BFileData;
-                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*" + val + @".*\.xml");
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*" + val + @".*\.xml");
                 if (metadataAsset != null)
                 {
                     L1BFileData = new XmlDocument();
@@ -592,7 +592,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
             IAsset metadataAsset = null;
-            metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(di|gec|gtc|slc)-.*\.xml");
+            metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.xml");
             if (metadataAsset == null)
                 throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
 
