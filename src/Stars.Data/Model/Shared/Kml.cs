@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using System;
 
-namespace Terradue.Stars.Data.Model.Metadata.Rcm
+namespace Terradue.Stars.Data.Model.Shared
 {
 
     [XmlRoot(ElementName="LineStyle", Namespace="")]
@@ -223,7 +223,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
         public string NoNamespaceSchemaLocation { get; set; } 
 
         [XmlText] 
-        public string Text { get; set; } 
+        public string Text { get; set; }
+
+        [XmlElement(ElementName="GroundOverlay", Namespace="")] 
+        public GroundOverlay GroundOverlay { get; set; } 
+
     }
 
 }

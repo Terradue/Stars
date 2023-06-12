@@ -38,6 +38,32 @@
             }
         }
     },
+    "ExternalServices": {
+        "Titiler": {
+          "BaseUrl": "https://tiler.test.terradue.com",
+          "Identifier": "Terradue titiler",
+          "ServiceMaps": {
+            "tiler-test2": {
+              "UrlPattern": "s3://snowgrid.*",
+              "ServiceUrl": "http://tiler.test2.terradue.com/"
+            },
+            "tiler-test2-bis": {
+              "UrlPattern": "https://catalog.terradue.com/snowgrid_mean.*",
+              "ServiceUrl": "http://tiler.test2.terradue.com/"
+            }
+          },
+          "UriMaps": {
+            "S3-proc-results": {
+              "From": "s3://processing-results/",
+              "To": "http://acceptance-supervisor-catalog-stac.cpe/catalog/"
+            }, 
+            "catalog": {
+              "From": "https://supervisor.charter.uat.esaportal.eu/catalog/",
+              "To": "http://acceptance-supervisor-catalog-stac.cpe/catalog/"
+            }
+          }
+        }
+    },
     "LocalStack": {
         "Enabled": true
     },

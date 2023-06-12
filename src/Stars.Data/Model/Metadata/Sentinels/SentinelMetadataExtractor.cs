@@ -38,7 +38,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 if (match.Success)
                     identifier = match.Groups["identifier"].Value;
                 else return false;
-                SentinelSafeStacFactory stacFactory = CreateSafeStacFactory(manifest, item, identifier);
+                SentinelSafeStacFactory stacFactory = CreateSafeStacFactoryAsync(manifest, item, identifier).GetAwaiter().GetResult();
                 return stacFactory != null;
             }
             catch
@@ -61,7 +61,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 
             XFDUType manifest = await ReadManifest(manifestAsset);
 
-            SentinelSafeStacFactory stacFactory = CreateSafeStacFactory(manifest, item, identifier);
+            SentinelSafeStacFactory stacFactory = await CreateSafeStacFactoryAsync(manifest, item, identifier);
             StacItem stacItem = stacFactory.CreateStacItem();
             
             // Get the proper instance for assets and additional properties
@@ -106,7 +106,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             }
             return manifestAsset;
         }
-        protected abstract SentinelSafeStacFactory CreateSafeStacFactory(XFDUType manifest, IItem item, string identifier);
+        protected abstract Task<SentinelSafeStacFactory> CreateSafeStacFactoryAsync(XFDUType manifest, IItem item, string identifier);
 
         public virtual async Task<XFDUType> ReadManifest(IAsset manifestAsset)
         {

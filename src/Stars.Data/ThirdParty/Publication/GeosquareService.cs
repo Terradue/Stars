@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 using Stac;
 using Terradue.Stars.Data.Model.Atom;
 using Terradue.OpenSearch.Result;
@@ -21,8 +18,6 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Store;
-using Terradue.Stars.Services.ThirdParty.Titiler;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services;
 using System.Threading;
@@ -37,7 +32,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         private readonly RouterService routingService;
         private readonly TranslatorManager translatorManager;
         private readonly GeosquareConfiguration geosquareConfiguration;
-        private readonly TitilerService titilerService;
         private readonly IHttpClientFactory httpClientFactory;
         private readonly ICredentials credentials;
         private readonly IResourceServiceProvider resourceServiceProvider;
@@ -48,7 +42,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public GeosquareService(RouterService routerService,
                                   TranslatorManager translatorManager,
                                   IOptions<GeosquareConfiguration> geosquareConfiguration,
-                                  TitilerService titilerService,
                                   IHttpClientFactory httpClientFactory,
                                   ICredentials credentials,
                                   IResourceServiceProvider resourceServiceProvider,
@@ -57,7 +50,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             this.routingService = routerService;
             this.translatorManager = translatorManager;
             this.geosquareConfiguration = geosquareConfiguration.Value;
-            this.titilerService = titilerService;
             this.httpClientFactory = httpClientFactory;
             this.credentials = credentials;
             this.resourceServiceProvider = resourceServiceProvider;
