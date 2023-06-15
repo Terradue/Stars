@@ -55,10 +55,23 @@ namespace Terradue.Stars.Services
         {
             FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(assetsContainer, assetsFilters);
 
-            if (filteredAssetContainer.Assets.Count() == 0)
+            // Here we will catch errors from supplier when getting assets
+            // Especially when the supplier is a datahub creating router for assets
+            try
             {
-                logger.LogDebug("No asset to import. Check filters: " + assetsFilters.ToString());
-                return new AssetImportReport(null, destination);
+                if (filteredAssetContainer.Assets.Count() == 0)
+                {
+                    logger.LogDebug("No asset to import. Check filters: " + assetsFilters.ToString());
+                    return new AssetImportReport(null, destination);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "Error while getting assets");
+                Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
+                Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
+                assetsExceptions.Add("all", e);
+                return new AssetImportReport(new DeliveryQuotation(assetsQuotes, assetsExceptions), destination);
             }
 
             logger.LogDebug("Importing {0} assets to {1}", filteredAssetContainer.Assets.Count(), destination);

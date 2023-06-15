@@ -14,6 +14,7 @@ using Terradue.Stars.Services;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 using Terradue.Stars.Data.Model.Atom;
 using System.Linq;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 
 namespace Stars.Tests
 {
@@ -88,6 +89,29 @@ namespace Stars.Tests
             // Add TMS offering via titiler if possible
             var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
             Assert.True(starsAtomItem.ElementExtensions.Any(i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0"));
+        }
+
+        [Fact]
+        public async Task MultiTilerTest()
+        {
+            StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/snowgrid_meanHS_1974.json")));
+            StacItemNode stacItemNode = new StacItemNode(item, new Uri("https://catalog.terradue.com/snowgrid_meanHS_1974.json"));
+            var assets = _titilerService.SelectOverviewCombinationAssets(item);
+            StarsAtomItem starsAtomItem = StarsAtomItem.Create(item, new Uri("https://catalog.terradue.com/snowgrid_meanHS_1974.json"));
+            // Add EO Profile if possible
+            Assert.True(starsAtomItem.TryAddEarthObservationProfile(stacItemNode.StacItem));
+
+            var date = starsAtomItem.ElementExtensions.First(i => i.OuterName == "date" && i.OuterNamespace == "http://purl.org/dc/elements/1.1/").GetObject<string>();
+
+            Assert.Equal(DateTime.Parse("1972-12-01T00:00:00Z"), DateTime.Parse(date.Split("/")[0]));
+
+            // Add TMS offering via titiler if possible
+            var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
+            var offerings = starsAtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
+            Assert.Equal("http://www.terradue.com/twm", offerings.First().Code);
+            var op = offerings.First().Operations.First();
+            Assert.Equal("GetMap", op.Code);
+            Assert.Equal("http://tiler.test2.terradue.com/stac/tiles/WebMercatorQuad/{z}/{x}/{y}.png?url=https://catalog.terradue.com/snowgrid_meanHS_1974.json&assets=snowgrid_meanHS_1974&rescale=0,255&color_formula=&resampling_method=average", op.Href);
         }
     }
 }

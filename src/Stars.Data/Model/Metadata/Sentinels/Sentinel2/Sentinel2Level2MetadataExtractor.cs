@@ -12,6 +12,7 @@ using Stac.Extensions.Eo;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
+using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules;
 using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level2;
 using Terradue.Stars.Interface;
 
@@ -141,9 +142,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             return assetName;
         }
 
-        protected override SentinelSafeStacFactory CreateSafeStacFactory(XFDUType manifest, IItem item, string identifier)
+        protected override async Task<SentinelSafeStacFactory> CreateSafeStacFactoryAsync(XFDUType manifest, IItem item, string identifier)
         {
-            return S2SafeStacFactory.Create(manifest, item, identifier);
+            var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
+            Level2A_Tile mtdTile = null;
+            if (mtdtlAsset != null)
+                mtdTile = (Level2A_Tile)s2L2AProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset, System.Threading.CancellationToken.None));
+            return S2L2SafeStacFactory.Create(manifest, item, identifier, mtdTile);
         }
 
         private async Task GetUserProduct(IItem item)

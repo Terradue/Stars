@@ -36,6 +36,7 @@ namespace Stars.Tests
             services.AddSingleton<S3StreamingCarrier, S3StreamingCarrier>();
             services.AddSingleton<TitilerService, TitilerService>();
             services.AddSingleton<EgmsService, EgmsService>();
+            services.Configure<TitilerConfiguration>(Configuration.GetSection("ExternalServices:Titiler"));
             services.AddStarsManagedServices(builder =>
                 {
                     builder.UseDefaultConfiguration(Configuration);

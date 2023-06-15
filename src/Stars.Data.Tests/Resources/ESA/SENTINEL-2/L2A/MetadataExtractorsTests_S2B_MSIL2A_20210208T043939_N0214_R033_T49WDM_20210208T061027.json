@@ -78,7 +78,7 @@
     "processing_baseline": "02.14",
     "processing:level": "L2A",
     "processing:lineage": "Generation of Level-2A User Product",
-    "proj:epsg": null,
+    "proj:epsg": 32649,
     "title": "SENTINEL-2B MSI L2A 33 2021-02-08 04:39:39",
     "providers": [
       {

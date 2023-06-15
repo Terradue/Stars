@@ -45,7 +45,7 @@
       "sao1a"
     ],
     "sensor_type": "radar",
-    "gsd": 50.0,
+    "gsd": 10.0,
     "title": "SAOCOM-1A SAO1A GEC VV/VH/HH/HV 2019-11-08 09:50:27",
     "sat:orbit_state": "descending",
     "proj:epsg": null,
@@ -54,7 +54,6 @@
       9199
     ],
     "view:off_nadir": 32.0,
-    "view:incidence_angle": 36.8,
     "sar:instrument_mode": "SM",
     "sar:frequency_band": "L",
     "sar:polarizations": [

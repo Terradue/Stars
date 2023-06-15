@@ -21,6 +21,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Geometry.GeoJson;
+using Terradue.Stars.Data.Model.Shared;
 
 namespace Terradue.Stars.Data.Model.Metadata.Rcm
 {
