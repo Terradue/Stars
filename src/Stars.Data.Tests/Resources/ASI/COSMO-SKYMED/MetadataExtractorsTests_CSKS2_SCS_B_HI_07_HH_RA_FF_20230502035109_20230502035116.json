@@ -8,46 +8,46 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236",
+  "id": "CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          -18.258259,
-          64.843066
+          26.7299,
+          40.7087
         ],
         [
-          -18.056643,
-          64.42391
+          26.8164,
+          40.3457
         ],
         [
-          -17.112008,
-          64.503662
+          27.2815,
+          40.4084
         ],
         [
-          -17.299032,
-          64.923484
+          27.1977,
+          40.7715
         ],
         [
-          -18.258259,
-          64.843066
+          26.7299,
+          40.7087
         ]
       ]
     ]
   },
   "properties": {
-    "start_datetime": "2014-09-02T06:32:28.5062577Z",
-    "end_datetime": "2014-09-02T06:32:36.1486932Z",
-    "datetime": "2014-09-02T06:32:28.5062577Z",
-    "created": "2014-09-12T11:41:39Z",
-    "platform": "csk3",
+    "start_datetime": "2023-05-02T03:51:09.187492Z",
+    "end_datetime": "2023-05-02T03:51:15.887413Z",
+    "datetime": "2023-05-02T03:51:09.187492Z",
+    "created": "2023-05-02T04:16:06Z",
+    "platform": "csk2",
     "mission": "csk",
     "instruments": [
       "sar-x"
     ],
     "sensor_type": "radar",
-    "title": "CSKS3 Level-1A 2014-09-02 06:32:28",
+    "title": "CSKS2 Level-1A 2023-05-02 03:51:09",
     "providers": [
       {
         "name": "ASI",
@@ -65,7 +65,7 @@
     "sar:frequency_band": "X",
     "sar:center_frequency": 9.6,
     "sar:polarizations": [
-      "VV"
+      "HH"
     ],
     "sar:product_type": "SCS_B",
     "sar:resolution_range": 3.0,
@@ -76,16 +76,18 @@
     "sar:looks_azimuth": 1.0,
     "sar:looks_equivalent_number": 1.0,
     "sat:orbit_state": "ascending",
+    "sat:absolute_orbit": 83292,
+    "sat:relative_orbit": 2105,
     "proj:epsg": 4326,
-    "view:incidence_angle": 34.579358,
+    "view:incidence_angle": 37.4044,
     "processing:level": "L1A",
     "processing:facility": "ICUGS"
   },
   "bbox": [
-    -18.258259,
-    64.42391,
-    -17.112008,
-    64.923484
+    26.7299,
+    40.3457,
+    27.2815,
+    40.7715
   ],
   "assets": {
     "image": {
@@ -94,22 +96,12 @@
         "data"
       ],
       "title": "Image file",
-      "href": "data/CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236/CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5",
-      "filename": "CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5",
-      "file:size": 0,
+      "href": "data/CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116/CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116.h5",
+      "filename": "CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116.h5",
+      "file:size": 28176,
       "sar:polarizations": [
-        "VV"
+        "HH"
       ]
-    },
-    "metadata": {
-      "type": "application/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Metadata file",
-      "href": "data/CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236/DFDN_CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5.xml",
-      "filename": "DFDN_CSKS3_SCS_B_HI_09_VV_RA_SF_20140902063229_20140902063236.h5.xml",
-      "file:size": 3670
     }
   },
   "links": []
