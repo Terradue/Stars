@@ -159,7 +159,7 @@ namespace Terradue.Stars.Services.Resources
                     triedS3 = true;
                 }
 
-                if (!triedS3 && !badStatusCode)
+                if (!badStatusCode)
                 {
                     return new HttpResource(resource.Uri, client, contentHeaders);
                 }
