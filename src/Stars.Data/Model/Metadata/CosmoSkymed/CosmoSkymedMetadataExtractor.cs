@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
-using ProjNet.CoordinateSystems;
 using Stac;
 using Stac.Extensions.Sar;
 using Stac.Extensions.Processing;
@@ -29,7 +28,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         // Possible identifiers:
         // CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156
         private Regex identifierRegex = new Regex(@"(?'id'CSKS(?'i'\d)_(?'pt'RAW_B|SCS_B|SCS_U|DGM_B|GEC_B|GTC_B)_(?'mode'HI|PP|WR|HR|S2)_(?'swath'..)_(?'pol'HH|VV|HV|VH|CO|CH|CV)_(?'look'L|R)(?'dir'A|D)_.._\d{14}_\d{14})");
-        private Regex coordinateRegex = new Regex(@"(?'lat'[^ ]+) (?'lon'[^ ]+)");
+        private Regex coordinateRegex = new Regex(@"(?'lat'[^ ,]+),? (?'lon'[^ ,]+)");
         private static Regex h5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
@@ -46,9 +45,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             if (item == null) return false;
             try
             {   
-                IAsset metadataAsset = GetMetadataAsset(item);
-                Schemas.Metadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
-
+                IAsset dataAsset = GetDataAsset(item);
                 return true;
             }
             catch (Exception e)
@@ -59,59 +56,78 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
+            IAsset dataAsset = GetDataAsset(item);
+            Dictionary<string, string> hdfAttributes = ReadHdfMetadata(dataAsset).GetAwaiter().GetResult();
             IAsset metadataAsset = GetMetadataAsset(item);
-            Schemas.Metadata metadata = await ReadMetadata(metadataAsset);
+            Schemas.Metadata metadata = await ReadXmlMetadata(metadataAsset);
 
-            Match identifierMatch = identifierRegex.Match(metadata.ProductInfo.ProductName);
+            string imageFileName = (metadata == null ? dataAsset.Uri.AbsolutePath : metadata.ProductInfo.ProductName);
+            Match identifierMatch = identifierRegex.Match(imageFileName);
             if (!identifierMatch.Success)
             {
-                throw new InvalidOperationException(String.Format("Identifier not recognised from image name: {0}", metadata.ProductInfo.ProductName));
+                throw new InvalidOperationException(String.Format("Identifier not recognised from image file name: {0}", imageFileName));
             }
 
-            StacItem stacItem = CreateStacItem(metadata, identifierMatch);
+            StacItem stacItem = CreateStacItem(hdfAttributes, metadata, identifierMatch);
 
-            AddAssets(stacItem, item, metadata, identifierMatch);
+            AddAssets(stacItem, item, hdfAttributes, metadata, identifierMatch);
 
-            AddSarStacExtension(stacItem, metadata, identifierMatch);
-            AddSatStacExtension(stacItem, metadata, identifierMatch);
-            AddProjStacExtension(stacItem, metadata, identifierMatch);
-            AddViewStacExtension(stacItem, metadata, identifierMatch);
-            AddProcessingStacExtension(stacItem, metadata, identifierMatch);
+            AddSarStacExtension(stacItem, hdfAttributes, metadata, identifierMatch);
+            AddSatStacExtension(stacItem, hdfAttributes, metadata, identifierMatch);
+            AddProjStacExtension(stacItem, hdfAttributes, metadata, identifierMatch);
+            AddViewStacExtension(stacItem, hdfAttributes, metadata, identifierMatch);
+            AddProcessingStacExtension(stacItem, hdfAttributes, metadata, identifierMatch);
             // FillAdditionalSarProperties(stacItem.Properties, metadata, identifierMatch);
-            FillAdditionalSatProperties(stacItem, item, metadata, identifierMatch);
             //FillBasicsProperties(stacItem.Properties, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri);
         }
 
-        internal virtual StacItem CreateStacItem(Schemas.Metadata metadata, Match identifierMatch)
+        internal virtual StacItem CreateStacItem(Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
 
             string identifier = identifierMatch.Groups["id"].Value;
-            StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), GetCommonMetadata(metadata));
+            StacItem stacItem = new StacItem(identifier, GetGeometry(hdfAttributes, metadata), GetCommonMetadata(hdfAttributes, metadata));
             
             return stacItem;
         }
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             double[] bottomLeft, bottomRight, topRight, topLeft;
 
-            // Coordinates are given as lat/lon
-            bottomLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomLeft);
-            bottomRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordBottomRight);
-            topRight = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopRight);
-            topLeft = GetCoordinates(metadata.ProductDefinitionData.GeoCoordTopLeft);
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
-                new GeoJSON.Net.Geometry.Position[5]{
-                    new GeoJSON.Net.Geometry.Position(bottomLeft[0], bottomLeft[1]),
-                    new GeoJSON.Net.Geometry.Position(bottomRight[0], bottomRight[1]),
-                    new GeoJSON.Net.Geometry.Position(topRight[0], topRight[1]),
-                    new GeoJSON.Net.Geometry.Position(topLeft[0], topLeft[1]),
-                    new GeoJSON.Net.Geometry.Position(bottomLeft[0], bottomLeft[1])
-                }
-            );
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            hdfAttributes.TryGetValue("Bottom Left Geodetic Coordinates", out string bottomLeftStr);
+            hdfAttributes.TryGetValue("Bottom Right Geodetic Coordinates", out string bottomRightStr);
+            hdfAttributes.TryGetValue("Top Right Geodetic Coordinates", out string topRightStr);
+            hdfAttributes.TryGetValue("Top Left Geodetic Coordinates", out string topLeftStr);
+
+            if ((bottomLeftStr == null || bottomRightStr == null || topRightStr == null || topLeftStr == null) && metadata != null)
+            {
+                bottomLeftStr = metadata.ProductDefinitionData.GeoCoordBottomLeft;
+                bottomRightStr = metadata.ProductDefinitionData.GeoCoordBottomRight;
+                topRightStr = metadata.ProductDefinitionData.GeoCoordTopRight;
+                topLeftStr = metadata.ProductDefinitionData.GeoCoordTopLeft;
+            }
+
+            if (bottomLeftStr != null && bottomRightStr != null && topRightStr != null && topLeftStr != null)
+            {
+                // Coordinates are given as lat/lon
+                bottomLeft = GetCoordinates(bottomLeftStr);
+                bottomRight = GetCoordinates(bottomRightStr);
+                topRight = GetCoordinates(topRightStr);
+                topLeft = GetCoordinates(topLeftStr);
+                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
+                    new GeoJSON.Net.Geometry.Position[5]{
+                        new GeoJSON.Net.Geometry.Position(bottomLeft[0], bottomLeft[1]),
+                        new GeoJSON.Net.Geometry.Position(bottomRight[0], bottomRight[1]),
+                        new GeoJSON.Net.Geometry.Position(topRight[0], topRight[1]),
+                        new GeoJSON.Net.Geometry.Position(topLeft[0], topLeft[1]),
+                        new GeoJSON.Net.Geometry.Position(bottomLeft[0], bottomLeft[1])
+                    }
+                );
+                return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            }
+            return null;
         }
 
 
@@ -136,15 +152,27 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
             IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"DFDN.*\.h5\.xml$");
-            if (metadataAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
             return metadataAsset;
         }
 
-        public virtual async Task<Schemas.Metadata> ReadMetadata(IAsset metadataAsset)
+        protected virtual IAsset GetDataAsset(IItem item)
         {
+            IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, @".*\.h5$");
+            if (dataAsset == null)
+            {
+                throw new FileNotFoundException(String.Format("Unable to find the HDF5 file asset"));
+            }
+            return dataAsset;
+        }
+
+        public virtual async Task<Schemas.Metadata> ReadXmlMetadata(IAsset metadataAsset)
+        {
+            if (metadataAsset == null)
+            {
+                logger.LogDebug("No metadata file available");
+                return null;
+            }
+
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
             using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
@@ -159,70 +187,161 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         }
 
 
-        private IDictionary<string, object> GetCommonMetadata(Schemas.Metadata metadata)
+        public virtual async Task<Dictionary<string, string>> ReadHdfMetadata(IAsset dataAsset)
+        {
+            Dictionary<string, string> attributes = new Dictionary<string, string>();
+            logger.LogDebug("Reading HDF5 attributes from file {0}", dataAsset.Uri);
+
+            string hdf5File = dataAsset.Uri.AbsolutePath;
+            string[] attributeNames = new string[]
+            {
+                "Scene Sensing Start UTC",
+                "Scene Sensing Stop UTC",
+                "Product Generation UTC",
+                "Satellite ID",
+                "Mission ID",
+                "Look Side",
+                "Acquisition Mode",
+                "Radar Frequency",
+                "Polarisation",
+                "Product Type",
+                "Ground Range Geometric Resolution",
+                "Azimuth Geometric Resolution",
+                "Range Processing Number of Looks",
+                "Azimuth Processing Number of Looks",
+                "Equivalent Number of Looks",
+                "Orbit Number",
+                "Orbit Direction",
+                "Near Incidence Angle",
+                "Far Incidence Angle",
+                "Near Look Angle",
+                "Processing Centre",
+                "L0 Software Version",
+                "L1A Software Version",
+                "L1B Software Version",
+                "L1C Software Version",
+                "L1D Software Version",
+                "Ellipsoid Designator",
+                "Bottom Left Geodetic Coordinates",
+                "Bottom Right Geodetic Coordinates",
+                "Top Right Geodetic Coordinates",
+                "Top Left Geodetic Coordinates",
+            };
+
+            foreach (string attributeName in attributeNames)
+            {
+                string value = GetHdf5Value(hdf5File, attributeName);
+                if (value == null) continue;
+                
+                attributes.Add(attributeName, value);
+            }
+
+            return attributes;
+        }
+
+
+        private IDictionary<string, object> GetCommonMetadata(Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
-            FillDateTimeProperties(properties, metadata);
+            FillDateTimeProperties(properties, hdfAttributes, metadata);
             // TODO Licensing
             // TODO Provider
-            FillInstrument(properties, metadata);
-            FillBasicsProperties(properties, metadata);
-            AddOtherProperties(properties, metadata);
+            FillInstrument(properties, hdfAttributes, metadata);
+            FillBasicsProperties(properties, hdfAttributes, metadata);
+            AddOtherProperties(properties, hdfAttributes, metadata);
 
             return properties;
         }
 
-        private void FillDateTimeProperties(Dictionary<string, object> properties, Schemas.Metadata metadata)
+        private void FillDateTimeProperties(Dictionary<string, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             CultureInfo provider = CultureInfo.InvariantCulture;
+            
+            bool complete = true;
             DateTime startDate = DateTime.MinValue;
-            bool hasStartDate = DateTime.TryParse(metadata.ProductDefinitionData.SceneSensingStartUTC, null, DateTimeStyles.AssumeUniversal, out startDate);
             DateTime endDate = startDate;
-            bool hasEndDate = DateTime.TryParse(metadata.ProductDefinitionData.SceneSensingStopUTC, null, DateTimeStyles.AssumeUniversal, out endDate);
+            complete &= hdfAttributes.TryGetValue("Scene Sensing Start UTC", out string startDateStr);
+            complete &= hdfAttributes.TryGetValue("Scene Sensing Stop UTC", out string endDateStr);
 
-            if (hasStartDate && hasEndDate)
+            if (complete)
+            {
+                complete &= DateTime.TryParse(startDateStr, provider, DateTimeStyles.AssumeUniversal, out startDate);
+                complete &= DateTime.TryParse(endDateStr, provider, DateTimeStyles.AssumeUniversal, out endDate);
+            }
+            else if (metadata != null)
+            {
+                complete = true;
+                complete &= DateTime.TryParse(metadata.ProductDefinitionData.SceneSensingStartUTC, provider, DateTimeStyles.AssumeUniversal, out startDate);
+                complete &= DateTime.TryParse(metadata.ProductDefinitionData.SceneSensingStopUTC, provider, DateTimeStyles.AssumeUniversal, out endDate);
+            }
+
+            if (complete)
             {
                 properties["start_datetime"] = startDate.ToUniversalTime();
                 properties["end_datetime"] = endDate.ToUniversalTime();
                 properties["datetime"] = startDate.ToUniversalTime();
             }
-            else if (hasStartDate)
+            else if (startDateStr != null && DateTime.TryParse(startDateStr, provider, DateTimeStyles.AssumeUniversal, out startDate))
             {
                 properties["datetime"] = startDate.ToUniversalTime();
             }
 
-            DateTime createdDate = DateTime.MinValue;
-            bool hasCreatedDate = DateTime.TryParse(metadata.ProductInfo.ProductGenerationDate, null, DateTimeStyles.AssumeUniversal, out createdDate);
+            complete = hdfAttributes.TryGetValue("Product Generation UTC", out string createdDateStr);
+            complete &= DateTime.TryParse(createdDateStr, provider, DateTimeStyles.AssumeUniversal, out DateTime createdDate);
 
-            if (hasCreatedDate)
+            if (!complete && metadata != null)
+            {
+                complete = DateTime.TryParse(metadata.ProductInfo.ProductGenerationDate, null, DateTimeStyles.AssumeUniversal, out createdDate);
+            }
+
+            if (complete)
             {
                 properties["created"] = createdDate.ToUniversalTime();
             }
         }
 
 
-        private void FillInstrument(Dictionary<string, object> properties, Schemas.Metadata metadata)
+        private void FillInstrument(Dictionary<string, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             // platform & constellation
-            
-            properties["platform"] = metadata.ProductDefinitionData.SatelliteId.ToLower().Replace("csks", "csk");
-            properties["mission"] = (metadata.ProductInfo.MissionId == null ? "csk" : metadata.ProductInfo.MissionId.ToLower()); 
+            bool complete = true;
+            complete &= hdfAttributes.TryGetValue("Satellite ID", out string platform);
+            complete &= hdfAttributes.TryGetValue("Mission ID", out string mission);
             properties["instruments"] = new string[] { "sar-x" };
             properties["sensor_type"] = "radar";
+
+            if (!complete && metadata != null)
+            {
+                platform = metadata.ProductDefinitionData.SatelliteId;
+                mission = (metadata.ProductInfo.MissionId == null ? "csk" : metadata.ProductInfo.MissionId);
+            }
+
+            if (platform != null) properties["platform"] = platform.ToLower().Replace("csks", "csk");
+            if (mission != null) properties["mission"] = mission.ToLower();
         }
 
-        private void FillBasicsProperties(IDictionary<String, object> properties, Schemas.Metadata metadata)
+        private void FillBasicsProperties(IDictionary<String, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
+            bool complete = true;
+            complete &= hdfAttributes.TryGetValue("Satellite ID", out string platform);
+            string processingLevel = GetProcessingLevel(hdfAttributes);
+            complete &= processingLevel != null;
+            if (complete) processingLevel = processingLevel.Replace("L", "Level-");
+            if (!complete && metadata != null)
+            {
+                platform = metadata.ProductDefinitionData.SatelliteId;
+                processingLevel = metadata.ProcessingInfo.ProcessingLevel;
+            }
             properties["title"] = String.Format("{0} {1} {2}",
-                metadata.ProductDefinitionData.SatelliteId,
-                metadata.ProcessingInfo.ProcessingLevel,
+                platform,
+                processingLevel,
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
 
-        private void AddOtherProperties(IDictionary<String, object> properties, Schemas.Metadata metadata)
+        private void AddOtherProperties(IDictionary<String, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             if (IncludeProviderProperty)
             {
@@ -236,7 +355,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             }
         }
 
-        private void FillAdditionalSarProperties(IDictionary<String, object> properties, Schemas.Metadata metadata, Match identifierMatch) {
+        private void FillAdditionalSarProperties(IDictionary<String, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch) {
             int? multiLookSpacingRange = null;
 
             switch (identifierMatch.Groups["mode"].Value)
@@ -266,36 +385,28 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         }
 
 
-        private void AddSatStacExtension(StacItem stacItem, Schemas.Metadata metadata, Match identifierMatch)
+        private void AddSatStacExtension(StacItem stacItem, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
             var sat = new SatStacExtension(stacItem);
-            sat.OrbitState = (identifierMatch.Groups["dir"].Value == "A" ? "ascending" : "descending");
+            if (hdfAttributes.TryGetValue("Orbit Direction", out string orbitDirection)) orbitDirection = orbitDirection.ToLower();
+            else if (metadata != null) orbitDirection = (identifierMatch.Groups["dir"].Value == "A" ? "ascending" : "descending");
+            sat.OrbitState = orbitDirection;
+
+            if (hdfAttributes.TryGetValue("Orbit Number", out string orbitNumberStr) && Int32.TryParse(orbitNumberStr, out int orbitNumber))
+            {
+                sat.AbsoluteOrbit = orbitNumber;
+                sat.RelativeOrbit = Int32.Parse(identifierMatch.Groups["i"].Value) * 1000 + orbitNumber % 237;
+            }
         }
 
-
-        private void FillAdditionalSatProperties(StacItem stacItem, IItem item, Schemas.Metadata metadata, Match identifierMatch)
-        {
-            IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", metadata.ProductInfo.ProductName));
-
-            if (imageAsset == null) return;
-
-            string hdf5File = imageAsset.Uri.AbsolutePath;
-
-            string orbitNumberStr = GetHdf5Value(hdf5File, "Orbit Number");
-            if (orbitNumberStr == null || !Int32.TryParse(orbitNumberStr, out int orbitNumber)) return;
-
-            var sat = stacItem.SatExtension();
-
-            sat.AbsoluteOrbit = orbitNumber;
-            sat.RelativeOrbit = Int32.Parse(identifierMatch.Groups["i"].Value) * 1000 + orbitNumber % 237;
-        }
-
-
-        private void AddProjStacExtension(StacItem stacItem, Schemas.Metadata metadata, Match identifierMatch)
+        private void AddProjStacExtension(StacItem stacItem, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
 
-            string ellipsoidDesignator = GetTagValue(metadata.AncillaryDataReference.Tag, "Ellipsoid Designator");
+            if (!hdfAttributes.TryGetValue("Ellipsoid Designator", out string ellipsoidDesignator) && metadata != null)
+            {
+                ellipsoidDesignator = GetTagValue(metadata.AncillaryDataReference.Tag, "Ellipsoid Designator");
+            }
             if (ellipsoidDesignator == "WGS84")
             {
                 proj.Epsg = 4326;
@@ -303,52 +414,114 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         }
 
 
-        private void AddViewStacExtension(StacItem stacItem, Schemas.Metadata metadata, Match identifierMatch)
+        private void AddViewStacExtension(StacItem stacItem, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
             var view = new ViewStacExtension(stacItem);
-            if (metadata.ProductDefinitionData.NearLookAngle != null && Double.TryParse(metadata.ProductDefinitionData.NearLookAngle, out double nearLookAngle))
+
+            bool complete = true;
+            complete &= hdfAttributes.TryGetValue("Near Incidence Angle", out string nearAngleStr);
+            complete &= hdfAttributes.TryGetValue("Far Incidence Angle", out string farAngleStr);
+
+            if (!complete && metadata != null)
             {
-                view.IncidenceAngle = Math.Abs(nearLookAngle);
-                // Note: according to README it should be an array of these:
-                // [
-                //    /DeliveryNote/ProductDefinitionData/NearLookAngle,
-                //    /DeliveryNote/ProductDefinitionData/FarLookAngle
-                // ]
-            } 
+                // use near look angle as before in case incidence angles are not available
+                nearAngleStr = metadata.ProductDefinitionData.NearLookAngle;
+                farAngleStr = nearAngleStr;
+            }
+
+            if (nearAngleStr != null && farAngleStr != null)
+            {
+                if (Double.TryParse(nearAngleStr, out double nearAngle) && Double.TryParse(farAngleStr, out double farAngle))
+                {
+                    view.IncidenceAngle = Math.Abs((nearAngle + farAngle) / 2);
+                }
+            }
+
+            // Note: according to README it should be an array of these:
+            // [
+            //    /DeliveryNote/ProductDefinitionData/NearLookAngle,
+            //    /DeliveryNote/ProductDefinitionData/FarLookAngle
+            // ]
         }
 
 
-        private void AddSarStacExtension(StacItem stacItem, Schemas.Metadata metadata, Match identifierMatch)
+        private void AddSarStacExtension(StacItem stacItem, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
             SarStacExtension sar = stacItem.SarExtension();
-            if (identifierMatch.Groups["look"].Value == "L")
+            if (hdfAttributes.TryGetValue("Look Side", out string lookSide))
+            {
+                lookSide = lookSide[0].ToString();
+            }
+            else
+            {
+                lookSide = identifierMatch.Groups["look"].Value;
+            }
+            if (lookSide == "L")
                 sar.ObservationDirection = ObservationDirection.Left;
-            else if (identifierMatch.Groups["look"].Value == "R")
+            else if (lookSide == "R")
                 sar.ObservationDirection = ObservationDirection.Right;
-            sar.InstrumentMode = metadata.ProductDefinitionData.AcquisitionMode;
+
+            if (!hdfAttributes.TryGetValue("Acquisition Mode", out string instrumentMode) && metadata != null)
+            {
+                instrumentMode = metadata.ProductDefinitionData.AcquisitionMode;
+            }
+            sar.InstrumentMode = instrumentMode;
+            
             sar.FrequencyBand = SarCommonFrequencyBandName.X;
-            sar.CenterFrequency = 9.6;
+            
+            if (hdfAttributes.TryGetValue("Radar Frequency", out string radarFrequencyStr) && Double.TryParse(radarFrequencyStr, out double radarFrequency))
+            {
+                sar.CenterFrequency = radarFrequency / 1000000000;
+            }
+            else
+            {
+                sar.CenterFrequency = 9.6;
+            }
 
-            sar.Polarizations = new string[] {
-                identifierMatch.Groups["pol"].Value
-            };
+            if (hdfAttributes.TryGetValue("", out string polarisationsStr) && polarisationsStr != null)
+            {
+                sar.Polarizations = polarisationsStr.Split(' ');
+            }
+            else
+            {
+                sar.Polarizations = new string[] {
+                    identifierMatch.Groups["pol"].Value
+                };
+            }
 
-            sar.ProductType = metadata.ProductDefinitionData.ProductType;
-            if (metadata.ProductCharacteristics.GroundRangeGeometricResolution != null && Double.TryParse(metadata.ProductCharacteristics.GroundRangeGeometricResolution, out double resolutionRange))
+            if (!hdfAttributes.TryGetValue("Product Type", out string productType) && metadata != null)
+            {
+                productType = metadata.ProductDefinitionData.ProductType;
+            }
+            sar.ProductType = productType;
+
+            if (!hdfAttributes.TryGetValue("Ground Range Geometric Resolution", out string resolutionRangeStr) || !hdfAttributes.TryGetValue("Azimuth Geometric Resolution", out string resolutionAzimuthStr) && metadata != null)
+            {
+                resolutionRangeStr = metadata.ProductCharacteristics.GroundRangeGeometricResolution;
+                resolutionAzimuthStr = metadata.ProductCharacteristics.AzimuthGeometricResolution;
+            }
+
+            if (Double.TryParse(resolutionRangeStr, out double resolutionRange) && Double.TryParse(resolutionAzimuthStr, out double resolutionAzimuth))
             {
                 sar.ResolutionRange = resolutionRange;
+                sar.ResolutionAzimuth = resolutionAzimuth;
                 sar.PixelSpacingRange = resolutionRange / 2;
                 sar.PixelSpacingAzimuth = resolutionRange / 2;
             }
-            if (metadata.ProductCharacteristics.AzimuthGeometricResolution != null && Double.TryParse(metadata.ProductCharacteristics.AzimuthGeometricResolution, out double resolutionAzimuth))
+
+            if (!hdfAttributes.TryGetValue("Range Processing Number of Looks", out string looksRangeStr) && metadata != null)
             {
-                sar.ResolutionAzimuth = resolutionAzimuth;
+                looksRangeStr = GetTagValue(metadata.Algorithms.Tag, "Range Processing Number of Looks");
+            }
+            if (!hdfAttributes.TryGetValue("Azimuth Processing Number of Looks", out string looksAzimuthStr) && metadata != null)
+            {
+                looksAzimuthStr = GetTagValue(metadata.Algorithms.Tag, "Azimuth Processing Number of Looks");
+            }
+            if (!hdfAttributes.TryGetValue("Equivalent Number of Looks", out string looksEquivalentNumberStr) && metadata != null)
+            {
+                looksEquivalentNumberStr = GetTagValue(metadata.Algorithms.Tag, "Equivalent Number of Looks");
             }
 
-            string looksRangeStr = GetTagValue(metadata.Algorithms.Tag, "Range Processing Number of Looks");
-            string looksAzimuthStr = GetTagValue(metadata.Algorithms.Tag, "Azimuth Processing Number of Looks");
-            string looksEquivalentNumberStr = GetTagValue(metadata.Algorithms.Tag, "Equivalent Number of Looks");
-            
             if (Double.TryParse(looksRangeStr, out double looksRange))
             {
                 sar.LooksRange = looksRange;
@@ -364,12 +537,37 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         }
 
 
-        private void AddProcessingStacExtension(StacItem stacItem, Schemas.Metadata metadata, Match identifierMatch)
+        private void AddProcessingStacExtension(StacItem stacItem, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
             var proc = stacItem.ProcessingExtension();
-            string level = metadata.ProcessingInfo.ProcessingLevel;
-            if (level != null) level = level.Replace("Level-", "L");
-            proc.Level = level;
+            string processingLevel = GetProcessingLevel(hdfAttributes);
+            if (processingLevel == null && metadata != null)
+            {
+                processingLevel = metadata.ProcessingInfo.ProcessingLevel;
+            }
+            if (processingLevel != null) {
+                proc.Level = processingLevel.Replace("Level-", "L");
+            }
+            if (!hdfAttributes.TryGetValue("Processing Centre", out string processingCentre) && metadata != null)
+            {
+                processingCentre = metadata.OtherInfo.ProcessingCentre;
+            }
+            proc.Facility = processingCentre;
+        }
+
+
+        private string GetProcessingLevel(Dictionary<string, string> hdfAttributes)
+        {
+            string[] possibleLevels = new string[] {"L0", "L1A", "L1B", "L1C", "L1D"};
+            string processingLevel = null;
+            foreach (string level in possibleLevels)
+            {
+                if (hdfAttributes.TryGetValue(String.Format("{0} Software Version", level), out string version) && version != null)
+                {
+                    processingLevel = level;
+                }
+            }
+            return processingLevel;
         }
 
 
@@ -384,11 +582,9 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
 
 
-        protected void AddAssets(StacItem stacItem, IItem item, Schemas.Metadata metadata, Match identifierMatch)
+        protected void AddAssets(StacItem stacItem, IItem item, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
-            string imageFile = metadata.ProductInfo.ProductName;
-
-            IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", metadata.ProductInfo.ProductName));
+            IAsset imageAsset = GetDataAsset(item);
             
             stacItem.Assets.Add("image", StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("application/x-hdf5"), "Image file"));
             stacItem.Assets["image"].Properties.AddRange(imageAsset.Properties);
@@ -397,10 +593,13 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             };
             
             IAsset metadataAsset = GetMetadataAsset(item);
-            stacItem.Assets.Add("metadata", StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.OriginalString)), "Metadata file"));
-            stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
+            if (metadataAsset != null)
+            {
+                stacItem.Assets.Add("metadata", StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.OriginalString)), "Metadata file"));
+                stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
+            }
 
-            IAsset additionalMetadataAsset = FindFirstAssetFromFileNameRegex(item, String.Format("DFAS_{0}_CSK_AccompanyingSheet\\.xml$", metadata.ProductInfo.UserRequestId));
+            IAsset additionalMetadataAsset = FindFirstAssetFromFileNameRegex(item, "DFAS_.*_CSK_AccompanyingSheet\\.xml$");
             if (additionalMetadataAsset != null)
             {
                 stacItem.Assets.Add("metadata-acc", StacAsset.CreateMetadataAsset(stacItem, additionalMetadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(additionalMetadataAsset.Uri.OriginalString)), "Accompanying sheet"));
@@ -420,7 +619,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             h5dumpStartInfo.RedirectStandardOutput = true;
             h5dumpStartInfo.UseShellExecute = false;
             // ncDumpStartInfo.Arguments = @"-c 'ncdump -v lat_01,lon_01 " + ncFile + "'";
-            h5dumpStartInfo.Arguments = String.Format("-a \"Orbit Number\" \"{0}\"", hdf5File);
+            h5dumpStartInfo.Arguments = String.Format("-N \"{1}\" \"{0}\"", hdf5File, attribute);
             h5dumpProcess.EnableRaisingEvents = true;
             h5dumpProcess.StartInfo = h5dumpStartInfo;
 
@@ -458,6 +657,11 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             //Now we need to see if the process was successful
             if (exitCode > 0 & !h5dumpProcess.HasExited) {
                 h5dumpProcess.Kill();
+            }
+
+            if (value != null && value.StartsWith("\"") && value.EndsWith("\""))
+            {
+                value = value.Substring(1, value.Length - 2);
             }
 
             return value;

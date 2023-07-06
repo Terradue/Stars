@@ -1,0 +1,108 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          26.7299,
+          40.7087
+        ],
+        [
+          26.8164,
+          40.3457
+        ],
+        [
+          27.2815,
+          40.4084
+        ],
+        [
+          27.1977,
+          40.7715
+        ],
+        [
+          26.7299,
+          40.7087
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2023-05-02T03:51:09.187492Z",
+    "end_datetime": "2023-05-02T03:51:15.887413Z",
+    "datetime": "2023-05-02T03:51:09.187492Z",
+    "created": "2023-05-02T04:16:06Z",
+    "platform": "csk2",
+    "mission": "csk",
+    "instruments": [
+      "sar-x"
+    ],
+    "sensor_type": "radar",
+    "title": "CSKS2 Level-1A 2023-05-02 03:51:09",
+    "providers": [
+      {
+        "name": "ASI",
+        "description": "COSMO-SkyMed (Constellation of Small Satellites for Mediterranean basin Observation) is a 4 spacecraft constellation. Each of the 4 satellites is equipped with the SAR-2000 Synthetic Aperture Radar, which observes in the X-band to provide global observation under all weather and visibility conditions.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.asi.it/en/earth-science/cosmo-skymed/"
+      }
+    ],
+    "sar:observation_direction": "right",
+    "sar:instrument_mode": "HIMAGE",
+    "sar:frequency_band": "X",
+    "sar:center_frequency": 9.6,
+    "sar:polarizations": [
+      "HH"
+    ],
+    "sar:product_type": "SCS_B",
+    "sar:resolution_range": 3.0,
+    "sar:pixel_spacing_range": 1.5,
+    "sar:pixel_spacing_azimuth": 1.5,
+    "sar:resolution_azimuth": 3.0,
+    "sar:looks_range": 1.0,
+    "sar:looks_azimuth": 1.0,
+    "sar:looks_equivalent_number": 1.0,
+    "sat:orbit_state": "ascending",
+    "sat:absolute_orbit": 83292,
+    "sat:relative_orbit": 2105,
+    "proj:epsg": 4326,
+    "view:incidence_angle": 37.4044,
+    "processing:level": "L1A",
+    "processing:facility": "ICUGS"
+  },
+  "bbox": [
+    26.7299,
+    40.3457,
+    27.2815,
+    40.7715
+  ],
+  "assets": {
+    "image": {
+      "type": "application/x-hdf5",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116/CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116.h5",
+      "filename": "CSKS2_SCS_B_HI_07_HH_RA_FF_20230502035109_20230502035116.h5",
+      "file:size": 28176,
+      "sar:polarizations": [
+        "HH"
+      ]
+    }
+  },
+  "links": []
+}

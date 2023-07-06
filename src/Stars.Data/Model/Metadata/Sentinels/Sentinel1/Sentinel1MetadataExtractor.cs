@@ -152,9 +152,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             return assetFactory.GetId();
         }
 
-        protected override SentinelSafeStacFactory CreateSafeStacFactory(XFDUType manifest, IItem item, string identifier)
+        protected override Task<SentinelSafeStacFactory> CreateSafeStacFactoryAsync(XFDUType manifest, IItem item, string identifier)
         {
-            return S1SafeStacFactory.Create(manifest, item, identifier);
+            return Task.FromResult<SentinelSafeStacFactory>(S1SafeStacFactory.Create(manifest, item, identifier));
         }
 
         // This method is not normally used, subclass method is called directly with the proper instance

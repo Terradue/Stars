@@ -1,0 +1,396 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/file/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    31.9926640875942,
+                    -26.8880080529026
+                ],
+                [
+                    31.9898599334268,
+                    -27.2071267739584
+                ],
+                [
+                    32.7181759251729,
+                    -27.2094954565969
+                ],
+                [
+                    32.7523073026798,
+                    -27.0713207696678
+                ],
+                [
+                    32.5006775914516,
+                    -27.0084593242086
+                ],
+                [
+                    32.5012679301763,
+                    -27.0060849479478
+                ],
+                [
+                    32.3302006847146,
+                    -26.9662466777792
+                ],
+                [
+                    32.2438309369491,
+                    -26.9464015771465
+                ],
+                [
+                    32.2438014488146,
+                    -26.9465188116035
+                ],
+                [
+                    32.2436760824988,
+                    -26.9464898352895
+                ],
+                [
+                    32.2436222876734,
+                    -26.9467032262401
+                ],
+                [
+                    32.2434127344728,
+                    -26.946654706203
+                ],
+                [
+                    32.2433438994057,
+                    -26.9469277881749
+                ],
+                [
+                    32.2432792590841,
+                    -26.9469127948204
+                ],
+                [
+                    32.2431432127943,
+                    -26.9474535182172
+                ],
+                [
+                    32.2429835545743,
+                    -26.9474162939075
+                ],
+                [
+                    32.2428977084607,
+                    -26.9477571325961
+                ],
+                [
+                    32.2427891123303,
+                    -26.947731766234
+                ],
+                [
+                    32.2426676102655,
+                    -26.9482151764463
+                ],
+                [
+                    32.2426297756388,
+                    -26.9482062898757
+                ],
+                [
+                    32.2425673435299,
+                    -26.9484543754523
+                ],
+                [
+                    32.0168168537319,
+                    -26.8953226134783
+                ],
+                [
+                    32.0172798111266,
+                    -26.893473709872
+                ],
+                [
+                    31.9926640875942,
+                    -26.8880080529026
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "title": "[CD] SENTINEL-2B MSI L1C 92 2023-05-03 07:36:19",
+        "description": "<table>\n<thead>\n<tr>\n<th>Name</th>\n<th>Value</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Agency</td>\n<td>**ESA/EC (Copernicus)**</td>\n</tr>\n<tr>\n<td>Satellite</td>\n<td>**sentinel-2b**</td>\n</tr>\n<tr>\n<td>Instruments</td>\n<td>**msi**</td>\n</tr>\n<tr>\n<td>Sensor Type</td>\n<td>**optical**</td>\n</tr>\n<tr>\n<td>Acquisition Date</td>\n<td>**03/05/2023 07:36:19**</td>\n</tr>\n<tr>\n<td>Resolution</td>\n<td>**MR**</td>\n</tr>\n<tr>\n<td>COS2 Id</td>\n<td>**922-ESA-SENTINEL_2B-S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437**</td>\n</tr>\n<tr>\n<td>License</td>\n<td>**CC-BY-SA-3.0-IGO**</td>\n</tr>\n<tr>\n<td>Created</td>\n<td>**03/05/2023 13:03:11**</td>\n</tr>\n<tr>\n<td>Updated</td>\n<td>**03/05/2023 13:16:40**</td>\n</tr>\n<tr>\n<td>Status</td>\n<td>**Calibrated Dataset** [Completed (data staging...)](https://supervisor.disasterscharter.org/hangfire/jobs/details/289698)</td>\n</tr>\n</tbody>\n</table>\n        ",
+        "datetime": "0001-01-01T00:00:00Z",
+        "start_datetime": "0001-01-01T00:00:00Z",
+        "end_datetime": "0001-01-01T00:00:00Z",
+        "created": "2023-05-03T13:03:11.7337865Z",
+        "updated": "2023-05-03T13:16:44.372262Z",
+        "platform": "sentinel-2b",
+        "constellation": "sentinel-2",
+        "mission": "sentinel-2",
+        "sensor_type": "optical",
+        "instruments": [
+            "msi"
+        ],
+        "gsd": 10.0
+    },
+    "bbox": [
+        31.9898599334268,
+        -27.2094954565969,
+        32.7523073026798,
+        -26.8880080529026
+    ],
+    "assets": {
+        "enclosure-1": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "coastal",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-coastal.tif",
+            "file:size": 1237281
+        },
+        "enclosure-2": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "blue",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-blue.tif",
+            "file:size": 41516956
+        },
+        "enclosure-3": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "green",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-green.tif",
+            "file:size": 41732475
+        },
+        "enclosure-4": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "red",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-red.tif",
+            "file:size": 42520534
+        },
+        "enclosure-5": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "rededge70",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-rededge70.tif",
+            "file:size": 10975017
+        },
+        "enclosure-6": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "rededge74",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-rededge74.tif",
+            "file:size": 11020216
+        },
+        "enclosure-7": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "rededge78",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-rededge78.tif",
+            "file:size": 11095252
+        },
+        "enclosure-8": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "nir",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-nir.tif",
+            "file:size": 42921110
+        },
+        "enclosure-9": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "nir08",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-nir08.tif",
+            "file:size": 11159210
+        },
+        "enclosure-10": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "nir09",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-nir09.tif",
+            "file:size": 1110961
+        },
+        "enclosure-11": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "cirrus",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-cirrus.tif",
+            "file:size": 700323
+        },
+        "enclosure-12": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "swir16",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-swir16.tif",
+            "file:size": 11037647
+        },
+        "enclosure-13": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "swir22",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/r-swir22.tif",
+            "file:size": 10768886
+        },
+        "enclosure-14": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-trc",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-trc.tif",
+            "file:size": 42914580
+        },
+        "enclosure-15": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-civ",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-civ.tif",
+            "file:size": 43991982
+        },
+        "enclosure-16": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-sir",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-sir.tif",
+            "file:size": 14301003
+        },
+        "enclosure-17": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-atp",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-atp.tif",
+            "file:size": 14918801
+        },
+        "enclosure-18": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-fcu",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-fcu.tif",
+            "file:size": 15081416
+        },
+        "enclosure-19": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-vea",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-vea.tif",
+            "file:size": 13643273
+        },
+        "enclosure-20": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-law",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-law.tif",
+            "file:size": 13607763
+        },
+        "enclosure-21": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-wad",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-wad.tif",
+            "file:size": 1574361
+        },
+        "enclosure-22": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "data",
+                "enclosure"
+            ],
+            "title": "overview-trc-low-res",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-trc-low-res.tif",
+            "file:size": 530522
+        },
+        "icon": {
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "roles": [
+                "icon",
+                "thumbnail"
+            ],
+            "title": "Browse",
+            "href": "https://supervisor.disasterscharter.org/files/calls/922/acquisitions/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/Optical_Calibration/overview-trc-low-res.tif",
+            "file:size": 530522
+        }
+    },
+    "links": [
+        {
+            "type": "application/xml",
+            "rel": "alternate",
+            "title": "EOP profile",
+            "href": "https://catalog.disasterscharter.org//eop/charter/profile/xml?uid=call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated"
+        },
+        {
+            "type": "application/json",
+            "rel": "parent",
+            "href": "s3://cpe-operations-catalog/calls/call-922/calibratedDatasets/catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "https://supervisor.disasterscharter.org/api/catalog.json"
+        },
+        {
+            "type": "application/atom+xml",
+            "rel": "self",
+            "title": "Reference link",
+            "href": "https://catalog.disasterscharter.org//charter/cat/[charteracquisition,chartercalibrateddataset]/search?format=atom&uid=call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated"
+        },
+        {
+            "type": "image/png",
+            "rel": "xyz",
+            "title": "Tile GetMap",
+            "href": "https://titiler.disasterscharter.org/stac/tiles/WebMercatorQuad/{z}/{x}/{y}.png?url=s3://cpe-operations-catalog/calls/call-922/calibratedDatasets/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated/S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json&assets=overview-trc&rescale=0,255&color_formula=&resampling_method=average"
+        }
+    ]
+}

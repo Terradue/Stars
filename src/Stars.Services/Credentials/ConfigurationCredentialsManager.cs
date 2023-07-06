@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.Extensions.Logging;
@@ -31,6 +32,11 @@ namespace Terradue.Stars.Services.Credentials
         {
             if ( v.Uri == null ) return false;
             return v.Uri.IsBaseOf(uri) && v.AuthType.Equals(authType, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public IEnumerable<CredentialsOption> GetPossibleCredentials(Uri uri, string authType)
+        {
+            return _credentialsCache.Values.Where(v => MatchUriAndAuth(v, uri, authType));
         }
 
         public void CacheCredential(Uri uriCut, string authType, NetworkCredential cred)

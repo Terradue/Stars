@@ -20,6 +20,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
 using System.Threading;
 
+
 namespace Terradue.Stars.Data.Suppliers
 {
     public class DataHubSourceSupplier : OpenSearchableSupplier, ISupplier
@@ -50,9 +51,21 @@ namespace Terradue.Stars.Data.Suppliers
             var target_uri = serviceUrl;
             var target_creds = credentialsManager;
 
-
             if (target_creds == null)
                 logger.LogWarning("Credentials are not set, target sites' services requiring credentials for data access will fail!");
+
+
+            if (target_uri.Host == "catalogue.dataspace.copernicus.eu")
+            {
+                wrapper = new CopernicusOdataWrapper(
+                    target_creds,
+                    "https://catalogue.dataspace.copernicus.eu/odata/v1"
+                );
+            }
+            else if (target_uri.Host.EndsWith("copernicus.eu"))
+            {
+                wrapper = new DHuSWrapper(target_uri, target_creds);
+            }
 
 
             if (target_uri.Host == "catalogue.onda-dias.eu")
@@ -92,11 +105,6 @@ namespace Terradue.Stars.Data.Suppliers
             {
                 // usgsOpenSearchable
                 wrapper = new Terradue.OpenSearch.Usgs.UsgsDataWrapper(new Uri("https://m2m.cr.usgs.gov"), target_creds);
-            }
-
-            if (target_uri.Host.EndsWith("copernicus.eu"))
-            {
-                wrapper = new DHuSWrapper(target_uri, target_creds);
             }
 
             if (target_uri.Host.EndsWith("amazon.com"))
@@ -150,4 +158,5 @@ namespace Terradue.Stars.Data.Suppliers
         }
 
     }
+
 }

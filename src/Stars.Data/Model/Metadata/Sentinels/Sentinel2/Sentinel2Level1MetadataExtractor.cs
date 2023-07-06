@@ -185,9 +185,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             }
         }
 
-        protected override SentinelSafeStacFactory CreateSafeStacFactory(XFDUType manifest, IItem item, string identifier)
+        protected override async Task<SentinelSafeStacFactory> CreateSafeStacFactoryAsync(XFDUType manifest, IItem item, string identifier)
         {
-            return S2SafeStacFactory.Create(manifest, item, identifier);
+            var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
+            Level1C_Tile mtdTile = null;
+            if (mtdtlAsset != null)
+                mtdTile = (Level1C_Tile)s2L1CProductTileSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(mtdtlAsset, System.Threading.CancellationToken.None));
+            return S2SafeStacFactory.Create(manifest, item, identifier, mtdTile);
         }
 
         private async Task GetUserProduct(IItem item)

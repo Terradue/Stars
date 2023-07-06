@@ -48,6 +48,18 @@
     ],
     "sensor_type": "radar",
     "title": "CSKS3 Level-1A 2014-09-02 06:32:28",
+    "providers": [
+      {
+        "name": "ASI",
+        "description": "COSMO-SkyMed (Constellation of Small Satellites for Mediterranean basin Observation) is a 4 spacecraft constellation. Each of the 4 satellites is equipped with the SAR-2000 Synthetic Aperture Radar, which observes in the X-band to provide global observation under all weather and visibility conditions.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.asi.it/en/earth-science/cosmo-skymed/"
+      }
+    ],
     "sar:observation_direction": "right",
     "sar:instrument_mode": "HIMAGE",
     "sar:frequency_band": "X",
@@ -66,7 +78,8 @@
     "sat:orbit_state": "ascending",
     "proj:epsg": 4326,
     "view:incidence_angle": 34.579358,
-    "processing:level": "L1A"
+    "processing:level": "L1A",
+    "processing:facility": "ICUGS"
   },
   "bbox": [
     -18.258259,
