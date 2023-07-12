@@ -91,8 +91,12 @@ namespace Terradue.Stars.Services
                     if ( deliveryQuotation.AssetsExceptions.ContainsKey(assetDeliveries.Key))
                     {
                         reason += " : " + deliveryQuotation.AssetsExceptions[assetDeliveries.Key].Message;
+                        report.AssetsExceptions[assetDeliveries.Key] = new AssetImportException(reason);
                     }
-                    report.AssetsExceptions.Add(assetDeliveries.Key, new AssetImportException(reason));
+                    else
+                    {
+                        report.AssetsExceptions.Add(assetDeliveries.Key, new AssetImportException(reason));
+                    }
                     continue;
                 }
                 IResource importedResource = null;
