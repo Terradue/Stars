@@ -56,14 +56,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
     }
 
-    [XmlRoot(ElementName = "DATASET_TN_PATH")]
-    public class DATASET_TN_PATH {
-
-        [XmlAttribute(AttributeName = "href")]
-        public string Href { get; set; }
-
-    }
-
     [XmlRoot(ElementName = "DATASET_QL_PATH")]
     public class DATASET_QL_PATH {
 
@@ -117,9 +109,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
         [XmlElement(ElementName = "DATASET_TN_PATH")]
         public DATASET_TN_PATH DATASET_TN_PATH { get; set; }
-
-        [XmlElement(ElementName = "DATASET_TN_FORMAT")]
-        public string DATASET_TN_FORMAT { get; set; }
 
         [XmlElement(ElementName = "DATASET_QL_PATH")]
         public DATASET_QL_PATH DATASET_QL_PATH { get; set; }
@@ -193,6 +182,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
     }
 
+
     [XmlRoot(ElementName = "Dataset_Components")]
     public class Dataset_Components {
 
@@ -200,6 +190,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
         public List<Component> Component { get; set; }
 
     }
+
+
 
     [XmlRoot(ElementName = "Vertex")]
     public class Vertex {
@@ -581,7 +573,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
     [XmlRoot(ElementName = "MTF_Settings")]
     public class MTF_Settings {
 
-        [XmlElement(ElementName = "PAN_RESTORATION")]
         public string PAN_RESTORATION { get; set; }
 
         [XmlElement(ElementName = "MS_RESTORATION")]
@@ -1247,12 +1238,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
         [XmlElement(ElementName = "MISSION_INDEX")]
         public string MISSION_INDEX { get; set; }
-
-        [XmlElement(ElementName = "INSTRUMENT")]
-        public string INSTRUMENT { get; set; }
-
-        [XmlElement(ElementName = "INSTRUMENT_INDEX")]
-        public string INSTRUMENT_INDEX { get; set; }
 
         [XmlElement(ElementName = "IMAGING_DATE")]
         public string IMAGING_DATE { get; set; }
