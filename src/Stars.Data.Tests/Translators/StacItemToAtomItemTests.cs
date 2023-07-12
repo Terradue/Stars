@@ -35,6 +35,32 @@ namespace Terradue.Data.Tests.Translators
         }
 
         [Fact]
+        public async System.Threading.Tasks.Task S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240()
+        {
+            string json = GetJson("Translators");
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
+
+            Assert.Equal("S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240", atomItemNode.AtomItem.Identifier);
+
+            // Get the vector offering
+            var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
+            var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
+
+            Assert.NotNull(twmOfferings);
+            Assert.Equal(1, twmOfferings.Count());
+            Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
+            Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
+
+        }
+
+        [Fact]
         public async System.Threading.Tasks.Task VectorResults()
         {
             string json = GetJson("Translators");
