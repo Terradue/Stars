@@ -60,6 +60,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 case "PHR_ORTHO":
                 case "PHR_SENSOR":
                     return new PleiadesDimapProfiler(dimap);
+                case "PNEO_ORTHO":
+                    return new PleiadesNEODimapProfiler(dimap);
                 case "S6_ORTHO":
                 case "S7_ORTHO":
                     return new SpotDimapProfiler(dimap);

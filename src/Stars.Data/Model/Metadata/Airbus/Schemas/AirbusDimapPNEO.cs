@@ -710,9 +710,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
     }
 
+    //just found in PNEO
     [XmlRoot(ElementName = "Tile_Set")]
     public class Tile_Set {
-
+        
         [XmlElement(ElementName = "NTILES")]
         public string NTILES { get; set; }
 
