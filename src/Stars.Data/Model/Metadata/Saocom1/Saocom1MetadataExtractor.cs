@@ -26,6 +26,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.IO.Abstractions;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {
@@ -77,27 +79,29 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             XEMT manifest = await ReadManifest(manifestAsset);
             IAssetsContainer extractedAssets = null;
 
+            IItem innerStacItem = item;
+
             if (zipAsset != null)
             {
                 ZipArchiveAsset zipArchiveAsset = new ZipArchiveAsset(zipAsset, logger, resourceServiceProvider, _fileSystem);
-                var tmpDestination = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(zipArchiveAsset.Uri.AbsolutePath)), item);
+                var tmpDestination = LocalFileDestination.Create(_fileSystem.DirectoryInfo.FromDirectoryName(Path.GetTempPath()), item);
 
                 extractedAssets = await zipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
             }
 
-            if (extractedAssets != null && item is StacItemNode)
+            if (extractedAssets != null && item is IAssetsContainer)
             {
-                StacItem innerStacItem = (item as StacItemNode).StacItem;
-                
-                foreach (var kvp in extractedAssets.Assets) innerStacItem.Assets[kvp.Key] = new StacAsset(innerStacItem, kvp.Value.Uri);
-                item = StacItemNode.Create(innerStacItem, item.Uri) as StacItemNode;
+                var mergedAssets = new Dictionary<string, IAsset>(item.Assets.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+                mergedAssets.MergeAssets(extractedAssets.Assets, false);
+                innerStacItem = new ContainerNode(item, mergedAssets, "merged");
             }
 
-            IAsset metadataAsset = GetMetadataAsset(item);
+            IAsset metadataAsset = GetMetadataAsset(innerStacItem);
+            if (metadataAsset == null) throw new Exception("No metadata asset found");
 
             SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
 
-            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.kml");
+            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(innerStacItem, @"(slc|di|gec|gtc)-.*\.kml");
             if (kmlAsset == null) return null;
 
             Kml kml = null;
@@ -111,10 +115,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 logger.LogError("KML file asset is not streamable, skipping geometry extraction");
             }
 
-            StacItem stacItem = CreateStacItem(metadata, manifest, item, kml);
-            await AddAssets(stacItem, item, manifestAsset);
+            StacItem stacItem = CreateStacItem(metadata, manifest, innerStacItem, kml);
+            await AddAssets(stacItem, innerStacItem, manifestAsset);
 
-            var stacNode = StacItemNode.Create(stacItem, item.Uri);
+            var stacNode = StacItemNode.Create(stacItem, innerStacItem.Uri);
 
             return stacNode;
         }
