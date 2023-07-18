@@ -37,7 +37,15 @@ namespace Terradue.Data.Tests
 
         public ulong ContentLength => Convert.ToUInt64(fileInfo.Length);
 
-        public ContentDisposition ContentDisposition => null;
+        public ContentDisposition ContentDisposition => new ContentDisposition()
+        {
+            FileName = fileInfo.Name,
+            Size = fileInfo.Length,
+            CreationDate = fileInfo.CreationTime,
+            ModificationDate = fileInfo.LastWriteTime,
+            Inline = false,
+            DispositionType = "attachment"
+        };
 
         public IReadOnlyDictionary<string, object> Properties
         {

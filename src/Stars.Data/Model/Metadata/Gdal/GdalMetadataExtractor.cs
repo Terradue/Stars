@@ -147,8 +147,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Gdal
                 }
                 catch { }
             }
+            if (!string.IsNullOrEmpty(dataset.GetMetadataItem("DateTime", "")))
+            {
+                try
+                {
+                    return new Itenso.TimePeriod.TimeInterval(DateTime.Parse(dataset.GetMetadataItem("DateTime", ""), null, DateTimeStyles.AssumeUniversal));
+                }
+                catch { }
+            }
             // if (item is StacItem)
-                return item.DateTime;
+            return new Itenso.TimePeriod.TimeInterval(new DateTime(2000, 1, 1));
 
             // return new Itenso.TimePeriod.TimeInterval(FileInfo(dataset.GetFileList());
         }

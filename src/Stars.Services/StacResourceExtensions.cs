@@ -27,6 +27,21 @@ namespace Terradue.Stars.Services
             }
         }
 
+        public static void MergeAssets(this IDictionary<string, IAsset> assets, IReadOnlyDictionary<string, IAsset> assets2, bool removeIfNotInContainer = false)
+        {
+            if (removeIfNotInContainer)
+                assets.Clear();
+            foreach (var asset in assets2)
+            {
+                if (assets.ContainsKey(asset.Key))
+                {
+                    assets.Remove(asset.Key);
+                }
+                // we must pass the previous parent url to make the asset uri absolute
+                assets.Add(asset.Key, asset.Value);
+            }
+        }
+
         public static StacAsset CreateAbsoluteStacAsset(this IAsset asset, StacItem stacItem, Uri parentUrl)
         {
             StacAsset newAsset = null;

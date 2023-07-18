@@ -133,6 +133,9 @@
                 },
                 "NEWSAT": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.NewSat.NewSatMetadataExtractor"
+                },
+                "SAOCOM": {
+                    "Type": "Terradue.Stars.Data.Model.Metadata.Saocom1.Saocom1MetadataExtractor"
                 }
             }
         }
