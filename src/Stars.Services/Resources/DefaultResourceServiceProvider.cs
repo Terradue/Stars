@@ -134,7 +134,10 @@ namespace Terradue.Stars.Services.Resources
                 }
 
                 // S3 resource case
-                if (s3Url != null && !triedS3 && contentHeaders.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
+                if (s3Url != null
+                    && !triedS3
+                    && badStatusCode
+                    && contentHeaders.Any(h => h.Key.StartsWith("x-amz", true, System.Globalization.CultureInfo.InvariantCulture)))
                 {
                     try
                     {
@@ -156,7 +159,7 @@ namespace Terradue.Stars.Services.Resources
                     triedS3 = true;
                 }
 
-                if (!triedS3 && !badStatusCode)
+                if (!badStatusCode)
                 {
                     return new HttpResource(resource.Uri, client, contentHeaders);
                 }

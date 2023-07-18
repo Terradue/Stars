@@ -59,6 +59,7 @@ namespace Terradue.Data.Tests
             Collection = new ServiceCollection();
             Collection.AddLogging();
             Collection.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
+            Collection.AddSingleton<CarrierManager, CarrierManager>();
             Collection.AddSingleton<IFileSystem, FileSystem>();
             Collection.AddSingleton<StacRouter, StacRouter>();
             Collection.AddSingleton<TitilerService, TitilerService>();
