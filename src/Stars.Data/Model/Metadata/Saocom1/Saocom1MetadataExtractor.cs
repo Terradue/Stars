@@ -81,8 +81,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             {
                 ZipArchiveAsset zipArchiveAsset = new ZipArchiveAsset(zipAsset, logger, resourceServiceProvider, _fileSystem);
                 var tmpDestination = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(zipArchiveAsset.Uri.AbsolutePath)), item);
-                //var tmpArchiveAssetDestination = tmpDestination.To(zipAsset, Guid.NewGuid().ToString());
-                //tmpArchiveAssetDestination.PrepareDestination();
 
                 extractedAssets = await zipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
             }
