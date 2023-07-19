@@ -169,6 +169,7 @@ namespace Terradue.Stars.Services.Resources
             if (finalException is AmazonS3Exception amazonS3Exception)
             {
                 logger.LogDebug(amazonS3Exception.ResponseBody);
+                throw new SystemException($"Error loading resource {resource.Uri} : {amazonS3Exception.Message}", amazonS3Exception);
             }
             throw finalException;
         }
