@@ -54,7 +54,7 @@ namespace Terradue.Data.Tests
                 foreach (var file in directory.GetFiles("*", new EnumerationOptions() { RecurseSubdirectories = true }))
                 {
                     var asset = new TestFileAsset(file, new Uri(directory.FullName), Uri);
-                    assets.Add(file.FullName, asset);
+                    assets.Add(Path.GetRelativePath(directory.FullName, file.FullName), asset);
                 }
                 return assets;
             }

@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services.Processing
             return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
 
-        internal async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
+        public async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             IDictionary<string, IAsset> assets = await ExtractTarAsync(await GetTarStreamAsync(asset, ct), DeliverTarEntryAsync, destination, carrierManager, ct);
             return new GenericAssetContainer(destination, assets);

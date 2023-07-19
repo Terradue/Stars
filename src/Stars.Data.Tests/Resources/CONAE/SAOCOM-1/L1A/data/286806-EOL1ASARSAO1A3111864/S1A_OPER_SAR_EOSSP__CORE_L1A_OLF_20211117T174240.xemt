@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xmt:xemt xmlns:xmt="http://www.conae.gov.ar/CUSS/XEMT" xmlns:tns="http://www.conae.gov.ar/CGSS/XPNet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" code="SAR-SAOG-103-ICD" version="0.1">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xmt:xemt xmlns:xmt="http://www.conae.gov.ar/CUSS/XEMT" xmlns:tns="http://www.conae.gov.ar/CGSS/XPNet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" code="SAR-SAOG-103-ICD" version="0.1">
+
   <product code="SAR-SAOG-103-ICD">
     <id>EOL1ASARSAO1A3111864</id>
     <productType>
@@ -12,7 +12,7 @@
     </productType>
     <features>
       <title>SAOCOM SAR L1A Product</title>
-      <abstract>XML Annotated SAR Single Look Complex Image (NOMINAL.xml)</abstract>
+<abstract>XML Annotated SAR Single Look Complex Image (NOMINAL.xml)</abstract>
       <topics/>
       <scene>
         <frame>
@@ -904,7 +904,7 @@
       <software>
         <name>SSP</name>
         <executableName>SP.bin</executableName>
-        <version>SSPV05.0605DB01.5507</version>
+ <version>SSPV05.0605DB01.5507</version>
         <inputs>
           <input>
             <name>SAOCOM SAR L0A Product</name>
@@ -1014,4 +1014,5 @@
       <processingLog>/opt/sao/appsharedfiles/SSP04/workspace/SP_customLogFile_20211118093903.xml</processingLog>
     </productionHistory>
   </product>
+
 </xmt:xemt>

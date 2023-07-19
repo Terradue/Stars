@@ -16,7 +16,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Processing
 {
-    internal class ZipArchiveAsset : Archive
+    public class ZipArchiveAsset : Archive
     {
         private ZipFile zipFile;
         private readonly IAsset asset;
@@ -81,7 +81,7 @@ namespace Terradue.Stars.Services.Processing
             return Path.GetFileNameWithoutExtension(asset.Uri.ToString());
         }
 
-        internal async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
+        public async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
             zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));

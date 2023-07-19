@@ -105,6 +105,6 @@ namespace Terradue.Stars.Services.Processing
             return res;
         }
 
-        internal abstract Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct);
+        public abstract Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct);
     }
 }
