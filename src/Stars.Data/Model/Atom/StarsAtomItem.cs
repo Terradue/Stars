@@ -539,6 +539,7 @@ namespace Terradue.Stars.Data.Model.Atom
             {
                 eop.procedure = new ServiceModel.Ogc.Om20.OM_ProcessPropertyType();
                 eop.procedure.Eop21EarthObservationEquipment = new EarthObservationEquipmentType();
+                eop.EopMetaDataProperty.EarthObservationMetaData.parentIdentifier = stacItem.Mission;
                 if (!string.IsNullOrEmpty(platform))
                 {
                     eop.procedure.Eop21EarthObservationEquipment.platform = new PlatformPropertyType();
