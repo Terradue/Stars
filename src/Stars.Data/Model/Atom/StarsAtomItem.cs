@@ -571,6 +571,8 @@ namespace Terradue.Stars.Data.Model.Atom
                 // Cloud cover
                 if ( stacItem.EoExtension().CloudCover != null)
                 {
+                    eop.result = new ServiceModel.Ogc.Om20.OM_ResultPropertyType();
+                    eop.result.Opt21EarthObservationResult = new ServiceModel.Ogc.Opt21.OptEarthObservationResultType();
                     eop.result.Opt21EarthObservationResult.cloudCoverPercentage = new ServiceModel.Ogc.Gml321.MeasureType()
                     {
                         Value = stacItem.EoExtension().CloudCover.Value

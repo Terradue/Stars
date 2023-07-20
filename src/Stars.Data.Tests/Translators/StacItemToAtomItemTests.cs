@@ -37,9 +37,9 @@ namespace Terradue.Data.Tests.Translators
             // Test if the cloud cover is set
             var eop = atomItemNode.AtomItem.GetEarthObservationProfile();
             Assert.NotNull(eop);
-            var cloudCover = eop.FindCloudCoverPercentage();
+            var cloudCover = eop.result.Opt21EarthObservationResult.cloudCoverPercentage;
             Assert.NotNull(cloudCover);
-            Assert.Equal(26.4, cloudCover);
+            Assert.Equal(26.4, cloudCover.Value);
 
         }
 
