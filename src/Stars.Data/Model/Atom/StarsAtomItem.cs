@@ -20,6 +20,7 @@ using Stac.Extensions.File;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.ThirdParty.Egms;
 using Terradue.Stars.Interface;
+using Stac.Extensions.Eo;
 
 namespace Terradue.Stars.Data.Model.Atom
 {
@@ -566,6 +567,14 @@ namespace Terradue.Stars.Data.Model.Atom
                         };
                     }
                     catch { }
+                }
+                // Cloud cover
+                if ( stacItem.EoExtension().CloudCover != null)
+                {
+                    eop.result.Opt21EarthObservationResult.cloudCoverPercentage = new ServiceModel.Ogc.Gml321.MeasureType()
+                    {
+                        Value = stacItem.EoExtension().CloudCover.Value
+                    };
                 }
             }
 
