@@ -84,6 +84,7 @@
     "processing:level": "L2A",
     "processing:lineage": "Generation of Level-2A User Product",
     "title": "SENTINEL-2A MSI L2A 16/12/2019 00:47:01",
+    "eo:cloud_cover": 26.4,
     "eo:bands": [
       {
         "name": "B01-60m",

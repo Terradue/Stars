@@ -10,6 +10,8 @@ using System.Threading;
 using System.Xml;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 using System;
+using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using Terradue.Metadata.EarthObservation.Ogc.Extensions;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -31,6 +33,13 @@ namespace Terradue.Data.Tests.Translators
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
             Assert.Equal("S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808", atomItemNode.AtomItem.Identifier);
+
+            // Test if the cloud cover is set
+            var eop = atomItemNode.AtomItem.GetEarthObservationProfile();
+            Assert.NotNull(eop);
+            var cloudCover = eop.FindCloudCoverPercentage();
+            Assert.NotNull(cloudCover);
+            Assert.Equal(26.4, cloudCover);
 
         }
 
