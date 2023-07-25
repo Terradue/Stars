@@ -79,7 +79,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             stacItem.Properties.Add("processing_baseline", level2A_User_Product.General_Info.L2A_Product_Info.PROCESSING_BASELINE);
         }
 
-        private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level2A_User_Product level2AUserProduct, Level2A_Tile? mtdTile)
+        private string AddJp2BandAsset(StacItem stacItem, IAsset bandAsset, IItem item, Level2A_User_Product level2AUserProduct, Level2A_Tile mtdTile)
         {
 
             // checking if the jp2 is a MSK, if yes skip.
