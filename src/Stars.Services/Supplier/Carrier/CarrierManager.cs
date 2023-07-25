@@ -58,6 +58,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     {
                         try
                         {
+                            logger.LogDebug("Quoting delivery for asset {0} with url {1}", asset.Key, possibleAsset.Uri);
                             var possibleAssetStreamResource = await resourceServiceProvider.GetStreamResourceAsync(possibleAsset, ct);
                             var length = possibleAssetStreamResource.ContentLength > 0 ? possibleAssetStreamResource.ContentLength : possibleAsset.ContentLength;
                             if (assetsContainer.Uri != null && assetsContainer.Uri.IsAbsoluteUri)
@@ -88,7 +89,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                         }
                         catch (Exception e)
                         {
-                            logger.LogWarning("Cannot quote delivery for {0}: {1}", asset.Value.Uri, e.Message);
+                            logger.LogWarning("Cannot quote delivery for asset {0} with url {2} : {1}", asset.Key, e.Message, possibleAsset.Uri);
                             logger.LogDebug(e.StackTrace);
                             assetsExceptions.Add(asset.Key, e);
                         }

@@ -26,7 +26,7 @@ namespace Terradue.Stars.Services.Supplier
         {
             this.quotation = quotation;
             this.importedAssets = new Dictionary<string, IAsset>();
-            this.assetsExceptions = (quotation == null || quotation.AssetsExceptions == null ? new Dictionary<string, Exception>() : quotation.AssetsExceptions);
+            this.assetsExceptions = new Dictionary<string, Exception>();
             this.destination = destination;
         }
 
