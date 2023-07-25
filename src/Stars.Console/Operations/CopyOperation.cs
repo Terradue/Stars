@@ -265,8 +265,17 @@ namespace Terradue.Stars.Console.Operations
                         }
                         AssetChecks assetChecks = GetAssetChecks();
                         AssetImportReport deliveryReport = await assetService.ImportAssetsAsync(supplierNode as IAssetsContainer, destination, assetFilters, assetChecks, ct);
-                        if (StopOnError && deliveryReport.AssetsExceptions.Count > 0)
-                            throw new AggregateException(deliveryReport.AssetsExceptions.Values);
+
+                        // Process cases that must raise an exception
+                        if (StopOnError)
+                        {
+                            // exception in delivery report
+                            if (deliveryReport.AssetsExceptions.Count > 0)
+                                throw new AggregateException(deliveryReport.AssetsExceptions.Values);
+                            // no delivery but exception in quotation
+                            if (deliveryReport.AssetsExceptions.Count == 0 && deliveryReport.Quotation.AssetsExceptions != null)
+                                throw new AggregateException(deliveryReport.Quotation.AssetsExceptions.Values);
+                        }
 
                         if (deliveryReport.ImportedAssets.Count() > 0)
                             stacItemNode.StacItem.MergeAssets(deliveryReport, !KeepOriginalAssets);
@@ -315,9 +324,9 @@ namespace Terradue.Stars.Console.Operations
 
         private AssetChecks GetAssetChecks()
         {
-            if ( NoHtmlAsset )
+            if (NoHtmlAsset)
                 return AssetChecks.NoHtml;
-            
+
             return AssetChecks.None;
         }
 
