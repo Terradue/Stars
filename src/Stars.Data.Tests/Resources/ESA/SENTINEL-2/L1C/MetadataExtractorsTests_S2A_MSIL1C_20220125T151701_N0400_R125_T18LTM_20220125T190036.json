@@ -79,6 +79,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 10.0,
+    "eo:cloud_cover": 15.2616929084983,
     "sat:orbit_state": "descending",
     "sat:absolute_orbit": 34442,
     "sat:relative_orbit": 125,
