@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using Stac;
+using Stac.Extensions.Eo;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
@@ -33,8 +34,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             return stacItem;
         }
 
-        private void AddEoStacExtension(StacItem stacItem)
+        protected virtual void AddEoStacExtension(StacItem stacItem)
         {
+            double? cloudCover = mtdTile?.Quality_Indicators_Info?.Image_Content_QI?.CLOUDY_PIXEL_PERCENTAGE.Value;
+            EoStacExtension eo = stacItem.EoExtension();
+            if (cloudCover != null) eo.CloudCover = cloudCover.Value;
         }
 
         private SarCommonFrequencyBandName GetFrequencyBand() => SarCommonFrequencyBandName.C;

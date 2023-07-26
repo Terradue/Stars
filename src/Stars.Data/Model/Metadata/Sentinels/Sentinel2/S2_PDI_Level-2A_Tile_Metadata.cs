@@ -68,18 +68,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             }
         }
 
-        // [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
-        // public A_QUALITY_INDICATORS_INFO_TILE Quality_Indicators_Info
-        // {
-        //     get
-        //     {
-        //         return this.quality_Indicators_InfoField;
-        //     }
-        //     set
-        //     {
-        //         this.quality_Indicators_InfoField = value;
-        //     }
-        // }
+        [System.Xml.Serialization.XmlElementAttribute(Order = 2)]
+        public A_QUALITY_INDICATORS_INFO_TILE Quality_Indicators_Info
+        {
+            get
+            {
+                return this.quality_Indicators_InfoField;
+            }
+            set
+            {
+                this.quality_Indicators_InfoField = value;
+            }
+        }
     }
 
 
