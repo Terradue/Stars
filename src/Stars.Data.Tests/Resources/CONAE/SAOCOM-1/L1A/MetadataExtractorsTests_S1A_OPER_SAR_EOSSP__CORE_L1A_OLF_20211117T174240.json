@@ -125,7 +125,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
+      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
       "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml"
     },
     "amplitude-hv": {
