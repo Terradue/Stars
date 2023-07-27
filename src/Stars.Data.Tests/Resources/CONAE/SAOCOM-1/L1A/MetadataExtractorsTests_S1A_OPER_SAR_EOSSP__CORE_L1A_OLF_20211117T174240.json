@@ -105,7 +105,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
+      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
       "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml"
     },
     "amplitude-hh": {
@@ -114,7 +114,7 @@
         "amplitude",
         "data"
       ],
-      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
+      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
       "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
       "sar:polarizations": [
         "HH"
@@ -125,7 +125,7 @@
       "roles": [
         "metadata"
       ],
-      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
+      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
       "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml"
     },
     "amplitude-hv": {
@@ -134,7 +134,7 @@
         "amplitude",
         "data"
       ],
-      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
+      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
       "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
       "sar:polarizations": [
         "HV"
