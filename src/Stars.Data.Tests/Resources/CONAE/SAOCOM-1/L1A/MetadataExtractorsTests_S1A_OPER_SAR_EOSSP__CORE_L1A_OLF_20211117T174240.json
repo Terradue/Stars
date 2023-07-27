@@ -105,8 +105,8 @@
       "roles": [
         "metadata"
       ],
-      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
+      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
+      "filename": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml"
     },
     "amplitude-hh": {
       "type": "image/tiff; application=geotiff",
@@ -114,8 +114,8 @@
         "amplitude",
         "data"
       ],
-      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
+      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
+      "filename": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
       "sar:polarizations": [
         "HH"
       ]
@@ -125,8 +125,8 @@
       "roles": [
         "metadata"
       ],
-      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
+      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
+      "filename": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml"
     },
     "amplitude-hv": {
       "type": "image/tiff; application=geotiff",
@@ -134,8 +134,8 @@
         "amplitude",
         "data"
       ],
-      "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
+      "href": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
+      "filename": "286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
       "sar:polarizations": [
         "HV"
       ]
