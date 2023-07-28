@@ -84,6 +84,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             if (zipAsset != null)
             {
                 ZipArchiveAsset zipArchiveAsset = new ZipArchiveAsset(zipAsset, logger, resourceServiceProvider, _fileSystem);
+                zipArchiveAsset.UseParentAssetBaseDir = true;
                 var tmpDestination = LocalFileDestination.Create(_fileSystem.DirectoryInfo.FromDirectoryName(Path.GetTempPath()), item);
 
                 extractedAssets = await zipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
@@ -685,14 +686,5 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 return (XEMT)manifestSerializer.Deserialize(reader);
             }
         }
-
-        public virtual async Task ReadAssetsFromZip(IAsset zipAsset)
-        {
-            logger.LogDebug("Extracting ZIP archive", zipAsset.Uri);
-
-            Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            Ionic.Zip.ZipFile zipFile = Ionic.Zip.ZipFile.Read(zipAsset.Uri.AbsolutePath);
-        }
-
     }
 }

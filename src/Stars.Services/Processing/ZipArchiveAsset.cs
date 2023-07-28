@@ -59,14 +59,48 @@ namespace Terradue.Stars.Services.Processing
                 foreach (ZipEntry entry in zipFile)
                 {
                     if (entry.IsDirectory) continue;
-
-                    assets.Add(entry.FileName, new ZipEntryAsset(entry, zipFile, asset));
+                    assets.Add(entry.FileName, new ZipEntryAsset(entry, zipFile, asset, ParentAssetBaseDir));
                 }
                 return assets;
             }
         }
 
         public override System.Uri Uri => asset.Uri;
+
+        // If set to true, detects relative location of parent/generic asset
+        // and adjusts included assets' filenames with that directory
+        public bool UseParentAssetBaseDir
+        {
+            get
+            {
+                return (ParentAssetBaseDir != null);
+            }
+
+            set
+            {
+                if (value)
+                {
+                    string parentAssetFileName = asset?.ContentDisposition?.FileName;
+                    if (parentAssetFileName == null)
+                    {
+                        ParentAssetBaseDir = null;
+                    }
+                    else
+                    {
+                        string dirName = Path.GetDirectoryName(parentAssetFileName);
+                        ParentAssetBaseDir = String.IsNullOrEmpty(dirName) ? null : dirName;
+                    }
+                }
+                else
+                {
+                    ParentAssetBaseDir = null;
+                }
+            }
+        }
+
+        // Directory where ZIP file is located
+        // (value is set automatically if UseParentAssetBaseDir is set to true)
+        public string ParentAssetBaseDir { get; set; }
 
         public string AutodetectSubfolder()
         {
