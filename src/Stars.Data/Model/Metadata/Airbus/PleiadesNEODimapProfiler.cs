@@ -25,13 +25,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         protected override IDictionary<EoBandCommonName?, int> BandOrders
         {
             get
-            {
+            {   //MS-FS assets
                 Dictionary<EoBandCommonName?, int> bandOrders = new Dictionary<EoBandCommonName?, int>();
-                bandOrders.Add(EoBandCommonName.pan, 0);
-                bandOrders.Add(EoBandCommonName.red, 1);
-                bandOrders.Add(EoBandCommonName.green, 2);
-                bandOrders.Add(EoBandCommonName.blue, 3);
-                bandOrders.Add(EoBandCommonName.nir, 4);
+                bandOrders.Add(EoBandCommonName.blue, 0);
+                bandOrders.Add(EoBandCommonName.green, 1);
+                bandOrders.Add(EoBandCommonName.red, 2);
+                bandOrders.Add(EoBandCommonName.coastal, 3);
+                bandOrders.Add(EoBandCommonName.rededge, 4);
+                bandOrders.Add(EoBandCommonName.nir, 5);
                 return bandOrders;
             }
         }
@@ -41,11 +42,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             string mission = GetMission().ToLower();
             switch (mission)
             {
-                //TODO check changes, e.g. by gdoc
-                case "pleiades-1a":
-                    return "2011-076F";
-                case "pleiades-1b":
-                    return "2012-068A";
+                //TODO check caase keys
+                case "pleiades-3":
+                    return "2021-034A";
+                case "pleiades-4":
+                    return "2021-073E";
             }
             return null;
         }
@@ -53,9 +54,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         internal override StacProvider GetStacProvider()
         {
             StacProvider provider = new StacProvider("Airbus", new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor });
-            provider.Description = "Pléiades Neo is our most advanced optical constellation, with two identical 30cm resolution satellites with ultimate reactivity. Entirely funded, manufactured, owned and operated by Airbus, Pléiades Neo is a breakthrough in the Earth Observation domain.";
+            provider.Description = "Pléiades Neo is the most advanced optical constellation of Airbus, with two identical 30 cm resolution satellites and optimum reactivity. Pleiades Neo allows users to unleash the potential of geospatial applications and analytics.";
+            //TODO check Uri vs gdoc url
             provider.Uri = new Uri("https://www.intelligence-airbusds.com/imagery/constellation/pleiades-neo/");
             return provider;
         }
+
+        public override string[] GetInstruments()
+        {
+            return new string[1] { "pneo-imager"};
+        }
+
+        //TODO override CompleteAsset
     }
 }
