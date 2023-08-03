@@ -293,7 +293,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             return eoBandObject;
         }
-
+        //TODO probably to override for PNEO
         protected virtual RasterBand GetRasterBandObject(Schemas.Band_Radiance bandInfo, Schemas.Band_Solar_Irradiance bandSolarIrradiance, Radiometric_Settings radiometric_Settings)
         {
             RasterBand rasterBand = new RasterBand();
@@ -325,6 +325,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return rasterBand;
         }
 
+        //TODO add coastal and rededge for PNEO ? 
         private EoBandCommonName GetEoCommonName(Band_Radiance bandInfo)
         {
             if (bandInfo.BAND_ID == "P")
@@ -352,6 +353,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return key;
         }
 
+        //Probably to be override in PNEO Dimap 
         internal virtual string GetAssetTitle(IAsset bandAsset, Data_File dataFile)
         {
             string title = string.Format("{0} {1} {2} {3} R{4} C{5}",

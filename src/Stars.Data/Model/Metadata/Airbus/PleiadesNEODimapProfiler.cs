@@ -19,12 +19,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         internal override string GetMission()
         {
-            return base.GetMission().Replace("PNEO", "PleiadesNEO");
+            return base.GetMission().Replace("PNEO", "pleiades-neo");
         }
 
         protected override IDictionary<EoBandCommonName?, int> BandOrders
         {
             get
+
+            //TODO PAN assets ? 
             {   //MS-FS assets
                 Dictionary<EoBandCommonName?, int> bandOrders = new Dictionary<EoBandCommonName?, int>();
                 bandOrders.Add(EoBandCommonName.blue, 0);
@@ -39,16 +41,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public override string GetPlatformInternationalDesignator()
         {
-            string mission = GetMission().ToLower();
-            switch (mission)
-            {
-                //TODO check caase keys
-                case "pleiades-3":
-                    return "2021-034A";
-                case "pleiades-4":
+            //string mission = GetMission().ToLower();
+            //switch (mission)
+            //{
+                //TODO check rational to distinguish the mission vs designator
+                //case "pleiades-3":
+                //    return "2021-034A";
+                //case "pleiades-4":
                     return "2021-073E";
-            }
-            return null;
+            //}
         }
 
         internal override StacProvider GetStacProvider()
@@ -57,6 +58,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             provider.Description = "Pléiades Neo is the most advanced optical constellation of Airbus, with two identical 30 cm resolution satellites and optimum reactivity. Pleiades Neo allows users to unleash the potential of geospatial applications and analytics.";
             //TODO check Uri vs gdoc url
             provider.Uri = new Uri("https://www.intelligence-airbusds.com/imagery/constellation/pleiades-neo/");
+            //TODO set "propietary" for field license here ? 
             return provider;
         }
 
