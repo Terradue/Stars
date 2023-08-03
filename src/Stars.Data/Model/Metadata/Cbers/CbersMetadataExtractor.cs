@@ -354,7 +354,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers {
         private void AddSatStacExtension(Schemas.Metadata metadata, StacItem stacItem) {
             var sat = new SatStacExtension(stacItem);
             Schemas.prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
-            sat.OrbitState = image.orbitDirection.ToLower();
+            
+            // only add if we have a valid orbit direction
+            if (image.orbitDirection != null) {
+                sat.OrbitState = image.orbitDirection.ToLower();
+            }
+
             if (Int64.TryParse(image.path, out long path) && Int64.TryParse(image.row, out long row)) {
                 sat.AbsoluteOrbit = Convert.ToInt32(1000 * path + row);
             }

@@ -53,13 +53,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
 
             var footprintArray = FOOTPRINT.Trim().Split(' ');
             var bboxArray = FindBoundingBox(footprintArray);
-
+            
+            // IMAGE
             metadata.image = new prdfImage
             {
-                // START_DATE COMPLETE_DATE
+                // START_DATE COMPLETE_DATE CENTER_DATE
                 timeStamp = new prdfImageTimeStamp
                 {
                     begin = START_DATE,
+                    center =  CalculateMeanDate(START_DATE, COMPLETE_DATE),
                     end = COMPLETE_DATE
                 },
                 // FOOTPRINT
@@ -99,7 +101,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
                 
                 absoluteCalibrationCoefficient = GetBandValuesFromAbsoluteCalibrationCoefficients(ABSOLUTE_CALIBRATION_COEFFICIENTS),
                 
-                orbitDirection = "DESCENDING"
             };
             
             // PROCESSING_LEVEL
@@ -183,6 +184,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             }
 
             return attributeValues.ToArray();
+        }
+        
+        
+        private static string CalculateMeanDate(string dateString1, string dateString2)
+        {
+            DateTime date1 = DateTime.Parse(dateString1);
+            DateTime date2 = DateTime.Parse(dateString2);
+
+            // Calculate the total ticks (nanoseconds) from both dates
+            long totalTicks = (date1.Ticks + date2.Ticks) / 2;
+
+            // Create the mean date
+            DateTime meanDate = new DateTime(totalTicks, DateTimeKind.Utc);
+
+            return meanDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
         }
     }
 }
