@@ -55,6 +55,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
         
         private string generatorVersionField;
         
+        public string identifier { get; set; }
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("leftCamera")]
         public prdfLeftCamera leftCamera {
