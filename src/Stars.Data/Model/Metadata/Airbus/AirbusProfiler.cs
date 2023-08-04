@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Humanizer;
 using Stac;
 using Stac.Extensions.Eo;
@@ -113,12 +114,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         internal int GetEpsgProjectionCode()
         {
-            try
-            {
-                if (Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_CODE.Contains("EPSG"))
-                    return int.Parse(Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_NAME.Split(' ').First());
+            try {
+                if (Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_CODE.Contains("EPSG")) {
+                    const string pattern = @"\d+$";
+                    var match = Regex.Match(Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_CODE,
+                        pattern);
+                    if (match.Success) {
+                        var numberStr = match.Value;
+                        return int.Parse(numberStr);
+                    }
+                }
             }
             catch { }
+
             try
             {
                 if (Dimap.Coordinate_Reference_System.Geodetic_CRS.CRS_TABLES.Contains("EPSG"))
@@ -328,8 +336,33 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         //TODO add coastal and rededge for PNEO ? 
         private EoBandCommonName GetEoCommonName(Band_Radiance bandInfo)
         {
-            if (bandInfo.BAND_ID == "P")
-                return EoBandCommonName.pan;
+            // check if bandinfo is null
+            if (bandInfo == null)
+                return default(EoBandCommonName);
+            
+            switch (bandInfo.BAND_ID) {
+                case "R":
+                    return EoBandCommonName.red;
+                case "G":
+                    return EoBandCommonName.green;
+                case "B":
+                    return EoBandCommonName.blue;
+                case "P":
+                    return EoBandCommonName.pan;
+                case "RE":
+                    return EoBandCommonName.rededge;
+                case "NIR":
+                    return EoBandCommonName.nir;
+                case "DB":
+                    return EoBandCommonName.coastal;
+                case "PAN":
+                    return default(EoBandCommonName);
+            }
+
+
+            // check if imap.Raster_Data.Raster_Display is null
+            if (Dimap.Raster_Data.Raster_Display == null)
+                return default(EoBandCommonName);
             if (Dimap.Raster_Data.Raster_Display.Band_Display_Order.RED_CHANNEL == bandInfo.BAND_ID)
                 return EoBandCommonName.red;
             if (Dimap.Raster_Data.Raster_Display.Band_Display_Order.GREEN_CHANNEL == bandInfo.BAND_ID)

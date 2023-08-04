@@ -351,14 +351,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             stacItem.Assets.Add("metadata-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING, StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
                         new ContentType("application/xml"), "Metadata file"));
             stacItem.Assets["metadata-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING].Properties.AddRange(metadataAsset.Properties);
-            var overviewAsset = FindFirstAssetFromFilePathRegex(item, @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_QL_PATH.Href);
+            var overviewAsset = FindFirstAssetFromFilePathRegex(item, @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_QL_PATH?.Href);
             if (overviewAsset != null)
             {
                 stacItem.Assets.Add("overview-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING, StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
                             new ContentType(MimeTypes.GetMimeType(Path.GetFileName(overviewAsset.Uri.ToString())))));
                 stacItem.Assets["overview-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING].Properties.AddRange(overviewAsset.Properties);
             }
-            var thumbnailAsset = FindFirstAssetFromFilePathRegex(item, @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_TN_PATH.Href);
+            
+            var thumbnailAsset = FindFirstAssetFromFilePathRegex(item, @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_TN_PATH?.Href);
             if (thumbnailAsset != null)
             {
                 stacItem.Assets.Add("thumbnail-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING, StacAsset.CreateThumbnailAsset(stacItem, thumbnailAsset.Uri,
