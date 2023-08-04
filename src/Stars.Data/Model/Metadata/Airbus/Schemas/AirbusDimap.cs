@@ -781,7 +781,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
         [XmlElement(ElementName = "ALPHA_CHANNEL")]
         public string ALPHA_CHANNEL { get; set; }
-
+        //TODO evaluate adding PNEO only channels coastal and rededge
     }
 
     [XmlRoot(ElementName = "Special_Value")]

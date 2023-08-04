@@ -1,0 +1,1176 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "PNEO4_202111151358313_MS-FS_ORT",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -52.856014655141074,
+          5.331521610991151
+        ],
+        [
+          -52.85546904535023,
+          5.1466461429833625
+        ],
+        [
+          -52.73059256550336,
+          5.146997753615243
+        ],
+        [
+          -52.731101501063335,
+          5.331885921096864
+        ],
+        [
+          -52.856014655141074,
+          5.331521610991151
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2021-11-15T13:58:30.1Z",
+    "created": "2023-02-17T16:04:37.325Z",
+    "platform": "pleiades-neo-4",
+    "constellation": "pleiades",
+    "mission": "pleiades-neo-4",
+    "instruments": [
+      "pneo-imager"
+    ],
+    "sensor_type": "optical",
+    "gsd": 1.3286948204040527,
+    "title": "PLEIADES-NEO-4 pneo-imager RASTER_ORTHO 2021-11-15 13:58:30",
+    "sat:platform_international_designator": "2021-073E",
+    "proj:epsg": 32622,
+    "proj:shape": [
+      11540,
+      17040
+    ],
+    "view:azimuth": 147.56948824818645,
+    "view:sun_azimuth": 141.48329891391222,
+    "view:sun_elevation": 59.78366977101399,
+    "view:incidence_angle": 22.745845870743427,
+    "processing:level": "ORTHO/BASIC",
+    "processing:software": {
+      "SPICY;Format": "1.2.11;v69.1.1"
+    },
+    "providers": [
+      {
+        "name": "Airbus",
+        "description": "Pléiades Neo is the most advanced optical constellation of Airbus, with two identical 30 cm resolution satellites and optimum reactivity. Pleiades Neo allows users to unleash the potential of geospatial applications and analytics.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.intelligence-airbusds.com/imagery/constellation/pleiades-neo/"
+      }
+    ]
+  },
+  "bbox": [
+    -52.856014655141074,
+    5.1466461429833625,
+    -52.73059256550336,
+    5.331885921096864
+  ],
+  "assets": {
+    "MS-FS-R1C2": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS-FS Ortho R1 C2",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C2.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C2.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1972.0
+        },
+        {
+          "name": "G",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1815.4
+        },
+        {
+          "name": "R",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1551.7
+        },
+        {
+          "name": "DB",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1797.1
+        },
+        {
+          "name": "RE",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "rededge",
+          "solar_illumination": 1349.0
+        },
+        {
+          "name": "NIR",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.1
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1531628120692296,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.13984058173682004,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12547051442910917,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11668611435239207,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10115314586283634,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08476012883539583,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS-FS",
+      "proj:shape": [
+        11540,
+        17040
+      ]
+    },
+    "MS-FS-R1C2-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C2.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C2.TIF",
+      "file:size": 0
+    },
+    "MS-FS-R2C2": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS-FS Ortho R2 C2",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C2.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C2.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1972.0
+        },
+        {
+          "name": "G",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1815.4
+        },
+        {
+          "name": "R",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1551.7
+        },
+        {
+          "name": "DB",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1797.1
+        },
+        {
+          "name": "RE",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "rededge",
+          "solar_illumination": 1349.0
+        },
+        {
+          "name": "NIR",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.1
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1531628120692296,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.13984058173682004,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12547051442910917,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11668611435239207,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10115314586283634,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08476012883539583,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS-FS",
+      "proj:shape": [
+        11540,
+        17040
+      ]
+    },
+    "MS-FS-R2C2-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C2.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C2.TIF",
+      "file:size": 0
+    },
+    "MS-FS-R3C2": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS-FS Ortho R3 C2",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C2.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C2.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1972.0
+        },
+        {
+          "name": "G",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1815.4
+        },
+        {
+          "name": "R",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1551.7
+        },
+        {
+          "name": "DB",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1797.1
+        },
+        {
+          "name": "RE",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "rededge",
+          "solar_illumination": 1349.0
+        },
+        {
+          "name": "NIR",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.1
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1531628120692296,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.13984058173682004,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12547051442910917,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11668611435239207,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10115314586283634,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08476012883539583,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS-FS",
+      "proj:shape": [
+        11540,
+        17040
+      ]
+    },
+    "MS-FS-R3C2-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C2.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C2.TIF",
+      "file:size": 0
+    },
+    "MS-FS-R1C1": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS-FS Ortho R1 C1",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C1.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C1.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1972.0
+        },
+        {
+          "name": "G",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1815.4
+        },
+        {
+          "name": "R",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1551.7
+        },
+        {
+          "name": "DB",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1797.1
+        },
+        {
+          "name": "RE",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "rededge",
+          "solar_illumination": 1349.0
+        },
+        {
+          "name": "NIR",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.1
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1531628120692296,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.13984058173682004,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12547051442910917,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11668611435239207,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10115314586283634,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08476012883539583,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS-FS",
+      "proj:shape": [
+        11540,
+        17040
+      ]
+    },
+    "MS-FS-R1C1-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C1.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R1C1.TIF",
+      "file:size": 0
+    },
+    "MS-FS-R2C1": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS-FS Ortho R2 C1",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C1.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C1.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1972.0
+        },
+        {
+          "name": "G",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1815.4
+        },
+        {
+          "name": "R",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1551.7
+        },
+        {
+          "name": "DB",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1797.1
+        },
+        {
+          "name": "RE",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "rededge",
+          "solar_illumination": 1349.0
+        },
+        {
+          "name": "NIR",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.1
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1531628120692296,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.13984058173682004,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12547051442910917,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11668611435239207,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10115314586283634,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08476012883539583,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS-FS",
+      "proj:shape": [
+        11540,
+        17040
+      ]
+    },
+    "MS-FS-R2C1-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C1.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R2C1.TIF",
+      "file:size": 0
+    },
+    "MS-FS-R3C1": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic MS-FS Ortho R3 C1",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C1.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C1.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "B",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "solar_illumination": 1972.0
+        },
+        {
+          "name": "G",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "solar_illumination": 1815.4
+        },
+        {
+          "name": "R",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "solar_illumination": 1551.7
+        },
+        {
+          "name": "DB",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1797.1
+        },
+        {
+          "name": "RE",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "rededge",
+          "solar_illumination": 1349.0
+        },
+        {
+          "name": "NIR",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "solar_illumination": 1060.1
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.1531628120692296,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.13984058173682004,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12547051442910917,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.11668611435239207,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.10115314586283634,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.08476012883539583,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "MS-FS",
+      "proj:shape": [
+        11540,
+        17040
+      ]
+    },
+    "MS-FS-R3C1-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C1.TIF",
+      "filename": "IMG_01_PNEO4_MS-FS/IMG_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1_RGB_R3C1.TIF",
+      "file:size": 0
+    },
+    "metadata-MS-FS": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/DIM_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1.XML",
+      "filename": "IMG_01_PNEO4_MS-FS/DIM_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1.XML",
+      "file:size": 129316
+    },
+    "overview-MS-FS": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_MS-FS/PREVIEW_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1.JPG",
+      "filename": "IMG_01_PNEO4_MS-FS/PREVIEW_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1.JPG",
+      "file:size": 250529
+    },
+    "thumbnail-MS-FS": {
+      "type": "text/html",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/000071864_1_1_STD_A/INDEX.HTM",
+      "filename": "INDEX.HTM",
+      "file:size": 3598
+    },
+    "PAN-R1C1": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PAN Ortho R1 C1",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C1.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C1.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1567.3
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12554927809165098,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PAN",
+      "proj:shape": [
+        46160,
+        68160
+      ]
+    },
+    "PAN-R1C1-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C1.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C1.TIF",
+      "file:size": 0
+    },
+    "PAN-R2C1": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PAN Ortho R2 C1",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C1.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C1.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1567.3
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12554927809165098,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PAN",
+      "proj:shape": [
+        46160,
+        68160
+      ]
+    },
+    "PAN-R2C1-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C1.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C1.TIF",
+      "file:size": 0
+    },
+    "PAN-R3C1": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PAN Ortho R3 C1",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C1.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C1.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1567.3
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12554927809165098,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PAN",
+      "proj:shape": [
+        46160,
+        68160
+      ]
+    },
+    "PAN-R3C1-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C1.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C1.TIF",
+      "file:size": 0
+    },
+    "PAN-R1C2": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PAN Ortho R1 C2",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C2.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C2.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1567.3
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12554927809165098,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PAN",
+      "proj:shape": [
+        46160,
+        68160
+      ]
+    },
+    "PAN-R1C2-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C2.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R1C2.TIF",
+      "file:size": 0
+    },
+    "PAN-R2C2": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PAN Ortho R2 C2",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C2.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C2.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1567.3
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12554927809165098,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PAN",
+      "proj:shape": [
+        46160,
+        68160
+      ]
+    },
+    "PAN-R2C2-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C2.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R2C2.TIF",
+      "file:size": 0
+    },
+    "PAN-R3C2": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PAN Ortho R3 C2",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C2.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C2.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "coastal",
+          "solar_illumination": 1567.3
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12554927809165098,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PAN",
+      "proj:shape": [
+        46160,
+        68160
+      ]
+    },
+    "PAN-R3C2-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C2.TIF",
+      "filename": "IMG_01_PNEO4_PAN/IMG_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1_P_R3C2.TIF",
+      "file:size": 0
+    },
+    "metadata-PAN": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/DIM_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.XML",
+      "filename": "IMG_01_PNEO4_PAN/DIM_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.XML",
+      "file:size": 36638
+    },
+    "overview-PAN": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/PREVIEW_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.JPG",
+      "filename": "IMG_01_PNEO4_PAN/PREVIEW_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.JPG",
+      "file:size": 300442
+    },
+    "thumbnail-PAN": {
+      "type": "text/html",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/000071864_1_1_STD_A/INDEX.HTM",
+      "filename": "INDEX.HTM",
+      "file:size": 3598
+    }
+  },
+  "links": []
+}
