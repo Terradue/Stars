@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
@@ -189,14 +190,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
         
         private static string CalculateMeanDate(string dateString1, string dateString2)
         {
-            DateTime date1 = DateTime.Parse(dateString1);
-            DateTime date2 = DateTime.Parse(dateString2);
+            DateTime date1 = DateTime.Parse(dateString1, null, DateTimeStyles.AssumeUniversal).ToUniversalTime();
+            DateTime date2 = DateTime.Parse(dateString2, null, DateTimeStyles.AssumeUniversal).ToUniversalTime();
 
             // Calculate the total ticks (nanoseconds) from both dates
             long totalTicks = (date1.Ticks + date2.Ticks) / 2;
 
             // Create the mean date
-            DateTime meanDate = new DateTime(totalTicks, DateTimeKind.Utc);
+            DateTime meanDate = new DateTime(totalTicks, DateTimeKind.Utc).ToUniversalTime();
 
             return meanDate.ToString("yyyy-MM-ddTHH:mm:ssZ");
         }

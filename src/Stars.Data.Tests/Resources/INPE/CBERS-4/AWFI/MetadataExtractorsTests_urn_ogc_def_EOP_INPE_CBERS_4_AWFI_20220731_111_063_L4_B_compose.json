@@ -37,14 +37,14 @@
   "properties": {
     "start_datetime": "2022-07-31T10:12:38Z",
     "end_datetime": "2022-07-31T10:14:33Z",
-    "datetime": "2022-07-31T12:13:35Z",
+    "datetime": "2022-07-31T10:13:35Z",
     "platform": "cbers-4",
     "mission": "cbers-4",
     "instruments": [
       "wfi"
     ],
     "sensor_type": "optical",
-    "title": "CBERS-4 L1 2022-07-31 12:13:35",
+    "title": "CBERS-4 L1 2022-07-31 10:13:35",
     "sat:absolute_orbit": 111063,
     "view:sun_azimuth": 125.013,
     "view:sun_elevation": 65.9144,
