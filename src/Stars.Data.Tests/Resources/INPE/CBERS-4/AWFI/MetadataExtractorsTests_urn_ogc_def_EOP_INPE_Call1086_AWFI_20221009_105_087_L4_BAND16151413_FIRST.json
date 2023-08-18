@@ -1,7 +1,9 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -38,17 +40,51 @@
     "start_datetime": "2022-10-09T09:54:37Z",
     "end_datetime": "2022-10-09T09:56:31Z",
     "datetime": "2022-10-09T09:55:34Z",
+    "constellation": "cbers-4",
     "platform": "cbers-4",
     "mission": "cbers-4",
     "instruments": [
       "wfi"
     ],
     "sensor_type": "optical",
-    "title": "CBERS-4 L1 2022-10-09 09:55:34",
+    "gsd": 64.0,
+    "title": "CBERS-4 AWFI L4 2022-10-09 09:55:34",
+    "eo:bands": [
+      {
+        "name": "band-16",
+        "common_name": "nir",
+        "center_wavelength": 0.83,
+        "full_width_half_max": 0.12,
+        "solar_illumination": 981.91
+      },
+      {
+        "name": "band-15",
+        "common_name": "red",
+        "center_wavelength": 0.66,
+        "full_width_half_max": 0.06,
+        "solar_illumination": 1536.38
+      },
+      {
+        "name": "band-14",
+        "common_name": "green",
+        "center_wavelength": 0.555,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1823.4
+      },
+      {
+        "name": "band-13",
+        "common_name": "blue",
+        "center_wavelength": 0.485,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1984.65
+      }
+    ],
     "sat:absolute_orbit": 105087,
+    "proj:epsg": 32632,
+    "view:off_nadir": 0.0,
     "view:sun_azimuth": 132.472,
     "view:sun_elevation": 63.0344,
-    "processing:level": "L1",
+    "processing:level": "L4",
     "providers": [
       {
         "name": "INPE/CAST",
@@ -69,6 +105,46 @@
     -18.488
   ],
   "assets": {
+    "compose": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/1086-INPE-CBERS-4-urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST/Call895_AWFI_20221009_105_087_L4_BAND16151413.tiff",
+      "filename": "Call895_AWFI_20221009_105_087_L4_BAND16151413.tiff",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "band-16",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "full_width_half_max": 0.12,
+          "solar_illumination": 981.91
+        },
+        {
+          "name": "band-15",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "full_width_half_max": 0.06,
+          "solar_illumination": 1536.38
+        },
+        {
+          "name": "band-14",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1823.4
+        },
+        {
+          "name": "band-13",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1984.65
+        }
+      ]
+    },
     "metadata": {
       "type": "text/csv",
       "roles": [
@@ -78,6 +154,24 @@
       "href": "data/1086-INPE-CBERS-4-urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST/urn_ogc_def_eop_inpe_call1086_awfi_20221009_105_087_l4_band16151413_first-metadata.csv",
       "filename": "urn_ogc_def_eop_inpe_call1086_awfi_20221009_105_087_l4_band16151413_first-metadata.csv",
       "file:size": 564
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/1086-INPE-CBERS-4-urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST/urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST-preview.png",
+      "filename": "urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST-preview.png",
+      "file:size": 0
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/1086-INPE-CBERS-4-urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST/urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST-icon.jpg",
+      "filename": "urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST-icon.jpg",
+      "file:size": 0
     }
   },
   "links": []

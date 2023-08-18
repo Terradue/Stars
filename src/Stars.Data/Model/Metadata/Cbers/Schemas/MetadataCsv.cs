@@ -95,6 +95,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
                     elevation = SUN_ELEVATION,
                     sunAzimuth = SUN_AZIMUTH
                 },
+
+                // OFF_NADIR
+                offNadirAngle = OFF_NADIR,
                 
                 // PATH ROW
                 row = ROW,
@@ -114,11 +117,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             else {
                 throw new Exception("No match found");
             }
+
+            // EPSG
+            metadata.image.epsg = EPSG;
+
+
             
             // PROCESSING_LEVEL_DESCRIPTION
             // PROJECTION
-            // EPSG
-            // OFF_NADIR
             // MODE
             // PRODUCT_URL
             // AOI
