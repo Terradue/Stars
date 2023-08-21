@@ -40,6 +40,7 @@
     "end_datetime": "2020-10-31T03:17:37.001437Z",
     "datetime": "2020-10-31T03:16:39.935702Z",
     "created": "2020-11-01T03:40:45.332637Z",
+    "constellation": "cbers-4",
     "platform": "cbers-4",
     "mission": "cbers-4",
     "instruments": [
@@ -47,12 +48,14 @@
     ],
     "sensor_type": "optical",
     "gsd": 64.0,
-    "title": "CBERS-4 L2 2020-10-31 03:16:39",
+    "title": "CBERS-4 AWFI L2 2020-10-31 03:16:39",
     "eo:bands": [
       {
         "name": "band-15",
-        "common_name": "green",
-        "center_wavelength": 0.555
+        "common_name": "red",
+        "center_wavelength": 0.66,
+        "full_width_half_max": 0.06,
+        "solar_illumination": 1536.38
       }
     ],
     "sat:orbit_state": "descending",
@@ -92,8 +95,10 @@
       "eo:bands": [
         {
           "name": "band-15",
-          "common_name": "green",
-          "center_wavelength": 0.555
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "full_width_half_max": 0.06,
+          "solar_illumination": 1536.38
         }
       ]
     },

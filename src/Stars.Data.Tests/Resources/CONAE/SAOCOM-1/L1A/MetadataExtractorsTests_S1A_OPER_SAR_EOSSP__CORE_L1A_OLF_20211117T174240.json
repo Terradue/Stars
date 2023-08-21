@@ -106,7 +106,7 @@
         "metadata"
       ],
       "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
+      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml"
     },
     "amplitude-hh": {
       "type": "image/tiff; application=geotiff",
@@ -115,7 +115,7 @@
         "data"
       ],
       "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
+      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
       "sar:polarizations": [
         "HH"
       ]
@@ -126,7 +126,7 @@
         "metadata"
       ],
       "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
+      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml"
     },
     "amplitude-hv": {
       "type": "image/tiff; application=geotiff",
@@ -135,7 +135,7 @@
         "data"
       ],
       "href": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
+      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
       "sar:polarizations": [
         "HV"
       ]
