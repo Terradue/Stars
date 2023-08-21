@@ -40,6 +40,7 @@
     "end_datetime": "2019-05-10T04:31:16.634084Z",
     "datetime": "2019-05-10T04:31:07.658174Z",
     "created": "2019-05-11T03:08:40.261628Z",
+    "constellation": "cbers-4",
     "platform": "cbers-4",
     "mission": "cbers-4",
     "instruments": [
@@ -47,12 +48,13 @@
     ],
     "sensor_type": "optical",
     "gsd": 5.0,
-    "title": "CBERS-4 L2 2019-05-10 04:31:07",
+    "title": "CBERS-4 PAN5M L2 2019-05-10 04:31:07",
     "eo:bands": [
       {
         "name": "band-1",
         "common_name": "pan",
-        "center_wavelength": 0.68
+        "center_wavelength": 0.7,
+        "full_width_half_max": 0.38
       }
     ],
     "sat:orbit_state": "descending",
@@ -94,7 +96,8 @@
         {
           "name": "band-1",
           "common_name": "pan",
-          "center_wavelength": 0.68
+          "center_wavelength": 0.7,
+          "full_width_half_max": 0.38
         }
       ]
     },

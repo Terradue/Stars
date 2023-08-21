@@ -40,6 +40,7 @@
     "end_datetime": "2020-08-01T14:33:40.74086Z",
     "datetime": "2020-08-01T14:32:46.53386Z",
     "created": "2020-08-02T16:54:34.864819Z",
+    "constellation": "cbers-4a",
     "platform": "cbers-4a",
     "mission": "cbers-4a",
     "instruments": [
@@ -47,17 +48,21 @@
     ],
     "sensor_type": "optical",
     "gsd": 55.0,
-    "title": "CBERS-4A L4 2020-08-01 14:32:46",
+    "title": "CBERS-4A WFI L4 2020-08-01 14:32:46",
     "eo:bands": [
       {
         "name": "band-14-left",
-        "common_name": "red",
-        "center_wavelength": 0.66
+        "common_name": "green",
+        "center_wavelength": 0.555,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1823.4
       },
       {
         "name": "band-14-right",
-        "common_name": "red",
-        "center_wavelength": 0.66
+        "common_name": "green",
+        "center_wavelength": 0.555,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1823.4
       }
     ],
     "sat:orbit_state": "descending",
@@ -97,8 +102,10 @@
       "eo:bands": [
         {
           "name": "band-14-left",
-          "common_name": "red",
-          "center_wavelength": 0.66
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1823.4
         }
       ]
     },
@@ -114,8 +121,10 @@
       "eo:bands": [
         {
           "name": "band-14-right",
-          "common_name": "red",
-          "center_wavelength": 0.66
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1823.4
         }
       ]
     },
