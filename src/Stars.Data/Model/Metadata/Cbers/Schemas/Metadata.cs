@@ -55,6 +55,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
         
         private string generatorVersionField;
         
+        public string identifier { get; set; }
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("leftCamera")]
         public prdfLeftCamera leftCamera {
@@ -225,6 +227,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
                 this.generatorVersionField = value;
             }
         }
+
+        [System.Xml.Serialization.XmlIgnore()]
+        public string spectralMode { get; set; }
+
     }
     
     /// <remarks/>
@@ -1548,6 +1554,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
                 this.correlationDeltaField = value;
             }
         }
+
+        // field not available in XML, but in CSV
+        [System.Xml.Serialization.XmlIgnore()]
+        public string epsg { get; set; }
     }
     
     /// <remarks/>
@@ -2620,7 +2630,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
         private imageEphemeridesEphemeris[] ephemeridesField;
         
         private band[] syncLossField;
-        
+
         /// <remarks/>
         public string receivingStation {
             get {

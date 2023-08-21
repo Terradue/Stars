@@ -40,6 +40,7 @@
     "end_datetime": "2020-07-30T13:51:31.009148Z",
     "datetime": "2020-07-30T13:51:24.147711Z",
     "created": "2020-07-31T04:49:26.04152Z",
+    "constellation": "cbers-4a",
     "platform": "cbers-4a",
     "mission": "cbers-4a",
     "instruments": [
@@ -47,12 +48,13 @@
     ],
     "sensor_type": "optical",
     "gsd": 2.0,
-    "title": "CBERS-4A L4 2020-07-30 13:51:24",
+    "title": "CBERS-4A WPM L4 2020-07-30 13:51:24",
     "eo:bands": [
       {
         "name": "band-0",
         "common_name": "pan",
-        "center_wavelength": 0.675
+        "center_wavelength": 0.675,
+        "full_width_half_max": 0.45
       }
     ],
     "sat:orbit_state": "descending",
@@ -93,7 +95,8 @@
         {
           "name": "band-0",
           "common_name": "pan",
-          "center_wavelength": 0.675
+          "center_wavelength": 0.675,
+          "full_width_half_max": 0.45
         }
       ]
     },
