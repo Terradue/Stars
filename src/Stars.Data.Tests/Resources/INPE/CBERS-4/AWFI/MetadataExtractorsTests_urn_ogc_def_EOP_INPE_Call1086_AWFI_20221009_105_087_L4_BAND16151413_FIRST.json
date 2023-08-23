@@ -4,6 +4,7 @@
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -14,24 +15,24 @@
     "coordinates": [
       [
         [
-          47.61,
-          -22.114
-        ],
-        [
-          47.61,
-          -18.488
-        ],
-        [
           49.983,
-          -22.114
+          -18.738
         ],
         [
-          49.983,
+          48.753,
           -18.488
         ],
         [
           47.61,
+          -21.666
+        ],
+        [
+          48.797,
           -22.114
+        ],
+        [
+          49.983,
+          -18.738
         ]
       ]
     ]
@@ -79,6 +80,8 @@
         "solar_illumination": 1984.65
       }
     ],
+    "cbers:path": 105,
+    "cbers:row": 87,
     "sat:absolute_orbit": 105087,
     "proj:epsg": 32632,
     "view:off_nadir": 0.0,
@@ -142,6 +145,20 @@
           "center_wavelength": 0.485,
           "full_width_half_max": 0.07,
           "solar_illumination": 1984.65
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.189
+        },
+        {
+          "scale": 0.218
+        },
+        {
+          "scale": 0.267
+        },
+        {
+          "scale": 0.235
         }
       ]
     },
