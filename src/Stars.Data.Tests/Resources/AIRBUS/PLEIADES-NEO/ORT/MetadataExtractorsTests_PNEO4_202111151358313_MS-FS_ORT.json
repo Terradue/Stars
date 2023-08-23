@@ -858,15 +858,6 @@
       "filename": "IMG_01_PNEO4_MS-FS/PREVIEW_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1.JPG",
       "file:size": 250529
     },
-    "thumbnail-MS-FS": {
-      "type": "text/html",
-      "roles": [
-        "thumbnail"
-      ],
-      "href": "data/000071864_1_1_STD_A/INDEX.HTM",
-      "filename": "INDEX.HTM",
-      "file:size": 3598
-    },
     "PAN-R1C1": {
       "type": "image/tiff",
       "roles": [
@@ -1161,15 +1152,6 @@
       "href": "data/000071864_1_1_STD_A/IMG_01_PNEO4_PAN/PREVIEW_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.JPG",
       "filename": "IMG_01_PNEO4_PAN/PREVIEW_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.JPG",
       "file:size": 300442
-    },
-    "thumbnail-PAN": {
-      "type": "text/html",
-      "roles": [
-        "thumbnail"
-      ],
-      "href": "data/000071864_1_1_STD_A/INDEX.HTM",
-      "filename": "INDEX.HTM",
-      "file:size": 3598
     }
   },
   "links": []
