@@ -66,6 +66,8 @@
       }
     ],
     "sat:orbit_state": "descending",
+    "cbers:path": 221,
+    "cbers:row": 156,
     "sat:absolute_orbit": 221156,
     "view:sun_azimuth": 31.455,
     "view:sun_elevation": 32.44,

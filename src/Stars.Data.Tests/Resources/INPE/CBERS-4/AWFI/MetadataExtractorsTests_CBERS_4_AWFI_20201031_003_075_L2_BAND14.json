@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -59,6 +60,8 @@
       }
     ],
     "sat:orbit_state": "descending",
+    "cbers:path": 3,
+    "cbers:row": 75,
     "sat:absolute_orbit": 3075,
     "view:sun_azimuth": 156.091,
     "view:sun_elevation": 49.7066,
@@ -99,6 +102,11 @@
           "center_wavelength": 0.555,
           "full_width_half_max": 0.07,
           "solar_illumination": 1823.4
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 1.4351
         }
       ]
     },

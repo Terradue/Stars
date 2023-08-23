@@ -16,6 +16,7 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Stac.Extensions.Raster;
 using Terradue.Stars.Data.Model.Metadata.Cbers.Schemas;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
@@ -45,6 +46,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             {"PAN10M", new int[] {2, 3, 4}},
             {"WFI", new int[] {13, 14, 15, 16}},
             {"WPM", new int[] {0, 1, 2, 3, 4}},
+            {"WPM-pansharpening", new int[] {1, 2, 3, 4}},
         };
 
         private Regex bandKeyRegex = new Regex(@"band-\d+");
@@ -470,6 +472,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
             if (Int64.TryParse(image.path, out long path) && Int64.TryParse(image.row, out long row))
             {
+                stacItem.Properties["cbers:path"] = path;
+                stacItem.Properties["cbers:row"] = row;
                 sat.AbsoluteOrbit = Convert.ToInt32(1000 * path + row);
             }
             // sat.RelativeOrbit = 
@@ -547,12 +551,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                             "Band file declared in metadata, but not present '{0}'",
                             bandFile));
 
-                    AddBandAsset(stacItem, key, bandAsset, metadata);
+                    AddBandAsset(stacItem, key, bandAsset, metadata, null, null);
                 }
             }
             else
             {
                 Match match = identifierInfoRegex.Match(metadata.identifier.ToLower());
+                int[] defaultCompositeBands = null;
                 int[] compositeBands = null;
 
                 if (match.Success)
@@ -560,21 +565,29 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     string mode = match.Groups["mode"].Value.ToUpper();
                     string rest = match.Groups["rest"].Value;
 
-                    if (rest.Contains("compos"))
+                    if (mode == "WPM" && rest.Contains("pansharpening"))
                     {
-                        compositeBands = spectralModeBands[mode];
+                        defaultCompositeBands = spectralModeBands["WPM-pansharpening"];
+                    }
+                    else
+                    {
+                        defaultCompositeBands = spectralModeBands[mode];
+                    }
+
+                    if (rest.Contains("compose"))
+                    {
+                        compositeBands = defaultCompositeBands;
                     }
                     else
                     {
                         string[] bandsStrs = new string[spectralModeBands[mode].Length];
                         for (int i = 0; i < bandsStrs.Length; i++) bandsStrs[i] = spectralModeBands[mode][i].ToString();
-                        Regex bandsRegex = new Regex(String.Format(@"((?'band'{0})[^\d]*)", String.Join("|", bandsStrs)));
-
-                        MatchCollection bandMatches = bandsRegex.Matches(rest);
-                        compositeBands = new int[bandMatches.Count];
-                        for (int i = 0; i < bandMatches.Count; i++)
+                        Regex bandsRegex = new Regex(String.Format(@"(band|b)(?'bands'{0})+", String.Join("|", bandsStrs)));
+                        Match bandMatch = bandsRegex.Match(rest);
+                        compositeBands = new int[bandMatch.Groups["bands"].Captures.Count];
+                        for (int i = 0; i < bandMatch.Groups["bands"].Captures.Count; i++)
                         {
-                            compositeBands[i] = Int32.Parse(bandMatches[i].Groups["band"].Value);
+                            compositeBands[i] = Int32.Parse(bandMatch.Groups["bands"].Captures[i].Value);
                         }
                     }
 
@@ -592,7 +605,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                 stacItem.Assets.Add("compose", stacAsset);
                 foreach (int band in compositeBands)
                 {
-                    AddBandAsset(stacItem, band, compositeAsset, metadata, stacAsset);
+                    AddBandAsset(stacItem, band, compositeAsset, metadata, stacAsset, defaultCompositeBands);
                 }
             }
 
@@ -627,20 +640,22 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                             new ContentType(MimeTypes.GetMimeType(thumbnailAsset.Uri.ToString()))));
                 stacItem.Assets["thumbnail"].Properties.AddRange(thumbnailAsset.Properties);
             }
-
-
         }
 
-        private void AddBandAsset(StacItem stacItem, int bandNumber, IAsset imageAsset, Schemas.Metadata metadata, StacAsset stacAsset = null)
+        private void AddBandAsset(StacItem stacItem, int bandNumber, IAsset imageAsset, Schemas.Metadata metadata, StacAsset stacAsset = null, int[] defaultCompositeBands = null)
         {
-            AddBandAsset(stacItem, String.Format("band-{0}", bandNumber), imageAsset, metadata, stacAsset);
+            AddBandAsset(stacItem, String.Format("band-{0}", bandNumber), imageAsset, metadata, stacAsset, defaultCompositeBands);
         }
 
-        private void AddBandAsset(StacItem stacItem, string assetKey, IAsset imageAsset, Schemas.Metadata metadata, StacAsset stacAsset = null)
+        private void AddBandAsset(StacItem stacItem, string bandId, IAsset imageAsset, Schemas.Metadata metadata, StacAsset stacAsset = null, int[] defaultCompositeBands = null)
         {
-            double waveLength = 0;
-            double fullWidthHalfMax = 0;
-            double solarIllumination = 0;
+            double? waveLength = null;
+            double? fullWidthHalfMax = null;
+            double? solarIllumination = null;
+            Stac.Common.DataType? dataType = null;
+            int? bitsPerSample = null;
+            double? scale = null;
+
             EoBandCommonName commonName = new EoBandCommonName();
             bool notFound = false;
 
@@ -648,81 +663,98 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                 (metadata.leftCamera == null ? metadata.satellite : metadata.leftCamera.satellite);
             if (satellite.instrument.Value == "WPM")
             {
-                switch (assetKey)
+                switch (bandId)
                 {
                     case "band-0": // WPM
                         waveLength = 0.675;
                         fullWidthHalfMax = 0.45;
+                        solarIllumination = 1258.38;
                         commonName = EoBandCommonName.pan;
                         break;
                     case "band-1": // WPM
                         waveLength = 0.485;
                         fullWidthHalfMax = 0.07;
                         solarIllumination = 1984.65;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.blue;
                         break;
                     case "band-2": // WPM
                         waveLength = 0.555;
                         fullWidthHalfMax = 0.07;
                         solarIllumination = 1823.40;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.green;
                         break;
                     case "band-3": // WPM
                         waveLength = 0.660;
                         fullWidthHalfMax = 0.06;
                         solarIllumination = 1536.38;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.red;
                         break;
                     case "band-4": // WPM
                         waveLength = 0.830;
                         fullWidthHalfMax = 0.12;
                         solarIllumination = 981.91;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.nir;
                         break;
                 }
             }
             else
             {
-                switch (assetKey)
+                switch (bandId)
                 {
                     case "band-1": // PAN5M
                         waveLength = 0.700;
                         fullWidthHalfMax = 0.38;
+                        solarIllumination = 1259.85;
                         commonName = EoBandCommonName.pan;
                         break;
                     case "band-2": // PAN10M
                         waveLength = 0.555;
                         fullWidthHalfMax = 0.07;
+                        solarIllumination = 1823.40;
                         commonName = EoBandCommonName.green;
                         break;
                     case "band-3": // PAN10M
                         waveLength = 0.660;
                         fullWidthHalfMax = 0.06;
+                        solarIllumination = 1536.38;
                         commonName = EoBandCommonName.red;
                         break;
                     case "band-4": // PAN10M
                         waveLength = 0.830;
                         fullWidthHalfMax = 0.12;
+                        solarIllumination = 981.91;
                         commonName = EoBandCommonName.nir;
                         break;
                     case "band-5": // MUX
                         waveLength = 0.485;
                         fullWidthHalfMax = 0.07;
+                        solarIllumination = 1984.65;
                         commonName = EoBandCommonName.blue;
                         break;
                     case "band-6": // MUX
                         waveLength = 0.555;
                         fullWidthHalfMax = 0.07;
+                        solarIllumination = 1823.40;
                         commonName = EoBandCommonName.green;
                         break;
                     case "band-7": // MUX
                         waveLength = 0.660;
                         fullWidthHalfMax = 0.06;
+                        solarIllumination = 1536.38;
                         commonName = EoBandCommonName.red;
                         break;
                     case "band-8": // MUX
                         waveLength = 0.830;
                         fullWidthHalfMax = 0.12;
+                        solarIllumination = 981.91;
                         commonName = EoBandCommonName.nir;
                         break;
                     case "band-13": // AWFI
@@ -731,6 +763,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                         waveLength = 0.485;
                         fullWidthHalfMax = 0.07;
                         solarIllumination = 1984.65;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.blue;
                         break;
                     case "band-14": // AWFI
@@ -739,6 +773,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                         waveLength = 0.555;
                         fullWidthHalfMax = 0.07;
                         solarIllumination = 1823.40;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.green;
                         break;
                     case "band-15": // AWFI
@@ -747,6 +783,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                         waveLength = 0.66;
                         fullWidthHalfMax = 0.06;
                         solarIllumination = 1536.38;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.red;
                         break;
                     case "band-16": // AWFI
@@ -755,6 +793,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                         waveLength = 0.83;
                         fullWidthHalfMax = 0.12;
                         solarIllumination = 981.91;
+                        dataType = Stac.Common.DataType.int16;
+                        bitsPerSample = 12;
                         commonName = EoBandCommonName.nir;
                         break;
                     default:
@@ -765,13 +805,30 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
             if (notFound)
             {
-                throw new InvalidOperationException(String.Format("Band information not found for {0}", assetKey));
+                throw new InvalidOperationException(String.Format("Band information not found for {0}", bandId));
             }
 
-            EoBandObject eoBandObject = new EoBandObject(assetKey, commonName);
-            eoBandObject.CenterWavelength = waveLength;
-            if (fullWidthHalfMax != 0) eoBandObject.FullWidthHalfMax = fullWidthHalfMax;
-            if (solarIllumination != 0) eoBandObject.SolarIllumination = solarIllumination;
+            // Find absolute calibration coefficients
+            scale = GetAbsoluteCalibrationCoefficient(bandId, metadata.image?.absoluteCalibrationCoefficient, defaultCompositeBands);
+
+            EoBandObject eoBandObject = new EoBandObject(bandId, commonName)
+            {
+                CenterWavelength = waveLength,
+                FullWidthHalfMax = fullWidthHalfMax,
+                SolarIllumination = solarIllumination
+            };
+
+            RasterBand rasterBand = null;
+            if (scale != null)
+            {
+                // data type and bits per sample can't be reliably set (defaults from above may not always apply).
+                rasterBand = new RasterBand()
+                {
+                    //DataType = dataType,
+                    //BitsPerSample = bitsPerSample,
+                    Scale = scale
+                };
+            }
 
             if (stacAsset == null)
             {
@@ -779,7 +836,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     new ContentType(MimeTypes.GetMimeType(imageAsset.Uri.OriginalString)), "Image file");
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.EoExtension().Bands = new EoBandObject[] { eoBandObject };
-                stacItem.Assets.Add(assetKey, stacAsset);
+                
+                if (rasterBand != null)
+                {
+                    stacAsset.RasterExtension().Bands = new RasterBand[] { rasterBand};
+                }
+
+                stacItem.Assets.Add(bandId, stacAsset);
             }
             else
             {
@@ -790,13 +853,66 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                 }
                 else
                 {
-                    List<EoBandObject> bands = new List<EoBandObject>(stacAsset.EoExtension().Bands)
+                    List<EoBandObject> bands = new List<EoBandObject>(eo.Bands)
                     {
                         eoBandObject
                     };
                     eo.Bands = bands.ToArray();
                 }
+                
+                if (rasterBand != null)
+                {
+                    RasterStacExtension raster = stacAsset.RasterExtension();
+                    if (raster.Bands == null)
+                    {
+                        raster.Bands = new RasterBand[] { rasterBand };
+                    }
+                    else
+                    {
+                        List<RasterBand> bands = new List<RasterBand>(raster.Bands)
+                        {
+                            rasterBand
+                        };
+                        raster.Bands = bands.ToArray();
+                    }
+                }
             }
+        }
+
+        private double? GetAbsoluteCalibrationCoefficient(string bandId, band[] coefficients, int[] defaultCompositeBands)
+        {
+            string bandIdNumber = bandId.Replace("band-", String.Empty);
+            if (coefficients != null)
+            {
+                if (defaultCompositeBands == null)
+                {
+                    // In case of properly provided metadata with asset path (via XML), get coefficient from band with same ID
+                    foreach (band coefficient in coefficients)
+                    {
+                        if (coefficient.name.Replace("band-", String.Empty) == bandIdNumber)
+                        {
+                            if (Double.TryParse(coefficient.Value, out double scale)) return scale;
+                        }
+                    }
+                }
+                else
+                {
+                    // In case manually created package (with CSV-provided metadata),
+                    // get coefficient from the values originating from CSV assuming ascending order of bands
+                    // from terms like this:
+                    // band0:0.235 band1:0.267 band2:0.218 band3:0.189
+                    // (band0 stands for the band with the lowest number, normally the first in the XML),
+                    // e.g. BAND13 (blue) in case of AWFI, regardless of band order in actual image
+                    for (int i = 0; i < defaultCompositeBands.Length; i++)
+                    {
+                        if (defaultCompositeBands[i].ToString() == bandIdNumber && i < coefficients.Length)
+                        {
+                            if (Double.TryParse(coefficients[i].Value, out double scale)) return scale;
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }
 }

@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -54,10 +55,13 @@
         "name": "band-8",
         "common_name": "nir",
         "center_wavelength": 0.83,
-        "full_width_half_max": 0.12
+        "full_width_half_max": 0.12,
+        "solar_illumination": 981.91
       }
     ],
     "sat:orbit_state": "descending",
+    "cbers:path": 3,
+    "cbers:row": 73,
     "sat:absolute_orbit": 3073,
     "view:sun_azimuth": 156.124,
     "view:sun_elevation": 48.4603,
@@ -96,7 +100,13 @@
           "name": "band-8",
           "common_name": "nir",
           "center_wavelength": 0.83,
-          "full_width_half_max": 0.12
+          "full_width_half_max": 0.12,
+          "solar_illumination": 981.91
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 1.1761
         }
       ]
     },

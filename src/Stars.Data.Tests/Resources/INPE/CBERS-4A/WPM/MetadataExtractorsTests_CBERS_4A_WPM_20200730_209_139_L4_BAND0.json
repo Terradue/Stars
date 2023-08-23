@@ -54,10 +54,13 @@
         "name": "band-0",
         "common_name": "pan",
         "center_wavelength": 0.675,
-        "full_width_half_max": 0.45
+        "full_width_half_max": 0.45,
+        "solar_illumination": 1258.38
       }
     ],
     "sat:orbit_state": "descending",
+    "cbers:path": 209,
+    "cbers:row": 139,
     "sat:absolute_orbit": 209139,
     "view:sun_azimuth": 32.9856,
     "view:sun_elevation": 44.3535,
@@ -96,7 +99,8 @@
           "name": "band-0",
           "common_name": "pan",
           "center_wavelength": 0.675,
-          "full_width_half_max": 0.45
+          "full_width_half_max": 0.45,
+          "solar_illumination": 1258.38
         }
       ]
     },

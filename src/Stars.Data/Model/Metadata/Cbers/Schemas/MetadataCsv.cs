@@ -186,7 +186,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             {
                 if (match.Groups.Count >= 2)
                 {
-                    attributeValues.Add(new band() {  Value = match.Groups[1].Value} );
+                    attributeValues.Add(new band() { Value = match.Groups[1].Value} );
                 }
             }
 
