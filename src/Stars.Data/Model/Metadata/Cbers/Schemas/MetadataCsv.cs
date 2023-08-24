@@ -1,10 +1,16 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: MetadataCsv.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
-    public class MetadataCsv {
+namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas
+{
+    public class MetadataCsv
+    {
         public string AGENCY { get; set; }
         public string SATELLITE { get; set; }
         public string INSTRUMENT { get; set; }
@@ -27,7 +33,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
         public string SUN_ELEVATION { get; set; }
         public string ABSOLUTE_CALIBRATION_COEFFICIENTS { get; set; }
 
-        public Metadata getMetadata() {
+        public Metadata getMetadata()
+        {
             Metadata metadata = new Metadata();
             // SATELLITE
             metadata.satellite = new prdfSatellite();
@@ -35,11 +42,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
 
             string pattern = @"CBERS(\d+)";
             Match match = Regex.Match(SATELLITE, pattern);
-            if (match.Success) {
+            if (match.Success)
+            {
                 string numberString = match.Groups[1].Value;
                 metadata.satellite.number = numberString;
             }
-            else {
+            else
+            {
                 throw new Exception("No match found");
             }
 
@@ -48,13 +57,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             {
                 Value = INSTRUMENT
             };
-            
+
             // IDENTIFIER
             metadata.identifier = IDENTIFIER;
 
             var footprintArray = FOOTPRINT.Trim().Split(' ');
             var bboxArray = FindBoundingBox(footprintArray);
-            
+
             // IMAGE
 
             metadata.image = new prdfImage
@@ -63,7 +72,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
                 timeStamp = new prdfImageTimeStamp
                 {
                     begin = START_DATE,
-                    center =  CalculateMeanDate(START_DATE, COMPLETE_DATE),
+                    center = CalculateMeanDate(START_DATE, COMPLETE_DATE),
                     end = COMPLETE_DATE
                 },
                 // FOOTPRINT
@@ -92,30 +101,33 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
                 },
 
                 // SUN_AZIMUTH  SUN_ELEVATION
-                sunPosition = new prdfImageSunPosition {
+                sunPosition = new prdfImageSunPosition
+                {
                     elevation = SUN_ELEVATION,
                     sunAzimuth = SUN_AZIMUTH
                 },
 
                 // OFF_NADIR
                 offNadirAngle = OFF_NADIR,
-                
+
                 // PATH ROW
                 row = ROW,
                 path = PATH,
-                
+
                 absoluteCalibrationCoefficient = GetBandValuesFromAbsoluteCalibrationCoefficients(ABSOLUTE_CALIBRATION_COEFFICIENTS),
-                
+
             };
-            
+
             // PROCESSING_LEVEL
             pattern = @"L(\d+)";
             match = Regex.Match(PROCESSING_LEVEL, pattern);
-            if (match.Success) {
+            if (match.Success)
+            {
                 string level = match.Groups[1].Value;
                 metadata.image.level = level;
             }
-            else {
+            else
+            {
                 throw new Exception("No match found");
             }
 
@@ -123,7 +135,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             metadata.image.epsg = EPSG;
 
 
-            
+
             // PROCESSING_LEVEL_DESCRIPTION
             // PROJECTION
             // MODE
@@ -131,12 +143,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             // AOI
             // FORMAT
             // AGENCY
-            
+
             return metadata;
         }
 
 
-        private static double[,] FindBoundingBox(string[] singleCoordinates) {
+        private static double[,] FindBoundingBox(string[] singleCoordinates)
+        {
             // Assumes bounding box has only 4 unique points
             // position (upper/lower and left/right) is not considered
             // (unimportant for geometry generation)
@@ -155,8 +168,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             for (int i = 0; i < len; i++)
             {
                 // Latitude comes before longitude in original string -> invert
-                coordinates[i, 0] = Double.Parse(singleCoordinates[2 * i + 1]);
-                coordinates[i, 1] = Double.Parse(singleCoordinates[2 * i]);
+                coordinates[i, 0] = double.Parse(singleCoordinates[2 * i + 1]);
+                coordinates[i, 1] = double.Parse(singleCoordinates[2 * i]);
             }
 
             return coordinates;
@@ -176,14 +189,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             {
                 if (match.Groups.Count >= 2)
                 {
-                    attributeValues.Add(new band() { Value = match.Groups[1].Value} );
+                    attributeValues.Add(new band() { Value = match.Groups[1].Value });
                 }
             }
 
             return attributeValues.ToArray();
         }
-        
-        
+
+
         private static string CalculateMeanDate(string dateString1, string dateString2)
         {
             DateTime date1 = DateTime.Parse(dateString1, null, DateTimeStyles.AssumeUniversal).ToUniversalTime();

@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: FilteredAssetContainer.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +12,8 @@ namespace Terradue.Stars.Services
 {
     public class FilteredAssetContainer : IAssetsContainer
     {
-        private IAssetsContainer assetsContainer;
-        private AssetFilters assetFilters;
+        private readonly IAssetsContainer assetsContainer;
+        private readonly AssetFilters assetFilters;
 
         public FilteredAssetContainer(IAssetsContainer assetsContainer, AssetFilters assetFilters)
         {

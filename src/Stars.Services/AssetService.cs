@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AssetService.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +12,10 @@ using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.File;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Translator;

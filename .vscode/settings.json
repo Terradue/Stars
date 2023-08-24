@@ -4,5 +4,6 @@
     ],
     "omnisharp.disableMSBuildDiagnosticWarning": true,
     "dotnet-test-explorer.testProjectPath": "**/*Tests.@(csproj|vbproj|fsproj)",
-    "jira-plugin.workingProject": "DATAAUTHOR"
+    "jira-plugin.workingProject": "DATAAUTHOR",
+    "dotnet.defaultSolution": "src/Terradue.Stars.sln"
 }

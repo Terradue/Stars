@@ -1,7 +1,8 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IOrderable.cs
+
 using System;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Interface.Supplier
 {

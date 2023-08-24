@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Gaofen3MetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,11 +18,11 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services;
-using Terradue.Stars.Geometry.GeoJson;
+using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 {
@@ -26,7 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
     {
         //private const string GAOFEN3_PLATFORM_NAME = "gf-3";
         private const string GAOFEN3_PLATFORM_NAME = "GAOFEN-3";
-       
+
         private const string GAOFEN3_DESCENDING_ORBIT_STATE = "descending";
 
         public override string Label => "Gaofen-3 SAR Satellite (CNSA) mission product metadata extractor";
@@ -35,8 +39,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.meta\\.xml)$");
 
             if (metadataFile == null)
@@ -50,13 +53,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             logger.LogDebug("Retrieving the metadata files in the product package");
-            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.meta\\.xml)$");
-
-            if (metadataFile == null)
-            {
-                throw new FileNotFoundException("Unable to find the metadata file asset");
-            }
-
+            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.meta\\.xml)$") ?? throw new FileNotFoundException("Unable to find the metadata file asset");
             logger.LogDebug("Metadata file is {0}", metadataFile.Uri);
 
             IStreamResource metadataFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(metadataFile, System.Threading.CancellationToken.None);
@@ -96,14 +93,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             FillBasicsProperties(metadata, stacItem.Properties);
             AddOtherProperties(metadata, stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
         private void AddProjStacExtension(ProductMetadata metadata, StacItem stacItem)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.SetCoordinateSystem(ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84);
-            proj.Shape = new int[2]{ metadata.Imageinfo.Width, metadata.Imageinfo.Height };
+            proj.Shape = new int[2] { metadata.Imageinfo.Width, metadata.Imageinfo.Height };
         }
 
         private void AddSarStacExtension(ProductMetadata metadata, StacItem stacItem)
@@ -131,11 +128,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             switch (metadata.Productinfo.ProductPolar)
             {
                 // single polarization
-                case "HH": case "DH":
+                case "HH":
+                case "DH":
                     return new[] { "HH" };
                 case "HV":
                     return new[] { "HV" };
-                case "VV": case "DV":
+                case "VV":
+                case "DV":
                     return new[] { "VV" };
                 case "VH":
                     return new[] { "VH" };
@@ -221,12 +220,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             if (match.Success)
             {
                 string polarization;
-                if (match.Groups[1].Value.ToUpper().Equals("DH")) {
+                if (match.Groups[1].Value.ToUpper().Equals("DH"))
+                {
                     polarization = "HH";
-                } else if (match.Groups[1].Value.ToUpper().Equals("DV")) {
+                }
+                else if (match.Groups[1].Value.ToUpper().Equals("DV"))
+                {
                     polarization = "VV";
-                } else {
-                    polarization = match.Groups[1].Value;    
+                }
+                else
+                {
+                    polarization = match.Groups[1].Value;
                 }
 
                 var thumbnailAsset = GetGenericAsset(stacItem, asset.Uri, new[] { "thumbnail" });
@@ -243,12 +247,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             if (match.Success)
             {
                 string polarization;
-                if (match.Groups[1].Value.ToUpper().Equals("DH")) {
+                if (match.Groups[1].Value.ToUpper().Equals("DH"))
+                {
                     polarization = "HH";
-                } else if (match.Groups[1].Value.ToUpper().Equals("DV")) {
+                }
+                else if (match.Groups[1].Value.ToUpper().Equals("DV"))
+                {
                     polarization = "VV";
-                } else {
-                    polarization = match.Groups[1].Value;    
+                }
+                else
+                {
+                    polarization = match.Groups[1].Value;
                 }
 
                 var overviewAsset = GetGenericAsset(stacItem, asset.Uri, new[] { "overview" });
@@ -263,14 +272,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             // Tiff
             rgx = new Regex("[0-9a-zA-Z_-]*(HH|HV|VH|VV|DH|DV)[0-9a-zA-Z_-]*(\\.tiff)$");
             match = rgx.Match(filename);
-            if (match.Success) {
+            if (match.Success)
+            {
                 string polarization;
-                if (match.Groups[1].Value.ToUpper().Equals("DH")) {
+                if (match.Groups[1].Value.ToUpper().Equals("DH"))
+                {
                     polarization = "HH";
-                } else if (match.Groups[1].Value.ToUpper().Equals("DV")) {
+                }
+                else if (match.Groups[1].Value.ToUpper().Equals("DV"))
+                {
                     polarization = "VV";
-                } else {
-                    polarization = match.Groups[1].Value;    
+                }
+                else
+                {
+                    polarization = match.Groups[1].Value;
                 }
                 var tiffAsset = GetGenericAsset(stacItem, asset.Uri, new[] { "amplitude", "data" });
                 tiffAsset.SetProperty("sar:polarizations", new[] { polarization });
@@ -330,7 +345,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "CNSA", 
+                    "CNSA",
                     "The main goal of the CHEOS (China High-Resolution Earth Observation System) series is to provide NRT (Near-Real-Time) observations for disaster prevention and relief, climate change monitoring, geographical mapping, environment and resource surveying, and precision agricultural support.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("http://www.cnsa.gov.cn/english/n6465715/n6465716/c6840350/content.html")

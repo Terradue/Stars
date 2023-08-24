@@ -1,28 +1,29 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GenericAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Supplier
 {
     public class GenericAsset : IAsset
     {
-        private IResource route;
+        private readonly IResource route;
         private readonly string title;
         private readonly IReadOnlyList<string> roles;
         private Uri uri;
-        private Dictionary<string, object> properties = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> properties = new Dictionary<string, object>();
 
         public GenericAsset(IResource route, string title, IReadOnlyList<string> roles)
         {
             this.route = route;
             this.title = title;
             this.roles = roles;
-            this.uri = route.Uri;
+            uri = route.Uri;
             if (route is IAsset)
             {
                 properties = new Dictionary<string, object>((route as IAsset).Properties.ToDictionary(x => x.Key, x => x.Value));

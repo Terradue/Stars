@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: EgmsTimeSeriesOperationStatus.cs
+
 using System.Collections.Generic;
 using System.Linq;
 using Stac;
@@ -7,8 +11,8 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 {
     internal class EgmsTimeSeriesOperationStatus : IAbstractTimeSeriesOperationStatus<StacCollection>
     {
-        private StacCollection _collection;
-        private List<EgmsTimeSeriesImportTask> _statuses;
+        private readonly StacCollection _collection;
+        private readonly List<EgmsTimeSeriesImportTask> _statuses;
 
         public EgmsTimeSeriesOperationStatus(StacCollection collection, List<EgmsTimeSeriesImportTask> statuses)
         {

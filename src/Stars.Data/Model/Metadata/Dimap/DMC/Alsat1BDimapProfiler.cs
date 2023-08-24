@@ -1,8 +1,11 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Alsat1BDimapProfiler.cs
+
 using System;
-using Stac.Extensions.Eo;
 using Stac;
+using Stac.Extensions.Eo;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
-using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
 {
@@ -13,7 +16,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
         {
         }
 
-        protected override EoBandObject GetEoBandObject(Schemas.t_Spectral_Band_Info bandInfo, string description)
+        protected override EoBandObject GetEoBandObject(t_Spectral_Band_Info bandInfo, string description)
         {
             var eoBandObject = base.GetEoBandObject(bandInfo, description);
             ////

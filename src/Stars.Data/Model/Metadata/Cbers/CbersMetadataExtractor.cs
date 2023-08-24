@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: CbersMetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,34 +16,34 @@ using CsvHelper;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
-using Stac.Extensions.Projection;
 using Stac.Extensions.Processing;
+using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
-using Stac.Extensions.Raster;
 using Terradue.Stars.Data.Model.Metadata.Cbers.Schemas;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Cbers
 {
     public class CbersMetadataExtractor : MetadataExtraction
     {
-        private Regex identifierRegex =
+        private readonly Regex identifierRegex =
             new Regex(@"(?'id1'CBERS_4A?_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_L(?'level'[^_]+))(_LEFT|RIGHT)?(?'id2'_BAND(?'band'\d+))");
 
         // alternative identifier regex for for filename of
         // this type 956-INPE-CBERS-4-urn_ogc_def_EOP_INPE_CBERS_4_AWFI_20220731_111_063_L4_B_compose
-        private Regex identifierRegex2 =
+        private readonly Regex identifierRegex2 =
             new Regex(@".*_inpe_(call[0-9]*|cbers_4A?)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(band\d{8}|b)_\w*-(\w*\.csv)$");
 
 
-        private Regex identifierInfoRegex = new Regex(@".*(?'mode'awfi|mux|pan5m|pan10m|wfi|wpm)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(?'rest'.*)$");
+        private readonly Regex identifierInfoRegex = new Regex(@".*(?'mode'awfi|mux|pan5m|pan10m|wfi|wpm)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(?'rest'.*)$");
 
         // Dictionary containing the bands offered by each spectral mode
-        private Dictionary<string, int[]> spectralModeBands = new Dictionary<string, int[]> {
+        private readonly Dictionary<string, int[]> spectralModeBands = new Dictionary<string, int[]> {
             {"AWFI", new int[] {13, 14, 15, 16}},
             {"MUX", new int[] {5, 6, 7, 8}},
             {"PAN5M", new int[] {1}},
@@ -49,8 +53,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             {"WPM-pansharpening", new int[] {1, 2, 3, 4}},
         };
 
-        private Regex bandKeyRegex = new Regex(@"band-\d+");
-        private Regex utmZoneRegex = new Regex(@"(?'num'\d+)(?'hem'[NS])");
+        private readonly Regex bandKeyRegex = new Regex(@"band-\d+");
+        private readonly Regex utmZoneRegex = new Regex(@"(?'num'\d+)(?'hem'[NS])");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
 
@@ -64,8 +68,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -107,7 +110,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             FillBasicsProperties(metadata, stacItem.Properties);
             AddOtherProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
             ;
         }
 
@@ -154,10 +157,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     if (!identifierMatch.Success)
                     {
                         throw new InvalidOperationException(
-                            String.Format("Identifier not recognised from band name: {0}", bandName));
+                            string.Format("Identifier not recognised from band name: {0}", bandName));
                     }
 
-                    identifier = String.Format("{0}{1}", identifierMatch.Groups["id1"].Value,
+                    identifier = string.Format("{0}{1}", identifierMatch.Groups["id1"].Value,
                         identifierMatch.Groups["id2"].Value);
                 }
                 else
@@ -169,7 +172,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                         if (!identifierMatch.Success)
                         {
                             throw new InvalidOperationException(
-                                String.Format("Identifier not recognised from band name: {0}", bandName));
+                                string.Format("Identifier not recognised from band name: {0}", bandName));
                         }
 
                         identifier = identifierMatch.Groups["id1"].Value;
@@ -182,23 +185,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             return stacItem;
         }
 
-        private void FindBands(Schemas.prdfImage image, Dictionary<string, string> bands, string suffix = "")
+        private void FindBands(prdfImage image, Dictionary<string, string> bands, string suffix = "")
         {
             if (image == null) return;
 
-            if (image.band0 != null) bands[String.Format("band-0{0}", suffix)] = image.band0;
-            if (image.band1 != null) bands[String.Format("band-1{0}", suffix)] = image.band1;
-            if (image.band2 != null) bands[String.Format("band-2{0}", suffix)] = image.band2;
-            if (image.band3 != null) bands[String.Format("band-3{0}", suffix)] = image.band3;
-            if (image.band4 != null) bands[String.Format("band-4{0}", suffix)] = image.band4;
-            if (image.band5 != null) bands[String.Format("band-5{0}", suffix)] = image.band5;
-            if (image.band6 != null) bands[String.Format("band-6{0}", suffix)] = image.band6;
-            if (image.band7 != null) bands[String.Format("band-7{0}", suffix)] = image.band7;
-            if (image.band8 != null) bands[String.Format("band-8{0}", suffix)] = image.band8;
-            if (image.band13 != null) bands[String.Format("band-13{0}", suffix)] = image.band13;
-            if (image.band14 != null) bands[String.Format("band-14{0}", suffix)] = image.band14;
-            if (image.band15 != null) bands[String.Format("band-15{0}", suffix)] = image.band15;
-            if (image.band16 != null) bands[String.Format("band-16{0}", suffix)] = image.band16;
+            if (image.band0 != null) bands[string.Format("band-0{0}", suffix)] = image.band0;
+            if (image.band1 != null) bands[string.Format("band-1{0}", suffix)] = image.band1;
+            if (image.band2 != null) bands[string.Format("band-2{0}", suffix)] = image.band2;
+            if (image.band3 != null) bands[string.Format("band-3{0}", suffix)] = image.band3;
+            if (image.band4 != null) bands[string.Format("band-4{0}", suffix)] = image.band4;
+            if (image.band5 != null) bands[string.Format("band-5{0}", suffix)] = image.band5;
+            if (image.band6 != null) bands[string.Format("band-6{0}", suffix)] = image.band6;
+            if (image.band7 != null) bands[string.Format("band-7{0}", suffix)] = image.band7;
+            if (image.band8 != null) bands[string.Format("band-8{0}", suffix)] = image.band8;
+            if (image.band13 != null) bands[string.Format("band-13{0}", suffix)] = image.band13;
+            if (image.band14 != null) bands[string.Format("band-14{0}", suffix)] = image.band14;
+            if (image.band15 != null) bands[string.Format("band-15{0}", suffix)] = image.band15;
+            if (image.band16 != null) bands[string.Format("band-16{0}", suffix)] = image.band16;
         }
 
 
@@ -211,20 +214,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)
         {
-            Schemas.prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
+            prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                 new GeoJSON.Net.Geometry.Position[]
                 {
-                    new GeoJSON.Net.Geometry.Position(Double.Parse(image.boundingBox.LL.latitude),
-                        Double.Parse(image.boundingBox.LL.longitude)),
-                    new GeoJSON.Net.Geometry.Position(Double.Parse(image.boundingBox.LR.latitude),
-                        Double.Parse(image.boundingBox.LR.longitude)),
-                    new GeoJSON.Net.Geometry.Position(Double.Parse(image.boundingBox.UR.latitude),
-                        Double.Parse(image.boundingBox.UR.longitude)),
-                    new GeoJSON.Net.Geometry.Position(Double.Parse(image.boundingBox.UL.latitude),
-                        Double.Parse(image.boundingBox.UL.longitude)),
-                    new GeoJSON.Net.Geometry.Position(Double.Parse(image.boundingBox.LL.latitude),
-                        Double.Parse(image.boundingBox.LL.longitude)),
+                    new GeoJSON.Net.Geometry.Position(double.Parse(image.boundingBox.LL.latitude),
+                        double.Parse(image.boundingBox.LL.longitude)),
+                    new GeoJSON.Net.Geometry.Position(double.Parse(image.boundingBox.LR.latitude),
+                        double.Parse(image.boundingBox.LR.longitude)),
+                    new GeoJSON.Net.Geometry.Position(double.Parse(image.boundingBox.UR.latitude),
+                        double.Parse(image.boundingBox.UR.longitude)),
+                    new GeoJSON.Net.Geometry.Position(double.Parse(image.boundingBox.UL.latitude),
+                        double.Parse(image.boundingBox.UL.longitude)),
+                    new GeoJSON.Net.Geometry.Position(double.Parse(image.boundingBox.LL.latitude),
+                        double.Parse(image.boundingBox.LL.longitude)),
                 }
             );
             return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString })
@@ -234,12 +237,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @".*(CBERS_4|Call|CBERS_4A?|cbers_4|call|cbers_4A?).*\.(xml|csv)$");
-            if (metadataAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
-
+            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @".*(CBERS_4|Call|CBERS_4A?|cbers_4|call|cbers_4A?).*\.(xml|csv)$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             return metadataAsset;
         }
 
@@ -275,7 +273,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                 case "WPM":
                     break;
                 default:
-                    throw new InvalidOperationException(String.Format("Unknown metadata/band type: {0}", typeStr));
+                    throw new InvalidOperationException(string.Format("Unknown metadata/band type: {0}", typeStr));
             }
 
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
@@ -319,8 +317,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         private string GetProcessingLevel(Schemas.Metadata metadata)
         {
-            Schemas.prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
-            return String.Format("L{0}", image.level);
+            prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
+            return string.Format("L{0}", image.level);
         }
 
         private IDictionary<string, object> GetCommonMetadata(Schemas.Metadata metadata)
@@ -337,7 +335,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         private void FillDateTimeProperties(Schemas.Metadata metadata, Dictionary<string, object> properties)
         {
-            Schemas.prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
+            prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
             CultureInfo provider = CultureInfo.InvariantCulture;
             DateTime startDate = DateTime.MinValue;
             bool hasStartDate =
@@ -376,17 +374,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         private void FillInstrument(Schemas.Metadata metadata, Dictionary<string, object> properties)
         {
             // platform & constellation
-            Schemas.prdfSatellite satellite =
+            prdfSatellite satellite =
                 (metadata.leftCamera == null ? metadata.satellite : metadata.leftCamera.satellite);
-            Schemas.prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
+            prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
 
-            properties["constellation"] = String.Format("{0}-{1}", satellite.name, satellite.number).ToLower();
-            properties["platform"] = String.Format("{0}-{1}", satellite.name, satellite.number).ToLower();
+            properties["constellation"] = string.Format("{0}-{1}", satellite.name, satellite.number).ToLower();
+            properties["platform"] = string.Format("{0}-{1}", satellite.name, satellite.number).ToLower();
             properties["mission"] = properties["platform"];
             properties["instruments"] = new string[] { satellite.instrument.Value.ToLower() };
             properties["sensor_type"] = "optical";
-            double gsd = 0;
-            if (Double.TryParse(image.verticalPixelSize, out gsd))
+            if (double.TryParse(image.verticalPixelSize, out double gsd))
             {
                 properties["gsd"] = gsd;
             }
@@ -422,20 +419,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             }
         }
 
-        private void FillBasicsProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(Schemas.Metadata metadata, IDictionary<string, object> properties)
         {
-            Schemas.prdfSatellite satellite =
+            prdfSatellite satellite =
                 (metadata.leftCamera == null ? metadata.satellite : metadata.leftCamera.satellite);
             CultureInfo culture = new CultureInfo("fr-FR");
-            properties["title"] = String.Format("{0} {1} {2} {3}",
-                String.Format("{0}-{1}", satellite.name.ToUpper(), satellite.number.ToUpper()),
+            properties["title"] = string.Format("{0} {1} {2} {3}",
+                string.Format("{0}-{1}", satellite.name.ToUpper(), satellite.number.ToUpper()),
                 metadata.spectralMode,
                 GetProcessingLevel(metadata),
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
 
-        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<string, object> properties)
         {
             if (IncludeProviderProperty)
             {
@@ -462,7 +459,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         private void AddSatStacExtension(Schemas.Metadata metadata, StacItem stacItem)
         {
             var sat = new SatStacExtension(stacItem);
-            Schemas.prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
+            prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
 
             // only add if we have a valid orbit direction
             if (image.orbitDirection != null)
@@ -470,7 +467,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                 sat.OrbitState = image.orbitDirection.ToLower();
             }
 
-            if (Int64.TryParse(image.path, out long path) && Int64.TryParse(image.row, out long row))
+            if (long.TryParse(image.path, out long path) && long.TryParse(image.row, out long row))
             {
                 stacItem.Properties["cbers:path"] = path;
                 stacItem.Properties["cbers:row"] = row;
@@ -483,7 +480,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         private void AddProjStacExtension(Schemas.Metadata metadata, StacItem stacItem)
         {
-            if (metadata.image != null && !String.IsNullOrEmpty(metadata.image.epsg) && Int64.TryParse(metadata.image.epsg, out long epsg))
+            if (metadata.image != null && !string.IsNullOrEmpty(metadata.image.epsg) && long.TryParse(metadata.image.epsg, out long epsg))
             {
                 ProjectionStacExtension proj = stacItem.ProjectionExtension();
                 proj.Epsg = epsg;
@@ -510,18 +507,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         private void AddViewStacExtension(Schemas.Metadata metadata, StacItem stacItem)
         {
             var view = new ViewStacExtension(stacItem);
-            Schemas.prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
-            if (Double.TryParse(image.offNadirAngle, out double offNadir))
+            prdfImage image = (metadata.leftCamera == null ? metadata.image : metadata.leftCamera.image);
+            if (double.TryParse(image.offNadirAngle, out double offNadir))
             {
                 view.OffNadir = offNadir / 1000;
             }
 
-            if (Double.TryParse(image.sunPosition.sunAzimuth, out double sunAzimuth))
+            if (double.TryParse(image.sunPosition.sunAzimuth, out double sunAzimuth))
             {
                 view.SunAzimuth = sunAzimuth;
             }
 
-            if (Double.TryParse(image.sunPosition.elevation, out double sunElevation))
+            if (double.TryParse(image.sunPosition.elevation, out double sunElevation))
             {
                 view.SunElevation = sunElevation;
             }
@@ -545,11 +542,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     string bandFile = Path.GetFileName(bands[key]);
 
                     IAsset bandAsset =
-                        FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", bandFile)); //.Replace(".", @"\.")
-                    if (bandAsset == null)
-                        throw new FileNotFoundException(string.Format(
+                        FindFirstAssetFromFileNameRegex(item, string.Format("{0}$", bandFile)) ?? throw new FileNotFoundException(string.Format(
                             "Band file declared in metadata, but not present '{0}'",
-                            bandFile));
+                            bandFile)); //.Replace(".", @"\.")
 
                     AddBandAsset(stacItem, key, bandAsset, metadata, null, null);
                 }
@@ -582,21 +577,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     {
                         string[] bandsStrs = new string[spectralModeBands[mode].Length];
                         for (int i = 0; i < bandsStrs.Length; i++) bandsStrs[i] = spectralModeBands[mode][i].ToString();
-                        Regex bandsRegex = new Regex(String.Format(@"(band|b)(?'bands'{0})+", String.Join("|", bandsStrs)));
+                        Regex bandsRegex = new Regex(string.Format(@"(band|b)(?'bands'{0})+", string.Join("|", bandsStrs)));
                         Match bandMatch = bandsRegex.Match(rest);
                         compositeBands = new int[bandMatch.Groups["bands"].Captures.Count];
                         for (int i = 0; i < bandMatch.Groups["bands"].Captures.Count; i++)
                         {
-                            compositeBands[i] = Int32.Parse(bandMatch.Groups["bands"].Captures[i].Value);
+                            compositeBands[i] = int.Parse(bandMatch.Groups["bands"].Captures[i].Value);
                         }
                     }
 
                     string s = "";
-                    foreach (int b in compositeBands) s += String.Format(" {0}", b);
+                    foreach (int b in compositeBands) s += string.Format(" {0}", b);
                 }
                 if (compositeBands == null || compositeBands.Length == 0)
                 {
-                    throw new Exception(String.Format("Contained bands not detectable from identifier \"{0}\"", metadata.identifier));
+                    throw new Exception(string.Format("Contained bands not detectable from identifier \"{0}\"", metadata.identifier));
                 }
 
                 StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, compositeAsset.Uri,
@@ -644,7 +639,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         private void AddBandAsset(StacItem stacItem, int bandNumber, IAsset imageAsset, Schemas.Metadata metadata, StacAsset stacAsset = null, int[] defaultCompositeBands = null)
         {
-            AddBandAsset(stacItem, String.Format("band-{0}", bandNumber), imageAsset, metadata, stacAsset, defaultCompositeBands);
+            AddBandAsset(stacItem, string.Format("band-{0}", bandNumber), imageAsset, metadata, stacAsset, defaultCompositeBands);
         }
 
         private void AddBandAsset(StacItem stacItem, string bandId, IAsset imageAsset, Schemas.Metadata metadata, StacAsset stacAsset = null, int[] defaultCompositeBands = null)
@@ -659,7 +654,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             EoBandCommonName commonName = new EoBandCommonName();
             bool notFound = false;
 
-            Schemas.prdfSatellite satellite =
+            prdfSatellite satellite =
                 (metadata.leftCamera == null ? metadata.satellite : metadata.leftCamera.satellite);
             if (satellite.instrument.Value == "WPM")
             {
@@ -805,7 +800,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
             if (notFound)
             {
-                throw new InvalidOperationException(String.Format("Band information not found for {0}", bandId));
+                throw new InvalidOperationException(string.Format("Band information not found for {0}", bandId));
             }
 
             // Find absolute calibration coefficients
@@ -836,10 +831,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     new ContentType(MimeTypes.GetMimeType(imageAsset.Uri.OriginalString)), "Image file");
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.EoExtension().Bands = new EoBandObject[] { eoBandObject };
-                
+
                 if (rasterBand != null)
                 {
-                    stacAsset.RasterExtension().Bands = new RasterBand[] { rasterBand};
+                    stacAsset.RasterExtension().Bands = new RasterBand[] { rasterBand };
                 }
 
                 stacItem.Assets.Add(bandId, stacAsset);
@@ -859,7 +854,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     };
                     eo.Bands = bands.ToArray();
                 }
-                
+
                 if (rasterBand != null)
                 {
                     RasterStacExtension raster = stacAsset.RasterExtension();
@@ -881,7 +876,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
 
         private double? GetAbsoluteCalibrationCoefficient(string bandId, band[] coefficients, int[] defaultCompositeBands)
         {
-            string bandIdNumber = bandId.Replace("band-", String.Empty);
+            string bandIdNumber = bandId.Replace("band-", string.Empty);
             if (coefficients != null)
             {
                 if (defaultCompositeBands == null)
@@ -889,9 +884,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     // In case of properly provided metadata with asset path (via XML), get coefficient from band with same ID
                     foreach (band coefficient in coefficients)
                     {
-                        if (coefficient.name.Replace("band-", String.Empty) == bandIdNumber)
+                        if (coefficient.name.Replace("band-", string.Empty) == bandIdNumber)
                         {
-                            if (Double.TryParse(coefficient.Value, out double scale)) return scale;
+                            if (double.TryParse(coefficient.Value, out double scale)) return scale;
                         }
                     }
                 }
@@ -907,7 +902,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
                     {
                         if (defaultCompositeBands[i].ToString() == bandIdNumber && i < coefficients.Length)
                         {
-                            if (Double.TryParse(coefficients[i].Value, out double scale)) return scale;
+                            if (double.TryParse(coefficients[i].Value, out double scale)) return scale;
                         }
                     }
                 }

@@ -1,7 +1,9 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: EgmsConfiguration.cs
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.ThirdParty.Egms
@@ -31,4 +33,3 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
         public string Replacement { get; set; }
     }
 }
-

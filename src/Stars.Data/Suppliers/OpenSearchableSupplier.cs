@@ -1,19 +1,23 @@
-using Microsoft.Extensions.Logging;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: OpenSearchableSupplier.cs
+
 using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
-using Terradue.Stars.Data.Routers;
+using Microsoft.Extensions.Logging;
+using Stac;
 using Terradue.OpenSearch;
 using Terradue.OpenSearch.Engine;
 using Terradue.OpenSearch.Result;
-using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Data.Routers;
 using Terradue.Stars.Interface;
-using System.Text.RegularExpressions;
-using Stac;
-using System.Threading;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Stars.Data.Suppliers
 {
@@ -26,9 +30,9 @@ namespace Terradue.Stars.Data.Suppliers
 
         public OpenSearchableSupplier(ILogger logger, TranslatorManager translatorManager)
         {
-            this.opensearchEngine = new OpenSearchEngine();
-            this.opensearchEngine.RegisterExtension(new Terradue.OpenSearch.Engine.Extensions.AtomOpenSearchEngineExtension());
-            this.opensearchEngine.RegisterExtension(new Terradue.OpenSearch.GeoJson.Extensions.FeatureCollectionOpenSearchEngineExtension());
+            opensearchEngine = new OpenSearchEngine();
+            opensearchEngine.RegisterExtension(new OpenSearch.Engine.Extensions.AtomOpenSearchEngineExtension());
+            opensearchEngine.RegisterExtension(new OpenSearch.GeoJson.Extensions.FeatureCollectionOpenSearchEngineExtension());
             this.logger = logger;
             this.translatorManager = translatorManager;
         }
@@ -77,7 +81,7 @@ namespace Terradue.Stars.Data.Suppliers
             NameValueCollection nvc = CreateOpenSearchParametersFromItem(node as IItem, identifierRegex);
             if (nvc == null) return null;
 
-            return await Task.Run<AtomFeed>(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
+            return await Task.Run(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
         }
 
         private NameValueCollection CreateOpenSearchParametersFromItem(IItem item, string identifierRegex = null)

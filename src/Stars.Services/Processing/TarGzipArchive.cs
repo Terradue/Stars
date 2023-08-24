@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TarGzipArchive.cs
+
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +25,6 @@ namespace Terradue.Stars.Services.Processing
             var stream = new GZipInputStream(await streamResource.GetStreamAsync(ct));
             return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
-       
+
     }
 }

@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StarsExtensions.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Credentials;
 
 namespace Terradue.Stars.Services
@@ -37,7 +40,7 @@ namespace Terradue.Stars.Services
             // we should return Empty.
             catch (RegexMatchTimeoutException)
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 
@@ -54,7 +57,7 @@ namespace Terradue.Stars.Services
             return (array == null || array.Length == 0);
         }
 
-        public async static Task<string> ReadAsStringAsync(this IStreamResource streamable, CancellationToken ct)
+        public static async Task<string> ReadAsStringAsync(this IStreamResource streamable, CancellationToken ct)
         {
             StreamReader sr = new StreamReader(await streamable.GetStreamAsync(ct));
             return await sr.ReadToEndAsync();

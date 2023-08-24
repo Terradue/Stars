@@ -1,10 +1,10 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: CredentialsOptions.cs
+
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.Credentials
@@ -20,8 +20,8 @@ namespace Terradue.Stars.Services.Credentials
             if (credentialsOptions == null) return;
             foreach (var credentialsOption in credentialsOptions)
             {
-                this.Remove(credentialsOption.Key);
-                this.Add(credentialsOption.Key, credentialsOption.Value);
+                Remove(credentialsOption.Key);
+                Add(credentialsOption.Key, credentialsOption.Value);
             }
         }
     }
@@ -63,7 +63,7 @@ namespace Terradue.Stars.Services.Credentials
         public string Username { get; set; }
 
         public string Password { get; set; }
-        
+
         public bool PreAuth { get; set; }
     }
 }

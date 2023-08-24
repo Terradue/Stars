@@ -1,13 +1,16 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DimapProfiler.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Humanizer;
 using Stac;
 using Stac.Extensions.Eo;
-using Stac;
-using Terradue.Stars.Interface;
 using Stac.Extensions.Raster;
-using Humanizer;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {

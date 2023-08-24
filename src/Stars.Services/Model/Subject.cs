@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Subject.cs
+
 using System.Runtime.Serialization;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
@@ -13,8 +17,8 @@ namespace Terradue.Stars.Services.Model
 
         public Subject(ISubject s)
         {
-            this.Id = s.Id;
-            this.Name = s.Name;
+            Id = s.Id;
+            Name = s.Name;
         }
 
         [DataMember(Name = "id")]
@@ -22,12 +26,12 @@ namespace Terradue.Stars.Services.Model
 
         [DataMember(Name = "name")]
         public string Name { get; set; }
-        
+
         public SyndicationCategory ToSyndicationCategory()
         {
             var category = new SyndicationCategory(Name, Id, Name);
             return category;
         }
     }
-   
+
 }

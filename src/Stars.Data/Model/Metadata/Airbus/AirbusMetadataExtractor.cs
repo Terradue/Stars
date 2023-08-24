@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AirbusMetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,17 +20,16 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
 using Terradue.Stars.Data.Model.Metadata.Airbus.Schemas;
-using Terradue.Stars.Data.Utils;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Airbus
 {
     public class AirbusMetadataExtractor : MetadataExtraction
     {
-        public static XmlSerializer AirbusDimapSerializer = new XmlSerializer(typeof(Schemas.Dimap_Document));
+        public static XmlSerializer AirbusDimapSerializer = new XmlSerializer(typeof(Dimap_Document));
 
         public override string Label => "Airbus missions (Pleiades, SPOT, VOL) DIMAP based product metadata extractor";
 
@@ -36,12 +39,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IDictionary<string, IAsset> metadataAssets = GetMetadataAssets(item);
-                Schemas.Dimap_Document metadata = ReadMetadata(metadataAssets.First().Value).GetAwaiter().GetResult();
+                Dimap_Document metadata = ReadMetadata(metadataAssets.First().Value).GetAwaiter().GetResult();
                 var dimapProfiler = GetProfiler(metadata);
                 return dimapProfiler != null;
             }
@@ -93,8 +95,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
 
             // Merge MS (multispectral) assets into P (pan-chromatic) STAC item
-            StacItemNode baseNode = stacItemNodes.FirstOrDefault(n => n.StacItem.Assets.ContainsKey("P-metadata"));
-            if (baseNode == null) baseNode = stacItemNodes[0];
+            StacItemNode baseNode = stacItemNodes.FirstOrDefault(n => n.StacItem.Assets.ContainsKey("P-metadata")) ?? stacItemNodes[0];
             //StacItem mergedStacItem = baseNode.StacItem;
 
             foreach (StacItemNode n in stacItemNodes.FindAll(n => n != baseNode))
@@ -144,7 +145,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             // AddEoBandPropertyInItem(stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri) as StacItemNode;
+            return StacNode.Create(stacItem, item.Uri) as StacItemNode;
         }
 
         private void AddEoBandPropertyInItem(StacItem stacItem)
@@ -286,7 +287,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             properties.Add("updated", DateTime.UtcNow);
         }
 
-        private void FillBasicsProperties(AirbusProfiler dimapProfiler, IDictionary<String, object> properties)
+        private void FillBasicsProperties(AirbusProfiler dimapProfiler, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -303,23 +304,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
         }
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(AirbusProfiler dimapProfiler)
+        private IGeometryObject GetGeometry(AirbusProfiler dimapProfiler)
         {
-            List<GeoJSON.Net.Geometry.Position> positions = new List<Position>();
+            List<Position> positions = new List<Position>();
             foreach (var vertex in dimapProfiler.Dimap.Dataset_Content.Dataset_Extent.Vertex)
             {
-                positions.Add(new GeoJSON.Net.Geometry.Position(
+                positions.Add(new Position(
                     vertex.LAT, vertex.LON
                 )
                 );
             }
             positions.Add(positions.First());
 
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
+            LineString lineString = new LineString(
                 positions.ToArray()
             );
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            return new Polygon(new LineString[] { lineString }).NormalizePolygon();
         }
 
         protected void AddAssets(StacItem stacItem, IItem item, IAsset metadataAsset, AirbusProfiler dimapProfiler)
@@ -327,9 +328,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             foreach (var dataFile in dimapProfiler.Dimap.Raster_Data.Data_Access.Data_Files.Data_File)
             {
-                IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href + "$");
-                if (productAsset == null)
-                    throw new FileNotFoundException(string.Format("No product found '{0}'", dataFile.DATA_FILE_PATH.Href));
+                IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href + "$") ?? throw new FileNotFoundException(string.Format("No product found '{0}'", dataFile.DATA_FILE_PATH.Href));
                 var bandStacAsset = GetBandAsset(productAsset, dimapProfiler, dataFile, stacItem);
                 if (Path.GetExtension(bandStacAsset.Value.Uri.ToString()).Equals(".jp2", StringComparison.InvariantCultureIgnoreCase))
                     bandStacAsset.Value.MediaType = new ContentType("image/jp2");
@@ -385,12 +384,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             {
                 manifestAsset = FindAllAssetsFromFileNameRegex(item, @"^DIM.*\.XML$");
                 if (manifestAsset == null)
-                    throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
+                    throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             }
             return manifestAsset;
         }
 
-        public virtual async Task<Schemas.Dimap_Document> ReadMetadata(IAsset manifestAsset)
+        public virtual async Task<Dimap_Document> ReadMetadata(IAsset manifestAsset)
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
@@ -399,7 +398,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
 
-                return (Schemas.Dimap_Document)AirbusDimapSerializer.Deserialize(reader);
+                return (Dimap_Document)AirbusDimapSerializer.Deserialize(reader);
             }
         }
 

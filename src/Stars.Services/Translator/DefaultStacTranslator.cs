@@ -1,22 +1,25 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DefaultStacTranslator.cs
+
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Stac;
+using Stac.Extensions.File;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services.Model.Stac;
-using System.Collections.Generic;
-using Stac;
-using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
-using Stac.Extensions.File;
-using System.Net;
-using System.Threading;
 
 namespace Terradue.Stars.Services.Translator
 {
     [PluginPriority(10)]
     public class DefaultStacTranslator : ITranslator
     {
-        private ILogger logger;
+        private readonly ILogger logger;
 
         public int Priority { get; set; }
         public string Key { get => "DefaultStacTranslator"; set { } }
@@ -30,17 +33,15 @@ namespace Terradue.Stars.Services.Translator
 
         public Task<T> TranslateAsync<T>(IResource route, CancellationToken ct) where T : IResource
         {
-            ICatalog catalogRoute = route as ICatalog;
-            if (catalogRoute != null)
+            if (route is ICatalog catalogRoute)
             {
-                return Task.FromResult<T>((T)CreateStacCatalogNode(catalogRoute));
+                return Task.FromResult((T)CreateStacCatalogNode(catalogRoute));
             }
-            IItem itemRoute = route as IItem;
-            if (itemRoute != null)
+            if (route is IItem itemRoute)
             {
-                return Task.FromResult<T>((T)CreateStacItemNode(itemRoute));
+                return Task.FromResult((T)CreateStacItemNode(itemRoute));
             }
-            return Task.FromResult<T>(default(T));
+            return Task.FromResult(default(T));
         }
 
         private IResource CreateStacCatalogNode(ICatalog node)
@@ -92,9 +93,8 @@ namespace Terradue.Stars.Services.Translator
         private StacAsset CreateStacAsset(IAsset asset, StacItem stacItem, Uri uri)
         {
             Preconditions.CheckNotNull(asset);
-            StacAssetAsset stacAssetAsset = asset as StacAssetAsset;
             StacAsset stacAsset = null;
-            if (stacAssetAsset == null)
+            if (!(asset is StacAssetAsset stacAssetAsset))
             {
                 stacAsset = new StacAsset(stacItem, uri, asset.Roles, asset.Title, asset.ContentType);
                 try

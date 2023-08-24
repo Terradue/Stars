@@ -1,12 +1,16 @@
-using Terradue.ServiceModel.Syndication;
-using System.Collections.Generic;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AtomExtensions.cs
+
 using System;
-using Terradue.OpenSearch.Result;
-using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
-using GeoJSON.Net.Geometry;
-using Terradue.Stars.Services.Model.EOP;
-using Stac;
+using System.Collections.Generic;
 using System.Xml;
+using GeoJSON.Net.Geometry;
+using Stac;
+using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using Terradue.OpenSearch.Result;
+using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Services.Model.EOP;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -185,7 +189,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
             IGeometryObject savegeom = null;
 
-            savegeom = Terradue.Stars.Geometry.Atom.AtomExtensions.FindGeometry(item);
+            savegeom = Geometry.Atom.AtomExtensions.FindGeometry(item);
 
             if (savegeom == null)
             {

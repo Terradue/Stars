@@ -1,31 +1,32 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StarsServiceCollectionExtensions.cs
+
 using System;
+using System.IO.Abstractions;
+using System.Linq;
 using System.Net;
-using Microsoft.Extensions.Configuration;
+using System.Net.Http;
+using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Credentials;
+using Terradue.Stars.Services.Model.Atom;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Plugins;
+using Terradue.Stars.Services.Processing;
+using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Processing;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Services.Credentials;
-using System.Linq;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Model.Atom;
-using System.Runtime.Loader;
-using Terradue.Stars.Services.Plugins;
-using Microsoft.Extensions.Options;
-using Terradue.Stars.Interface.Router.Translator;
-using System.IO.Abstractions;
-using Terradue.Stars.Services.Resources;
-using Terradue.Stars.Interface;
-using System.Net.Http;
-using Microsoft.Extensions.Caching.InMemory;
-using Microsoft.Extensions.Caching.Abstractions;
 
 namespace Terradue.Stars.Services
 {
@@ -41,7 +42,7 @@ namespace Terradue.Stars.Services
             services.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
 
             services.AddSingleton<IS3ClientFactory, S3ClientFactory>();
-            services.AddTransient<StarsHttpMessageHandler>(sp =>
+            services.AddTransient(sp =>
             {
                 return new StarsHttpMessageHandler(sp.GetRequiredService<ICredentials>());
             });
@@ -76,7 +77,7 @@ namespace Terradue.Stars.Services
             services.AddSingleton<TranslatorManager, TranslatorManager>();
             services.AddSingleton<ProcessingManager, ProcessingManager>();
 
-            
+
 
             // 4. Let's Configure
             var builder = new StarsBuilder(services);
@@ -127,8 +128,8 @@ namespace Terradue.Stars.Services
             // Processing Service
             services.AddTransient<ProcessingService, ProcessingService>();
 
-            services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(StacLinkTranslator)));
-            services.AddTransient<ITranslator>(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(DefaultStacTranslator)));
+            services.AddTransient(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(StacLinkTranslator)));
+            services.AddTransient(serviceProvider => PluginManager.CreateDefaultPlugin<ITranslator>(serviceProvider, typeof(DefaultStacTranslator)));
 
             services.AddSingleton<IResourceServiceProvider, DefaultResourceServiceProvider>();
 

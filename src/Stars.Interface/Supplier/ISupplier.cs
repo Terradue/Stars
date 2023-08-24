@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ISupplier.cs
+
 using System.Threading;
 using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Interface.Supplier
 {

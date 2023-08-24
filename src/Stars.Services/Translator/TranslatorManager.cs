@@ -1,8 +1,12 @@
-using Microsoft.Extensions.Logging;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TranslatorManager.cs
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router.Translator;
 
@@ -17,7 +21,7 @@ namespace Terradue.Stars.Services.Translator
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
             Dictionary<ITranslator, T> translations = new Dictionary<ITranslator, T>();
-            if (node is T) return (T)node;
+            if (node is T nodeT) return nodeT;
             List<Exception> exceptions = new List<Exception>();
             foreach (var translator in GetPlugins().Values)
             {

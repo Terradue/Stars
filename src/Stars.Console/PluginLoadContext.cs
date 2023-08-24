@@ -1,15 +1,17 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: PluginLoadContext.cs
+
 using System;
-using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
-using McMaster.Extensions.CommandLineUtils;
 
 namespace Terradue.Stars.Console
 {
     internal class PluginLoadContext : AssemblyLoadContext
     {
         private readonly AssemblyLoadContext mainAppAssemblyLoadContext;
-        private AssemblyDependencyResolver _resolver;
+        private readonly AssemblyDependencyResolver _resolver;
 
         public PluginLoadContext(string pluginPath, AssemblyLoadContext mainAppAssemblyLoadContext)
         {

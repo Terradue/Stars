@@ -1,10 +1,9 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IItem.cs
+
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Mime;
-using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
-using Stac;
 
 namespace Terradue.Stars.Interface
 {

@@ -1,8 +1,8 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StarsConfigurationExtensions.cs
+
 using System.Collections.Generic;
-using Amazon.Extensions.NETCore.Setup;
-using Amazon.Runtime;
-using Amazon.Runtime.CredentialManagement;
 using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services
     {
         public static IStarsBuilder UseDefaultConfiguration(this IStarsBuilder starsBuilder, IConfiguration configuration)
         {
-            starsBuilder.Services.AddSingleton<IConfiguration>(configuration);
+            starsBuilder.Services.AddSingleton(configuration);
             starsBuilder.UseCredentialsOptions(configuration.GetSection("Credentials"));
             starsBuilder.UsePluginsOptions(configuration.GetSection("Plugins"));
             // Only for retro-compatibility

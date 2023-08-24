@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ResurspMetadataExtractor.cs
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -21,37 +25,45 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Polygon = GeoJSON.Net.Geometry.Polygon;
 
-namespace Terradue.Stars.Data.Model.Metadata.Resursp {
-    public class ResurspMetadataExtractor : MetadataExtraction {
+namespace Terradue.Stars.Data.Model.Metadata.Resursp
+{
+    public class ResurspMetadataExtractor : MetadataExtraction
+    {
         public override string Label => "Resursp (Roscosmos) missions product metadata extractor";
 
         private readonly string GDALFILE_REGEX = @".*\.(shp)$";
 
-        public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) {
+        public ResurspMetadataExtractor(ILogger<ResurspMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
+        {
         }
 
-        public override bool CanProcess(IResource route, IDestination destination) {
-            IItem item = route as IItem;
-            if (item == null) return false;
+        public override bool CanProcess(IResource route, IDestination destination)
+        {
+            if (!(route is IItem item)) return false;
             IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.xml)$");
-            if (metadataFile == null) {
+            if (metadataFile == null)
+            {
                 return false;
             }
 
             // deserialize product medatadata
             SPP_ROOT productMetadata =
                 DeserializeProductMetadata(resourceServiceProvider.GetStreamResourceAsync(metadataFile, System.Threading.CancellationToken.None).GetAwaiter().GetResult()).GetAwaiter().GetResult();
-            if (productMetadata == null) {
+            if (productMetadata == null)
+            {
                 return false;
             }
             return true;
         }
 
-        public static async Task<SPP_ROOT> DeserializeProductMetadata(IStreamResource productMetadataFile) {
+        public static async Task<SPP_ROOT> DeserializeProductMetadata(IStreamResource productMetadataFile)
+        {
             XmlSerializer ser = new XmlSerializer(typeof(SPP_ROOT));
             SPP_ROOT auxiliary;
-            using (var stream = new StreamReader(productMetadataFile.Uri.AbsolutePath, Encoding.UTF8, true)) {
-                using (XmlReader reader = XmlReader.Create(stream)) {
+            using (var stream = new StreamReader(productMetadataFile.Uri.AbsolutePath, Encoding.UTF8, true))
+            {
+                using (XmlReader reader = XmlReader.Create(stream))
+                {
                     auxiliary = (SPP_ROOT)ser.Deserialize(reader);
                 }
             }
@@ -60,28 +72,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix) {
+        protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
+        {
             logger.LogDebug("Retrieving the metadata files in the product package");
-            IAsset metadatafile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.xml)$");
-            if (metadatafile == null) {
-                throw new FileNotFoundException("Unable to find any metadata file asset");
-            }
+            IAsset metadatafile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.xml)$") ?? throw new FileNotFoundException("Unable to find any metadata file asset");
 
             // deserialize product medatadata
             SPP_ROOT productMetadata = await DeserializeProductMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadatafile, System.Threading.CancellationToken.None));
 
             logger.LogDebug("Retrieving the shapefile in the product package");
-            IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$");
-            if (shapefile == null) {
-                throw new FileNotFoundException("Unable to find any shapefile asset");
-            }
+            IAsset shapefile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(\\.shp)$") ?? throw new FileNotFoundException("Unable to find any shapefile asset");
 
             // retrieving id from filename
             // GF2_PMS1_W91.0_N17.6_20200510_L1A0004793969-MSS1.xml
             string stacItemId = Path.GetFileNameWithoutExtension(metadatafile.Uri.OriginalString).Split('-')[0];
 
             // retrieve lowest gsd
-            double gsd = Double.Parse(productMetadata.Normal.NPixelImg);
+            double gsd = double.Parse(productMetadata.Normal.NPixelImg);
 
             // to retrieve the properties, any product metadata is ok
             var stacItem = GetStacItemWithProperties(productMetadata, stacItemId, gsd, shapefile);
@@ -91,15 +98,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             FillBasicsProperties(stacItem.Properties);
             AddOtherProperties(stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
         }
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometryFromShpFileAsset(IAsset shapeFileAsset) {
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometryFromShpFileAsset(IAsset shapeFileAsset)
+        {
             // load the shapefile in a datasource
             var shapefilePath = shapeFileAsset.Title;
-            DataSource shpDatasource = Ogr.Open(shapefilePath, 0);
-            if (shpDatasource == null)
-                throw new InvalidDataException("Not valid shapefile");
+            DataSource shpDatasource = Ogr.Open(shapefilePath, 0) ?? throw new InvalidDataException("Not valid shapefile");
 
             // load the shapefile layer
             Layer shpLayer = shpDatasource.GetLayerByIndex(0);
@@ -117,7 +123,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
         private StacItem GetStacItemWithProperties(SPP_ROOT productMetadata, string stacItemId, double gsd,
-            IAsset shapefile) {
+            IAsset shapefile)
+        {
             // retrieve geometry from shapefile
             var geometryObject = GetGeometryFromShpFileAsset(shapefile);
 
@@ -134,18 +141,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        private string ConvertDegreeAngleToDegreeString(string coordinate) {
+        private string ConvertDegreeAngleToDegreeString(string coordinate)
+        {
             return ConvertDegreeAngleToDegreeDouble(coordinate).ToString();
         }
 
-        private double ConvertDegreeAngleToDegreeDouble(string coordinate) {
+        private double ConvertDegreeAngleToDegreeDouble(string coordinate)
+        {
             // example 0:15:22.185719
 
             string[] coordinateArray = coordinate.Split(':');
 
-            double degrees = Double.Parse(coordinateArray[0]);
-            double minutes = Double.Parse(coordinateArray[1]);
-            double seconds = Double.Parse(coordinateArray[2]);
+            double degrees = double.Parse(coordinateArray[0]);
+            double minutes = double.Parse(coordinateArray[1]);
+            double seconds = double.Parse(coordinateArray[2]);
             //Decimal degrees = 
             //   whole number of degrees, 
             //   plus minutes divided by 60, 
@@ -154,7 +163,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             return degrees + (minutes / 60) + (seconds / 3600);
         }
 
-        private IDictionary<string, object> GetCommonMetadata(SPP_ROOT productMetadata, double gsd) {
+        private IDictionary<string, object> GetCommonMetadata(SPP_ROOT productMetadata, double gsd)
+        {
             Dictionary<string, object> properties = new Dictionary<string, object>();
             FillBitProperties(productMetadata, properties);
             FillDateTimeProperties(productMetadata, properties);
@@ -163,29 +173,33 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             return properties;
         }
 
-        private void AddRasterBands(SPP_ROOT productMetadata, StacAsset stacAsset) {
+        private void AddRasterBands(SPP_ROOT productMetadata, StacAsset stacAsset)
+        {
             var gains = productMetadata.AbsoluteCalibr.BMult.Split(',');
             var offsets = productMetadata.AbsoluteCalibr.BAdd.Split(',');
             RasterBand[] rasterBands = new RasterBand[gains.Length];
-            for (int i = 0; i < gains.Length; i++) {
-                rasterBands[i] = CreateRasterBandObject(Double.Parse(offsets[i]), Double.Parse(gains[i]));
+            for (int i = 0; i < gains.Length; i++)
+            {
+                rasterBands[i] = CreateRasterBandObject(double.Parse(offsets[i]), double.Parse(gains[i]));
             }
 
             stacAsset.RasterExtension().Bands = rasterBands;
         }
 
-        private void FillBitProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties) {
+        private void FillBitProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties)
+        {
             properties.Remove("bit");
             properties.Add("bit", productMetadata.Normal.NBitsPerPixel);
         }
 
-        private void FillDateTimeProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties) {
+        private void FillDateTimeProperties(SPP_ROOT productMetadata, Dictionary<string, object> properties)
+        {
             CultureInfo provider = CultureInfo.InvariantCulture;
             string format = "dd/MM/yyyy HH:mm:ss.ffffff";
             DateTime.TryParseExact(
-                String.Format("{0} {1}", productMetadata.Normal.DSceneDate, productMetadata.Normal.TSceneTime), format,
+                string.Format("{0} {1}", productMetadata.Normal.DSceneDate, productMetadata.Normal.TSceneTime), format,
                 provider, DateTimeStyles.AssumeUniversal, out var startDate);
-            double deltaTime = Double.Parse(productMetadata.Normal.NDeltaTime);
+            double deltaTime = double.Parse(productMetadata.Normal.NDeltaTime);
             var endDate = startDate.AddMinutes(deltaTime);
 
             Itenso.TimePeriod.TimeInterval dateInterval = new Itenso.TimePeriod.TimeInterval(startDate, endDate);
@@ -196,14 +210,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             properties.Remove("end_datetime");
 
             // datetime, start_datetime, end_datetime
-            if (dateInterval.IsAnytime) {
+            if (dateInterval.IsAnytime)
+            {
                 properties.Add("datetime", null);
             }
 
-            if (dateInterval.IsMoment) {
+            if (dateInterval.IsMoment)
+            {
                 properties.Add("datetime", dateInterval.Start.ToUniversalTime());
             }
-            else {
+            else
+            {
                 properties.Add("datetime", dateInterval.Start.ToUniversalTime());
                 properties.Add("start_datetime", dateInterval.Start.ToUniversalTime());
                 properties.Add("end_datetime", dateInterval.End.ToUniversalTime());
@@ -214,7 +231,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
                 DateTimeStyles.AssumeUniversal,
                 out var createdDate);
 
-            if (createdDate.Ticks != 0) {
+            if (createdDate.Ticks != 0)
+            {
                 properties.Remove("created");
                 properties.Add("created", createdDate.ToUniversalTime());
             }
@@ -225,26 +243,31 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
 
         private void FillInstrument(SPP_ROOT productMetadata,
-            Dictionary<string, object> properties, double gsd) {
+            Dictionary<string, object> properties, double gsd)
+        {
             string platformName = "resurs-p"; //productMetadata.CCodeKA;
-            if (!string.IsNullOrEmpty(platformName)) {
+            if (!string.IsNullOrEmpty(platformName))
+            {
                 properties.Remove("platform");
                 properties.Add("platform", platformName);
 
                 properties.Remove("mission");
                 properties.Add("mission", platformName);
             }
-            else {
+            else
+            {
                 throw new InvalidDataException("Platform id not found or not recognized");
             }
 
             // instruments
             var instrumentName = "";
 
-            if (productMetadata.Passport.CDeviceName.ToLower().Equals("geotonp")) {
+            if (productMetadata.Passport.CDeviceName.ToLower().Equals("geotonp"))
+            {
                 instrumentName = "geoton";
             }
-            else {
+            else
+            {
                 instrumentName = "kshmsa";
             }
 
@@ -256,12 +279,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        private void AddProcessingStacExtension(SPP_ROOT productMetadata, StacItem stacItem) {
+        private void AddProcessingStacExtension(SPP_ROOT productMetadata, StacItem stacItem)
+        {
             var proc = stacItem.ProcessingExtension();
             proc.Level = productMetadata.Normal.CLevel;
         }
 
-        private void AddViewStacExtension(SPP_ROOT productMetadata, StacItem stacItem) {
+        private void AddViewStacExtension(SPP_ROOT productMetadata, StacItem stacItem)
+        {
             var view = new ViewStacExtension(stacItem);
 
             view.Azimuth = ConvertDegreeAngleToDegreeDouble(productMetadata.Normal.AAzimutScan);
@@ -269,25 +294,30 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             view.SunElevation = ConvertDegreeAngleToDegreeDouble(productMetadata.Normal.ASunElevC);
         }
 
-        private void AddProjStacExtension(SPP_ROOT productMetaData, StacItem stacItem) {
+        private void AddProjStacExtension(SPP_ROOT productMetaData, StacItem stacItem)
+        {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.Epsg = long.Parse(productMetaData.CoordinateSystem.NCoordSystCode);
         }
 
 
         private async Task AddAssetsAsync(StacItem stacItem, IAssetsContainer assetsContainer, double gsd,
-            SPP_ROOT productMetadata) {
-            foreach (var asset in assetsContainer.Assets.Values.OrderBy(a => a.Uri.ToString())) {
+            SPP_ROOT productMetadata)
+        {
+            foreach (var asset in assetsContainer.Assets.Values.OrderBy(a => a.Uri.ToString()))
+            {
                 await AddAssetAsync(stacItem, asset, assetsContainer, gsd, productMetadata);
             }
         }
 
         private async Task AddAssetAsync(StacItem stacItem, IAsset asset,
-            IAssetsContainer assetsContainer, double gsd, SPP_ROOT productMetadata) {
+            IAssetsContainer assetsContainer, double gsd, SPP_ROOT productMetadata)
+        {
             string filename = Path.GetFileName(asset.Uri.ToString());
             string sensorName = filename.Split('_')[1];
             // thumbnail
-            if (filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture)) {
+            if (filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture))
+            {
                 stacItem.Assets.Add("thumbnail",
                     GetGenericAsset(stacItem, asset.Uri, "thumbnail"));
                 stacItem.Assets["thumbnail"].Properties.AddRange(asset.Properties);
@@ -296,7 +326,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
 
 
             // metadata
-            if (filename.EndsWith(".xml", true, CultureInfo.InvariantCulture)) {
+            if (filename.EndsWith(".xml", true, CultureInfo.InvariantCulture))
+            {
                 stacItem.Assets.Add("metadata",
                     GetGenericAsset(stacItem, asset.Uri, "metadata"));
                 stacItem.Assets["metadata"].Properties.AddRange(asset.Properties);
@@ -304,13 +335,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             }
 
 
-            if (filename.EndsWith(".tiff", true, CultureInfo.InvariantCulture)) {
+            if (filename.EndsWith(".tiff", true, CultureInfo.InvariantCulture))
+            {
                 string mssBandName;
 
-                if (asset.Uri.ToString().Contains("Geoton")) {
+                if (asset.Uri.ToString().Contains("Geoton"))
+                {
                     mssBandName = "MSS";
                 }
-                else {
+                else
+                {
                     mssBandName = "PMS";
                 }
 
@@ -320,7 +354,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
                 stacItem.Assets.Add(mssBandName, bandAsset);
 
                 // add raster bands only if product is Geoton
-                if (asset.Uri.ToString().Contains("Geoton")) {
+                if (asset.Uri.ToString().Contains("Geoton"))
+                {
                     AddRasterBands(productMetadata, bandAsset);
                 }
 
@@ -329,7 +364,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             }
         }
 
-        private StacAsset GetGenericAsset(StacItem stacItem, Uri uri, string role) {
+        private StacAsset GetGenericAsset(StacItem stacItem, Uri uri, string role)
+        {
             StacAsset stacAsset = new StacAsset(stacItem, uri);
             stacAsset.Roles.Add(role);
             stacAsset.MediaType =
@@ -338,14 +374,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        private StacAsset GetBandAsset(StacItem stacItem, IAsset asset, double gsd) {
+        private StacAsset GetBandAsset(StacItem stacItem, IAsset asset, double gsd)
+        {
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, asset.Uri,
                 new System.Net.Mime.ContentType(MimeTypes.GetMimeType(asset.Uri.ToString()))
             );
             stacAsset.Properties.AddRange(asset.Properties);
             stacAsset.SetProperty("gsd", gsd);
 
-            if (asset.Uri.ToString().Contains("Geoton")) {
+            if (asset.Uri.ToString().Contains("Geoton"))
+            {
                 //geoton
                 EoBandObject b01EoBandObject =
                     CreateEoBandObject("channel-1", EoBandCommonName.blue, 0.5045, 0.045);
@@ -358,7 +396,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
                 stacAsset.EoExtension().Bands = new[]
                     { b01EoBandObject, b02EoBandObject, b03EoBandObject, b04EoBandObject };
             }
-            else {
+            else
+            {
                 //KShMSA
                 EoBandObject b01EoBandObject =
                     CreateEoBandObject("channel-1", EoBandCommonName.blue, 0.47, 0.08);
@@ -378,10 +417,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
         private EoBandObject CreateEoBandObject(string name, EoBandCommonName eoBandCommonName, double centerWaveLength,
-            double fullWidthHalfMax, double? eai = null) {
+            double fullWidthHalfMax, double? eai = null)
+        {
             EoBandObject eoBandObject = new EoBandObject(name, eoBandCommonName);
             eoBandObject.Properties.Add("full_width_half_max", fullWidthHalfMax);
-            if (eai != null) {
+            if (eai != null)
+            {
                 eoBandObject.SolarIllumination = eai;
             }
 
@@ -389,7 +430,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
             return eoBandObject;
         }
 
-        private RasterBand CreateRasterBandObject(double offset, double gain) {
+        private RasterBand CreateRasterBandObject(double offset, double gain)
+        {
             RasterBand rasterBandObject = new RasterBand();
             rasterBandObject.Offset = offset;
             rasterBandObject.Scale = gain;
@@ -397,7 +439,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        private void FillBasicsProperties(IDictionary<string, object> properties) {
+        private void FillBasicsProperties(IDictionary<string, object> properties)
+        {
             CultureInfo culture = CultureInfo.InvariantCulture;
             // title
             properties.Remove("title");
@@ -410,12 +453,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         }
 
 
-        private void AddOtherProperties(IDictionary<string, object> properties) {
+        private void AddOtherProperties(IDictionary<string, object> properties)
+        {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "Roscosmos", 
+                    "Roscosmos",
                     "Resurs-P is a series of Russian commercial Earth observation satellites capable of acquiring high-resolution hyperspectral, wide-field multispectral, and panchromatic imagery.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.eoportal.org/satellite-missions/resurs-p")

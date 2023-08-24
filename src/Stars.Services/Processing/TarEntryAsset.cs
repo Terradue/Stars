@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TarEntryAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,9 +15,9 @@ namespace Terradue.Stars.Services.Processing
 {
     public class TarEntryAsset : IAsset, IStreamResource
     {
-        private string name;
-        private ulong size;
-        private BlockingStream blockingStream;
+        private readonly string name;
+        private readonly ulong size;
+        private readonly BlockingStream blockingStream;
 
         public TarEntryAsset(string name, ulong size, BlockingStream blockingStream)
         {

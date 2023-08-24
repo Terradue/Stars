@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Stars.cs
+
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Console.Operations;
-using System.ComponentModel.DataAnnotations;
-using System;
-using System.Net;
-using System.Reflection;
 
 namespace Terradue.Stars.Console
 {

@@ -1,19 +1,20 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3Tests.cs
+
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Stac;
 using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Resources;
-using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Supplier.Destination;
@@ -34,7 +35,7 @@ namespace Stars.Tests
                        IS3ClientFactory s3ClientFactory) : base(s3ClientFactory)
         {
             this.assetService = assetService;
-            this.serviceProvider = sp;
+            serviceProvider = sp;
             this.resourceServiceProvider = resourceServiceProvider;
         }
 
@@ -42,7 +43,7 @@ namespace Stars.Tests
         public void Test1()
         {
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-production-catalog/test.json");
-            StacCatalogNode node = (StacCatalogNode)StacCatalogNode.Create(new StacCatalog("test", "test"), s3ObjectDestination.Uri);
+            StacCatalogNode node = (StacCatalogNode)StacNode.Create(new StacCatalog("test", "test"), s3ObjectDestination.Uri);
             Assert.Equal("s3://local-production-catalog/test.json", node.Uri.ToString());
         }
 
@@ -54,7 +55,7 @@ namespace Stars.Tests
             var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif")), CancellationToken.None);
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog/calls/857/notifications/test502.json");
-            StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
+            StacItemNode itemNode = (StacItemNode)StacNode.Create(item, s3ObjectDestination.Uri);
             var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative, AssetChecks.None, CancellationToken.None);
             foreach (var ex in importReport.AssetsExceptions)
             {
@@ -72,7 +73,7 @@ namespace Stars.Tests
             var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog2/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif")), CancellationToken.None);
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/cci_fss_CFD_1993.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog2/indices_cog/copy/cci_fss_CFD_1993.json");
-            StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
+            StacItemNode itemNode = (StacItemNode)StacNode.Create(item, s3ObjectDestination.Uri);
             var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative, AssetChecks.None, CancellationToken.None);
             foreach (var ex in importReport.AssetsExceptions)
             {

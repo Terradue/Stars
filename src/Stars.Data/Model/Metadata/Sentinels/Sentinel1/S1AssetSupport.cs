@@ -1,7 +1,9 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S1AssetSupport.cs
+
 using System;
 using System.IO;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Stac;
 using Terradue.Stars.Interface;
 

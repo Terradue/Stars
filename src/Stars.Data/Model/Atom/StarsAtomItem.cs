@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StarsAtomItem.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +11,17 @@ using System.Xml;
 using Humanizer;
 using Markdig;
 using Stac;
+using Stac.Extensions.Eo;
+using Stac.Extensions.File;
 using Stac.Extensions.Projection;
-using Terradue.Stars.Data.ThirdParty.Geosquare;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Ogc.Eop21;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Geometry.Wkt;
-using Terradue.Stars.Services.Store;
-using Terradue.Stars.Services.ThirdParty.Titiler;
-using Stac.Extensions.File;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.ThirdParty.Egms;
-using Terradue.Stars.Interface;
-using Stac.Extensions.Eo;
+using Terradue.Stars.Services.ThirdParty.Titiler;
 
 namespace Terradue.Stars.Data.Model.Atom
 {
@@ -274,7 +275,7 @@ namespace Terradue.Stars.Data.Model.Atom
             EarthObservationType eop = CreateEOProfileFromStacItem(stacItem);
             if (eop != null)
             {
-                EarthObservationExtension = new SyndicationElementExtension(Terradue.ServiceModel.Ogc.OgcHelpers.CreateReader(eop));
+                EarthObservationExtension = new SyndicationElementExtension(ServiceModel.Ogc.OgcHelpers.CreateReader(eop));
                 return true;
             }
             return false;
@@ -484,7 +485,7 @@ namespace Terradue.Stars.Data.Model.Atom
 
                     // show related button
                     osLink.AttributeExtensions.Add(new XmlQualifiedName("level"), "primary");
-                    this.Links.Add(osLink);
+                    Links.Add(osLink);
                 }
             }
         }
@@ -508,7 +509,7 @@ namespace Terradue.Stars.Data.Model.Atom
             return new Dictionary<string, StacAsset>();
         }
 
-        SyndicationElementExtension earthObservationExtension = null;
+        private SyndicationElementExtension earthObservationExtension = null;
 
         public SyndicationElementExtension EarthObservationExtension
         {
@@ -518,9 +519,9 @@ namespace Terradue.Stars.Data.Model.Atom
             }
             set
             {
-                this.ElementExtensions.Remove(earthObservationExtension);
+                ElementExtensions.Remove(earthObservationExtension);
                 earthObservationExtension = value;
-                this.ElementExtensions.Add(earthObservationExtension);
+                ElementExtensions.Add(earthObservationExtension);
             }
         }
 
@@ -569,7 +570,7 @@ namespace Terradue.Stars.Data.Model.Atom
                     catch { }
                 }
                 // Cloud cover
-                if ( stacItem.EoExtension().CloudCover != null)
+                if (stacItem.EoExtension().CloudCover != null)
                 {
                     eop.result = new ServiceModel.Ogc.Om20.OM_ResultPropertyType();
                     eop.result.Opt21EarthObservationResult = new ServiceModel.Ogc.Opt21.OptEarthObservationResultType();

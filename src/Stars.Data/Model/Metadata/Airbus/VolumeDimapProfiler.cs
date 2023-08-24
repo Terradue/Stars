@@ -1,13 +1,13 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: VolumeDimapProfiler.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
-using Stac;
 using Stac.Extensions.Eo;
 using Terradue.Stars.Data.Model.Metadata.Airbus.Schemas;
-using Terradue.Stars.Data.Utils;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model.Stac;
 
@@ -17,7 +17,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
     {
         private readonly AirbusMetadataExtractor airbusMetadataExtractor;
 
-        public VolumeDimapProfiler(Schemas.Dimap_Document dimap, AirbusMetadataExtractor airbusMetadataExtractor) : base(dimap)
+        public VolumeDimapProfiler(Dimap_Document dimap, AirbusMetadataExtractor airbusMetadataExtractor) : base(dimap)
         {
             this.airbusMetadataExtractor = airbusMetadataExtractor;
         }

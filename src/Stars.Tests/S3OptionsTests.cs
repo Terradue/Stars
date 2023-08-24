@@ -1,19 +1,12 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3OptionsTests.cs
+
 using System;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
-using Amazon.S3;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
-using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Resources;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Services.Supplier.Destination;
 using Xunit;
 
 namespace Stars.Tests
@@ -27,7 +20,7 @@ namespace Stars.Tests
                        IResourceServiceProvider resourceServiceProvider,
                        IS3ClientFactory s3ClientFactory) : base(s3ClientFactory)
         {
-            this.serviceProvider = sp;
+            serviceProvider = sp;
         }
 
         [Fact]
@@ -41,7 +34,7 @@ namespace Stars.Tests
             Assert.NotNull(s3Client);
             Assert.Equal("fr-par", s3Client.Config.AuthenticationRegion);
             // the serviceUrl will be null as the new Custom config will use the DetermineServiceURL method
-            Assert.Equal(null, s3Client.Config.ServiceURL);
+            Assert.Null(s3Client.Config.ServiceURL);
         }
 
     }

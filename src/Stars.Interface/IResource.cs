@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IResource.cs
+
 using System.Net.Mime;
-using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface
 {

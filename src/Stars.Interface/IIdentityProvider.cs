@@ -1,7 +1,9 @@
-using System.Collections.Generic;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IIdentityProvider.cs
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Principal;
 
 namespace Terradue.Stars.Interface
 {

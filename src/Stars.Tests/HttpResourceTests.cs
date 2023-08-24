@@ -1,20 +1,15 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: HttpResourceTests.cs
+
 using System;
-using System.IO;
 using System.Threading.Tasks;
-using Stac;
-using Stac.Exceptions;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier.Destination;
-using Xunit;
-using Microsoft.Extensions.Logging;
 using MELT;
+using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
-using Terradue.Stars.Services.ThirdParty.Titiler;
-using Terradue.Stars.Data.Model.Atom;
-using System.Linq;
 using Terradue.Stars.Services.Resources;
+using Xunit;
 
 namespace Stars.Tests
 {
@@ -32,7 +27,7 @@ namespace Stars.Tests
             logger = loggerFactory.CreateLogger<StacTests>();
         }
 
-        [Fact (Skip = "External resource")]
+        [Fact(Skip = "External resource")]
         public async Task LargeHttpResourceTest()
         {
             GenericResource genericResource = new GenericResource(new Uri("https://download.disasterscharter.org/cos-api/service/acquisition/916/CSA/RCM-1/urn_ogc_def_EOP_CSA_RCM1_OK2417781_PK2421038_1_FSL25_20230119_105132_HH_HV_GRD/urn_ogc_def_EOP_CSA_RCM1_OK2417781_PK2421038_1_FSL25_20230119_105132_HH_HV_GRD-product.zip"));

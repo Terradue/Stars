@@ -1,13 +1,13 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3ObjectDestination.cs
+
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Resources;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Supplier.Destination
 {
@@ -19,7 +19,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         private S3ObjectDestination(Uri s3Uri, IResource resource = null)
         {
-            this.s3Url = S3Url.ParseUri(s3Uri);
+            s3Url = S3Url.ParseUri(s3Uri);
             this.resource = resource;
         }
 

@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Alos2MetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,10 +17,10 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Alos2
 {
@@ -31,8 +35,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -54,7 +57,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
         internal virtual StacItem CreateStacItem(Alos2Metadata metadata)
@@ -123,7 +126,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
         private string GetProcessingLevel(Alos2Metadata metadata)
         {
-            return String.Format("L{0}", metadata.GetString("Lbi_ProcessLevel"));
+            return string.Format("L{0}", metadata.GetString("Lbi_ProcessLevel"));
         }
 
         private IDictionary<string, object> GetCommonMetadata(Alos2Metadata metadata)
@@ -180,11 +183,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
         }
 
-        private void FillBasicsProperties(Alos2Metadata metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(Alos2Metadata metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
-            properties["title"] = String.Format("ALOS-2 PALSAR-2 {0} L{1} {2} {3}",
+            properties["title"] = string.Format("ALOS-2 PALSAR-2 {0} L{1} {2} {3}",
                 metadata.GetString("Ext_ObservationMode"),
                 metadata.GetString("Lbi_ProcessLevel"),
                 metadata.GetString("Ext_Polarizations"),
@@ -199,7 +202,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "JAXA", 
+                    "JAXA",
                     "The Advanced Land Observing Satellite-2 is a follow-on mission from the ALOS. ALOS has contributed to cartography, regional observation, disaster monitoring, and resource surveys, since its launch in 2006. ALOS-2 will succeed this mission with enhanced capabilities.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.eorc.jaxa.jp/ALOS/en/alos-2/a2_about_e.htm")
@@ -247,20 +250,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
             foreach (var fileName in metadata.Assets)
             {
-                IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", fileName.Replace(".", "\\.")));
-                if (dataAsset == null)
-                    throw new FileNotFoundException(string.Format("Data file '{0}' declared in summary, but not present", fileName));
+                IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, string.Format("{0}$", fileName.Replace(".", "\\."))) ?? throw new FileNotFoundException(string.Format("Data file '{0}' declared in summary, but not present", fileName));
                 string polarization = fileName.Substring(4, 2);
                 string key, contentType, title;
                 if (fileName.EndsWith(".tif"))   // (IMG_*.tif)
                 {
-                    key = String.Format("amplitude-{0}", polarization.ToLower());
+                    key = string.Format("amplitude-{0}", polarization.ToLower());
                     contentType = "image/tiff; application=geotiff";
                     title = "GeoTIFF data file";
                 }
                 else   // (LUT_*.txt)
                 {
-                    key = String.Format("lut-{0}", polarization.ToLower());
+                    key = string.Format("lut-{0}", polarization.ToLower());
                     contentType = "text/plain";
                     title = "Pixel value to Sigma Naught Conversion factors";
                 }
@@ -292,12 +293,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"summary\.txt$");
-            //Console.WriteLine("SUMMARY: {0}", manifestAsset == null ? "NULL" : manifestAsset.Title);
-            if (manifestAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
-            }
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"summary\.txt$") ?? throw new FileNotFoundException(string.Format("Unable to find the summary file asset"));
             return manifestAsset;
         }
 
@@ -328,13 +324,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
     {
 
         // Regular expressions should normally be static but creates problem with async methods
-        private Regex lineRegex = new Regex("^ *([^= ]+) *= *(.*)$");
-        private Regex quotedValueRegex = new Regex("^\"(.*)\"$");
-        private Regex fileNameKeyRegex = new Regex("Pdi_L\\d{2}ProductFileName\\d{2}");   // e.g. Pdi_L15ProductFileName01
-        private Regex fileNameValueRegex = new Regex("(?'type'IMG|LUT)-(?'pol'HH|HV|VH|VV)-(?'id'.{32})\\.(tif|txt)");   // e.g. IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif
-        private Regex identifierRegex = new Regex("ALOS2(?'orbit'\\d{5})(?'frame'\\d{4})-(?'date'\\d{6})-(?'mode'(SBS|UBS|UBD|HBS|HBD|HBQ|FBS|FBD|FBQ|WBS|WBD|WWS|WWD|VBS|VBD))(?'obsdir'[LR])(?'level'.{3})(?'proc'[GR_])(?'proj'[UPML_])(?'orbitdir'[AD])");  // e.g. ALOS2146686640-170209-FBDR1.5GUA
-        private Regex siteRegex = new Regex(".* (?'dt'\\d{8} \\d{6})$");
-        private IAsset summaryAsset;
+        private readonly Regex lineRegex = new Regex("^ *([^= ]+) *= *(.*)$");
+        private readonly Regex quotedValueRegex = new Regex("^\"(.*)\"$");
+        private readonly Regex fileNameKeyRegex = new Regex("Pdi_L\\d{2}ProductFileName\\d{2}");   // e.g. Pdi_L15ProductFileName01
+        private readonly Regex fileNameValueRegex = new Regex("(?'type'IMG|LUT)-(?'pol'HH|HV|VH|VV)-(?'id'.{32})\\.(tif|txt)");   // e.g. IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif
+        private readonly Regex identifierRegex = new Regex("ALOS2(?'orbit'\\d{5})(?'frame'\\d{4})-(?'date'\\d{6})-(?'mode'(SBS|UBS|UBD|HBS|HBD|HBQ|FBS|FBD|FBQ|WBS|WBD|WWS|WWD|VBS|VBD))(?'obsdir'[LR])(?'level'.{3})(?'proc'[GR_])(?'proj'[UPML_])(?'orbitdir'[AD])");  // e.g. ALOS2146686640-170209-FBDR1.5GUA
+        private readonly Regex siteRegex = new Regex(".* (?'dt'\\d{8} \\d{6})$");
+        private readonly IAsset summaryAsset;
 
         private Dictionary<string, string> properties { get; set; }
 
@@ -343,7 +339,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
         public Alos2Metadata(IAsset summaryAsset)
         {
             this.summaryAsset = summaryAsset;
-            this.properties = new Dictionary<string, string>();
+            properties = new Dictionary<string, string>();
             Assets = new List<string>();
         }
 
@@ -386,7 +382,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
                         }
                     }
 
-                    properties["Ext_Identifier"] = String.Format("{0}-{1}", properties["Scs_SceneID"], properties["Pds_ProductID"]);
+                    properties["Ext_Identifier"] = string.Format("{0}-{1}", properties["Scs_SceneID"], properties["Pds_ProductID"]);
 
                     Match identifierMatch = identifierRegex.Match(properties["Ext_Identifier"]);
                     if (!identifierMatch.Success)
@@ -407,7 +403,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
                     properties["Ext_OrbitDirection"] = identifierMatch.Groups["orbitdir"].Value == "A" ? "ASCENDING" : "DESCENDING";
 
                     // Polarization(s), combined by slash(es) if multiple
-                    properties["Ext_Polarizations"] = String.Join("/", polarizations);
+                    properties["Ext_Polarizations"] = string.Join("/", polarizations);
 
                     Match siteMatch = siteRegex.Match(properties["Odi_SiteDateTime"]);
                     if (siteMatch.Success)
@@ -433,7 +429,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
             {
                 return properties[key];
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return null;
         }
 
@@ -441,12 +437,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
         {
             if (properties.ContainsKey(key))
             {
-                if (Int32.TryParse(properties[key], out int value))
+                if (int.TryParse(properties[key], out int value))
                     return value;
                 else
-                    throw new FormatException(String.Format("Invalid value for key '{0}' (not an int)", key));
+                    throw new FormatException(string.Format("Invalid value for key '{0}' (not an int)", key));
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return 0;
         }
 
@@ -454,12 +450,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
         {
             if (properties.ContainsKey(key))
             {
-                if (Int64.TryParse(properties[key], out long value))
+                if (long.TryParse(properties[key], out long value))
                     return value;
                 else
-                    throw new FormatException(String.Format("Invalid value for key '{0}' (not a long)", key));
+                    throw new FormatException(string.Format("Invalid value for key '{0}' (not a long)", key));
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return 0;
         }
 
@@ -467,12 +463,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
         {
             if (properties.ContainsKey(key))
             {
-                if (Double.TryParse(properties[key], out double value))
+                if (double.TryParse(properties[key], out double value))
                     return value;
                 else
-                    throw new FormatException(String.Format("Invalid value for key '{0}' (not a double)", key));
+                    throw new FormatException(string.Format("Invalid value for key '{0}' (not a double)", key));
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return 0;
         }
 
@@ -488,7 +484,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
                 }
                 else if (positions.Length >= 3)
                 {
-                    input = String.Format("{0}-{1}-{2}T{3}:{4}:{5}Z",
+                    input = string.Format("{0}-{1}-{2}T{3}:{4}:{5}Z",
                         raw.Substring(positions[0], 4),
                         raw.Substring(positions[1], 2),
                         raw.Substring(positions[2], 2),
@@ -499,14 +495,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
                 }
                 else
                 {
-                    throw new FormatException(String.Format("Invalid format expectation for key '{0}' (not a date/time)", key));
+                    throw new FormatException(string.Format("Invalid format expectation for key '{0}' (not a date/time)", key));
                 }
                 if (DateTime.TryParse(input, null, DateTimeStyles.AssumeUniversal, out DateTime value))
                     return value;
                 else
-                    throw new FormatException(String.Format("Invalid value for key '{0}' (not a date/time)", key));
+                    throw new FormatException(string.Format("Invalid value for key '{0}' (not a date/time)", key));
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return DateTime.MinValue;
         }
     }

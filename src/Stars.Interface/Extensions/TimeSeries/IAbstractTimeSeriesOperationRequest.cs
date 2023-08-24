@@ -1,8 +1,10 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IAbstractTimeSeriesOperationRequest.cs
+
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Stac;
-using Stac.Common;
 
 namespace Terradue.Stars.Interface.Extensions.TimeSeries
 {

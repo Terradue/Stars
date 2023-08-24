@@ -1,5 +1,7 @@
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: HttpCachedHeaders.cs
+
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -55,8 +57,8 @@ namespace Terradue.Stars.Services.Resources
             }
             set
             {
-                base.Remove("Content-Type");
-                base.Add("Content-Type", value.ToString());
+                Remove("Content-Type");
+                Add("Content-Type", value.ToString());
             }
         }
 
@@ -72,8 +74,8 @@ namespace Terradue.Stars.Services.Resources
             }
             set
             {
-                base.Remove("Content-Length");
-                base.Add("Content-Length", value.ToString());
+                Remove("Content-Length");
+                Add("Content-Length", value.ToString());
             }
         }
 
@@ -89,8 +91,8 @@ namespace Terradue.Stars.Services.Resources
             }
             set
             {
-                base.Remove("Content-Disposition");
-                base.Add("Content-Disposition", value.ToString());
+                Remove("Content-Disposition");
+                Add("Content-Disposition", value.ToString());
             }
         }
     }

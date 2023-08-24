@@ -1,5 +1,7 @@
-using System;
-using McMaster.Extensions.CommandLineUtils;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: BaseCommandLineTests.cs
+
 using Terradue.Stars.Console;
 using Xunit;
 using Xunit.Abstractions;

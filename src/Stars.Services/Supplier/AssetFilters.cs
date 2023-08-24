@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AssetFilters.cs
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -163,11 +167,11 @@ namespace Terradue.Stars.Services.Supplier
 
         public bool IsMatch(KeyValuePair<string, IAsset> asset)
         {
-            return 
-                ( string.IsNullOrEmpty(mediaType) ||
+            return
+                (string.IsNullOrEmpty(mediaType) ||
                   asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
                 ) &&
-                ( parameters == null ||
+                (parameters == null ||
                   parameters.Any(p => asset.Value.ContentType.Parameters.ContainsKey(p.Key) &&
                                       asset.Value.ContentType.Parameters[p.Key] == p.Value)
                 );

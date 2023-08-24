@@ -1,25 +1,26 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TestNode.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
 using Itenso.TimePeriod;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
 
 namespace Terradue.Data.Tests
 {
     internal class TestItem : IItem
     {
-        private DirectoryInfo directory;
+        private readonly DirectoryInfo directory;
 
         public TestItem(string folderPath)
         {
-            this.directory = new DirectoryInfo(folderPath);
+            directory = new DirectoryInfo(folderPath);
         }
 
         public string Title => directory.FullName;
@@ -28,9 +29,9 @@ namespace Terradue.Data.Tests
 
         public bool IsCatalog => false;
 
-        public Uri Uri => new Uri(Path.Combine(directory.FullName, "../.."));
+        public Uri Uri => new(Path.Combine(directory.FullName, "../.."));
 
-        public ContentType ContentType => new ContentType("application/x-directory");
+        public ContentType ContentType => new("application/x-directory");
 
         public ResourceType ResourceType => ResourceType.Item;
 
@@ -40,7 +41,7 @@ namespace Terradue.Data.Tests
 
         public IGeometryObject Geometry => null;
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileNameWithoutExtension(directory.FullName) };
+        public ContentDisposition ContentDisposition => new() { FileName = Path.GetFileNameWithoutExtension(directory.FullName) };
 
         public IDictionary<string, object> Properties => new Dictionary<string, object>();
 

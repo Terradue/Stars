@@ -1,12 +1,11 @@
-using Xunit;
-using System.Net;
-using System.Net.Http;
-using Microsoft.Extensions.Configuration;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Logging.cs
 
 namespace Stars.Tests
 {
     public class Logging
     {
-        
+
     }
 }

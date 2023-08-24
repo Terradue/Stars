@@ -1,6 +1,6 @@
-using System;
-using System.Collections.Generic;
-using Terradue.Stars.Interface.Router;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: RouterServiceParameters.cs
 
 namespace Terradue.Stars.Services.Router
 {
@@ -8,6 +8,6 @@ namespace Terradue.Stars.Services.Router
     {
         public int Recursivity { get; set; }
         public bool SkipAssets { get; set; }
-        
+
     }
 }

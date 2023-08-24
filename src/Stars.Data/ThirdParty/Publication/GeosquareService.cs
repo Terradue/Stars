@@ -1,29 +1,33 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GeosquareService.cs
+
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Stac;
-using Terradue.Stars.Data.Model.Atom;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Common;
+using Terradue.Stars.Data.Model.Atom;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Model;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
 using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services;
-using System.Threading;
-using Terradue.Stars.Services.Model;
-using System.Collections.Specialized;
-using System.Web;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -47,7 +51,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                                   IResourceServiceProvider resourceServiceProvider,
                                   ILogger<GeosquareService> logger)
         {
-            this.routingService = routerService;
+            routingService = routerService;
             this.translatorManager = translatorManager;
             this.geosquareConfiguration = geosquareConfiguration.Value;
             this.httpClientFactory = httpClientFactory;
@@ -60,8 +64,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         {
             // Get the client to use with the catalog Id
             HttpClient client = CreateClient(publicationModel.CatalogId);
-            GeosquarePublicationModel geosquareModel = publicationModel as GeosquarePublicationModel;
-            if (geosquareModel == null)
+            if (!(publicationModel is GeosquarePublicationModel geosquareModel))
             {
                 geosquareModel = CreateModelFromPublication(publicationModel);
             }
@@ -128,8 +131,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         private async Task<object> OnBeforeBranching(ICatalog node, IRouter router, object state, ICollection<IResource> subroutes, CancellationToken ct)
         {
-            var collection = (node as StacCatalogNode).StacCatalog as StacCollection;
-            if (collection == null)
+            if (!((node as StacCatalogNode).StacCatalog is StacCollection collection))
             {
                 return state;
             }
@@ -143,7 +145,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             return state;
         }
 
-        public async Task<object> PostCollectionToCatalog(Terradue.Stars.Interface.ICollection collectionNode, IRouter router, object state, CancellationToken ct)
+        public async Task<object> PostCollectionToCatalog(ICollection collectionNode, IRouter router, object state, CancellationToken ct)
         {
             GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
             AtomItemNode atomItemNode = null;
@@ -211,7 +213,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             // create eventual opensearch link
             if (atomItem is StarsAtomItem)
             {
-                await (atomItem as StarsAtomItem).CreateOpenSearchLinks(this.CreateOpenSearchLinkAsync, geosquarePublicationState);
+                await (atomItem as StarsAtomItem).CreateOpenSearchLinks(CreateOpenSearchLinkAsync, geosquarePublicationState);
             }
 
             //add links
@@ -279,10 +281,10 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             {
                 var template = geosquareConfiguration.GetOpenSearchForUri(link.Uri);
                 if (string.IsNullOrEmpty(template)) return null;
-                var webRoute = await resourceServiceProvider.GetStreamResourceAsync(new AtomResourceLink(link), System.Threading.CancellationToken.None);
-                IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync(System.Threading.CancellationToken.None));
-                var osUrl = template.ReplaceMacro<IStacObject>("stacObject", linkedStacObject);
-                osUrl = osUrl.ReplaceMacro<string>("index", catalogPublicationState.GeosquarePublicationModel.Index);
+                var webRoute = await resourceServiceProvider.GetStreamResourceAsync(new AtomResourceLink(link), CancellationToken.None);
+                IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync(CancellationToken.None));
+                var osUrl = template.ReplaceMacro("stacObject", linkedStacObject);
+                osUrl = osUrl.ReplaceMacro("index", catalogPublicationState.GeosquarePublicationModel.Index);
                 var osUri = new Uri(osUrl);
 
                 var relatedLink = new SyndicationLink(

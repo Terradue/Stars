@@ -1,21 +1,21 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ContainerNode.cs
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
 using Itenso.TimePeriod;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier
 {
     public class ContainerNode : IAssetsContainer, IItem
     {
         private readonly IItem item;
-        private readonly IDictionary<string, IAsset>  assets;
+        private readonly IDictionary<string, IAsset> assets;
         private readonly string suffix;
 
         public ContainerNode(IItem item, IDictionary<string, IAsset> assets, string suffix)

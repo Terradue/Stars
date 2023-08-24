@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TestVectorService.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +26,7 @@ namespace Terradue.Data.Tests
             Dictionary<string, StacAsset> vectorAssets = stacItem.Assets
                                                             .Where(a => a.Value.Roles.Contains("visual"))
                                                             .OrderBy(a => a.Value.GetProperty<long>("size"))
-                                                            .Where(a => a.Value.MediaType.MediaType.Contains("application/flatgeobuf") 
+                                                            .Where(a => a.Value.MediaType.MediaType.Contains("application/flatgeobuf")
                                                                         || a.Value.MediaType.MediaType.Contains("application/geo+json"))
                                                             .ToDictionary(a => a.Key, a => a.Value);
             return vectorAssets;

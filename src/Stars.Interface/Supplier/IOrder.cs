@@ -1,6 +1,6 @@
-using System;
-using System.Net.Mime;
-using Terradue.Stars.Interface.Router;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IOrder.cs
 
 namespace Terradue.Stars.Interface.Supplier
 {

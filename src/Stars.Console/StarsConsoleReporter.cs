@@ -1,9 +1,9 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StarsConsoleReporter.cs
+
 using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
-using McMaster.Extensions.CommandLineUtils.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace Terradue.Stars.Console
@@ -42,7 +42,7 @@ namespace Terradue.Stars.Console
         {
             string message = formatter(state, exception);
 
-            if ( logLevel == LogLevel.Trace && verbose <= 1 )
+            if (logLevel == LogLevel.Trace && verbose <= 1)
                 return;
 
             switch (logLevel)

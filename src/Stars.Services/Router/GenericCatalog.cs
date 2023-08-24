@@ -1,8 +1,10 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GenericCatalog.cs
+
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Net.Mime;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;

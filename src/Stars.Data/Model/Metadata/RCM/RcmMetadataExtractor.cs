@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: RcmMetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,12 +20,12 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Data.Model.Shared;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Geometry.GeoJson;
-using Terradue.Stars.Data.Model.Shared;
 
 namespace Terradue.Stars.Data.Model.Metadata.Rcm
 {
@@ -51,9 +55,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             IAsset kmlFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(mapOverlay.kml)$");
             if (auxFile == null)
             {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
+                throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             }
-            logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
+            logger.LogDebug(string.Format("Metadata file is {0}", auxFile.Uri));
 
             IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None);
             if (auxFileStreamable == null)
@@ -92,7 +96,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
             AddAssets(stacItem, auxiliary, item);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
 
         }
 
@@ -162,7 +166,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "CSA", 
+                    "CSA",
                     "The RADARSAT Constellation Mission (RCM) is Canada's new generation of Earth observation satellites. The RCM uses a trio of satellites to take daily scans of the country and its waters.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.asc-csa.gc.ca/eng/satellites/radarsat/what-is-rcm.asp")
@@ -373,7 +377,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
             properties.Add("updated", DateTime.UtcNow.ToString(format));
         }
 
-        private void FillBasicsProperties(Product auxiliary, IDictionary<String, object> properties)
+        private void FillBasicsProperties(Product auxiliary, IDictionary<string, object> properties)
         {
             // title
             properties.Remove("title");
@@ -382,7 +386,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         protected string GetTitle(Product auxiliary, IDictionary<string, object> properties)
         {
-            return string.Format("{0} {1} {2}", 
+            return string.Format("{0} {1} {2}",
                 //StylePlatform(properties.GetProperty<string>("platform")),
                 properties.GetProperty<string>("platform").ToUpper(),
                 GetProductType(auxiliary),
@@ -453,8 +457,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         public override bool CanProcess(IResource route, IDestination destinations)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(product.xml)$");
             try
             {

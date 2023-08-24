@@ -1,15 +1,9 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ApiClasses.cs
+
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Net.Mime;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
 
 namespace Terradue.Stars.Data.Suppliers.PlanetScope
 {

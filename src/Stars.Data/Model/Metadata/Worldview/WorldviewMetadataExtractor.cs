@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: WorldviewMetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,14 +16,14 @@ using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
+using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Model.Stac;
-using Stac.Extensions.Raster;
 using Terradue.Stars.Services;
-using Terradue.Stars.Geometry.GeoJson;
-using Stac.Extensions.Projection;
+using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Data.Model.Metadata.Worldview
 {
@@ -31,8 +35,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             IAsset metadata = FindFirstAssetFromFileNameRegex(item, "^(WV)[0-9a-zA-Z_-]*(\\.txt)$");
 
 
@@ -49,13 +52,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             logger.LogDebug("Retrieving the metadata file in the product package");
-            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "^(WV)[0-9a-zA-Z_-]*(\\.txt)$");
-            if (metadataFile == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
-
-            logger.LogDebug(String.Format("Metadata file is {0}", metadataFile.Uri));
+            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "^(WV)[0-9a-zA-Z_-]*(\\.txt)$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
+            logger.LogDebug(string.Format("Metadata file is {0}", metadataFile.Uri));
 
 
             //  loading properties in dictionary
@@ -98,7 +96,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
             AddAssets(stacItem, metadata, isdMetadata, item);
 
             // AddEoBandPropertyInItem(stacItem);
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
         }
 
         private void AddProcessingStacExtension(JavaProperties metadata, StacItem stacItem)
@@ -141,7 +139,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
             string filename = Path.GetFileName(asset.Uri.ToString());
 
             // thumbnail
-            if (filename.EndsWith(".XML", true, CultureInfo.InvariantCulture)){
+            if (filename.EndsWith(".XML", true, CultureInfo.InvariantCulture))
+            {
                 stacItem.Assets.Add("manifest",
                     GetGenericAsset(stacItem, asset, new[] { "metadata" }));
             }
@@ -555,7 +554,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
             }
         }
 
-        private void FillBasicsProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(JavaProperties metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -569,13 +568,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
             );
         }
 
-        private void AddOtherProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        private void AddOtherProperties(JavaProperties metadata, IDictionary<string, object> properties)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "DigitalGlobe/Maxar", 
+                    "DigitalGlobe/Maxar",
                     "WorldView are commercial imaging satellites of DigitalGlobe Inc. of Longmont, CO, USA. The overall objective is to meet the growing commercial demand for high-resolution satellite imagery.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://gisgeography.com/digitalglobe-satellite-imagery/")
@@ -619,7 +618,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
 
         private void AddProjStacExtension(Isd auxiliary, StacItem stacItem)
         {
-           stacItem.ProjectionExtension().Epsg = null;
+            stacItem.ProjectionExtension().Epsg = null;
         }
 
 

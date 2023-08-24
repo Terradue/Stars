@@ -1,7 +1,10 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3Url.cs
+
 using System;
 using System.Text.RegularExpressions;
 using System.Web;
-using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.Resources
 {
@@ -33,10 +36,10 @@ namespace Terradue.Stars.Services.Resources
         private const string versionID = "versionId";
 
         // Pattern used to parse multiple path and host style S3 endpoint URLs.
-        private static Regex s3URLPattern = new Regex(@"^(.+\.)?s3[.-](?:(accelerated|dualstack|website)[.-])?([a-z0-9-]+)\.(?:[a-z0-9-\.]+)");
+        private static readonly Regex s3URLPattern = new Regex(@"^(.+\.)?s3[.-](?:(accelerated|dualstack|website)[.-])?([a-z0-9-]+)\.(?:[a-z0-9-\.]+)");
 
         // Pattern to extract S3 bucket
-        private static Regex s3BucketRegex = new Regex(@"^s3://(?'bucket'[^/]+).*");
+        private static readonly Regex s3BucketRegex = new Regex(@"^s3://(?'bucket'[^/]+).*");
 
         public S3Url(string bucketName, string key)
         {
@@ -69,18 +72,17 @@ namespace Terradue.Stars.Services.Resources
 
         public string Region { get; private set; }
 
-        public Uri Uri => new Uri(string.Format("{0}://{1}{2}{3}", 
-                            Scheme, 
-                            Endpoint == null ? null : Endpoint + "/", 
-                            PathStyle ? Bucket + "/" : null, 
+        public Uri Uri => new Uri(string.Format("{0}://{1}{2}{3}",
+                            Scheme,
+                            Endpoint == null ? null : Endpoint + "/",
+                            PathStyle ? Bucket + "/" : null,
                             Key));
 
         public Uri EndpointUrl => Endpoint == null ? null : new Uri(string.Format("{0}://{1}", Scheme, Endpoint));
 
         public static S3Url Parse(string url)
         {
-            Uri s3Uri = null;
-            if (!Uri.TryCreate(url, UriKind.Absolute, out s3Uri))
+            if (!Uri.TryCreate(url, UriKind.Absolute, out Uri s3Uri))
             {
                 throw new FormatException($"unable to parse url : {url}");
             }
@@ -227,43 +229,43 @@ namespace Terradue.Stars.Services.Resources
 
         public object Clone()
         {
-            return S3Url.ParseUri(this.Uri);
+            return ParseUri(Uri);
         }
 
         public void NormalizeKey()
         {
-            this.Key = this.Key.TrimEnd('/');
+            Key = Key.TrimEnd('/');
         }
 
         public S3Url WithScheme(string scheme)
         {
-            this.Scheme = scheme;
+            Scheme = scheme;
             return this;
         }
 
         public S3Url WithBucket(string bucket)
         {
-            this.Bucket = bucket;
+            Bucket = bucket;
             return this;
         }
 
         public S3Url WithKey(string key)
         {
-            this.Key = key;
+            Key = key;
             return this;
         }
 
 
         public S3Url WithVersionId(string versionId)
         {
-            this.VersionID = versionId;
+            VersionID = versionId;
             return this;
         }
 
 
         public S3Url WithRegion(string region)
         {
-            this.Region = region;
+            Region = region;
             return this;
         }
 
@@ -274,5 +276,3 @@ namespace Terradue.Stars.Services.Resources
 
     }
 }
-
-

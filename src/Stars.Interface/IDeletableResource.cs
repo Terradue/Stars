@@ -1,9 +1,9 @@
-using System;
-using System.IO;
-using System.Net.Mime;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IDeletableResource.cs
+
 using System.Threading;
 using System.Threading.Tasks;
-using Stac;
 
 namespace Terradue.Stars.Interface
 {
