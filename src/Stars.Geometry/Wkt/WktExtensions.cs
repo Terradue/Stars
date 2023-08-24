@@ -41,44 +41,44 @@ namespace Terradue.Stars.Geometry.Wkt
 
         public static string ToWkt(this IGeometryObject geometry)
         {
-            if (geometry is Point)
+            if (geometry is Point point1)
             {
-                var point = GeometryToWktString((Point)geometry);
+                var point = GeometryToWktString(point1);
 
                 return string.Format("POINT({0})", point);
             }
 
-            if (geometry is MultiPoint)
+            if (geometry is MultiPoint multiPoint)
             {
-                var point = GeometryToWktString((MultiPoint)geometry);
+                var point = GeometryToWktString(multiPoint);
 
                 return string.Format("MULTIPOINT{0}", point);
             }
 
-            if (geometry is LineString)
+            if (geometry is LineString lineString1)
             {
-                var linestring = GeometryToWktString((LineString)geometry);
+                var linestring = GeometryToWktString(lineString1);
 
                 return string.Format("LINESTRING{0}", linestring);
             }
 
-            if (geometry is Polygon)
+            if (geometry is Polygon polygon1)
             {
-                var polygon = GeometryToWktString((Polygon)geometry);
+                var polygon = GeometryToWktString(polygon1);
 
                 return string.Format("POLYGON{0}", polygon);
             }
 
-            if (geometry is MultiPolygon)
+            if (geometry is MultiPolygon multiPolygon1)
             {
-                var multiPolygon = GeometryToWktString((MultiPolygon)geometry);
+                var multiPolygon = GeometryToWktString(multiPolygon1);
 
                 return string.Format("MULTIPOLYGON{0}", multiPolygon);
             }
 
-            if (geometry is MultiLineString)
+            if (geometry is MultiLineString multiLineString1)
             {
-                var multiLineString = GeometryToWktString((MultiLineString)geometry);
+                var multiLineString = GeometryToWktString(multiLineString1);
 
                 return string.Format("MULTILINESTRING{0}", multiLineString);
             }
@@ -99,8 +99,8 @@ namespace Terradue.Stars.Geometry.Wkt
         private static string GeometryToWktString(IPosition position)
         {
 
-            if (position is Position)
-                return string.Format(ci, "{0} {1}", ((Position)position).Longitude, ((Position)position).Latitude);
+            if (position is Position position1)
+                return string.Format(ci, "{0} {1}", position1.Longitude, position1.Latitude);
 
             return "";
         }

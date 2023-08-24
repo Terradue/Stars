@@ -21,7 +21,7 @@ namespace Terradue.Stars.Services.Translator
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
             Dictionary<ITranslator, T> translations = new Dictionary<ITranslator, T>();
-            if (node is T) return (T)node;
+            if (node is T nodeT) return nodeT;
             List<Exception> exceptions = new List<Exception>();
             foreach (var translator in GetPlugins().Values)
             {

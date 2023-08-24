@@ -352,10 +352,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             var measurementFrameSet = xfdu.metadataSection.First(m => m.ID == "measurementFrameSet");
 
             if (measurementFrameSet.metadataWrap.xmlData.frameSet != null && measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint != null &&
-                    measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType)
+                    measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType coordinates)
             {
-                ServiceModel.Ogc.Gml311.CoordinatesType coordinates = (ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint.Items1[0];
-
                 var polygon = new ServiceModel.Ogc.Gml321.PolygonType();
                 polygon.exterior = new ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
                 var linearRing = new ServiceModel.Ogc.Gml321.LinearRingType();
@@ -374,16 +372,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             }
 
             if (measurementFrameSet.metadataWrap.xmlData.frameSet11 != null && measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint != null &&
-                    measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType)
+                    measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType coordinates1)
             {
-                ServiceModel.Ogc.Gml311.CoordinatesType coordinates = (ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0];
-
                 var polygon = new ServiceModel.Ogc.Gml321.PolygonType();
                 polygon.exterior = new ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
                 var linearRing = new ServiceModel.Ogc.Gml321.LinearRingType();
                 var posList = new List<ServiceModel.Ogc.Gml321.DirectPositionListType>();
 
-                posList.Add(new ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinates.Value.Replace(",", " ") });
+                posList.Add(new ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinates1.Value.Replace(",", " ") });
                 if (posList[0].Text.Split(' ')[1] != posList[0].Text.Split(' ').Last())
                 {
                     posList[0].Text += " " + posList[0].Text.Split(' ')[0] + " " + posList[0].Text.Split(' ')[1];

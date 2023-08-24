@@ -22,17 +22,17 @@ namespace Terradue.Stars.Geometry.Gml321
         public static MultiSurfaceType ToGmlMultiSurface(this IGeometryObject geometry)
         {
 
-            if (geometry is Polygon)
+            if (geometry is Polygon polygon)
             {
                 List<Polygon> polygons = new List<Polygon>();
-                polygons.Add((Polygon)geometry);
+                polygons.Add(polygon);
                 MultiPolygon multiPolygon = new MultiPolygon(polygons);
 
                 return ToGmlMultiSurface((MultiPolygon)multiPolygon);
             }
-            else if (geometry is MultiPolygon)
+            else if (geometry is MultiPolygon multiPolygon1)
             {
-                return ToGmlMultiSurface((MultiPolygon)geometry);
+                return ToGmlMultiSurface(multiPolygon1);
             }
             else
                 return null;
@@ -42,17 +42,17 @@ namespace Terradue.Stars.Geometry.Gml321
         public static MultiCurveType ToGmlMultiCurve(this IGeometryObject geometry)
         {
 
-            if (geometry is LineString)
+            if (geometry is LineString lineString)
             {
                 List<LineString> lineStrings = new List<LineString>();
-                lineStrings.Add((LineString)geometry);
+                lineStrings.Add(lineString);
                 MultiLineString multiLineString = new MultiLineString(lineStrings);
 
                 return ToGmlMultiCurve((MultiLineString)multiLineString);
             }
-            else if (geometry is MultiLineString)
+            else if (geometry is MultiLineString multiLineString1)
             {
-                return ToGmlMultiCurve((MultiLineString)geometry);
+                return ToGmlMultiCurve(multiLineString1);
             }
             else
                 return null;
@@ -61,34 +61,34 @@ namespace Terradue.Stars.Geometry.Gml321
         public static AbstractGeometryType ToGml(this IGeometryObject geometry)
         {
 
-            if (geometry is Point)
+            if (geometry is Point point)
             {
-                return ToGmlPoint((Point)geometry);
+                return ToGmlPoint(point);
             }
 
-            if (geometry is MultiPoint)
+            if (geometry is MultiPoint multiPoint)
             {
-                return ToGmlMultiPoint((MultiPoint)geometry);
+                return ToGmlMultiPoint(multiPoint);
             }
 
-            if (geometry is LineString)
+            if (geometry is LineString lineString)
             {
-                return ToGmlLineString((LineString)geometry);
+                return ToGmlLineString(lineString);
             }
 
-            if (geometry is MultiLineString)
+            if (geometry is MultiLineString multiLineString)
             {
-                return ToGmlMultiCurve((MultiLineString)geometry);
+                return ToGmlMultiCurve(multiLineString);
             }
 
-            if (geometry is Polygon)
+            if (geometry is Polygon polygon)
             {
-                return ToGmlPolygon((Polygon)geometry);
+                return ToGmlPolygon(polygon);
             }
 
-            if (geometry is MultiPolygon)
+            if (geometry is MultiPolygon multiPolygon)
             {
-                return ToGmlMultiSurface((MultiPolygon)geometry);
+                return ToGmlMultiSurface(multiPolygon);
             }
 
             return null;
@@ -121,15 +121,14 @@ namespace Terradue.Stars.Geometry.Gml321
         public static DirectPositionType ToGmlPos(this IPosition position)
         {
 
-            if (position is Position)
+            if (position is Position position1)
             {
                 DirectPositionType gmlPos = new DirectPositionType();
-                gmlPos.srsDimension = ((Position)position).Altitude == null ? null : "3";
-                Position p = (Position)position;
-                if (p.Altitude != null)
-                    gmlPos.Text = string.Format("{0} {1} {2}", p.Latitude, p.Longitude, p.Altitude);
+                gmlPos.srsDimension = (position1).Altitude == null ? null : "3";
+                if (position1.Altitude != null)
+                    gmlPos.Text = string.Format("{0} {1} {2}", position1.Latitude, position1.Longitude, position1.Altitude);
                 else
-                    gmlPos.Text = string.Format("{0} {1}", p.Latitude, p.Longitude);
+                    gmlPos.Text = string.Format("{0} {1}", position1.Latitude, position1.Longitude);
                 return gmlPos;
             }
             return null;
@@ -138,7 +137,7 @@ namespace Terradue.Stars.Geometry.Gml321
         public static DirectPositionListType ToGmlPosList(this IPosition[] positions)
         {
 
-            if (positions.Length > 0 && positions[0] is Position)
+            if (positions.Length > 0 && positions[0] is Position position)
             {
                 DirectPositionListType gmlPosList = new DirectPositionListType();
                 gmlPosList.count = positions.Length.ToString();
@@ -151,7 +150,7 @@ namespace Terradue.Stars.Geometry.Gml321
                     p.Longitude.ToString(),
                     p.Altitude.ToString()
                 }).ToArray());
-                gmlPosList.srsDimension = ((Position)positions[0]).Altitude == null ? null : "3";
+                gmlPosList.srsDimension = (position).Altitude == null ? null : "3";
                 return gmlPosList;
             }
             return null;
@@ -250,19 +249,19 @@ namespace Terradue.Stars.Geometry.Gml321
                 throw new ArgumentNullException("gmlObject");
             }
 
-            if (gmlObject is MultiCurveType)
+            if (gmlObject is MultiCurveType multiCurveType)
             {
-                return ((MultiCurveType)gmlObject).ToGeometry();
+                return multiCurveType.ToGeometry();
             }
 
-            if (gmlObject is MultiSurfaceType)
+            if (gmlObject is MultiSurfaceType multiSurfaceType)
             {
-                return ((MultiSurfaceType)gmlObject).ToGeometry();
+                return multiSurfaceType.ToGeometry();
             }
 
-            if (gmlObject is MultiPointType)
+            if (gmlObject is MultiPointType multiPointType)
             {
-                return ((MultiPointType)gmlObject).ToGeometry();
+                return multiPointType.ToGeometry();
             }
 
             throw new NotImplementedException(gmlObject.GetType().ToString());
@@ -279,9 +278,9 @@ namespace Terradue.Stars.Geometry.Gml321
                 foreach (var member in gmlMultiSurface.surfaceMember)
                 {
 
-                    if (member.Item is PolygonType)
+                    if (member.Item is PolygonType polygonType)
                     {
-                        polygons.Add(((PolygonType)member.Item).ToGeometry());
+                        polygons.Add(polygonType.ToGeometry());
                         continue;
                     }
 
@@ -295,9 +294,9 @@ namespace Terradue.Stars.Geometry.Gml321
                 foreach (var member in gmlMultiSurface.surfaceMembers.Items)
                 {
 
-                    if (member is PolygonType)
+                    if (member is PolygonType polygonType)
                     {
-                        polygons.Add(((PolygonType)member).ToGeometry());
+                        polygons.Add(polygonType.ToGeometry());
                         continue;
                     }
 
@@ -317,9 +316,9 @@ namespace Terradue.Stars.Geometry.Gml321
 
                 foreach (var member in gmlMultiCurve.curveMember)
                 {
-                    if (member.Item is LineStringType)
+                    if (member.Item is LineStringType lineStringType)
                     {
-                        linestrings.Add(((LineStringType)member.Item).ToGeometry());
+                        linestrings.Add(lineStringType.ToGeometry());
                         continue;
                     }
 
@@ -332,9 +331,9 @@ namespace Terradue.Stars.Geometry.Gml321
 
                 foreach (var member in gmlMultiCurve.curveMembers.Items)
                 {
-                    if (member is LineStringType)
+                    if (member is LineStringType lineStringType)
                     {
-                        linestrings.Add(((LineStringType)member).ToGeometry());
+                        linestrings.Add(lineStringType.ToGeometry());
                         continue;
                     }
 
@@ -379,9 +378,9 @@ namespace Terradue.Stars.Geometry.Gml321
                 AbstractRingPropertyType arpt = (AbstractRingPropertyType)gmlPolygon.exterior;
 
 
-                if (arpt.Item is LinearRingType)
+                if (arpt.Item is LinearRingType linearRingType)
                 {
-                    ls = ((LinearRingType)arpt.Item).ToGeometry();
+                    ls = linearRingType.ToGeometry();
 
                     if (ls.Coordinates.Count < 4 || !ls.IsClosed())
                         throw new FormatException("invalid GML representation: polygon outer is not a closed ring of minimum 4 positions");
@@ -399,9 +398,9 @@ namespace Terradue.Stars.Geometry.Gml321
                 foreach (AbstractRingPropertyType arpt in gmlPolygon.interior)
                 {
 
-                    if (arpt.Item is LinearRingType)
+                    if (arpt.Item is LinearRingType linearRingType)
                     {
-                        ls = ((LinearRingType)arpt.Item).ToGeometry();
+                        ls = linearRingType.ToGeometry();
 
                         if (ls.Coordinates.Count < 4 || !ls.IsClosed())
                             throw new FormatException("invalid GML representation: polygon inner is not a closed ring of minimum 4 positions");
@@ -556,10 +555,10 @@ namespace Terradue.Stars.Geometry.Gml321
         public static Point ToGeometry(this PointType point)
         {
 
-            if (point.Item is DirectPositionType)
-                return new Point(((DirectPositionType)point.Item).ToGeometry());
-            if (point.Item is CoordinatesType)
-                return new Point(((CoordinatesType)point.Item).ToGeometry().First());
+            if (point.Item is DirectPositionType directPositionType)
+                return new Point(directPositionType.ToGeometry());
+            if (point.Item is CoordinatesType coordinatesType)
+                return new Point(coordinatesType.ToGeometry().First());
 
             throw new FormatException("invalid GML representation: gml:point is empty");
         }

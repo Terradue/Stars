@@ -37,7 +37,7 @@ namespace Terradue.Stars.Data.Translators
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
             if (typeof(T) != typeof(AtomItemNode)) return default(T);
-            if (node is T) return (T)node;
+            if (node is T nodeT) return nodeT;
             if (!(node is StacCollectionNode)) return default(T);
 
             IResource atomItemNode = new AtomItemNode(CreateAtomItem(node as StacCollectionNode), node.Uri);

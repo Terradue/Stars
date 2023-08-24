@@ -177,9 +177,9 @@ namespace Terradue.Stars.Services.Resources
 
         public async Task<IStreamResource> GetStreamResourceAsync(IResource resource, CancellationToken ct)
         {
-            if (resource is IStreamResource)
+            if (resource is IStreamResource streamResource)
             {
-                return (IStreamResource)resource;
+                return streamResource;
             }
             IStreamResource sresource = await CreateStreamResourceAsync(resource, ct);
             if (resource.ContentType == null || resource.ContentType.MediaType == null || resource.ContentType.MediaType.EndsWith("octet-stream") || sresource.ContentType.MediaType.EndsWith("octet-stream"))
@@ -194,9 +194,9 @@ namespace Terradue.Stars.Services.Resources
         public async Task DeleteAsync(IResource resource, CancellationToken ct)
         {
             IStreamResource streamResource = await CreateStreamResourceAsync(resource, ct);
-            if (streamResource is IDeletableResource)
+            if (streamResource is IDeletableResource deletableResource)
             {
-                await ((IDeletableResource)streamResource).DeleteAsync(ct);
+                await deletableResource.DeleteAsync(ct);
                 return;
             }
             throw new SystemException("Resource cannot be deleted");

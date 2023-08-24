@@ -20,51 +20,44 @@ namespace Terradue.Stars.Services.Model.EOP
         {
 
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Alt21.AltEarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Alt21.AltEarthObservationType altEarthObservation)
             {
-                return ((ServiceModel.Ogc.Alt21.AltEarthObservationType)earthObservation).FindGeometry();
+                return altEarthObservation.FindGeometry();
             }
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Ssp21.SspEarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Ssp21.SspEarthObservationType sspEarthObservation)
             {
-
-                return ((ServiceModel.Ogc.Ssp21.SspEarthObservationType)earthObservation).FindGeometry();
+                return sspEarthObservation.FindGeometry();
             }
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Lmb21.LmbEarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Lmb21.LmbEarthObservationType lmbEarthObservation)
             {
-
-                return ((ServiceModel.Ogc.Lmb21.LmbEarthObservationType)earthObservation).FindGeometry();
+                return lmbEarthObservation.FindGeometry();
             }
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Eop21.EarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Eop21.EarthObservationType eopEarthObservation)
             {
-
-                return ((ServiceModel.Ogc.Eop21.EarthObservationType)earthObservation).FindGeometry();
+                return eopEarthObservation.FindGeometry();
             }
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Alt20.AltEarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Alt20.AltEarthObservationType altEarthObservation20)
             {
-
-                return ((ServiceModel.Ogc.Alt20.AltEarthObservationType)earthObservation).FindGeometry();
+                return altEarthObservation20.FindGeometry();
             }
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Eop20.EarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Eop20.EarthObservationType eopEarthObservation20)
             {
-
-                return ((ServiceModel.Ogc.Eop20.EarthObservationType)earthObservation).FindGeometry();
+                return eopEarthObservation20.FindGeometry();
             }
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Ssp20.SspEarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Ssp20.SspEarthObservationType sspEarthObservation20)
             {
-
-                return ((ServiceModel.Ogc.Ssp20.SspEarthObservationType)earthObservation).FindGeometry();
+                return sspEarthObservation20.FindGeometry();
             }
 
-            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Lmb20.LmbEarthObservationType)
+            if (earthObservation != null && earthObservation is ServiceModel.Ogc.Lmb20.LmbEarthObservationType lmbEarthObservation20)
             {
-
-                return ((ServiceModel.Ogc.Lmb20.LmbEarthObservationType)earthObservation).FindGeometry();
+                return lmbEarthObservation20.FindGeometry();
             }
 
             return null;

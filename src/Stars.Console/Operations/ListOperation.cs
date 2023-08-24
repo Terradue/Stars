@@ -135,9 +135,9 @@ namespace Terradue.Stars.Console.Operations
         private async Task PrintAssets(IItem resource, IRouter router, string prefix)
         {
             // List assets
-            if (!SkippAssets && resource is IAssetsContainer)
+            if (!SkippAssets && resource is IAssetsContainer assetsContainer)
             {
-                IReadOnlyDictionary<string, IAsset> assets = ((IAssetsContainer)resource).Assets;
+                IReadOnlyDictionary<string, IAsset> assets = assetsContainer.Assets;
                 for (int i = 0; i < assets.Count(); i++)
                 {
                     string newPrefix = prefix.Replace('─', ' ').Replace('└', ' ');

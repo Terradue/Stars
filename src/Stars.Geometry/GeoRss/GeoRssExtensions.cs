@@ -21,29 +21,29 @@ namespace Terradue.Stars.Geometry.GeoRss
         public static IGeometryObject ToGeometry(this IGeoRSS georss)
         {
 
-            if (georss is GeoRssPoint)
+            if (georss is GeoRssPoint geoRssPoint)
             {
-                return ((GeoRssPoint)georss).ToGeometry();
+                return geoRssPoint.ToGeometry();
             }
 
-            if (georss is GeoRssLine)
+            if (georss is GeoRssLine geoRssLine)
             {
-                return ((GeoRssLine)georss).ToGeometry();
+                return geoRssLine.ToGeometry();
             }
 
-            if (georss is GeoRssPolygon)
+            if (georss is GeoRssPolygon geoRssPolygon)
             {
-                return ((GeoRssPolygon)georss).ToGeometry();
+                return geoRssPolygon.ToGeometry();
             }
 
-            if (georss is GeoRssBox)
+            if (georss is GeoRssBox geoRssBox)
             {
-                return ((GeoRssBox)georss).ToGeometry();
+                return geoRssBox.ToGeometry();
             }
 
-            if (georss is GeoRssWhere)
+            if (georss is GeoRssWhere geoRssWhere)
             {
-                return ((GeoRssWhere)georss).ToGeometry();
+                return geoRssWhere.ToGeometry();
             }
 
             return null;
@@ -53,9 +53,9 @@ namespace Terradue.Stars.Geometry.GeoRss
         public static IGeometryObject ToGeometry(this GeoRssWhere where)
         {
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is EnvelopeType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is EnvelopeType envelopeType)
             {
-                return ((EnvelopeType)where.Item[0]).ToGeometry();
+                return envelopeType.ToGeometry();
             }
 
             if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is CircleByCenterPointType)
@@ -63,49 +63,49 @@ namespace Terradue.Stars.Geometry.GeoRss
                 throw new NotImplementedException();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is LineStringType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is LineStringType lineStringType)
             {
-                return ((LineStringType)where.Item[0]).ToGeometry();
+                return lineStringType.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is PointType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is PointType pointType)
             {
-                return ((PointType)where.Item[0]).ToGeometry();
+                return pointType.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is PolygonType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is PolygonType polygonType)
             {
-                return ((PolygonType)where.Item[0]).ToGeometry();
+                return polygonType.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiPolygonType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiPolygonType multiPolygonType)
             {
-                return ((MultiPolygonType)where.Item[0]).ToGeometry();
+                return multiPolygonType.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiCurveType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiCurveType multiCurveType)
             {
-                return ((MultiCurveType)where.Item[0]).ToGeometry();
+                return multiCurveType.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiPolygonType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiPolygonType multiPolygonType1)
             {
-                return ((MultiCurveType)where.Item[0]).ToGeometry();
+                return multiPolygonType1.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiSurfaceType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiSurfaceType multiSurfaceType)
             {
-                return ((MultiSurfaceType)where.Item[0]).ToGeometry();
+                return multiSurfaceType.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiPointType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiPointType multiPointType)
             {
-                return ((MultiPointType)where.Item[0]).ToGeometry();
+                return multiPointType.ToGeometry();
             }
 
-            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiLineStringType)
+            if (where.Item != null && where.Item.Count() > 0 && where.Item[0] is MultiLineStringType multiLineStringType)
             {
-                return ((MultiLineStringType)where.Item[0]).ToGeometry();
+                return multiLineStringType.ToGeometry();
             }
 
             return null;
@@ -182,35 +182,35 @@ namespace Terradue.Stars.Geometry.GeoRss
         public static IGeoRSS ToGeoRss(this IGeometryObject geom)
         {
 
-            if (geom is Point)
-                return ((Point)geom).ToGeoRssPoint();
+            if (geom is Point point)
+                return point.ToGeoRssPoint();
 
-            if (geom is LineString)
-                return ((LineString)geom).ToGeoRssLine();
+            if (geom is LineString lineString)
+                return lineString.ToGeoRssLine();
 
-            if (geom is Polygon && ((Polygon)geom).Coordinates.Count == 1)
-                return ((Polygon)geom).ToGeoRssPolygon();
+            if (geom is Polygon polygon && polygon.Coordinates.Count == 1)
+                return polygon.ToGeoRssPolygon();
 
-            if (geom is Polygon && ((Polygon)geom).Coordinates.Count > 1)
-                return ((Polygon)geom).ToGeoRssWhere();
+            if (geom is Polygon polygon1 && polygon1.Coordinates.Count > 1)
+                return polygon1.ToGeoRssWhere();
 
-            if (geom is MultiPolygon && ((MultiPolygon)geom).Coordinates.Count == 1)
-                return ((MultiPolygon)geom).Coordinates.First().ToGeoRss();
+            if (geom is MultiPolygon multiPolygon && multiPolygon.Coordinates.Count == 1)
+                return multiPolygon.Coordinates.First().ToGeoRss();
 
-            if (geom is MultiPolygon && ((MultiPolygon)geom).Coordinates.Count > 1)
-                return ((MultiPolygon)geom).ToGeoRssWhere();
+            if (geom is MultiPolygon multiPolygon1 && multiPolygon1.Coordinates.Count > 1)
+                return multiPolygon1.ToGeoRssWhere();
 
-            if (geom is MultiPoint && ((MultiPoint)geom).Coordinates.Count == 1)
-                return ((MultiPoint)geom).Coordinates.First().ToGeoRss();
+            if (geom is MultiPoint multiPoint && multiPoint.Coordinates.Count == 1)
+                return multiPoint.Coordinates.First().ToGeoRss();
 
-            if (geom is MultiPoint)
-                return ((MultiPoint)geom).ToGeoRssWhere();
+            if (geom is MultiPoint multiPoint1)
+                return multiPoint1.ToGeoRssWhere();
 
-            if (geom is MultiLineString && ((MultiLineString)geom).Coordinates.Count == 1)
-                return ((MultiLineString)geom).Coordinates.First().ToGeoRss();
+            if (geom is MultiLineString multiLineString && multiLineString.Coordinates.Count == 1)
+                return multiLineString.Coordinates.First().ToGeoRss();
 
-            if (geom is MultiLineString)
-                return ((MultiLineString)geom).ToGeoRssWhere();
+            if (geom is MultiLineString multiLineString1)
+                return multiLineString1.ToGeoRssWhere();
 
             throw new NotImplementedException();
         }
@@ -218,23 +218,23 @@ namespace Terradue.Stars.Geometry.GeoRss
         public static GeoRssWhere ToGeoRssWhere(this IGeometryObject geom)
         {
 
-            if (geom is Point)
-                return ((Point)geom).ToGeoRssWhere();
+            if (geom is Point point)
+                return point.ToGeoRssWhere();
 
-            if (geom is LineString)
-                return ((LineString)geom).ToGeoRssWhere();
+            if (geom is LineString lineString)
+                return lineString.ToGeoRssWhere();
 
-            if (geom is Polygon)
-                return ((Polygon)geom).ToGeoRssWhere();
+            if (geom is Polygon polygon)
+                return polygon.ToGeoRssWhere();
 
-            if (geom is MultiPolygon)
-                return ((MultiPolygon)geom).ToGeoRssWhere();
+            if (geom is MultiPolygon multiPolygon)
+                return multiPolygon.ToGeoRssWhere();
 
-            if (geom is MultiPoint)
-                return ((MultiPoint)geom).ToGeoRssWhere();
+            if (geom is MultiPoint multiPoint)
+                return multiPoint.ToGeoRssWhere();
 
-            if (geom is MultiLineString)
-                return ((MultiLineString)geom).ToGeoRssWhere();
+            if (geom is MultiLineString multiLineString)
+                return multiLineString.ToGeoRssWhere();
 
 
             throw new NotImplementedException();
