@@ -1,28 +1,30 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacCollectionToAtomItemTranslator.cs
+
+using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Stac;
+using Terradue.Stars.Data.Model.Atom;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services.Model.Atom;
-using Stac;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Interface;
-using System.Net;
-using Terradue.Stars.Data.Model.Atom;
-using System;
-using Terradue.Stars.Services.Store;
-using Terradue.Stars.Services.ThirdParty.Titiler;
-using Microsoft.Extensions.DependencyInjection;
 using Terradue.Stars.Services.ThirdParty.Egms;
-using System.Threading;
+using Terradue.Stars.Services.ThirdParty.Titiler;
 
 namespace Terradue.Stars.Data.Translators
 {
     public class StacCollectionToAtomItemTranslator : ITranslator
     {
         private readonly IServiceProvider serviceProvider;
-        private AtomRouter atomRouter;
-        
+        private readonly AtomRouter atomRouter;
+
         public StacCollectionToAtomItemTranslator(IServiceProvider serviceProvider)
         {
-            this.atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
+            atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
             this.serviceProvider = serviceProvider;
             Key = "staccollection-to-atom";
         }
@@ -34,9 +36,9 @@ namespace Terradue.Stars.Data.Translators
 
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
-            if ( typeof(T) != typeof(AtomItemNode) ) return default(T);
-            if ( node is T ) return (T)node;
-            if ( !(node is StacCollectionNode) ) return default(T);
+            if (typeof(T) != typeof(AtomItemNode)) return default(T);
+            if (node is T) return (T)node;
+            if (!(node is StacCollectionNode)) return default(T);
 
             IResource atomItemNode = new AtomItemNode(CreateAtomItem(node as StacCollectionNode), node.Uri);
             return (T)atomItemNode;
@@ -56,7 +58,7 @@ namespace Terradue.Stars.Data.Translators
             }
 
             // Add offering via egms if possible
-            EgmsService egmsService = serviceProvider.GetService<EgmsService>();                        
+            EgmsService egmsService = serviceProvider.GetService<EgmsService>();
             if (egmsService != null)
             {
                 imageOfferingSet = imageOfferingSet || atomItem.TryAddEGMSOffering(stacCollectionNode, egmsService);

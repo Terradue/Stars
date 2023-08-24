@@ -1,18 +1,18 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AtomRouter.cs
+
 using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Terradue.Stars.Interface.Router;
-using Terradue.ServiceModel.Syndication;
-using System.Net;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Plugins;
 using Terradue.OpenSearch.Result;
-using Terradue.Stars.Services.Router;
-using System.Linq;
+using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Resources;
-using Terradue.Stars.Services.Supplier;
-using System.IO;
-using System.Threading;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -20,7 +20,7 @@ namespace Terradue.Stars.Services.Model.Atom
     public class AtomRouter : IRouter
     {
 
-        private static string[] supportedTypes = new string[] { "application/atom+xml", "application/xml", "text/xml" };
+        private static readonly string[] supportedTypes = new string[] { "application/atom+xml", "application/xml", "text/xml" };
 
         private readonly IResourceServiceProvider resourceServiceProvider;
 
@@ -105,7 +105,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public async Task<IResource> RouteLinkAsync(IResource resource, IResourceLink childLink, CancellationToken ct)
         {
-            if (!(resource is AtomFeedCatalog) 
+            if (!(resource is AtomFeedCatalog)
                 && !(resource is AtomItemNode))
             {
                 throw new Exception("Cannot route link from non-atom resource");

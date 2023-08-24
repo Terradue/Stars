@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DimapMetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -16,17 +20,17 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {
     public class DimapMetadataExtractor : MetadataExtraction
     {
-        public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.t_Dimap_Document));
+        public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(t_Dimap_Document));
 
         public override string Label => "Generic DIMAP product metadata extractor";
 
@@ -36,12 +40,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                Schemas.t_Dimap_Document metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
+                t_Dimap_Document metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
                 var dimapProfiler = GetProfiler(metadata);
                 return dimapProfiler != null;
             }
@@ -68,7 +71,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             IAsset metadataAsset = GetMetadataAsset(item);
-            Schemas.t_Dimap_Document metadata = await ReadMetadata(metadataAsset);
+            t_Dimap_Document metadata = await ReadMetadata(metadataAsset);
 
             DimapProfiler dimapProfiler = GetProfiler(metadata);
 
@@ -78,7 +81,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
             // AddEoBandPropertyInItem(stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
         private void AddEoBandPropertyInItem(StacItem stacItem)
@@ -230,7 +233,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             properties.Add("updated", DateTime.UtcNow);
         }
 
-        private void FillBasicsProperties(DimapProfiler dimapProfiler, IDictionary<String, object> properties)
+        private void FillBasicsProperties(DimapProfiler dimapProfiler, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -247,32 +250,30 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             }
         }
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(DimapProfiler dimapProfiler)
+        private IGeometryObject GetGeometry(DimapProfiler dimapProfiler)
         {
-            List<GeoJSON.Net.Geometry.Position> positions = new List<Position>();
+            List<Position> positions = new List<Position>();
             foreach (var vertex in dimapProfiler.Dimap.Dataset_Frame)
             {
-                positions.Add(new GeoJSON.Net.Geometry.Position(
+                positions.Add(new Position(
                     vertex.FRAME_LAT.Value, vertex.FRAME_LON.Value
                 )
                 );
             }
             positions.Add(positions.First());
 
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
+            LineString lineString = new LineString(
                 positions.ToArray()
             );
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            return new Polygon(new LineString[] { lineString }).NormalizePolygon();
         }
 
         protected void AddAssets(StacItem stacItem, IItem item, DimapProfiler dimapProfiler)
         {
             foreach (var dataFile in dimapProfiler.Dimap.Data_Access.Data_File)
             {
-                IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.href + "$");
-                if (productAsset == null)
-                    throw new FileNotFoundException(string.Format("No product found '{0}'", dataFile.DATA_FILE_PATH.href));
+                IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.href + "$") ?? throw new FileNotFoundException(string.Format("No product found '{0}'", dataFile.DATA_FILE_PATH.href));
                 var bandStacAsset = CreateRasterAsset(stacItem, productAsset, dimapProfiler, dataFile);
                 if (dimapProfiler.Dimap.Data_Access.DATA_FILE_ORGANISATION == t_DATA_FILE_ORGANISATION.BAND_SEPARATE)
                     dimapProfiler.CompleteAsset(bandStacAsset.Value,
@@ -308,7 +309,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                     stacItem.Assets["thumbnail"].Properties.AddRange(thumbnailAsset.Properties);
                 }
             }
-            catch{}
+            catch { }
         }
 
         private KeyValuePair<string, StacAsset> CreateRasterAsset(StacItem stacItem, IAsset bandAsset, DimapProfiler dimapProfiler, t_Data_File dataFile)
@@ -326,12 +327,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             {
                 manifestAsset = FindFirstAssetFromFileNameRegex(item, @"DIM.*\.xml$");
                 if (manifestAsset == null)
-                    throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
+                    throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             }
             return manifestAsset;
         }
 
-        public virtual async Task<Schemas.t_Dimap_Document> ReadMetadata(IAsset manifestAsset)
+        public virtual async Task<t_Dimap_Document> ReadMetadata(IAsset manifestAsset)
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
@@ -340,7 +341,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
 
-                return (Schemas.t_Dimap_Document)metadataSerializer.Deserialize(reader);
+                return (t_Dimap_Document)metadataSerializer.Deserialize(reader);
             }
         }
 

@@ -1,16 +1,15 @@
-using System.Linq;
-using Newtonsoft.Json;
-using Xunit;
-using Stac.Extensions.Projection;
-using Terradue.Stars.Data.Translators;
-using Stac;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Model.Atom;
-using System.Threading;
-using System.Xml;
-using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacCollectionToAtomItemTests.cs
+
 using System.IO;
+using System.Threading;
+using Stac;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.Stars.Data.Translators;
+using Terradue.Stars.Services.Model.Atom;
+using Terradue.Stars.Services.Model.Stac;
+using Xunit;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -38,19 +37,19 @@ namespace Terradue.Data.Tests.Translators
             bool egmsIsPresent = false;
             bool wmsIsPresent = false;
             if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
-			{
+            {
                 var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
 
-				foreach (var offering in offerings)
-				{
-                    if(offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
-                    if(offering != null && offering.Code == "http://www.opengis.net/spec/owc-atom/1.0/req/wms") wmsIsPresent = true;
+                foreach (var offering in offerings)
+                {
+                    if (offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
+                    if (offering != null && offering.Code == "http://www.opengis.net/spec/owc-atom/1.0/req/wms") wmsIsPresent = true;
                 }
-              
+
             }
 
-            Assert.True(egmsIsPresent);   
-            Assert.True(wmsIsPresent);           
+            Assert.True(egmsIsPresent);
+            Assert.True(wmsIsPresent);
         }
 
     }

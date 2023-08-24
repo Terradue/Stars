@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TestFileAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,9 +10,6 @@ using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Data.Tests
 {
@@ -29,15 +30,15 @@ namespace Terradue.Data.Tests
 
         public IReadOnlyList<string> Roles => new string[1] { "data" };
 
-        public Uri Uri => new Uri(fileInfo.FullName);
+        public Uri Uri => new(fileInfo.FullName);
 
-        public ContentType ContentType => new ContentType("application/octet-stream");
+        public ContentType ContentType => new("application/octet-stream");
 
         public ResourceType ResourceType => ResourceType.Asset;
 
         public ulong ContentLength => Convert.ToUInt64(fileInfo.Length);
 
-        public ContentDisposition ContentDisposition => new ContentDisposition()
+        public ContentDisposition ContentDisposition => new()
         {
             FileName = fileInfo.Name,
             Size = fileInfo.Length,

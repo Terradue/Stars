@@ -1,6 +1,10 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Schema.cs
+
 using System;
-using System.Xml.Serialization;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {

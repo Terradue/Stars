@@ -1,31 +1,13 @@
-﻿//
-//  FeatureExtensions.cs
-//
-//  Author:
-//       Emmanuel Mathot <emmanuel.mathot@terradue.com>
-//
-//  Copyright (c) 2014 Terradue
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation; either version 2 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, write to the Free Software
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-//
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Gml311Extensions.cs
+
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
-using Terradue.ServiceModel.Ogc.Gml311;
 using GeoJSON.Net.Geometry;
+using Terradue.ServiceModel.Ogc.Gml311;
 
 namespace Terradue.Stars.Geometry.Gml311
 {
@@ -156,7 +138,7 @@ namespace Terradue.Stars.Geometry.Gml311
                 DirectPositionListType gmlPosList = new DirectPositionListType();
                 gmlPosList.count = positions.Length.ToString();
                 gmlPosList.Text = string.Join(" ", positions.Cast<Position>()
-                                              .SelectMany<Position, string>(p => (p.Altitude == null || dim == 2) ? new string[2] {
+                                              .SelectMany(p => (p.Altitude == null || dim == 2) ? new string[2] {
                     p.Latitude.ToString(),
                     p.Longitude.ToString()
                 } : new string[3] {
@@ -262,7 +244,7 @@ namespace Terradue.Stars.Geometry.Gml311
                         interiors.Add(interior);
                     }
                     gmlPolygon.Items1 = interiors.ToArray();
-                    gmlPolygon.Items1ElementName = interiors.Select<AbstractRingPropertyType, Items1ChoiceType3>(int1 => Items1ChoiceType3.interior).ToArray();
+                    gmlPolygon.Items1ElementName = interiors.Select(int1 => Items1ChoiceType3.interior).ToArray();
                 }
             }
 
@@ -284,7 +266,7 @@ namespace Terradue.Stars.Geometry.Gml311
         public static MultiSurfaceType ToGmlMultiSurface(this MultiPolygon multiPolygon)
         {
             MultiSurfaceType gmlMultiSurface = new MultiSurfaceType();
-            gmlMultiSurface.surfaceMembers = multiPolygon.Coordinates.Select<Polygon, PolygonType>(p => p.ToGmlPolygon()).ToArray();
+            gmlMultiSurface.surfaceMembers = multiPolygon.Coordinates.Select(p => p.ToGmlPolygon()).ToArray();
 
             return gmlMultiSurface;
         }
@@ -470,7 +452,7 @@ namespace Terradue.Stars.Geometry.Gml311
         public static Polygon ToGeometry(this EnvelopeType gmlEnvelope)
         {
             LineString ls = null;
-            if (gmlEnvelope.ItemsElementName[0] == ItemsChoiceType2.lowerCorner 
+            if (gmlEnvelope.ItemsElementName[0] == ItemsChoiceType2.lowerCorner
                 && gmlEnvelope.ItemsElementName[1] == ItemsChoiceType2.upperCorner)
             {
                 var ll = ((DirectPositionType)gmlEnvelope.Items[0]).ToGeometry();
@@ -557,7 +539,7 @@ namespace Terradue.Stars.Geometry.Gml311
 
             Type posType = linearRing.Items1ElementName.First().GetType();
 
-            positions = FromGMLData(linearRing.Items1, Array.ConvertAll<Items1ChoiceType2, string>(linearRing.Items1ElementName, i => i.ToString()));
+            positions = FromGMLData(linearRing.Items1, Array.ConvertAll(linearRing.Items1ElementName, i => i.ToString()));
 
             LineString linestring = new LineString(positions);
 
@@ -572,7 +554,7 @@ namespace Terradue.Stars.Geometry.Gml311
             if (lineString.Items1 == null)
                 return null;
 
-            List<IPosition> points = FromGMLData(lineString.Items1, Array.ConvertAll<Items1ChoiceType1, string>(lineString.Items1ElementName, i => i.ToString()));
+            List<IPosition> points = FromGMLData(lineString.Items1, Array.ConvertAll(lineString.Items1ElementName, i => i.ToString()));
 
             if (points.Count < 2)
                 throw new FormatException("invalid GML representation: LineString type must have at least 2 positions");
@@ -635,23 +617,22 @@ namespace Terradue.Stars.Geometry.Gml311
 
             List<IPosition> positions = new List<IPosition>();
             string gmlcoord, gmlts, gmlcs, gmldec;
-            char ts = ' ', cs = ',', dec = '.';
 
             /* Retrieve separator between coordinates tuples */
             gmlts = coordinates.ts;
-            if (char.TryParse(gmlts, out ts) != true)
+            if (char.TryParse(gmlts, out char ts) != true)
                 ts = ' ';
 
             /* Retrieve separator between each coordinate */
             gmlcs = coordinates.cs;
-            if (char.TryParse(gmlcs, out cs) != true)
+            if (char.TryParse(gmlcs, out char cs) != true)
             {
                 cs = ',';
             }
 
             /* Retrieve decimal separator */
             gmldec = coordinates.@decimal;
-            if (char.TryParse(gmldec, out dec) != true)
+            if (char.TryParse(gmldec, out char dec) != true)
                 dec = '.';
 
             if (cs == ts || cs == dec || ts == dec)
@@ -689,7 +670,7 @@ namespace Terradue.Stars.Geometry.Gml311
             if (coord.X == default(decimal) || coord.Y == default(decimal))
                 throw new FormatException("invalid GML representation: gml:coord missing X or Y");
 
-            Position geopos = new Position(System.Convert.ToDouble(coord.X), System.Convert.ToDouble(coord.Y), System.Convert.ToDouble(coord.Z));
+            Position geopos = new Position(Convert.ToDouble(coord.X), Convert.ToDouble(coord.Y), Convert.ToDouble(coord.Z));
             return geopos;
         }
 
@@ -742,4 +723,3 @@ namespace Terradue.Stars.Geometry.Gml311
         }
     }
 }
-

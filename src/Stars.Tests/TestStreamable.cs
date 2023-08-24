@@ -1,16 +1,19 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TestStreamable.cs
+
 using System;
 using System.IO;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Services;
 
 namespace Stars.Tests
 {
     internal class TestStreamable : IStreamResource
     {
-        private Stream stream;
+        private readonly Stream stream;
         private readonly ulong contentLength;
 
         public TestStreamable(Stream stream, ulong contentLength)
@@ -21,15 +24,15 @@ namespace Stars.Tests
 
         public bool CanBeRanged => false;
 
-        public ContentType ContentType => new ContentType("application/octet-stream");
+        public ContentType ContentType => new("application/octet-stream");
 
         public ResourceType ResourceType => ResourceType.Asset;
 
         public ulong ContentLength => contentLength;
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = "test.bin" };
+        public ContentDisposition ContentDisposition => new() { FileName = "test.bin" };
 
-        public Uri Uri => new Uri("http://localhost/test.bin");
+        public Uri Uri => new("http://localhost/test.bin");
 
         public Task<Stream> GetStreamAsync(CancellationToken ct)
         {

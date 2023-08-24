@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
-using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
-using Terradue.OpenSearch.Result;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: OpenSearchMetadata.cs
 
 namespace Terradue.Stars.Data.Model
 {

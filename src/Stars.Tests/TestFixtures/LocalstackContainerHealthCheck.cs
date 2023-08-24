@@ -1,15 +1,15 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: LocalstackContainerHealthCheck.cs
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
-using log4net.Core;
 
 namespace Stars.Tests.TestFixtures
 {
@@ -43,7 +43,7 @@ namespace Stars.Tests.TestFixtures
             if (s3Status is null)
                 return false;
 
-            if ( s3Status.GetValue<string>() == "available" )
+            if (s3Status.GetValue<string>() == "available")
                 return true;
 
             return false;

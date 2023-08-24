@@ -1,20 +1,23 @@
-using Microsoft.Extensions.Logging;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GeodeliverySupplier.cs
+
 using System;
-using System.Threading.Tasks;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface;
-using System.Text.RegularExpressions;
-using Stac;
 using System.Collections.Generic;
-using System.Net;
 using System.IO;
-using Terradue.Stars.Services.Supplier;
-using System.Runtime.ExceptionServices;
-using System.Threading;
-using Terradue.Stars.Services.Translator;
 using System.Linq;
+using System.Net;
+using System.Runtime.ExceptionServices;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Stac;
 using Stac.Extensions.File;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Stars.Data.Suppliers.Astrium
 {
@@ -22,7 +25,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
     {
         protected ILogger logger;
         private readonly TranslatorManager translatorManager;
-        private ICredentials credentials;
+        private readonly ICredentials credentials;
 
         public GeodeliverySupplier(ILogger<GeodeliverySupplier> logger, TranslatorManager translatorManager, ICredentials credentials)
         {
@@ -92,11 +95,11 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                 try
                 {
                     FtpWebRequest reqFTP;
-                    reqFTP = (FtpWebRequest)FtpWebRequest.Create(ftpUri);
+                    reqFTP = (FtpWebRequest)WebRequest.Create(ftpUri);
                     reqFTP.UseBinary = true;
                     reqFTP.Credentials = credentials;
                     reqFTP.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-                    reqFTP.Timeout = System.Threading.Timeout.Infinite;
+                    reqFTP.Timeout = Timeout.Infinite;
                     reqFTP.Proxy = null;
                     reqFTP.KeepAlive = true;
                     reqFTP.UsePassive = true;
@@ -107,10 +110,10 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                             string line = reader.ReadLine();
                             while (line != null)
                             {
-                                Regex regex = new Regex ( @"^([d-])([rwxt-]{3}){3}\s+\d{1,}\s+.*?(\d{1,})\s+(\w+\s+\d{1,2}\s+(?:\d{4})?)(\d{1,2}:\d{2})?\s+(.+?)\s?$",
-                                    RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace );
+                                Regex regex = new Regex(@"^([d-])([rwxt-]{3}){3}\s+\d{1,}\s+.*?(\d{1,})\s+(\w+\s+\d{1,2}\s+(?:\d{4})?)(\d{1,2}:\d{2})?\s+(.+?)\s?$",
+                                    RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace);
                                 Match detail = regex.Match(line);
-                                if ( !detail.Success ) continue;
+                                if (!detail.Success) continue;
                                 ulong contentLength = ulong.Parse(detail.Groups[3].Value);
                                 allLines.Add(detail.Groups[6].Value);
                                 Match match = Regex.Match(detail.Groups[6].Value, string.Format("CHARTER_ID{0}_(?'aoi'.+)_{1}.*\\.zip$", callid, pattern));

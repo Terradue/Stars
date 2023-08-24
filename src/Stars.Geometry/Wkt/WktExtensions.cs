@@ -1,40 +1,21 @@
-﻿//
-//  FeatureExtensions.cs
-//
-//  Author:
-//       Emmanuel Mathot <emmanuel.mathot@terradue.com>
-//
-//  Copyright (c) 2014 Terradue
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation; either version 2 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with this program; if not, write to the Free Software
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-//
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: WktExtensions.cs
+
 using System;
-using System.Linq;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using GeoJSON.Net.Geometry;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 using GeoJSON.Net.Feature;
+using GeoJSON.Net.Geometry;
 using Stac.Collection;
 
 namespace Terradue.Stars.Geometry.Wkt
 {
     public static class WktExtensions
     {
-
-        static readonly IFormatProvider ci = CultureInfo.InvariantCulture;
+        private static readonly IFormatProvider ci = CultureInfo.InvariantCulture;
 
         public static string ToWkt(this Feature feature)
         {
@@ -105,17 +86,17 @@ namespace Terradue.Stars.Geometry.Wkt
             return null;
         }
 
-        static string GeometryToWktString(Point point)
+        private static string GeometryToWktString(Point point)
         {
             return GeometryToWktString(point.Coordinates);
         }
 
-        static string GeometryToWktString(MultiPoint multiPoint)
+        private static string GeometryToWktString(MultiPoint multiPoint)
         {
             return string.Format("({0})", string.Join(",", multiPoint.Coordinates.Select(GeometryToWktString)));
         }
 
-        static string GeometryToWktString(IPosition position)
+        private static string GeometryToWktString(IPosition position)
         {
 
             if (position is Position)
@@ -124,22 +105,22 @@ namespace Terradue.Stars.Geometry.Wkt
             return "";
         }
 
-        static string GeometryToWktString(LineString lineString)
+        private static string GeometryToWktString(LineString lineString)
         {
             return string.Format("({0})", string.Join(",", lineString.Coordinates.Select(GeometryToWktString)));
         }
 
-        static string GeometryToWktString(Polygon polygon)
+        private static string GeometryToWktString(Polygon polygon)
         {
             return string.Format("({0})", string.Join(",", polygon.Coordinates.Select(GeometryToWktString)));
         }
 
-        static string GeometryToWktString(MultiPolygon multiPolygon)
+        private static string GeometryToWktString(MultiPolygon multiPolygon)
         {
             return string.Format("({0})", string.Join(",", multiPolygon.Coordinates.Select(GeometryToWktString)));
         }
 
-        static string GeometryToWktString(MultiLineString multiLineString)
+        private static string GeometryToWktString(MultiLineString multiLineString)
         {
             return string.Format("({0})", string.Join(",", multiLineString.Coordinates.Select(GeometryToWktString)));
         }
@@ -297,4 +278,3 @@ namespace Terradue.Stars.Geometry.Wkt
 
 
 }
-

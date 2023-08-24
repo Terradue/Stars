@@ -1,5 +1,8 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S1L1AssetNoise.cs
+
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Stac;
@@ -17,11 +20,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise
 
         public S1L1AssetNoise(l1NoiseVectorType l1Calibration, IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider) : base(resourceServiceProvider)
         {
-            this.l1Noise = l1Calibration;
-            this.noiseAsset = calibrationAsset;
+            l1Noise = l1Calibration;
+            noiseAsset = calibrationAsset;
         }
 
-        public async static Task<S1L1AssetNoise> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
+        public static async Task<S1L1AssetNoise> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
         {
             return new S1L1AssetNoise((l1NoiseVectorType)s1L1NoiseSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(calibrationAsset, System.Threading.CancellationToken.None)), calibrationAsset, resourceServiceProvider);
         }
@@ -60,7 +63,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise
 
         public override string GetId()
         {
-            return String.Format("noise-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            return string.Format("noise-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
         }
 
         private object GetStripe()

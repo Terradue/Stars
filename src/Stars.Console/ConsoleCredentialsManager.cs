@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ConsoleCredentialsManager.cs
+
 using System;
 using System.Net;
 using McMaster.Extensions.CommandLineUtils;
@@ -42,7 +46,7 @@ namespace Terradue.Stars.Console.Operations
                 }
                 if (cred != null)
                 {
-                    base.CacheCredential(uriCut, authType, cred);
+                    CacheCredential(uriCut, authType, cred);
                     PromptSaveCredentials(cred, uriCut, authType);
                 }
             }
@@ -66,7 +70,7 @@ namespace Terradue.Stars.Console.Operations
         private void SaveCredentials(ICredentials cred, Uri uri, string authType)
         {
             CredentialsConfigurationSection credConfigSection = cred.ToCredentialsConfigurationSection(uri, authType);
-            consoleUserSettings.AddOrUpdateSetting<CredentialsConfigurationSection>("Credentials:" + Guid.NewGuid().ToString(), credConfigSection);
+            consoleUserSettings.AddOrUpdateSetting("Credentials:" + Guid.NewGuid().ToString(), credConfigSection);
         }
 
         private NetworkCredential PromptCredentials(Uri uri, string authType)

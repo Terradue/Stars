@@ -1,5 +1,8 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S1L1AssetProduct.cs
+
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Stac;
@@ -12,19 +15,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
     public class S1L1AssetProduct : SentinelAssetFactory
     {
 
-        public static XmlSerializer s1L1ProductSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S1.Level1.Product.l1ProductType));
+        public static XmlSerializer s1L1ProductSerializer = new XmlSerializer(typeof(l1ProductType));
         private readonly l1ProductType l1Product;
         private readonly IAsset annotationAsset;
         private readonly IAsset dataAsset;
 
-        public S1L1AssetProduct(l1ProductType l1ProductType, IAsset annotationAsset, IAsset dataAsset, IResourceServiceProvider resourceServiceProvider): base(resourceServiceProvider)
+        public S1L1AssetProduct(l1ProductType l1ProductType, IAsset annotationAsset, IAsset dataAsset, IResourceServiceProvider resourceServiceProvider) : base(resourceServiceProvider)
         {
-            this.l1Product = l1ProductType;
+            l1Product = l1ProductType;
             this.annotationAsset = annotationAsset;
             this.dataAsset = dataAsset;
         }
 
-        public async static Task<S1L1AssetProduct> Create(IAsset annotationAsset, IAsset dataAsset, IResourceServiceProvider resourceServiceProvider)
+        public static async Task<S1L1AssetProduct> Create(IAsset annotationAsset, IAsset dataAsset, IResourceServiceProvider resourceServiceProvider)
         {
             return new S1L1AssetProduct((l1ProductType)s1L1ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset, System.Threading.CancellationToken.None)), annotationAsset, dataAsset, resourceServiceProvider);
         }
@@ -78,7 +81,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public override string GetId()
         {
-            return String.Format("{0}-{1}-{2}-{3}", GetPixelValueLabel(), GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            return string.Format("{0}-{1}-{2}-{3}", GetPixelValueLabel(), GetPolarization(), GetSwath(), GetStripe()).ToLower();
         }
 
         private object GetStripe()
@@ -93,12 +96,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public override string GetAnnotationId()
         {
-            return String.Format("annotation-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            return string.Format("annotation-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
         }
 
         public string GetAnnotationTitle()
         {
-            return String.Format("Annotation {0} {1} {2}", GetPolarization(), GetSwath(), GetStripe());
+            return string.Format("Annotation {0} {1} {2}", GetPolarization(), GetSwath(), GetStripe());
         }
 
         public override StacAsset CreateMetadataAsset(IStacObject stacObject)

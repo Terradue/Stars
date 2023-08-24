@@ -1,21 +1,23 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacStoreService.cs
+
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Stac;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Supplier.Destination;
-using Stac;
-using System.Collections.Generic;
 using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Services.Translator;
-using System.IO;
-using System.Net;
-using System.Linq;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier;
-using System.Threading;
 
 namespace Terradue.Stars.Services.Store
 {
@@ -66,14 +68,14 @@ namespace Terradue.Stars.Services.Store
                             StacRouter stacRouter,
                             AssetService assetService)
         {
-            this.storeOptions = options.Value;
+            storeOptions = options.Value;
             this.logger = logger;
             this.destinationManager = destinationManager;
             this.translatorManager = translatorManager;
             this.carrierManager = carrierManager;
             this.resourceServiceProvider = resourceServiceProvider;
             this.credentials = credentials;
-            this._stacRouter = stacRouter;
+            _stacRouter = stacRouter;
             this.assetService = assetService;
         }
 
@@ -197,7 +199,7 @@ namespace Terradue.Stars.Services.Store
             var links = stacObject.Links.Where(l => l != null).ToArray();
 
             stacObject.Links.Clear();
-            stacObject.Links.AddRange<StacLink>(links);
+            stacObject.Links.AddRange(links);
 
             if (storeOptions.AllRelative)
                 MakeAllLinksRelative(stacObject, destination);

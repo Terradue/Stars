@@ -1,17 +1,21 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: OpenSearchResultItemRoutable.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Terradue.Stars.Services.Model.Atom;
+using Microsoft.Extensions.Logging;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
-using Microsoft.Extensions.Logging;
-using System.Threading;
+using Terradue.Stars.Services.Model.Atom;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -19,12 +23,12 @@ namespace Terradue.Stars.Data.Routers
     {
         protected IOpenSearchResultItem osItem;
 
-        private Uri sourceUri;
+        private readonly Uri sourceUri;
         protected readonly ILogger logger;
 
         public OpenSearchResultItemRoutable(IOpenSearchResultItem item, Uri sourceUri, ILogger logger)
         {
-            this.osItem = item;
+            osItem = item;
             this.sourceUri = sourceUri;
             this.logger = logger;
         }
@@ -49,7 +53,7 @@ namespace Terradue.Stars.Data.Routers
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsStringAsync(System.Threading.CancellationToken.None)).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsStringAsync(CancellationToken.None)).Length);
 
         public bool IsCatalog => false;
 
@@ -65,7 +69,7 @@ namespace Terradue.Stars.Data.Routers
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 var atomItem = AtomItem.FromOpenSearchResultItem(osItem);
                 MemoryStream ms = new MemoryStream();

@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AtomResourceLink.cs
+
 using System;
 using System.IO;
 using System.Net.Mime;
@@ -8,11 +12,11 @@ namespace Terradue.Stars.Services.Model.Atom
 {
     public class AtomResourceLink : IResourceLink
     {
-        private SyndicationLink atomLink;
+        private readonly SyndicationLink atomLink;
 
         public AtomResourceLink(SyndicationLink l)
         {
-            this.atomLink = l;
+            atomLink = l;
         }
 
         public Uri Uri => atomLink.Uri;

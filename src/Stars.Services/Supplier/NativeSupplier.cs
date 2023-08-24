@@ -1,13 +1,14 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: NativeSupplier.cs
+
 using System;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Microsoft.Extensions.Configuration;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Plugins;
 using System.Threading;
+using System.Threading.Tasks;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Services.Plugins;
+using Terradue.Stars.Services.Supplier.Carrier;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -22,7 +23,7 @@ namespace Terradue.Stars.Services.Supplier
         }
 
         public int Priority { get; set; }
-        public string Key { get => Id; set {} }
+        public string Key { get => Id; set { } }
 
         public string Id => "Native";
 
@@ -30,7 +31,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public Task<IResource> SearchForAsync(IResource resource, CancellationToken ct, string identifierRegex = null)
         {
-            return Task.FromResult<IResource>(resource);
+            return Task.FromResult(resource);
         }
 
         public Task<IOrder> Order(IOrderable orderableRoute)

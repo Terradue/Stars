@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3Options.cs
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -58,19 +62,19 @@ namespace Terradue.Stars.Services.Resources
 
         public S3Configuration(S3Configuration s3Configuration)
         {
-            this.UrlPattern = s3Configuration?.UrlPattern;
-            this.Region = s3Configuration?.Region;
-            this.ServiceURL = s3Configuration?.ServiceURL;
-            this.AccessKey = s3Configuration?.AccessKey;
-            this.SecretKey = s3Configuration?.SecretKey;
-            this.AuthenticationRegion = s3Configuration?.AuthenticationRegion;
-            this.UseHttp = s3Configuration == null ? false : s3Configuration.UseHttp;
-            this.ForcePathStyle = s3Configuration == null ? false : s3Configuration.ForcePathStyle;
-            this.ScopeRoles = s3Configuration?.ScopeRoles;
-            this.TryAdaptRegion = s3Configuration == null ? false : s3Configuration.TryAdaptRegion;
-            this.AmazonS3Config = s3Configuration?.AmazonS3Config;
-            this.AWSCredentials = s3Configuration?.AWSCredentials;
-            this.UseWebIdentity = s3Configuration == null ? false : s3Configuration.UseWebIdentity;
+            UrlPattern = s3Configuration?.UrlPattern;
+            Region = s3Configuration?.Region;
+            ServiceURL = s3Configuration?.ServiceURL;
+            AccessKey = s3Configuration?.AccessKey;
+            SecretKey = s3Configuration?.SecretKey;
+            AuthenticationRegion = s3Configuration?.AuthenticationRegion;
+            UseHttp = s3Configuration == null ? false : s3Configuration.UseHttp;
+            ForcePathStyle = s3Configuration == null ? false : s3Configuration.ForcePathStyle;
+            ScopeRoles = s3Configuration?.ScopeRoles;
+            TryAdaptRegion = s3Configuration == null ? false : s3Configuration.TryAdaptRegion;
+            AmazonS3Config = s3Configuration?.AmazonS3Config;
+            AWSCredentials = s3Configuration?.AWSCredentials;
+            UseWebIdentity = s3Configuration == null ? false : s3Configuration.UseWebIdentity;
         }
 
         public string UrlPattern { get; set; }

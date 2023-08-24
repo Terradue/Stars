@@ -1,4 +1,6 @@
-using Terradue.Stars.Interface.Supplier;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: SupplierServiceParameters.cs
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -10,10 +12,10 @@ namespace Terradue.Stars.Services.Supplier
         {
         }
 
-        
+
 
         public AssetFilters AssetFilters { get; set; }
-        
+
         public bool ContinueOnDeliveryError { get; set; }
     }
 }

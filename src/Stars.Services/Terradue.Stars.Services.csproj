@@ -38,7 +38,7 @@
     <PackageReference Include="Terradue.Metadata.EarthObservation" Version="1.6.7" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="MimeTypes" Version="2.0.2" />
-    <PackageReference Include="DotNetZip" Version="1.15.0" />
+    <PackageReference Include="DotNetZip" Version="1.16.0" />
     <PackageReference Include="AWSSDK.Core" Version="3.7.13.*" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.9.*" />
     <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.1.*" />

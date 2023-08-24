@@ -1,28 +1,29 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacItemToAtomItemTranslator.cs
+
+using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Stac;
+using Terradue.Stars.Data.Model.Atom;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services.Model.Atom;
-using Stac;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Interface;
-using System.Net;
-using Terradue.Stars.Data.Model.Atom;
-using System;
-using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.ThirdParty.Titiler;
-using Microsoft.Extensions.DependencyInjection;
-using Terradue.Stars.Services.ThirdParty.Egms;
-using System.Threading;
 
 namespace Terradue.Stars.Data.Translators
 {
     public class StacItemToAtomItemTranslator : ITranslator
     {
         private readonly IServiceProvider serviceProvider;
-        private AtomRouter atomRouter;
+        private readonly AtomRouter atomRouter;
 
         public StacItemToAtomItemTranslator(IServiceProvider serviceProvider)
         {
-            this.atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
+            atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
             this.serviceProvider = serviceProvider;
             Key = "stac-to-atom";
         }

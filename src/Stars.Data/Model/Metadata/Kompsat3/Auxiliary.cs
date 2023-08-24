@@ -1,9 +1,13 @@
-﻿using System.Xml.Serialization;
-using System.Collections.Generic;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Auxiliary.cs
+
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.Xml.Serialization;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
 {
@@ -698,7 +702,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         [XmlElement(ElementName = "Metadata")]
         public Metadata Metadata { get; set; }
 
-        Dictionary<string, OneImage> images;
+        private Dictionary<string, OneImage> images;
 
         [XmlIgnore]
         public Dictionary<string, OneImage> Images
@@ -720,7 +724,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         {
             get
             {
-                return new XmlKeyTextValueListWrapper<OneImage>(() => this.Images);
+                return new XmlKeyTextValueListWrapper<OneImage>(() => Images);
             }
             set
             {

@@ -1,7 +1,10 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Atom2StacTests.cs
+
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -9,11 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Terradue.OpenSearch.Result;
-using Terradue.Stars.Data.Translators;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services;
-using Terradue.Stars.Services.Credentials;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
@@ -67,8 +67,8 @@ namespace Stars.Tests
             var stacItemNode = await translatorManager.TranslateAsync<StacItemNode>(resource, CancellationToken.None);
             Assert.Equal("S1A_IW_GRDH_1SDV_20211018T111323_20211018T111348_040173_04C21B_421A", stacItemNode.StacItem.Id);
             Assert.Equal(2, stacItemNode.StacItem.Assets.Count);
-            Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("data")).Count());
-            Assert.Equal(1, stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("thumbnail")).Count());
+            Assert.Single(stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("data")));
+            Assert.Single(stacItemNode.StacItem.Assets.Where(a => a.Value.Roles.Contains("thumbnail")));
             Assert.Equal("radar", stacItemNode.StacItem.GetProperty("sensor_type"));
         }
 
@@ -88,6 +88,6 @@ namespace Stars.Tests
             // File.WriteAllText("../../../Out/call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json", StacConvert.Serialize(stacItem));
         }
 
-        
+
     }
 }

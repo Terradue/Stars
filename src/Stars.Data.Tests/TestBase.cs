@@ -1,5 +1,8 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TestBase.cs
+
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Reflection;
@@ -31,7 +34,7 @@ namespace Terradue.Data.Tests
 
         protected IConfigurationRoot configuration;
 
-        protected static StacValidator stacValidator = new StacValidator(new JSchemaUrlResolver());
+        protected static StacValidator stacValidator = new(new JSchemaUrlResolver());
 
         private static readonly Assembly ThisAssembly = typeof(TestBase)
 #if NETCOREAPP1_1
@@ -86,7 +89,7 @@ namespace Terradue.Data.Tests
             pluginManager.LoadPlugins(Collection, s => AssemblyLoadContext.Default);
         }
 
-        
+
 
         public static string AssemblyDirectory
         {

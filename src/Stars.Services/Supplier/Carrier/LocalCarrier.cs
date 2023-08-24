@@ -1,21 +1,15 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: LocalCarrier.cs
+
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Terradue.Stars.Services.Router;
-using System.Net.Http;
-using Terradue.Stars.Services.Supplier.Destination;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Microsoft.Extensions.Options;
-using Terradue.Stars.Interface;
-using Microsoft.Extensions.Logging;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {

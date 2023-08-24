@@ -1,31 +1,28 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AtomItemNode.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Stac;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Services.Router;
-using Terradue.ServiceModel.Syndication;
-using Terradue.Stars.Services;
 using GeoJSON.Net.Geometry;
-using Terradue.Stars.Geometry.Atom;
-using System.Net;
-using Terradue.Stars.Interface;
-using Terradue.OpenSearch.Result;
 using Itenso.TimePeriod;
-using System.Threading;
+using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
     public class AtomItemNode : IItem, IAssetsContainer, IStreamResource
     {
-        private AtomItem item;
+        private readonly AtomItem item;
         private readonly Uri sourceUri;
 
         public AtomItemNode(AtomItem item, Uri sourceUri)
@@ -61,7 +58,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 MemoryStream ms = new MemoryStream();
                 var sw = XmlWriter.Create(ms);
@@ -102,7 +99,7 @@ namespace Terradue.Stars.Services.Model.Atom
                     string key = link.RelationshipType;
                     if (keysCount[key] > 1)
                         key += "-" + keysIndex[key]++;
-                    assets.Add(key, new AtomLinkAsset(link, this.AtomItem));
+                    assets.Add(key, new AtomLinkAsset(link, AtomItem));
                 }
                 return assets;
             }

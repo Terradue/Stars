@@ -1,6 +1,9 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: OrderVoucher.cs
+
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Mime;
 using System.Text;
@@ -8,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
 
 namespace Terradue.Stars.Services.Supplier
@@ -16,12 +18,12 @@ namespace Terradue.Stars.Services.Supplier
     [JsonObject]
     public class OrderVoucher : IResource, IOrder, IAsset
     {
-        private IOrderable orderableRoute;
+        private readonly IOrderable orderableRoute;
         private readonly string orderId;
 
         public OrderVoucher(IOrderable route, string orderId)
         {
-            this.orderableRoute = route;
+            orderableRoute = route;
             this.orderId = orderId;
         }
 
@@ -74,7 +76,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 MemoryStream ms = new MemoryStream();
                 StreamWriter sw = new StreamWriter(ms);

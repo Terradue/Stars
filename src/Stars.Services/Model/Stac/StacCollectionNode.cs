@@ -1,9 +1,11 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacCollectionNode.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Stac;
-using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac

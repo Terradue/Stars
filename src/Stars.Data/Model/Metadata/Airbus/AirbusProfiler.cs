@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AirbusProfiler.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,14 +18,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 {
     public abstract class AirbusProfiler
     {
-        public Schemas.Dimap_Document Dimap { get; protected set; }
+        public Dimap_Document Dimap { get; protected set; }
 
         public AirbusProfiler(Dimap_Document dimap)
         {
             Dimap = dimap;
         }
 
-        internal Schemas.Source_Identification GetSourceIdentification()
+        internal Source_Identification GetSourceIdentification()
         {
             return Dimap.Dataset_Sources.Source_Identification
                     .Where(ds => ds.Strip_Source != null)
@@ -255,7 +259,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public abstract string GetPlatformInternationalDesignator();
 
-        private List<EoBandObject> GetEoBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        private List<EoBandObject> GetEoBandObjects(Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
         {
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
@@ -267,7 +271,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return eoBandObjects.OrderBy(eob => BandOrders[eob.CommonName]).ToList();
         }
 
-        private List<RasterBand> GetRasterBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        private List<RasterBand> GetRasterBandObjects(Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
         {
             List<RasterBand> rasterBandObjects = new List<RasterBand>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
@@ -284,7 +288,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         protected abstract IDictionary<EoBandCommonName?, int> BandOrders { get; }
 
-        protected virtual EoBandObject GetEoBandRadianceObject(Schemas.Band_Radiance bandInfo, Schemas.Band_Solar_Irradiance bandSolarIrradiance)
+        protected virtual EoBandObject GetEoBandRadianceObject(Band_Radiance bandInfo, Band_Solar_Irradiance bandSolarIrradiance)
         {
             EoBandObject eoBandObject = new EoBandObject(bandInfo.BAND_ID,
                                                 GetEoCommonName(bandInfo));
@@ -294,7 +298,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return eoBandObject;
         }
 
-        protected virtual RasterBand GetRasterBandObject(Schemas.Band_Radiance bandInfo, Schemas.Band_Solar_Irradiance bandSolarIrradiance, Radiometric_Settings radiometric_Settings)
+        protected virtual RasterBand GetRasterBandObject(Band_Radiance bandInfo, Band_Solar_Irradiance bandSolarIrradiance, Radiometric_Settings radiometric_Settings)
         {
             RasterBand rasterBand = new RasterBand();
             rasterBand.Statistics = new Stac.Common.Statistics(0, 4096, null, null, null);

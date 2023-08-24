@@ -1,8 +1,9 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: NTSExtensions.cs
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using NetTopologySuite.Geometries;
 
 namespace Stars.Geometry.NTS
 {
@@ -43,7 +44,7 @@ namespace Stars.Geometry.NTS
                 coordinate.Z = geometryPosition.Altitude.Value;
             return coordinate;
         }
-    
+
         public static NetTopologySuite.Geometries.MultiPoint ToNTSMultiPoint(this GeoJSON.Net.Geometry.MultiPoint geometryMultiPoint)
         {
             return new NetTopologySuite.Geometries.MultiPoint(geometryMultiPoint.Coordinates.Select(c => c.ToNTSPoint()).ToArray());

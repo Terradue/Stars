@@ -1,10 +1,13 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GeosquarePublicationModel.cs
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
-using System.Xml;
 using Stac;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
@@ -19,7 +22,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
     [DataContract]
     public class GeosquarePublicationModel : IPublicationModel
     {
-        private AuthenticationHeaderValue authorizationHeaderValue;
+        private readonly AuthenticationHeaderValue authorizationHeaderValue;
 
         public GeosquarePublicationModel()
         {
@@ -98,7 +101,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public List<Subject> SubjectsList { get; set; }
 
         [IgnoreDataMember]
-        public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
+        public List<ISubject> Subjects => SubjectsList.Cast<ISubject>().ToList();
 
         public Action<SyndicationLink, AtomItem, IAssetsContainer> CustomLinkUpdater { get; set; }
 

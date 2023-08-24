@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ZipArchiveAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -65,7 +69,7 @@ namespace Terradue.Stars.Services.Processing
             }
         }
 
-        public override System.Uri Uri => asset.Uri;
+        public override Uri Uri => asset.Uri;
 
         // If set to true, detects relative location of parent/generic asset
         // and adjusts included assets' filenames with that directory
@@ -88,7 +92,7 @@ namespace Terradue.Stars.Services.Processing
                     else
                     {
                         string dirName = Path.GetDirectoryName(parentAssetFileName);
-                        ParentAssetBaseDir = String.IsNullOrEmpty(dirName) ? null : dirName;
+                        ParentAssetBaseDir = string.IsNullOrEmpty(dirName) ? null : dirName;
                     }
                 }
                 else
@@ -115,10 +119,10 @@ namespace Terradue.Stars.Services.Processing
             return Path.GetFileNameWithoutExtension(asset.Uri.ToString());
         }
 
-        public async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
+        public override async Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
+            zipFile = ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
             string subFolder = AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)

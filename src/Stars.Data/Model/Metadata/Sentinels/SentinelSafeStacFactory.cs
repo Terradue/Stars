@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: SentinelSafeStacFactory.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,9 +12,9 @@ using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Sat;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Geometry.Gml321;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 {
@@ -89,16 +93,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 proc.Lineage = processing.metadataWrap.xmlData.processing.name;
                 if (processing.metadataWrap.xmlData.processing.Items != null)
                 {
-                    OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType facility =
-                    processing.metadataWrap.xmlData.processing.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType) as
-                    OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType;
-                    if (facility != null)
+                    if (processing.metadataWrap.xmlData.processing.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType) is OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType facility)
                     {
                         proc.Facility = facility.name;
-                        OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType software =
-                        facility.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType) as
-                        OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType;
-                        if (software != null)
+                        if (facility.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType) is OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType software)
                             proc.Software.Add(software.name, software.version);
                     }
                 }
@@ -109,16 +107,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 proc.Lineage = processing.metadataWrap.xmlData.processing11.name;
                 if (processing.metadataWrap.xmlData.processing11.Items != null)
                 {
-                    OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType facility =
-                    processing.metadataWrap.xmlData.processing11.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType) as
-                    OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType;
-                    if (facility != null)
+                    if (processing.metadataWrap.xmlData.processing11.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType) is OpenSearch.Sentinel.Data.Safe.Sentinel10.facilityType facility)
                     {
                         proc.Facility = facility.name;
-                        OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType software =
-                        facility.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType) as
-                        OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType;
-                        if (software != null)
+                        if (facility.Items.FirstOrDefault(i => i is OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType) is OpenSearch.Sentinel.Data.Safe.Sentinel10.softwareType software)
                             proc.Software.Add(software.name, software.version);
                     }
                 }
@@ -360,44 +352,44 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             var measurementFrameSet = xfdu.metadataSection.First(m => m.ID == "measurementFrameSet");
 
             if (measurementFrameSet.metadataWrap.xmlData.frameSet != null && measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint != null &&
-                    measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint.Items1[0] is Terradue.ServiceModel.Ogc.Gml311.CoordinatesType)
+                    measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType)
             {
-                Terradue.ServiceModel.Ogc.Gml311.CoordinatesType coordinates = (Terradue.ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint.Items1[0];
+                ServiceModel.Ogc.Gml311.CoordinatesType coordinates = (ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet.frame[0].footPrint.Items1[0];
 
-                var polygon = new Terradue.ServiceModel.Ogc.Gml321.PolygonType();
-                polygon.exterior = new Terradue.ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
-                var linearRing = new Terradue.ServiceModel.Ogc.Gml321.LinearRingType();
-                var posList = new List<Terradue.ServiceModel.Ogc.Gml321.DirectPositionListType>();
+                var polygon = new ServiceModel.Ogc.Gml321.PolygonType();
+                polygon.exterior = new ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
+                var linearRing = new ServiceModel.Ogc.Gml321.LinearRingType();
+                var posList = new List<ServiceModel.Ogc.Gml321.DirectPositionListType>();
 
-                posList.Add(new Terradue.ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinates.Value.Replace(",", " ") });
+                posList.Add(new ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinates.Value.Replace(",", " ") });
                 if (posList[0].Text.Split(' ')[1] != posList[0].Text.Split(' ').Last())
                 {
                     posList[0].Text += " " + posList[0].Text.Split(' ')[0] + " " + posList[0].Text.Split(' ')[1];
                 }
                 linearRing.Items = posList.ToArray();
-                linearRing.ItemsElementName = new Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
+                linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
                 polygon.exterior.Item = linearRing;
 
                 return polygon.ToGeometry().NormalizePolygon();
             }
 
             if (measurementFrameSet.metadataWrap.xmlData.frameSet11 != null && measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint != null &&
-                    measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0] is Terradue.ServiceModel.Ogc.Gml311.CoordinatesType)
+                    measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType)
             {
-                Terradue.ServiceModel.Ogc.Gml311.CoordinatesType coordinates = (Terradue.ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0];
+                ServiceModel.Ogc.Gml311.CoordinatesType coordinates = (ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0];
 
-                var polygon = new Terradue.ServiceModel.Ogc.Gml321.PolygonType();
-                polygon.exterior = new Terradue.ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
-                var linearRing = new Terradue.ServiceModel.Ogc.Gml321.LinearRingType();
-                var posList = new List<Terradue.ServiceModel.Ogc.Gml321.DirectPositionListType>();
+                var polygon = new ServiceModel.Ogc.Gml321.PolygonType();
+                polygon.exterior = new ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
+                var linearRing = new ServiceModel.Ogc.Gml321.LinearRingType();
+                var posList = new List<ServiceModel.Ogc.Gml321.DirectPositionListType>();
 
-                posList.Add(new Terradue.ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinates.Value.Replace(",", " ") });
+                posList.Add(new ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinates.Value.Replace(",", " ") });
                 if (posList[0].Text.Split(' ')[1] != posList[0].Text.Split(' ').Last())
                 {
                     posList[0].Text += " " + posList[0].Text.Split(' ')[0] + " " + posList[0].Text.Split(' ')[1];
                 }
                 linearRing.Items = posList.ToArray();
-                linearRing.ItemsElementName = new Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
+                linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
                 polygon.exterior.Item = linearRing;
 
                 return polygon.ToGeometry().NormalizePolygon();

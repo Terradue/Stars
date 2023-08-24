@@ -1,17 +1,17 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacItemToAtomItemTests.cs
+
 using System.Linq;
-using Newtonsoft.Json;
-using Xunit;
-using Stac.Extensions.Projection;
-using Terradue.Stars.Data.Translators;
-using Stac;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Model.Atom;
 using System.Threading;
-using System.Xml;
-using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
-using System;
-using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using Stac;
 using Terradue.Metadata.EarthObservation.Ogc.Extensions;
+using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.Stars.Data.Translators;
+using Terradue.Stars.Services.Model.Atom;
+using Terradue.Stars.Services.Model.Stac;
+using Xunit;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -63,7 +63,7 @@ namespace Terradue.Data.Tests.Translators
             var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
 
             Assert.NotNull(twmOfferings);
-            Assert.Equal(1, twmOfferings.Count());
+            Assert.Single(twmOfferings);
             Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
             Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
 
@@ -111,7 +111,7 @@ namespace Terradue.Data.Tests.Translators
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
-            Terradue.ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
+            ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
 
             Assert.NotNull(legendLink);
             Assert.Equal("https://test.com/legend.png", legendLink.Uri.AbsoluteUri);
@@ -137,7 +137,7 @@ namespace Terradue.Data.Tests.Translators
             var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
 
             Assert.NotNull(twmOfferings);
-            Assert.Equal(1, twmOfferings.Count());
+            Assert.Single(twmOfferings);
             Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
             Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
         }
@@ -160,7 +160,7 @@ namespace Terradue.Data.Tests.Translators
             var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
 
             Assert.NotNull(twmOfferings);
-            Assert.Equal(1, twmOfferings.Count());
+            Assert.Single(twmOfferings);
             Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
             Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
         }

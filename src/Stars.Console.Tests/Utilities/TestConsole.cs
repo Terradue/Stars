@@ -1,9 +1,13 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TestConsole.cs
+
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Xunit.Abstractions;
 using McMaster.Extensions.CommandLineUtils;
+using Xunit.Abstractions;
 using Xunit.Sdk;
 
 namespace Stars.Console.Tests

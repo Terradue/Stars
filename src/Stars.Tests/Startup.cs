@@ -1,7 +1,10 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Startup.cs
+
 using System;
 using System.IO;
 using System.Runtime.Loader;
-using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -61,7 +64,7 @@ namespace Stars.Tests
             var builder = new ConfigurationBuilder()
                 .AddNewtonsoftJsonFile("testsettings.json", optional: true)
                 .AddNewtonsoftJsonFile(configFile.FullName, optional: false, reloadOnChange: false)
-                .AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true)
+                .AddNewtonsoftJsonFile(Path.Join(Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 

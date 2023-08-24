@@ -1,17 +1,15 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: LocalStackFixture.cs
+
 using System;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Docker.DotNet.Models;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Terradue.Stars.Services.Resources;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Stars.Tests.TestFixtures
 {

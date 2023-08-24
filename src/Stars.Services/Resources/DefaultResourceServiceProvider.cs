@@ -1,23 +1,17 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DefaultResourceServiceProvider.cs
+
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
-using Amazon.Runtime;
-using Amazon.Runtime.Internal;
 using Amazon.S3;
-using Amazon.SecurityToken;
-using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Router;
 
@@ -86,10 +80,7 @@ namespace Terradue.Stars.Services.Resources
             // HTTP
             if (resource.Uri.Scheme.StartsWith("http"))
             {
-                var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
-                if (clientFactory == null)
-                    throw new SystemException("HttpClient Factory not provided");
-
+                var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>() ?? throw new SystemException("HttpClient Factory not provided");
                 var client = clientFactory.CreateClient("stars");
 
                 HttpCachedHeaders contentHeaders = null;
