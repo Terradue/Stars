@@ -21,6 +21,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Geometry.GeoJson;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Data.Model.Metadata.Airbus
 {
@@ -300,8 +301,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         {
             if (IncludeProviderProperty)
             {
-                StacProvider provider = dimapProfiler.GetStacProvider();
-                if (provider != null) properties.Add("providers", new StacProvider[] { provider });
+                StacProvider[] providers = dimapProfiler.GetStacProviders();
+                if (!providers.IsNullOrEmpty()) properties.Add("providers", providers);
             }
         }
 

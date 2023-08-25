@@ -166,7 +166,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
         }
 
-        internal double GetResolution()
+        public virtual double GetResolution()
         {
             try
             {
@@ -398,7 +398,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return title;
         }
 
-        internal virtual StacProvider GetStacProvider()
+        internal virtual StacProvider[] GetStacProviders()
         {
             return null;
         }

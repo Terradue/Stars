@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Stac;
 using Stac.Extensions.Eo;
 using Terradue.Stars.Data.Model.Metadata.Airbus.Schemas;
@@ -14,12 +15,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         internal override string GetConstellation()
         {
-            return "pleiades";
+            return "pleiades-neo";
         }
 
         internal override string GetMission()
         {
-            return base.GetMission().Replace("PNEO", "pleiades-neo");
+            return GetConstellation();
         }
 
         protected override IDictionary<EoBandCommonName?, int> BandOrders
@@ -52,21 +53,51 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             //}
         }
 
-        internal override StacProvider GetStacProvider()
+        internal override StacProvider[] GetStacProviders()
         {
-            StacProvider provider = new StacProvider("Airbus", new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor });
-            provider.Description = "Pléiades Neo is the most advanced optical constellation of Airbus, with two identical 30 cm resolution satellites and optimum reactivity. Pleiades Neo allows users to unleash the potential of geospatial applications and analytics.";
-            //TODO check Uri vs gdoc url
-            provider.Uri = new Uri("https://www.intelligence-airbusds.com/imagery/constellation/pleiades-neo/");
-            //TODO set "propietary" for field license here ? 
-            return provider;
+            StacProvider provider1 = new StacProvider("Airbus", new[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor });
+            provider1.Description = "Pléiades Neo is the most advanced optical constellation of Airbus, with two identical 30 cm resolution satellites and optimum reactivity. Pleiades Neo allows users to unleash the potential of geospatial applications and analytics.";
+            provider1.Uri = new Uri("https://www.intelligence-airbusds.com/imagery/constellation/pleiades-neo/");
+            
+            StacProvider provider2 = new StacProvider("CNES", new[] { StacProviderRole.licensor });
+            
+            return new[] { provider1, provider2 };
         }
 
         public override string[] GetInstruments()
         {
             return new string[1] { "pneo-imager"};
         }
+        
+        
+        
+        public override double GetResolution()
+        {
+            try {
+                var value1 = double.Parse(Dimap.Geometric_Data.Use_Area.Located_Geometric_Values
+                    .FirstOrDefault(l => l.LOCATION_TYPE.Equals("center",
+                        StringComparison.InvariantCultureIgnoreCase))
+                    .Ground_Sample_Distance.GSD_ACROSS_TRACK);
 
-        //TODO override CompleteAsset
+                var value2 = double.Parse(Dimap.Geometric_Data.Use_Area.Located_Geometric_Values
+                    .FirstOrDefault(l => l.LOCATION_TYPE.Equals("center",
+                        StringComparison.InvariantCultureIgnoreCase))
+                    .Ground_Sample_Distance.GSD_ALONG_TRACK);
+                
+                // make mean of the two values and round to 2 decimals
+                return Math.Round((value1 + value2) / 2, 2);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        
+        internal override string GetProcessingLevel()
+        {
+            return Dimap.Processing_Information.Product_Settings.PROCESSING_LEVEL;
+        }
+
     }
 }
