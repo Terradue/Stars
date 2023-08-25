@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Stac;
 using Stac.Extensions.Eo;
+using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
 using Terradue.Stars.Data.Model.Metadata.Airbus.Schemas;
 
 namespace Terradue.Stars.Data.Model.Metadata.Airbus
@@ -26,8 +29,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         protected override IDictionary<EoBandCommonName?, int> BandOrders
         {
             get
-
-            //TODO PAN assets ? 
             {   //MS-FS assets
                 Dictionary<EoBandCommonName?, int> bandOrders = new Dictionary<EoBandCommonName?, int>();
                 bandOrders.Add(EoBandCommonName.blue, 0);
@@ -36,6 +37,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 bandOrders.Add(EoBandCommonName.coastal, 3);
                 bandOrders.Add(EoBandCommonName.rededge, 4);
                 bandOrders.Add(EoBandCommonName.nir, 5);
+                bandOrders.Add(EoBandCommonName.pan, 6);
                 return bandOrders;
             }
         }
@@ -101,15 +103,90 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         
         
-        
-        protected override List<EoBandObject> GetEoBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        internal override void CompleteAsset(StacAsset stacAsset, StacItem stacItem)
         {
+            // FOR MS-FS and PMS-FS spectalProcess 
+            
+            // if the TIF is a NED
+            // return only the bands NIR, REDEDGE, DEEP BLUE
+            
+            // if the TIF is a RGB
+            // return only the bands R, G, B
+            Data_Files dataFiles = null;
+            List<Raster_Index> filterBands = new List<Raster_Index>();
+            if(Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING == "PMS-FS" || Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING == "MS-FS"){
+
+                // check to what dataFiles the TIF belongs ( NED or RGB )
+                dataFiles = Dimap.Raster_Data.Data_Access.Data_Files.FirstOrDefault(dfs => dfs.Data_File.FirstOrDefault(df => df.DATA_FILE_PATH.Href.Equals(System.IO.Path.GetFileName(stacAsset.Uri.ToString()),
+                        StringComparison.InvariantCultureIgnoreCase)) != null);
+
+                if (dataFiles != null) {
+                    filterBands = dataFiles.Raster_Display.Raster_Index_List.Raster_Index;
+                }
+            }
+            
+            List<EoBandObject> eoBandObjects = GetEoBandObjects(stacAsset, Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
+                Dimap.Processing_Information.Product_Settings.Radiometric_Settings,filterBands);
+            if (eoBandObjects.Count > 0)
+            {
+                stacAsset.EoExtension().Bands = eoBandObjects.ToArray();
+            }
+            List<RasterBand> rasterBandObjects = GetRasterBandObjects(Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
+                Dimap.Processing_Information.Product_Settings.Radiometric_Settings,filterBands);
+
+            if (rasterBandObjects.Count > 0)
+                stacAsset.RasterExtension().Bands = rasterBandObjects.ToArray();
+            stacAsset.Properties.Add("product_type", Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING);
+            switch (Dimap.Processing_Information.Product_Settings.Radiometric_Settings.RADIOMETRIC_PROCESSING)
+            {
+                case "BASIC":
+                case "LINEAR_STRETCH":
+                    stacAsset.Roles.Add("dn");
+                    break;
+                case "REFLECTANCE":
+                    stacAsset.Roles.Add("reflectance");
+                    break;
+                case "DISPLAY":
+                case "SEAMLESS":
+                    stacAsset.Roles.Add("visual");
+                    break;
+            }
+
+            try
+            {
+                stacAsset.ProjectionExtension().Shape = new int[] { int.Parse(Dimap.Raster_Data.Raster_Dimensions.NCOLS), int.Parse(Dimap.Raster_Data.Raster_Dimensions.NROWS) };
+            }
+            catch
+            {
+            }
+        }
+        
+        
+        
+        
+        protected override List<EoBandObject> GetEoBandObjects(StacAsset stacAsset,
+            Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometricSettings,
+            List<Raster_Index> filterBands = null)
+        {
+
+            // FOR MS-FS spectalProcess 
+            
+            // if the TIF is a NED
+            // return only the bands NIR, REDEDGE, DEEP BLUE
+            
+            // if the TIF is a RGB
+            // return only the bands R, G, B
+            
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
             {
-                var bandInfo = spectralBandInfos.Band_Radiance[i];
-                var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
                 
+                var bandInfo = spectralBandInfos.Band_Radiance[i];
+                // check if bandInfo is in filterBands
+                if(filterBands.Any() && !filterBands.Any(b => b.BAND_ID.Equals(bandInfo.BAND_ID)))
+                    continue;
+                
+                var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
 
                 var fwhm = spectralBandInfos.Band_Spectral_Range.FirstOrDefault(b => b.BAND_ID.Equals(bandInfo.BAND_ID)).FWHM;
                 // center_wavelength
@@ -121,26 +198,31 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 eoBandObject.Properties.Add("full_width_half_max", fullWidthHalfMax);
                 eoBandObject.CenterWavelength = centerWavelength;
                 
+                string commonName = eoBandObject.CommonName.ToString();
+                // commonName with first letter to upper case
+                commonName = eoBandObject.Name = $"{commonName.Substring(0, 1).ToUpper()}{commonName.Substring(1)}";
+
+                string bandNumber = "";
+                if (filterBands.Any())
+                {
+                    bandNumber= $"B{filterBands.FirstOrDefault(b => b.BAND_ID.Equals(bandInfo.BAND_ID)).BAND_INDEX}";
+                }
+
+                // type
+                string type = "";
+                if (stacAsset.Uri.ToString().Contains("NED")) {
+                    type = "NED-";
+                }
+                else if (stacAsset.Uri.ToString().Contains("RGB")) {
+                    type = "RGB-";
+                }
+                
+                eoBandObject.Name = $"{type}{bandNumber} {commonName}";
                 eoBandObjects.Add(eoBandObject);
             }
             return eoBandObjects.OrderBy(eob => BandOrders[eob.CommonName]).ToList();
         }
 
-        // private List<RasterBand> GetRasterBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
-        // {
-        //     List<RasterBand> rasterBandObjects = new List<RasterBand>();
-        //     for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
-        //     {
-        //         var bandInfo = spectralBandInfos.Band_Radiance[i];
-        //         var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
-        //         rasterBandObjects.Add(GetRasterBandObject(bandInfo, bandSolarIrradiance, radiometric_Settings));
-        //     }
-        //     rasterBandObjects = rasterBandObjects.OrderBy(rb => BandOrders[rb.GetProperty<EoBandCommonName>("bcn")]).ToList();
-        //     foreach (var rb in rasterBandObjects)
-        //         rb.RemoveProperty("bcn");
-        //     return rasterBandObjects;
-        // }
-        
         
     }
 }

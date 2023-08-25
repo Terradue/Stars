@@ -223,9 +223,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
         }
 
-        internal void CompleteAsset(StacAsset stacAsset, StacItem stacItem)
+        internal virtual void CompleteAsset(StacAsset stacAsset, StacItem stacItem)
         {
-            List<EoBandObject> eoBandObjects = GetEoBandObjects(Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
+            List<EoBandObject> eoBandObjects = GetEoBandObjects(stacAsset, Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
                                                                 Dimap.Processing_Information.Product_Settings.Radiometric_Settings);
             if (eoBandObjects.Count > 0)
             {
@@ -263,7 +263,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public abstract string GetPlatformInternationalDesignator();
 
-        protected virtual List<EoBandObject> GetEoBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        protected virtual List<EoBandObject> GetEoBandObjects(StacAsset stacAsset,
+            Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings,
+            List<Raster_Index> filterBands = null)
         {
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
@@ -275,12 +277,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return eoBandObjects.OrderBy(eob => BandOrders[eob.CommonName]).ToList();
         }
 
-        private List<RasterBand> GetRasterBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        protected List<RasterBand> GetRasterBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings,List<Raster_Index> filterBands = null)
         {
             List<RasterBand> rasterBandObjects = new List<RasterBand>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
             {
                 var bandInfo = spectralBandInfos.Band_Radiance[i];
+                
+                if(filterBands!= null && filterBands.Any() && !filterBands.Any(b => b.BAND_ID.Equals(bandInfo.BAND_ID)))
+                    continue;
+                
                 var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
                 rasterBandObjects.Add(GetRasterBandObject(bandInfo, bandSolarIrradiance, radiometric_Settings));
             }
@@ -332,8 +338,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             rasterBand.SetProperty("bcn", GetEoCommonName(bandInfo));
             return rasterBand;
         }
-
-        //TODO add coastal and rededge for PNEO ? 
+        
         private EoBandCommonName GetEoCommonName(Band_Radiance bandInfo)
         {
             // check if bandinfo is null
@@ -356,7 +361,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 case "DB":
                     return EoBandCommonName.coastal;
                 case "PAN":
-                    return default(EoBandCommonName);
+                    return EoBandCommonName.pan;
             }
 
 
@@ -382,7 +387,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         internal virtual string GetAssetKey(IAsset bandAsset, Data_File dataFile)
         {
             string key = Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING;
-            key += "-R" + dataFile.Tile_R + "C" + dataFile.Tile_C;
+
+            string type = "";
+            if (key == "MS-FS" || key == "PMS-FS") {
+                if (bandAsset.Uri.ToString().Contains("NED")) {
+                    type = "-NED";
+                }
+                else if (bandAsset.Uri.ToString().Contains("RGB")) {
+                    type = "-RGB";
+                }
+            }
+            
+            key += type + "-R" + dataFile.Tile_R + "C" + dataFile.Tile_C;
             return key;
         }
 

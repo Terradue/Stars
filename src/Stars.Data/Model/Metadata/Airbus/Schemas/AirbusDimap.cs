@@ -660,6 +660,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
         [XmlElement(ElementName = "Data_File")]
         public List<Data_File> Data_File { get; set; }
+        
+        [XmlElement(ElementName = "Raster_Display")]
+        public Raster_Display Raster_Display { get; set; }
 
     }
 
@@ -676,7 +679,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
         public string DATA_FILE_TILES { get; set; }
 
         [XmlElement(ElementName = "Data_Files")]
-        public Data_Files Data_Files { get; set; }
+        public List<Data_Files> Data_Files { get; set; }
 
     }
 
@@ -803,7 +806,29 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
         [XmlElement(ElementName = "Special_Value")]
         public List<Special_Value> Special_Value { get; set; }
+        
+        [XmlElement(ElementName = "Raster_Index_List")]
+        public Raster_Index_List Raster_Index_List { get; set; }
+    }
 
+    [XmlRoot(ElementName = "Raster_Index_List")]
+    public class Raster_Index_List {
+        [XmlElement(ElementName = "Raster_Index")]
+        public List<Raster_Index> Raster_Index { get; set; }
+    }
+
+    [XmlRoot(ElementName = "Raster_Index")]
+    public class Raster_Index {
+        
+        [XmlElement(ElementName = "BAND_ID")]
+        public string BAND_ID { get; set; }
+        
+        [XmlElement(ElementName = "BAND_NAME")]
+        public string BAND_NAME { get; set; }
+        
+        [XmlElement(ElementName = "BAND_INDEX")]
+        public int BAND_INDEX { get; set; }
+        
     }
 
     [XmlRoot(ElementName = "Raster_Data")]

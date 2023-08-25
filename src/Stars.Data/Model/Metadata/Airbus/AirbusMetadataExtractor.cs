@@ -327,25 +327,28 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         protected void AddAssets(StacItem stacItem, IItem item, IAsset metadataAsset, AirbusProfiler dimapProfiler) {
 
-            foreach (var dataFile in dimapProfiler.Dimap.Raster_Data.Data_Access.Data_Files.Data_File) {
-                IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href + "$");
-                if (productAsset == null)
-                    throw new FileNotFoundException(string.Format("No product found '{0}'",
-                        dataFile.DATA_FILE_PATH.Href));
-                var bandStacAsset = GetBandAsset(productAsset, dimapProfiler, dataFile, stacItem);
-                if (Path.GetExtension(bandStacAsset.Value.Uri.ToString())
-                    .Equals(".jp2", StringComparison.InvariantCultureIgnoreCase))
-                    bandStacAsset.Value.MediaType = new ContentType("image/jp2");
-                dimapProfiler.CompleteAsset(bandStacAsset.Value, stacItem);
-                stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
-                var productWorldFileAsset =
-                    FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href.Replace("JP2", "J2W") + "$");
-                if (productWorldFileAsset != null) {
-                    var dataAsset = StacAsset.CreateDataAsset(stacItem, productWorldFileAsset.Uri,
-                        new ContentType(MimeTypes.GetMimeType(Path.GetFileName(productWorldFileAsset.Uri.ToString()))));
-                    dataAsset.Properties.AddRange(productWorldFileAsset.Properties);
-                    stacItem.Assets.Add(bandStacAsset.Key + "-wf", dataAsset);
-                    stacItem.Assets[bandStacAsset.Key + "-wf"].Roles.Add("world-file");
+            foreach (var dataFiles in dimapProfiler.Dimap.Raster_Data.Data_Access.Data_Files){
+                foreach (var dataFile in dataFiles.Data_File) {
+                    IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href + "$");
+                    if (productAsset == null)
+                        throw new FileNotFoundException(string.Format("No product found '{0}'",
+                            dataFile.DATA_FILE_PATH.Href));
+                    var bandStacAsset = GetBandAsset(productAsset, dimapProfiler, dataFile, stacItem);
+                    if (Path.GetExtension(bandStacAsset.Value.Uri.ToString())
+                        .Equals(".jp2", StringComparison.InvariantCultureIgnoreCase))
+                        bandStacAsset.Value.MediaType = new ContentType("image/jp2");
+                    dimapProfiler.CompleteAsset(bandStacAsset.Value, stacItem);
+                    stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
+                    var productWorldFileAsset =
+                        FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href.Replace("JP2", "J2W") + "$");
+                    if (productWorldFileAsset != null) {
+                        var dataAsset = StacAsset.CreateDataAsset(stacItem, productWorldFileAsset.Uri,
+                            new ContentType(
+                                MimeTypes.GetMimeType(Path.GetFileName(productWorldFileAsset.Uri.ToString()))));
+                        dataAsset.Properties.AddRange(productWorldFileAsset.Properties);
+                        stacItem.Assets.Add(bandStacAsset.Key + "-wf", dataAsset);
+                        stacItem.Assets[bandStacAsset.Key + "-wf"].Roles.Add("world-file");
+                    }
                 }
             }
 
