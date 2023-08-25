@@ -263,7 +263,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public abstract string GetPlatformInternationalDesignator();
 
-        private List<EoBandObject> GetEoBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        protected virtual List<EoBandObject> GetEoBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
         {
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)

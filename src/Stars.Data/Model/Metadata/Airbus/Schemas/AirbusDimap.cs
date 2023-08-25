@@ -910,8 +910,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus.Schemas
 
         [XmlElement(ElementName = "MAX")]
         public string MAX { get; set; }
+        
+        [XmlElement(ElementName = "FWHM")]
+        public FWHM FWHM { get; set; }
 
     }
+
+    [XmlRoot(ElementName = "FWHM")]
+    public class FWHM {
+        
+        [XmlElement(ElementName = "MIN")]
+        public double FWHM_MIN { get; set; }
+
+        [XmlElement(ElementName = "MAX")]
+        public double FWHM_MAX { get; set; }
+        
+    }
+
 
     [XmlRoot(ElementName = "Band_Radiance")]
     public class Band_Radiance {

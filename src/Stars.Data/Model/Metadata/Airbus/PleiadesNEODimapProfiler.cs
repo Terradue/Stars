@@ -99,5 +99,48 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return Dimap.Processing_Information.Product_Settings.PROCESSING_LEVEL;
         }
 
+        
+        
+        
+        protected override List<EoBandObject> GetEoBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        {
+            List<EoBandObject> eoBandObjects = new List<EoBandObject>();
+            for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
+            {
+                var bandInfo = spectralBandInfos.Band_Radiance[i];
+                var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
+                
+
+                var fwhm = spectralBandInfos.Band_Spectral_Range.FirstOrDefault(b => b.BAND_ID.Equals(bandInfo.BAND_ID)).FWHM;
+                // center_wavelength
+                double centerWavelength  = (fwhm.FWHM_MIN + fwhm.FWHM_MAX) / 2/1000;
+                // full_width_half_max
+                double fullWidthHalfMax = (fwhm.FWHM_MAX - fwhm.FWHM_MIN)/1000;
+
+                EoBandObject eoBandObject = GetEoBandRadianceObject(bandInfo, bandSolarIrradiance);
+                eoBandObject.Properties.Add("full_width_half_max", fullWidthHalfMax);
+                eoBandObject.CenterWavelength = centerWavelength;
+                
+                eoBandObjects.Add(eoBandObject);
+            }
+            return eoBandObjects.OrderBy(eob => BandOrders[eob.CommonName]).ToList();
+        }
+
+        // private List<RasterBand> GetRasterBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        // {
+        //     List<RasterBand> rasterBandObjects = new List<RasterBand>();
+        //     for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
+        //     {
+        //         var bandInfo = spectralBandInfos.Band_Radiance[i];
+        //         var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
+        //         rasterBandObjects.Add(GetRasterBandObject(bandInfo, bandSolarIrradiance, radiometric_Settings));
+        //     }
+        //     rasterBandObjects = rasterBandObjects.OrderBy(rb => BandOrders[rb.GetProperty<EoBandCommonName>("bcn")]).ToList();
+        //     foreach (var rb in rasterBandObjects)
+        //         rb.RemoveProperty("bcn");
+        //     return rasterBandObjects;
+        // }
+        
+        
     }
 }
