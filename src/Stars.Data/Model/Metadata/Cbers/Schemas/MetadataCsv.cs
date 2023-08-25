@@ -56,6 +56,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             var bboxArray = FindBoundingBox(footprintArray);
             
             // IMAGE
+
             metadata.image = new prdfImage
             {
                 // START_DATE COMPLETE_DATE CENTER_DATE
@@ -68,25 +69,25 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
                 // FOOTPRINT
                 boundingBox = new prdfImageBoundingBox
                 {
-                    UR = new UR
-                    {
-                        latitude = bboxArray[0],
-                        longitude = bboxArray[1]
-                    },
                     UL = new UL
                     {
-                        latitude = bboxArray[2],
-                        longitude = bboxArray[3]
+                        latitude = bboxArray[0, 1].ToString(),
+                        longitude = bboxArray[0, 0].ToString()
+                    },
+                    UR = new UR
+                    {
+                        latitude = bboxArray[1, 1].ToString(),
+                        longitude = bboxArray[1, 0].ToString()
                     },
                     LR = new LR
                     {
-                        latitude = bboxArray[4],
-                        longitude = bboxArray[5]
+                        latitude = bboxArray[2, 1].ToString(),
+                        longitude = bboxArray[2, 0].ToString()
                     },
                     LL = new LL
                     {
-                        latitude = bboxArray[6],
-                        longitude = bboxArray[7]
+                        latitude = bboxArray[3, 1].ToString(),
+                        longitude = bboxArray[3, 0].ToString()
                     }
                 },
 
@@ -135,42 +136,31 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
         }
 
 
-        private static string[] FindBoundingBox(string[] uniqueCoordinates) {
-            if (uniqueCoordinates == null)
-                throw new ArgumentNullException(nameof(uniqueCoordinates));
-            if (uniqueCoordinates.Length < 4 || uniqueCoordinates.Length % 2 != 0)
+        private static double[,] FindBoundingBox(string[] singleCoordinates) {
+            // Assumes bounding box has only 4 unique points
+            // position (upper/lower and left/right) is not considered
+            // (unimportant for geometry generation)
+            if (singleCoordinates == null)
+                throw new ArgumentNullException(nameof(singleCoordinates));
+            if (singleCoordinates.Length < 8 || singleCoordinates.Length % 2 != 0)
                 throw new ArgumentException("Invalid number of coordinates.");
 
-            var numericCoordinates = new List<double>();
-            foreach (string coordinate in uniqueCoordinates) {
-                if (!double.TryParse(coordinate, out double numericValue))
-                    throw new ArgumentException("Invalid numeric value in the coordinates.");
-
-                numericCoordinates.Add(numericValue);
-            }
-
-            var xMin = numericCoordinates[0];
-            var xMax = numericCoordinates[0];
-            var yMin = numericCoordinates[1];
-            var yMax = numericCoordinates[1];
-
-            for (var i = 2; i < numericCoordinates.Count; i += 2) {
-                var xCoordinate = numericCoordinates[i];
-                var yCoordinate = numericCoordinates[i + 1];
-
-                xMin = Math.Min(xMin, xCoordinate);
-                xMax = Math.Max(xMax, xCoordinate);
-                yMin = Math.Min(yMin, yCoordinate);
-                yMax = Math.Max(yMax, yCoordinate);
-            }
-
-            return new[]
+            int len = singleCoordinates.Length / 2;
+            if (len == 5 && singleCoordinates[0] == singleCoordinates[8] && singleCoordinates[1] == singleCoordinates[9])
             {
-                xMin.ToString(), yMax.ToString(),
-                xMax.ToString(), yMax.ToString(),
-                xMax.ToString(), yMin.ToString(),
-                xMin.ToString(), yMin.ToString()
-            };
+                len = 4;
+            }
+
+            double[,] coordinates = new double[len, 2];
+            for (int i = 0; i < len; i++)
+            {
+                // Latitude comes before longitude in original string -> invert
+                coordinates[i, 0] = Double.Parse(singleCoordinates[2 * i + 1]);
+                coordinates[i, 1] = Double.Parse(singleCoordinates[2 * i]);
+            }
+
+            return coordinates;
+
         }
 
 
@@ -186,7 +176,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             {
                 if (match.Groups.Count >= 2)
                 {
-                    attributeValues.Add(new band() {  Value = match.Groups[1].Value} );
+                    attributeValues.Add(new band() { Value = match.Groups[1].Value} );
                 }
             }
 
