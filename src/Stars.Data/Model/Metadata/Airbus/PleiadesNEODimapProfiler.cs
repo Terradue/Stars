@@ -205,16 +205,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 string bandNumber = "";
                 if (filterBands.Any())
                 {
-                    bandNumber= $"B{filterBands.FirstOrDefault(b => b.BAND_ID.Equals(bandInfo.BAND_ID)).BAND_INDEX}";
+                    bandNumber= $"-B{filterBands.FirstOrDefault(b => b.BAND_ID.Equals(bandInfo.BAND_ID)).BAND_INDEX}";
                 }
 
                 // type
                 string type = "";
                 if (stacAsset.Uri.ToString().Contains("NED")) {
-                    type = "NED-";
+                    type = "NED";
                 }
                 else if (stacAsset.Uri.ToString().Contains("RGB")) {
-                    type = "RGB-";
+                    type = "RGB";
                 }
                 
                 eoBandObject.Name = $"{type}{bandNumber} {commonName}";
