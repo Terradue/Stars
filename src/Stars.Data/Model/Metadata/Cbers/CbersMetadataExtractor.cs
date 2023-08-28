@@ -819,16 +819,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
             };
 
             RasterBand rasterBand = null;
-            if (scale != null)
+            // data type and bits per sample can't be reliably set (defaults from above may not always apply).
+            rasterBand = new RasterBand()
             {
-                // data type and bits per sample can't be reliably set (defaults from above may not always apply).
-                rasterBand = new RasterBand()
-                {
-                    //DataType = dataType,
-                    //BitsPerSample = bitsPerSample,
-                    Scale = scale
-                };
-            }
+                //DataType = dataType,
+                //BitsPerSample = bitsPerSample,
+                Scale = scale,
+                Offset = 0
+            };
 
             if (stacAsset == null)
             {
