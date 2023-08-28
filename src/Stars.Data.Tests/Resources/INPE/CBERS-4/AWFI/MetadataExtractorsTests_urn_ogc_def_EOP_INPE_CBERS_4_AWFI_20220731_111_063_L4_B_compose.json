@@ -149,16 +149,20 @@
       ],
       "raster:bands": [
         {
-          "scale": 0.235
+          "scale": 0.235,
+          "offset": 0.0
         },
         {
-          "scale": 0.267
+          "scale": 0.267,
+          "offset": 0.0
         },
         {
-          "scale": 0.218
+          "scale": 0.218,
+          "offset": 0.0
         },
         {
-          "scale": 0.189
+          "scale": 0.189,
+          "offset": 0.0
         }
       ]
     },
