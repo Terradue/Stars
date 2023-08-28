@@ -106,7 +106,8 @@
       ],
       "raster:bands": [
         {
-          "scale": 1.3903
+          "scale": 1.3903,
+          "offset": 0.0
         }
       ]
     },

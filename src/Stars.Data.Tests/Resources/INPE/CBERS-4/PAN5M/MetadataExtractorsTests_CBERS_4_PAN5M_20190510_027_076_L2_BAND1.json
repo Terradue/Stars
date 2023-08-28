@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -102,6 +103,11 @@
           "center_wavelength": 0.7,
           "full_width_half_max": 0.38,
           "solar_illumination": 1259.85
+        }
+      ],
+      "raster:bands": [
+        {
+          "offset": 0.0
         }
       ]
     },
