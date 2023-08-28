@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask gml:id="202307260722027_PWOI_000115104_1_1_F_1_PNEO4_ORT_PMS_imgroi_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <gml:name>Validity Mask from data-strip 202307260722027_PWOI_000115104_1_1_F_1_PNEO4_ORT_PMS</gml:name>
+    <gml:boundedBy>
+        <gml:Envelope srsName="GDLIB:32738">
+            <gml:lowerCorner>374982 7637031.9</gml:lowerCorner>
+            <gml:upperCorner>377793.3 7639842</gml:upperCorner>
+        </gml:Envelope>
+    </gml:boundedBy>
+    <hma:maskMembers>
+        <hma:MaskFeature gml:id="area_of_interest-202307260722027_PWOI_000115104_1_1_F_1_PNEO4_ORT_PMS-0">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">AREA_OF_INTEREST</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32738"><gml:exterior><gml:LinearRing><gml:posList>375106.95 7637032.65 375006.15 7637131.65 374986.65 7639728.15 375085.35 7639828.35 376892.85 7639842.15 377678.85 7639842.15 377773.65 7639748.85 377793.15 7637152.95 377693.85 7637052.15 375106.95 7637032.65</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+    </hma:maskMembers>
+</hma:Mask>
