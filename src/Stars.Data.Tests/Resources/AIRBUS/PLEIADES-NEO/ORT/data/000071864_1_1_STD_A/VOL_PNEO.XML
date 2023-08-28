@@ -1,0 +1,62 @@
+<?xml version= "1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet href="./LIBRARY/VOL_STYLE.XSL" type="text/xsl"?>
+<Dimap_Document version="1.2">
+	<Metadata_Identification>
+		<METADATA_FORMAT version="2.0">DIMAP</METADATA_FORMAT>
+		<METADATA_PROFILE>VOLUME</METADATA_PROFILE>
+		<METADATA_SUBPROFILE>ORDER_VOLUME</METADATA_SUBPROFILE>
+		<METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+	</Metadata_Identification>
+	<Dataset_Identification>
+		<DATASET_NAME>PNEO Volume Description: 000071864_1_1</DATASET_NAME>
+		<DATASET_ID>000071864_1_1_A</DATASET_ID>
+	</Dataset_Identification>
+	<Product_Information>
+		<Producer_Information>
+			<PRODUCER_NAME>AIRBUS DS GEO</PRODUCER_NAME>
+			<PRODUCER_URL href="http://www.geo-airbusds.com/"></PRODUCER_URL>
+			<PRODUCER_CONTACT>contact@geo-airbusds.com</PRODUCER_CONTACT>
+			<PRODUCER_ADDRESS>5 rue des satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</PRODUCER_ADDRESS>
+		</Producer_Information>
+		<Distributor_Information>
+			<DISTRIBUTOR_NAME>AIRBUS DS GEO</DISTRIBUTOR_NAME>
+			<DISTRIBUTOR_URL href="http://www.geo-airbusds.com/"></DISTRIBUTOR_URL>
+			<DISTRIBUTOR_CONTACT>contact@geo-airbusds.com</DISTRIBUTOR_CONTACT>
+			<DISTRIBUTOR_ADDRESS>5 rue des satellites - BP 14359 - F 31030 Toulouse Cedex 4 - France</DISTRIBUTOR_ADDRESS>
+		</Distributor_Information>
+		<Delivery_Identification>
+			<PRODUCTION_DATE>2023-02-17T16:04:37.325Z</PRODUCTION_DATE>
+			<PRODUCT_CODE>STD</PRODUCT_CODE>
+			<PRODUCT_TYPE>STANDARD</PRODUCT_TYPE>
+			<Order_Identification>
+				<CUSTOMER_REFERENCE>Polygon 3</CUSTOMER_REFERENCE>
+				<INTERNAL_REFERENCE>SAL23061731</INTERNAL_REFERENCE>
+				<COMMERCIAL_REFERENCE>000071864</COMMERCIAL_REFERENCE>
+				<COMMERCIAL_ITEM>1_1</COMMERCIAL_ITEM>
+				<COMMENT></COMMENT>
+			</Order_Identification>
+		</Delivery_Identification>
+	</Product_Information>
+	<Dataset_Content>
+		<Dataset_Components>
+			<Component>
+				<COMPONENT_TITLE>ORTHO MS-FS 000071864_1_1</COMPONENT_TITLE>
+				<COMPONENT_TYPE>DIMAP</COMPONENT_TYPE>
+				<COMPONENT_PATH index="000071864_1_1_STD_A" href="IMG_01_PNEO4_MS-FS/DIM_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1.XML"></COMPONENT_PATH>
+				<COMPONENT_QL_PATH index="000071864_1_1_STD_A" href="IMG_01_PNEO4_MS-FS/PREVIEW_PNEO4_202111151358313_MS-FS_ORT_PWOI_000071864_1_1_F_1.JPG"></COMPONENT_QL_PATH>
+			</Component>
+			<Component>
+				<COMPONENT_TITLE>ORTHO PAN 000071864_1_1</COMPONENT_TITLE>
+				<COMPONENT_TYPE>DIMAP</COMPONENT_TYPE>
+				<COMPONENT_PATH index="000071864_1_1_STD_A" href="IMG_01_PNEO4_PAN/DIM_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.XML"></COMPONENT_PATH>
+				<COMPONENT_QL_PATH index="000071864_1_1_STD_A" href="IMG_01_PNEO4_PAN/PREVIEW_PNEO4_202111151358313_PAN_ORT_PWOI_000071864_1_1_F_1.JPG"></COMPONENT_QL_PATH>
+			</Component>
+			<Component>
+				<COMPONENT_TITLE>Digital Documentation about DIMAP format</COMPONENT_TITLE>
+				<COMPONENT_TYPE>ENCAPSULATED</COMPONENT_TYPE>
+				<COMPONENT_PATH href="https://www.intelligence-airbusds.com/en/8718-user-guides"></COMPONENT_PATH>
+				<COMPONENT_QL_PATH href="LIBRARY/VOL_LOGO.JPG"></COMPONENT_QL_PATH>
+			</Component>
+		</Dataset_Components>
+	</Dataset_Content>
+</Dimap_Document>

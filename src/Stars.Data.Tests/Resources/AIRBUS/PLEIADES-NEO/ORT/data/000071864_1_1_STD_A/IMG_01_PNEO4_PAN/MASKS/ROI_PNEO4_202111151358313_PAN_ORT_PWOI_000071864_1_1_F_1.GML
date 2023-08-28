@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask gml:id="202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P_imgroi_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <gml:name>Validity Mask from data-strip 202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P</gml:name>
+    <gml:boundedBy>
+        <gml:Envelope srsName="GDLIB:32622">
+            <gml:lowerCorner>294324 569172.3</gml:lowerCorner>
+            <gml:upperCorner>308171.7 589620</gml:upperCorner>
+        </gml:Envelope>
+    </gml:boundedBy>
+    <hma:maskMembers>
+        <hma:MaskFeature gml:id="area_of_interest-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-0">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">AREA_OF_INTEREST</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>308145.3 571638.0 308171.7 569270.7 308049.6 569172.3 298161.0 571441.5 298157.7 571442.4 298086.9 571503.9 295005.6 579433.8 295003.8 579438.6 294997.8 579465.6 294327.0 589514.4 294327.0 589515.9 294430.2 589620.0 294474.9 589620.0 301156.8 589236.0 301160.4 589235.7 301163.7 589234.2 301224.3 589205.1 301228.5 589203.0 301234.5 589196.7 306024.3 583877.4 306037.2 583859.4 306041.1 583852.5 308033.1 580291.5 308037.0 580284.3 308049.6 580237.2 308145.3 571638.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+    </hma:maskMembers>
+</hma:Mask>

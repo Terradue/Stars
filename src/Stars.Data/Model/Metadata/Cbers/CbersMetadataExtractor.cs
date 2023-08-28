@@ -33,7 +33,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         // alternative identifier regex for for filename of
         // this type 956-INPE-CBERS-4-urn_ogc_def_EOP_INPE_CBERS_4_AWFI_20220731_111_063_L4_B_compose
         private Regex identifierRegex2 =
-            new Regex(@".*_inpe_(call[0-9]*|cbers_4A?)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(band\d{8}|b)_\w*-(\w*\.csv)$");
+            new Regex(@".*_inpe_(call[0-9]*|cbers_4a?)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(band|b)?(\d+)?(.+)?\.csv$");
 
 
         private Regex identifierInfoRegex = new Regex(@".*(?'mode'awfi|mux|pan5m|pan10m|wfi|wpm)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(?'rest'.*)$");
@@ -246,7 +246,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers
         public virtual async Task<Schemas.Metadata> ReadMetadata(IAsset metadataAsset)
         {
             Match identifierMatch = identifierRegex.Match(Path.GetFileName(metadataAsset.Uri.OriginalString));
-            Match identifierMatch2 = identifierRegex2.Match(Path.GetFileName(metadataAsset.Uri.OriginalString));
+            Match identifierMatch2 = identifierRegex2.Match(Path.GetFileName(metadataAsset.Uri.OriginalString).ToLower());
 
             string typeStr;
             string level;
