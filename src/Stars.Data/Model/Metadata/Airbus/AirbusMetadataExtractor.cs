@@ -156,9 +156,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             eo.Bands = stacItem.Assets.Values.Where(a => a.EoExtension().Bands != null).SelectMany(a => a.EoExtension().Bands).ToArray();
         }
 
-        internal virtual StacItem CreateStacItem(AirbusProfiler dimapProfiler)
-        {
-            StacItem stacItem = new StacItem(dimapProfiler.Dimap.Dataset_Identification.DATASET_NAME.Text,
+        internal virtual StacItem CreateStacItem(AirbusProfiler dimapProfiler) {
+            
+            StacItem stacItem = new StacItem(dimapProfiler.GetId(),
                                              GetGeometry(dimapProfiler),
                                              GetCommonMetadata(dimapProfiler));
             AddSatStacExtension(dimapProfiler, stacItem);

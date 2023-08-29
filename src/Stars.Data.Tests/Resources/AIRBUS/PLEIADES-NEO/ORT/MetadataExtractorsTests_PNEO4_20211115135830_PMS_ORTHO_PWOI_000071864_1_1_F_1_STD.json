@@ -9,7 +9,7 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "PNEO4_202111151358313_MS-FS_ORT",
+  "id": "PNEO4_20211115135830_PMS_ORTHO_PWOI_000071864_1_1_F_1_STD",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
@@ -40,7 +40,7 @@
   "properties": {
     "datetime": "2021-11-15T13:58:30.1Z",
     "created": "2023-02-17T16:04:37.325Z",
-    "platform": "pleiades-neo",
+    "platform": "pneo4",
     "constellation": "pleiades-neo",
     "mission": "pleiades-neo",
     "instruments": [
@@ -48,7 +48,7 @@
     ],
     "sensor_type": "optical",
     "gsd": 1.34,
-    "title": "PLEIADES-NEO pneo-imager RASTER_ORTHO 2021-11-15 13:58:30",
+    "title": "PNEO4 MS-FS ORTHO 2021-11-15 13:58:30",
     "sat:platform_international_designator": "2021-073E",
     "proj:epsg": 32622,
     "proj:shape": [

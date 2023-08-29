@@ -22,6 +22,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             Dimap = dimap;
         }
 
+        internal virtual string GetId() {
+            return Dimap.Dataset_Identification.DATASET_NAME.Text;
+        }
+        
         internal Schemas.Source_Identification GetSourceIdentification()
         {
             return Dimap.Dataset_Sources.Source_Identification
