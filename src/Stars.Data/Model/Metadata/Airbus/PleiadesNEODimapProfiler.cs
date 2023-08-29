@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Stac;
@@ -23,7 +24,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         internal override string GetMission()
         {
-            return GetConstellation();
+            return "pleiades-neo";
         }
 
         protected override IDictionary<EoBandCommonName?, int> BandOrders
@@ -53,6 +54,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 //case "pleiades-4":
                     return "2021-073E";
             //}
+        }
+        
+        internal override string GetPlatform()
+        {
+            return Dimap.Dataset_Sources.Source_Identification.First().Strip_Source.MISSION
+                   +Dimap.Dataset_Sources.Source_Identification.First().Strip_Source.MISSION_INDEX;
         }
 
         internal override StacProvider[] GetStacProviders()
@@ -223,6 +230,26 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return eoBandObjects.OrderBy(eob => BandOrders[eob.CommonName]).ToList();
         }
 
+
+        internal override string GetId() {
+            List<string> bandModes =
+                Dimap.Dataset_Sources.Source_Identification.Select(identification => identification.Strip_Source.BAND_MODE).ToList();
+            var bandModesString = string.Join("_", bandModes);
+            CultureInfo culture = new CultureInfo("fr-FR");
+            var datetime = GetAcquisitionTime().ToUniversalTime().ToString("yyyyMMddHHmmss",culture);;
+            return $"{GetPlatform()}_{datetime}_{bandModesString}_{GetProcessingLevel()}_{Dimap.Product_Information.Delivery_Identification.JOB_ID}_{Dimap.Product_Information.Delivery_Identification.PRODUCT_CODE}";
+        }
+        
+        
+        public override string GetTitle(IDictionary<string, object> properties)
+        {
+            CultureInfo culture = new CultureInfo("fr-FR");
+            return string.Format("{0} {1} {2} {3}",
+                GetPlatform().ToUpper(),
+                Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING,
+                GetProcessingLevel(),
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
+        }
         
     }
 }
