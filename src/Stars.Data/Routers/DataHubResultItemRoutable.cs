@@ -26,8 +26,10 @@ namespace Terradue.Stars.Data.Routers
         {
             get
             {
-                if (assets != null)
+                if (assets != null && assets.Count > 0)
                     return assets;
+                assets = new Dictionary<string, IAsset>();
+                
                 var enclosureAccess = supplier.Wrapper.GetEnclosureAccess(osItem);
                 try
                 {
