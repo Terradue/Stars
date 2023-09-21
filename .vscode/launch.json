@@ -803,7 +803,7 @@
                 // "--nocopy-cog",
                 "--output",
                 "/tmp/stars",
-                "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a-cogs/items/S2B_36RTT_20191205_0_L2A"
+                "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a/items/S2A_17UNQ_20230511_0_L2A"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
