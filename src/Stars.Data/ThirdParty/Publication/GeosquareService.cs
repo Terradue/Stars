@@ -214,7 +214,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 {
                     var xml = extension.GetReader().ReadOuterXml();
                     var offering = OwcContextHelper.OwcOfferingSerializer.Deserialize(new System.IO.StringReader(xml)) as OwcOffering;
-                    if ( offering == null ) continue;
+                    if (offering == null || offering.Contents == null) continue;
                     atomItem.ElementExtensions.Remove(extension);
                     foreach (var content in offering.Contents)
                     {
@@ -225,7 +225,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                     atomItem.ElementExtensions.Add(offering.CreateReader());
                 }
             }
-            
+
             atomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
 
 
