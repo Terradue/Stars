@@ -91,7 +91,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             if (spectralInfo != null)
             {
                 stacAsset.SetProperty("gsd", (double)spectralInfo.RESOLUTION);
-                EoBandObject eoBandObject = new EoBandObject(GetBandNameConvention(spectralInfo), GetBandCommonName(spectralInfo));
+                EoBandObject eoBandObject = new EoBandObject(GetBandNameConvention(spectralInfo, spectralInfo.RESOLUTION), GetBandCommonName(spectralInfo));
                 eoBandObject.CenterWavelength = spectralInfo.Wavelength.CENTRAL.Value / 1000;
                 eoBandObject.Description = string.Format("{0} {1}nm TOA {2}", GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), spectralInfo.RESOLUTION);
                 var solarIrradiance = level1CUserProduct.General_Info.Product_Image_Characteristics.Reflectance_Conversion.Solar_Irradiance_List.FirstOrDefault(si => si.bandId == spectralInfo.bandId);
@@ -115,74 +115,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             stacItem.Assets.Add(bandId, stacAsset);
 
             return bandId;
-        }
-
-        public static EoBandCommonName GetBandCommonName(OpenSearch.Sentinel.Data.Dimap.A_PRODUCT_INFO_USERL1CProduct_Image_CharacteristicsSpectral_Information spectralInfo)
-        {
-            switch (spectralInfo.physicalBand)
-            {
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B1:
-                    return EoBandCommonName.coastal;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B2:
-                    return EoBandCommonName.blue;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B3:
-                    return EoBandCommonName.green;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B4:
-                    return EoBandCommonName.red;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B5:
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B6:
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B7:
-                    return EoBandCommonName.rededge;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B8:
-                    return EoBandCommonName.nir;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B8A:
-                    return EoBandCommonName.nir08;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B9:
-                    return EoBandCommonName.nir09;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B10:
-                    return EoBandCommonName.cirrus;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B11:
-                    return EoBandCommonName.swir16;
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B12:
-                    return EoBandCommonName.swir22;
-                default:
-                    return default(EoBandCommonName);
-            }
-        }
-
-        public static string GetBandNameConvention(OpenSearch.Sentinel.Data.Dimap.A_PRODUCT_INFO_USERL1CProduct_Image_CharacteristicsSpectral_Information spectralInfo)
-        {
-            switch (spectralInfo.physicalBand)
-            {
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B1:
-                    return EoBandCommonName.coastal.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B2:
-                    return EoBandCommonName.blue.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B3:
-                    return EoBandCommonName.green.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B4:
-                    return EoBandCommonName.red.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B5:
-                    return "rededge70";
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B6:
-                    return "rededge74";
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B7:
-                    return "rededge78";
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B8:
-                    return EoBandCommonName.nir.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B8A:
-                    return EoBandCommonName.nir08.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B9:
-                    return EoBandCommonName.nir09.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B10:
-                    return EoBandCommonName.cirrus.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B11:
-                    return EoBandCommonName.swir16.ToString();
-                case OpenSearch.Sentinel.Data.Dimap.A_PHYSICAL_BAND_NAME.B12:
-                    return EoBandCommonName.swir22.ToString();
-                default:
-                    return spectralInfo.bandId.ToString();
-            }
         }
 
         protected override async Task<SentinelSafeStacFactory> CreateSafeStacFactoryAsync(XFDUType manifest, IItem item, string identifier)
