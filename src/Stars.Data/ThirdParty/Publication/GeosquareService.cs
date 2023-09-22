@@ -214,6 +214,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 {
                     var xml = extension.GetReader().ReadOuterXml();
                     var offering = OwcContextHelper.OwcOfferingSerializer.Deserialize(new System.IO.StringReader(xml)) as OwcOffering;
+                    if ( offering == null ) continue;
                     atomItem.ElementExtensions.Remove(extension);
                     foreach (var content in offering.Contents)
                     {
