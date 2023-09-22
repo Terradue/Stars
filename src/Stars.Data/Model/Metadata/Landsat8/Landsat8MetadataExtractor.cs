@@ -244,13 +244,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             stacItem.SetProperty("landsat:collection_number", auxiliary.CollectionNumber);
             stacItem.SetProperty("landsat:collection_category", auxiliary.CollectionCategory);
             stacItem.SetProperty("landsat:cloud_cover_land", auxiliary.CloudCoverLand);
-
         }
 
         private void AddEoStacExtension(Auxiliary auxiliary, StacItem stacItem)
         {
-            EoStacExtension eo = stacItem.EoExtension();
-            eo.CloudCover = auxiliary.CloudCover;
+            if (auxiliary.CloudCover >= 0)
+            {
+                EoStacExtension eo = stacItem.EoExtension();
+                eo.CloudCover = auxiliary.CloudCover;
+            }
         }
 
         private void AddProjStacExtension(Auxiliary auxiliary, StacItem stacItem)
