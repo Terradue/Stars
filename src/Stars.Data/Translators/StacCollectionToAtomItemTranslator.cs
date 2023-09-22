@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services.Model.Atom;
 using Stac;
@@ -71,9 +71,14 @@ namespace Terradue.Stars.Data.Translators
                     if (link.RelationshipType == "wms" && link.Uri != null)
                     {
                         atomItem.AddWMSOffering(link);
+                        imageOfferingSet = true;
                     }
                 }
             }
+
+            // if no previous image offering set, then let's try a simple overlay offering
+            if (!imageOfferingSet)
+                atomItem.AddImageOverlayOffering(stacCollectionNode);
 
             return atomItem;
         }

@@ -355,6 +355,35 @@ namespace Terradue.Stars.Data.Model.Atom
             return false;
         }
 
+        public bool AddImageOverlayOffering(StacCollectionNode stacCollectionNode)
+        {
+            var imageOverview = SelectOverlayOverviewAssets(stacCollectionNode.StacCollection).FirstOrDefault();
+            if (imageOverview.Key != null)
+            {
+                Uri assetUri = imageOverview.Value.Uri;
+                try
+                {
+                    // if relative
+                    if (!assetUri.IsAbsoluteUri)
+                        // then make absolute from item
+                        assetUri = new Uri(stacCollectionNode.Uri, assetUri);
+                }
+                catch { return false; }
+                ElementExtensions.Add(new OwcOffering()
+                {
+
+                    Contents = new OwcContent[]{new OwcContent()
+                        {
+                        Url = assetUri,
+                        Type = imageOverview.Value.MediaType.ToString()
+                        }},
+                    Code = "http://www.opengis.net/spec/owc-atom/1.0/req/img"
+                }.CreateReader());
+                return true;
+            }
+            return false;
+        }
+
         public bool TryAddEGMSOffering(StacCollectionNode stacCollectionNode, EgmsService egmsService)
         {
             var egmsServiceUri = stacCollectionNode.StacCollection.Links.FirstOrDefault(l => l.RelationshipType == "self").Uri;
@@ -496,6 +525,22 @@ namespace Terradue.Stars.Data.Model.Atom
                 return new Dictionary<string, StacAsset>();
 
             Dictionary<string, StacAsset> overviewAssets = stacItem.Assets
+                                                            .Where(a => a.Value.Roles.Contains("overview") ||
+                                                                        a.Value.Roles.Contains("visual"))
+                                                            .OrderBy(a => a.Value.GetProperty<long>("size"))
+                                                            .Where(a => a.Value.MediaType.MediaType.StartsWith("image/") &&
+                                                                        a.Value.FileExtension().Size < 20971520)
+                                                            .Take(1)
+                                                            .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            return new Dictionary<string, StacAsset>();
+        }
+
+        private static Dictionary<string, StacAsset> SelectOverlayOverviewAssets(StacCollection stacCollection)
+        {
+
+            Dictionary<string, StacAsset> overviewAssets = stacCollection.Assets
                                                             .Where(a => a.Value.Roles.Contains("overview") ||
                                                                         a.Value.Roles.Contains("visual"))
                                                             .OrderBy(a => a.Value.GetProperty<long>("size"))

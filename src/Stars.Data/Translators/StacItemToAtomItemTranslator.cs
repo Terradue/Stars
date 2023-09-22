@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services.Model.Atom;
 using Stac;
