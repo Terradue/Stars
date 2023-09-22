@@ -222,7 +222,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             view.OffNadir = auxiliary.OffNadirAngle;
             view.IncidenceAngle = auxiliary.IncidenceAngle;
             // view.Azimuth = auxiliary.Azimuth;
-            view.SunAzimuth = auxiliary.SunAzimuth;
+            view.SunAzimuth = auxiliary.SunAzimuth < 0 ? auxiliary.SunAzimuth + 360 : auxiliary.SunAzimuth;
             view.SunElevation = auxiliary.SunElevation;
         }
 
