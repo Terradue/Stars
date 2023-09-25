@@ -101,12 +101,12 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "RGB Blue",
+          "name": "RGB Red",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "blue",
-          "center_wavelength": 0.483,
-          "solar_illumination": 1972.0,
-          "full_width_half_max": 0.074
+          "common_name": "red",
+          "center_wavelength": 0.6545,
+          "solar_illumination": 1551.7,
+          "full_width_half_max": 0.071
         },
         {
           "name": "RGB Green",
@@ -117,12 +117,12 @@
           "full_width_half_max": 0.058
         },
         {
-          "name": "RGB Red",
+          "name": "RGB Blue",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "red",
-          "center_wavelength": 0.6545,
-          "solar_illumination": 1551.7,
-          "full_width_half_max": 0.071
+          "common_name": "blue",
+          "center_wavelength": 0.483,
+          "solar_illumination": 1972.0,
+          "full_width_half_max": 0.074
         },
         {
           "name": "RGB Nir",
@@ -141,7 +141,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.15121729925903524,
+          "scale": 0.12470382840753211,
           "offset": 0.0
         },
         {
@@ -161,7 +161,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.12470382840753211,
+          "scale": 0.15121729925903524,
           "offset": 0.0
         },
         {
