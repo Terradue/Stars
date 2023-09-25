@@ -30,15 +30,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         protected override IDictionary<EoBandCommonName?, int> BandOrders
         {
             get
-            {   //MS-FS assets
+            {
                 Dictionary<EoBandCommonName?, int> bandOrders = new Dictionary<EoBandCommonName?, int>();
-                bandOrders.Add(EoBandCommonName.blue, 0);
-                bandOrders.Add(EoBandCommonName.green, 1);
-                bandOrders.Add(EoBandCommonName.red, 2);
-                bandOrders.Add(EoBandCommonName.coastal, 3);
-                bandOrders.Add(EoBandCommonName.rededge, 4);
-                bandOrders.Add(EoBandCommonName.nir, 5);
-                bandOrders.Add(EoBandCommonName.pan, 6);
+                if (Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING == "PMS-X") {
+                    bandOrders.Add(EoBandCommonName.green, 0);
+                    bandOrders.Add(EoBandCommonName.red, 1);
+                    bandOrders.Add(EoBandCommonName.nir, 2);
+                }
+                else {
+                    bandOrders.Add(EoBandCommonName.red, 0);
+                    bandOrders.Add(EoBandCommonName.green, 1);
+                    bandOrders.Add(EoBandCommonName.blue, 2);
+                    bandOrders.Add(EoBandCommonName.coastal, 3);
+                    bandOrders.Add(EoBandCommonName.rededge, 4);
+                    bandOrders.Add(EoBandCommonName.nir, 5);
+                    bandOrders.Add(EoBandCommonName.pan, 6);
+                }
+
                 return bandOrders;
             }
         }
