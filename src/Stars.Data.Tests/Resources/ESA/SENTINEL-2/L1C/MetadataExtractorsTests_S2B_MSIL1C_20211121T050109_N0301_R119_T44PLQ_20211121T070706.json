@@ -51,16 +51,16 @@
     ],
     "sensor_type": "optical",
     "gsd": 10.0,
-    "eo:cloud_cover": 2.2017,
     "sat:orbit_state": "descending",
     "sat:absolute_orbit": 24598,
     "sat:relative_orbit": 119,
     "sat:platform_international_designator": "2015-000A",
-    "processing_baseline": "03.01",
     "processing:level": "L1C",
     "processing:lineage": "Generation of Level-1C User Product",
     "proj:epsg": 32644,
     "title": "SENTINEL-2B MSI L1C 119 2021-11-21 05:01:09",
+    "eo:cloud_cover": 2.2017,
+    "processing_baseline": "03.01",
     "providers": [
       {
         "name": "ESA/EC (Copernicus)",

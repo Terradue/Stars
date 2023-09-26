@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Earth_Explorer_File xmlns="http://gs2.esa.int/DATA_STRUCTURE/olqcReport">
+    <Earth_Explorer_Header>
+        <Fixed_Header>
+            <File_Name>FORMAT_CORRECTNESS.xml</File_Name>
+            <File_Description>Report produced by OLQC-SC</File_Description>
+            <Notes></Notes>
+            <Mission>S2A</Mission>
+            <File_Class>OPER</File_Class>
+            <File_Type>REP_OLQCPA</File_Type>
+            <Validity_Period>
+                <Validity_Start>UTC=2022-01-25T02:20:00</Validity_Start>
+                <Validity_Stop>UTC=2100-01-01T00:00:00</Validity_Stop>
+            </Validity_Period>
+            <File_Version>2</File_Version>
+            <Source>
+                <System>OLQC-SC</System>
+                <Creator>OLQC-SC</Creator>
+                <Creator_Version>05.00.00</Creator_Version>
+                <Creation_Date>UTC=2022-02-14T10:22:21</Creation_Date>
+            </Source>
+        </Fixed_Header>
+    </Earth_Explorer_Header>
+    <Data_Block type="xml">
+        <report gippVersion="1.0" globalStatus="PASSED" date="2022-02-14T10:22:21.593Z">
+            <checkList>
+                <parentID>S2A_OPER_GIP_OLQCPA_MPC__20220119T000039_V20220125T022000</parentID>
+                <name>FORMAT_CORRECTNESS</name>
+                <version>1.0</version>
+                <item url="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/" className="PDI Level 2A Tile Folder" name="S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00" class="http://www.esa.int/s2#pdi_level_2a_tile_container"/>
+                <check>
+                    <inspection creation="2022-02-14T10:22:21.094Z" duration="395" execution="2022-02-14T10:22:21.178Z" id="schemaXmlValidator" item="MTD_TL.xml" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/MTD_TL.xml" name="Schema Validator. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">The schema validation passed successfully.</message>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:21.595Z" duration="2886" execution="2022-02-14T10:22:21.624Z" id="Jp2Gml" item="MTD_TL.xml" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/MTD_TL.xml" name="Checks JP2GML boxes in images  " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Granule is included into RHA "earth". found 36 band(s).JP2GML box in band T38KQA_20220214T070051_AOT_10m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B02_10m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B03_10m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B04_10m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B08_10m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_TCI_10m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_WVP_10m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_AOT_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B01_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B02_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B03_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B04_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B05_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B06_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B07_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B11_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B12_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B8A_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_SCL_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_TCI_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_WVP_20m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_AOT_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B01_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B02_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B03_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B04_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B05_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B06_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B07_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B09_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B11_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B12_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_B8A_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_SCL_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_TCI_60m.jp2 validates schema. JP2GML box in band T38KQA_20220214T070051_WVP_60m.jp2 validates schema. </message>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:24.513Z" duration="16" execution="2022-02-14T10:22:24.646Z" id="Tile_Position_Size" item="MTD_TL.xml" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/MTD_TL.xml" name="Check of consistency of Tile Position by Size. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Tile image size is between [90000.0,110000.0].</message>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:24.665Z" duration="7" execution="2022-02-14T10:22:24.710Z" id="Tile_Position_Geoposition" item="MTD_TL.xml" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/MTD_TL.xml" name="Check of consistency of Tile Position by Geoposition. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Tile geoposition is valid.</message>
+                    <extraValues>
+                        <value name="ULX(10)">699960</value>
+                        <value name="ULY(10)">7600000</value>
+                        <value name="XDIM(10)">10</value>
+                        <value name="YDIM(10)">-10</value>
+                        <value name="ULX(20)">699960</value>
+                        <value name="ULY(20)">7600000</value>
+                        <value name="XDIM(20)">20</value>
+                        <value name="YDIM(20)">-20</value>
+                        <value name="ULX(60)">699960</value>
+                        <value name="ULY(60)">7600000</value>
+                        <value name="XDIM(60)">60</value>
+                        <value name="YDIM(60)">-60</value>
+                    </extraValues>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:25.326Z" duration="13" execution="2022-02-14T10:22:25.341Z" id="checkMetadata" item="S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/" name="Metadata file check. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Metadata file is present.</message>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:25.365Z" duration="11" execution="2022-02-14T10:22:25.415Z" id="checkL2AMasks" item="S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/" name="L2A Masks availability check. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">All elements in QI_DATA are present.</message>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:25.428Z" duration="41" execution="2022-02-14T10:22:25.456Z" id="checkL2AImages" item="S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/" name="L2A images availability check. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">All bands are present.</message>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:25.516Z" duration="0" execution="2022-02-14T10:22:25.530Z" id="Aux_Cams" item="S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/" name="AUX_CAMS data conformity and completeness check  " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">AUX_CAMS file is present.</message>
+                </check>
+                <check>
+                    <inspection creation="2022-02-14T10:22:25.532Z" duration="1" execution="2022-02-14T10:22:25.544Z" id="Ecmwf" item="S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00" itemURL="/gpfs/dpc/data/phoebus-share/PHOEBUS-4.5.005/wp_in_progress/l2a_20220214_12/app_data/steps_data/GR/S2A_OPER_MSI_L2A_TL_VGS1_20220214T085403_A034723_T38KQA_N04.00/" name="ECMWF data conformity and completeness check  " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">ECMWF file is present.</message>
+                </check>
+            </checkList>
+        </report>
+    </Data_Block>
+</Earth_Explorer_File>

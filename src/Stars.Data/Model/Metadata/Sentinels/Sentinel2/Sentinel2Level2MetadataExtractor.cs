@@ -104,17 +104,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             }
 
             string res = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_')[3];
+            double gsd = Double.Parse(res.TrimEnd('m'));
             string assetName = bandId;
             var spectralInfo = level2AUserProduct.General_Info.Product_Image_Characteristics.Spectral_Information_List.FirstOrDefault(si => si.physicalBand.ToString() == bandId.Replace("B0", "B"));
             if (spectralInfo != null)
             {
-                assetName = Sentinel2Level1MetadataExtractor.GetBandNameConvention(spectralInfo);
-                var assetNameRes = assetName;
-                if (stacItem.Assets.Any(a => a.Key == assetNameRes))
-                    assetNameRes += "-" + res;
-                EoBandObject eoBandObject = new EoBandObject(assetNameRes, Sentinel2Level1MetadataExtractor.GetBandCommonName(spectralInfo));
+                assetName = GetBandNameConvention(spectralInfo, Convert.ToInt32(gsd), false);
+                string eoBandName = GetBandNameConvention(spectralInfo, Convert.ToInt32(gsd), true);
+                EoBandObject eoBandObject = new EoBandObject(eoBandName, GetBandCommonName(spectralInfo));
                 eoBandObject.CenterWavelength = spectralInfo.Wavelength.CENTRAL.Value / 1000;
-                eoBandObject.Description = string.Format("{0} {1}nm BOA {2}", Sentinel2Level1MetadataExtractor.GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), res);
+                eoBandObject.Description = string.Format("{0} {1}nm BOA {2}", GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), res);
                 var solarIrradiance = level2AUserProduct.General_Info.Product_Image_Characteristics.Reflectance_Conversion.Solar_Irradiance_List.FirstOrDefault(si => si.bandId == spectralInfo.bandId);
                 if (solarIrradiance != null)
                     eoBandObject.SolarIllumination = solarIrradiance.Value;
@@ -130,13 +129,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
                     stacAsset.ProjectionExtension().Shape = new int[2] { size.NCOLS, size.NROWS };
                 }
                 stacAsset.RasterExtension().Bands = new RasterBand[1] { rasterBand };
-                stacAsset.Title = string.Format("{0} {1}nm BOA {2}", Sentinel2Level1MetadataExtractor.GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), res);
+                stacAsset.Title = string.Format("{0} {1}nm BOA {2}", GetBandCommonName(spectralInfo), Math.Round(spectralInfo.Wavelength.CENTRAL.Value), res);
             }
-            stacAsset.SetProperty("gsd", double.Parse(res.TrimEnd('m')));
-            if (stacItem.Assets.ContainsKey(assetName))
-            {
-                assetName = bandId + "-" + stacAsset.GetProperty<double>("gsd").ToString();
-            }
+            stacAsset.SetProperty("gsd", gsd);
+            if (stacItem.Assets.ContainsKey(assetName)) assetName = bandId + "-" + gsd;
             stacAsset.Roles.Add("reflectance");
             stacItem.Assets.Add(assetName, stacAsset);
             return assetName;
