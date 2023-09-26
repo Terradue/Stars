@@ -40,7 +40,7 @@ namespace Terradue.Stars.Services.Processing
             return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
 
-        internal async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
+        public async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             var inputStream = await GetStreamAsync(asset, ct);
             string name = asset.ContentDisposition.FileName.Replace(".gz", "");

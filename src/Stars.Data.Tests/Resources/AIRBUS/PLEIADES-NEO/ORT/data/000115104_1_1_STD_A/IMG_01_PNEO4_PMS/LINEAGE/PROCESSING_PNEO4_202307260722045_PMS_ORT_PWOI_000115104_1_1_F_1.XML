@@ -1,0 +1,57 @@
+<?xml version= "1.0" encoding="UTF-8" standalone="yes"?>
+<Dimap_Document version="1.2">
+	<Metadata_Identification>
+		<METADATA_FORMAT version="2.0">DIMAP</METADATA_FORMAT>
+		<METADATA_PROFILE>PNEO_ORTHO</METADATA_PROFILE>
+		<METADATA_SUBPROFILE>PROCESSING</METADATA_SUBPROFILE>
+		<METADATA_LANGUAGE>en</METADATA_LANGUAGE>
+	</Metadata_Identification>
+	<Coordinate_Reference_System>
+		<Temporal_CRS>
+			<CRS_TABLES version="0.0">ITU</CRS_TABLES>
+			<TEMPORAL_CRS_NAME>UTC</TEMPORAL_CRS_NAME>
+		</Temporal_CRS>
+	</Coordinate_Reference_System>
+	<Processing>
+		<Processing_Step processingLevel="ORTHO">
+			<TIME>2023-07-27T15:59:22.659316Z</TIME>
+			<SOFTWARE version="1.2.13">SPICY</SOFTWARE>
+		</Processing_Step>
+		<Processing_Step processingLevel="ORTHO">
+			<TIME>2023-07-27T15:59:22.659316Z</TIME>
+			<SOFTWARE version="R18.9.1">MIPF</SOFTWARE>
+		</Processing_Step>
+		<Processing_Parameters>
+			<PARAMETER_ID parameterType="string">GIPP_PNEO4_ALGORITHMS-00_20210816_000000_0400</PARAMETER_ID>
+			<PARAMETER_TYPE parameterType="string">ALGORITHMS</PARAMETER_TYPE>
+		</Processing_Parameters>
+		<Processing_Parameters>
+			<PARAMETER_ID parameterType="string">GIPP_PNEO4_SYSTEM_20210816_000000_0400</PARAMETER_ID>
+			<PARAMETER_TYPE parameterType="string">SYSTEM</PARAMETER_TYPE>
+		</Processing_Parameters>
+		<Processing_Parameters>
+			<PARAMETER_ID parameterType="string">GIPP_PNEO4_EQUALIZATION-010142060901_20230524_155400_0000</PARAMETER_ID>
+			<PARAMETER_TYPE parameterType="string">EQUALIZATION</PARAMETER_TYPE>
+		</Processing_Parameters>
+		<Processing_Parameters>
+			<PARAMETER_ID parameterType="string">GIPP_PNEO4_GEOMETRY_20220617_000000_0400</PARAMETER_ID>
+			<PARAMETER_TYPE parameterType="string">GEOMETRY</PARAMETER_TYPE>
+		</Processing_Parameters>
+		<Processing_Parameters>
+			<PARAMETER_ID parameterType="string">GIPP_PNEO4_RADIOMETRY_20230311_000000_0407</PARAMETER_ID>
+			<PARAMETER_TYPE parameterType="string">RADIOMETRY</PARAMETER_TYPE>
+		</Processing_Parameters>
+		<Processing_Step processingLevel="ORTHO">
+			<TIME>2023-07-27T15:59:22.659Z</TIME>
+			<SOFTWARE version="2023-07-27T15:59:22.659Z">MPP_Ingest</SOFTWARE>
+		</Processing_Step>
+		<Processing_Step processingLevel="ORTHO">
+			<TIME>2023-07-27T16:05:22.388Z</TIME>
+			<SOFTWARE version="6.19.1;v75.0.3">MPP_Format</SOFTWARE>
+		</Processing_Step>
+		<Processing_Parameters>
+			<PARAMETER_ID parameterType="string">default-pneo4-2023-05-12</PARAMETER_ID>
+			<PARAMETER_TYPE parameterType="string">Format</PARAMETER_TYPE>
+		</Processing_Parameters>
+	</Processing>
+</Dimap_Document>

@@ -15,12 +15,14 @@ namespace Terradue.Stars.Services.Processing
         private ZipEntry entry;
         private readonly ZipFile zipFile;
         private readonly IAsset parentAsset;
+        private readonly string parentAssetBaseDir;
 
-        public ZipEntryAsset(ZipEntry entry, ZipFile zipFile, IAsset parentAsset)
+        public ZipEntryAsset(ZipEntry entry, ZipFile zipFile, IAsset parentAsset, string parentAssetBaseDir = null)
         {
             this.entry = entry;
             this.zipFile = zipFile;
             this.parentAsset = parentAsset;
+            this.parentAssetBaseDir = parentAssetBaseDir;
         }
 
         public string Title => parentAsset.Title + " / " + entry.FileName;
@@ -52,7 +54,12 @@ namespace Terradue.Stars.Services.Processing
             get
             {
                 Dictionary<string, object> props = new Dictionary<string, object>();
-                props.Add("filename", entry.FileName);
+                string fileName = entry.FileName;
+                if (parentAssetBaseDir != null)
+                {
+                    fileName = Path.Combine(parentAssetBaseDir, fileName);
+                }
+                props.Add("filename", fileName);
                 return props;
             }
         }

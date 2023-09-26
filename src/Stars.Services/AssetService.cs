@@ -53,28 +53,17 @@ namespace Terradue.Stars.Services
                                                                AssetChecks assetChecks,
                                                                CancellationToken ct)
         {
+            // WARNING: PLEASE REVIEW ANY CHANGE TO THE FOLLOWING CODE WITH THE TEAM
+            // There is a specific logic here to handle properly the assets delivery
+            // with the follongin steps:
+            // 1. Quote the assets delivery: this will return a list of possible deliveries by testing the assets access
+            // 2. Check the delivery quotation: According to the asset quotation checks, some deliveries may be skipped with no error (no StopOnError)
+            // 3. Deliver the assets: this will try to deliver the assets to the destination with the possible deliveries
+            // 4. Check the delivery: According to the asset delivery checks, an error may be raised (StopOnError)
+
             FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(assetsContainer, assetsFilters);
 
-            // Here we will catch errors from supplier when getting assets
-            // Especially when the supplier is a datahub creating router for assets
-            try
-            {
-                if (filteredAssetContainer.Assets.Count() == 0)
-                {
-                    logger.LogDebug("No asset to import. Check filters: " + assetsFilters.ToString());
-                    return new AssetImportReport(null, destination);
-                }
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e, "Error while getting assets");
-                Dictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes = new Dictionary<string, IOrderedEnumerable<IDelivery>>();
-                Dictionary<string, Exception> assetsExceptions = new Dictionary<string, Exception>();
-                assetsExceptions.Add("all", e);
-                return new AssetImportReport(new DeliveryQuotation(assetsQuotes, assetsExceptions), destination);
-            }
 
-            logger.LogDebug("Importing {0} assets to {1}", filteredAssetContainer.Assets.Count(), destination);
 
             IDeliveryQuotation deliveryQuotation = await QuoteAssetsDeliveryAsync(filteredAssetContainer, destination, assetsFilters, assetChecks, ct);
             AssetImportReport report = new AssetImportReport(deliveryQuotation, destination);
@@ -88,7 +77,7 @@ namespace Terradue.Stars.Services
                 if (assetDeliveries.Value.Count() == 0)
                 {
                     string reason = "No possible delivery for asset";
-                    if ( deliveryQuotation.AssetsExceptions.ContainsKey(assetDeliveries.Key))
+                    if (deliveryQuotation.AssetsExceptions.ContainsKey(assetDeliveries.Key))
                     {
                         reason += " : " + deliveryQuotation.AssetsExceptions[assetDeliveries.Key].Message;
                         report.AssetsExceptions[assetDeliveries.Key] = new AssetImportException(reason);
@@ -207,6 +196,28 @@ namespace Terradue.Stars.Services
 
         private async Task<IDeliveryQuotation> QuoteAssetsDeliveryAsync(IAssetsContainer assetsContainer, IDestination destination, AssetFilters assetFilters, AssetChecks assetChecks, CancellationToken ct)
         {
+            // Here we use a try/catch because some implementation of IAssetsContainer
+            // perform an important work in the assets listing (e.g. DataHubResultItemRoutable)
+            try
+            {
+                if (assetsContainer.Assets.Count() == 0)
+                {
+                    logger.LogDebug("No asset to quote. Applied filters: " + assetFilters.ToString());
+                    return new DeliveryQuotation(new Dictionary<string, IOrderedEnumerable<IDelivery>>(),
+                                                 new Dictionary<string, Exception>());
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning("Cannot quote delivery for assets container {0} : {1}", assetsContainer.Uri, e.Message);
+                logger.LogDebug(e.StackTrace);
+                return new DeliveryQuotation(new Dictionary<string, IOrderedEnumerable<IDelivery>>(),
+                                             new Dictionary<string, Exception>(){
+                                                    { assetsContainer.Uri.ToString(), e }
+                                             });
+            }
+
+            logger.LogDebug("Quoting delivery for {0} assets to {1}", assetsContainer.Assets.Count(), destination);
             return await carrierManager.GetAssetsDeliveryQuotationsAsync(assetsContainer, destination, assetChecks, true, ct);
         }
     }

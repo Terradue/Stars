@@ -1,0 +1,485 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+        "https://terradue.github.io/disaster/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    119.146727,
+                    -1.068375
+                ],
+                [
+                    119.33636,
+                    -1.989713
+                ],
+                [
+                    119.778445,
+                    -1.896407
+                ],
+                [
+                    119.588553,
+                    -0.975631
+                ],
+                [
+                    119.146727,
+                    -1.068375
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "sat:orbit_state": "ascending",
+        "proj:epsg": null,
+        "proj:shape": [
+            6419,
+            32596
+        ],
+        "view:off_nadir": 32.0,
+        "view:incidence_angle": 39.75,
+        "sar:instrument_mode": "SM",
+        "sar:frequency_band": "L",
+        "sar:polarizations": [
+            "HH",
+            "HV"
+        ],
+        "sar:product_type": "SLC",
+        "sar:observation_direction": "right",
+        "sar:center_frequency": 12.75,
+        "sar:pixel_spacing_range": 4.99654096667666,
+        "sar:pixel_spacing_azimuth": 3.19838775503902,
+        "sar:looks_equivalent_number": 3.0,
+        "sar:resolution_range": 6.05820514079381,
+        "sar:resolution_azimuth": 4.98814376176766,
+        "processing:level": "L1A",
+        "datetime": "2021-11-14T22:17:15.468Z",
+        "created": "2023-07-03T15:31:30.0509794Z",
+        "platform": "saocom-1a",
+        "mission": "saocom-1",
+        "instruments": [
+            "sao1a"
+        ],
+        "sensor_type": "radar",
+        "gsd": 10.0,
+        "title": "SAOCOM-1A SLC SM HH/HV 2021-11-14 22:17:15",
+        "providers": [
+            {
+                "name": "CONAE",
+                "description": "The SAOCOM satellite series represents Argentina's approved polarimetric L-band SAR (Synthetic Aperture Radar) constellation of two spacecraft. The SAOCOM-1 mission is composed of two satellites (SAOCOM-1A and -1B) launched consecutively. The overall objective of SAOCOM is to provide an effective Earth observation and disaster monitoring capability.",
+                "roles": [
+                    "producer",
+                    "processor",
+                    "licensor"
+                ],
+                "url": "http://saocom.invap.com.ar"
+            },
+            {
+                "name": "CONAE",
+                "roles": [
+                    "licensor"
+                ]
+            }
+        ],
+        "disaster:class": "Acquisition",
+        "cpe:status": {
+            "stage": "calibratedDataset",
+            "message": "Completed (data staging...)",
+            "link": "https://supervisor.mapper-dev.terradue.com/hangfire/jobs/details/1218"
+        },
+        "updated": "2023-07-03T15:49:20.5085827Z",
+        "cpe:notified": [
+            "2023-06-23T15:43:37.6099983Z",
+            "2023-07-03T15:26:17.5773486Z"
+        ],
+        "license": "proprietary",
+        "disaster:call_ids": [
+            969
+        ],
+        "disaster:resolution_class": "LR",
+        "cpe:cos2_xml": null,
+        "cpe:cos2_id": "969-CONAE-SAOCOM1-S1A-SAR-L1A-20211117T174240-MOD",
+        "description": "Name | Value\n---- | -----\nAgency | **CONAE**\nSatellite  | **saocom-1a**\nInstruments  | **sao1a**\nSensor Type  | **radar**\nAcquisition Date  | **14/11/2021 22:17:15**\nResolution  | **LR**\nCOS2 Id  | **969-CONAE-SAOCOM1-S1A-SAR-L1A-20211117T174240-MOD**\nLicense  | **proprietary**\nCreated  | **03/07/2023 15:31:30**\nUpdated  | **03/07/2023 15:49:20**\n",
+        "cpe:processing_monitoring_id": "monitor-execution-17d128ba-19b7-11ee-8387-063840a316bc"
+    },
+    "bbox": [
+        119.146727,
+        -1.989713,
+        119.778445,
+        -0.975631
+    ],
+    "assets": {
+        "manifest": {
+            "type": "application/xml",
+            "roles": [
+                "metadata"
+            ],
+            "title": "Manifest (XEMT)",
+            "href": "s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/Saocom-1_SLC_Overview/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240.xemt",
+            "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240.xemt",
+            "file:size": 39511
+        },
+        "metadata-hh": {
+            "type": "application/xml",
+            "roles": [
+                "metadata"
+            ],
+            "href": "s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/Saocom-1_SLC_Overview/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
+            "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
+            "file:size": 45186
+        },
+        "amplitude-hh": {
+            "type": "image/tiff; application=geotiff",
+            "roles": [
+                "amplitude",
+                "data"
+            ],
+            "href": "s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/Saocom-1_SLC_Overview/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
+            "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
+            "file:size": 1674452810,
+            "sar:polarizations": [
+                "HH"
+            ]
+        },
+        "metadata-hv": {
+            "type": "application/xml",
+            "roles": [
+                "metadata"
+            ],
+            "href": "s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/Saocom-1_SLC_Overview/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
+            "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
+            "file:size": 45188
+        },
+        "amplitude-hv": {
+            "type": "image/tiff; application=geotiff",
+            "roles": [
+                "amplitude",
+                "data"
+            ],
+            "href": "s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/Saocom-1_SLC_Overview/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
+            "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
+            "file:size": 1674452810,
+            "sar:polarizations": [
+                "HV"
+            ]
+        },
+        "overview": {
+            "type": "image/tiff; application=geotiff",
+            "roles": [
+                "visual"
+            ],
+            "title": "Overview",
+            "href": "s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/Saocom-1_SLC_Overview/overview.tif",
+            "raster:bands": [
+                {
+                    "data_type": "byte",
+                    "spatial_resolution": 10.0,
+                    "statistics": {
+                        "minimum": "0",
+                        "maximum": "255",
+                        "mean": "70.393703077169",
+                        "stddev": "86.849879530334",
+                        "valid_percent": "100"
+                    },
+                    "scale": 1.0,
+                    "offset": 0,
+                    "histogram": {
+                        "count": 256,
+                        "min": -0.5,
+                        "max": 255.5,
+                        "buckets": [
+                            42966468,
+                            40964,
+                            41808,
+                            42379,
+                            43151,
+                            44157,
+                            44704,
+                            45604,
+                            46030,
+                            46866,
+                            47723,
+                            47987,
+                            48816,
+                            49529,
+                            50487,
+                            51259,
+                            52004,
+                            52966,
+                            53595,
+                            54064,
+                            55353,
+                            55992,
+                            57032,
+                            57681,
+                            58081,
+                            58592,
+                            59421,
+                            60303,
+                            61222,
+                            61999,
+                            62501,
+                            63663,
+                            64232,
+                            64570,
+                            65409,
+                            65642,
+                            66284,
+                            67393,
+                            67577,
+                            67751,
+                            68384,
+                            69178,
+                            69421,
+                            69737,
+                            70528,
+                            70742,
+                            71276,
+                            71728,
+                            71930,
+                            72430,
+                            72934,
+                            72897,
+                            73337,
+                            74076,
+                            73296,
+                            73702,
+                            73906,
+                            74111,
+                            74609,
+                            74647,
+                            74863,
+                            75209,
+                            75536,
+                            74659,
+                            75673,
+                            75598,
+                            75692,
+                            76153,
+                            75455,
+                            76264,
+                            76292,
+                            76076,
+                            76248,
+                            76697,
+                            76660,
+                            76617,
+                            76517,
+                            76927,
+                            77276,
+                            77531,
+                            78356,
+                            78115,
+                            78968,
+                            79530,
+                            79168,
+                            80192,
+                            80072,
+                            81500,
+                            82003,
+                            82795,
+                            83200,
+                            83735,
+                            84584,
+                            85971,
+                            86860,
+                            87583,
+                            89364,
+                            90366,
+                            92016,
+                            92668,
+                            94254,
+                            95815,
+                            97278,
+                            98503,
+                            99755,
+                            102093,
+                            104163,
+                            105511,
+                            107793,
+                            109803,
+                            112125,
+                            113705,
+                            116049,
+                            118598,
+                            121158,
+                            123203,
+                            125943,
+                            128625,
+                            131128,
+                            133627,
+                            136805,
+                            139367,
+                            141438,
+                            145429,
+                            148051,
+                            151370,
+                            154036,
+                            317541,
+                            162971,
+                            167277,
+                            169918,
+                            172623,
+                            176648,
+                            179972,
+                            182759,
+                            186785,
+                            188855,
+                            193773,
+                            196453,
+                            198626,
+                            203056,
+                            206560,
+                            209785,
+                            213340,
+                            215849,
+                            219090,
+                            223075,
+                            225851,
+                            228257,
+                            230607,
+                            235004,
+                            236229,
+                            240564,
+                            242838,
+                            246327,
+                            248578,
+                            250108,
+                            253527,
+                            254965,
+                            258505,
+                            259754,
+                            262287,
+                            264170,
+                            265674,
+                            267954,
+                            269488,
+                            269607,
+                            273171,
+                            273906,
+                            275789,
+                            275768,
+                            275657,
+                            276406,
+                            277336,
+                            277941,
+                            279364,
+                            278349,
+                            279658,
+                            278648,
+                            277829,
+                            278477,
+                            276145,
+                            275347,
+                            274609,
+                            274327,
+                            272324,
+                            271208,
+                            269563,
+                            268329,
+                            265675,
+                            263750,
+                            261559,
+                            259445,
+                            256441,
+                            254546,
+                            251895,
+                            248635,
+                            245298,
+                            242918,
+                            240056,
+                            236337,
+                            232424,
+                            229398,
+                            225985,
+                            222569,
+                            218092,
+                            214771,
+                            210814,
+                            205547,
+                            203020,
+                            198531,
+                            194962,
+                            191224,
+                            185816,
+                            182251,
+                            177708,
+                            173295,
+                            169800,
+                            165473,
+                            160299,
+                            156709,
+                            152929,
+                            147466,
+                            144486,
+                            139241,
+                            136191,
+                            132061,
+                            128577,
+                            123957,
+                            121043,
+                            116333,
+                            113190,
+                            108649,
+                            105379,
+                            102296,
+                            98333,
+                            95314,
+                            91942,
+                            88395,
+                            84973,
+                            81887,
+                            79397,
+                            76362,
+                            73203,
+                            69847,
+                            68342,
+                            65218,
+                            62905,
+                            60411,
+                            57962,
+                            55220,
+                            53241,
+                            50936,
+                            49148,
+                            975314
+                        ]
+                    }
+                }
+            ],
+            "file:size": 109584310
+        }
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "derived_from",
+            "title": "Acquisition",
+            "href": "s3://dc-development-catalog/calls/call-969/acquisitions/969-CONAE-SAOCOM1-S1A-SAR-L1A-20211117T174240-MOD/969-CONAE-SAOCOM1-S1A-SAR-L1A-20211117T174240-MOD.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "related",
+            "title": "Calibrated Dataset",
+            "href": "s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "parent",
+            "href": "../catalog.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "s3://dc-development-catalog/catalog.json"
+        }
+    ]
+}

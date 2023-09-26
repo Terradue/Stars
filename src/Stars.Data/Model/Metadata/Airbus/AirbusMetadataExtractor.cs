@@ -21,6 +21,7 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Geometry.GeoJson;
+using Terradue.Stars.Services;
 
 namespace Terradue.Stars.Data.Model.Metadata.Airbus
 {
@@ -60,6 +61,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 case "PHR_ORTHO":
                 case "PHR_SENSOR":
                     return new PleiadesDimapProfiler(dimap);
+                case "PNEO_ORTHO":
+                    return new PleiadesNEODimapProfiler(dimap);
                 case "S6_ORTHO":
                 case "S7_ORTHO":
                     return new SpotDimapProfiler(dimap);
@@ -153,9 +156,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             eo.Bands = stacItem.Assets.Values.Where(a => a.EoExtension().Bands != null).SelectMany(a => a.EoExtension().Bands).ToArray();
         }
 
-        internal virtual StacItem CreateStacItem(AirbusProfiler dimapProfiler)
-        {
-            StacItem stacItem = new StacItem(dimapProfiler.Dimap.Dataset_Identification.DATASET_NAME.Text,
+        internal virtual StacItem CreateStacItem(AirbusProfiler dimapProfiler) {
+            
+            StacItem stacItem = new StacItem(dimapProfiler.GetId(),
                                              GetGeometry(dimapProfiler),
                                              GetCommonMetadata(dimapProfiler));
             AddSatStacExtension(dimapProfiler, stacItem);
@@ -298,8 +301,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         {
             if (IncludeProviderProperty)
             {
-                StacProvider provider = dimapProfiler.GetStacProvider();
-                if (provider != null) properties.Add("providers", new StacProvider[] { provider });
+                StacProvider[] providers = dimapProfiler.GetStacProviders();
+                if (!providers.IsNullOrEmpty()) properties.Add("providers", providers);
             }
         }
 
@@ -322,48 +325,67 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
-        protected void AddAssets(StacItem stacItem, IItem item, IAsset metadataAsset, AirbusProfiler dimapProfiler)
-        {
+        protected void AddAssets(StacItem stacItem, IItem item, IAsset metadataAsset, AirbusProfiler dimapProfiler) {
 
-            foreach (var dataFile in dimapProfiler.Dimap.Raster_Data.Data_Access.Data_Files.Data_File)
-            {
-                IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href + "$");
-                if (productAsset == null)
-                    throw new FileNotFoundException(string.Format("No product found '{0}'", dataFile.DATA_FILE_PATH.Href));
-                var bandStacAsset = GetBandAsset(productAsset, dimapProfiler, dataFile, stacItem);
-                if (Path.GetExtension(bandStacAsset.Value.Uri.ToString()).Equals(".jp2", StringComparison.InvariantCultureIgnoreCase))
-                    bandStacAsset.Value.MediaType = new ContentType("image/jp2");
-                dimapProfiler.CompleteAsset(bandStacAsset.Value, stacItem);
-                stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
-                var productWorldFileAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href.Replace("JP2", "J2W") + "$");
-                if (productWorldFileAsset != null)
-                {
-                    var dataAsset = StacAsset.CreateDataAsset(stacItem, productWorldFileAsset.Uri,
-                            new ContentType(MimeTypes.GetMimeType(Path.GetFileName(productWorldFileAsset.Uri.ToString()))));
-                    dataAsset.Properties.AddRange(productWorldFileAsset.Properties);
-                    stacItem.Assets.Add(bandStacAsset.Key + "-wf", dataAsset);
-                    stacItem.Assets[bandStacAsset.Key + "-wf"].Roles.Add("world-file");
+            foreach (var dataFiles in dimapProfiler.Dimap.Raster_Data.Data_Access.Data_Files){
+                foreach (var dataFile in dataFiles.Data_File) {
+                    IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href + "$");
+                    if (productAsset == null)
+                        throw new FileNotFoundException(string.Format("No product found '{0}'",
+                            dataFile.DATA_FILE_PATH.Href));
+                    var bandStacAsset = GetBandAsset(productAsset, dimapProfiler, dataFile, stacItem);
+                    if (Path.GetExtension(bandStacAsset.Value.Uri.ToString())
+                        .Equals(".jp2", StringComparison.InvariantCultureIgnoreCase))
+                        bandStacAsset.Value.MediaType = new ContentType("image/jp2");
+                    dimapProfiler.CompleteAsset(bandStacAsset.Value, stacItem);
+                    stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
+                    var productWorldFileAsset =
+                        FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.Href.Replace("JP2", "J2W") + "$");
+                    if (productWorldFileAsset != null) {
+                        var dataAsset = StacAsset.CreateDataAsset(stacItem, productWorldFileAsset.Uri,
+                            new ContentType(
+                                MimeTypes.GetMimeType(Path.GetFileName(productWorldFileAsset.Uri.ToString()))));
+                        dataAsset.Properties.AddRange(productWorldFileAsset.Properties);
+                        stacItem.Assets.Add(bandStacAsset.Key + "-wf", dataAsset);
+                        stacItem.Assets[bandStacAsset.Key + "-wf"].Roles.Add("world-file");
+                    }
                 }
             }
 
-            stacItem.Assets.Add("metadata-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING, StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
-                        new ContentType("application/xml"), "Metadata file"));
-            stacItem.Assets["metadata-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING].Properties.AddRange(metadataAsset.Properties);
-            var overviewAsset = FindFirstAssetFromFilePathRegex(item, @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_QL_PATH.Href);
-            if (overviewAsset != null)
-            {
-                stacItem.Assets.Add("overview-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING, StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
-                            new ContentType(MimeTypes.GetMimeType(Path.GetFileName(overviewAsset.Uri.ToString())))));
-                stacItem.Assets["overview-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING].Properties.AddRange(overviewAsset.Properties);
-            }
-            var thumbnailAsset = FindFirstAssetFromFilePathRegex(item, @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_TN_PATH.Href);
-            if (thumbnailAsset != null)
-            {
-                stacItem.Assets.Add("thumbnail-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING, StacAsset.CreateThumbnailAsset(stacItem, thumbnailAsset.Uri,
-                            new ContentType(MimeTypes.GetMimeType(Path.GetFileName(thumbnailAsset.Uri.ToString())))));
-                stacItem.Assets["thumbnail-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING].Properties.AddRange(thumbnailAsset.Properties);
+            stacItem.Assets.Add(
+                "metadata-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING,
+                StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
+                    new ContentType("application/xml"), "Metadata file"));
+            stacItem.Assets[
+                    "metadata-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING]
+                .Properties.AddRange(metadataAsset.Properties);
+            var overviewAsset = FindFirstAssetFromFilePathRegex(item,
+                @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_QL_PATH?.Href);
+            if (overviewAsset != null) {
+                stacItem.Assets.Add(
+                    "overview-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING,
+                    StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
+                        new ContentType(MimeTypes.GetMimeType(Path.GetFileName(overviewAsset.Uri.ToString())))));
+                stacItem.Assets[
+                        "overview-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING]
+                    .Properties.AddRange(overviewAsset.Properties);
             }
 
+            if (dimapProfiler.Dimap.Dataset_Identification.DATASET_TN_PATH != null) {
+                var thumbnailAsset = FindFirstAssetFromFilePathRegex(item,
+                    @".*" + dimapProfiler.Dimap.Dataset_Identification.DATASET_TN_PATH?.Href);
+                if (thumbnailAsset != null) {
+                    stacItem.Assets.Add(
+                        "thumbnail-" + dimapProfiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING,
+                        StacAsset.CreateThumbnailAsset(stacItem, thumbnailAsset.Uri,
+                            new ContentType(MimeTypes.GetMimeType(Path.GetFileName(thumbnailAsset.Uri.ToString())))));
+                    stacItem.Assets[
+                            "thumbnail-" + dimapProfiler.Dimap.Processing_Information.Product_Settings
+                                .SPECTRAL_PROCESSING]
+                        .Properties.AddRange(thumbnailAsset.Properties);
+                }
+
+            }
         }
 
         private KeyValuePair<string, StacAsset> GetBandAsset(IAsset bandAsset, AirbusProfiler dimapProfiler, Data_File dataFile, StacItem stacItem)

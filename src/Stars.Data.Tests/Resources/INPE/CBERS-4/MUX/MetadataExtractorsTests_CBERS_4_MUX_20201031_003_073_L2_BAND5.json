@@ -3,6 +3,7 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -40,6 +41,7 @@
     "end_datetime": "2020-10-31T03:16:19.763179Z",
     "datetime": "2020-10-31T03:16:10.854295Z",
     "created": "2020-11-01T03:27:00.279915Z",
+    "constellation": "cbers-4",
     "platform": "cbers-4",
     "mission": "cbers-4",
     "instruments": [
@@ -47,15 +49,19 @@
     ],
     "sensor_type": "optical",
     "gsd": 20.0,
-    "title": "CBERS-4 L2 2020-10-31 03:16:10",
+    "title": "CBERS-4 MUX L2 2020-10-31 03:16:10",
     "eo:bands": [
       {
         "name": "band-5",
         "common_name": "blue",
-        "center_wavelength": 0.485
+        "center_wavelength": 0.485,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1984.65
       }
     ],
     "sat:orbit_state": "descending",
+    "cbers:path": 3,
+    "cbers:row": 73,
     "sat:absolute_orbit": 3073,
     "view:sun_azimuth": 156.103,
     "view:sun_elevation": 48.4855,
@@ -93,7 +99,15 @@
         {
           "name": "band-5",
           "common_name": "blue",
-          "center_wavelength": 0.485
+          "center_wavelength": 0.485,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1984.65
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 1.51123,
+          "offset": 0.0
         }
       ]
     },

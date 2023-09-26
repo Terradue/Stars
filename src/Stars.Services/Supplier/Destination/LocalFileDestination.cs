@@ -32,13 +32,14 @@ namespace Terradue.Stars.Services.Supplier.Destination
             if (route.ContentDisposition != null && !string.IsNullOrEmpty(route.ContentDisposition.FileName))
                 filename = route.ContentDisposition.FileName;
             if (string.IsNullOrEmpty(filename))
-                filename = Guid.NewGuid().ToString("N");
+                filename = Guid.NewGuid().ToString("N") + "/";
             return new LocalFileDestination(directory.FileSystem.FileInfo.FromFileName(Path.Combine(directory.FullName, filename)), route);
         }
 
         public void PrepareDestination()
         {
-            file.Directory.Create();
+            if ( !file.Directory.Exists)
+                file.Directory.Create();
         }
 
         public IDestination To(IResource subroute, string relPathFix = null)

@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<hma:Mask gml:id="202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P_imgcld_msk" xmlns:gml="http://www.opengis.net/gml" xmlns:hma="http://earth.esa.int/hma" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <gml:name>Cloud Cotation Mask from data-strip 202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P</gml:name>
+    <gml:boundedBy>
+        <gml:Envelope srsName="GDLIB:32622">
+            <gml:lowerCorner>294324 569172.3</gml:lowerCorner>
+            <gml:upperCorner>308171.7 589620</gml:upperCorner>
+        </gml:Envelope>
+    </gml:boundedBy>
+    <hma:maskMembers>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-0">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>306567.3 571575.9 306571.8 571574.4 306766.5 571464.6 307284.6 571434.0 307398.3 571373.4 307700.1 570995.4 307742.7 570860.4 307755.3 570606.9 307920.6 570618.9 307951.5 570649.8 307908.3 570871.8 307898.1 571220.1 307971.3 571300.8 308148.6 571340.7 308171.7 569270.7 308049.6 569172.3 305189.7 569828.4 305177.7 570050.4 305228.7 570242.1 305397.0 570359.7 305400.0 570679.2 305557.8 570848.1 305613.6 571143.6 305813.1 571430.7 305700.6 571846.8 305836.2 571956.9 306025.2 571821.9 306242.7 571516.5 306567.3 571575.9</gml:posList></gml:LinearRing></gml:exterior><gml:interior><gml:LinearRing><gml:posList>305960.7 570438.9 305822.7 570115.8 305739.6 570033.3 305478.6 569976.3 305457.9 569913.0 305687.1 569939.1 305940 569919 306085.5 570061.2 306108.6 570360.6 305960.7 570438.9</gml:posList></gml:LinearRing></gml:interior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-1">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>307208.1 574635.0 307220.1 574645.5 307387.2 574664.4 307679.1 574372.2 307729.5 574273.8 307733.7 574268.7 308044.5 573977.7 308119.5 573962.4 308124.3 573533.1 307999.8 573593.7 307937.4 573522.9 307853.4 573507.6 307770.0 573578.7 307697.7 573800.4 307279.2 573886.5 307102.5 574093.5 307039.5 574228.2 307029.3 574358.4 307082.4 574515.3 307208.1 574635.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-2">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>308099.4 575716.8 308106.3 575141.4 307873.5 575301.3 307840.5 575360.4 307840.2 575513.1 308099.4 575716.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-3">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>307378.2 575321.7 307380.3 575321.1 307651.8 575127.0 307650.9 574988.4 307747.5 575020.8 307820.1 574972.2 307819.2 574908.6 307756.8 574850.7 307753.8 574850.7 307640.4 574913.1 307587.3 574842.6 307483.5 574826.7 307160.1 574980.9 307128.3 575016.3 307128.6 575124.0 307129.5 575125.2 307295.4 575306.4 307378.2 575321.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-4">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>307610.1 575595.6 307662.6 575548.5 307672.8 575460.6 307567.5 575426.1 307515.6 575473.2 307515.9 575527.8 307547.4 575578.8 307610.1 575595.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-5">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>307233.3 572605.8 307412.4 572601.3 307508.7 572503.8 307493.4 572101.5 307419.6 571977.0 307357.8 571938.0 307266.0 571921.8 307263.9 571922.1 307184.1 571987.8 306994.8 572177.7 306996.3 572283.3 307127.1 572526.3 307129.2 572529.0 307233.3 572605.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-6">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>307298.4 576352.8 307361.4 576337.5 307413.3 576280.2 307413.3 576193.5 307297.8 576138.0 307224.9 576218.7 307214.7 576295.2 307298.4 576352.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-7">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>306314.7 572405.4 306445.2 572745.9 306469.2 572805.0 306471.0 572806.2 306521.4 572833.5 306522.9 572833.5 306657.9 572801.7 306814.5 572681.7 306763.2 572273.7 306641.4 572038.2 306642.3 571873.2 306587.7 571803.6 306514.2 571788.0 306369.6 571851.3 306305.7 571923.0 306255.3 572250.6 306314.7 572405.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-8">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>306631.8 573337.5 306684.9 573333.3 306786 573255 306795.9 573157.8 306722.4 573099.3 306606.6 573097.2 306544.2 573155.7 306535.5 573262.5 306631.8 573337.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-9">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>306312.0 575964.6 306324.6 575952.9 306355.2 575777.4 306553.8 575610.6 306562.2 575449.5 306406.2 575298.3 306038.1 575285.4 305954.1 575335.2 305860.5 575460.3 305842.5 575794.5 305979.6 575956.2 306260.1 576011.7 306262.8 576011.1 306312.0 575964.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-10">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>306051.0 572618.7 306167.1 572609.7 306240.0 572550.6 306240.0 572485.2 305962.8 572205.9 305836.2 572164.5 305730.6 572172.3 305636.1 572244.9 305612.7 572498.1 305613.9 572500.5 305696.4 572568.3 306051.0 572618.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-11">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>305939.4 574021.2 306086.1 573988.5 306158.7 573875.4 306105.3 573534.3 306000.6 573445.2 305895.3 573453.0 305811.9 573502.2 305717.7 573638.7 305697.9 573866.7 305792.7 573957.0 305939.4 574021.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-12">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>305529.9 576759.0 305676.9 576726.0 305906.1 576481.8 305813.7 576140.1 305686.8 576076.8 305223.6 576244.2 305160.9 576345.6 305161.2 576432.0 305327.7 576621.6 305330.4 576624.3 305529.9 576759.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-13">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>305162.7 573073.8 305168.4 573069.0 305352.0 572874.6 305352.3 572819.7 305300.4 572768.7 305143.5 572725.8 305080.8 572784.6 305079.0 572952.3 305089.8 573036.3 305162.7 573073.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-14">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>304844.7 576142.5 304846.8 576142.5 304847.7 576141.6 304982.1 575960.4 305002.2 575840.1 304938.9 575790.9 304676.4 575768.1 304593.0 575871.6 304594.2 576033.6 304678.2 576135.0 304844.7 576142.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-15">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>304680.6 577052.4 304764.6 577035.6 304816.8 576966.9 304817.1 576857.4 304745.1 576796.2 304660.8 576813.3 304600.5 576901.2 304600.2 576967.5 304680.6 577052.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-16">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>304354.8 577632.0 304431.3 577665.0 304629.6 577531.2 304786.8 577313.4 304786.5 577237.5 304608.0 577111.8 304514.1 577095.9 304272.3 577343.1 304241.4 577464.0 304325.4 577618.8 304354.8 577632.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-17">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>304755 571638 304752.3 571277.7 304710.0 571173.3 304635.6 571125.3 304541.7 571197.3 304500.3 571286.7 304417.8 571507.2 304417.5 571681.2 304574.4 571777.5 304677.9 571769.4 304680.9 571768.2 304755.6 571705.2 304755 571638</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-18">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>304320.9 571638.0 304313.1 571612.8 304208.4 571470.9 304116.6 571417.2 304112.4 571414.8 304110.3 571414.8 304015.8 571424.7 303860.7 571584.9 303703.5 571607.1 303618.9 571679.7 303590.7 572175.9 303831.9 572449.5 303822.9 572664.6 303959.4 572826.3 304035 572850 304198.8 572843.7 304294.2 572759.1 304401.9 572530.8 304400.7 572413.2 304480.8 572250.9 304481.4 572129.7 304320.9 571638.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-19">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>304038.6 576648.3 304133.1 576598.2 304133.1 576511.2 304049.7 576431.4 303944.4 576482.7 303944.7 576569.1 304038.6 576648.3</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-20">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>304009.5 577115.1 304072.5 577099.5 304125.0 577041.3 304114.2 576955.5 304041.0 576907.2 303987.9 576922.2 303935.7 576991.2 303936.0 577066.5 304009.5 577115.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-21">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303317.7 585913.5 303495.6 586219.2 303548.7 586247.4 303769.2 586218.9 303873.9 586188.9 303946.8 586107.6 304092.9 585879.0 304092.6 585748.5 304050.6 585654.9 303924.3 585556.8 303599.1 585615.3 303387.9 585610.5 303324.9 585691.2 303315.0 585902.1 303315 585909 303317.7 585913.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-22">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303855.0 573050.1 303928.8 573001.5 303928.8 572946.6 303855.6 572909.1 303783.3 572955.9 303783.6 573009.9 303855.0 573050.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-23">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303669.9 576040.5 303775.2 575988.9 303775.2 575980.5 303774.0 575783.7 303668.4 575673.0 303584.7 575722.8 303554.4 575984.7 303669.9 576040.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-24">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303346.8 576885.6 303557.1 576804.3 303692.7 576631.8 303744.6 576315.9 303713.1 576146.4 303712.2 576144.6 303555.0 576049.5 303302.4 576210.3 303114.9 576460.5 303030.9 576639.9 303031.2 576715.8 303094.2 576775.5 303346.8 576885.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-25">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303317.7 574320.6 303373.5 574451.7 303468.3 574497.9 303636.0 574463.1 303637.2 574462.2 303647.4 574429.2 303563.4 574338.9 303478.8 574119.0 303480.0 574116.3 303562.8 574002.9 303563.4 573947.4 303406.8 573861.0 303204.6 573880.5 303173.1 573980.1 303317.7 574320.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-26">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303093.3 586623.0 303213.3 586760.7 303245.4 586899.3 303269.4 586935.9 303484.2 586698.0 303371.1 586510.8 303254.7 586400.7 303171.3 586375.2 303168.0 586376.1 303096.9 586413.3 303065.4 586448.4 303055.5 586579.5 303093.3 586623.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-27">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303173.4 574635.0 303173.1 574587.3 303037.2 574522.5 302984.4 574569.6 302984.4 574666.8 303105.3 574709.7 303110.7 574711.2 303173.4 574663.2 303173.4 574635.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-28">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>303107.7 577627.2 303118.2 577626.6 303118.2 577615.8 303107.7 577616.4 303107.7 577627.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-29">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302932.2 587271.6 303008.4 587226.3 303034.8 587197.2 303035.1 587195.1 303004.2 587005.5 302887.8 586938.9 302825.1 586987.2 302826.0 587139.3 302837.1 587192.7 302932.2 587271.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-30">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302855.7 572155.5 302967.3 572086.2 302969.4 572084.7 302969.7 572082.0 302970.3 571941.9 302867.7 571828.2 302783.1 571878.3 302772.0 572096.1 302855.7 572155.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-31">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302950.2 586623.0 302950.2 586598.4 302897.7 586559.4 302792.1 586557.0 302739.9 586604.4 302739.9 586658.7 302823.6 586705.8 302887.5 586701.0 302950.5 586652.7 302950.2 586623.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-32">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302629.5 572761.8 302764.5 572754.6 302824.2 572719.8 302827.5 572717.4 302923.2 572589.0 302911.5 572374.5 302804.7 572289.0 302678.7 572330.7 302542.2 572482.2 302492.1 572666.1 302629.5 572761.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-33">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300320.7 570951.6 300420.6 571126.8 300684.3 571404.0 300689.7 571407.0 300801.9 571450.8 300822.0 571558.8 300748.8 571661.1 300728.1 571803.3 300915.9 572083.8 301074.3 572514.9 301127.7 572963.7 301015.5 573390.6 300858.6 573693.6 300847.2 573846.9 300931.8 573948.6 301131.6 574083.3 301395.0 574160.7 301436.1 574398.3 301352.1 574534.2 301351.2 574644.3 301413.6 574726.8 301509.6 574749.9 301738.8 574659.0 301853.7 574554.3 301938.6 574133.4 302148.0 573880.2 302136.3 573753.0 302063.4 573692.4 302033.7 573455.1 301990.5 573417.0 302001.9 573141.9 302273.1 572810.4 302290.8 572467.8 302416.2 572350.8 302531.4 571994.4 302689.8 571840.5 302721.0 571731.3 302721.0 571728.6 302688.6 571400.1 302688.0 571398.9 302667.0 571388.4 302445.3 571278.9 302298.3 571138.5 302110.5 571109.4 302108.7 571109.4 302055.9 571135.8 301850.4 571384.2 301765.8 571359.0 301972.8 571173.9 302068.2 570842.1 302057.7 570712.8 301942.5 570573.6 301105.5 570765.6 301070.1 570810.3 301038.3 570801.9 301036.2 570781.5 300318.0 570946.5 300320.7 570951.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-34">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302658.6 574635.0 302659.8 574625.4 302629.5 574443.0 302567.1 574219.5 302513.7 574158.9 302460.3 574152.9 302232.0 574275.6 302180.7 574462.2 301959.3 574739.4 301927.5 574861.8 301960.2 575042.7 302010.3 575106.6 302197.2 575114.7 302199.3 575114.7 302357.1 575047.2 302638.8 574800.3 302658.6 574635.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-35">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302486.7 577479.9 302489.4 577479.3 302572.5 577408.5 302632.5 577237.8 302634.0 577231.2 302612.7 577115.4 302349.6 576995.1 302053.8 576748.5 301980.3 576754.2 301948.5 576789.6 301928.4 576963.9 302262.6 577354.8 302352.3 577457.1 302486.7 577479.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-36">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302209.5 585650.4 302346.6 585639.6 302409.6 585591.3 302470.8 585283.2 302418.9 585243.6 302417.4 585243.3 302283.3 585294.6 302169 585444 302136.0 585602.4 302209.5 585650.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-37">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302436 586623 302466.0 586507.5 302465.1 586344.9 302337.3 586181.4 302157.6 586152.6 301916.4 586236.9 301728.0 586043.7 301476.9 586138.5 301475.1 586138.5 301243.8 586038.6 301105.5 585878.1 300958.8 585802.5 300873.6 585885.9 300884.7 586166.7 300780.9 586368.9 300781.5 586434.0 300888.0 586533.3 300816.3 586775.1 300827.1 586925.4 301109.1 587135.7 301151.7 587219.4 301268.1 587296.8 301426.2 587251.5 301646.1 586962.6 302267.1 586880.4 302403.3 586750.8 302436 586623</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-38">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302217.3 578756.1 302322.3 578693.7 302322.6 578638.8 302217.6 578550.0 302143.8 578555.4 302112.0 578655.9 302217.3 578756.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-39">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>302172.9 580629.0 302172.6 580615.2 302109.0 580534.8 301854.6 580524.3 301792.2 580582.8 301792.8 580659.6 301814.4 580808.1 301878.9 580866.0 302079.3 580860.9 302174.1 580776.9 302172.9 580629.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-40">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>301905.0 586064.4 301968.3 586048.5 302031.3 585978.6 302136.3 585764.7 302136.0 585699.3 302083.5 585638.4 302000.7 585642.9 301999.5 585644.1 301906.5 585747.3 301822.8 585915.9 301821.3 585984.0 301905.0 586064.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-41">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>301596.3 585146.4 301832.7 585138.0 301838.7 585137.7 301840.5 585136.2 301891.5 585089.7 301869.6 584907.9 301806.6 584869.8 301639.2 584893.8 301635.6 584895.9 301522.8 584989.2 301522.5 585087.3 301596.3 585146.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-42">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>301737.6 576772.5 301801.5 576768.3 301864.5 576709.5 301833.0 576581.7 301751.7 576520.2 301603.5 576543.0 301561.5 576589.5 301560.6 576677.4 301602.3 576740.1 301737.6 576772.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-43">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>301367.7 580420.2 301375.2 580419.3 301507.8 580377.9 301856.1 579980.4 301853.7 579896.7 301708.5 579786.9 301359.0 579794.1 301086.6 580129.8 301087.2 580194.6 301140.6 580362.0 301202.7 580412.4 301367.7 580420.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-44">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300942.6 577632.0 300926.7 577550.4 300740.7 577376.7 300456.6 577370.1 300451.8 577368.6 300411.0 577342.2 300372.6 577019.1 300277.2 576929.4 300096.6 576910.8 299898.0 576936.9 299699.7 577232.7 299700.3 577428.3 299776.5 577818.3 300069.6 578080.5 300102.3 578413.2 300198.0 578609.4 300250.2 578637.6 300473.4 578587.2 300619.2 578501.1 300702.9 578375.7 300744.6 578361.9 300839.7 578408.7 300840.3 578494.2 300913.5 578640.0 301018.8 578718.3 301209.0 578725.5 301396.8 578679.3 301554.6 578580.6 301745.1 578152.5 301754.1 577849.2 301710.9 577791.3 301703.7 577788.9 301458.3 577733.7 301291.5 577743.9 301038.9 577970.4 300996.9 577908.6 300942.6 577632.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-45">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>301561.5 580795.5 301582.8 580783.5 301582.5 580729.2 301477.2 580672.5 301413.9 580688.1 301382.7 580733.7 301561.5 580795.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-46">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>301146.9 588412.2 301326.6 588408.6 301389.3 588349.2 301440.9 588215.1 301439.7 588062.7 301312.8 587921.4 301196.7 587909.1 301059.9 587952.6 301007.4 588000.0 301007.7 588066.0 301083.0 588330.3 301146.9 588412.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-47">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>301271.4 584428.8 301374.3 584403.0 301416.6 584356.2 301427.4 584158.5 301351.8 584113.8 301298.1 584140.5 301194.6 584320.2 301197 584382 301271.4 584428.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-48">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300995.7 585215.7 301122.6 585184.2 301322.1 584800.5 301300.8 584672.1 301157.7 584579.1 300988.5 584614.5 300827.4 584871.6 300827.4 584970.6 300848.4 585087.0 300933.3 585188.7 300995.7 585215.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-49">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300918.6 576803.7 300981.6 576788.1 300982.8 576786.9 301149.9 576570.0 301150.2 576428.7 301012.5 576148.2 300927.6 576068.1 300832.5 576043.2 300717.9 576126.9 300571.5 576430.5 300561.0 576518.4 300613.2 576568.5 300760.5 576589.5 300823.5 576746.7 300918.6 576803.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-50">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300734.1 582592.2 300735.6 582592.2 300738.0 582589.8 301020.6 582274.8 301020.9 582198.3 300925.8 582044.4 301029.0 581821.8 301028.4 581712.9 300964.2 581642.4 300880.2 581627.4 300817.5 581686.5 300735.6 581951.1 300725.4 582222.9 300514.8 582434.4 300516.0 582487.5 300610.2 582578.7 300734.1 582592.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-51">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300320.7 575618.1 300390.3 575677.5 300716.4 575738.7 300874.5 575715.6 300927.6 575646.0 300874.2 575240.4 300780.9 574941.0 300657.0 574838.4 300225.3 574861.2 300099.3 575098.2 300048.0 575307.3 300173.7 575492.7 300320.7 575618.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-52">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300579 585963 300736.5 585940.5 300884.4 585787.2 300884.1 585722.1 300756.9 585625.5 300753.6 585624.9 300629.4 585613.8 300482.7 585679.5 300398.7 585772.8 300399.0 585892.2 300579 585963</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-53">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300321.0 580430.4 300297.0 580430.4 300096.9 580241.1 300012.3 580258.5 299854.5 580465.5 299844.6 580639.2 299866.5 580788.6 300215.4 581096.1 300384.3 581157.6 300552.9 581145.0 300752.4 580902.0 300773.1 580704.0 300669.9 580503.9 300571.5 580430.7 300321.0 580430.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-54">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300589.8 586491.9 300593.1 586491.6 300717.3 586353.0 300748.5 586263.9 300737.1 586157.1 300641.7 586089.0 300494.4 586133.1 300380.1 586259.7 300378.9 586263.0 300369.6 586358.7 300474.0 586477.8 300476.7 586480.2 300589.8 586491.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-55">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300663.6 583094.4 300665.7 583093.5 300736.8 583004.7 300726.3 582907.8 300610.8 582861.3 300516.3 582966.6 300516.0 583021.5 300547.8 583072.5 300663.6 583094.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-56">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300318.0 582163.8 300334.5 582060.6 300483.6 582080.4 300618.9 582048.3 300703.8 581943.6 300702.0 581749.8 300576.3 581584.5 300458.4 581574.3 300343.2 581648.1 300143.1 581674.8 299985.3 581774.4 299891.1 581890.2 299891.7 581988.6 300049.2 582180.0 300123.6 582239.4 300219.0 582253.5 300313.8 582192.0 300318.0 582163.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-57">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300468.3 573681.9 300562.8 573654.0 300658.5 573525.9 300624.6 573346.8 300531.9 573275.7 300447.6 573292.5 300394.2 573363.0 300344.1 573622.8 300344.1 573624.6 300347.1 573626.1 300468.3 573681.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-58">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300538.5 576260.7 300591.6 576246.0 300654.6 576165.0 300654.6 576099.6 300601.8 576061.2 300538.2 576076.8 300476.1 576156.3 300475.8 576222.3 300538.5 576260.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-59">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299364.3 580225.8 299562.0 580018.2 299905.5 579866.4 300088.2 579618.0 300400.5 579599.4 300515.1 579526.5 300516.0 579525.6 300557.4 579189.6 300557.4 579187.5 300555.6 579184.5 300335.1 578837.1 300039.3 578709.6 299943.6 578155.2 299796.0 578037.3 299670.0 578077.8 299406.3 577904.7 299208.6 577980.3 299094.3 578074.8 299093.4 578077.2 299082.3 578447.4 299260.2 578759.1 299335.5 579001.5 299127.3 579253.5 298893.6 579317.7 298672.8 579615.9 298672.5 579735.3 298756.8 579879.9 298873.2 579957.9 299010.6 579925.5 299189.1 579727.2 299202.6 580102.8 299269.5 580190.1 299364.3 580225.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-60">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300318.0 587961.9 300448.5 587807.1 300458.1 587546.1 300394.8 587497.2 300278.7 587538.9 300125.1 587752.2 300121.2 587758.8 300111.0 587866.8 300184.5 587968.8 300311.7 587969.7 300318.0 587961.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-61">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299682.6 589320.6 300383.7 589280.4 300386.4 589280.1 300386.4 589279.2 300380.4 589233.3 300295.2 589120.8 300157.5 589121.1 299999.4 589068.9 300019.8 588785.1 299989.8 588756.6 299988.3 588755.4 299986.5 588755.4 299630.1 588784.2 299534.7 588900.3 299535.3 589086.9 299546.4 589192.5 299682.6 589320.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-62">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300321.0 586463.1 300180.9 586274.7 300138.0 586103.1 300042.9 586045.8 299897.1 586026.0 299894.7 586026.6 299843.1 586073.1 299843.4 586149.0 299918.7 586467.3 300013.5 586657.5 300120.0 586723.5 300309.6 586698.3 300372.3 586617.6 300371.7 586530.9 300321.0 586463.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-63">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300318 573906 300332.7 573896.4 300333.0 573831.3 300248.7 573786.0 300247.2 573785.7 300183.6 573834.9 300183.0 573911.4 300258.0 573947.1 300318 573906</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-64">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>300153.0 584426.4 300161.1 584426.4 300163.8 584423.7 300254.1 584323.2 300255.6 584320.5 300234.3 584073.6 300150.3 583972.2 300003.3 584037.3 299802.6 584064.3 299728.8 584124.3 299728.8 584179.2 299802.6 584270.7 300055.5 584424.0 300153.0 584426.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-65">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299490.3 585127.8 299585.4 585099.0 299648.4 585028.8 299785.5 585072.3 299868.9 585034.8 299879.7 584946.9 299826.6 584886.0 299973.0 584669.1 299992.8 584537.4 299834.7 584397.9 299582.1 584504.1 299393.1 584769.9 299351.7 584859.3 299352.0 584957.4 299415.3 585082.2 299490.3 585127.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-66">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299973.3 571638.0 299973.6 571629.3 299941.2 571470.0 299717.7 571084.5 298989.6 571251.3 298865.1 571329.9 298867.2 571279.5 298158.6 571442.1 298086.9 571503.9 297867.6 572068.2 297867.0 572072.1 297885.9 572173.8 298409.1 572156.1 298593.0 572148.3 298824.9 572055.0 298833.9 572058.6 299181.9 572224.5 299457.0 572157.3 299678.1 571999.8 299888.7 571962.3 299961.3 571893.3 299973.3 571638.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-67">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299925.9 583626.0 299931.0 583582.2 299803.8 583430.4 299685 583434 299677.5 583440.6 299547.6 583574.7 299527.2 583707.3 299612.1 583808.7 299845.2 583843.2 299909.4 583770.9 299925.9 583626.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-68">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299743.2 581858.7 299817.3 581853.0 299869.5 581805.6 299837.4 581721.3 299648.7 581649.3 299645.4 581649.9 299553.0 581689.2 299542.8 581755.2 299743.2 581858.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-69">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299808.3 586623.0 299812.8 586620.0 299813.4 586476.3 299707.8 586409.1 299550.0 586431.3 299508.3 586477.8 299508.9 586564.5 299571.3 586647.6 299574.6 586649.4 299655.0 586686.3 299727.3 586680.9 299730 586680 299808.3 586623.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-70">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299160.6 576029.7 299331.3 576014.4 299646.6 575913.9 299797.2 575692.5 299771.4 575560.8 299664.3 575463.0 299580.6 575426.4 299474.4 575434.5 299274.3 575277.3 298969.8 575159.4 298737.3 575187.9 298695.0 575234.7 298554.9 575571.0 298554.0 575578.8 298553.7 575640.6 298740.3 575952.6 298824.9 575968.2 298919.1 575918.7 299160.6 576029.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-71">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299552.4 573384.0 299628.0 573365.4 299731.8 573218.4 299668.8 572856.6 299721.3 572678.7 299720.7 572505.3 299637.6 572271.3 299488.2 572209.5 299214.6 572415.3 299036.7 572775.0 299036.1 572895.0 299214.3 573144.6 299404.8 573320.4 299552.4 573384.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-72">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299322.0 581717.1 299479.2 581684.4 299582.1 581570.1 299584.2 581567.7 299585.1 581564.7 299604.9 581479.2 299646.6 581130.9 299645.1 580773.0 299560.5 580704.6 299456.7 580743.6 299107.5 580761.6 299034 580887 298951.2 581369.1 299218.2 581657.4 299322.0 581717.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-73">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299041.5 583060.8 299190.0 583048.8 299473.5 582907.5 299526.0 582827.4 299525.4 582751.8 299313.6 582563.1 299218.2 582549.0 298969.8 582824.1 298937.7 582958.8 299041.5 583060.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-74">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298236.0 589070.4 298405.8 589002.6 298626.9 588822.0 298859.7 588825.0 298953.9 588882.3 299092.5 588892.8 299430.3 588767.4 299523.9 588695.4 299490.9 588393.9 299437.2 588267.9 299363.1 588230.4 299058.6 588286.2 298848.9 588245.7 298730.7 588127.8 298540.8 588164.4 298539.9 588013.8 298434.0 587925.6 298085.7 587953.5 298011.6 588057.0 298011.6 588176.4 298202.7 588289.8 298310.7 588398.1 298447.2 588694.8 298440.6 588702.6 298173 588978 298173.3 589032.6 298236.0 589070.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-75">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299174.4 577228.2 299394.6 577223.7 299490.0 577117.5 299504.4 576774.3 299449.2 576717.6 299283.9 576684.0 299162.1 576691.5 299157.0 576692.4 299106.6 576737.1 298916.1 576752.4 298780.5 576621.3 298716 576390 298578.3 576292.5 298272.9 576446.4 298230.6 576613.5 298335.6 576735.3 298788.9 577054.8 299086.2 577138.2 299174.4 577228.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-76">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299326.2 583504.8 299463.3 583440.0 299465.1 583263.6 299316.6 583169.1 299158.2 583202.4 299105.1 583272.3 299105.1 583327.2 299326.2 583504.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-77">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299327.7 584145.0 299331.9 584142.6 299402.1 584085.3 299402.1 583998.6 299296.5 583941.3 299245.2 583987.2 299244.9 584085.6 299327.7 584145.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-78">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299276.7 583626.0 299252.4 583608.3 298991.1 583519.2 298842.6 583541.7 298801.5 583597.8 298803.0 583661.4 298979.7 583912.5 299075.1 583980.6 299263.8 583847.4 299348.1 583732.2 299347.8 583677.6 299276.7 583626.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-79">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299329.2 586623.0 299327.1 586603.2 299234.1 586368.9 298999.2 586184.7 298935.3 586223.1 298809.6 586428.6 298692.9 586526.1 298692.6 586603.5 298809.6 586832.4 298883.7 586881.0 299234.1 586817.4 299339.4 586721.7 299329.2 586623.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-80">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298268.7 574056.9 298470.3 574006.5 298669.2 574015.2 298983.0 573756.3 299249.1 573666.6 299311.2 573609.0 299276.7 573279.0 299171.1 573168.0 298866.9 573123.9 298708.8 573148.2 298538.4 573261.3 298275.9 573302.4 298048.2 573585.6 298026.9 573750.3 298152.0 573969.6 298268.7 574056.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-81">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298725.0 582421.8 298786.8 582397.5 298819.2 582329.1 299080.2 582375.0 299082 582375 299154.3 582338.1 299175.3 581978.4 299269.2 581841.9 299269.2 581765.1 299091.6 581679.0 298952.7 581746.8 298893.0 581899.5 298608.6 582236.7 298609.5 582300.6 298725.0 582421.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-82">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>299008.8 585750.3 299220.9 585644.4 299252.1 585555.0 298976.7 585404.4 298891.2 585411.6 298743.9 585488.7 298734.0 585631.8 298831.2 585740.4 299008.8 585750.3</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-83">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298523.7 589387.2 298989.3 589360.5 298990.8 589359.6 298786.2 589123.8 298782.6 589123.8 298556.7 589142.1 298553.7 589142.4 298551.0 589145.1 298500.9 589200.9 298491.3 589332.3 298523.7 589387.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-84">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297864.3 583626.0 297918.0 583686.3 298002.0 583712.4 297982.2 583800.0 297949.5 583859.1 297756.0 583824.3 297528.3 583956.6 297444.3 584093.1 297434.7 584299.2 297517.5 584403.0 297864.9 584409.6 297981.6 584529.6 298106.7 584559.6 298112.1 584560.2 298630.8 584508.6 298749.0 584494.5 298834.8 584398.5 298906.5 584190.3 298907.4 584079.6 298833.3 583934.1 298526.1 583632.6 298494.9 583514.4 298381.5 583443.9 298269.0 583483.8 298265.4 583484.4 298212.3 583360.2 298138.5 583300.8 298053.3 583080.9 297990 583032 297936.9 583035.6 297832.5 583194.6 297832.8 583389.3 297854.4 583614.6 297864.3 583626.0</gml:posList></gml:LinearRing></gml:exterior><gml:interior><gml:LinearRing><gml:posList>298055.7 584230.2 298044.3 584189.1 298182.0 584100.9 298287.9 584145.9 298110.3 584224.2 298055.7 584230.2</gml:posList></gml:LinearRing></gml:interior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-85">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298845.3 574318.5 298848.3 574316.7 298898.1 574272.0 298898.1 574195.5 298795.2 574156.8 298732.8 574214.7 298731.0 574282.5 298845.3 574318.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-86">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298690.5 585428.4 298753.8 585380.1 298764.3 585291.9 298723.2 585240.0 298660.2 585233.1 298597.2 585292.2 298597.2 585368.7 298690.5 585428.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-87">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298654.5 572516.1 298717.5 572457.3 298717.8 572402.4 298656.3 572328.9 298592.7 572323.2 298541.4 572368.8 298530.6 572457.0 298654.5 572516.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-88">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298508.4 578970.9 298603.5 578919.9 298601.1 578847.0 298517.1 578756.4 298414.2 578804.1 298413.6 578810.7 298413.3 578892.3 298508.4 578970.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-89">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298470.6 585967.8 298587.6 585870.9 298598.1 585771.3 298555.5 585720.9 298425.9 585724.5 298330.8 585765.0 298300.8 585850.8 298299.9 585854.7 298342.2 585937.5 298470.6 585967.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-90">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298213.8 581686.2 298352.1 581631.0 298445.7 581538.3 298455.9 581439.9 298361.1 581361.6 298191.9 581374.8 298128.9 581433.9 298129.2 581617.5 298213.8 581686.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-91">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>298188.6 582722.4 298316.7 582700.2 298410.3 582618.3 298365.0 582430.8 298239.3 582342.6 298114.2 582382.2 298079.1 582551.7 298100.4 582670.5 298188.6 582722.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-92">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297913.2 587370.6 298166.4 587177.1 298145.1 586972.2 298050.6 586860.0 297986.1 586865.7 297775.5 586991.4 297713.1 587049.3 297713.7 587092.5 297754.5 587210.1 297913.2 587370.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-93">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297323.7 585077.7 297328.2 585082.8 297411.9 585088.8 297432.6 585120.0 297453.3 585368.1 297592.2 585681.0 297688.8 585736.2 297742.5 585720.6 297973.2 585431.4 298025.1 585319.8 298024.2 585234.0 297827.7 584973.0 297897.9 584775.6 297823.5 584739.3 297632.4 584755.2 297569.1 584684.4 297515.7 584678.1 297276.3 584922.0 297275.1 585022.5 297323.7 585077.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-94">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297906.0 580626.6 297909.3 580625.1 298015.5 580548.3 298015.8 580493.1 297900.0 580458.9 297836.1 580519.2 297833.1 580588.8 297906.0 580626.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-95">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297947.7 580852.8 298000.5 580805.4 298000.5 580751.1 297905.4 580693.2 297842.4 580741.5 297842.4 580817.4 297947.7 580852.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-96">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297764.7 586938.3 297838.8 586889.1 297838.8 586884.3 297838.5 586834.8 297764.1 586797.3 297690.9 586846.2 297690.6 586848.6 297690.9 586900.8 297764.7 586938.3</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-97">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297410.7 586623.0 297501.3 586729.5 297626.7 586721.7 297816.3 586444.2 297793.8 586197.9 297690.0 586139.7 297593.1 586149.0 297456.0 586268.1 297403.5 586358.7 297396.3 586605.9 297410.7 586623.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-98">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297623.7 573785.7 297697.8 573780.3 297784.2 573705.3 297792.3 573609.9 297699.0 573484.5 297615.0 573479.1 297508.2 573576.9 297498.3 573696.6 297623.7 573785.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-99">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297361.8 573370.2 297402.6 573368.4 297466.8 573297.0 297509.4 573120.0 297676.5 572828.7 297738.3 572417.1 297738.9 572400.3 297361.8 573370.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-100">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297454.8 580629.0 297678.6 580465.8 297668.7 580291.8 297478.8 580089.3 297342.3 580076.7 297173.1 580319.7 297057.6 580338.3 296985.0 580396.5 296964.6 580516.5 297058.2 580630.2 297300.0 580742.1 297454.8 580629.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-101">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297522.9 583148.1 297589.2 583128.3 297653.1 583035.3 297642.0 582927.3 297577.5 582890.7 297511.8 582931.8 297447.6 583036.5 297447.9 583101.9 297522.9 583148.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-102">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297321 576819 297481.5 576813.3 297577.5 576739.2 297631.2 576636.3 297640.8 576440.4 297567.6 576282.3 297523.5 575758.5 297418.8 575712.0 297231.0 575701.8 297114.9 575709.9 296987.1 575787.0 296903.7 575921.7 296904.9 576468.9 296901.6 576608.7 297027.6 576751.5 297155.4 576824.7 297321 576819</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-103">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297455.4 578531.7 297528.3 578516.7 297601.2 578458.2 297611.7 578359.2 297505.8 578292.6 297399.9 578301.0 297337.8 578358.6 297338.7 578455.5 297455.4 578531.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-104">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297434.7 582388.2 297500.1 582337.2 297500.1 582282.3 297404.4 582228.6 297402.6 582228.3 297350.7 582275.1 297351.3 582328.8 297434.7 582388.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-105">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297329.1 586180.8 297425.1 586161.6 297479.1 586079.4 297490.8 585968.1 297447.9 585929.1 297308.1 585943.5 297255.6 586012.5 297245.1 586111.5 297329.1 586180.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-106">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296745.6 589489.2 297388.5 589452.0 297318.6 589350.6 297194.1 589303.8 296876.7 589306.8 296745.6 589489.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-107">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296020.5 586131.9 296516.4 586115.4 296737.8 586032.6 296993.1 586075.5 297234.0 585917.1 297244.8 585773.7 296862.6 585392.7 296661.6 585354.3 296503.8 585485.4 296514.3 585615.6 296239.8 585615.3 296073.6 585854.4 295979.4 585925.8 295937.7 586049.1 296020.5 586131.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-108">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>297003.3 584973.9 297056.4 584970.3 297119.4 584910.9 297202.5 584731.2 297211.8 584220.6 297086.1 584143.5 297083.1 584145.0 296990.7 584215.8 296990.7 584508.9 296907.0 584699.4 296898.0 584884.5 297003.3 584973.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-109">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296954.4 586623.0 297003.9 586640.4 297161.7 586617.0 297203.4 586559.7 297202.5 586462.2 297107.1 586361.1 296876.1 586281.9 296801.4 586287.6 296727.9 586347.3 296685.3 586394.4 296685.3 586470.9 296854.8 586587.3 296954.4 586623.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-110">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296991.9 589232.7 297045.9 589228.5 297129.6 589157.1 297139.8 589015.2 297033.9 588926.4 296917.8 588924.6 296854.8 588983.7 296854.8 589049.1 296907.6 589185.0 296991.9 589232.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-111">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296858.1 575377.2 296985 575367 297068.4 575318.1 297057.3 575178.9 296994.3 575088.0 296992.5 575086.5 296909.4 575039.7 296751 574998 296718.0 575026.8 296666.4 575160.3 296742.3 575298.0 296858.1 575377.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-112">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296721.6 583626.0 296714.4 583618.2 296491.2 583670.7 296332.8 583890.6 296342.1 584034.9 296301.0 584242.2 296322.3 584588.1 296156.7 584781.3 296104.5 584904.9 296105.1 585003.3 296158.2 585215.4 296199.6 585258.9 296260.5 585298.8 296410.5 585263.1 296559.6 584933.7 296611.5 584656.8 296757.6 584462.7 296833.2 584433.3 296928.3 584328.0 296832.3 583809.6 296819.7 583730.7 296721.6 583626.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-113">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296613.9 577632.0 296715.3 577256.4 296831.1 577128.6 296821.2 576987.9 296757.3 576918.0 296628.6 576909.3 296283.0 577104.9 296083.5 577000.5 296071.8 576841.2 296027.4 576804.0 295738.5 577547.4 295745.7 577591.5 295716.6 577603.8 295532.1 578079.3 295670.1 578217.0 295671.3 578217.3 295873.2 578231.4 296095.5 578169.3 296273.4 578049.0 296610.0 577645.5 296613.9 577632.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-114">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296469.9 580834.8 296544.6 580817.7 296616.9 580749.0 296616.9 580683.9 296554.8 580633.5 296501.7 580637.4 296396.1 580710.6 296395.8 580787.4 296469.9 580834.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-115">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296515.8 588815.7 296558.1 588801.6 296600.4 588743.7 296599.8 588667.8 296535.6 588630.0 296493.3 588644.1 296451.6 588701.7 296452.5 588777.3 296515.8 588815.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-116">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296268.0 587270.1 296352.6 587242.5 296551.8 587055.0 296539.5 586917.0 296465.4 586868.7 296296.8 586881.0 296172.6 587050.8 296173.2 587191.2 296268.0 587270.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-117">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296373.6 588373.2 296448.6 588367.2 296511.9 588307.5 296492.1 588165.6 296331.9 588008.1 296215.8 588017.4 296152.5 588097.5 296153.7 588172.2 296259.9 588314.4 296373.6 588373.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-118">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295937.4 589535.7 296215.5 589519.5 296099.1 589438.8 296093.4 589435.8 295978.2 589455.6 295937.4 589535.7</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-119">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295932 584844 295934.4 584844.0 295936.8 584841.9 296142.9 584656.5 296142.6 584601.6 296005.5 584352.9 295911.0 584296.2 295909.2 584295.9 295624.2 584405.7 295486.8 584579.1 295476.3 584699.7 295593.0 584798.7 295932 584844</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-120">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>296097.3 586623.0 296023.2 586584.0 295727.7 586574.1 295663.2 586668.0 295662.0 586779.3 295736.4 586872.3 295905.0 586945.5 296012.1 586935.9 296116.8 586808.4 296116.8 586632.9 296097.3 586623.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-121">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295679.1 588732.0 295774.2 588691.8 295837.2 588621.6 295866.6 588337.8 295813.5 588277.8 295750.5 588261.0 295656.0 588321.3 295550.7 588590.4 295551.0 588678.3 295679.1 588732.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-122">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295695.3 580347.9 295802.1 580327.5 295844.1 580281.0 295863.0 580107.6 295810.2 579808.5 295756.2 579750.3 295673.1 579732.3 295621.5 579778.2 295537.5 579957.0 295535.4 580156.5 295587.9 580272.3 295695.3 580347.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-123">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295606.8 581621.1 295748.4 581582.4 295842.3 581435.7 295853.1 581303.4 295789.5 581243.7 295673.4 581252.7 295533.3 581474.4 295532.7 581573.4 295606.8 581621.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-124">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295091.7 586529.4 295176.0 586523.7 295216.8 586510.5 295218.6 586508.7 295313.1 586371.6 295376.7 586182.3 295378.5 586058.7 295441.2 585945.6 295449.3 585940.8 295652.1 585842.4 295807.2 585627.3 295829.7 585515.7 295828.8 585513.6 295678.8 585421.8 295573.8 585451.2 295447.5 585601.8 295325.4 585517.8 295489.8 585306.0 295467.3 584938.5 295350.0 584839.5 295244.7 584836.5 295175.1 584978.4 294994.5 584895.3 294897.9 584915.7 294770.7 585046.8 294749.7 585156.6 294815.7 585550.5 294753.6 585727.2 294751.5 585873.3 294828.9 586058.4 294994.8 586126.5 294994.5 586452.9 295091.7 586529.4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-125">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295536.9 586199.1 295652.7 586158.3 295716.3 586098.6 295713.9 586025.4 295662.9 585972.6 295578.6 585978.6 295462.5 586086.0 295460.7 586154.1 295536.9 586199.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-126">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295602.9 583438.8 295666.8 583389.9 295667.1 583334.7 295594.2 583295.7 295531.8 583342.8 295528.8 583401.9 295602.9 583438.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-127">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295429.8 583626.0 295506.3 583557.3 295437.9 583315.8 295312.2 583171.8 295124.4 583126.5 295118.4 583125.9 295012.5 583222.5 295002.0 583332.6 295187.7 583633.2 295189.5 583635.9 295191.3 583636.2 295400.7 583652.4 295429.8 583626.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-128">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>295248.9 587577.6 295255.5 587577.3 295349.4 587462.1 295366.5 587324.7 295114.2 587247.0 294935.1 587247.6 294785.4 587306.1 294732.0 587365.2 294731.7 587463.6 294911.1 587568.6 295248.9 587577.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-129">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>294901.2 582808.5 294906.9 582807.9 295021.5 582755.7 295010.4 582680.7 295074.9 582426.0 295067.4 582206.7 295067.1 582204.0 295062.6 582199.5 294829.8 581981.4 294775.2 582798.0 294901.2 582808.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-130">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>294885.3 581146.5 294955.8 581145.0 295019.1 581085.6 295020.9 580994.7 294956.7 580850.1 294908.7 580803.6 294885.3 581146.5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-131">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>294695.4 583994.1 294780.9 583848.0 294781.5 583759.8 294717.3 583670.7 294695.4 583994.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-132">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>294583.8 587736.3 294637.2 587732.1 294700.2 587672.7 294699.9 587553.0 294693.0 587539.2 294668.1 587490.3 294584.1 587442.3 294520.5 587490.6 294520.2 587607.9 294520.2 587676.3 294583.8 587736.3</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-133">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>294663.6 584470.8 294698.4 584246.4 294698.4 584243.4 294683.1 584183.4 294663.6 584470.8</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-134">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>294380.4 589569.9 294568.5 589562.4 294631.8 589514.1 294588.9 589321.8 294474.6 589242.3 294343.8 589263.6 294327.0 589515.9 294380.4 589569.9</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+        <hma:MaskFeature gml:id="cloud_cotation-202111151358299_PWOI_000071864_1_1_F_1_PNEO4_ORT_P-135">
+            <hma:maskType codeSpace="urn:phr:ipu:maskType">CLOUD_COTATION</hma:maskType>
+            <gml:extentOf>
+                <gml:Polygon srsName="urn:ogc:def:crs:epsg::32622"><gml:exterior><gml:LinearRing><gml:posList>294566.1 585930.6 294606.0 585858.9 294605.7 585695.4 294584.1 585665.1 294566.1 585930.6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
+            </gml:extentOf>
+        </hma:MaskFeature>
+    </hma:maskMembers>
+</hma:Mask>

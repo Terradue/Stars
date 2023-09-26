@@ -16,7 +16,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Processing
 {
-    internal class ZipArchiveAsset : Archive
+    public class ZipArchiveAsset : Archive
     {
         private ZipFile zipFile;
         private readonly IAsset asset;
@@ -59,14 +59,48 @@ namespace Terradue.Stars.Services.Processing
                 foreach (ZipEntry entry in zipFile)
                 {
                     if (entry.IsDirectory) continue;
-
-                    assets.Add(entry.FileName, new ZipEntryAsset(entry, zipFile, asset));
+                    assets.Add(entry.FileName, new ZipEntryAsset(entry, zipFile, asset, ParentAssetBaseDir));
                 }
                 return assets;
             }
         }
 
         public override System.Uri Uri => asset.Uri;
+
+        // If set to true, detects relative location of parent/generic asset
+        // and adjusts included assets' filenames with that directory
+        public bool UseParentAssetBaseDir
+        {
+            get
+            {
+                return (ParentAssetBaseDir != null);
+            }
+
+            set
+            {
+                if (value)
+                {
+                    string parentAssetFileName = asset?.ContentDisposition?.FileName;
+                    if (parentAssetFileName == null)
+                    {
+                        ParentAssetBaseDir = null;
+                    }
+                    else
+                    {
+                        string dirName = Path.GetDirectoryName(parentAssetFileName);
+                        ParentAssetBaseDir = String.IsNullOrEmpty(dirName) ? null : dirName;
+                    }
+                }
+                else
+                {
+                    ParentAssetBaseDir = null;
+                }
+            }
+        }
+
+        // Directory where ZIP file is located
+        // (value is set automatically if UseParentAssetBaseDir is set to true)
+        public string ParentAssetBaseDir { get; set; }
 
         public string AutodetectSubfolder()
         {
@@ -81,7 +115,7 @@ namespace Terradue.Stars.Services.Processing
             return Path.GetFileNameWithoutExtension(asset.Uri.ToString());
         }
 
-        internal async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
+        public async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
             zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));

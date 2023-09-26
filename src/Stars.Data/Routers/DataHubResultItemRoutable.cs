@@ -20,13 +20,17 @@ namespace Terradue.Stars.Data.Routers
             this.supplier = supplier;
         }
 
+        Dictionary<string, IAsset> assets = null;
 
         public override IReadOnlyDictionary<string, IAsset> Assets
         {
             get
             {
+                if (assets != null && assets.Count > 0)
+                    return assets;
+                assets = new Dictionary<string, IAsset>();
+                
                 var enclosureAccess = supplier.Wrapper.GetEnclosureAccess(osItem);
-                Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
                 try
                 {
                     foreach (var dr in enclosureAccess.GetDownloadRequests())

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Humanizer;
 using Stac;
 using Stac.Extensions.Eo;
@@ -21,6 +22,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             Dimap = dimap;
         }
 
+        internal virtual string GetId() {
+            return Dimap.Dataset_Identification.DATASET_NAME.Text;
+        }
+        
         internal Schemas.Source_Identification GetSourceIdentification()
         {
             return Dimap.Dataset_Sources.Source_Identification
@@ -113,12 +118,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         internal int GetEpsgProjectionCode()
         {
-            try
-            {
-                if (Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_CODE.Contains("EPSG"))
-                    return int.Parse(Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_NAME.Split(' ').First());
+            try {
+                if (Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_CODE.Contains("EPSG")) {
+                    const string pattern = @"\d+$";
+                    var match = Regex.Match(Dimap.Coordinate_Reference_System.Projected_CRS.PROJECTED_CRS_CODE,
+                        pattern);
+                    if (match.Success) {
+                        var numberStr = match.Value;
+                        return int.Parse(numberStr);
+                    }
+                }
             }
             catch { }
+
             try
             {
                 if (Dimap.Coordinate_Reference_System.Geodetic_CRS.CRS_TABLES.Contains("EPSG"))
@@ -158,7 +170,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
         }
 
-        internal double GetResolution()
+        public virtual double GetResolution()
         {
             try
             {
@@ -215,9 +227,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
         }
 
-        internal void CompleteAsset(StacAsset stacAsset, StacItem stacItem)
+        internal virtual void CompleteAsset(StacAsset stacAsset, StacItem stacItem)
         {
-            List<EoBandObject> eoBandObjects = GetEoBandObjects(Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
+            List<EoBandObject> eoBandObjects = GetEoBandObjects(stacAsset, Dimap.Radiometric_Data.Radiometric_Calibration.Instrument_Calibration.Band_Measurement_List,
                                                                 Dimap.Processing_Information.Product_Settings.Radiometric_Settings);
             if (eoBandObjects.Count > 0)
             {
@@ -255,7 +267,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public abstract string GetPlatformInternationalDesignator();
 
-        private List<EoBandObject> GetEoBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        protected virtual List<EoBandObject> GetEoBandObjects(StacAsset stacAsset,
+            Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings,
+            List<Raster_Index> filterBands = null)
         {
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
@@ -267,12 +281,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return eoBandObjects.OrderBy(eob => BandOrders[eob.CommonName]).ToList();
         }
 
-        private List<RasterBand> GetRasterBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings)
+        protected List<RasterBand> GetRasterBandObjects(Schemas.Band_Measurement_List spectralBandInfos, Radiometric_Settings radiometric_Settings,List<Raster_Index> filterBands = null)
         {
             List<RasterBand> rasterBandObjects = new List<RasterBand>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
             {
                 var bandInfo = spectralBandInfos.Band_Radiance[i];
+                
+                if(filterBands!= null && filterBands.Any() && !filterBands.Any(b => b.BAND_ID.Equals(bandInfo.BAND_ID)))
+                    continue;
+                
                 var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
                 rasterBandObjects.Add(GetRasterBandObject(bandInfo, bandSolarIrradiance, radiometric_Settings));
             }
@@ -293,7 +311,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             return eoBandObject;
         }
-
+        //TODO probably to override for PNEO
         protected virtual RasterBand GetRasterBandObject(Schemas.Band_Radiance bandInfo, Schemas.Band_Solar_Irradiance bandSolarIrradiance, Radiometric_Settings radiometric_Settings)
         {
             RasterBand rasterBand = new RasterBand();
@@ -324,11 +342,36 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             rasterBand.SetProperty("bcn", GetEoCommonName(bandInfo));
             return rasterBand;
         }
-
+        
         private EoBandCommonName GetEoCommonName(Band_Radiance bandInfo)
         {
-            if (bandInfo.BAND_ID == "P")
-                return EoBandCommonName.pan;
+            // check if bandinfo is null
+            if (bandInfo == null)
+                return default(EoBandCommonName);
+            
+            switch (bandInfo.BAND_ID) {
+                case "R":
+                    return EoBandCommonName.red;
+                case "G":
+                    return EoBandCommonName.green;
+                case "B":
+                    return EoBandCommonName.blue;
+                case "P":
+                    return EoBandCommonName.pan;
+                case "RE":
+                    return EoBandCommonName.rededge;
+                case "NIR":
+                    return EoBandCommonName.nir;
+                case "DB":
+                    return EoBandCommonName.coastal;
+                case "PAN":
+                    return EoBandCommonName.pan;
+            }
+
+
+            // check if imap.Raster_Data.Raster_Display is null
+            if (Dimap.Raster_Data.Raster_Display == null)
+                return default(EoBandCommonName);
             if (Dimap.Raster_Data.Raster_Display.Band_Display_Order.RED_CHANNEL == bandInfo.BAND_ID)
                 return EoBandCommonName.red;
             if (Dimap.Raster_Data.Raster_Display.Band_Display_Order.GREEN_CHANNEL == bandInfo.BAND_ID)
@@ -348,10 +391,22 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         internal virtual string GetAssetKey(IAsset bandAsset, Data_File dataFile)
         {
             string key = Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING;
-            key += "-R" + dataFile.Tile_R + "C" + dataFile.Tile_C;
+
+            string type = "";
+            if (key == "MS-FS" || key == "PMS-FS") {
+                if (bandAsset.Uri.ToString().Contains("NED")) {
+                    type = "-NED";
+                }
+                else if (bandAsset.Uri.ToString().Contains("RGB")) {
+                    type = "-RGB";
+                }
+            }
+            
+            key += type + "-R" + dataFile.Tile_R + "C" + dataFile.Tile_C;
             return key;
         }
 
+        //Probably to be override in PNEO Dimap 
         internal virtual string GetAssetTitle(IAsset bandAsset, Data_File dataFile)
         {
             string title = string.Format("{0} {1} {2} {3} R{4} C{5}",
@@ -363,7 +418,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return title;
         }
 
-        internal virtual StacProvider GetStacProvider()
+        internal virtual StacProvider[] GetStacProviders()
         {
             return null;
         }

@@ -17,6 +17,7 @@ using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Store;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace Terradue.Data.Tests.Harvesters
 {
@@ -66,12 +67,21 @@ namespace Terradue.Data.Tests.Harvesters
                 Assert.NotNull(stacItem.Providers);
                 stacItem.Properties.Remove("updated");
                 stacItemNode.MakeAssetUriRelative();
+                RemoveAssetUriTmp(stacItemNode);
                 CheckAssetLocalPath(stacItem, key);
                 var actualJson = StacConvert.Serialize(stacItem, new Newtonsoft.Json.JsonSerializerSettings()
                 {
                     Formatting = Formatting.Indented
                 });
-                stacValidator.ValidateJson(actualJson);
+                try
+                {
+                    stacValidator.ValidateJson(actualJson);
+                }
+                catch (System.Exception)
+                {
+                    System.Console.WriteLine(actualJson);
+                    throw;
+                }
                 // Dot NOT uncomment unless you are changing the expected JSON
                 // WriteJson(Path.Join(datadir, "../.."), actualJson, stacItem.Id);
                 string expectedJson = null;
@@ -83,9 +93,9 @@ namespace Terradue.Data.Tests.Harvesters
                 {
                     System.Console.WriteLine(actualJson);
                     throw;
-                } 
+                }
                 // stacValidator.ValidateJson(expectedJson);
-                
+
                 try
                 {
                     JsonAssert.AreEqual(expectedJson, actualJson);
@@ -94,7 +104,7 @@ namespace Terradue.Data.Tests.Harvesters
                 {
                     System.Console.WriteLine(actualJson);
                     throw;
-                } 
+                }
             }
         }
 
@@ -103,6 +113,15 @@ namespace Terradue.Data.Tests.Harvesters
             foreach (var asset in stacItem.Assets)
             {
                 Assert.True(asset.Value.Properties.ContainsKey("filename"), $"[{key}] Asset " + asset.Key + " does not contain filename property");
+            }
+        }
+
+        private static void RemoveAssetUriTmp(StacItemNode stacItemNode)
+        {
+            foreach (var asset in stacItemNode.StacItem.Assets)
+            {
+                var newurl = Regex.Replace(asset.Value.Uri.ToString(), ".*/tmp/[^/]*/(.*)", "$1");
+                asset.Value.Uri = new Uri(newurl, UriKind.Relative);
             }
         }
     }

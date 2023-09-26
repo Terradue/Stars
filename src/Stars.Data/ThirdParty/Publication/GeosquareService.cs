@@ -24,6 +24,7 @@ using System.Threading;
 using Terradue.Stars.Services.Model;
 using System.Collections.Specialized;
 using System.Web;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -207,6 +208,26 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 link.Uri = geosquareConfiguration.MapUri(link.Uri);
                 geosquarePublicationState.GeosquarePublicationModel.UpdateLink(link, atomItem, assetsContainer);
             }
+            foreach (var extension in atomItem.ElementExtensions.ToArray())
+            {
+                if (extension.OuterName == "offering" && extension.OuterNamespace == OwcNamespaces.Owc)
+                {
+                    var xml = extension.GetReader().ReadOuterXml();
+                    var offering = OwcContextHelper.OwcOfferingSerializer.Deserialize(new System.IO.StringReader(xml)) as OwcOffering;
+                    if (offering == null || offering.Contents == null) continue;
+                    atomItem.ElementExtensions.Remove(extension);
+                    foreach (var content in offering.Contents)
+                    {
+                        SyndicationLink link = new SyndicationLink(content.Url, "enclosure", "", content.Type, 0);
+                        geosquarePublicationState.GeosquarePublicationModel.UpdateLink(link, atomItem, assetsContainer);
+                        content.Url = geosquareConfiguration.MapUri(link.Uri);
+                    }
+                    atomItem.ElementExtensions.Add(offering.CreateReader());
+                }
+            }
+
+            atomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
+
 
             // create eventual opensearch link
             if (atomItem is StarsAtomItem)

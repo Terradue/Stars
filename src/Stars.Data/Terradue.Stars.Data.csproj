@@ -4,7 +4,7 @@
         <ProjectName>Terradue.Stars.Data</ProjectName>
         <Title>Terradue.Stars.Data</Title>
         <Description>Collection of data Plugins for Terradue.Stars</Description>
-        <Version>2.12.2</Version>
+        <Version>2.16.3</Version>
         <!-- <VersionSuffix>beta.8</VersionSuffix> -->
         <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
         <NoWarn>NU1603</NoWarn>
@@ -23,6 +23,7 @@
         <DebugType>embedded</DebugType>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="CsvHelper" Version="30.0.1" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.*" />
         <PackageReference Include="Html2Markdown" Version="3.3.1.407" />
         <PackageReference Include="Markdig" Version="0.22.0" />
@@ -30,7 +31,7 @@
         <PackageReference Include="Terradue.MetadataExtractor" Version="1.3.0" />
         <PackageReference Include="ProjNet" Version="2.0.0" />
         <PackageReference Include="MimeTypes" Version="2.0.2" />
-        <PackageReference Include="Terradue.OpenSearch.SciHub" Version="1.25.5" />
+        <PackageReference Include="Terradue.OpenSearch.SciHub" Version="1.25.6" />
         <PackageReference Include="Terradue.OpenSearch.Asf" Version="1.2.*" />
         <PackageReference Include="Terradue.OpenSearch.Usgs" Version="1.6.*" />
         <PackageReference Include="Terradue.OpenSearch.GeoJson" Version="1.4.5" />
@@ -50,9 +51,6 @@
             <PrivateAssets>all</PrivateAssets>
         </ProjectReference>
     </ItemGroup>
-    <!--<ItemGroup>
-        <Reference Include="tempbin\Terradue.OpenSearch.SciHub.dll" />
-    </ItemGroup>-->
     <!-- <ItemGroup>
     <ProjectReference Include="../../../../sugar/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub.csproj" />
   </ItemGroup> -->

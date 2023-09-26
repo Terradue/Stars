@@ -96,6 +96,8 @@ namespace Terradue.Stars.Services.Model.Stac
         public async Task<IResource> RouteAsync(IResource route, CancellationToken ct)
         {
             var routeFound = await AffineRouteAsync(route, ct);
+            if (routeFound is StacCollectionNode)
+                return routeFound as StacCollectionNode;
             if (routeFound is StacCatalogNode)
                 return routeFound as StacCatalogNode;
             if (routeFound is StacItemNode)
@@ -106,8 +108,11 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 var json = await (routeFound as IStreamResource).ReadAsStringAsync(ct);
                 IStacObject stacObject = StacConvert.Deserialize<IStacObject>(json);
-                if (stacObject is IStacCatalog)
+                if (stacObject is IStacCatalog){
+                    if (stacObject is StacCollection)
+                        return new StacCollectionNode(stacObject as StacCollection, routeFound.Uri);
                     return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri);
+                }
                 else
                     return new StacItemNode(stacObject as StacItem, routeFound.Uri);
             }

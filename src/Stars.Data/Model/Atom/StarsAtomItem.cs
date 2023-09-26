@@ -20,6 +20,7 @@ using Stac.Extensions.File;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.ThirdParty.Egms;
 using Terradue.Stars.Interface;
+using Stac.Extensions.Eo;
 
 namespace Terradue.Stars.Data.Model.Atom
 {
@@ -354,6 +355,35 @@ namespace Terradue.Stars.Data.Model.Atom
             return false;
         }
 
+        public bool AddImageOverlayOffering(StacCollectionNode stacCollectionNode)
+        {
+            var imageOverview = SelectOverlayOverviewAssets(stacCollectionNode.StacCollection).FirstOrDefault();
+            if (imageOverview.Key != null)
+            {
+                Uri assetUri = imageOverview.Value.Uri;
+                try
+                {
+                    // if relative
+                    if (!assetUri.IsAbsoluteUri)
+                        // then make absolute from item
+                        assetUri = new Uri(stacCollectionNode.Uri, assetUri);
+                }
+                catch { return false; }
+                ElementExtensions.Add(new OwcOffering()
+                {
+
+                    Contents = new OwcContent[]{new OwcContent()
+                        {
+                        Url = assetUri,
+                        Type = imageOverview.Value.MediaType.ToString()
+                        }},
+                    Code = "http://www.opengis.net/spec/owc-atom/1.0/req/img"
+                }.CreateReader());
+                return true;
+            }
+            return false;
+        }
+
         public bool TryAddEGMSOffering(StacCollectionNode stacCollectionNode, EgmsService egmsService)
         {
             var egmsServiceUri = stacCollectionNode.StacCollection.Links.FirstOrDefault(l => l.RelationshipType == "self").Uri;
@@ -507,6 +537,22 @@ namespace Terradue.Stars.Data.Model.Atom
             return new Dictionary<string, StacAsset>();
         }
 
+        private static Dictionary<string, StacAsset> SelectOverlayOverviewAssets(StacCollection stacCollection)
+        {
+
+            Dictionary<string, StacAsset> overviewAssets = stacCollection.Assets
+                                                            .Where(a => a.Value.Roles.Contains("overview") ||
+                                                                        a.Value.Roles.Contains("visual"))
+                                                            .OrderBy(a => a.Value.GetProperty<long>("size"))
+                                                            .Where(a => a.Value.MediaType.MediaType.StartsWith("image/") &&
+                                                                        a.Value.FileExtension().Size < 20971520)
+                                                            .Take(1)
+                                                            .ToDictionary(a => a.Key, a => a.Value);
+            if (overviewAssets.Count == 1) return overviewAssets;
+
+            return new Dictionary<string, StacAsset>();
+        }
+
         SyndicationElementExtension earthObservationExtension = null;
 
         public SyndicationElementExtension EarthObservationExtension
@@ -539,6 +585,7 @@ namespace Terradue.Stars.Data.Model.Atom
             {
                 eop.procedure = new ServiceModel.Ogc.Om20.OM_ProcessPropertyType();
                 eop.procedure.Eop21EarthObservationEquipment = new EarthObservationEquipmentType();
+                eop.EopMetaDataProperty.EarthObservationMetaData.parentIdentifier = stacItem.Mission;
                 if (!string.IsNullOrEmpty(platform))
                 {
                     eop.procedure.Eop21EarthObservationEquipment.platform = new PlatformPropertyType();
@@ -565,6 +612,16 @@ namespace Terradue.Stars.Data.Model.Atom
                         };
                     }
                     catch { }
+                }
+                // Cloud cover
+                if ( stacItem.EoExtension().CloudCover != null)
+                {
+                    eop.result = new ServiceModel.Ogc.Om20.OM_ResultPropertyType();
+                    eop.result.Opt21EarthObservationResult = new ServiceModel.Ogc.Opt21.OptEarthObservationResultType();
+                    eop.result.Opt21EarthObservationResult.cloudCoverPercentage = new ServiceModel.Ogc.Gml321.MeasureType()
+                    {
+                        Value = stacItem.EoExtension().CloudCover.Value
+                    };
                 }
             }
 

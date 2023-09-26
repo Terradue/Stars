@@ -20,6 +20,14 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Data.Model.Shared;
+using Terradue.Stars.Services.Processing;
+
+using Microsoft.Extensions.DependencyInjection;
+using System.IO.Abstractions;
+using Terradue.Stars.Services.Supplier.Destination;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {
@@ -27,11 +35,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
     {
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(SAOCOM_XMLProduct));
         public static XmlSerializer manifestSerializer = new XmlSerializer(typeof(XEMT));
+        private readonly IFileSystem _fileSystem;
+        private readonly CarrierManager _carrierManager;
 
         public override string Label => "SAR Observation & Communications Satellite (CONAE) constellation product metadata extractor";
 
-        public Saocom1MetadataExtractor(ILogger<Saocom1MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
+        public Saocom1MetadataExtractor(ILogger<Saocom1MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem, CarrierManager carrierManager) : base(logger, resourceServiceProvider)
         {
+            _fileSystem = fileSystem;
+            _carrierManager = carrierManager;
         }
 
 
@@ -42,7 +54,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                SAOCOM_XMLProduct metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
+                if (metadataAsset == null)
+                {
+                    IAsset zipAsset = GetZipAsset(item);
+                    return (zipAsset != null);
+                }
+                else 
+                {
+                    SAOCOM_XMLProduct metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
+                }
                 return true;
             }
             catch (Exception e)
@@ -54,12 +74,35 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
-            IAsset metadataAsset = GetMetadataAsset(item);
             IAsset manifestAsset = GetManifestAsset(item);
-            SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
+            IAsset zipAsset = GetZipAsset(item);
             XEMT manifest = await ReadManifest(manifestAsset);
+            IAssetsContainer extractedAssets = null;
 
-            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.kml");
+            IItem innerStacItem = item;
+
+            if (zipAsset != null)
+            {
+                ZipArchiveAsset zipArchiveAsset = new ZipArchiveAsset(zipAsset, logger, resourceServiceProvider, _fileSystem);
+                zipArchiveAsset.UseParentAssetBaseDir = true;
+                var tmpDestination = LocalFileDestination.Create(_fileSystem.DirectoryInfo.FromDirectoryName(Path.GetTempPath()), item);
+
+                extractedAssets = await zipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
+            }
+
+            if (extractedAssets != null && item is IAssetsContainer)
+            {
+                var mergedAssets = new Dictionary<string, IAsset>(item.Assets.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+                mergedAssets.MergeAssets(extractedAssets.Assets, false);
+                innerStacItem = new ContainerNode(item, mergedAssets, "merged");
+            }
+
+            IAsset metadataAsset = GetMetadataAsset(innerStacItem);
+            if (metadataAsset == null) throw new Exception("No metadata asset found");
+
+            SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
+
+            IAsset kmlAsset = FindFirstAssetFromFileNameRegex(innerStacItem, @"(slc|di|gec|gtc)-.*\.kml");
             if (kmlAsset == null) return null;
 
             Kml kml = null;
@@ -73,10 +116,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 logger.LogError("KML file asset is not streamable, skipping geometry extraction");
             }
 
-            StacItem stacItem = CreateStacItem(metadata, manifest, item, kml);
-            await AddAssets(stacItem, item, manifestAsset);
+            StacItem stacItem = CreateStacItem(metadata, manifest, innerStacItem, kml);
+            await AddAssets(stacItem, innerStacItem, manifestAsset);
 
-            var stacNode = StacItemNode.Create(stacItem, item.Uri);
+            var stacNode = StacItemNode.Create(stacItem, innerStacItem.Uri);
 
             return stacNode;
         }
@@ -593,8 +636,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         {
             IAsset metadataAsset = null;
             metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.xml");
-            if (metadataAsset == null)
-                throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
 
             return metadataAsset;
         }
@@ -605,6 +646,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             IAsset manifestAsset = null;
             manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*\.xemt");
             return manifestAsset;
+        }
+
+
+        protected virtual IAsset GetZipAsset(IItem item)
+        {
+            IAsset zipAsset = null;
+            zipAsset = FindFirstAssetFromFileNameRegex(item, @"S.*\.zip");
+            return zipAsset;
         }
 
 

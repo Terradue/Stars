@@ -222,7 +222,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             view.OffNadir = auxiliary.OffNadirAngle;
             view.IncidenceAngle = auxiliary.IncidenceAngle;
             // view.Azimuth = auxiliary.Azimuth;
-            view.SunAzimuth = auxiliary.SunAzimuth;
+            view.SunAzimuth = auxiliary.SunAzimuth < 0 ? auxiliary.SunAzimuth + 360 : auxiliary.SunAzimuth;
             view.SunElevation = auxiliary.SunElevation;
         }
 
@@ -244,13 +244,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             stacItem.SetProperty("landsat:collection_number", auxiliary.CollectionNumber);
             stacItem.SetProperty("landsat:collection_category", auxiliary.CollectionCategory);
             stacItem.SetProperty("landsat:cloud_cover_land", auxiliary.CloudCoverLand);
-
         }
 
         private void AddEoStacExtension(Auxiliary auxiliary, StacItem stacItem)
         {
-            EoStacExtension eo = stacItem.EoExtension();
-            eo.CloudCover = auxiliary.CloudCover;
+            if (auxiliary.CloudCover >= 0)
+            {
+                EoStacExtension eo = stacItem.EoExtension();
+                eo.CloudCover = auxiliary.CloudCover;
+            }
         }
 
         private void AddProjStacExtension(Auxiliary auxiliary, StacItem stacItem)

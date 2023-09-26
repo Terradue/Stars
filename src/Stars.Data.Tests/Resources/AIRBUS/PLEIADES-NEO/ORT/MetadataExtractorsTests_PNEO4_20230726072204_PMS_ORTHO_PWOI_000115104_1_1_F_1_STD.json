@@ -1,0 +1,215 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "PNEO4_20230726072204_PMS_ORTHO_PWOI_000115104_1_1_F_1_STD",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          43.79440204225826,
+          -21.33911642635975
+        ],
+        [
+          43.79419440201547,
+          -21.36450079707145
+        ],
+        [
+          43.8213051453787,
+          -21.36469333779417
+        ],
+        [
+          43.82150811980402,
+          -21.339308716464636
+        ],
+        [
+          43.79440204225826,
+          -21.33911642635975
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2023-07-26T07:22:04.4Z",
+    "created": "2023-07-27T15:59:22.659Z",
+    "platform": "pneo4",
+    "constellation": "pleiades-neo",
+    "mission": "pleiades-neo",
+    "instruments": [
+      "pneo-imager"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.37,
+    "title": "PNEO4 PMS ORTHO 2023-07-26 07:22:04",
+    "sat:platform_international_designator": "2021-073E",
+    "proj:epsg": 32738,
+    "proj:shape": [
+      9372,
+      9368
+    ],
+    "view:azimuth": 187.13080923982753,
+    "view:sun_azimuth": 34.85523524898767,
+    "view:sun_elevation": 40.9502503756138,
+    "view:incidence_angle": 29.07008737251518,
+    "processing:level": "ORTHO",
+    "processing:software": {
+      "SPICY;Format": "1.2.13;v75.0.3"
+    },
+    "providers": [
+      {
+        "name": "Airbus",
+        "description": "Pléiades Neo is the most advanced optical constellation of Airbus, with two identical 30 cm resolution satellites and optimum reactivity. Pleiades Neo allows users to unleash the potential of geospatial applications and analytics.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.intelligence-airbusds.com/imagery/constellation/pleiades-neo/"
+      },
+      {
+        "name": "CNES",
+        "roles": [
+          "licensor"
+        ]
+      }
+    ]
+  },
+  "bbox": [
+    43.79419440201547,
+    -21.36469333779417,
+    43.82150811980402,
+    -21.33911642635975
+  ],
+  "assets": {
+    "PMS-R1C1": {
+      "type": "image/jp2",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Band Composite Basic PMS Ortho R1 C1",
+      "href": "data/000115104_1_1_STD_A/IMG_01_PNEO4_PMS/IMG_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1_RGBN_R1C1.JP2",
+      "filename": "IMG_01_PNEO4_PMS/IMG_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1_RGBN_R1C1.JP2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "RGB Red",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "red",
+          "center_wavelength": 0.6545,
+          "solar_illumination": 1551.7,
+          "full_width_half_max": 0.071
+        },
+        {
+          "name": "RGB Green",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "green",
+          "center_wavelength": 0.562,
+          "solar_illumination": 1815.4,
+          "full_width_half_max": 0.058
+        },
+        {
+          "name": "RGB Blue",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "blue",
+          "center_wavelength": 0.483,
+          "solar_illumination": 1972.0,
+          "full_width_half_max": 0.074
+        },
+        {
+          "name": "RGB Nir",
+          "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "nir",
+          "center_wavelength": 0.828,
+          "solar_illumination": 1060.1,
+          "full_width_half_max": 0.12
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.12470382840753211,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.13875398917718884,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.15121729925903524,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.0844095551616443,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "PMS",
+      "proj:shape": [
+        9372,
+        9368
+      ]
+    },
+    "PMS-R1C1-wf": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/000115104_1_1_STD_A/IMG_01_PNEO4_PMS/IMG_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1_RGBN_R1C1.J2W",
+      "filename": "IMG_01_PNEO4_PMS/IMG_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1_RGBN_R1C1.J2W",
+      "file:size": 0
+    },
+    "metadata-PMS": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/000115104_1_1_STD_A/IMG_01_PNEO4_PMS/DIM_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1.XML",
+      "filename": "IMG_01_PNEO4_PMS/DIM_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1.XML",
+      "file:size": 36853
+    },
+    "overview-PMS": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/000115104_1_1_STD_A/IMG_01_PNEO4_PMS/PREVIEW_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1.JPG",
+      "filename": "IMG_01_PNEO4_PMS/PREVIEW_PNEO4_202307260722045_PMS_ORT_PWOI_000115104_1_1_F_1.JPG",
+      "file:size": 0
+    }
+  },
+  "links": []
+}
