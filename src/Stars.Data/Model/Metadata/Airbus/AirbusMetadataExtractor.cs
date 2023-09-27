@@ -74,11 +74,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         {
             var metadataAssets = GetMetadataAssets(item);
             List<StacItemNode> stacItemNodes = new List<StacItemNode>();
-
+            List<AirbusProfiler> dimapProfilers = new List<AirbusProfiler>();
+            
             foreach (var metadataAsset in metadataAssets)
             {
                 Dimap_Document metadata = await ReadMetadata(metadataAsset.Value);
                 AirbusProfiler dimapProfiler = GetProfiler(metadata);
+                dimapProfilers.Add(dimapProfiler);
 
                 if (dimapProfiler is VolumeDimapProfiler)
                 {
@@ -103,6 +105,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             foreach (StacItemNode n in stacItemNodes.FindAll(n => n != baseNode))
             {
                 baseNode.StacItem.Assets.AddRange(n.StacItem.Assets);
+            }
+            
+            // Custom title for PNEO with multiple spectral processings
+            // the second element of the title must contain all spectral processings
+            // eg. PNEO4 MS-FS PAN ORTHO 2021-11-15 13:58:30
+            if( dimapProfilers.Count > 1 && dimapProfilers[0].GetPlatform().Contains("PNEO")) {
+                string title = GetPNEOTitle(dimapProfilers, baseNode);
+                baseNode.StacItem.Title = title;
             }
 
             return baseNode;
@@ -136,6 +146,27 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return StacCatalogNode.Create(catalog, item.Uri);*/
         }
 
+        private string GetPNEOTitle(List<AirbusProfiler> profilers, StacItemNode baseNode)
+        {
+            // from each item, get the spectral processing and put it in a list
+             var spectralProcesses = profilers.Select(profiler => profiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING.ToUpper())
+                .ToList();
+             
+             // check if PAN is present and move it to the first position
+             spectralProcesses.Remove("PAN");
+             spectralProcesses.Insert(0, "PAN");
+
+             // join the list into a string
+             string spectralProcessesString = string.Join(" ", spectralProcesses);
+            
+            CultureInfo culture = new CultureInfo("fr-FR");
+            return string.Format("{0} {1} {2} {3}",
+                profilers[0].GetPlatform().ToUpper(),
+                spectralProcessesString,
+                profilers[0].GetProcessingLevel(),
+                baseNode.StacItem.Properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
+        }
+        
         internal StacItemNode ExtractMetadata(IItem item,
                                                       AirbusProfiler dimapProfiler,
                                                       IAsset metadataAsset,
