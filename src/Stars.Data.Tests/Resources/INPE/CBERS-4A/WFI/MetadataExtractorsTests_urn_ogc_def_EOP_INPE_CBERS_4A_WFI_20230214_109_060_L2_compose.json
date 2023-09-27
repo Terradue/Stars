@@ -41,15 +41,15 @@
     "start_datetime": "2023-02-14T08:31:25Z",
     "end_datetime": "2023-02-14T08:33:13Z",
     "datetime": "2023-02-14T08:32:19Z",
-    "constellation": "cbers-4",
-    "platform": "cbers-4",
-    "mission": "cbers-4",
+    "constellation": "cbers-4a",
+    "platform": "cbers-4a",
+    "mission": "cbers-4a",
     "instruments": [
       "wfi"
     ],
     "sensor_type": "optical",
     "gsd": 55.0,
-    "title": "CBERS-4 WFI L2 2023-02-14 08:32:19",
+    "title": "CBERS-4A WFI L2 2023-02-14 08:32:19",
     "eo:bands": [
       {
         "name": "band-13",
@@ -174,7 +174,7 @@
       "title": "Metadata file",
       "href": "data/CBERS-4A-urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose/urn_ogc_def_eop_inpe_cbers_4a_wfi_20230214_109_060_l2_compose-metadata.csv",
       "filename": "urn_ogc_def_eop_inpe_cbers_4a_wfi_20230214_109_060_l2_compose-metadata.csv",
-      "file:size": 551
+      "file:size": 552
     },
     "overview": {
       "type": "image/png",
