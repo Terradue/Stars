@@ -33,7 +33,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             metadata.satellite = new prdfSatellite();
             metadata.satellite.name = "CBERS";
 
-            string pattern = @"CBERS(\d+)";
+            string pattern = @"CBERS(.*)";
             Match match = Regex.Match(SATELLITE, pattern);
             if (match.Success) {
                 string numberString = match.Groups[1].Value;
