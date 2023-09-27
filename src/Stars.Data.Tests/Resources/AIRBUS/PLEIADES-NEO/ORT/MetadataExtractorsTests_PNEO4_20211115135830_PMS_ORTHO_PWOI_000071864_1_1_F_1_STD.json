@@ -605,12 +605,12 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "NED-B3 Coastal",
+          "name": "NED-B1 Nir",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "coastal",
-          "center_wavelength": 0.4365,
-          "solar_illumination": 1797.1,
-          "full_width_half_max": 0.041
+          "common_name": "nir",
+          "center_wavelength": 0.828,
+          "solar_illumination": 1060.1,
+          "full_width_half_max": 0.12
         },
         {
           "name": "NED-B2 Rededge",
@@ -621,12 +621,12 @@
           "full_width_half_max": 0.053
         },
         {
-          "name": "NED-B1 Nir",
+          "name": "NED-B3 Coastal",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "nir",
-          "center_wavelength": 0.828,
-          "solar_illumination": 1060.1,
-          "full_width_half_max": 0.12
+          "common_name": "coastal",
+          "center_wavelength": 0.4365,
+          "solar_illumination": 1797.1,
+          "full_width_half_max": 0.041
         }
       ],
       "raster:bands": [
@@ -637,7 +637,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.11668611435239207,
+          "scale": 0.08476012883539583,
           "offset": 0.0
         },
         {
@@ -657,7 +657,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.08476012883539583,
+          "scale": 0.11668611435239207,
           "offset": 0.0
         }
       ],
@@ -689,12 +689,12 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "NED-B3 Coastal",
+          "name": "NED-B1 Nir",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "coastal",
-          "center_wavelength": 0.4365,
-          "solar_illumination": 1797.1,
-          "full_width_half_max": 0.041
+          "common_name": "nir",
+          "center_wavelength": 0.828,
+          "solar_illumination": 1060.1,
+          "full_width_half_max": 0.12
         },
         {
           "name": "NED-B2 Rededge",
@@ -705,12 +705,12 @@
           "full_width_half_max": 0.053
         },
         {
-          "name": "NED-B1 Nir",
+          "name": "NED-B3 Coastal",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "nir",
-          "center_wavelength": 0.828,
-          "solar_illumination": 1060.1,
-          "full_width_half_max": 0.12
+          "common_name": "coastal",
+          "center_wavelength": 0.4365,
+          "solar_illumination": 1797.1,
+          "full_width_half_max": 0.041
         }
       ],
       "raster:bands": [
@@ -721,7 +721,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.11668611435239207,
+          "scale": 0.08476012883539583,
           "offset": 0.0
         },
         {
@@ -741,7 +741,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.08476012883539583,
+          "scale": 0.11668611435239207,
           "offset": 0.0
         }
       ],
@@ -773,12 +773,12 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "NED-B3 Coastal",
+          "name": "NED-B1 Nir",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "coastal",
-          "center_wavelength": 0.4365,
-          "solar_illumination": 1797.1,
-          "full_width_half_max": 0.041
+          "common_name": "nir",
+          "center_wavelength": 0.828,
+          "solar_illumination": 1060.1,
+          "full_width_half_max": 0.12
         },
         {
           "name": "NED-B2 Rededge",
@@ -789,12 +789,12 @@
           "full_width_half_max": 0.053
         },
         {
-          "name": "NED-B1 Nir",
+          "name": "NED-B3 Coastal",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "nir",
-          "center_wavelength": 0.828,
-          "solar_illumination": 1060.1,
-          "full_width_half_max": 0.12
+          "common_name": "coastal",
+          "center_wavelength": 0.4365,
+          "solar_illumination": 1797.1,
+          "full_width_half_max": 0.041
         }
       ],
       "raster:bands": [
@@ -805,7 +805,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.11668611435239207,
+          "scale": 0.08476012883539583,
           "offset": 0.0
         },
         {
@@ -825,7 +825,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.08476012883539583,
+          "scale": 0.11668611435239207,
           "offset": 0.0
         }
       ],
@@ -857,12 +857,12 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "NED-B3 Coastal",
+          "name": "NED-B1 Nir",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "coastal",
-          "center_wavelength": 0.4365,
-          "solar_illumination": 1797.1,
-          "full_width_half_max": 0.041
+          "common_name": "nir",
+          "center_wavelength": 0.828,
+          "solar_illumination": 1060.1,
+          "full_width_half_max": 0.12
         },
         {
           "name": "NED-B2 Rededge",
@@ -873,12 +873,12 @@
           "full_width_half_max": 0.053
         },
         {
-          "name": "NED-B1 Nir",
+          "name": "NED-B3 Coastal",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "nir",
-          "center_wavelength": 0.828,
-          "solar_illumination": 1060.1,
-          "full_width_half_max": 0.12
+          "common_name": "coastal",
+          "center_wavelength": 0.4365,
+          "solar_illumination": 1797.1,
+          "full_width_half_max": 0.041
         }
       ],
       "raster:bands": [
@@ -889,7 +889,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.11668611435239207,
+          "scale": 0.08476012883539583,
           "offset": 0.0
         },
         {
@@ -909,7 +909,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.08476012883539583,
+          "scale": 0.11668611435239207,
           "offset": 0.0
         }
       ],
@@ -941,12 +941,12 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "NED-B3 Coastal",
+          "name": "NED-B1 Nir",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "coastal",
-          "center_wavelength": 0.4365,
-          "solar_illumination": 1797.1,
-          "full_width_half_max": 0.041
+          "common_name": "nir",
+          "center_wavelength": 0.828,
+          "solar_illumination": 1060.1,
+          "full_width_half_max": 0.12
         },
         {
           "name": "NED-B2 Rededge",
@@ -957,12 +957,12 @@
           "full_width_half_max": 0.053
         },
         {
-          "name": "NED-B1 Nir",
+          "name": "NED-B3 Coastal",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "nir",
-          "center_wavelength": 0.828,
-          "solar_illumination": 1060.1,
-          "full_width_half_max": 0.12
+          "common_name": "coastal",
+          "center_wavelength": 0.4365,
+          "solar_illumination": 1797.1,
+          "full_width_half_max": 0.041
         }
       ],
       "raster:bands": [
@@ -973,7 +973,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.11668611435239207,
+          "scale": 0.08476012883539583,
           "offset": 0.0
         },
         {
@@ -993,7 +993,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.08476012883539583,
+          "scale": 0.11668611435239207,
           "offset": 0.0
         }
       ],
@@ -1025,12 +1025,12 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "NED-B3 Coastal",
+          "name": "NED-B1 Nir",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "coastal",
-          "center_wavelength": 0.4365,
-          "solar_illumination": 1797.1,
-          "full_width_half_max": 0.041
+          "common_name": "nir",
+          "center_wavelength": 0.828,
+          "solar_illumination": 1060.1,
+          "full_width_half_max": 0.12
         },
         {
           "name": "NED-B2 Rededge",
@@ -1041,12 +1041,12 @@
           "full_width_half_max": 0.053
         },
         {
-          "name": "NED-B1 Nir",
+          "name": "NED-B3 Coastal",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "nir",
-          "center_wavelength": 0.828,
-          "solar_illumination": 1060.1,
-          "full_width_half_max": 0.12
+          "common_name": "coastal",
+          "center_wavelength": 0.4365,
+          "solar_illumination": 1797.1,
+          "full_width_half_max": 0.041
         }
       ],
       "raster:bands": [
@@ -1057,7 +1057,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.11668611435239207,
+          "scale": 0.08476012883539583,
           "offset": 0.0
         },
         {
@@ -1077,7 +1077,7 @@
             "minimum": 0.0,
             "maximum": 4096.0
           },
-          "scale": 0.08476012883539583,
+          "scale": 0.11668611435239207,
           "offset": 0.0
         }
       ],

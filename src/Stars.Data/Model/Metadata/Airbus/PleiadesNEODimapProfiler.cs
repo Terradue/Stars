@@ -41,9 +41,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                     bandOrders.Add(EoBandCommonName.red, 0);
                     bandOrders.Add(EoBandCommonName.green, 1);
                     bandOrders.Add(EoBandCommonName.blue, 2);
-                    bandOrders.Add(EoBandCommonName.coastal, 3);
+                    bandOrders.Add(EoBandCommonName.nir, 3);
                     bandOrders.Add(EoBandCommonName.rededge, 4);
-                    bandOrders.Add(EoBandCommonName.nir, 5);
+                    bandOrders.Add(EoBandCommonName.coastal, 5);
                     bandOrders.Add(EoBandCommonName.pan, 6);
                 }
 
