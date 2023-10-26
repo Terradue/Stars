@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
+namespace Terradue.Stars.Data.Model.Metadata.Inpe.Schemas {
     public class MetadataCsv {
         public string AGENCY { get; set; }
         public string SATELLITE { get; set; }
@@ -31,13 +31,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Cbers.Schemas {
             Metadata metadata = new Metadata();
             // SATELLITE
             metadata.satellite = new prdfSatellite();
-            metadata.satellite.name = "CBERS";
 
-            string pattern = @"CBERS(.*)";
+            string pattern = @"(CBERS|AMAZONIA)(.*)";
             Match match = Regex.Match(SATELLITE, pattern);
             if (match.Success) {
-                string numberString = match.Groups[1].Value;
-                metadata.satellite.number = numberString;
+                metadata.satellite.name = match.Groups[1].Value;
+                metadata.satellite.number = match.Groups[2].Value;
             }
             else {
                 throw new Exception("No match found");

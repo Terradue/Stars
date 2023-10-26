@@ -52,6 +52,13 @@
     "title": "CBERS-4A WFI L4 2020-08-01 14:32:46",
     "eo:bands": [
       {
+        "name": "band-14",
+        "common_name": "green",
+        "center_wavelength": 0.555,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1823.4
+      },
+      {
         "name": "band-14-left",
         "common_name": "green",
         "center_wavelength": 0.555,
@@ -69,7 +76,7 @@
     "sat:orbit_state": "descending",
     "cbers:path": 221,
     "cbers:row": 156,
-    "sat:absolute_orbit": 221156,
+    "sat:platform_international_designator": "2019-093E",
     "view:sun_azimuth": 31.4573,
     "view:sun_elevation": 32.4705,
     "processing:level": "L4",
@@ -82,9 +89,10 @@
           "processor",
           "licensor"
         ],
-        "url": "http://www.dgi.inpe.br/en"
+        "url": "http://www.cbers.inpe.br/sobre/cbers3-4.php"
       }
-    ]
+    ],
+    "licence": "proprietary"
   },
   "bbox": [
     -68.909668,
@@ -93,6 +101,31 @@
     -29.808218
   ],
   "assets": {
+    "band-14": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND14/CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND14.tif",
+      "filename": "CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND14.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "band-14",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1823.4
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.287,
+          "offset": 0.0
+        }
+      ]
+    },
     "band-14-left": {
       "type": "image/tiff",
       "roles": [

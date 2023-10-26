@@ -62,7 +62,7 @@
     "sat:orbit_state": "descending",
     "cbers:path": 3,
     "cbers:row": 75,
-    "sat:absolute_orbit": 3075,
+    "sat:platform_international_designator": "2014-079A",
     "view:sun_azimuth": 156.091,
     "view:sun_elevation": 49.7066,
     "processing:level": "L2",
@@ -75,9 +75,10 @@
           "processor",
           "licensor"
         ],
-        "url": "http://www.dgi.inpe.br/en"
+        "url": "http://www.cbers.inpe.br/sobre/cbers3-4.php"
       }
-    ]
+    ],
+    "licence": "proprietary"
   },
   "bbox": [
     104.793931,
