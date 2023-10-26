@@ -106,8 +106,8 @@
                 "GEOEYE": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Geoeye.GeoeyeMetadataExtractor"
                 },
-                "CBERS": {
-                    "Type": "Terradue.Stars.Data.Model.Metadata.Cbers.CbersMetadataExtractor"
+                "INPE": {
+                    "Type": "Terradue.Stars.Data.Model.Metadata.Inpe.InpeMetadataExtractor"
                 },
                 "KANOPUS-V": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Kanopus.KanopusVMetadataExtractor"

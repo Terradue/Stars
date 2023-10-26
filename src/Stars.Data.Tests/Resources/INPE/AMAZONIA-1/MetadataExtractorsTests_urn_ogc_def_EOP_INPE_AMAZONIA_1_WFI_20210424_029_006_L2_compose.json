@@ -9,104 +9,104 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose",
+  "id": "urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210424_029_006_L2_compose",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          43.174,
-          42.576
+          -4.661,
+          55.783
         ],
         [
-          43.83,
-          42.584
+          -2.673,
+          55.892
         ],
         [
-          43.824,
-          42.944
+          -2.957,
+          57.722
         ],
         [
-          43.164,
-          42.936
+          -5.043,
+          57.606
         ],
         [
-          43.174,
-          42.576
+          -4.661,
+          55.783
         ]
       ]
     ]
   },
   "properties": {
-    "start_datetime": "2023-02-14T08:31:25Z",
-    "end_datetime": "2023-02-14T08:33:13Z",
-    "datetime": "2023-02-14T08:32:19Z",
-    "constellation": "cbers-4a",
-    "platform": "cbers-4a",
-    "mission": "cbers-4a",
+    "start_datetime": "2021-05-29T11:10:13Z",
+    "end_datetime": "2021-05-29T11:12:07Z",
+    "datetime": "2021-05-29T11:11:10Z",
+    "constellation": "amazonia-1",
+    "platform": "amazonia-1",
+    "mission": "amazonia-1",
     "instruments": [
       "wfi"
     ],
     "sensor_type": "optical",
-    "gsd": 55.0,
-    "title": "CBERS-4A WFI L2 2023-02-14 08:32:19",
+    "gsd": 64.0,
+    "title": "AMAZONIA-1 WFI L2 2021-05-29 11:11:10",
     "eo:bands": [
       {
-        "name": "band-13",
+        "name": "band-1",
         "common_name": "blue",
         "center_wavelength": 0.485,
         "full_width_half_max": 0.07,
         "solar_illumination": 1984.65
       },
       {
-        "name": "band-14",
+        "name": "band-2",
         "common_name": "green",
         "center_wavelength": 0.555,
         "full_width_half_max": 0.07,
         "solar_illumination": 1823.4
       },
       {
-        "name": "band-15",
+        "name": "band-3",
         "common_name": "red",
         "center_wavelength": 0.66,
         "full_width_half_max": 0.06,
         "solar_illumination": 1536.38
       },
       {
-        "name": "band-16",
+        "name": "band-4",
         "common_name": "nir",
         "center_wavelength": 0.83,
         "full_width_half_max": 0.12,
         "solar_illumination": 981.91
       }
     ],
-    "cbers:path": 109,
-    "cbers:row": 60,
-    "sat:platform_international_designator": "2019-093E",
-    "proj:epsg": 32638,
+    "cbers:path": 29,
+    "cbers:row": 6,
+    "sat:platform_international_designator": "2021-015A",
+    "proj:epsg": 32631,
     "view:off_nadir": 0.0,
-    "view:sun_azimuth": 165.439,
-    "view:sun_elevation": 32.9467,
+    "view:sun_azimuth": 159.983,
+    "view:sun_elevation": 56.0884,
     "processing:level": "L2",
     "providers": [
       {
-        "name": "INPE/CAST",
-        "description": "The China-Brazil Earth Resources Satellite mission is to provide remote sensing images to observe and monitor vegetation - especially deforestation in the Amazon region - the monitoring of water resources, agriculture, urban growth, land use and education.",
+        "name": "INPE",
+        "description": "Amazonia-1 is an Earth observation minisatellite mission of the Brazilian Space Agency (AEB), developed at the National Institute for Space Research (INPE) in Brazil. Its main goal is to monitor global deforestation, with a focus on the Brazilian Amazon rainforest.",
         "roles": [
           "producer",
           "processor",
           "licensor"
         ],
-        "url": "http://www.cbers.inpe.br/sobre/cbers3-4.php"
+        "url": "http://www.inpe.br/amazonia1/"
       }
     ],
     "licence": "proprietary"
   },
   "bbox": [
-    43.164,
-    42.576,
-    43.83,
-    42.944
+    -5.043,
+    55.783,
+    -2.673,
+    57.722
   ],
   "assets": {
     "compose": {
@@ -116,33 +116,33 @@
         "dn"
       ],
       "title": "WFI L2 COMPOSE",
-      "href": "data/CBERS-4A-urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose/CBERS_4A_WFI_20230214_109_060_L2_compose.tif",
-      "filename": "CBERS_4A_WFI_20230214_109_060_L2_compose.tif",
+      "href": "data/968-INPE-AMAZONIA-1-urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210424_029_006_L2_compose/AMAZONIA_1_WFI_20210424_029_006_L2_compose.tif",
+      "filename": "AMAZONIA_1_WFI_20210424_029_006_L2_compose.tif",
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "band-13",
+          "name": "band-1",
           "common_name": "blue",
           "center_wavelength": 0.485,
           "full_width_half_max": 0.07,
           "solar_illumination": 1984.65
         },
         {
-          "name": "band-14",
+          "name": "band-2",
           "common_name": "green",
           "center_wavelength": 0.555,
           "full_width_half_max": 0.07,
           "solar_illumination": 1823.4
         },
         {
-          "name": "band-15",
+          "name": "band-3",
           "common_name": "red",
           "center_wavelength": 0.66,
           "full_width_half_max": 0.06,
           "solar_illumination": 1536.38
         },
         {
-          "name": "band-16",
+          "name": "band-4",
           "common_name": "nir",
           "center_wavelength": 0.83,
           "full_width_half_max": 0.12,
@@ -151,19 +151,19 @@
       ],
       "raster:bands": [
         {
-          "scale": 1.4351,
+          "scale": 0.384,
           "offset": 0.0
         },
         {
-          "scale": 1.4351,
+          "scale": 0.41,
           "offset": 0.0
         },
         {
-          "scale": 1.6559,
+          "scale": 0.343,
           "offset": 0.0
         },
         {
-          "scale": 1.6559,
+          "scale": 0.291,
           "offset": 0.0
         }
       ]
@@ -174,26 +174,17 @@
         "metadata"
       ],
       "title": "Metadata file",
-      "href": "data/CBERS-4A-urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose/urn_ogc_def_eop_inpe_cbers_4a_wfi_20230214_109_060_l2_compose-metadata.csv",
-      "filename": "urn_ogc_def_eop_inpe_cbers_4a_wfi_20230214_109_060_l2_compose-metadata.csv",
-      "file:size": 552
-    },
-    "overview": {
-      "type": "image/png",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/CBERS-4A-urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose/urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose-preview.png",
-      "filename": "urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose-preview.png",
-      "file:size": 0
+      "href": "data/968-INPE-AMAZONIA-1-urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210424_029_006_L2_compose/urn_ogc_def_eop_inpe_amazonia_1_wfi_20210424_029_006_l2_compose-metadata.csv",
+      "filename": "urn_ogc_def_eop_inpe_amazonia_1_wfi_20210424_029_006_l2_compose-metadata.csv",
+      "file:size": 553
     },
     "thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
       ],
-      "href": "data/CBERS-4A-urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose/urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose-icon.jpg",
-      "filename": "urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose-icon.jpg",
+      "href": "data/968-INPE-AMAZONIA-1-urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210424_029_006_L2_compose/urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210424_029_006_L2_compose-icon.jpg",
+      "filename": "urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210424_029_006_L2_compose-icon.jpg",
       "file:size": 0
     }
   },
