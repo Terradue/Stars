@@ -90,9 +90,10 @@
     "band-0": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "WPM L4 BAND-0",
       "href": "data/CBERS_4A_WPM_20200730_209_139_L4_BAND0/CBERS_4A_WPM_20200730_209_139_L4_BAND0.tif",
       "filename": "CBERS_4A_WPM_20200730_209_139_L4_BAND0.tif",
       "file:size": 0,

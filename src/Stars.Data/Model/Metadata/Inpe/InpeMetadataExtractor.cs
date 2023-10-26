@@ -636,6 +636,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
                 StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, compositeAsset.Uri,
                     new ContentType(MimeTypes.GetMimeType(compositeAsset.Uri.OriginalString)), String.Format("{0} {1} COMPOSE", metadata.spectralMode, GetProcessingLevel(metadata))
                 );
+                stacAsset.Roles.Add("dn");
                 stacAsset.Properties.AddRange(compositeAsset.Properties);
                 stacItem.Assets.Add("compose", stacAsset);
                 foreach (int band in compositeBands)
@@ -902,7 +903,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
             if (stacAsset == null)
             {
                 stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri,
-                    new ContentType(MimeTypes.GetMimeType(imageAsset.Uri.OriginalString)), "Image file");
+                    new ContentType(MimeTypes.GetMimeType(imageAsset.Uri.OriginalString)), String.Format("{0} {1} {2}", metadata.spectralMode, GetProcessingLevel(metadata), bandId.ToUpper()));
+                stacAsset.Roles.Add("dn");
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.EoExtension().Bands = new EoBandObject[] { eoBandObject };
                 

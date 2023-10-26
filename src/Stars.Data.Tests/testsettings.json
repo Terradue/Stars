@@ -1,8 +1,90 @@
 {
   "Tests": {
     "Harvesters": {
+      "KOMPSAT-3": [
+        "KARI/KOMPSAT-3"
+      ],
+      "KOMPSAT-5": [
+        "KARI/KOMPSAT-5"
+      ],
+      "SENTINEL-1": [
+        "ESA/SENTINEL-1"
+      ],
+      "SENTINEL-2": [
+        "ESA/SENTINEL-2"
+      ],
+      "ICEYE": [
+        "ICEYE"
+      ],
+      "TERRASAR-X": [
+        "DLR/TERRASAR-X"
+      ],
+      "GAOFEN": [
+        "CNSA/GAOFEN-1",
+        "CNSA/GAOFEN-2",
+        "CNSA/GAOFEN-4"
+      ],
+      "GAOFEN-3": [
+        "CNSA/GAOFEN-3"
+      ],
+      "LANDSAT8": [
+        "NASA/LANDSAT8"
+      ],
+      "LANDSAT9": [
+        "NASA/LANDSAT9"
+      ],
+      "DIMAP": [
+        "DMC"
+      ],
+      "ALOS2": [
+        "JAXA/ALOS2"
+      ],
+      "CONAE": [
+        "CONAE/SAOCOM-1"
+      ],
+      "RCM": [
+        "CSA/RCM-1",
+        "CSA/RCM-2",
+        "CSA/RCM-3"
+      ],
+      "AIRBUS": [
+        "AIRBUS"
+      ],
+      "ABAE": [
+        "ABAE"
+      ],
+      "WORLDVIEW": [
+        "DIGITALGLOBE/WORLDVIEW"
+      ],
+      "GEOEYE": [
+        "DIGITALGLOBE/GEOEYE"
+      ],
       "INPE": [
         "INPE"
+      ],
+      "KANOPUS-V": [
+        "ROSCOSMOS/KANOPUS-V"
+      ],
+      "ISRO": [
+        "ISRO"
+      ],
+      "PLANET": [
+        "PLANETSCOPE"
+      ],
+     "CSK": [
+       "ASI/COSMO-SKYMED"
+     ],
+     "GDAL": [
+       "GDAL"
+     ],
+      "RESURSP": [
+        "ROSCOSMOS/RESURS-P"
+      ],
+      "BLACKSKY": [
+        "BLACKSKY/Global"
+      ],
+      "NEWSAT": [
+        "SATELLOGIC/NEWSAT"
       ]
     }
   }

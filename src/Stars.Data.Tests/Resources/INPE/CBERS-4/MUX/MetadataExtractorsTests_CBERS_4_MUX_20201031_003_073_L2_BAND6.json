@@ -90,9 +90,10 @@
     "band-6": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "MUX L2 BAND-6",
       "href": "data/CBERS_4_MUX_20201031_003_073_L2_BAND6/CBERS_4_MUX_20201031_003_073_L2_BAND6.tif",
       "filename": "CBERS_4_MUX_20201031_003_073_L2_BAND6.tif",
       "file:size": 0,

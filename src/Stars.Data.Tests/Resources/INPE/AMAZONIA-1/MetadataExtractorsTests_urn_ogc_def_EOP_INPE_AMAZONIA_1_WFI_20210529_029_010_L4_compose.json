@@ -112,7 +112,8 @@
     "compose": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
       "title": "WFI L4 COMPOSE",
       "href": "data/965-INPE-AMAZONIA-1-urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210529_029_010_L4_compose/AMAZONIA_1_WFI_20210529_029_010_L4_compose.tif",

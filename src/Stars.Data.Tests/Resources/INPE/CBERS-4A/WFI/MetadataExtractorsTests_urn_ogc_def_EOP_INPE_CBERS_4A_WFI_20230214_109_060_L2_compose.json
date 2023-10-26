@@ -112,7 +112,8 @@
     "compose": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
       "title": "WFI L2 COMPOSE",
       "href": "data/CBERS-4A-urn_ogc_def_EOP_INPE_CBERS_4A_WFI_20230214_109_060_L2_compose/CBERS_4A_WFI_20230214_109_060_L2_compose.tif",

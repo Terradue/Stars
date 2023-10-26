@@ -90,9 +90,10 @@
     "band-16": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "AWFI L2 BAND-16",
       "href": "data/CBERS_4_AWFI_20201031_003_075_L2_BAND16/CBERS_4_AWFI_20201031_003_075_L2_BAND16.tif",
       "filename": "CBERS_4_AWFI_20201031_003_075_L2_BAND16.tif",
       "file:size": 0,

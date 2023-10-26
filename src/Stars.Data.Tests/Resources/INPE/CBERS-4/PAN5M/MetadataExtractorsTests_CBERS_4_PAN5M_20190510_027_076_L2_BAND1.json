@@ -91,9 +91,10 @@
     "band-1": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "PAN5M L2 BAND-1",
       "href": "data/CBERS_4_PAN5M_20190510_027_076_L2_BAND1/CBERS_4_PAN5M_20190510_027_076_L2_BAND1.tif",
       "filename": "CBERS_4_PAN5M_20190510_027_076_L2_BAND1.tif",
       "file:size": 0,

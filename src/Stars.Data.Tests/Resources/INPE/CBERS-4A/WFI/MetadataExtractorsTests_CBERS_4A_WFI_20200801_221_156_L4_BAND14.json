@@ -104,9 +104,10 @@
     "band-14": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "WFI L4 BAND-14",
       "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND14/CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND14.tif",
       "filename": "CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND14.tif",
       "file:size": 0,
@@ -129,9 +130,10 @@
     "band-14-left": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "WFI L4 BAND-14-LEFT",
       "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND14/CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND14.tif",
       "filename": "CBERS_4A_WFI_20200801_221_156_L4_LEFT_BAND14.tif",
       "file:size": 0,
@@ -153,9 +155,10 @@
     "band-14-right": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "WFI L4 BAND-14-RIGHT",
       "href": "data/CBERS_4A_WFI_20200801_221_156_L4_BAND14/CBERS_4A_WFI_20200801_221_156_L4_RIGHT_BAND14.tif",
       "filename": "CBERS_4A_WFI_20200801_221_156_L4_RIGHT_BAND14.tif",
       "file:size": 0,

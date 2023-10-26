@@ -112,7 +112,8 @@
     "compose": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
       "title": "AWFI L4 COMPOSE",
       "href": "data/956-INPE-CBERS-4-urn_ogc_def_EOP_INPE_CBERS_4_AWFI_20220731_111_063_L4_B_compose/CBERS_4_AWFI_20220731_111_063_L4_B_compose.tiff",
