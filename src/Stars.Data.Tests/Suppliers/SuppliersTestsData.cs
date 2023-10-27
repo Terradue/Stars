@@ -9,6 +9,9 @@ using Xunit.Abstractions;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Data.Suppliers;
+using Microsoft.Extensions.Logging;
+using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Data.Tests.Suppliers
 {
@@ -16,6 +19,13 @@ namespace Terradue.Data.Tests.Suppliers
     {
         public SuppliersTestsData() : base()
         {
+            Collection.AddSingleton<ISupplier>(sp =>
+            {
+                var supplier = new OpenSearchableSupplier(sp.GetRequiredService<ILogger<OpenSearchableSupplier>>(),
+                                                          sp.GetRequiredService<TranslatorManager>());
+                supplier.Key = "OpenSearchable";
+                return supplier;
+            });
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -34,7 +44,7 @@ namespace Terradue.Data.Tests.Suppliers
                     continue;
                 foreach (var path in paths[supplier.Key])
                 {
-                    foreach (var file in Directory.GetFiles(GetResourceFilePath(path), "*.json", new EnumerationOptions() { RecurseSubdirectories = true }))
+                    foreach (var file in Directory.GetFiles(GetResourceFilePath("Suppliers/" + path), "*.json", new EnumerationOptions() { RecurseSubdirectories = true }))
                     {
                         yield return new object[] { supplier.Key, supplier, file };
                     }

@@ -24,6 +24,7 @@ using Terradue.Stars.Data.Suppliers;
 using Microsoft.Extensions.DependencyInjection;
 using Terradue.Stars.Services.Translator;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Terradue.Data.Tests.Suppliers
 {
@@ -35,14 +36,8 @@ namespace Terradue.Data.Tests.Suppliers
         {
             _settings = new JsonSerializerSettings();
             _settings.Converters.Add(new BooleanExpressionConverter());
-            // Collection.AddSingleton<ISupplier, OpenSearchableSupplier>();
-            // Collection.AddTransient<OpenSearchableSupplier>(sp =>
-            // {
-            //     var supplier = new OpenSearchableSupplier(sp.GetRequiredService<ILogger<OpenSearchableSupplier>>(),
-            //                                               sp.GetRequiredService<TranslatorManager>());
-            //     supplier.Key = "OpenSearchable";
-            //     return supplier;
-            // });
+            
+            
         }
 
         public static IEnumerable<object[]> AllSuppliersTestsData
@@ -54,7 +49,7 @@ namespace Terradue.Data.Tests.Suppliers
         }
 
         [Theory, MemberData("AllSuppliersTestsData", DisableDiscoveryEnumeration = true)]
-        public async void AllSuppliersSearchExpression(string key, string file, ISupplier supplier)
+        public async Task AllSuppliersSearchExpression(string key, ISupplier supplier, string file)
         {
             string json = File.ReadAllText(file);
             JObject jObject = JObject.Parse(json);

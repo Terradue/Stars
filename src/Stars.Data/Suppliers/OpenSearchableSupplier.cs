@@ -173,15 +173,7 @@ namespace Terradue.Stars.Data.Suppliers
             int level = 0;
 
             // Let's iterate over the search expression
-            try
-            {
-                FillParametersFromBooleanExpression(cql2Expression.Expression, parameters, level);
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e, "Error while parsing the search expression");
-                return null;
-            }
+            FillParametersFromBooleanExpression(cql2Expression.Expression, parameters, level);
 
             return parameters;
 
@@ -505,6 +497,9 @@ namespace Terradue.Stars.Data.Suppliers
             // check the property name
             switch (propertyName)
             {
+                case "id":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", value);
+                    return;
                 case "collection":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", value);
                     return;
@@ -537,10 +532,13 @@ namespace Terradue.Stars.Data.Suppliers
                 }
             }
             if (propertyName == null || value == null)
-                throw new NotSupportedException("The OpenSearchableSupplier supplier cannot search for resource from a search expression with is like predicate with other than property and literal");
+                throw new NotSupportedException("The OpenSearchableSupplier supplier cannot search for resource from a search expression with comparison predicate with other than property and literal");
             // check the property name
             switch (propertyName)
             {
+                case "id":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", ValueToNumberSetOrInterval(value, binaryComparisonPredicate.Op));
+                    return;
                 case "collection":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", ValueToNumberSetOrInterval(value, binaryComparisonPredicate.Op));
                     return;
