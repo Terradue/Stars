@@ -25,6 +25,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Terradue.Stars.Services.Translator;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Google.Apis.Bigquery.v2.Data;
+using Xunit.Sdk;
 
 namespace Terradue.Data.Tests.Suppliers
 {
@@ -36,8 +38,8 @@ namespace Terradue.Data.Tests.Suppliers
         {
             _settings = new JsonSerializerSettings();
             _settings.Converters.Add(new BooleanExpressionConverter());
-            
-            
+
+
         }
 
         public static IEnumerable<object[]> AllSuppliersTestsData
@@ -56,11 +58,22 @@ namespace Terradue.Data.Tests.Suppliers
             var be = JsonConvert.DeserializeObject<BooleanExpression>(jObject["filter"].ToString(), _settings);
             CQL2Expression cql = new CQL2Expression(be);
 
-            var result = await supplier.InternalSearchExpressionAsync(cql, CancellationToken.None);
+            // try catch to identify the file that fails
+            try
+            {
+                var result = await supplier.InternalSearchExpressionAsync(cql, CancellationToken.None);
+                var resultJson = JsonConvert.SerializeObject(result);
 
-            var resultJson = JsonConvert.SerializeObject(result);
+                Assert.NotNull(jObject["result"]);
 
-            JsonAssert.AreEqual(jObject["result"].ToString(), resultJson);
+                JsonAssert.AreEqual(jObject["result"].ToString(), resultJson);
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Test Error for file {file}", e);
+            }
+
+
 
         }
 

@@ -189,9 +189,11 @@ namespace Terradue.Stars.Data.Suppliers
                     // we do not support OR operator
                     if (andOrExpression.Op == AndOrExpressionOp.Or)
                         throw new NotSupportedException("The OpenSearchableSupplier supplier cannot search for resource from a search expression with OR operator");
-                    // we simply recurse on the two operands
-                    FillParametersFromBooleanExpression(andOrExpression.Args[0], parameters, level + 1);
-                    FillParametersFromBooleanExpression(andOrExpression.Args[1], parameters, level + 1);
+                    // we simply recurse on the operands
+                    foreach (var arg in andOrExpression.Args)
+                    {
+                        FillParametersFromBooleanExpression(arg, parameters, level + 1);
+                    }
                     return;
                 case NotExpression notExpression:
                     // we do not support NOT operator
@@ -257,35 +259,35 @@ namespace Terradue.Stars.Data.Suppliers
             switch (op)
             {
                 case TemporalPredicateOp.T_after:
-                    parameters.Set("time:start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
                     return;
                 case TemporalPredicateOp.T_before:
-                    parameters.Set("time:end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
                     return;
                 case TemporalPredicateOp.T_during:
-                    parameters.Set("time:start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:relation", "during");
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}relation", "during");
                     return;
                 case TemporalPredicateOp.T_equals:
-                    parameters.Set("time:start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:relation", "equals");
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}relation", "equals");
                     return;
                 case TemporalPredicateOp.T_disjoint:
-                    parameters.Set("time:start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:relation", "disjoint");
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}relation", "disjoint");
                     return;
                 case TemporalPredicateOp.T_contains:
-                    parameters.Set("time:start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:relation", "contains");
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}relation", "contains");
                     return;
                 default:
-                    parameters.Set("time:start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
-                    parameters.Set("time:relation", "intersects");
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}start", timeInterval.Start.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}end", timeInterval.End.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/time/1.0/}relation", "intersects");
                     return;
             }
         }
@@ -344,16 +346,16 @@ namespace Terradue.Stars.Data.Suppliers
                     switch (op)
                     {
                         case SpatialPredicateOp.S_intersects:
-                            parameters.Set("geo:geometry", geometryLiteral.GeometryObject.ToWkt());
-                            parameters.Set("geo:relation", "intersects");
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}geometry", geometryLiteral.GeometryObject.ToWkt());
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}relation", "intersects");
                             return;
                         case SpatialPredicateOp.S_contains:
-                            parameters.Set("geo:geometry", geometryLiteral.GeometryObject.ToWkt());
-                            parameters.Set("geo:relation", "contains");
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}geometry", geometryLiteral.GeometryObject.ToWkt());
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}relation", "contains");
                             return;
                         case SpatialPredicateOp.S_disjoint:
-                            parameters.Set("geo:geometry", geometryLiteral.GeometryObject.ToWkt());
-                            parameters.Set("geo:relation", "disjoint");
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}geometry", geometryLiteral.GeometryObject.ToWkt());
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}relation", "disjoint");
                             return;
                         default:
                             throw new NotSupportedException($"The OpenSearchableSupplier supplier cannot search for resource from a search expression with spatial predicate with '{op}' operator");
@@ -362,16 +364,16 @@ namespace Terradue.Stars.Data.Suppliers
                     switch (op)
                     {
                         case SpatialPredicateOp.S_intersects:
-                            parameters.Set("geo:box", envelopeLiteral.ToString());
-                            parameters.Set("geo:relation", "intersects");
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}box", envelopeLiteral.ToString());
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}relation", "intersects");
                             return;
                         case SpatialPredicateOp.S_contains:
-                            parameters.Set("geo:box", envelopeLiteral.ToString());
-                            parameters.Set("geo:relation", "contains");
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}box", envelopeLiteral.ToString());
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}relation", "contains");
                             return;
                         case SpatialPredicateOp.S_disjoint:
-                            parameters.Set("geo:box", envelopeLiteral.ToString());
-                            parameters.Set("geo:relation", "disjoint");
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}box", envelopeLiteral.ToString());
+                            parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}relation", "disjoint");
                             return;
                         default:
                             throw new NotSupportedException($"The OpenSearchableSupplier supplier cannot search for resource from a search expression with spatial predicate with '{op}' operator");
@@ -519,7 +521,7 @@ namespace Terradue.Stars.Data.Suppliers
             // We support only the comparison between a property and a literal
             // So we extract the property and the literal
             string propertyName = null;
-            string value = null;
+            IScalarExpression value = null;
             foreach (var arg in binaryComparisonPredicate.Args)
             {
                 if (arg is PropertyRef propertyRef)
@@ -528,7 +530,7 @@ namespace Terradue.Stars.Data.Suppliers
                 }
                 else if (arg is IScalarExpression scalarExpression)
                 {
-                    value = scalarExpression.ToString();
+                    value = scalarExpression;
                 }
             }
             if (propertyName == null || value == null)
@@ -537,16 +539,40 @@ namespace Terradue.Stars.Data.Suppliers
             switch (propertyName)
             {
                 case "id":
-                    parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", ValueToNumberSetOrInterval(value, binaryComparisonPredicate.Op));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
+                    return;
+                case "datetime":
+                    InstantLiteral instantLiteral = value as InstantLiteral;
+                    if ( instantLiteral == null)
+                    {
+                        throw new NotSupportedException("The OpenSearchableSupplier supplier cannot search for resource from a search expression with comparison predicate on datetime property with other than instant literal");
+                    }
+                    FillStartStopParametersFromTimeInterval(TemporalLiteralToTimeInterval(value as ITemporalLiteral), BinaryComparisonPredicateToTemporalPredicateOp(binaryComparisonPredicate.Op), parameters);
                     return;
                 case "collection":
-                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", ValueToNumberSetOrInterval(value, binaryComparisonPredicate.Op));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
                     return;
                 case "eo:cloud_cover":
-                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}cloudCover", ValueToNumberSetOrInterval(value, binaryComparisonPredicate.Op));
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}cloudCover", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
                     return;
                 default:
                     throw new NotSupportedException($"The OpenSearchableSupplier supplier cannot search for resource from a search expression with is like predicate on '{propertyName}' property");
+            }
+        }
+
+        private TemporalPredicateOp BinaryComparisonPredicateToTemporalPredicateOp(ComparisonPredicateOp op)
+        {
+            switch (op){
+                case ComparisonPredicateOp.Eq:
+                    return TemporalPredicateOp.T_equals;
+                case ComparisonPredicateOp.Gt:
+                case ComparisonPredicateOp.Ge:
+                    return TemporalPredicateOp.T_after;
+                case ComparisonPredicateOp.Lt:
+                case ComparisonPredicateOp.Le:
+                    return TemporalPredicateOp.T_before;
+                default:
+                    throw new NotSupportedException($"The OpenSearchableSupplier supplier cannot search for resource from a search expression with comparison predicate with '{op}' operator");
             }
         }
 
