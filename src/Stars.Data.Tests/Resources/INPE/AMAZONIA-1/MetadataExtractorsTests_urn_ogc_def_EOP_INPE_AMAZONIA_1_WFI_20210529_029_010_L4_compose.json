@@ -1,0 +1,192 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210529_029_010_L4_compose",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -9.972,
+          30.181
+        ],
+        [
+          -6.102,
+          30.153
+        ],
+        [
+          -5.996,
+          33.494
+        ],
+        [
+          -10.008,
+          33.527
+        ],
+        [
+          -9.972,
+          30.181
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2021-05-29T11:16:51Z",
+    "end_datetime": "2021-05-29T11:18:46Z",
+    "datetime": "2021-05-29T11:17:48Z",
+    "constellation": "amazonia-1",
+    "platform": "amazonia-1",
+    "mission": "amazonia-1",
+    "instruments": [
+      "wfi"
+    ],
+    "sensor_type": "optical",
+    "gsd": 64.0,
+    "title": "AMAZONIA-1 WFI L4 2021-05-29 11:17:48",
+    "eo:bands": [
+      {
+        "name": "band-1",
+        "common_name": "blue",
+        "center_wavelength": 0.485,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1984.65
+      },
+      {
+        "name": "band-2",
+        "common_name": "green",
+        "center_wavelength": 0.555,
+        "full_width_half_max": 0.07,
+        "solar_illumination": 1823.4
+      },
+      {
+        "name": "band-3",
+        "common_name": "red",
+        "center_wavelength": 0.66,
+        "full_width_half_max": 0.06,
+        "solar_illumination": 1536.38
+      },
+      {
+        "name": "band-4",
+        "common_name": "nir",
+        "center_wavelength": 0.83,
+        "full_width_half_max": 0.12,
+        "solar_illumination": 981.91
+      }
+    ],
+    "cbers:path": 29,
+    "cbers:row": 10,
+    "sat:platform_international_designator": "2021-015A",
+    "proj:epsg": 32629,
+    "view:off_nadir": 0.0,
+    "view:sun_azimuth": 114.603,
+    "view:sun_elevation": 71.4315,
+    "processing:level": "L4",
+    "providers": [
+      {
+        "name": "INPE",
+        "description": "Amazonia-1 is an Earth observation minisatellite mission of the Brazilian Space Agency (AEB), developed at the National Institute for Space Research (INPE) in Brazil. Its main goal is to monitor global deforestation, with a focus on the Brazilian Amazon rainforest.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "http://www.inpe.br/amazonia1/"
+      }
+    ],
+    "licence": "proprietary"
+  },
+  "bbox": [
+    -10.008,
+    30.153,
+    -5.996,
+    33.527
+  ],
+  "assets": {
+    "compose": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "WFI L4 COMPOSE",
+      "href": "data/965-INPE-AMAZONIA-1-urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210529_029_010_L4_compose/AMAZONIA_1_WFI_20210529_029_010_L4_compose.tif",
+      "filename": "AMAZONIA_1_WFI_20210529_029_010_L4_compose.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "band-1",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1984.65
+        },
+        {
+          "name": "band-2",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1823.4
+        },
+        {
+          "name": "band-3",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "full_width_half_max": 0.06,
+          "solar_illumination": 1536.38
+        },
+        {
+          "name": "band-4",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "full_width_half_max": 0.12,
+          "solar_illumination": 981.91
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.384,
+          "offset": 0.0
+        },
+        {
+          "scale": 0.41,
+          "offset": 0.0
+        },
+        {
+          "scale": 0.343,
+          "offset": 0.0
+        },
+        {
+          "scale": 0.291,
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata": {
+      "type": "text/csv",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/965-INPE-AMAZONIA-1-urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210529_029_010_L4_compose/urn_ogc_def_eop_inpe_amazonia_1_wfi_20210529_029_010_l4_compose-metadata.csv",
+      "filename": "urn_ogc_def_eop_inpe_amazonia_1_wfi_20210529_029_010_l4_compose-metadata.csv",
+      "file:size": 554
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/965-INPE-AMAZONIA-1-urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210529_029_010_L4_compose/urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210529_029_010_L4_compose-icon.jpg",
+      "filename": "urn_ogc_def_EOP_INPE_AMAZONIA_1_WFI_20210529_029_010_L4_compose-icon.jpg",
+      "file:size": 0
+    }
+  },
+  "links": []
+}

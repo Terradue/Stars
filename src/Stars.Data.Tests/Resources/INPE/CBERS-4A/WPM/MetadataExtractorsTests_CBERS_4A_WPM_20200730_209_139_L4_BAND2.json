@@ -62,7 +62,7 @@
     "sat:orbit_state": "descending",
     "cbers:path": 209,
     "cbers:row": 139,
-    "sat:absolute_orbit": 209139,
+    "sat:platform_international_designator": "2019-093E",
     "view:sun_azimuth": 32.9789,
     "view:sun_elevation": 44.3304,
     "processing:level": "L4",
@@ -75,9 +75,10 @@
           "processor",
           "licensor"
         ],
-        "url": "http://www.dgi.inpe.br/en"
+        "url": "http://www.cbers.inpe.br/sobre/cbers3-4.php"
       }
-    ]
+    ],
+    "licence": "proprietary"
   },
   "bbox": [
     -51.684164,
@@ -89,9 +90,10 @@
     "band-2": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "WPM L4 BAND-2",
       "href": "data/CBERS_4A_WPM_20200730_209_139_L4_BAND2/CBERS_4A_WPM_20200730_209_139_L4_BAND2.tif",
       "filename": "CBERS_4A_WPM_20200730_209_139_L4_BAND2.tif",
       "file:size": 0,
