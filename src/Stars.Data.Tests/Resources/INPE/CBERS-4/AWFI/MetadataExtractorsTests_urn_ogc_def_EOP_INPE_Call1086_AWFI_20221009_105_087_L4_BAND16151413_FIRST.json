@@ -82,7 +82,7 @@
     ],
     "cbers:path": 105,
     "cbers:row": 87,
-    "sat:absolute_orbit": 105087,
+    "sat:platform_international_designator": "2014-079A",
     "proj:epsg": 32632,
     "view:off_nadir": 0.0,
     "view:sun_azimuth": 132.472,
@@ -97,9 +97,10 @@
           "processor",
           "licensor"
         ],
-        "url": "http://www.dgi.inpe.br/en"
+        "url": "http://www.cbers.inpe.br/sobre/cbers3-4.php"
       }
-    ]
+    ],
+    "licence": "proprietary"
   },
   "bbox": [
     47.61,
@@ -111,9 +112,10 @@
     "compose": {
       "type": "image/tiff",
       "roles": [
-        "data"
+        "data",
+        "dn"
       ],
-      "title": "Image file",
+      "title": "AWFI L4 COMPOSE",
       "href": "data/1086-INPE-CBERS-4-urn_ogc_def_EOP_INPE_Call1086_AWFI_20221009_105_087_L4_BAND16151413_FIRST/Call895_AWFI_20221009_105_087_L4_BAND16151413.tiff",
       "filename": "Call895_AWFI_20221009_105_087_L4_BAND16151413.tiff",
       "file:size": 0,
