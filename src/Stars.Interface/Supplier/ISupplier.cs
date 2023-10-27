@@ -1,3 +1,4 @@
+using Stac.Api.Interfaces;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,10 @@ namespace Terradue.Stars.Interface.Supplier
         string Label { get; }
 
         Task<IResource> SearchForAsync(IResource item, CancellationToken ct, string identifierRegex = null);
+
+        Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct);
+
+        Task<object> InternalSearchExpressionAsync(ISearchExpression searchExpression, CancellationToken ct);
 
         Task<IOrder> Order(IOrderable orderableRoute);
     }

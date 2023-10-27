@@ -1,0 +1,15 @@
+{
+    "filter": {
+        "op": "=",
+        "args": [
+            {
+                "property": "id"
+            },
+            "LC08_L1TP_060247_20180905_20180912_01_T1_L1TP"
+        ]
+    },
+    "result":
+    {
+        "{http://a9.com/-/opensearch/extensions/geo/1.0/}uid": "LC08_L1TP_060247_20180905_20180912_01_T1_L1TP"
+    }
+}

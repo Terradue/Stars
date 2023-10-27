@@ -5,6 +5,7 @@ using System.IO.Abstractions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using System.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,12 +13,14 @@ using Newtonsoft.Json.Schema;
 using Stac.Schemas;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Services.Credentials;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.ThirdParty.Egms;
 using Terradue.Stars.Services.ThirdParty.Titiler;
+using Terradue.Stars.Services.Translator;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -66,6 +69,8 @@ namespace Terradue.Data.Tests
             Collection.AddSingleton<TitilerService, TitilerService>();
             Collection.AddSingleton<EgmsService, EgmsService>();
             Collection.AddSingleton<IVectorService, TestVectorService>();
+            Collection.AddSingleton<TranslatorManager, TranslatorManager>();
+            Collection.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
             Collection.AddHttpClient();
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file

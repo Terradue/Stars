@@ -18,6 +18,7 @@ using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Translator;
 using Stac.Extensions.File;
+using Stac.Api.Interfaces;
 
 namespace Terradue.Stars.Data.Suppliers.PlanetScope
 {
@@ -175,6 +176,16 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
         public virtual Task<IOrder> Order(IOrderable orderableRoute)
         {
             throw new NotSupportedException();
+        }
+
+        public Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<object> InternalSearchExpressionAsync(ISearchExpression searchExpression, CancellationToken ct)
+        {
+            throw new NotImplementedException();
         }
     }
 

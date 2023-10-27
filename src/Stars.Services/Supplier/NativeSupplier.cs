@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
 using System.Threading;
+using Stac.Api.Interfaces;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -36,6 +37,17 @@ namespace Terradue.Stars.Services.Supplier
         public Task<IOrder> Order(IOrderable orderableRoute)
         {
             throw new NotSupportedException();
+        }
+
+        public Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
+        {
+            // the Native supplier will never return a resource from a search expression
+            return null;
+        }
+
+        public Task<object> InternalSearchExpressionAsync(ISearchExpression searchExpression, CancellationToken ct)
+        {
+            throw new NotImplementedException();
         }
     }
 }
