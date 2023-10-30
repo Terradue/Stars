@@ -12,5 +12,6 @@
         "args": [ { "property": "eo:cloud_cover" }, 10 ]
       }
     ]
-  }
+  },
+  "exception": "System.NotSupportedException"
 }

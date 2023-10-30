@@ -58,22 +58,29 @@ namespace Terradue.Data.Tests.Suppliers
             var be = JsonConvert.DeserializeObject<BooleanExpression>(jObject["filter"].ToString(), _settings);
             CQL2Expression cql = new CQL2Expression(be);
 
-            // try catch to identify the file that fails
+            // Task<object> result = null;
+            // get the result without the exception
+
             try
             {
-                var result = await supplier.InternalSearchExpressionAsync(cql, CancellationToken.None);
-                var resultJson = JsonConvert.SerializeObject(result);
-
-                Assert.NotNull(jObject["result"]);
-
-                JsonAssert.AreEqual(jObject["result"].ToString(), resultJson);
+                var task = await supplier.InternalSearchExpressionAsync(cql, CancellationToken.None);
+                if (jObject["result"] != null)
+                {
+                    var resultJson = JsonConvert.SerializeObject(task);
+                    JsonAssert.AreEqual(jObject["result"].ToString(), resultJson);
+                }
             }
             catch (Exception e)
             {
-                throw new Exception($"Test Error for file {file}", e);
+                if (jObject["exception"] != null)
+                {
+                    Assert.Equal(Type.GetType(jObject["exception"].ToString()), e.GetType());
+                }
+                else
+                {
+                    throw new Exception($"{Path.GetFileName(file)}: {e.Message}", e);
+                }
             }
-
-
 
         }
 

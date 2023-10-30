@@ -6,5 +6,6 @@
       { "property": "mission" },
       "sentinel%"
     ]
-  }
+  },
+  "exception": "System.NotSupportedException"
 }

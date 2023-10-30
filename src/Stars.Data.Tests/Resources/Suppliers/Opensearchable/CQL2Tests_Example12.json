@@ -12,5 +12,8 @@
                 "wildfire"
             ]
         ]
+    },
+    "result": {
+        "{http://purl.org/dc/terms/}subject": "{fire,forest,wildfire}"
     }
 }

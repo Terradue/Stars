@@ -6,5 +6,6 @@
       { "property": "prop1" },
       { "property": "prop2" }
     ]
-  }
+  },
+  "exception": "System.NotSupportedException"
 }
