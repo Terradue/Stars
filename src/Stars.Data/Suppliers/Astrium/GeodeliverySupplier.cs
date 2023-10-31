@@ -147,7 +147,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
             throw new NotSupportedException();
         }
 
-        public Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
+        public Task<IItemCollection> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
         {
             // the GeodeliverySupplier supplier will never return a resource from a search expression
             logger.LogWarning("The GeodeliverySupplier supplier cannot search for resource from a search expression");

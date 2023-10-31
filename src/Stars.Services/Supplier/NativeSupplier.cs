@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services.Supplier
             throw new NotSupportedException();
         }
 
-        public Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
+        public Task<IItemCollection> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
         {
             // the Native supplier will never return a resource from a search expression
             return null;

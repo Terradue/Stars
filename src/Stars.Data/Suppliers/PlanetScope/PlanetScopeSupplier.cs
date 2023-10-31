@@ -178,7 +178,7 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
             throw new NotSupportedException();
         }
 
-        public Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
+        public Task<IItemCollection> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
         {
             throw new NotImplementedException();
         }

@@ -144,7 +144,7 @@ namespace Terradue.Stars.Data.Suppliers
             throw new NotSupportedException();
         }
 
-        public async Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
+        public async Task<IItemCollection> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
         {
             NameValueCollection nvc = CreateOpenSearchParametersFromExpression(searchExpression);
             if (nvc == null) return null;

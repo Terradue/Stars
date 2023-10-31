@@ -14,7 +14,7 @@ namespace Terradue.Stars.Interface.Supplier
 
         Task<IResource> SearchForAsync(IResource item, CancellationToken ct, string identifierRegex = null);
 
-        Task<IResource> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct);
+        Task<IItemCollection> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct);
 
         Task<object> InternalSearchExpressionAsync(ISearchExpression searchExpression, CancellationToken ct);
 

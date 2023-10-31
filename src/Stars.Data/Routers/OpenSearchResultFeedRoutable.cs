@@ -12,10 +12,11 @@ using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
 using Microsoft.Extensions.Logging;
 using System.Threading;
+using System.Collections;
 
 namespace Terradue.Stars.Data.Routers
 {
-    public class OpenSearchResultFeedRoutable : IResource, IAssetsContainer, IStreamResource
+    public class OpenSearchResultFeedRoutable : IItemCollection, IStreamResource
     {
         protected IOpenSearchResultCollection osCollection;
 
@@ -57,6 +58,10 @@ namespace Terradue.Stars.Data.Routers
 
         public bool CanBeRanged => false;
 
+        public int Count => throw new NotImplementedException();
+
+        public bool IsReadOnly => throw new NotImplementedException();
+
         public string ReadAsStringAsync(CancellationToken ct)
         {
             StreamReader sr = new StreamReader(GetStreamAsync(ct).Result);
@@ -83,18 +88,49 @@ namespace Terradue.Stars.Data.Routers
             return Task.FromResult((IResource)this);
         }
 
-        public virtual IReadOnlyDictionary<string, IAsset> Assets
-        {
-            get
-            {
-                Dictionary<string, IAsset> assets = new Dictionary<string, IAsset>();
-                return assets;
-            }
-        }
-
         public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             throw new NotImplementedException();
+        }
+
+        public IReadOnlyList<IResourceLink> GetLinks()
+        {
+            return osCollection.Links.Select(l => new AtomResourceLink(l)).ToList();
+        }
+
+        public void Add(IItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(IItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(IItem[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(IItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<IItem> GetEnumerator()
+        {
+            return osCollection.Items.Select(i => i as IItem).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return osCollection.Items.Select(i => i as IItem).GetEnumerator();
         }
     }
 }
