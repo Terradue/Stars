@@ -125,12 +125,12 @@ namespace Terradue.Stars.Data.Routers
 
         public IEnumerator<IItem> GetEnumerator()
         {
-            return osCollection.Items.Select(i => i as IItem).GetEnumerator();
+            return osCollection.Items.Select(i => new AtomItemNode(AtomItem.FromOpenSearchResultItem(i), new Uri(Uri, i.Id))).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return osCollection.Items.Select(i => i as IItem).GetEnumerator();
+            return osCollection.Items.Select(i => new AtomItemNode(AtomItem.FromOpenSearchResultItem(i), new Uri(Uri, i.Id))).GetEnumerator();
         }
     }
 }

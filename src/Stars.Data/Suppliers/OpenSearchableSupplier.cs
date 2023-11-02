@@ -52,7 +52,7 @@ namespace Terradue.Stars.Data.Suppliers
 
         public virtual async Task<IResource> SearchForAsync(IResource node, CancellationToken ct, string identifierRegex = null)
         {
-            return (IResource)new OpenSearchResultItemRoutable((await QueryAsync(node, ct, identifierRegex)).Items.FirstOrDefault(), new Uri("os://" + openSearchable.Identifier), logger);
+            return (IResource)new OpenSearchResultItemRoutable((await QueryAsync(node, ct, identifierRegex)).Items.FirstOrDefault(), new Uri("os://opensearch"), logger);
         }
 
         public virtual async Task<IOpenSearchResultCollection> QueryAsync(IResource node, CancellationToken ct, string identifierRegex = null)
@@ -148,10 +148,11 @@ namespace Terradue.Stars.Data.Suppliers
         {
             NameValueCollection nvc = CreateOpenSearchParametersFromExpression(searchExpression);
             if (nvc == null) return null;
+            logger.LogDebug("OpenSearch parameters: {0}", string.Join(",", nvc.AllKeys.Select(k => $"{k}={nvc[k]}")));
 
             AtomFeed atomFeed = await Task.Run<AtomFeed>(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
 
-            return new OpenSearchResultFeedRoutable(atomFeed, new Uri("os://" + openSearchable.Identifier), logger);
+            return new OpenSearchResultFeedRoutable(atomFeed, new Uri("os://opensearch"), logger);
         }
 
         private NameValueCollection CreateOpenSearchParametersFromExpression(ISearchExpression searchExpression)
@@ -181,8 +182,6 @@ namespace Terradue.Stars.Data.Suppliers
 
         private void FillParametersFromBooleanExpression(BooleanExpression booleanExpression, NameValueCollection parameters, int level)
         {
-            if (level > 1)
-                throw new NotSupportedException("The OpenSearchableSupplier supplier cannot search for resource from a search expression with nested boolean expression");
             switch (booleanExpression)
             {
                 case AndOrExpression andOrExpression:
@@ -541,9 +540,12 @@ namespace Terradue.Stars.Data.Suppliers
                 case "id":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/geo/1.0/}uid", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
                     return;
+                case "mission":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}platform", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
+                    return;
                 case "datetime":
                     InstantLiteral instantLiteral = value as InstantLiteral;
-                    if ( instantLiteral == null)
+                    if (instantLiteral == null)
                     {
                         throw new NotSupportedException("The OpenSearchableSupplier supplier cannot search for resource from a search expression with comparison predicate on datetime property with other than instant literal");
                     }
@@ -562,7 +564,8 @@ namespace Terradue.Stars.Data.Suppliers
 
         private TemporalPredicateOp BinaryComparisonPredicateToTemporalPredicateOp(ComparisonPredicateOp op)
         {
-            switch (op){
+            switch (op)
+            {
                 case ComparisonPredicateOp.Eq:
                     return TemporalPredicateOp.T_equals;
                 case ComparisonPredicateOp.Gt:
