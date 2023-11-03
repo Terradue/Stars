@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 namespace Terradue.Stars.Data.Model.Metadata.Bka
 {
 
-    [XmlRoot(ElementName = "Metadata")]
+    [XmlRoot(ElementName = "MetaData")]
     public class BkaMetadata
     {
 
@@ -157,7 +157,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         public int? EpsgCode { get; set; }
 
         [XmlElement(ElementName = "EPSG_tables")]
-        public string EPSGTables { get; set; }
+        public string EpsgTables { get; set; }
 
         [XmlElement(ElementName = "Elevation_Data")]
         public BkaElevationData ElevationData { get; set; }
@@ -171,15 +171,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
     [XmlRoot(ElementName = "Image_Info")]
     public class BkaImageInfo
     {
-        /*
-            <Image_Info>
-                <Resample>
-                    <Method>Bilinear Interpolation</Method>
-                </Resample>
-            </Image_Info>
-        */
-
-
         [XmlElement(ElementName = "File_Format")]
         public string FileFormat { get; set; }
 
@@ -222,26 +213,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
     [XmlRoot(ElementName = "Scene_Acquisition")]
     public class BkaSceneAcquisition
     {
-        /*
-            <Scene_Acquisition>
-                <Satellite>BKA</Satellite>
-                <Acquisition_Time_GMT>2015-09-24T04:43:01</Acquisition_Time_GMT>
-                <Sun_Elevation>84.08</Sun_Elevation>
-                <Sun_Azimuth>6.84</Sun_Azimuth>
-                <Viewing_Angle>2.31</Viewing_Angle>
-                <Center>
-                    <Center_Lat>-6.21091851</Center_Lat>
-                    <Center_Lon>106.60503472</Center_Lon>
-                </Center>
-            </Scene_Acquisition>
-        */
-
-
         [XmlElement(ElementName = "Satellite")]
-        public string SceneAcquisition { get; set; }
+        public string Satellite { get; set; }
 
         [XmlElement(ElementName = "Acquisition_Time_GMT")]
-        public string RoutesCount { get; set; }
+        public string AcquisitionTime { get; set; }
 
         [XmlElement(ElementName = "Sun_Elevation")]
         public double? SunElevation { get; set; }
@@ -343,22 +319,22 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         public double Corner1SWLon { get; set; }
 
         [XmlElement(ElementName = "Corner2_NW_Lat")]
-        public double Corner1NWLat { get; set; }
+        public double Corner2NWLat { get; set; }
 
         [XmlElement(ElementName = "Corner2_NW_Lon")]
-        public double Corner1NWLon { get; set; }
+        public double Corner2NWLon { get; set; }
 
         [XmlElement(ElementName = "Corner3_NE_Lat")]
-        public double Corner1NELat { get; set; }
+        public double Corner3NELat { get; set; }
 
         [XmlElement(ElementName = "Corner3_NE_Lon")]
-        public double Corner1NELon { get; set; }
+        public double Corner3NELon { get; set; }
 
         [XmlElement(ElementName = "Corner4_SE_Lat")]
-        public double Corner1SELat { get; set; }
+        public double Corner4SELat { get; set; }
 
         [XmlElement(ElementName = "Corner4_SE_Lon")]
-        public double Corner1SELon { get; set; }
+        public double Corner4SELon { get; set; }
     }
 
 
@@ -372,22 +348,22 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         public double Corner1SWNorthing { get; set; }
 
         [XmlElement(ElementName = "Corner2_NW_Easting")]
-        public double Corner1NWEasting { get; set; }
+        public double Corner2NWEasting { get; set; }
 
         [XmlElement(ElementName = "Corner2_NW_Northing")]
-        public double Corner1NWNorthing { get; set; }
+        public double Corner2NWNorthing { get; set; }
 
         [XmlElement(ElementName = "Corner3_NE_Easting")]
-        public double Corner1NEEasting { get; set; }
+        public double Corner3NEEasting { get; set; }
 
         [XmlElement(ElementName = "Corner3_NE_Northing")]
-        public double Corner1NENorthing { get; set; }
+        public double Corner3NENorthing { get; set; }
 
         [XmlElement(ElementName = "Corner4_SE_Easting")]
-        public double Corner1SEEasting { get; set; }
+        public double Corner4SEEasting { get; set; }
 
         [XmlElement(ElementName = "Corner4_SE_Northing")]
-        public double Corner1SENorthing { get; set; }
+        public double Corner4SENorthing { get; set; }
     }
 
 
