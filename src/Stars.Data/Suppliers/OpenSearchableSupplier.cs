@@ -16,7 +16,6 @@ using Stac;
 using System.Threading;
 using Stac.Api.Interfaces;
 using Stac.Api.Models.Cql2;
-using Microsoft.AspNetCore.Mvc;
 using Itenso.TimePeriod;
 using Terradue.GeoJson.Geometry;
 using Terradue.Stars.Geometry.Wkt;
