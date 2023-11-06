@@ -19,9 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: | 
-            6.0.x
-            7.0.x
+        global-json-file: global.json
     - name: Install dependencies (hdf5)
       run: sudo apt install hdf5-tools -y
     - name: Restore dependencies
