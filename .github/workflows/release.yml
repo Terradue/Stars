@@ -41,7 +41,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        global-json-file: global.json
+        dotnet-version: | 
+            6.0.x
+            7.0.x
     - name: Make packages
       run: |
         dotnet tool restore
