@@ -1,0 +1,111 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "4077631-0220-PAN-C-1-1-1100761-150924T044238-ID",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          106.56038194,
+          -6.53782335
+        ],
+        [
+          106.76985243,
+          -6.49664605
+        ],
+        [
+          106.64960069,
+          -5.88415202
+        ],
+        [
+          106.44033854,
+          -5.92522244
+        ],
+        [
+          106.56038194,
+          -6.53782335
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2015-09-24T04:43:02.0000000Z",
+    "created": "2021-06-11T16:38:54.0000000Z",
+    "platform": "bka/kanopus-v",
+    "constellation": "bka",
+    "mission": "bka",
+    "instruments": [
+      "mss"
+    ],
+    "sensor_type": "optical",
+    "spectral_mode": "PAN",
+    "sat:platform_international_designator": "2012-039B",
+    "proj:epsg": 32748,
+    "proj:shape": [
+      34082,
+      17110
+    ],
+    "view:azimuth": 84.08,
+    "processing:level": "L1C",
+    "title": "BKA/KANOPUS-V MSS L1C 2015-09-24 04:43:02",
+    "providers": [
+      {
+        "name": "NAS",
+        "description": "BKA (formerly known as BelKa 2) is a Belarusian remote sensing satellite developed under an agreement between the National Academy of Sciences of Belarus (NAS) and the Federal Space Agency of the Russian Federation. The BKA satellite is almost an exact copy of the Russian Kanopus-Vulkan N1 Environmental Satellite (Kanopus-V 1).",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://gis.by/en/tech/bka/"
+      }
+    ],
+    "licence": "proprietary",
+    "gsd": 2.12
+  },
+  "bbox": [
+    106.44033854,
+    -6.53782335,
+    106.76985243,
+    -5.88415202
+  ],
+  "assets": {
+    "L1C_PAN": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID.tif",
+      "title": "L1C PAN",
+      "filename": "4077631-0220-PAN-C-1-1-1100761-150924T044238-ID.tif",
+      "file:size": 0
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID_pasp-en.xml",
+      "filename": "4077631-0220-PAN-C-1-1-1100761-150924T044238-ID_pasp-en.xml",
+      "file:size": 4161
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID_preview.jpg",
+      "filename": "4077631-0220-PAN-C-1-1-1100761-150924T044238-ID_preview.jpg",
+      "file:size": 142295
+    }
+  },
+  "links": []
+}
