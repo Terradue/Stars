@@ -1,0 +1,22 @@
+{
+    "filter-lang": "cql2-json",
+    "filter": {
+        "op": "t_intersects",
+        "args": [
+            {
+                "property": "datetime"
+            },
+            {
+                "interval": [
+                    "2020-11-11T00:00:00Z",
+                    "2020-11-12T00:00:00Z"
+                ]
+            }
+        ]
+    },
+    "result": {
+        "{http://a9.com/-/opensearch/extensions/time/1.0/}relation": "intersects",
+        "{http://a9.com/-/opensearch/extensions/time/1.0/}start": "2020-11-11T00:00:00Z",
+        "{http://a9.com/-/opensearch/extensions/time/1.0/}end": "2020-11-12T00:00:00Z"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "filter-lang": "cql2-json",
+    "filter": {
+        "op": "between",
+        "args": [
+            {
+                "property": "eo:cloud_cover"
+            },
+            0,
+            50
+        ]
+    },
+    "result": {
+        "{http://a9.com/-/opensearch/extensions/eo/1.0/}cloudCover": "[0,50]"
+    }
+}
