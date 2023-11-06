@@ -15,6 +15,7 @@ using System.Threading;
 using Terradue.Stars.Services.Translator;
 using System.Linq;
 using Stac.Extensions.File;
+using Stac.Api.Interfaces;
 
 namespace Terradue.Stars.Data.Suppliers.Astrium
 {
@@ -144,6 +145,18 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
         public virtual Task<IOrder> Order(IOrderable orderableRoute)
         {
             throw new NotSupportedException();
+        }
+
+        public Task<IItemCollection> SearchForAsync(ISearchExpression searchExpression, CancellationToken ct)
+        {
+            // the GeodeliverySupplier supplier will never return a resource from a search expression
+            logger.LogWarning("The GeodeliverySupplier supplier cannot search for resource from a search expression");
+            return null;
+        }
+
+        public Task<object> InternalSearchExpressionAsync(ISearchExpression searchExpression, CancellationToken ct)
+        {
+            throw new NotImplementedException();
         }
     }
 }

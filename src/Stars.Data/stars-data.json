@@ -112,6 +112,9 @@
                 "KANOPUS-V": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Kanopus.KanopusVMetadataExtractor"
                 },
+                "BKA": {
+                    "Type": "Terradue.Stars.Data.Model.Metadata.Bka.BkaMetadataExtractor"
+                },
                 "ISRO": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Isro.IsroMetadataExtractor"
                 },
