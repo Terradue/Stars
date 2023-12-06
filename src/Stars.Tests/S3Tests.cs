@@ -100,7 +100,8 @@ namespace Stars.Tests
             Assert.Equal(new FileInfo(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")).Length, metadata.ContentLength);
         }
 
-        [Fact]
+        // Test disabled due to retirement of SciHub
+        /*[Fact]
         public async Task ImportHttpStreamabletoS3()
         {
             await CreateBucketAsync("s3://local-http");
@@ -111,7 +112,7 @@ namespace Stars.Tests
             var newRoute = await s3StreamingCarrier.StreamToS3Object(httpRoute, s3Route, CancellationToken.None);
             var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Route.S3Uri.Bucket, s3Route.S3Uri.Key);
             Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(metadata.ContentLength));
-        }
+        }*/
 
         [Fact]
         public async Task AdaptRegion()
