@@ -1,0 +1,30 @@
+{
+    "filter": {
+        "op": "and",
+        "args": [
+            {
+                "op": "=",
+                "args": [
+                    {
+                        "property": "id"
+                    },
+                    "S2A_60HWB_20201111_0_L2A"
+                ]
+            },
+            {
+                "op": "=",
+                "args": [
+                    {
+                        "property": "collection"
+                    },
+                    "sentinel-s2-l2a-cogs"
+                ]
+            }
+        ]
+    },
+    "result":
+    {
+        "{http://a9.com/-/opensearch/extensions/geo/1.0/}uid": "S2A_60HWB_20201111_0_L2A",
+        "{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier": "sentinel-s2-l2a-cogs"
+    }
+}

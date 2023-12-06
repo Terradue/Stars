@@ -1,0 +1,11 @@
+{
+  "filter-lang": "cql2-json",
+  "filter": {
+    "op": "like",
+    "args": [
+      { "property": "mission" },
+      "sentinel%"
+    ]
+  },
+  "exception": "System.NotSupportedException"
+}

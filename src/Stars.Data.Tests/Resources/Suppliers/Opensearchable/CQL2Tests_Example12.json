@@ -1,0 +1,19 @@
+{
+    "filter-lang": "cql2-json",
+    "filter": {
+        "op": "in",
+        "args": [
+            {
+                "property": "keywords"
+            },
+            [
+                "fire",
+                "forest",
+                "wildfire"
+            ]
+        ]
+    },
+    "result": {
+        "{http://purl.org/dc/terms/}subject": "{fire,forest,wildfire}"
+    }
+}
