@@ -113,9 +113,15 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
                 
                 // before deserializing we modify the instruments type from string to array of strings
                 dynamic featureCollection = JsonConvert.DeserializeObject(json);
-                string instruments = featureCollection.features[0].properties.instruments;
-                featureCollection.features[0].properties.instruments = new JArray() as dynamic;
-                featureCollection.features[0].properties.instruments.Add(instruments.ToLower());
+
+                // Transform instrument into array if it is a string
+                if (featureCollection.features[0].properties.instruments is JValue)
+                {
+                    string instruments = featureCollection.features[0].properties.instruments;
+
+                    featureCollection.features[0].properties.instruments = new JArray() as dynamic;
+                    featureCollection.features[0].properties.instruments.Add(instruments.ToLower());
+                }
                 
                 // retrieving first statItem of the collection
                 string featureJson = featureCollection.features[0].ToString();
@@ -165,7 +171,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
             string itemId = stacItem.Id;
             string resolution = itemId.Split('_')[4].ToLower();
             if (resolution.Equals("sr")) {
-                stacItem.Gsd = 0.7;    
+                stacItem.Gsd = 0.7;
             } else {
                 stacItem.Gsd = 1;
             }
