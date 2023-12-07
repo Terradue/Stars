@@ -40,9 +40,9 @@
   "properties": {
     "datetime": "2015-09-24T04:43:01.0000000Z",
     "created": "2021-06-11T16:38:46.0000000Z",
-    "platform": "bka/kanopus-v",
+    "platform": "bka",
     "constellation": "bka",
-    "mission": "bka",
+    "mission": "bka/kanopus-v",
     "instruments": [
       "mss"
     ],
@@ -56,7 +56,7 @@
     ],
     "view:azimuth": 84.08,
     "processing:level": "L1C",
-    "title": "BKA/KANOPUS-V MSS L1C 2015-09-24 04:43:01",
+    "title": "BKA MSS L1C 2015-09-24 04:43:01",
     "providers": [
       {
         "name": "NAS",

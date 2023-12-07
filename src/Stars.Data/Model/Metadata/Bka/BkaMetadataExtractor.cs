@@ -203,9 +203,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             string platform = "bka";
             if (metadata.Processing?.Satellite != null) platform = metadata.Processing.Satellite.ToLower();
             string mission = "bka";
-            if (metadata.Processing?.Mission != null) platform = metadata.Processing.Mission.ToLower();
+            if (metadata.Processing?.Mission != null) mission = metadata.Processing.Mission.ToLower();
             properties["platform"] = platform;
-            properties["constellation"] = mission;
+            properties["constellation"] = platform;
             properties["mission"] = mission;
             properties["instruments"] = new string[] { GetInstrument(metadata).ToLower() };
             properties["sensor_type"] = "optical";
