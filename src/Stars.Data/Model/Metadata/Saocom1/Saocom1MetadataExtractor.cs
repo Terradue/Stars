@@ -35,6 +35,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
     {
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(SAOCOM_XMLProduct));
         public static XmlSerializer manifestSerializer = new XmlSerializer(typeof(XEMT));
+        public static XmlSerializer parametersSerializer = new XmlSerializer(typeof(ParameterFile));
         private readonly IFileSystem _fileSystem;
         private readonly CarrierManager _carrierManager;
 
@@ -133,7 +134,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             Dictionary<string, object> properties = new Dictionary<string, object>();
             StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(item, kml, metadata), properties);
             AddSatStacExtension(metadata, stacItem);
-            AddOrbitInformation(metadata, manifest, stacItem);
+            AddOrbitInformation(metadata, manifest, stacItem, item);
             AddProjStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, manifest, stacItem);
             AddSarStacExtension(metadata, stacItem, item);
@@ -258,12 +259,34 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 sat.AbsoluteOrbit = absOrbit;
         }
 
-        private void AddOrbitInformation(SAOCOM_XMLProduct metadata, XEMT manifest, StacItem stacItem)
+        private void AddOrbitInformation(SAOCOM_XMLProduct metadata, XEMT manifest, StacItem stacItem, IItem item)
         {
             if (manifest != null && manifest.Product != null && manifest.Product.Features != null && manifest.Product.Features.GeographicAttributes != null && manifest.Product.Features.GeographicAttributes.PathRow != null)
             {
                 stacItem.Properties["saocom:path"] = manifest.Product.Features.GeographicAttributes.PathRow.Path;
                 stacItem.Properties["saocom:row"] = manifest.Product.Features.GeographicAttributes.PathRow.Row;
+            }
+            else
+            {
+                IAsset parametersAsset = GetParametersAsset(item);
+                if (parametersAsset != null)
+                {
+                    ParameterFile parameters = null;
+                    using (var stream = resourceServiceProvider.GetAssetStreamAsync(parametersAsset, System.Threading.CancellationToken.None).Result)
+                    {
+                        var reader = XmlReader.Create(stream);
+                        logger.LogDebug("Deserializing metadata file {0}", parametersAsset.Uri);
+                        parameters = (ParameterFile)parametersSerializer.Deserialize(reader);
+                    }
+                    if (parameters.Inputs != null && parameters.Inputs.Parameters != null)
+                    {
+                        foreach (Parameter p in parameters.Inputs.Parameters)
+                        {
+                            if (p.Name == "Path" && Int32.TryParse(p.Value, out int path))stacItem.Properties["saocom:path"] = path;
+                            if (p.Name == "Row" && Int32.TryParse(p.Value, out int row)) stacItem.Properties["saocom:row"] = row;
+                        }
+                    }
+                }
             }
         }
 
@@ -648,8 +671,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset metadataAsset = null;
-            metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.xml");
+            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"(slc|di|gec|gtc)-.*\.xml");
 
             return metadataAsset;
         }
@@ -657,9 +679,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
         protected virtual IAsset GetManifestAsset(IItem item)
         {
-            IAsset manifestAsset = null;
-            manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*\.xemt");
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*\.xemt");
             return manifestAsset;
+        }
+
+
+        protected virtual IAsset GetParametersAsset(IItem item)
+        {
+            IAsset parametersAsset = FindFirstAssetFromFileNameRegex(item, @"parameterFile2\.xml");
+            return parametersAsset;
         }
 
 

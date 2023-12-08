@@ -360,7 +360,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public string At { get; set; }
     }
 
-    // XEMT files (incomplete classes)
+    // =========================================================================
+    // .xemt files (incomplete classes)
+    // =========================================================================
 
     [XmlRoot(ElementName = "xemt", Namespace = "http://www.conae.gov.ar/CUSS/XEMT")]
     public class XEMT
@@ -473,5 +475,44 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         [XmlElement(ElementName = "Row")]
         public int Row { get; set; }
     }
+
+    // =========================================================================
+    // parameters2.xml
+    // =========================================================================
+
+    [XmlRoot(ElementName = "parameters", Namespace = "http://www.conae.gov.ar/CGSS/XPNet")]
+    public class ParameterFile
+    {
+        [XmlElement(ElementName = "inputs")]
+        public Inputs Inputs { get; set; }
+        [XmlElement(ElementName = "outputs")]
+        public Outputs Outputs { get; set; }
+    }
+
+    [XmlRoot(ElementName = "inputs")]
+    public class Inputs
+    {
+        [XmlElement(ElementName = "parameter")]
+        public List<Parameter> Parameters { get; set; }
+    }
+
+    [XmlRoot(ElementName = "outputs")]
+    public class Outputs
+    {
+        [XmlElement(ElementName = "parameter")]
+        public List<Parameter> Parameters { get; set; }
+    }
+
+    [XmlRoot(ElementName = "parameter")]
+    public class Parameter
+    {
+        [XmlElement(ElementName = "name")]
+        public string Name { get; set; }
+        [XmlElement(ElementName = "type")]
+        public string Type { get; set; }
+        [XmlElement(ElementName = "value")]
+        public string Value { get; set; }
+    }
+
 
 }

@@ -38,6 +38,8 @@
   },
   "properties": {
     "sat:orbit_state": "ascending",
+    "saocom:row": 529,
+    "saocom:path": 137,
     "proj:epsg": null,
     "proj:shape": [
       9848,
