@@ -84,10 +84,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             if (zipAsset != null)
             {
                 ZipArchiveAsset zipArchiveAsset = new ZipArchiveAsset(zipAsset, logger, resourceServiceProvider, _fileSystem);
+                zipArchiveAsset.IsInternalArchive = true;
                 zipArchiveAsset.UseParentAssetBaseDir = true;
-                var tmpDestination = LocalFileDestination.Create(_fileSystem.DirectoryInfo.FromDirectoryName(Path.GetTempPath()), item);
 
-                extractedAssets = await zipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
+                string dirName = Path.GetDirectoryName(zipArchiveAsset.Uri.AbsolutePath) ?? Path.GetTempPath();
+                IResource route = item;
+                IDestination destination = LocalFileDestination.Create(_fileSystem.DirectoryInfo.FromDirectoryName(dirName), item, true);
+
+                extractedAssets = await zipArchiveAsset.ExtractToDestinationAsync(destination, _carrierManager, System.Threading.CancellationToken.None);
             }
 
             if (extractedAssets != null && item is IAssetsContainer)
@@ -129,6 +133,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             Dictionary<string, object> properties = new Dictionary<string, object>();
             StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(item, kml, metadata), properties);
             AddSatStacExtension(metadata, stacItem);
+            AddOrbitInformation(metadata, manifest, stacItem);
             AddProjStacExtension(metadata, stacItem);
             AddViewStacExtension(metadata, manifest, stacItem);
             AddSarStacExtension(metadata, stacItem, item);
@@ -251,6 +256,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             int absOrbit;
             if (int.TryParse(metadata.Channel[0].StateVectorData.OrbitNumber, out absOrbit))
                 sat.AbsoluteOrbit = absOrbit;
+        }
+
+        private void AddOrbitInformation(SAOCOM_XMLProduct metadata, XEMT manifest, StacItem stacItem)
+        {
+            if (manifest != null && manifest.Product != null && manifest.Product.Features != null && manifest.Product.Features.GeographicAttributes != null && manifest.Product.Features.GeographicAttributes.PathRow != null)
+            {
+                stacItem.Properties["saocom:path"] = manifest.Product.Features.GeographicAttributes.PathRow.Path;
+                stacItem.Properties["saocom:row"] = manifest.Product.Features.GeographicAttributes.PathRow.Row;
+            }
         }
 
         private string GetProductType(SAOCOM_XMLProduct metadata)

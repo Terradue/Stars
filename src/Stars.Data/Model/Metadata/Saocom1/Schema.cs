@@ -410,6 +410,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public Production Production { get; set; }
         [XmlElement(ElementName = "acquisition")]
         public Acquisition Acquisition { get; set; }
+        [XmlElement(ElementName = "geographicAttributes")]
+        public GeographicAttributes GeographicAttributes { get; set; }
 
     }
 
@@ -456,5 +458,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         public string SideLooking { get; set; }
     }
 
+    [XmlRoot(ElementName = "geographicAttributes")]
+    public class GeographicAttributes
+    {
+        [XmlElement(ElementName = "pathRow")]
+        public PathRow PathRow { get; set; }
+    }
+
+    [XmlRoot(ElementName = "pathRow")]
+    public class PathRow
+    {
+        [XmlElement(ElementName = "Path")]
+        public int Path { get; set; }
+        [XmlElement(ElementName = "Row")]
+        public int Row { get; set; }
+    }
 
 }

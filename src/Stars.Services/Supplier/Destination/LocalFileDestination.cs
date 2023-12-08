@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         private LocalFileDestination(IFileInfo file, IResource resource)
         {
-            this.file = file;
+            this.file = file;   // note: file can be the directory containing the zip file in case of nested zips
             this.resource = resource;
         }
 
@@ -26,14 +26,19 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public bool Exists => file.Exists;
 
-        public static LocalFileDestination Create(IDirectoryInfo directory, IResource route)
+        // Field 'file' can refer to a directory, in that case base directory is that directory,
+        // otherwise the parent directory of 'file'
+        public string BaseDirectory => Directory.Exists(file.FullName) ? file.FullName : file.Directory.FullName;
+
+        public static LocalFileDestination Create(IDirectoryInfo directory, IResource route, bool ignoreEmptyFilename = false)
         {
             var filename = Path.GetFileName(route.Uri.ToString());
             if (route.ContentDisposition != null && !string.IsNullOrEmpty(route.ContentDisposition.FileName))
                 filename = route.ContentDisposition.FileName;
-            if (string.IsNullOrEmpty(filename))
+            if (string.IsNullOrEmpty(filename) && !ignoreEmptyFilename)
                 filename = Guid.NewGuid().ToString("N") + "/";
-            return new LocalFileDestination(directory.FileSystem.FileInfo.FromFileName(Path.Combine(directory.FullName, filename)), route);
+            string path = filename == null ? directory.FullName : Path.Combine(directory.FullName, filename);
+            return new LocalFileDestination(directory.FileSystem.FileInfo.FromFileName(path), route);
         }
 
         public void PrepareDestination()
@@ -45,7 +50,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
         public IDestination To(IResource subroute, string relPathFix = null)
         {
             // we first integrate the relPath
-            string relPath = relPathFix ?? "";
+            string relPath = relPathFix ?? String.Empty;
 
             // we identify the filename
             string filename = Path.GetFileName(subroute.Uri.IsAbsoluteUri ? subroute.Uri.LocalPath : subroute.Uri.ToString());
@@ -90,7 +95,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
             }
             if (relPath.StartsWith("/")) relPath = relPath.Substring(1);
             if (filename.StartsWith("/")) filename = filename.Substring(1);
-            var newFilePath = Path.Combine(file.Directory.FullName, relPath, filename);
+            var newFilePath = Path.Combine(BaseDirectory, relPath, filename);
             return new LocalFileDestination(file.FileSystem.FileInfo.FromFileName(newFilePath), subroute);
         }
 
