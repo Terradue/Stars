@@ -98,6 +98,9 @@ namespace Terradue.Stars.Services.Processing
             }
         }
 
+        public bool IsInternalArchive { get; set; }
+
+
         // Directory where ZIP file is located
         // (value is set automatically if UseParentAssetBaseDir is set to true)
         public string ParentAssetBaseDir { get; set; }
@@ -119,7 +122,7 @@ namespace Terradue.Stars.Services.Processing
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
             zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
-            string subFolder = AutodetectSubfolder();
+            string subFolder = IsInternalArchive ? String.Empty : AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)
             {

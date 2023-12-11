@@ -23,7 +23,12 @@ namespace Terradue.Stars.Services.Credentials
 
         public virtual NetworkCredential GetCredential(Uri uri, string authType)
         {
-            var cred = _credentialsCache.Values.FirstOrDefault(v => MatchUriAndAuth(v, uri, authType));
+            // get the matching credentials and pick one randomly
+            var creds = _credentialsCache.Values
+                        .Where(v => MatchUriAndAuth(v, uri, authType));
+            if ( creds.Count() == 0 ) return null;
+            int i = new Random().Next(0, creds.Count() - 1);
+            var cred = creds.ElementAt(i);
             if (cred == null) return null;
             return cred.ToNetWorkCredential();
         }

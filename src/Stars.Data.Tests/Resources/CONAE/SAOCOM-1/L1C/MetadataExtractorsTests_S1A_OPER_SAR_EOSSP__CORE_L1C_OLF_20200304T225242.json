@@ -37,17 +37,9 @@
     ]
   },
   "properties": {
-    "datetime": "2019-11-08T09:50:27.048Z",
-    "created": "2020-03-04T23:12:48Z",
-    "platform": "saocom-1a",
-    "mission": "saocom-1",
-    "instruments": [
-      "sao1a"
-    ],
-    "sensor_type": "radar",
-    "gsd": 10.0,
-    "title": "SAOCOM-1A SAO1A GEC VV/VH/HH/HV 2019-11-08 09:50:27",
     "sat:orbit_state": "descending",
+    "saocom:path": 34,
+    "saocom:row": 151,
     "proj:epsg": null,
     "proj:shape": [
       4463,
@@ -71,6 +63,16 @@
     "sar:resolution_range": 10.0,
     "sar:resolution_azimuth": 10.0,
     "processing:level": "L1C",
+    "datetime": "2019-11-08T09:50:27.048Z",
+    "created": "2020-03-04T23:12:48Z",
+    "platform": "saocom-1a",
+    "mission": "saocom-1",
+    "instruments": [
+      "sao1a"
+    ],
+    "sensor_type": "radar",
+    "gsd": 10.0,
+    "title": "SAOCOM-1A SAO1A GEC VV/VH/HH/HV 2019-11-08 09:50:27",
     "providers": [
       {
         "name": "CONAE",
