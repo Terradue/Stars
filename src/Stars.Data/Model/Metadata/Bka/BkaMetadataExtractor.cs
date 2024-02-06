@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Geometry.GeoJson;
+using Terradue.Stars.Services.Processing;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
 using System.Xml;
 using System.Xml.Serialization;
 using Stac.Extensions.Sat;
@@ -31,9 +35,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         public override string Label => "BKA (Belarus) mission product metadata extractor";
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(BkaMetadata));
- 
-        public BkaMetadataExtractor(ILogger<BkaMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
+
+        private readonly IFileSystem _fileSystem;
+        private readonly CarrierManager _carrierManager;
+
+        public BkaMetadataExtractor(ILogger<BkaMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem, CarrierManager carrierManager) : base(logger, resourceServiceProvider)
         {
+            _fileSystem = fileSystem;
+            _carrierManager = carrierManager;
         }
 
         public override bool CanProcess(IResource route, IDestination destination)
@@ -42,9 +51,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             if (item == null) return false;
             try
             {
-                IAsset metadataAsset = GetMetadataAsset(item);
-                BkaMetadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
-                return metadata != null;
+                IAsset[] metadataAssets = GetMetadataAsset(item);
+                if (metadataAssets == null || metadataAssets.Length == 0)
+                {
+                    IAsset topZipAsset = GetTopZipAsset(item);
+                    return (topZipAsset != null);
+                }
+                else
+                {
+                    BkaMetadata[] metadata = ReadMetadata(metadataAssets).GetAwaiter().GetResult();
+                    return metadata != null;
+                }
             }
             catch (Exception)
             {
@@ -54,8 +71,42 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
-            IAsset metadataAsset = GetMetadataAsset(item);
-            BkaMetadata metadata = await ReadMetadata(metadataAsset);
+            IAsset topZipAsset = GetTopZipAsset(item);
+            List<IAssetsContainer> innerZipAssetContainers = null;
+            
+            if (topZipAsset != null)
+            {
+                ZipArchiveAsset topZipArchiveAsset = new ZipArchiveAsset(topZipAsset, logger, resourceServiceProvider, _fileSystem);
+                var tmpDestination = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(topZipArchiveAsset.Uri.AbsolutePath)), item);
+                IAssetsContainer topZipAssets = await topZipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
+
+                IAsset productZipAsset = GetProductZipAsset(topZipAssets);
+                if (productZipAsset != null)
+                {
+                    ZipArchiveAsset productZipArchiveAsset = new ZipArchiveAsset(productZipAsset, logger, resourceServiceProvider, _fileSystem);
+                    var tmpDestination2 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(productZipArchiveAsset.Uri.AbsolutePath)), item);
+                    IAssetsContainer productZipAssets = await productZipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
+
+                    IEnumerable<IAsset> innerZipAssets = GetInnerZipAssets(productZipAssets);
+                    if (innerZipAssets != null)
+                    {
+                        foreach (IAsset innerZipAsset in innerZipAssets)
+                        {
+                            ZipArchiveAsset innerZipArchiveAsset = new ZipArchiveAsset(innerZipAsset, logger, resourceServiceProvider, _fileSystem);
+                            var tmpDestination3 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(innerZipArchiveAsset.Uri.AbsolutePath)), item);
+                            IAssetsContainer innerZipAssetContainer = await innerZipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
+                            if (innerZipAssetContainers == null) innerZipAssetContainers = new List<IAssetsContainer>();
+                            innerZipAssetContainers.Add(innerZipAssetContainer);
+                        }
+                    }
+
+                }
+
+            }
+
+            IAsset[] metadataAssets = GetMetadataAsset(item, innerZipAssetContainers);
+
+            BkaMetadata[] metadata = await ReadMetadata(metadataAssets);
 
             StacItem stacItem = CreateStacItem(metadata);
 
@@ -254,12 +305,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                 stacItem.Assets.Add(key, stacAsset);
             }
 
-            IAsset metadataAsset = GetMetadataAsset(item);
-            if (metadataAsset != null)
+            IAsset[] metadataAssets = GetMetadataAsset(item);
+            if (metadataAssets != null && metadataAssets.Length != 0)
             {
-                StacAsset stacAsset = StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString())));
-                stacItem.Assets.Add("metadata", stacAsset);
-                stacAsset.Properties.AddRange(metadataAsset.Properties);
+                foreach (IAsset metadataAsset in metadataAssets)
+                {
+                    StacAsset stacAsset = StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString())));
+                    stacItem.Assets.Add("metadata", stacAsset);
+                    stacAsset.Properties.AddRange(metadataAsset.Properties);
+                }
             }
 
             IAsset overviewAsset = FindFirstAssetFromFileNameRegex(item, @".*_preview\.jpg");
@@ -346,16 +400,49 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         }
 
 
-        protected virtual IAsset GetMetadataAsset(IItem item)
+        protected virtual IAsset[] GetMetadataAsset(IItem item, IEnumerable<IAssetsContainer> innerAssetContainers = null)
         {
             IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"^.*_pasp-en\.xml");
-            if (metadataAsset != null) return metadataAsset;
+            if (metadataAsset != null) return new IAsset[] { metadataAsset };
+
+            if (innerAssetContainers != null)
+            {
+                List<IAsset> metadataAssets = new List<IAsset>();
+                foreach (IAssetsContainer innerAssetContainer in innerAssetContainers)
+                {
+                    metadataAsset = FindFirstAssetFromFileNameRegex(innerAssetContainer, @"^.*_pasp-en\.xml");
+                    if (metadataAsset != null) metadataAssets.Add(metadataAsset);
+                }
+                if (metadataAssets.Count != 0) return metadataAssets.ToArray();
+            }
 
             throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
         }
 
-        public virtual async Task<BkaMetadata> ReadMetadata(IAsset metadataAsset)
+
+        protected virtual IAsset GetTopZipAsset(IItem item)
         {
+            IAsset zipAsset = FindFirstAssetFromFileNameRegex(item, @".*\.zip");
+            return zipAsset;
+        }
+
+        protected virtual IAsset GetProductZipAsset(IAssetsContainer container)
+        {
+            IAsset zipAsset = FindFirstAssetFromFileNameRegex(container, @"PRODUCT\.zip");
+            return zipAsset;
+        }
+
+        protected virtual IEnumerable<IAsset> GetInnerZipAssets(IAssetsContainer container)
+        {
+            IEnumerable<IAsset> zipAssets = this.FindAssetsFromFileNameRegex(container, @"PRODUCT\.zip");
+            return zipAssets;
+        }
+
+        public virtual async Task<BkaMetadata[]> ReadMetadata(IEnumerable<IAsset> metadataAssets)
+        {
+            List<BkaMetadata> metadata = new List<BkaMetadata>();
+
+            foreach (IAsset metadataAsset in metadataAssets)
             using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
             {
                 XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
@@ -363,8 +450,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                 
                 logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
 
-                return (BkaMetadata)metadataSerializer.Deserialize(reader);
+                metadata.Add((BkaMetadata)metadataSerializer.Deserialize(reader));
             }
+
+            return metadata.ToArray();
         }
     }
 }
