@@ -1,0 +1,196 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "4089411-0220-C-1-1-1139831-160712T150120-BR",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -45.95907552,
+          -23.95074002
+        ],
+        [
+          -45.72936198,
+          -23.90813368
+        ],
+        [
+          -45.81505208,
+          -23.51828993
+        ],
+        [
+          -46.04410156,
+          -23.5607921
+        ],
+        [
+          -45.95907552,
+          -23.95074002
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2016-07-12T15:01:20.0000000Z",
+    "created": "2023-02-21T13:53:27.0000000Z",
+    "platform": "bka",
+    "constellation": "bka",
+    "mission": "bka/kanopus-v",
+    "instruments": [
+      "mss"
+    ],
+    "sensor_type": "optical",
+    "spectral_mode": "MUL/PAN",
+    "sat:platform_international_designator": "2012-039B",
+    "proj:epsg": 32723,
+    "proj:shape": [
+      4441,
+      2633
+    ],
+    "view:incidence_angle": 1.65,
+    "view:sun_azimuth": 2.58,
+    "view:sun_elevation": 44.38,
+    "processing:level": "L1C",
+    "title": "BKA MSS L1C 2016-07-12 15:01:20",
+    "providers": [
+      {
+        "name": "NAS",
+        "description": "BKA (formerly known as BelKa 2) is a Belarusian remote sensing satellite developed under an agreement between the National Academy of Sciences of Belarus (NAS) and the Federal Space Agency of the Russian Federation. The BKA satellite is almost an exact copy of the Russian Kanopus-Vulkan N1 Environmental Satellite (Kanopus-V 1).",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://gis.by/en/tech/bka/"
+      }
+    ],
+    "licence": "proprietary",
+    "gsd": 10.59
+  },
+  "bbox": [
+    -46.04410156,
+    -23.95074002,
+    -45.72936198,
+    -23.51828993
+  ],
+  "assets": {
+    "L1C_MUL": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/925_bka_1028560/PRODUCT/4089411-0220-MUL-C-1-1-1139831-160712T150120-BR/4089411-0220-MUL-C-1-1-1139831-160712T150120-BR.tif",
+      "title": "L1C MUL",
+      "filename": "4089411-0220-MUL-C-1-1-1139831-160712T150120-BR.tif",
+      "eo:bands": [
+        {
+          "name": "MS1",
+          "common_name": "blue",
+          "center_wavelength": 0.492,
+          "full_width_half_max": 0.04
+        },
+        {
+          "name": "MS2",
+          "common_name": "green",
+          "center_wavelength": 0.558,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "MS3",
+          "common_name": "red",
+          "center_wavelength": 0.675,
+          "full_width_half_max": 0.09
+        },
+        {
+          "name": "MS4",
+          "common_name": "nir",
+          "center_wavelength": 0.782,
+          "full_width_half_max": 0.1
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "int8",
+          "offset": 0.0
+        },
+        {
+          "data_type": "int8",
+          "offset": 0.0
+        },
+        {
+          "data_type": "int8",
+          "offset": 0.0
+        },
+        {
+          "data_type": "int8",
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata_MUL": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/925_bka_1028560/PRODUCT/4089411-0220-MUL-C-1-1-1139831-160712T150120-BR/4089411-0220-MUL-C-1-1-1139831-160712T150120-BR_pasp-en.xml",
+      "filename": "4089411-0220-MUL-C-1-1-1139831-160712T150120-BR_pasp-en.xml"
+    },
+    "overview_MUL": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/925_bka_1028560/PRODUCT/4089411-0220-MUL-C-1-1-1139831-160712T150120-BR/4089411-0220-MUL-C-1-1-1139831-160712T150120-BR_preview.jpg",
+      "filename": "4089411-0220-MUL-C-1-1-1139831-160712T150120-BR_preview.jpg"
+    },
+    "L1C_PAN": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "href": "data/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/925_bka_1028560/PRODUCT/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR.tif",
+      "title": "L1C PAN",
+      "filename": "4089411-0220-PAN-C-1-1-1139831-160712T150120-BR.tif",
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "common_name": "pan",
+          "center_wavelength": 0.66,
+          "full_width_half_max": 0.208
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "int8",
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata_PAN": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/925_bka_1028560/PRODUCT/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR_pasp-en.xml",
+      "filename": "4089411-0220-PAN-C-1-1-1139831-160712T150120-BR_pasp-en.xml"
+    },
+    "overview_PAN": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/925_bka_1028560/PRODUCT/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR_preview.jpg",
+      "filename": "4089411-0220-PAN-C-1-1-1139831-160712T150120-BR_preview.jpg"
+    }
+  },
+  "links": []
+}

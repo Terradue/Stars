@@ -1,8 +1,10 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
     "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
@@ -52,7 +54,9 @@
       34082,
       17110
     ],
-    "view:azimuth": 84.08,
+    "view:incidence_angle": 2.31,
+    "view:sun_azimuth": 6.8,
+    "view:sun_elevation": 84.08,
     "processing:level": "L1C",
     "title": "BKA MSS L1C 2015-09-24 04:43:02",
     "providers": [
@@ -86,7 +90,21 @@
       "href": "data/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID/4077631-0220-PAN-C-1-1-1100761-150924T044238-ID.tif",
       "title": "L1C PAN",
       "filename": "4077631-0220-PAN-C-1-1-1100761-150924T044238-ID.tif",
-      "file:size": 0
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "common_name": "pan",
+          "center_wavelength": 0.66,
+          "full_width_half_max": 0.208
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "int8",
+          "offset": 0.0
+        }
+      ]
     },
     "metadata": {
       "type": "application/xml",
