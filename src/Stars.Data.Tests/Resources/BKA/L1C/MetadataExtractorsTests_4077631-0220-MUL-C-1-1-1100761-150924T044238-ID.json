@@ -54,7 +54,9 @@
       6791,
       3052
     ],
-    "view:azimuth": 84.08,
+    "view:incidence_angle": 2.31,
+    "view:sun_azimuth": 6.84,
+    "view:sun_elevation": 84.08,
     "processing:level": "L1C",
     "title": "BKA MSS L1C 2015-09-24 04:43:01",
     "providers": [

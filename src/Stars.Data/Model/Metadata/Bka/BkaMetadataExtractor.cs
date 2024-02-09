@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Geometry.GeoJson;
+using Terradue.Stars.Services.Processing;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
 using System.Xml;
 using System.Xml.Serialization;
 using Stac.Extensions.Sat;
@@ -31,9 +35,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         public override string Label => "BKA (Belarus) mission product metadata extractor";
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(BkaMetadata));
- 
-        public BkaMetadataExtractor(ILogger<BkaMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
+
+        private readonly IFileSystem _fileSystem;
+        private readonly CarrierManager _carrierManager;
+
+        public BkaMetadataExtractor(ILogger<BkaMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem, CarrierManager carrierManager) : base(logger, resourceServiceProvider)
         {
+            _fileSystem = fileSystem;
+            _carrierManager = carrierManager;
         }
 
         public override bool CanProcess(IResource route, IDestination destination)
@@ -42,9 +51,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             if (item == null) return false;
             try
             {
-                IAsset metadataAsset = GetMetadataAsset(item);
-                BkaMetadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
-                return metadata != null;
+                IAsset[] metadataAssets = GetMetadataAssets(item);
+                if (metadataAssets == null || metadataAssets.Length == 0)
+                {
+                    IAsset topZipAsset = GetTopZipAsset(item);
+                    return (topZipAsset != null);
+                }
+                else
+                {
+                    BkaMetadata[] metadata = ReadMetadata(metadataAssets).GetAwaiter().GetResult();
+                    return metadata != null;
+                }
             }
             catch (Exception)
             {
@@ -54,20 +71,60 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
-            IAsset metadataAsset = GetMetadataAsset(item);
-            BkaMetadata metadata = await ReadMetadata(metadataAsset);
+            IAsset topZipAsset = GetTopZipAsset(item);
+            List<IAssetsContainer> innerZipAssetContainers = null;
+
+            if (topZipAsset != null)
+            {
+                ZipArchiveAsset topZipArchiveAsset = new ZipArchiveAsset(topZipAsset, logger, resourceServiceProvider, _fileSystem);
+                var tmpDestination = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(topZipArchiveAsset.Uri.AbsolutePath)), item, true);
+                IAssetsContainer topZipAssets = await topZipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
+
+                IAsset productZipAsset = GetProductZipAsset(topZipAssets);
+                if (productZipAsset != null)
+                {
+                    ZipArchiveAsset productZipArchiveAsset = new ZipArchiveAsset(productZipAsset, logger, resourceServiceProvider, _fileSystem);
+                    var tmpDestination2 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(productZipArchiveAsset.Uri.AbsolutePath)), item, true);
+                    IAssetsContainer productZipAssets = await productZipArchiveAsset.ExtractToDestinationAsync(tmpDestination2, _carrierManager, System.Threading.CancellationToken.None);
+
+                    IEnumerable<IAsset> innerZipAssets = GetInnerZipAssets(productZipAssets);
+                    if (innerZipAssets != null)
+                    {
+                        foreach (IAsset innerZipAsset in innerZipAssets)
+                        {
+                            ZipArchiveAsset innerZipArchiveAsset = new ZipArchiveAsset(innerZipAsset, logger, resourceServiceProvider, _fileSystem);
+                            var tmpDestination3 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(innerZipArchiveAsset.Uri.AbsolutePath)), item, true);
+                            IAssetsContainer innerZipAssetContainer = await innerZipArchiveAsset.ExtractToDestinationAsync(tmpDestination3, _carrierManager, System.Threading.CancellationToken.None);
+                            if (innerZipAssetContainers == null) innerZipAssetContainers = new List<IAssetsContainer>();
+                            innerZipAssetContainers.Add(innerZipAssetContainer);
+                        }
+                    }
+
+                }
+
+            }
+
+            IAsset[] metadataAssets = GetMetadataAssets(item, innerZipAssetContainers);
+
+            BkaMetadata[] metadata = await ReadMetadata(metadataAssets);
 
             StacItem stacItem = CreateStacItem(metadata);
 
-            AddAssets(stacItem, item, metadata);
+            AddAssets(stacItem, item, innerZipAssetContainers?.ToArray());
 
             return StacItemNode.Create(stacItem, item.Uri); ;
         }
 
 
-        internal virtual StacItem CreateStacItem(BkaMetadata metadata)
+        internal virtual StacItem CreateStacItem(BkaMetadata[] metadata)
         {
-            string identifier = metadata.Processing.Scene01FileName.Replace(".tif", String.Empty);
+            bool multipleProducts = metadata.Length > 1;
+            string identifier = metadata[0].Processing.Scene01FileName.Replace(".tif", String.Empty);
+            if (multipleProducts)
+            {
+                identifier = identifier.Replace("-MUL-", "-").Replace("-PAN-", "-");
+            }
+
             StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), GetCommonMetadata(metadata));
             AddSatStacExtension(metadata, stacItem);
             AddProjStacExtension(metadata, stacItem);
@@ -80,60 +137,110 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             return stacItem;
         }
 
-        private void AddEoStacExtension(BkaMetadata metadata, StacItem stacItem)
+        private void AddEoStacExtension(BkaMetadata[] metadata, StacItem stacItem)
         {
             EoStacExtension eo = stacItem.EoExtension();
         }
 
 
-        private void AddSatStacExtension(BkaMetadata metadata, StacItem stacItem)
+        private void AddSatStacExtension(BkaMetadata[] metadata, StacItem stacItem)
         {
             SatStacExtension sat = stacItem.SatExtension();
             sat.PlatformInternationalDesignator = "2012-039B";
         }
 
-        private void AddProjStacExtension(BkaMetadata metadata, StacItem stacItem)
+        private void AddProjStacExtension(BkaMetadata[] metadata, StacItem stacItem)
         {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            proj.Epsg = metadata.GeoReference?.EpsgCode;
-            if (metadata.ImageInfo != null && metadata.ImageInfo.Height != null && metadata.ImageInfo.Width != null)
+            proj.Epsg = metadata[0].GeoReference?.EpsgCode;
+            int height = 0, width = 0;
+            foreach (BkaMetadata m in metadata)
             {
-                proj.Shape = new int[2] { metadata.ImageInfo.Height.Value, metadata.ImageInfo.Width.Value };
+                if (m.ImageInfo != null && m.ImageInfo.Height != null && m.ImageInfo.Width != null)
+                {
+                    if (height == 0 || m.ImageInfo.Height.Value < height) height = m.ImageInfo.Height.Value;
+                    if (width == 0 || m.ImageInfo.Width.Value < width) width = m.ImageInfo.Width.Value;
+                }
+            }
+            if (height != 0 && width != 0)
+            {
+                proj.Shape = new int[2] { height, width };
             }
         }
 
-        private void AddProjViewExtension(BkaMetadata metadata, StacItem stacItem)
+        private void AddProjViewExtension(BkaMetadata[] metadata, StacItem stacItem)
         {
             ViewStacExtension view = stacItem.ViewExtension();
-            if (metadata.SatelliteData != null && metadata.SatelliteData.SceneAcquisition != null)
+            int viewingAngleCount = 0, sunAzimuthCount = 0, sunElevationCount = 0;
+            double viewingAngleSum = 0, sunAzimuthSum = 0, sunElevationSum = 0;
+            foreach (BkaMetadata m in metadata)
             {
-                BkaSceneAcquisition sceneAcquisition = metadata.SatelliteData.SceneAcquisition;
-                if (sceneAcquisition.ViewingAngle != null) view.Azimuth = sceneAcquisition.ViewingAngle.Value;
-                if (sceneAcquisition.SunAzimuth != null) view.Azimuth = sceneAcquisition.SunAzimuth.Value;
-                if (sceneAcquisition.SunElevation != null) view.Azimuth = sceneAcquisition.SunElevation.Value;
+                if (m.SatelliteData != null && m.SatelliteData.SceneAcquisition != null)
+                {
+                    BkaSceneAcquisition sceneAcquisition = m.SatelliteData.SceneAcquisition;
+                    if (sceneAcquisition.ViewingAngle != null)
+                    {
+                        viewingAngleCount++;
+                        viewingAngleSum += sceneAcquisition.ViewingAngle.Value;
+                    }
+                    if (sceneAcquisition.SunAzimuth != null)
+                    {
+                        sunAzimuthCount++;
+                        sunAzimuthSum += sceneAcquisition.SunAzimuth.Value;
+                    }
+                    if (sceneAcquisition.SunElevation != null)
+                    {
+                        sunElevationCount++;
+                        sunElevationSum += sceneAcquisition.SunElevation.Value;
+                    }
+                }
             }
+            if (viewingAngleCount != 0) view.IncidenceAngle = viewingAngleSum / viewingAngleCount;
+            if (sunAzimuthCount != 0) view.SunAzimuth = sunAzimuthSum / sunAzimuthCount;
+            if (sunElevationCount != 0) view.SunElevation = sunElevationSum / sunElevationCount;
         }
 
-        private void AddProcessingStacExtension(BkaMetadata metadata, StacItem stacItem)
+        private void AddProcessingStacExtension(BkaMetadata[] metadata, StacItem stacItem)
         {
             var proc = stacItem.ProcessingExtension();
-            if (metadata.Processing != null && metadata.Processing.Level != null)
+            string processingLevel = GetProcessingLevel(metadata);
+            if (processingLevel != null)
             {
-                proc.Level = GetProcessingLevel(metadata);
+                proc.Level = processingLevel;
             }
         }
 
-        private string GetProcessingLevel(BkaMetadata metadata)
+        private string GetProcessingLevel(BkaMetadata[] metadata)
         {
-            return String.Format("L1{0}", metadata.Processing.Level);
+            if (metadata[0].Processing?.Level != null)
+            {
+                return String.Format("L1{0}", metadata[0].Processing.Level);
+            }
+            return null;
         }
 
-        private string GetInstrument(BkaMetadata metadata)
+        private string GetInstrument(BkaMetadata[] metadata)
         {
             return "MSS";
         }
 
-        private IDictionary<string, object> GetCommonMetadata(BkaMetadata metadata)
+        private string GetSpectralMode(BkaMetadata[] metadata)
+        {
+            string spectralMode = null;
+            foreach (BkaMetadata m in metadata)
+            {
+                if (m.Processing?.Instrument != null)
+                {
+                    if (spectralMode == null) spectralMode = String.Empty;
+                    else spectralMode += "/";
+                    spectralMode += m.Processing.Instrument;
+                }
+            }
+            return spectralMode;
+        }
+
+
+        private IDictionary<string, object> GetCommonMetadata(BkaMetadata[] metadata)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
@@ -144,7 +251,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             return properties;
         }
 
-        private void FillBasicsProperties(BkaMetadata metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(BkaMetadata[] metadata, IDictionary<String, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -158,116 +265,176 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             );
         }
 
-        private void AddOtherProperties(BkaMetadata metadata, StacItem item)
+        private void AddOtherProperties(BkaMetadata[] metadata, StacItem item)
         {
             IDictionary<String, object> properties = item.Properties;
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "NAS", 
+                    "NAS",
                     "BKA (formerly known as BelKa 2) is a Belarusian remote sensing satellite developed under an agreement between the National Academy of Sciences of Belarus (NAS) and the Federal Space Agency of the Russian Federation. The BKA satellite is almost an exact copy of the Russian Kanopus-Vulkan N1 Environmental Satellite (Kanopus-V 1).",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://gis.by/en/tech/bka/")
                 );
             }
             properties["licence"] = "proprietary";
-            if (metadata.GeoReference.SceneGeoposition.GroundResolution != null)
+            double gsd = 0;
+            foreach (BkaMetadata m in metadata)
             {
-                item.Gsd = metadata.GeoReference.SceneGeoposition.GroundResolution.PixelSizeNorthing;
+                BkaSceneGroundResolution groundResolution = m.GeoReference?.SceneGeoposition?.GroundResolution;
+                if (groundResolution != null)
+                {
+                    if (gsd == 0 || groundResolution.PixelSizeNorthing > gsd) gsd = groundResolution.PixelSizeNorthing;
+                }
             }
+            if (gsd != 0) item.Gsd = gsd;
         }
 
 
-        private void FillDateTimeProperties(BkaMetadata metadata, Dictionary<string, object> properties)
+        private void FillDateTimeProperties(BkaMetadata[] metadata, Dictionary<string, object> properties)
         {
             var format = "yyyy-MM-ddTHH:mm:ss";
             var format2 = "dd.MM.yyyy HH:mm:ss";
 
-            if (DateTime.TryParseExact(metadata.SatelliteData.SceneAcquisition.AcquisitionTime, format, null, DateTimeStyles.AssumeUniversal, out DateTime dt))
+            DateTime datetime = DateTime.MaxValue;
+            DateTime created = DateTime.MaxValue;
+
+            foreach (BkaMetadata m in metadata)
             {
-                properties["datetime"] = dt.ToUniversalTime().ToString("O");
-            }
-            if (DateTime.TryParseExact(metadata.Production?.CreationDate, format, null, DateTimeStyles.AssumeUniversal, out dt))
-            {
-                properties["created"] = dt.ToUniversalTime().ToString("O");
-            }
-            else if (DateTime.TryParseExact(metadata.Production?.CreationDate, format2, null, DateTimeStyles.AssumeUniversal, out dt))
-            {
-                properties["created"] = dt.ToUniversalTime().ToString("O");
+
+                if (DateTime.TryParseExact(m.SatelliteData.SceneAcquisition.AcquisitionTime, format, null, DateTimeStyles.AssumeUniversal, out DateTime dt))
+                {
+                    if (dt.ToUniversalTime() < datetime) datetime = dt.ToUniversalTime();
+                    properties["datetime"] = datetime.ToString("O");
+                }
+                if (DateTime.TryParseExact(m.Production?.CreationDate, format, null, DateTimeStyles.AssumeUniversal, out dt))
+                {
+                    if (dt.ToUniversalTime() < created) {
+                        created = dt.ToUniversalTime();
+                        properties["created"] = created.ToString("O");
+                    }
+                }
+                else if (DateTime.TryParseExact(m.Production?.CreationDate, format2, null, DateTimeStyles.AssumeUniversal, out dt))
+                {
+                    if (dt.ToUniversalTime() < created) {
+                        created = dt.ToUniversalTime();
+                        properties["created"] = created.ToString("O");
+                    }
+                }
             }
         }
 
-        private void FillPlatformDefinition(BkaMetadata metadata, Dictionary<string, object> properties)
+        private void FillPlatformDefinition(BkaMetadata[] metadata, Dictionary<string, object> properties)
         {
             string platform = "bka";
-            if (metadata.Processing?.Satellite != null) platform = metadata.Processing.Satellite.ToLower();
+            if (metadata[0].Processing?.Satellite != null) platform = metadata[0].Processing.Satellite.ToLower();
             string mission = "bka";
-            if (metadata.Processing?.Mission != null) mission = metadata.Processing.Mission.ToLower();
+            if (metadata[0].Processing?.Mission != null) mission = metadata[0].Processing.Mission.ToLower();
             properties["platform"] = platform;
             properties["constellation"] = platform;
             properties["mission"] = mission;
             properties["instruments"] = new string[] { GetInstrument(metadata).ToLower() };
             properties["sensor_type"] = "optical";
-            if (metadata.Processing?.Instrument != null)
-            properties["spectral_mode"] = metadata.Processing?.Instrument;
+            string spectralMode = GetSpectralMode(metadata);
+            if (spectralMode != null) properties["spectral_mode"] = spectralMode;
         }
 
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(BkaMetadata metadata)
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(BkaMetadata[] metadata)
         {
-            BkaGeodeticCoordinates coordinates = metadata.GeoReference.SceneGeoposition.GeodeticCoordinates;
+            BkaGeodeticCoordinates baseCoordinates = metadata[0].GeoReference.SceneGeoposition.GeodeticCoordinates;
+            bool falling = baseCoordinates.Corner2NWLat < baseCoordinates.Corner3NELat;   // orbit goes NW -> SE or SE -> NW
+
+            double swLon = 180, swLat = 0, seLon = -180, seLat = 0, neLon = 0, neLat = 0, nwLon = 0, nwLat = 0;
+            foreach (BkaMetadata m in metadata)
+            {
+                if (m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner1SWLon < swLon)
+                {
+                    swLon = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner1SWLon;
+                    swLat = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner1SWLat;
+                    nwLon = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner2NWLon;
+                    nwLat = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner2NWLat;
+                }
+                if (m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner4SELon > seLon)
+                {
+                    seLon = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner4SELon;
+                    seLat = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner4SELat;
+                    neLon = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner3NELon;
+                    neLat = m.GeoReference.SceneGeoposition.GeodeticCoordinates.Corner3NELat;
+                }
+            }
+
+
             List<GeoJSON.Net.Geometry.Position> positions = new List<Position>
             {
-                new GeoJSON.Net.Geometry.Position(coordinates.Corner1SWLat, coordinates.Corner1SWLon),
-                new GeoJSON.Net.Geometry.Position(coordinates.Corner4SELat, coordinates.Corner4SELon),
-                new GeoJSON.Net.Geometry.Position(coordinates.Corner3NELat, coordinates.Corner3NELon),
-                new GeoJSON.Net.Geometry.Position(coordinates.Corner2NWLat, coordinates.Corner2NWLon),
-                new GeoJSON.Net.Geometry.Position(coordinates.Corner1SWLat, coordinates.Corner1SWLon)
+                new GeoJSON.Net.Geometry.Position(swLat, swLon),
+                new GeoJSON.Net.Geometry.Position(seLat, seLon),
+                new GeoJSON.Net.Geometry.Position(neLat, neLon),
+                new GeoJSON.Net.Geometry.Position(nwLat, nwLon),
+                new GeoJSON.Net.Geometry.Position(swLat, swLon)
             };
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(positions.ToArray());
             return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
         }
 
 
-        protected void AddAssets(StacItem stacItem, IItem item, BkaMetadata metadata)
+        protected void AddAssets(StacItem stacItem, IItem item, IAssetsContainer[] assetContainers)
         {
-            IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, @".*\.tif");
-            if (imageAsset != null)
+            if (assetContainers == null || assetContainers.Length == 0)
             {
-                StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"));
-                stacAsset.Roles.Add("dn");
-
-                string key = String.Format("{0}_{1}",
-                    GetProcessingLevel(metadata),
-                    metadata.Processing?.Instrument
-                );
-                stacAsset.Properties["title"] = key.Replace("_", " ");
-                stacAsset.Properties.AddRange(imageAsset.Properties);
-
-                BkaSpectral spectral = metadata.Radiometry.Spectral;
-                if (spectral.BandMS1 != null) AddBandAsset(spectral.BandMS1, stacAsset);
-                if (spectral.BandMS2 != null) AddBandAsset(spectral.BandMS2, stacAsset);
-                if (spectral.BandMS3 != null) AddBandAsset(spectral.BandMS3, stacAsset);
-                if (spectral.BandMS4 != null) AddBandAsset(spectral.BandMS4, stacAsset);
-
-                stacItem.Assets.Add(key, stacAsset);
+                assetContainers = new IAssetsContainer[] { item };
             }
-
-            IAsset metadataAsset = GetMetadataAsset(item);
-            if (metadataAsset != null)
+            foreach (IAssetsContainer container in assetContainers)
             {
-                StacAsset stacAsset = StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString())));
-                stacItem.Assets.Add("metadata", stacAsset);
-                stacAsset.Properties.AddRange(metadataAsset.Properties);
-            }
+                IAsset[] metadataAssets = GetMetadataAssets(container, null);
+                BkaMetadata[] metadata = ReadMetadata(metadataAssets).GetAwaiter().GetResult();
 
-            IAsset overviewAsset = FindFirstAssetFromFileNameRegex(item, @".*_preview\.jpg");
-            if (overviewAsset != null)
-            {
-                StacAsset stacAsset = StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri, new ContentType(MimeTypes.GetMimeType(overviewAsset.Uri.ToString())));
-                stacAsset.Properties.AddRange(overviewAsset.Properties);
-                stacItem.Assets.Add("overview", stacAsset);
+                if (metadata.Length != 1)
+                {
+                    throw new Exception("Missing/invalid metadata");
+                }
+                IAsset metadataAsset = metadataAssets[0];
+                BkaMetadata subProductMetadata = metadata[0];
+
+                IAsset imageAsset = FindFirstAssetFromFileNameRegex(container, @".*\.tif");
+                if (imageAsset != null)
+                {
+                    StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"));
+                    stacAsset.Roles.Add("dn");
+
+                    string key = String.Format("{0}_{1}",
+                        GetProcessingLevel(metadata),
+                        subProductMetadata.Processing?.Instrument
+                    );
+                    stacAsset.Properties["title"] = key.Replace("_", " ");
+                    stacAsset.Properties.AddRange(imageAsset.Properties);
+
+                    BkaSpectral spectral = subProductMetadata.Radiometry.Spectral;
+                    if (spectral.BandMS1 != null) AddBandAsset(spectral.BandMS1, stacAsset);
+                    if (spectral.BandMS2 != null) AddBandAsset(spectral.BandMS2, stacAsset);
+                    if (spectral.BandMS3 != null) AddBandAsset(spectral.BandMS3, stacAsset);
+                    if (spectral.BandMS4 != null) AddBandAsset(spectral.BandMS4, stacAsset);
+                    if (spectral.BandPAN != null) AddBandAsset(spectral.BandPAN, stacAsset);
+
+                    stacItem.Assets.Add(key, stacAsset);
+                }
+
+                string suffix = (assetContainers.Length == 1) ? String.Empty : String.Format("_{0}", subProductMetadata.Processing?.Instrument);
+                if (metadataAsset != null)
+                {
+                    StacAsset stacAsset = StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString())));
+                    stacItem.Assets.Add(String.Format("metadata{0}", suffix), stacAsset);
+                    stacAsset.Properties.AddRange(metadataAsset.Properties);
+                }
+
+                IAsset overviewAsset = FindFirstAssetFromFileNameRegex(container, @".*_preview\.jpg");
+                if (overviewAsset != null)
+                {
+                    StacAsset stacAsset = StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri, new ContentType(MimeTypes.GetMimeType(overviewAsset.Uri.ToString())));
+                    stacAsset.Properties.AddRange(overviewAsset.Properties);
+                    stacItem.Assets.Add(String.Format("overview{0}", suffix), stacAsset);
+                }
             }
         }
 
@@ -302,6 +469,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                     fullWidthHalfMax = 0.1;
                     commonName = EoBandCommonName.nir;
                     break;
+                case "PAN":
+                    waveLength = 0.66;
+                    fullWidthHalfMax = 0.208;
+                    commonName = EoBandCommonName.pan;
+                    break;
                 default:
                     return;
             }
@@ -329,7 +501,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                 List<EoBandObject> bands = new List<EoBandObject>(eo.Bands) { eoBandObject };
                 eo.Bands = bands.ToArray();
             }
-            
+
             if (rasterBand != null)
             {
                 RasterStacExtension raster = stacAsset.RasterExtension();
@@ -346,25 +518,62 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         }
 
 
-        protected virtual IAsset GetMetadataAsset(IItem item)
+        protected virtual IAsset[] GetMetadataAssets(IAssetsContainer container, IEnumerable<IAssetsContainer> innerAssetContainers = null)
         {
-            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"^.*_pasp-en\.xml");
-            if (metadataAsset != null) return metadataAsset;
+            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(container, @"^.*_pasp-en\.xml");
+            if (metadataAsset != null) return new IAsset[] { metadataAsset };
 
-            throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
+            if (innerAssetContainers != null)
+            {
+                List<IAsset> metadataAssets = new List<IAsset>();
+                foreach (IAssetsContainer innerAssetContainer in innerAssetContainers)
+                {
+                    metadataAsset = FindFirstAssetFromFileNameRegex(innerAssetContainer, @"^.*_pasp-en\.xml");
+                    if (metadataAsset != null) metadataAssets.Add(metadataAsset);
+                }
+                if (metadataAssets.Count != 0) return metadataAssets.ToArray();
+            }
+
+            return null;
         }
 
-        public virtual async Task<BkaMetadata> ReadMetadata(IAsset metadataAsset)
-        {
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
-            {
-                XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
-                var reader = XmlReader.Create(stream, settings);
-                
-                logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
 
-                return (BkaMetadata)metadataSerializer.Deserialize(reader);
+        protected virtual IAsset GetTopZipAsset(IItem item)
+        {
+            IAsset zipAsset = FindFirstAssetFromFileNameRegex(item, @".*\.zip");
+            return zipAsset;
+        }
+
+        protected virtual IAsset GetProductZipAsset(IAssetsContainer container)
+        {
+            IAsset zipAsset = FindFirstAssetFromFileNameRegex(container, @"PRODUCT\.zip");
+            return zipAsset;
+        }
+
+        protected virtual IEnumerable<IAsset> GetInnerZipAssets(IAssetsContainer container)
+        {
+            IEnumerable<IAsset> zipAssets = this.FindAssetsFromFileNameRegex(container, @".*\.zip");
+            return zipAssets;
+        }
+
+        public virtual async Task<BkaMetadata[]> ReadMetadata(IEnumerable<IAsset> metadataAssets)
+        {
+            List<BkaMetadata> metadata = new List<BkaMetadata>();
+
+            foreach (IAsset metadataAsset in metadataAssets)
+            {
+                using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
+                {
+                    XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
+                    var reader = XmlReader.Create(stream, settings);
+
+                    logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
+
+                    metadata.Add((BkaMetadata)metadataSerializer.Deserialize(reader));
+                }
             }
+
+            return metadata.ToArray();
         }
     }
 }
