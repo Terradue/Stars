@@ -350,11 +350,8 @@ namespace Terradue.Stars.Services.Resources
                 {
                     config.RegionEndpoint = options.Region;
                 }
-                else
-                {
-                    config.SetServiceURL(defaultConfig.ServiceURL);
-                }
             }
+            config.SetServiceURL(defaultConfig.ServiceURL);
 
             return config;
         }
@@ -380,7 +377,7 @@ namespace Terradue.Stars.Services.Resources
             var assumeRoleResult = await stsClient.AssumeRoleWithWebIdentityAsync(new AssumeRoleWithWebIdentityRequest
             {
                 WebIdentityToken = jwt.RawData,
-                RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
+                // RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
                 RoleSessionName = "MySession",
                 DurationSeconds = 3600,
                 Policy = policy
