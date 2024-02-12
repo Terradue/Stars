@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "auto-changelog": "^2.4.0"
+    "auto-changelog": "^2.4.0",
+    "package.json": "^2.0.1"
   },
   "auto-changelog": {
     "output": "CHANGELOG.md",
