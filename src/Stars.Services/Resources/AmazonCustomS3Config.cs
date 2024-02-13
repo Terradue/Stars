@@ -26,6 +26,7 @@ namespace Terradue.Stars.Services.Resources
         internal void SetServiceURL(string serviceURL)
         {
             _serviceURL = serviceURL;
+            this.ServiceURL = _serviceURL;
         }
     }
 }

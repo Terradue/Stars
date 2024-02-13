@@ -40,8 +40,6 @@ namespace Stars.Tests
             s3Client = s3ClientFactory.CreateS3Client(s3url);
             Assert.NotNull(s3Client);
             Assert.Equal("fr-par", s3Client.Config.AuthenticationRegion);
-            // the serviceUrl will be null as the new Custom config will use the DetermineServiceURL method
-            Assert.Equal(null, s3Client.Config.ServiceURL);
         }
 
     }
