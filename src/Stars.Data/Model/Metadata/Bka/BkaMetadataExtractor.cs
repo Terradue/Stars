@@ -80,7 +80,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                 var tmpDestination = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(topZipArchiveAsset.Uri.AbsolutePath)), item, true);
                 IAssetsContainer topZipAssets = await topZipArchiveAsset.ExtractToDestinationAsync(tmpDestination, _carrierManager, System.Threading.CancellationToken.None);
 
-                IAsset productZipAsset = GetProductZipAsset(topZipAssets);
+                IAsset productZipAsset = GetProductZipAsset(topZipAsset, topZipAssets);
                 if (productZipAsset != null)
                 {
                     ZipArchiveAsset productZipArchiveAsset = new ZipArchiveAsset(productZipAsset, logger, resourceServiceProvider, _fileSystem);
@@ -105,6 +105,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             }
 
             IAsset[] metadataAssets = GetMetadataAssets(item, innerZipAssetContainers);
+
+            if (metadataAssets == null)
+            {
+                throw new Exception("No metadata assets found");
+            }
 
             BkaMetadata[] metadata = await ReadMetadata(metadataAssets);
 
@@ -544,8 +549,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             return zipAsset;
         }
 
-        protected virtual IAsset GetProductZipAsset(IAssetsContainer container)
+        protected virtual IAsset GetProductZipAsset(IAsset topAsset, IAssetsContainer container)
         {
+            if (topAsset.Uri.AbsolutePath.EndsWith("PRODUCT.zip"))
+            {
+                return topAsset;
+            }
+
             IAsset zipAsset = FindFirstAssetFromFileNameRegex(container, @"PRODUCT\.zip");
             return zipAsset;
         }
