@@ -370,3 +370,8 @@ src/global.json
 
 build/
 package-lock.json
+src/Stars.Data.Tests/Resources/BKA/L1C/data/4089411-0220-PAN-C-1-1-1139831-160712T150120-BR
+src/Stars.Data.Tests/Resources/CONAE/SAOCOM-1/L1A/data/286806-EOL1ASARSAO1A3111864/Config
+src/Stars.Data.Tests/Resources/CONAE/SAOCOM-1/L1A/data/286806-EOL1ASARSAO1A3111864/Data
+src/Stars.Data.Tests/Resources/CONAE/SAOCOM-1/L1A/data/286806-EOL1ASARSAO1A3111864/Images
+src/Stars.Data.Tests/Resources/CONAE/SAOCOM-1/L1A/data/286806-EOL1ASARSAO1A3111864/Quality

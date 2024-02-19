@@ -853,6 +853,44 @@
             "enableStepFiltering": false
         },
         {
+            "name": "Copy S3 from CDS",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net6.0/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "-k",
+                "-r",
+                "4",
+                "-nohtml",
+                "-si",
+                "CDS",
+                "--output",
+                "/tmp/stars",
+                "https://catalogue.dataspace.copernicus.eu/stac/collections/SENTINEL-3/items/S3B_SL_1_RBT____20240207T082602_20240207T082902_20240207T092904_0179_089_221_0540_PS2_O_NR_004.SEN3"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            },
+            "justMyCode": false,
+            "requireExactSource": false,
+            // "symbolOptions": {
+            //     // "searchPaths": [
+            //     //     "/data/workspace/Others/aws-sdk-net/sdk/src"
+            //     // ],
+            //     "searchMicrosoftSymbolServer": true,
+            //     "searchNuGetOrgSymbolServer": true
+            // },
+            "enableStepFiltering": false
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

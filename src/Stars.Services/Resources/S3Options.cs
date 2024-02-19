@@ -19,6 +19,8 @@ namespace Terradue.Stars.Services.Resources
             Policies = new S3OptionsPolicies();
         }
 
+        public List<string> DomainsWithNoCertificateVerification { get; set; } = new List<string>();
+
         public Dictionary<string, S3Configuration> Services { get; set; }
 
         public S3OptionsPolicies Policies { get; set; }
