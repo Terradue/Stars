@@ -1,0 +1,15 @@
+{
+    "filter-lang": "cql2-json",
+    "filter": {
+        "op": "=",
+        "args": [
+            {
+                "property": "t2:product_type"
+            },
+            "S2MSI2A"
+        ]
+    },
+    "result": {
+        "{http://a9.com/-/opensearch/extensions/eo/1.0/}productType": "S2MSI2A"
+    }
+}
