@@ -467,6 +467,9 @@ namespace Terradue.Stars.Data.Suppliers
                 case "collection":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", "{" + string.Join(",", values) + "}");
                     return;
+                case "t2:product_type":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}productType", "{" + string.Join(",", values) + "}");
+                    return;
                 case "keywords":
                     parameters.Set("{http://purl.org/dc/terms/}subject", "{" + string.Join(",", values) + "}");
                     return;
@@ -505,6 +508,9 @@ namespace Terradue.Stars.Data.Suppliers
                     return;
                 case "keywords":
                     parameters.Set("{http://purl.org/dc/terms/}subject", value);
+                    return;
+                case "t2:product_type":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}productType", value);
                     return;
                 case "eo:cloud_cover":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}cloudCover", value);
@@ -552,6 +558,9 @@ namespace Terradue.Stars.Data.Suppliers
                     return;
                 case "collection":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
+                    return;
+                case "t2:product_type":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}productType", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
                     return;
                 case "eo:cloud_cover":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}cloudCover", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
