@@ -65,6 +65,7 @@ namespace Terradue.Stars.Services.Resources
             this.ServiceURL = s3Configuration?.ServiceURL;
             this.AccessKey = s3Configuration?.AccessKey;
             this.SecretKey = s3Configuration?.SecretKey;
+            this.SessionToken = s3Configuration?.SessionToken;
             this.AuthenticationRegion = s3Configuration?.AuthenticationRegion;
             this.UseHttp = s3Configuration == null ? false : s3Configuration.UseHttp;
             this.ForcePathStyle = s3Configuration == null ? false : s3Configuration.ForcePathStyle;
@@ -79,6 +80,7 @@ namespace Terradue.Stars.Services.Resources
         public string ServiceURL { get; set; }
         public string AccessKey { get; set; }
         public string SecretKey { get; set; }
+        public string SessionToken { get; set; }
         public string Region { get; set; }
         public string AuthenticationRegion { get; set; }
         public bool UseHttp { get; set; }
