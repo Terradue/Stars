@@ -370,6 +370,14 @@ namespace Terradue.Stars.Services.Resources
 
         public async Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceURL, JwtSecurityToken jwt, string policy)
         {
+            if (jwt == null)
+            {
+                throw new ArgumentNullException(nameof(jwt));
+            }
+            if (jwt.ValidTo < DateTime.UtcNow)
+            {
+                throw new ArgumentException("JWT token is expired");
+            }
             AmazonSecurityTokenServiceConfig amazonSecurityTokenServiceConfig = new AmazonSecurityTokenServiceConfig();
             amazonSecurityTokenServiceConfig.ServiceURL = serviceURL;
             var stsClient = new AmazonSecurityTokenServiceClient(new AnonymousAWSCredentials(), amazonSecurityTokenServiceConfig);
@@ -379,7 +387,7 @@ namespace Terradue.Stars.Services.Resources
                 WebIdentityToken = jwt.RawData,
                 // RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
                 RoleSessionName = "MySession",
-                DurationSeconds = 3600,
+                DurationSeconds = jwt.ValidTo.Subtract(DateTime.UtcNow).Seconds,
                 Policy = policy
             });
             return assumeRoleResult.Credentials;
