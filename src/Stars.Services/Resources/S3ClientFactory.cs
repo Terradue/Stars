@@ -123,8 +123,12 @@ namespace Terradue.Stars.Services.Resources
         {
             var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString(), identityProvider?.GetPrincipal());
 
-            if (!string.IsNullOrEmpty(s3Configuration.Value?.AccessKey) != null && !string.IsNullOrEmpty(s3Configuration.Value?.SecretKey))
+            if (!string.IsNullOrEmpty(s3Configuration.Value?.AccessKey) && !string.IsNullOrEmpty(s3Configuration.Value?.SecretKey))
             {
+                if ( !string.IsNullOrEmpty(s3Configuration.Value?.SessionToken))
+                {
+                    return new SessionAWSCredentials(s3Configuration.Value.AccessKey, s3Configuration.Value.SecretKey, s3Configuration.Value.SessionToken);
+                }
                 return new BasicAWSCredentials(s3Configuration.Value.AccessKey, s3Configuration.Value.SecretKey);
             }
 
@@ -367,9 +371,16 @@ namespace Terradue.Stars.Services.Resources
             return s3Options.CurrentValue.RootConfiguration.GetAWSOptions();
         }
 
-
         public async Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceURL, JwtSecurityToken jwt, string policy)
         {
+            if (jwt == null)
+            {
+                throw new ArgumentNullException(nameof(jwt));
+            }
+            if (jwt.ValidTo < DateTime.UtcNow)
+            {
+                throw new ArgumentException("JWT token is expired");
+            }
             AmazonSecurityTokenServiceConfig amazonSecurityTokenServiceConfig = new AmazonSecurityTokenServiceConfig();
             amazonSecurityTokenServiceConfig.ServiceURL = serviceURL;
             var stsClient = new AmazonSecurityTokenServiceClient(new AnonymousAWSCredentials(), amazonSecurityTokenServiceConfig);
@@ -379,7 +390,7 @@ namespace Terradue.Stars.Services.Resources
                 WebIdentityToken = jwt.RawData,
                 // RoleArn = "arn:aws:iam::123456789012:role/RoleForTerradue",
                 RoleSessionName = "MySession",
-                DurationSeconds = 3600,
+                DurationSeconds = Math.Max(900, jwt.ValidTo.Subtract(DateTime.UtcNow).Seconds),
                 Policy = policy
             });
             return assumeRoleResult.Credentials;
