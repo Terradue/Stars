@@ -829,7 +829,7 @@
                 "-nohtml",
                 "--output",
                 "/tmp/stars",
-                "https://catalog.terradue.com/landsat8/search?format=atom&uid=LC09_L1TP_163003_20220926_20220926_02_T1"
+                "https://catalog.terradue.com/landsat-9/search?format=atom&uid=LC09_L1TP_001085_20240205_20240205_02_T1"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

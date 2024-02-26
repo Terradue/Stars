@@ -3,14 +3,14 @@ using Amazon.S3;
 
 namespace Terradue.Stars.Services.Resources
 {
-    internal class AmazonCustomS3Config: AmazonS3Config
+    internal class AmazonCustomS3Config : AmazonS3Config
     {
         private string _region;
         private string _serviceURL;
 
         public override string DetermineServiceURL()
         {
-            if ( !string.IsNullOrEmpty(_serviceURL) )
+            if (!string.IsNullOrEmpty(_serviceURL))
             {
                 return _serviceURL;
             }
@@ -26,7 +26,10 @@ namespace Terradue.Stars.Services.Resources
         internal void SetServiceURL(string serviceURL)
         {
             _serviceURL = serviceURL;
-            this.ServiceURL = _serviceURL;
+            if (!string.IsNullOrEmpty(_serviceURL))
+            {
+                this.ServiceURL = _serviceURL;
+            }
         }
     }
 }
