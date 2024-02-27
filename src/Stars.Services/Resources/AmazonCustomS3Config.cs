@@ -3,7 +3,7 @@ using Amazon.S3;
 
 namespace Terradue.Stars.Services.Resources
 {
-    internal class AmazonCustomS3Config : AmazonS3Config
+    public class AmazonCustomS3Config : AmazonS3Config
     {
         private string _region;
         private string _serviceURL;

@@ -76,6 +76,34 @@ namespace Terradue.Stars.Services.Resources
             this.UseWebIdentity = s3Configuration == null ? false : s3Configuration.UseWebIdentity;
         }
 
+        /// <summary>
+        /// Create a new S3Configuration from original AmazonS3Config and AWSCredentials
+        /// This is useful when you want to create a new S3Configuration from an existing AmazonS3Config and AWSCredentials
+        /// and leverage the modification to access a custom S3 service by using IS3ClientFactory
+        /// </summary>
+        /// <param name="amazonS3Config"></param>
+        /// <param name="awsCredentials"></param>
+        /// <returns></returns>
+        public static S3Configuration Create(AmazonS3Config amazonS3Config, AWSCredentials awsCredentials)
+        {
+            return new S3Configuration
+            {
+                AmazonS3Config = amazonS3Config,
+                AWSCredentials = awsCredentials,
+                UrlPattern = $".*", // match all
+                Region = amazonS3Config?.RegionEndpoint?.SystemName,
+                ServiceURL = amazonS3Config?.ServiceURL,
+                AccessKey = awsCredentials?.GetCredentials()?.AccessKey,
+                SecretKey = awsCredentials?.GetCredentials()?.SecretKey,
+                SessionToken = awsCredentials?.GetCredentials()?.Token,
+                AuthenticationRegion = amazonS3Config?.AuthenticationRegion,
+                UseHttp = amazonS3Config?.UseHttp ?? false,
+                ForcePathStyle = amazonS3Config?.ForcePathStyle ?? false,
+                TryAdaptRegion = true,
+                UseWebIdentity = false
+            };
+        }
+
         public string UrlPattern { get; set; }
         public string ServiceURL { get; set; }
         public string AccessKey { get; set; }

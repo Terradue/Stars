@@ -81,7 +81,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             return state;
         }
 
-        private HttpClient CreateClient(string catalogId)
+        public HttpClient CreateClient(string catalogId)
         {
             HttpClient client = httpClientFactory.CreateClient(catalogId);
             if (client.BaseAddress == null)

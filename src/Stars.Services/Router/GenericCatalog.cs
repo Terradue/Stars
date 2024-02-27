@@ -22,7 +22,7 @@ namespace Terradue.Stars.Services.Router
 
         public string Title => id;
 
-        public ContentType ContentType => new ContentType("application/catalog");
+        public ContentType ContentType => new ContentType("application/atom+xml");
 
         public Uri Uri => new Uri("stars://catalog");
 
