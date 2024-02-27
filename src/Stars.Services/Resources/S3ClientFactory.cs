@@ -297,7 +297,7 @@ namespace Terradue.Stars.Services.Resources
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static AmazonCustomS3Config CreateS3Configuration(AWSOptions options)
+        public static AmazonCustomS3Config CreateS3Configuration(AWSOptions options)
         {
             AmazonCustomS3Config config = new AmazonCustomS3Config();
 

@@ -11,6 +11,7 @@ namespace Terradue.Stars.Services.Resources
     {
         IAmazonS3 CreateS3Client(S3Url s3Url);
         IAmazonS3 CreateS3Client(IAsset asset);
+        IAmazonS3 CreateS3Client(S3Configuration s3Config);
         Task<IAmazonS3> CreateS3ClientAsync(S3Url url, IIdentityProvider identityProvider, string policy = null);
         AWSCredentials GetConfiguredCredentials(S3Url s3Url, IIdentityProvider identityProvider = null);
         IAmazonS3 CreateS3Client(string name);
