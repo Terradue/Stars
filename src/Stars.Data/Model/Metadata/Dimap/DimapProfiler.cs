@@ -13,7 +13,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {
     public abstract class DimapProfiler
     {
-        public Schemas.t_Dimap_Document Dimap { get; protected set; }
+        public Schemas.DimapDocument Dimap { get; protected set; }
 
         internal Schemas.t_Source_Information GetSceneSource()
         {

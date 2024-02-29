@@ -13,7 +13,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
     internal class GenericDimapProfiler : DimapProfiler
     {
 
-        public GenericDimapProfiler(t_Dimap_Document dimap)
+        public GenericDimapProfiler(DimapDocument dimap)
         {
             Dimap = dimap;
         }

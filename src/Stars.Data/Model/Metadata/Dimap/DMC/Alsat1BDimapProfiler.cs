@@ -9,7 +9,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
     internal class Alsat1BDimapProfiler : DmcDimapProfiler
     {
 
-        public Alsat1BDimapProfiler(t_Dimap_Document dimap) : base(dimap)
+        public Alsat1BDimapProfiler(DimapDocument dimap) : base(dimap)
         {
         }
 

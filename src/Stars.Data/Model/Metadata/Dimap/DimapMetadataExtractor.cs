@@ -27,6 +27,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
     public class DimapMetadataExtractor : MetadataExtraction
     {
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.t_Dimap_Document));
+        public static XmlSerializer metadataAltSerializer = new XmlSerializer(typeof(Schemas.t_Metadata_Document));
 
         public override string Label => "Generic DIMAP product metadata extractor";
 
@@ -41,7 +42,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
-                Schemas.t_Dimap_Document metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
+                Schemas.DimapDocument metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
                 var dimapProfiler = GetProfiler(metadata);
                 return dimapProfiler != null;
             }
@@ -51,7 +52,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             }
         }
 
-        private DimapProfiler GetProfiler(t_Dimap_Document dimap)
+        private DimapProfiler GetProfiler(DimapDocument dimap)
         {
             switch (dimap.Metadata_Id.METADATA_PROFILE)
             {
@@ -68,7 +69,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             IAsset metadataAsset = GetMetadataAsset(item);
-            Schemas.t_Dimap_Document metadata = await ReadMetadata(metadataAsset);
+            Schemas.DimapDocument metadata = await ReadMetadata(metadataAsset);
 
             DimapProfiler dimapProfiler = GetProfiler(metadata);
 
@@ -268,7 +269,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         protected void AddAssets(StacItem stacItem, IItem item, DimapProfiler dimapProfiler)
         {
-            foreach (var dataFile in dimapProfiler.Dimap.Data_Access.Data_File)
+            t_Data_File[] dataFiles = dimapProfiler.Dimap.Data_Access.Data_File;
+            if (dataFiles == null && dimapProfiler.Dimap.Data_Access.Data_Files != null)
+            {
+                dataFiles = dimapProfiler.Dimap.Data_Access.Data_Files.Data_File;
+            }
+
+            if (dataFiles == null)
+            {
+                throw new Exception("No references to data files found in metadata");
+            }
+
+            foreach (var dataFile in dataFiles)
             {
                 IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.href + "$");
                 if (productAsset == null)
@@ -324,14 +336,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*\.dim$");
             if (manifestAsset == null)
             {
-                manifestAsset = FindFirstAssetFromFileNameRegex(item, @"DIM.*\.xml$");
+                manifestAsset = FindFirstAssetFromFileNameRegex(item, @"(DIM.*|.*Meta)\.xml$");
                 if (manifestAsset == null)
                     throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
             }
             return manifestAsset;
         }
 
-        public virtual async Task<Schemas.t_Dimap_Document> ReadMetadata(IAsset manifestAsset)
+        public virtual async Task<Schemas.DimapDocument> ReadMetadata(IAsset manifestAsset)
         {
             logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
 
@@ -340,7 +352,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 var reader = XmlReader.Create(stream);
                 logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
 
-                return (Schemas.t_Dimap_Document)metadataSerializer.Deserialize(reader);
+                Schemas.DimapDocument result;
+                try
+                {
+                    result = (Schemas.DimapDocument)metadataSerializer.Deserialize(reader);
+                }
+                catch (Exception e)
+                {
+                    result = (Schemas.t_Metadata_Document)metadataAltSerializer.Deserialize(reader);
+                }
+
+                return result;
             }
         }
 

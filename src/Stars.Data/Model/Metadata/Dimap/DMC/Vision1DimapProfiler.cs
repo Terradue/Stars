@@ -9,7 +9,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
     internal class Vision1DimapProfiler : DmcDimapProfiler
     {
 
-        public Vision1DimapProfiler(t_Dimap_Document dimap) : base(dimap)
+        public Vision1DimapProfiler(DimapDocument dimap) : base(dimap)
         {
         }
 
