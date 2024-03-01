@@ -57,7 +57,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                     IAsset topZipAsset = GetTopZipAsset(item);
                     return (topZipAsset != null);
                 }
-                else
+                else if (metadataAssets != null)
                 {
                     BkaMetadata[] metadata = ReadMetadata(metadataAssets).GetAwaiter().GetResult();
                     return metadata != null;
@@ -67,6 +67,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             {
                 return false;
             }
+            return false;
         }
 
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
