@@ -51,15 +51,17 @@
     "end_datetime": "2021-01-14T22:41:49Z",
     "created": "2021-01-26T00:00:00Z",
     "platform": "vision-1",
-    "constellation": "dmc",
+    "constellation": "dmc-3",
     "mission": "vision-1",
     "instruments": [
       "s-1"
     ],
+    "spectral_processing": "PAN",
     "sensor_type": "optical",
     "gsd": 1.0,
-    "title": "Vision-1 S-1  2021-01-14 22:41:40",
+    "title": "Vision-1 S-1 ORTP 2021-01-14 22:41:40",
     "sat:orbit_state": "ascending",
+    "sat:platform_international_designator": "2018-071A",
     "proj:epsg": 16160,
     "proj:shape": [
       37241,
@@ -69,19 +71,20 @@
     "view:sun_azimuth": 103.4175468101,
     "view:sun_elevation": 67.32504132054,
     "view:incidence_angle": 29.85796240132,
+    "processing:level": "ORTP",
     "processing:software": {
       "Keystone": "4.8.8"
     },
     "providers": [
       {
-        "name": "DMC/Airbus",
-        "description": "Vision-1 provides 0.9m resolution imagery in the panchromatic band and 3.5m in the multispectral bands (NIR, RGB), with a 20.8km swath width.",
+        "name": "Airbus DS",
+        "description": "Vision-1 imagery acquired by the SSTL S1-4 satellite provides 0.9m optical images in the panchromatic band and 3.5m in the multispectral bands (NIR, RGB), with a 20.8km swath width",
         "roles": [
           "producer",
           "processor",
           "licensor"
         ],
-        "url": "https://www.intelligence-airbusds.com/imagery/constellation/vision1/"
+        "url": "https://intelligence.airbus.com/imagery/our-optical-and-radar-satellite-imagery/vision-1/"
       }
     ]
   },
@@ -92,13 +95,13 @@
     -17.21733544498
   ],
   "assets": {
-    "composite": {
+    "PAN-ORTP": {
       "type": "image/tiff; application=geotiff",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Composite Scaled Radiance Orthorectified ",
+      "title": "Pan Ortp Scaled Radiance Orthorectified PAN",
       "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
       "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
       "file:size": 0,

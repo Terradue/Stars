@@ -9,64 +9,60 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "VIS1_MS4_20210114224140_ORTP_S105354_1e08",
+  "id": "VIS1_PSH_20200722023318_ORTP_S105563_14e5",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          178.287783798,
-          -17.21704575195
+          119.7338582308,
+          -0.7167070233808
         ],
         [
-          178.023620909,
-          -17.26580862572
+          119.7340266889,
+          -0.9594816286868
         ],
         [
-          178.0414271858,
-          -17.35340412138
+          119.9755130125,
+          -0.9592786680696
         ],
         [
-          178.0662679379,
-          -17.46962698733
+          119.9753297265,
+          -0.7165554232587
         ],
         [
-          178.3284607826,
-          -17.42112733681
-        ],
-        [
-          178.287783798,
-          -17.21704575195
+          119.7338582308,
+          -0.7167070233808
         ]
       ]
     ]
   },
   "properties": {
-    "datetime": "2021-01-14T22:41:40Z",
-    "start_datetime": "2021-01-14T22:41:40Z",
-    "end_datetime": "2021-01-14T22:41:49Z",
-    "created": "2021-01-26T00:00:00Z",
+    "datetime": "2020-07-22T02:33:18Z",
+    "start_datetime": "2020-07-22T02:33:18Z",
+    "end_datetime": "2020-07-22T02:33:27Z",
+    "created": "2021-01-29T00:00:00Z",
     "platform": "vision-1",
     "constellation": "dmc-3",
     "mission": "vision-1",
     "instruments": [
       "s-1"
     ],
-    "spectral_processing": "MS4",
+    "spectral_processing": "PSH",
     "sensor_type": "optical",
     "gsd": 4.0,
-    "title": "Vision-1 S-1 ORTP 2021-01-14 22:41:40",
+    "title": "Vision-1 S-1 ORTP 2020-07-22 02:33:18",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2018-071A",
-    "proj:epsg": 16160,
+    "proj:epsg": 16150,
     "proj:shape": [
-      9323,
-      7996
+      30921,
+      30879
     ],
-    "view:azimuth": 27.12159027368,
-    "view:sun_azimuth": 103.418551881,
-    "view:sun_elevation": 67.32638745903,
-    "view:incidence_angle": 29.84419762114,
+    "view:azimuth": 7.385804548626,
+    "view:sun_azimuth": 46.18760641006,
+    "view:sun_elevation": 58.88052954704,
+    "view:incidence_angle": 8.0803531039315,
     "processing:level": "ORTP",
     "processing:software": {
       "Keystone": "4.8.8"
@@ -85,44 +81,44 @@
     ]
   },
   "bbox": [
-    178.023620909,
-    -17.46962698733,
-    178.3284607826,
-    -17.21704575195
+    119.7338582308,
+    -0.9594816286868,
+    119.9755130125,
+    -0.7165554232587
   ],
   "assets": {
-    "MS-ORTP-MS4": {
+    "MS-ORTP-PSH": {
       "type": "image/tiff; application=geotiff",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Ms Ortp Ms4 Scaled Radiance Orthorectified MS4",
-      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/VIS1_MS4_20210114224140_ORTP_S105354_1e08.tif",
-      "filename": "VIS1_MS4_20210114224140_ORTP_S105354_1e08.tif",
+      "title": "Ms Ortp Psh Pansharpened Orthorectified PSH",
+      "href": "data/VIS1_PSH_Charter_02-1/VIS1_PSH_20200722023318_ORTP_S105563_14e5.tif",
+      "filename": "VIS1_PSH_20200722023318_ORTP_S105563_14e5.tif",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "BLUE ORTHORECTIFIED PANSHARPENED in W/m2/sr/m-6",
           "common_name": "blue",
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "GREEN ORTHORECTIFIED PANSHARPENED in W/m2/sr/m-6",
           "common_name": "green",
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "RED ORTHORECTIFIED PANSHARPENED in W/m2/sr/m-6",
           "common_name": "red",
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "NIR ORTHORECTIFIED PANSHARPENED in W/m2/sr/m-6",
           "common_name": "nir",
           "solar_illumination": 948.98
         }
@@ -160,17 +156,17 @@
         "metadata"
       ],
       "title": "Metadata file",
-      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/DIM_VIS1_MS4_20210114224140_ORTP_S105354_1e08_Meta.xml",
-      "filename": "DIM_VIS1_MS4_20210114224140_ORTP_S105354_1e08_Meta.xml",
-      "file:size": 18869
+      "href": "data/VIS1_PSH_Charter_02-1/DIM_VIS1_PSH_20200722023318_ORTP_S105563_14e5_Meta.xml",
+      "filename": "DIM_VIS1_PSH_20200722023318_ORTP_S105563_14e5_Meta.xml",
+      "file:size": 23218
     },
     "overview": {
       "type": "image/tiff",
       "roles": [
         "overview"
       ],
-      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/VIS1_MS4_20210114224140_ORTP_S105354_1e08_Preview.tif",
-      "filename": "VIS1_MS4_20210114224140_ORTP_S105354_1e08_Preview.tif",
+      "href": "data/VIS1_PSH_Charter_02-1/VIS1_PSH_20200722023318_ORTP_S105563_14e5_Preview.tif",
+      "filename": "VIS1_PSH_20200722023318_ORTP_S105563_14e5_Preview.tif",
       "file:size": 0
     },
     "thumbnail": {
@@ -178,9 +174,9 @@
       "roles": [
         "thumbnail"
       ],
-      "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/VIS1_MS4_20210114224140_ORTP_S105354_1e08_Icon.jpg",
-      "filename": "VIS1_MS4_20210114224140_ORTP_S105354_1e08_Icon.jpg",
-      "file:size": 0
+      "href": "data/VIS1_PSH_Charter_02-1/VIS1_PSH_20200722023318_ORTP_S105563_14e5_Icon.jpg",
+      "filename": "VIS1_PSH_20200722023318_ORTP_S105563_14e5_Icon.jpg",
+      "file:size": 3472
     }
   },
   "links": []

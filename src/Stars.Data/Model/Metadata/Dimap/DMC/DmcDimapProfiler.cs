@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using Stac;
 using Stac.Extensions.Eo;
-using Stac;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
 using Terradue.Stars.Interface;
 using Stac.Extensions.Raster;
@@ -17,6 +16,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
         {
         }
 
+        public DmcDimapProfiler(IEnumerable<DimapDocument> dimaps) : base(dimaps)
+        {
+        }
 
         protected override RasterBand GetRasterBandObject(Schemas.t_Spectral_Band_Info bandInfo, Schemas.t_Raster_Encoding raster_Encoding)
         {
@@ -110,7 +112,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
             }
             else if (platform == "alsat-1b")
             {
-                return (new Alsat1BDimapProfiler(null)).GetStacProvider();
+                return (new Alsat1BDimapProfiler(null as DimapDocument)).GetStacProvider();
             }
             return null;
         }

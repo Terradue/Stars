@@ -41,8 +41,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             if (item == null) return false;
             try
             {
-                IAsset metadataAsset = GetMetadataAsset(item);
-                Schemas.DimapDocument metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
+                IAsset[] metadataAssets = GetMetadataAssets(item);
+                Schemas.DimapDocument[] metadata = ReadMetadata(metadataAssets).GetAwaiter().GetResult();
                 var dimapProfiler = GetProfiler(metadata);
                 return dimapProfiler != null;
             }
@@ -52,24 +52,50 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             }
         }
 
-        private DimapProfiler GetProfiler(DimapDocument dimap)
+        private DimapProfiler GetProfiler(DimapDocument[] dimapDocuments)
         {
-            switch (dimap.Metadata_Id.METADATA_PROFILE)
+            int profiler = 0;
+            foreach (DimapDocument dimap in dimapDocuments)
             {
-                case "DMCii":
-                    return new DMC.DmcDimapProfiler(dimap);
+                int current = 0;
+                if (dimap.Metadata_Id.METADATA_PROFILE == "DMCii")
+                {
+                    current = 1;
+                }
+                else if (dimap.Dataset_Id != null && dimap.Dataset_Id.DATASET_NAME.StartsWith("vis1", true, CultureInfo.InvariantCulture))
+                {
+                    current = 2;
+                }
+                else if (dimap.Dataset_Id != null && dimap.Dataset_Id.DATASET_NAME.StartsWith("ab_", true, CultureInfo.InvariantCulture))
+                {
+                    current = 3;
+                }
+                else
+                {
+                    current = 4;
+                }
+
+                if (profiler == 0) profiler = current;
+                else if (current != profiler) throw new Exception("Inconsistent metadata documents");
             }
-            if (dimap.Dataset_Id != null && dimap.Dataset_Id.DATASET_NAME.StartsWith("vis1", true, CultureInfo.InvariantCulture))
-                return new DMC.Vision1DimapProfiler(dimap);
-            if (dimap.Dataset_Id != null && dimap.Dataset_Id.DATASET_NAME.StartsWith("ab_", true, CultureInfo.InvariantCulture))
-                return new DMC.Alsat1BDimapProfiler(dimap);
-            return new GenericDimapProfiler(dimap);
+
+            switch (profiler)
+            {
+                case 1:
+                    return new DMC.DmcDimapProfiler(dimapDocuments);
+                case 2:
+                    return new DMC.Vision1DimapProfiler(dimapDocuments);
+                case 3:
+                    return new DMC.Alsat1BDimapProfiler(dimapDocuments);
+                default:
+                    return new GenericDimapProfiler(dimapDocuments);
+            }
         }
 
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
-            IAsset metadataAsset = GetMetadataAsset(item);
-            Schemas.DimapDocument metadata = await ReadMetadata(metadataAsset);
+            IAsset[] metadataAssets = GetMetadataAssets(item);
+            Schemas.DimapDocument[] metadata = await ReadMetadata(metadataAssets);
 
             DimapProfiler dimapProfiler = GetProfiler(metadata);
 
@@ -90,7 +116,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         internal virtual StacItem CreateStacItem(DimapProfiler dimapProfiler)
         {
-            StacItem stacItem = new StacItem(dimapProfiler.Dimap.Dataset_Id.DATASET_NAME, GetGeometry(dimapProfiler), GetCommonMetadata(dimapProfiler));
+            bool multipleProducts = dimapProfiler.Dimaps.Length > 1;
+            string identifier = dimapProfiler.Dimaps[0].Dataset_Id.DATASET_NAME;
+            if (multipleProducts)
+            {
+                identifier = identifier.Replace("_MS4_", "_").Replace("_PAN_", "_");
+            }
+
+            StacItem stacItem = new StacItem(identifier, GetGeometry(dimapProfiler), GetCommonMetadata(dimapProfiler));
             AddSatStacExtension(dimapProfiler, stacItem);
             AddProjStacExtension(dimapProfiler, stacItem);
             AddViewStacExtension(dimapProfiler, stacItem);
@@ -117,36 +150,39 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         private void AddProjStacExtension(DimapProfiler dimapProfiler, StacItem stacItem)
         {
             var epsg = dimapProfiler.GetProjection();
-            if (epsg == 0) return;
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            proj.Epsg = epsg;
+            if (epsg == 0) proj.Epsg = null;
+            else proj.Epsg = epsg;
             proj.Shape = dimapProfiler.GetShape();
         }
 
         private void AddViewStacExtension(DimapProfiler dimapProfiler, StacItem stacItem)
         {
             var view = new ViewStacExtension(stacItem);
-            view.Azimuth = dimapProfiler.GetViewingAngle();
-            view.SunAzimuth = dimapProfiler.GetSunAngle();
-            view.SunElevation = dimapProfiler.GetSunElevation();
-            view.IncidenceAngle = dimapProfiler.GetIndidenceAngle();
+            double viewingAngle = dimapProfiler.GetViewingAngle();
+            double sunAzimuth = dimapProfiler.GetSunAngle();
+            double sunElevation = dimapProfiler.GetSunElevation();
+            double incidenceAngle = dimapProfiler.GetIndidenceAngle();
+            if (viewingAngle != 0) view.Azimuth = viewingAngle;
+            if (sunAzimuth != 0) view.SunAzimuth = sunAzimuth;
+            if (sunElevation != 0) view.SunElevation = sunElevation;
+            if (incidenceAngle != 0) view.IncidenceAngle = incidenceAngle;
         }
 
         private void AddSatStacExtension(DimapProfiler dimapProfiler, StacItem stacItem)
         {
             var sat = new SatStacExtension(stacItem);
             if (dimapProfiler.GetAbsoluteOrbit().HasValue)
+            {
                 sat.AbsoluteOrbit = dimapProfiler.GetAbsoluteOrbit().Value;
+            }
             if (dimapProfiler.GetRelativeOrbit().HasValue)
+            {
                 sat.RelativeOrbit = dimapProfiler.GetRelativeOrbit().Value;
+            }
             sat.OrbitState = dimapProfiler.GetOrbitState();
-            if (GetPlatformInternationalDesignator() != null)
-                sat.PlatformInternationalDesignator = GetPlatformInternationalDesignator();
-        }
-
-        protected virtual string GetPlatformInternationalDesignator()
-        {
-            return null;
+            string pid = dimapProfiler.GetPlatformInternationalDesignator();
+            if (pid != null) sat.PlatformInternationalDesignator = pid;
         }
 
         private IDictionary<string, object> GetCommonMetadata(DimapProfiler dimapProfiler)
@@ -178,6 +214,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             properties.Remove("instruments");
             properties.Add("instruments", dimapProfiler.GetInstruments().Select(i => i.ToLower()).ToArray());
 
+            string spectralProcessing = dimapProfiler.GetSpectralProcessing();
+            if (spectralProcessing != null) properties["spectral_processing"] = spectralProcessing;
             properties["sensor_type"] = dimapProfiler.GetSensorMode();
 
             properties.Remove("gsd");
@@ -269,101 +307,122 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         protected void AddAssets(StacItem stacItem, IItem item, DimapProfiler dimapProfiler)
         {
-            t_Data_File[] dataFiles = dimapProfiler.Dimap.Data_Access.Data_File;
-            if (dataFiles == null && dimapProfiler.Dimap.Data_Access.Data_Files != null)
+            foreach (DimapDocument dimap in dimapProfiler.Dimaps)
             {
-                dataFiles = dimapProfiler.Dimap.Data_Access.Data_Files.Data_File;
-            }
-
-            if (dataFiles == null)
-            {
-                throw new Exception("No references to data files found in metadata");
-            }
-
-            foreach (var dataFile in dataFiles)
-            {
-                IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.href + "$");
-                if (productAsset == null)
-                    throw new FileNotFoundException(string.Format("No product found '{0}'", dataFile.DATA_FILE_PATH.href));
-                var bandStacAsset = CreateRasterAsset(stacItem, productAsset, dimapProfiler, dataFile);
-                if (dimapProfiler.Dimap.Data_Access.DATA_FILE_ORGANISATION == t_DATA_FILE_ORGANISATION.BAND_SEPARATE)
-                    dimapProfiler.CompleteAsset(bandStacAsset.Value,
-                        new t_Spectral_Band_Info[1] { dimapProfiler.Dimap.Image_Interpretation.FirstOrDefault(sb => sb.BAND_INDEX == dataFile.BAND_INDEX) },
-                        dimapProfiler.Dimap.Raster_Encoding);
-                else
-                    dimapProfiler.CompleteAsset(bandStacAsset.Value, dimapProfiler.Dimap.Image_Interpretation, dimapProfiler.Dimap.Raster_Encoding);
-                stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
-            }
-
-            var metadataAsset = GetMetadataAsset(item);
-            stacItem.Assets.Add("metadata", StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
-                        new ContentType("application/xml"), "Metadata file"));
-            stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
-            try
-            {
-                var overviewAsset = FindFirstAssetFromFileNameRegex(item, dimapProfiler.Dimap.Dataset_Id.DATASET_QL_PATH.href);
-                if (overviewAsset != null)
+                t_Data_File[] dataFiles = dimap.Data_Access.Data_File;
+                if (dataFiles == null && dimap.Data_Access.Data_Files != null)
                 {
-                    if (stacItem.Assets.TryAdd("overview", StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
-                                new ContentType(MimeTypes.GetMimeType(Path.GetFileName(overviewAsset.Uri.ToString()))))))
-                        stacItem.Assets["overview"].Properties.AddRange(overviewAsset.Properties);
+                    dataFiles = dimap.Data_Access.Data_Files.Data_File;
+                }
+
+                if (dataFiles == null)
+                {
+                    throw new Exception("No references to data files found in metadata");
+                }
+
+                foreach (var dataFile in dataFiles)
+                {
+                    IAsset productAsset = FindFirstAssetFromFileNameRegex(item, dataFile.DATA_FILE_PATH.href + "$");
+                    if (productAsset == null)
+                        throw new FileNotFoundException(string.Format("No product found '{0}'", dataFile.DATA_FILE_PATH.href));
+                    var bandStacAsset = CreateRasterAsset(stacItem, productAsset, dimapProfiler, dataFile, dimap);
+                    if (dimap.Data_Access.DATA_FILE_ORGANISATION == t_DATA_FILE_ORGANISATION.BAND_SEPARATE)
+                        dimapProfiler.CompleteAsset(bandStacAsset.Value,
+                            new t_Spectral_Band_Info[1] { dimap.Image_Interpretation.FirstOrDefault(sb => sb.BAND_INDEX == dataFile.BAND_INDEX) },
+                            dimap.Raster_Encoding);
+                    else
+                        dimapProfiler.CompleteAsset(bandStacAsset.Value, dimap.Image_Interpretation, dimap.Raster_Encoding);
+                    stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
                 }
             }
-            catch { }
-            try
+
+            IAsset[] metadataAssets = GetMetadataAssets(item);
+            foreach (IAsset metadataAsset in metadataAssets)
             {
-                var thumbnailAsset = FindFirstAssetFromFileNameRegex(item, dimapProfiler.Dimap.Dataset_Id.DATASET_TN_PATH.href);
-                if (thumbnailAsset != null)
-                {
-                    stacItem.Assets.Add("thumbnail", StacAsset.CreateThumbnailAsset(stacItem, thumbnailAsset.Uri,
-                                new ContentType(MimeTypes.GetMimeType(Path.GetFileName(thumbnailAsset.Uri.ToString())))));
-                    stacItem.Assets["thumbnail"].Properties.AddRange(thumbnailAsset.Properties);
-                }
+                string suffix = dimapProfiler.GetAssetSuffix(null, metadataAsset);
+                string key = String.Format("metadata{0}", suffix);
+                stacItem.Assets.Add(key, StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
+                            new ContentType("application/xml"), "Metadata file"));
+                stacItem.Assets[key].Properties.AddRange(metadataAsset.Properties);
             }
-            catch{}
+            foreach (DimapDocument dimap in dimapProfiler.Dimaps)
+            {
+                string suffix = dimapProfiler.GetAssetSuffix(dimap);
+                try
+                {
+                    var overviewAsset = FindFirstAssetFromFileNameRegex(item, dimap.Dataset_Id.DATASET_QL_PATH.href);
+                    if (overviewAsset != null)
+                    {
+                        string key = String.Format("overview{0}", suffix);
+                        if (stacItem.Assets.TryAdd(key, StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
+                                    new ContentType(MimeTypes.GetMimeType(Path.GetFileName(overviewAsset.Uri.ToString()))))))
+                            stacItem.Assets[key].Properties.AddRange(overviewAsset.Properties);
+                    }
+                }
+                catch { }
+                try
+                {
+                    var thumbnailAsset = FindFirstAssetFromFileNameRegex(item, dimap.Dataset_Id.DATASET_TN_PATH.href);
+                    if (thumbnailAsset != null)
+                    {
+                        string key = String.Format("thumbnail{0}", suffix);
+                        stacItem.Assets.Add(key, StacAsset.CreateThumbnailAsset(stacItem, thumbnailAsset.Uri,
+                                    new ContentType(MimeTypes.GetMimeType(Path.GetFileName(thumbnailAsset.Uri.ToString())))));
+                        stacItem.Assets[key].Properties.AddRange(thumbnailAsset.Properties);
+                    }
+                }
+                catch{}
+            }
         }
 
-        private KeyValuePair<string, StacAsset> CreateRasterAsset(StacItem stacItem, IAsset bandAsset, DimapProfiler dimapProfiler, t_Data_File dataFile)
+        private KeyValuePair<string, StacAsset> CreateRasterAsset(StacItem stacItem, IAsset bandAsset, DimapProfiler dimapProfiler, t_Data_File dataFile, Schemas.DimapDocument dimap)
         {
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new ContentType(MimeTypes.GetMimeType(Path.GetFileName(bandAsset.Uri.ToString()))));
             stacAsset.Properties.AddRange(bandAsset.Properties);
-            stacAsset.Title = dimapProfiler.GetAssetTitle(bandAsset, dataFile);
+            stacAsset.Title = dimapProfiler.GetAssetTitle(bandAsset, dataFile, dimap);
             return new KeyValuePair<string, StacAsset>(dimapProfiler.GetProductKey(bandAsset, dataFile), stacAsset);
         }
 
-        protected virtual IAsset GetMetadataAsset(IItem item)
+        protected virtual IAsset[] GetMetadataAssets(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*\.dim$");
-            if (manifestAsset == null)
+            IEnumerable<IAsset> manifestAssets = this.FindAssetsFromFileNameRegex(item, @".*\.dim$");
+            if (manifestAssets == null ||  manifestAssets.Count() == 0)
             {
-                manifestAsset = FindFirstAssetFromFileNameRegex(item, @"(DIM.*|.*Meta)\.xml$");
-                if (manifestAsset == null)
-                    throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
+                manifestAssets = FindAssetsFromFileNameRegex(item, @"(DIM.*|.*Meta)\.xml$");
+                if (manifestAssets == null || manifestAssets.Count() == 0)
+                    throw new FileNotFoundException(String.Format("Unable to find the metadata file asset(s)"));
             }
-            return manifestAsset;
+            return manifestAssets.ToArray();
         }
 
-        public virtual async Task<Schemas.DimapDocument> ReadMetadata(IAsset manifestAsset)
+        public virtual async Task<Schemas.DimapDocument[]> ReadMetadata(IEnumerable<IAsset> metadataAssets)
         {
-            logger.LogDebug("Opening Manifest {0}", manifestAsset.Uri);
+            List<Schemas.DimapDocument> metadata = new List<Schemas.DimapDocument>();
 
-            using (var stream = await resourceServiceProvider.GetAssetStreamAsync(manifestAsset, System.Threading.CancellationToken.None))
+            foreach (IAsset metadataAsset in metadataAssets)
             {
-                var reader = XmlReader.Create(stream);
-                logger.LogDebug("Deserializing Manifest {0}", manifestAsset.Uri);
+                logger.LogDebug("Opening manifest {0}", metadataAsset.Uri);
 
-                Schemas.DimapDocument result;
-                try
+                using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
                 {
-                    result = (Schemas.DimapDocument)metadataSerializer.Deserialize(reader);
-                }
-                catch (Exception e)
-                {
-                    result = (Schemas.t_Metadata_Document)metadataAltSerializer.Deserialize(reader);
-                }
+                    var reader = XmlReader.Create(stream);
+                    logger.LogDebug("Deserializing manifest {0}", metadataAsset.Uri);
 
-                return result;
+                    Schemas.DimapDocument singleDimap;
+                    try
+                    {
+                        singleDimap = (Schemas.DimapDocument)metadataSerializer.Deserialize(reader);
+                    }
+                    catch
+                    {
+                        singleDimap = (Schemas.t_Metadata_Document)metadataAltSerializer.Deserialize(reader);
+                    }
+
+                    metadata.Add(singleDimap);
+
+                }
             }
+            return metadata.ToArray();
         }
 
 

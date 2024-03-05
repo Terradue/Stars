@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using Stac;
 using Stac.Extensions.Eo;
-using Stac;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
 using Terradue.Stars.Interface;
 using Stac.Extensions.Raster;
+using System.Linq;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {
@@ -16,6 +16,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         public GenericDimapProfiler(DimapDocument dimap)
         {
             Dimap = dimap;
+        }
+
+        public GenericDimapProfiler(IEnumerable<DimapDocument> dimaps)
+        {
+            Dimaps = dimaps.ToList().ToArray();
         }
 
         internal override string GetProcessingLevel()

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<Metadata_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Metadata_Id>
+    <METADATA_FORMAT version="1.0">VIS1_ORT</METADATA_FORMAT>
+  </Metadata_Id>
+  <Dataset_Id>
+    <DATASET_NAME>VIS1_MS4_20200722023318_ORT_103091_14e5</DATASET_NAME>
+    <DATASET_TN_PATH href="VIS1_MS4_20200722023318_ORT_103091_14e5_Icon.jpg"></DATASET_TN_PATH>
+    <DATASET_QL_PATH href="VIS1_MS4_20200722023318_ORT_103091_14e5_Preview.jpg"></DATASET_QL_PATH>
+  </Dataset_Id>
+  <Production>
+    <DATASET_PRODUCER_NAME>Airbus Defence and Space Limited</DATASET_PRODUCER_NAME>
+    <DATASET_PRODUCER_URL href="www.intelligenceairbusds.com"></DATASET_PRODUCER_URL>
+    <DATASET_PRODUCTION_DATE>2023-07-07</DATASET_PRODUCTION_DATE>
+    <DATA_COPYWRITE>Airbus Intelligence UK</DATA_COPYWRITE>
+  </Production>
+  <Data_Processing>
+    <GEOMETRIC_PROCESSING>ORTHORECTIFIED</GEOMETRIC_PROCESSING>
+    <RADIOMETRIC_PROCESSING>SCALED RADIANCE</RADIOMETRIC_PROCESSING>
+    <PROCESSING_CENTRE>Airbus Guildford</PROCESSING_CENTRE>
+    <SOFTWARE_VERSION>Airbus PDGS 3.0.0</SOFTWARE_VERSION>
+    <HEIGHT_REFERENCE>WD4O</HEIGHT_REFERENCE>
+    <GROUND_REFERENCE>OneAtlas basemap</GROUND_REFERENCE>
+    <RESAMPLE_METHOD>bicubic</RESAMPLE_METHOD>
+  </Data_Processing>
+  <Quality_Assessment>
+    <COMBINED_RMSE_ESTIMATE unit="M">4.32038</COMBINED_RMSE_ESTIMATE>
+    <COMBINED_CE90_ESTIMATE unit="M">6.57754</COMBINED_CE90_ESTIMATE>
+  </Quality_Assessment>
+  <Coordinate_Reference_System>
+    <CRS_CODE>EPSG:4326</CRS_CODE>
+    <CRS_TYPE>GEODETIC</CRS_TYPE>
+    <CRS_NAME>GCS_WGS_84</CRS_NAME>
+  </Coordinate_Reference_System>
+  <Geoposition>
+    <ULXMAP unit="DEG">119.73348</ULXMAP>
+    <ULYMAP unit="DEG">-0.71703</ULYMAP>
+    <X_RES unit="DEG">0.0000322222233333</X_RES>
+    <Y_RES unit="DEG">0.0000322222233333</Y_RES>
+  </Geoposition>
+  <Raster_CS>
+    <RASTER_CS_TYPE>POINT</RASTER_CS_TYPE>
+  </Raster_CS>
+  <Dataset_Frame>
+    <Vertex>
+      <FRAME_LON_UL unit="DEG">119.73346</FRAME_LON_UL>
+      <FRAME_LAT_UL unit="DEG">-0.71701</FRAME_LAT_UL>
+    </Vertex>
+    <Vertex>
+      <FRAME_LON_UR unit="DEG">119.97429</FRAME_LON_UR>
+      <FRAME_LAT_UR unit="DEG">-0.71701</FRAME_LAT_UR>
+    </Vertex>
+    <Vertex>
+      <FRAME_LON_LR unit="DEG">119.97429</FRAME_LON_LR>
+      <FRAME_LAT_LR unit="DEG">-0.95942</FRAME_LAT_LR>
+    </Vertex>
+    <Vertex>
+      <FRAME_LON_LL unit="DEG">119.73346</FRAME_LON_LL>
+      <FRAME_LAT_LL unit="DEG">-0.95942</FRAME_LAT_LL>
+    </Vertex>
+  </Dataset_Frame>
+  <Raster_Encoding>
+    <NBITS>16</NBITS>
+    <DATA_TYPE>SHORT</DATA_TYPE>
+    <BYTEORDER>Big_Endian</BYTEORDER>
+    <TILE_WIDTH>2048</TILE_WIDTH>
+    <TILE_HEIGHT>2048</TILE_HEIGHT>
+  </Raster_Encoding>
+  <Data_Access>
+    <DATA_FILE_FORMAT>JP2K</DATA_FILE_FORMAT>
+    <DATA_FILE_COMPRESSION>LOSSLESS</DATA_FILE_COMPRESSION>
+    <Data_Files>
+      <Data_File tile_R="1" tile_C="1">
+        <DATA_FILE_PATH href="VIS1_MS4_20200722023318_ORT_103091_14e5.jp2"></DATA_FILE_PATH>
+      </Data_File>
+    </Data_Files>
+  </Data_Access>
+  <Raster_Dimensions>
+    <NCOLS>7474</NCOLS>
+    <NROWS>7523</NROWS>
+    <NBANDS>4</NBANDS>
+    <Tile_Set>
+      <NTILES>1</NTILES>
+      <Regular_Tiling>
+        <NTILES_SIZE ncols="7474" nrows="7523"></NTILES_SIZE>
+        <NTILES_COUNT ntiles_C="1" ntiles_R="1"></NTILES_COUNT>
+        <OVERLAP_ROW>0.0</OVERLAP_ROW>
+        <OVERLAP_COL>0.0</OVERLAP_COL>
+      </Regular_Tiling>
+    </Tile_Set>
+  </Raster_Dimensions>
+  <Image_Interpretation>
+    <Spectral_Band_Info>
+      <BAND_INDEX>1</BAND_INDEX>
+      <BAND_DESCRIPTION>BLUE</BAND_DESCRIPTION>
+      <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+      <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+      <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+    </Spectral_Band_Info>
+    <Spectral_Band_Info>
+      <BAND_INDEX>2</BAND_INDEX>
+      <BAND_DESCRIPTION>GREEN</BAND_DESCRIPTION>
+      <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+      <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+      <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+    </Spectral_Band_Info>
+    <Spectral_Band_Info>
+      <BAND_INDEX>3</BAND_INDEX>
+      <BAND_DESCRIPTION>RED</BAND_DESCRIPTION>
+      <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+      <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+      <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+    </Spectral_Band_Info>
+    <Spectral_Band_Info>
+      <BAND_INDEX>4</BAND_INDEX>
+      <BAND_DESCRIPTION>NIR</BAND_DESCRIPTION>
+      <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+      <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+      <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+    </Spectral_Band_Info>
+  </Image_Interpretation>
+  <Image_Display>
+    <NO_DATA_INDEX>0</NO_DATA_INDEX>
+    <Band_Statistics>
+      <BAND_INDEX>1</BAND_INDEX>
+      <STX_STDV>3781.30415</STX_STDV>
+      <STX_MEAN>7374.57466</STX_MEAN>
+      <STX_MIN>1</STX_MIN>
+      <STX_MAX>42330</STX_MAX>
+    </Band_Statistics>
+    <Band_Statistics>
+      <BAND_INDEX>2</BAND_INDEX>
+      <STX_STDV>3183.73769</STX_STDV>
+      <STX_MEAN>5690.88214</STX_MEAN>
+      <STX_MIN>1</STX_MIN>
+      <STX_MAX>29131</STX_MAX>
+    </Band_Statistics>
+    <Band_Statistics>
+      <BAND_INDEX>3</BAND_INDEX>
+      <STX_STDV>3188.59372</STX_STDV>
+      <STX_MEAN>4107.94765</STX_MEAN>
+      <STX_MIN>1</STX_MIN>
+      <STX_MAX>28937</STX_MAX>
+    </Band_Statistics>
+    <Band_Statistics>
+      <BAND_INDEX>4</BAND_INDEX>
+      <STX_STDV>3572.97279</STX_STDV>
+      <STX_MEAN>6137.16724</STX_MEAN>
+      <STX_MIN>1</STX_MIN>
+      <STX_MAX>33269</STX_MAX>
+    </Band_Statistics>
+  </Image_Display>
+  <Dataset_Sources>
+    <Source_Information>
+      <Scene_Source_Id>
+        <SOURCE_ID>S10014e5_MUL</SOURCE_ID>
+      </Scene_Source_Id>
+      <Scene_Source>
+        <MISSION>Vision-1</MISSION>
+        <INSTRUMENT>S1-4 Imager</INSTRUMENT>
+        <IMAGING_START_TIME>2020-07-22T02:33:20Z</IMAGING_START_TIME>
+        <IMAGING_STOP_TIME>2020-07-22T02:33:24Z</IMAGING_STOP_TIME>
+        <INCIDENCE_ANGLE_ALONG_TRACK unit="DEG">-0.51294</INCIDENCE_ANGLE_ALONG_TRACK>
+        <INCIDENCE_ANGLE_ACROSS_TRACK unit="DEG">-8.06900</INCIDENCE_ANGLE_ACROSS_TRACK>
+        <VIEWING_ANGLE_ALONG_TRACK unit="DEG">0.57299</VIEWING_ANGLE_ALONG_TRACK>
+        <VIEWING_ANGLE_ACROSS_TRACK unit="DEG">7.37576</VIEWING_ANGLE_ACROSS_TRACK>
+        <SUN_AZIMUTH unit="DEG">46.30246</SUN_AZIMUTH>
+        <SUN_ELEVATION unit="DEG">58.80224</SUN_ELEVATION>
+        <EARTH_SUN_DISTANCE unit="AU">1.01600</EARTH_SUN_DISTANCE>
+        <SENSOR_ALTITUDE unit="M">595018</SENSOR_ALTITUDE>
+        <SENSOR_AZIMUTH unit="DEG">82.15971</SENSOR_AZIMUTH>
+        <SENSOR_ELEVATION unit="DEG">81.91514</SENSOR_ELEVATION>
+        <RESOLUTION unit="M">3.48</RESOLUTION>
+      </Scene_Source>
+    </Source_Information>
+  </Dataset_Sources>
+</Metadata_Document>

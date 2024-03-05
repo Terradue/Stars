@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Metadata_Id>
+        <METADATA_FORMAT version="1.1">DIMAP</METADATA_FORMAT>
+    </Metadata_Id>
+    <Dataset_Id>
+        <DATASET_NAME>VIS1_PSH_20200722023318_ORTP_S105563_14e5</DATASET_NAME>
+        <DATASET_TN_PATH href="VIS1_PSH_20200722023318_ORTP_S105563_14e5_Icon.jpg"/>
+        <DATASET_QL_PATH href="VIS1_PSH_20200722023318_ORTP_S105563_14e5_Preview.tif"/>
+    </Dataset_Id>
+    <Production>
+        <DATASET_PRODUCER_NAME>Airbus Defence and Space Limited</DATASET_PRODUCER_NAME>
+        <DATASET_PRODUCER_URL href="www.intelligence-airbusds.com"/>
+        <DATASET_PRODUCTION_DATE>2021-01-29</DATASET_PRODUCTION_DATE>
+        <PRODUCT_TYPE/>
+    </Production>
+    <Dataset_Use>
+        <DATASET_CONTENT/>
+    </Dataset_Use>
+    <Data_Processing>
+        <GEOMETRIC_PROCESSING>ORTHORECTIFIED</GEOMETRIC_PROCESSING>
+        <RADIOMETRIC_PROCESSING>PANSHARPENED</RADIOMETRIC_PROCESSING>
+        <Processing_Parameter>
+            <PROC_PARAMETER_DESC>SOFTWARE</PROC_PARAMETER_DESC>
+            <PROC_PARAMETER_VALUE>Keystone 4.8.8</PROC_PARAMETER_VALUE>
+        </Processing_Parameter>
+        <Processing_Parameter>
+            <PROC_PARAMETER_DESC>DEMs used</PROC_PARAMETER_DESC>
+            <PROC_PARAMETER_VALUE>WD4O_mosaic_Q8</PROC_PARAMETER_VALUE>
+        </Processing_Parameter>
+        <Processing_Parameter>
+            <PROC_PARAMETER_DESC>Interpolation type</PROC_PARAMETER_DESC>
+            <PROC_PARAMETER_VALUE>Bicubic</PROC_PARAMETER_VALUE>
+        </Processing_Parameter>
+        <Processing_Parameter>
+            <PROC_PARAMETER_DESC>GeometricReferenceLayer</PROC_PARAMETER_DESC>
+            <PROC_PARAMETER_VALUE>OneAtlas Basemap</PROC_PARAMETER_VALUE>
+        </Processing_Parameter>
+    </Data_Processing>
+    <Quality_Assessment>
+        <QUALITY_TABLES version="1.0">SPACEMETRIC</QUALITY_TABLES>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>Number of control points</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:NGCP</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE>9</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>Root Mean Square residual error X component</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:RMSX</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">1.24</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>Root Mean Square residual error Y component</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:RMSY</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">1.42</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>CE90</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:CE90</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">2.85418</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+        <Quality_Parameter>
+            <QUALITY_PARAMETER_DESC>CE95</QUALITY_PARAMETER_DESC>
+            <QUALITY_PARAMETER_CODE>SPACEMETRIC:CE95</QUALITY_PARAMETER_CODE>
+            <QUALITY_PARAMETER_VALUE unit="M">3.255441</QUALITY_PARAMETER_VALUE>
+        </Quality_Parameter>
+    </Quality_Assessment>
+    <Coordinate_Reference_System>
+        <GEO_TABLES>EPSG</GEO_TABLES>
+        <Horizontal_CS>
+            <HORIZONTAL_CS_CODE>EPSG:32750</HORIZONTAL_CS_CODE>
+            <HORIZONTAL_CS_TYPE>PROJECTED</HORIZONTAL_CS_TYPE>
+            <HORIZONTAL_CS_NAME>WGS 84 / UTM zone 50S</HORIZONTAL_CS_NAME>
+            <Coordinate_Axis>
+                <AXIS1_NAME>Easting</AXIS1_NAME>
+                <AXIS2_NAME>Northing</AXIS2_NAME>
+                <AXIS1_ORIENTATION>EAST</AXIS1_ORIENTATION>
+                <AXIS2_ORIENTATION>NORTH</AXIS2_ORIENTATION>
+            </Coordinate_Axis>
+            <Projection>
+                <PROJECTION_NAME>UTM zone 50S</PROJECTION_NAME>
+                <PROJECTION_CODE>EPSG:16150</PROJECTION_CODE>
+                <Projection_CT_Method>
+                    <PROJECTION_CT_NAME>Transverse Mercator</PROJECTION_CT_NAME>
+                    <PROJECTION_CT_CODE>EPSG:9807</PROJECTION_CT_CODE>
+                    <Projection_Parameters>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>Latitude_of_natural_origin</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="DEG">0.0</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>Longitude_of_natural_origin</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="DEG">117.0</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>Scale_factor_at_natural_origin</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE>0.9996</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>False_easting</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="M">500000.0</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                        <Projection_Parameter>
+                            <PROJECTION_PARAMETER_NAME>False_northing</PROJECTION_PARAMETER_NAME>
+                            <PROJECTION_PARAMETER_VALUE unit="M">1.0E7</PROJECTION_PARAMETER_VALUE>
+                        </Projection_Parameter>
+                    </Projection_Parameters>
+                </Projection_CT_Method>
+            </Projection>
+            <Geographic_CS>
+                <GEOGRAPHIC_CS_NAME>WGS 84</GEOGRAPHIC_CS_NAME>
+                <GEOGRAPHIC_CS_CODE>EPSG:4326</GEOGRAPHIC_CS_CODE>
+                <Horizontal_Datum>
+                    <HORIZONTAL_DATUM_NAME>World Geodetic System 1984</HORIZONTAL_DATUM_NAME>
+                    <HORIZONTAL_DATUM_CODE>EPSG:6326</HORIZONTAL_DATUM_CODE>
+                    <Ellipsoid>
+                        <ELLIPSOID_NAME>WGS 84</ELLIPSOID_NAME>
+                        <ELLIPSOID_CODE>EPSG:7030</ELLIPSOID_CODE>
+                        <Ellipsoid_Parameters>
+                            <ELLIPSOID_MAJOR_AXIS unit="M">6378137.0</ELLIPSOID_MAJOR_AXIS>
+                            <ELLIPSOID_MINOR_AXIS unit="M">6356752.314245</ELLIPSOID_MINOR_AXIS>
+                        </Ellipsoid_Parameters>
+                    </Ellipsoid>
+                    <Prime_Meridian>
+                        <PRIME_MERIDIAN_NAME>Greenwich</PRIME_MERIDIAN_NAME>
+                        <PRIME_MERIDIAN_CODE>EPSG:8901</PRIME_MERIDIAN_CODE>
+                        <PRIME_MERIDIAN_OFFSET unit="DEG">0.0</PRIME_MERIDIAN_OFFSET>
+                    </Prime_Meridian>
+                </Horizontal_Datum>
+            </Geographic_CS>
+        </Horizontal_CS>
+    </Coordinate_Reference_System>
+    <Geoposition>
+        <Geoposition_Insert>
+            <ULXMAP unit="M">804303.0</ULXMAP>
+            <ULYMAP unit="M">9920691.0</ULYMAP>
+            <XDIM unit="M">0.87</XDIM>
+            <YDIM unit="M">0.87</YDIM>
+        </Geoposition_Insert>
+    </Geoposition>
+    <Raster_CS>
+        <RASTER_CS_TYPE>POINT</RASTER_CS_TYPE>
+    </Raster_CS>
+    <Dataset_Frame>
+        <Vertex>
+            <FRAME_X unit="M">804302.565</FRAME_X>
+            <FRAME_Y unit="M">9920691.435</FRAME_Y>
+            <FRAME_LON unit="DEG">119.7338582308</FRAME_LON>
+            <FRAME_LAT unit="DEG">-0.7167070233808</FRAME_LAT>
+            <FRAME_COL>-0.5</FRAME_COL>
+            <FRAME_ROW>-0.5</FRAME_ROW>
+        </Vertex>
+        <Vertex>
+            <FRAME_X unit="M">804302.565</FRAME_X>
+            <FRAME_Y unit="M">9893826.705</FRAME_Y>
+            <FRAME_LON unit="DEG">119.7340266889</FRAME_LON>
+            <FRAME_LAT unit="DEG">-0.9594816286868</FRAME_LAT>
+            <FRAME_COL>-0.5</FRAME_COL>
+            <FRAME_ROW>30878.5</FRAME_ROW>
+        </Vertex>
+        <Vertex>
+            <FRAME_X unit="M">831203.835</FRAME_X>
+            <FRAME_Y unit="M">9893826.705</FRAME_Y>
+            <FRAME_LON unit="DEG">119.9755130125</FRAME_LON>
+            <FRAME_LAT unit="DEG">-0.9592786680696</FRAME_LAT>
+            <FRAME_COL>30920.5</FRAME_COL>
+            <FRAME_ROW>30878.5</FRAME_ROW>
+        </Vertex>
+        <Vertex>
+            <FRAME_X unit="M">831203.835</FRAME_X>
+            <FRAME_Y unit="M">9920691.435</FRAME_Y>
+            <FRAME_LON unit="DEG">119.9753297265</FRAME_LON>
+            <FRAME_LAT unit="DEG">-0.7165554232587</FRAME_LAT>
+            <FRAME_COL>30920.5</FRAME_COL>
+            <FRAME_ROW>-0.5</FRAME_ROW>
+        </Vertex>
+    </Dataset_Frame>
+    <Raster_Encoding>
+        <NBITS>16</NBITS>
+        <DATA_TYPE>SHORT</DATA_TYPE>
+        <BYTEORDER>M</BYTEORDER>
+        <TILE_WIDTH>512</TILE_WIDTH>
+        <TILE_HEIGHT>512</TILE_HEIGHT>
+    </Raster_Encoding>
+    <Data_Access>
+        <DATA_FILE_FORMAT>GEOTIFF</DATA_FILE_FORMAT>
+        <Data_File>
+            <DATA_FILE_PATH href="VIS1_PSH_20200722023318_ORTP_S105563_14e5.tif"/>
+        </Data_File>
+    </Data_Access>
+    <Raster_Dimensions>
+        <NCOLS>30921</NCOLS>
+        <NROWS>30879</NROWS>
+        <NBANDS>4</NBANDS>
+    </Raster_Dimensions>
+    <Image_Interpretation>
+        <Spectral_Band_Info>
+            <BAND_INDEX>1</BAND_INDEX>
+            <BAND_DESCRIPTION>BLUE</BAND_DESCRIPTION>
+            <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+            <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+            <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+        </Spectral_Band_Info>
+        <Spectral_Band_Info>
+            <BAND_INDEX>2</BAND_INDEX>
+            <BAND_DESCRIPTION>GREEN</BAND_DESCRIPTION>
+            <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+            <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+            <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+        </Spectral_Band_Info>
+        <Spectral_Band_Info>
+            <BAND_INDEX>3</BAND_INDEX>
+            <BAND_DESCRIPTION>RED</BAND_DESCRIPTION>
+            <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+            <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+            <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+        </Spectral_Band_Info>
+        <Spectral_Band_Info>
+            <BAND_INDEX>4</BAND_INDEX>
+            <BAND_DESCRIPTION>NIR</BAND_DESCRIPTION>
+            <PHYSICAL_GAIN>0.01</PHYSICAL_GAIN>
+            <PHYSICAL_BIAS>0.0</PHYSICAL_BIAS>
+            <PHYSICAL_UNIT>W/m2/sr/m-6</PHYSICAL_UNIT>
+        </Spectral_Band_Info>
+    </Image_Interpretation>
+    <Image_Display>
+        <Band_Display_Order>
+            <RED_CHANNEL>3</RED_CHANNEL>
+            <GREEN_CHANNEL>2</GREEN_CHANNEL>
+            <BLUE_CHANNEL>1</BLUE_CHANNEL>
+        </Band_Display_Order>
+        <Special_Value>
+            <SPECIAL_VALUE_INDEX>0</SPECIAL_VALUE_INDEX>
+            <SPECIAL_VALUE_TEXT>nodata</SPECIAL_VALUE_TEXT>
+        </Special_Value>
+        <Band_Statistics>
+            <BAND_INDEX>1</BAND_INDEX>
+            <STX_LIN_MIN>-5098.814113383083</STX_LIN_MIN>
+            <STX_LIN_MAX>16145.10135590034</STX_LIN_MAX>
+            <STX_STDV>4248.783093856685</STX_STDV>
+            <STX_MEAN>5523.143621258629</STX_MEAN>
+            <STX_MIN>1318.0</STX_MIN>
+            <STX_MAX>33981.0</STX_MAX>
+        </Band_Statistics>
+        <Band_Statistics>
+            <BAND_INDEX>2</BAND_INDEX>
+            <STX_LIN_MIN>-2411.986573596708</STX_LIN_MIN>
+            <STX_LIN_MAX>13847.469348520473</STX_LIN_MAX>
+            <STX_STDV>3251.8911844234362</STX_STDV>
+            <STX_MEAN>5717.741387461882</STX_MEAN>
+            <STX_MIN>2004.0</STX_MIN>
+            <STX_MAX>30646.0</STX_MAX>
+        </Band_Statistics>
+        <Band_Statistics>
+            <BAND_INDEX>3</BAND_INDEX>
+            <STX_LIN_MIN>-4142.539017583172</STX_LIN_MIN>
+            <STX_LIN_MAX>12689.075244899475</STX_LIN_MAX>
+            <STX_STDV>3366.322852496529</STX_STDV>
+            <STX_MEAN>4273.268113658151</STX_MEAN>
+            <STX_MIN>844.0</STX_MIN>
+            <STX_MAX>32800.0</STX_MAX>
+        </Band_Statistics>
+        <Band_Statistics>
+            <BAND_INDEX>4</BAND_INDEX>
+            <STX_LIN_MIN>-3306.821444740237</STX_LIN_MIN>
+            <STX_LIN_MAX>16805.67808567697</STX_LIN_MAX>
+            <STX_STDV>4022.4999060834416</STX_STDV>
+            <STX_MEAN>6749.428320468367</STX_MEAN>
+            <STX_MIN>1.0</STX_MIN>
+            <STX_MAX>46606.0</STX_MAX>
+        </Band_Statistics>
+    </Image_Display>
+    <Dataset_Sources>
+        <Source_Information>
+            <SOURCE_ID>S10014e5_000_SWATH_MUL</SOURCE_ID>
+            <Coordinate_Reference_System>
+                <GEO_TABLES>EPSG</GEO_TABLES>
+                <Horizontal_CS>
+                    <HORIZONTAL_CS_CODE>EPSG:32750</HORIZONTAL_CS_CODE>
+                    <HORIZONTAL_CS_TYPE>PROJECTED</HORIZONTAL_CS_TYPE>
+                    <HORIZONTAL_CS_NAME>WGS 84 / UTM zone 50S</HORIZONTAL_CS_NAME>
+                </Horizontal_CS>
+            </Coordinate_Reference_System>
+            <Source_Frame>
+                <Vertex>
+                    <FRAME_X unit="M">812838.6398105</FRAME_X>
+                    <FRAME_Y unit="M">9874085.704007</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">800297.3778109</FRAME_X>
+                    <FRAME_Y unit="M">9935794.208947</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">822619.3602179</FRAME_X>
+                    <FRAME_Y unit="M">9940340.600473</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">835170.3884404</FRAME_X>
+                    <FRAME_Y unit="M">9878618.870115</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">812838.6396867</FRAME_X>
+                    <FRAME_Y unit="M">9874085.70847</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">812838.639308</FRAME_X>
+                    <FRAME_Y unit="M">9874085.708393</FRAME_Y>
+                </Vertex>
+            </Source_Frame>
+            <Scene_Source>
+                <MISSION>S1</MISSION>
+                <MISSION_INDEX>4</MISSION_INDEX>
+                <INSTRUMENT>S</INSTRUMENT>
+                <INSTRUMENT_INDEX>1</INSTRUMENT_INDEX>
+                <IMAGING_DATE>2020-07-22</IMAGING_DATE>
+                <IMAGING_TIME>02:33:22.500</IMAGING_TIME>
+                <IMAGING_START_TIME>2020-07-22T02:33:18Z</IMAGING_START_TIME>
+                <IMAGING_STOP_TIME>2020-07-22T02:33:27Z</IMAGING_STOP_TIME>
+                <INCIDENCE_ANGLE unit="DEG">8.073623502268</INCIDENCE_ANGLE>
+                <VIEWING_ANGLE unit="DEG">7.379660155822</VIEWING_ANGLE>
+                <SUN_AZIMUTH unit="DEG">46.18708059151</SUN_AZIMUTH>
+                <SUN_ELEVATION unit="DEG">58.88102565335</SUN_ELEVATION>
+                <THEORETICAL_RESOLUTION unit="M">4.0</THEORETICAL_RESOLUTION>
+            </Scene_Source>
+            <Quality_Assessment>
+                <QUALITY_TABLES version="1.0">SPACEMETRIC</QUALITY_TABLES>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Scene altitude (meter)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:ALTITUDE</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>594980</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Sensor azimuth at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:SENSOR_AZIMUTH</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>82.42483052557368</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Sensor elevation at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:SENSOR_ELEVATION</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>81.9263764977316</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Viewing angle along-track (positive forwards) at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:VIEWING_ANGLE_ALONG_TRACK</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>0.02521249116731581</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Viewing angle across-track (positive left) at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:VIEWING_ANGLE_ACROSS_TRACK</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>7.396612744441487</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Platform heading (azimuth) at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:HEADING_AZIMUTH</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>-7.753076383140628</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+            </Quality_Assessment>
+        </Source_Information>
+        <Source_Information>
+            <SOURCE_ID>S10014e5_000_SWATH_PAN</SOURCE_ID>
+            <Coordinate_Reference_System>
+                <GEO_TABLES>EPSG</GEO_TABLES>
+                <Horizontal_CS>
+                    <HORIZONTAL_CS_CODE>EPSG:32750</HORIZONTAL_CS_CODE>
+                    <HORIZONTAL_CS_TYPE>PROJECTED</HORIZONTAL_CS_TYPE>
+                    <HORIZONTAL_CS_NAME>WGS 84 / UTM zone 50S</HORIZONTAL_CS_NAME>
+                </Horizontal_CS>
+            </Coordinate_Reference_System>
+            <Source_Frame>
+                <Vertex>
+                    <FRAME_X unit="M">812672.6227194</FRAME_X>
+                    <FRAME_Y unit="M">9874078.643941</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">800186.734876</FRAME_X>
+                    <FRAME_Y unit="M">9935795.733134</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">822510.1649586</FRAME_X>
+                    <FRAME_Y unit="M">9940344.691109</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">835005.3507777</FRAME_X>
+                    <FRAME_Y unit="M">9878614.339351</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">812672.6234734</FRAME_X>
+                    <FRAME_Y unit="M">9874078.644094</FRAME_Y>
+                </Vertex>
+                <Vertex>
+                    <FRAME_X unit="M">812672.6230943</FRAME_X>
+                    <FRAME_Y unit="M">9874078.644017</FRAME_Y>
+                </Vertex>
+            </Source_Frame>
+            <Scene_Source>
+                <MISSION>S1</MISSION>
+                <MISSION_INDEX>4</MISSION_INDEX>
+                <INSTRUMENT>S</INSTRUMENT>
+                <INSTRUMENT_INDEX>1</INSTRUMENT_INDEX>
+                <IMAGING_DATE>2020-07-22</IMAGING_DATE>
+                <IMAGING_TIME>02:33:22.500</IMAGING_TIME>
+                <IMAGING_START_TIME>2020-07-22T02:33:18Z</IMAGING_START_TIME>
+                <IMAGING_STOP_TIME>2020-07-22T02:33:27Z</IMAGING_STOP_TIME>
+                <INCIDENCE_ANGLE unit="DEG">8.087082705595</INCIDENCE_ANGLE>
+                <VIEWING_ANGLE unit="DEG">7.39194894143</VIEWING_ANGLE>
+                <SUN_AZIMUTH unit="DEG">46.18813222861</SUN_AZIMUTH>
+                <SUN_ELEVATION unit="DEG">58.88003344073</SUN_ELEVATION>
+                <THEORETICAL_RESOLUTION unit="M">1.0</THEORETICAL_RESOLUTION>
+            </Scene_Source>
+            <Quality_Assessment>
+                <QUALITY_TABLES version="1.0">SPACEMETRIC</QUALITY_TABLES>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Scene altitude (meter)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:ALTITUDE</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>594980</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Sensor azimuth at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:SENSOR_AZIMUTH</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>82.41813583701328</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Sensor elevation at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:SENSOR_ELEVATION</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>81.91291729440532</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Viewing angle along-track (positive forwards) at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:VIEWING_ANGLE_ALONG_TRACK</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>0.025215745126144155</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Viewing angle across-track (positive left) at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:VIEWING_ANGLE_ACROSS_TRACK</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>7.396570221298683</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+                <Quality_Parameter>
+                    <QUALITY_PARAMETER_DESC>Platform heading (azimuth) at scene center (deg)</QUALITY_PARAMETER_DESC>
+                    <QUALITY_PARAMETER_CODE>SPACEMETRIC:HEADING_AZIMUTH</QUALITY_PARAMETER_CODE>
+                    <QUALITY_PARAMETER_VALUE>-7.753076383140628</QUALITY_PARAMETER_VALUE>
+                </Quality_Parameter>
+            </Quality_Assessment>
+        </Source_Information>
+    </Dataset_Sources>
+</Dimap_Document>

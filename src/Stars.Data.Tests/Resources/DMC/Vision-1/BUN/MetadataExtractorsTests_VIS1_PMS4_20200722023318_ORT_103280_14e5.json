@@ -1,0 +1,367 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VIS1_PMS4_20200722023318_ORT_103280_14e5",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.69503,
+          -0.5297
+        ],
+        [
+          119.69503,
+          -0.78599
+        ],
+        [
+          119.93917,
+          -0.78599
+        ],
+        [
+          119.93917,
+          -0.5297
+        ],
+        [
+          119.69503,
+          -0.5297
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2020-07-22T02:33:23Z",
+    "start_datetime": "2020-07-22T02:33:23Z",
+    "end_datetime": "2020-07-22T02:33:27Z",
+    "created": "2023-07-03T00:00:00Z",
+    "platform": "vision-1",
+    "constellation": "dmc-3",
+    "mission": "vision-1",
+    "instruments": [
+      "s1-4 imager"
+    ],
+    "spectral_processing": "PMS4",
+    "sensor_type": "optical",
+    "gsd": 0.87,
+    "title": "Vision-1 S1-4 Imager ORT 2020-07-22 02:33:23",
+    "sat:orbit_state": "ascending",
+    "sat:platform_international_designator": "2018-071A",
+    "proj:epsg": null,
+    "proj:shape": [
+      29687,
+      29092
+    ],
+    "view:sun_azimuth": 46.56064,
+    "view:sun_elevation": 58.90025,
+    "processing:level": "ORT",
+    "providers": [
+      {
+        "name": "Airbus DS",
+        "description": "Vision-1 imagery acquired by the SSTL S1-4 satellite provides 0.9m optical images in the panchromatic band and 3.5m in the multispectral bands (NIR, RGB), with a 20.8km swath width",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://intelligence.airbus.com/imagery/our-optical-and-radar-satellite-imagery/vision-1/"
+      }
+    ]
+  },
+  "bbox": [
+    119.69503,
+    -0.78599,
+    119.93917,
+    -0.5297
+  ],
+  "assets": {
+    "MS-ORT-PMS4-R1C1": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Ms Ort Pms4 R1c1 Pansharp Orthorectified PMS4",
+      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
+      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BLUE",
+          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "blue",
+          "solar_illumination": 2002.25
+        },
+        {
+          "name": "GREEN",
+          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1822.22
+        },
+        {
+          "name": "RED",
+          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1613.83
+        },
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 948.98
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        }
+      ]
+    },
+    "MS-ORT-PMS4-R1C2": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Ms Ort Pms4 R1c2 Pansharp Orthorectified PMS4",
+      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
+      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BLUE",
+          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "blue",
+          "solar_illumination": 2002.25
+        },
+        {
+          "name": "GREEN",
+          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1822.22
+        },
+        {
+          "name": "RED",
+          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1613.83
+        },
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 948.98
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        }
+      ]
+    },
+    "MS-ORT-PMS4-R2C1": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Ms Ort Pms4 R2c1 Pansharp Orthorectified PMS4",
+      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
+      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BLUE",
+          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "blue",
+          "solar_illumination": 2002.25
+        },
+        {
+          "name": "GREEN",
+          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1822.22
+        },
+        {
+          "name": "RED",
+          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1613.83
+        },
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 948.98
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        }
+      ]
+    },
+    "MS-ORT-PMS4-R2C2": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "Ms Ort Pms4 R2c2 Pansharp Orthorectified PMS4",
+      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
+      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BLUE",
+          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "blue",
+          "solar_illumination": 2002.25
+        },
+        {
+          "name": "GREEN",
+          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "green",
+          "solar_illumination": 1822.22
+        },
+        {
+          "name": "RED",
+          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "red",
+          "solar_illumination": 1613.83
+        },
+        {
+          "name": "NIR",
+          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "common_name": "nir",
+          "solar_illumination": 948.98
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.01,
+          "offset": 0.0
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
+      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
+      "file:size": 7319
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
+      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
+      "file:size": 299306
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
+      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
+      "file:size": 3251
+    }
+  },
+  "links": []
+}
