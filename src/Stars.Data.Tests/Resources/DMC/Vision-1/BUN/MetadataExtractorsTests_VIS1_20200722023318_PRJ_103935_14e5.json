@@ -40,7 +40,7 @@
   "properties": {
     "datetime": "2020-07-22T02:33:18Z",
     "start_datetime": "2020-07-22T02:33:18Z",
-    "end_datetime": "2020-07-22T02:33:27Z",
+    "end_datetime": "2020-07-22T02:33:21Z",
     "created": "2023-07-10T00:00:00Z",
     "platform": "vision-1",
     "constellation": "dmc-3",
@@ -48,7 +48,7 @@
     "instruments": [
       "s1-4 imager"
     ],
-    "spectral_processing": "PAN,MS4,PMS4",
+    "spectral_processing": "PAN,MS4",
     "sensor_type": "optical",
     "gsd": 3.48,
     "title": "Vision-1 S1-4 Imager PRJ 2020-07-22 02:33:18",
@@ -59,8 +59,8 @@
       7424,
       7274
     ],
-    "view:sun_azimuth": 46.21594666666667,
-    "view:sun_elevation": 58.76876333333333,
+    "view:sun_azimuth": 46.0436,
+    "view:sun_elevation": 58.70302,
     "processing:level": "PRJ",
     "providers": [
       {
@@ -83,19 +83,19 @@
   ],
   "assets": {
     "PAN-PRJ": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Pan Prj Scaled Radiance Projected PAN",
+      "title": "PAN PRJ Scaled Radiance Projected",
       "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5.jp2",
       "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "PAN",
-          "description": "PAN PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "PAN Projected Scaled Radiance PAN in W/m2/sr/m-6",
           "common_name": "pan",
           "solar_illumination": 1830.15
         }
@@ -110,38 +110,46 @@
       ]
     },
     "MS-PRJ-MS4": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Ms Prj Ms4 Scaled Radiance Projected MS4",
+      "title": "MS PRJ MS4 Scaled Radiance Projected",
       "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5.jp2",
       "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Blue Projected Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "blue",
+          "center_wavelength": 0.475,
+          "full_width_half_max": 0.07,
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Green Projected Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "green",
+          "center_wavelength": 0.55,
+          "full_width_half_max": 0.08,
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Red Projected Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "red",
+          "center_wavelength": 0.635,
+          "full_width_half_max": 0.07,
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "NIR Projected Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "nir",
+          "center_wavelength": 0.835,
+          "full_width_half_max": 0.15,
           "solar_illumination": 948.98
         }
       ],
@@ -172,259 +180,7 @@
         }
       ]
     },
-    "MS-ORT-PMS4-R1C1": {
-      "type": "application/octet-stream",
-      "roles": [
-        "data",
-        "dn"
-      ],
-      "title": "Ms Ort Pms4 R1c1 Scaled Radiance Projected PMS4",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
-      "file:size": 0,
-      "eo:bands": [
-        {
-          "name": "BLUE",
-          "description": "BLUE PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "blue",
-          "solar_illumination": 2002.25
-        },
-        {
-          "name": "GREEN",
-          "description": "GREEN PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "green",
-          "solar_illumination": 1822.22
-        },
-        {
-          "name": "RED",
-          "description": "RED PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "red",
-          "solar_illumination": 1613.83
-        },
-        {
-          "name": "NIR",
-          "description": "NIR PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "nir",
-          "solar_illumination": 948.98
-        }
-      ],
-      "raster:bands": [
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        }
-      ]
-    },
-    "MS-ORT-PMS4-R1C2": {
-      "type": "application/octet-stream",
-      "roles": [
-        "data",
-        "dn"
-      ],
-      "title": "Ms Ort Pms4 R1c2 Scaled Radiance Projected PMS4",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
-      "file:size": 0,
-      "eo:bands": [
-        {
-          "name": "BLUE",
-          "description": "BLUE PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "blue",
-          "solar_illumination": 2002.25
-        },
-        {
-          "name": "GREEN",
-          "description": "GREEN PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "green",
-          "solar_illumination": 1822.22
-        },
-        {
-          "name": "RED",
-          "description": "RED PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "red",
-          "solar_illumination": 1613.83
-        },
-        {
-          "name": "NIR",
-          "description": "NIR PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "nir",
-          "solar_illumination": 948.98
-        }
-      ],
-      "raster:bands": [
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        }
-      ]
-    },
-    "MS-ORT-PMS4-R2C1": {
-      "type": "application/octet-stream",
-      "roles": [
-        "data",
-        "dn"
-      ],
-      "title": "Ms Ort Pms4 R2c1 Scaled Radiance Projected PMS4",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
-      "file:size": 0,
-      "eo:bands": [
-        {
-          "name": "BLUE",
-          "description": "BLUE PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "blue",
-          "solar_illumination": 2002.25
-        },
-        {
-          "name": "GREEN",
-          "description": "GREEN PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "green",
-          "solar_illumination": 1822.22
-        },
-        {
-          "name": "RED",
-          "description": "RED PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "red",
-          "solar_illumination": 1613.83
-        },
-        {
-          "name": "NIR",
-          "description": "NIR PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "nir",
-          "solar_illumination": 948.98
-        }
-      ],
-      "raster:bands": [
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        }
-      ]
-    },
-    "MS-ORT-PMS4-R2C2": {
-      "type": "application/octet-stream",
-      "roles": [
-        "data",
-        "dn"
-      ],
-      "title": "Ms Ort Pms4 R2c2 Scaled Radiance Projected PMS4",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
-      "file:size": 0,
-      "eo:bands": [
-        {
-          "name": "BLUE",
-          "description": "BLUE PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "blue",
-          "solar_illumination": 2002.25
-        },
-        {
-          "name": "GREEN",
-          "description": "GREEN PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "green",
-          "solar_illumination": 1822.22
-        },
-        {
-          "name": "RED",
-          "description": "RED PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "red",
-          "solar_illumination": 1613.83
-        },
-        {
-          "name": "NIR",
-          "description": "NIR PROJECTED SCALED RADIANCE in W/m2/sr/m-6",
-          "common_name": "nir",
-          "solar_illumination": 948.98
-        }
-      ],
-      "raster:bands": [
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        },
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 16,
-          "scale": 0.01,
-          "offset": 0.0
-        }
-      ]
-    },
-    "metadata_PAN": {
+    "PAN-metadata": {
       "type": "application/xml",
       "roles": [
         "metadata"
@@ -434,7 +190,7 @@
       "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Meta.xml",
       "file:size": 5064
     },
-    "metadata_MS4": {
+    "MS4-metadata": {
       "type": "application/xml",
       "roles": [
         "metadata"
@@ -444,17 +200,7 @@
       "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Meta.xml",
       "file:size": 6486
     },
-    "metadata_PMS": {
-      "type": "application/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Metadata file",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
-      "file:size": 7319
-    },
-    "overview_PAN": {
+    "PAN-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
@@ -463,7 +209,7 @@
       "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Preview.jpg",
       "file:size": 511115
     },
-    "thumbnail_PAN": {
+    "PAN-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
@@ -472,7 +218,7 @@
       "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Icon.jpg",
       "file:size": 3843
     },
-    "overview_MS4": {
+    "MS4-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
@@ -481,7 +227,7 @@
       "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Preview.jpg",
       "file:size": 512773
     },
-    "thumbnail_MS4": {
+    "MS4-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
@@ -489,24 +235,6 @@
       "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Icon.jpg",
       "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Icon.jpg",
       "file:size": 4525
-    },
-    "overview_PMS": {
-      "type": "image/jpeg",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
-      "file:size": 299306
-    },
-    "thumbnail_PMS": {
-      "type": "image/jpeg",
-      "roles": [
-        "thumbnail"
-      ],
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
-      "file:size": 3251
     }
   },
   "links": []

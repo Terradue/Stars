@@ -151,7 +151,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         public virtual string GetSpectralProcessing(Schemas.DimapDocument dimap = null)
         {
-            return null;
+            return Dimap.Data_Processing.SPECTRAL_PROCESSING;
         }
 
         internal int? GetAbsoluteOrbit()
@@ -315,9 +315,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         public abstract string GetProductKey(IAsset bandAsset, Schemas.t_Data_File dataFile);
 
-        internal void CompleteAsset(StacAsset stacAsset, Schemas.t_Spectral_Band_Info[] spectralBandInfos, Schemas.t_Raster_Encoding raster_Encoding)
+        internal void CompleteAsset(StacAsset stacAsset, Schemas.t_Spectral_Band_Info[] spectralBandInfos, Schemas.t_Raster_Encoding raster_Encoding, Schemas.DimapDocument dimap = null)
         {
-            List<EoBandObject> eoBandObjects = GetEoBandObjects(spectralBandInfos);
+            List<EoBandObject> eoBandObjects = GetEoBandObjects(spectralBandInfos, dimap);
             if (eoBandObjects.Count > 0)
                 stacAsset.EoExtension().Bands = eoBandObjects.ToArray();
             List<RasterBand> rasterBandObjects = GetRasterBandObjects(spectralBandInfos, raster_Encoding);
@@ -325,21 +325,24 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 stacAsset.RasterExtension().Bands = rasterBandObjects.ToArray();
             if (stacAsset.MediaType.MediaType == "image/tiff")
                 stacAsset.MediaType.Parameters.Add("application", "geotiff");
+            if (stacAsset.MediaType.MediaType == "image/jpeg")
+                stacAsset.MediaType.Parameters.Add("application", "jpeg");
             stacAsset.Roles.Add("dn");
         }
 
-        private List<EoBandObject> GetEoBandObjects(Schemas.t_Spectral_Band_Info[] spectralBandInfos)
+        private List<EoBandObject> GetEoBandObjects(Schemas.t_Spectral_Band_Info[] spectralBandInfos, Schemas.DimapDocument dimap = null)
         {
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             List<string> labels = new List<string>();
             if (!string.IsNullOrEmpty(Dimap.Data_Processing.GEOMETRIC_PROCESSING))
-                labels.Add(Dimap.Data_Processing.GEOMETRIC_PROCESSING);
+                labels.Add(Dimap.Data_Processing.GEOMETRIC_PROCESSING.ToLower().Titleize());
             if (!string.IsNullOrEmpty(Dimap.Data_Processing.RADIOMETRIC_PROCESSING))
-                labels.Add(Dimap.Data_Processing.RADIOMETRIC_PROCESSING);
-            if (!string.IsNullOrEmpty(Dimap.Data_Processing.SPECTRAL_PROCESSING))
-                labels.Add(Dimap.Data_Processing.SPECTRAL_PROCESSING);
+                labels.Add(Dimap.Data_Processing.RADIOMETRIC_PROCESSING.ToLower().Titleize());
+            string spectralProcessing = GetSpectralProcessing(dimap);
+            if (!string.IsNullOrEmpty(spectralProcessing))
+                labels.Add(spectralProcessing);
             if (!string.IsNullOrEmpty(Dimap.Data_Processing.THEMATIC_PROCESSING))
-                labels.Add(Dimap.Data_Processing.THEMATIC_PROCESSING);
+                labels.Add(Dimap.Data_Processing.THEMATIC_PROCESSING.Titleize());
             foreach (var bandInfo in spectralBandInfos)
             {
                 switch (bandInfo.PHYSICAL_UNIT)
@@ -375,19 +378,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         internal virtual string GetAssetTitle(IAsset bandAsset, Schemas.t_Data_File dataFile, Schemas.DimapDocument dimap = null)
         {
-            string spectralProcessing = null;
-            if (dimap != null) spectralProcessing = GetSpectralProcessing(dimap);
-            if (spectralProcessing == null) spectralProcessing = Dimap.Data_Processing.SPECTRAL_PROCESSING?.ToLower().Titleize();
-            string title = string.Format("{0} {1} {2} {3}",
-                GetProductKey(bandAsset, dataFile).ToLower().Titleize(),
+            string productKey = GetProductKey(bandAsset, dataFile).Replace("-", " ");
+            if (productKey == "composite") productKey = "Composite";
+            string title = string.Format("{0} {1} {2}",
+                productKey,
                 Dimap.Data_Processing.RADIOMETRIC_PROCESSING.ToLower().Titleize(),
-                Dimap.Data_Processing.GEOMETRIC_PROCESSING?.ToLower().Titleize(),
-                spectralProcessing
+                Dimap.Data_Processing.GEOMETRIC_PROCESSING?.ToLower().Titleize()
             );
             return title;
         }
 
-        internal virtual string GetAssetSuffix(Schemas.DimapDocument dimap, IAsset metadataAsset = null)
+        internal virtual string GetAssetPrefix(Schemas.DimapDocument dimap, IAsset metadataAsset = null)
         {
             return String.Empty;
         }

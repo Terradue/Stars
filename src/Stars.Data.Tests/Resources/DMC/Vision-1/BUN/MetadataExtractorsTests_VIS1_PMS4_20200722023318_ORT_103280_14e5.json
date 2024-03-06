@@ -83,38 +83,46 @@
   ],
   "assets": {
     "MS-ORT-PMS4-R1C1": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Ms Ort Pms4 R1c1 Pansharp Orthorectified PMS4",
-      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
+      "title": "MS ORT PMS4 R1C1 Pansharp Orthorectified",
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "blue",
+          "center_wavelength": 0.475,
+          "full_width_half_max": 0.07,
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Green Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "green",
+          "center_wavelength": 0.55,
+          "full_width_half_max": 0.08,
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Red Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "red",
+          "center_wavelength": 0.635,
+          "full_width_half_max": 0.07,
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "nir",
+          "center_wavelength": 0.835,
+          "full_width_half_max": 0.15,
           "solar_illumination": 948.98
         }
       ],
@@ -146,38 +154,46 @@
       ]
     },
     "MS-ORT-PMS4-R1C2": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Ms Ort Pms4 R1c2 Pansharp Orthorectified PMS4",
-      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
+      "title": "MS ORT PMS4 R1C2 Pansharp Orthorectified",
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "blue",
+          "center_wavelength": 0.475,
+          "full_width_half_max": 0.07,
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Green Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "green",
+          "center_wavelength": 0.55,
+          "full_width_half_max": 0.08,
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Red Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "red",
+          "center_wavelength": 0.635,
+          "full_width_half_max": 0.07,
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "nir",
+          "center_wavelength": 0.835,
+          "full_width_half_max": 0.15,
           "solar_illumination": 948.98
         }
       ],
@@ -209,38 +225,46 @@
       ]
     },
     "MS-ORT-PMS4-R2C1": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Ms Ort Pms4 R2c1 Pansharp Orthorectified PMS4",
-      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
+      "title": "MS ORT PMS4 R2C1 Pansharp Orthorectified",
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "blue",
+          "center_wavelength": 0.475,
+          "full_width_half_max": 0.07,
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Green Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "green",
+          "center_wavelength": 0.55,
+          "full_width_half_max": 0.08,
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Red Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "red",
+          "center_wavelength": 0.635,
+          "full_width_half_max": 0.07,
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "nir",
+          "center_wavelength": 0.835,
+          "full_width_half_max": 0.15,
           "solar_illumination": 948.98
         }
       ],
@@ -272,38 +296,46 @@
       ]
     },
     "MS-ORT-PMS4-R2C2": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Ms Ort Pms4 R2c2 Pansharp Orthorectified PMS4",
-      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
+      "title": "MS ORT PMS4 R2C2 Pansharp Orthorectified",
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "blue",
+          "center_wavelength": 0.475,
+          "full_width_half_max": 0.07,
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Green Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "green",
+          "center_wavelength": 0.55,
+          "full_width_half_max": 0.08,
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "Red Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "red",
+          "center_wavelength": 0.635,
+          "full_width_half_max": 0.07,
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED PANSHARP in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Pansharp PMS4 in W/m2/sr/m-6",
           "common_name": "nir",
+          "center_wavelength": 0.835,
+          "full_width_half_max": 0.15,
           "solar_illumination": 948.98
         }
       ],
@@ -340,8 +372,8 @@
         "metadata"
       ],
       "title": "Metadata file",
-      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Meta.xml",
       "file:size": 7319
     },
     "overview": {
@@ -349,8 +381,8 @@
       "roles": [
         "overview"
       ],
-      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Preview.jpg",
       "file:size": 299306
     },
     "thumbnail": {
@@ -358,8 +390,8 @@
       "roles": [
         "thumbnail"
       ],
-      "href": "data/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
-      "filename": "VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_Icon.jpg",
       "file:size": 3251
     }
   },

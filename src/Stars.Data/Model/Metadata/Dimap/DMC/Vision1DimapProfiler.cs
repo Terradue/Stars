@@ -39,18 +39,26 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
             if (bandInfo.BAND_DESCRIPTION.ToUpper() == "BLUE")
             {
                 eoBandObject.SolarIllumination = 2002.25;
-            }
-            if (bandInfo.BAND_DESCRIPTION.ToUpper() == "NIR")
-            {
-                eoBandObject.SolarIllumination = 948.98;
-            }
-            if (bandInfo.BAND_DESCRIPTION.ToUpper() == "RED")
-            {
-                eoBandObject.SolarIllumination = 1613.83;
+                eoBandObject.CenterWavelength = 0.475;
+                eoBandObject.FullWidthHalfMax = 0.07;
             }
             if (bandInfo.BAND_DESCRIPTION.ToUpper() == "GREEN")
             {
                 eoBandObject.SolarIllumination = 1822.22;
+                eoBandObject.CenterWavelength = 0.55;
+                eoBandObject.FullWidthHalfMax = 0.08;
+            }
+            if (bandInfo.BAND_DESCRIPTION.ToUpper() == "RED")
+            {
+                eoBandObject.SolarIllumination = 1613.83;
+                eoBandObject.CenterWavelength = 0.635;
+                eoBandObject.FullWidthHalfMax = 0.07;
+            }
+            if (bandInfo.BAND_DESCRIPTION.ToUpper() == "NIR")
+            {
+                eoBandObject.SolarIllumination = 948.98;
+                eoBandObject.CenterWavelength = 0.835;
+                eoBandObject.FullWidthHalfMax = 0.15;
             }
             ////
 
@@ -123,15 +131,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
             return "optical";
         }
 
-        internal override string GetAssetSuffix(Schemas.DimapDocument dimap, IAsset metadataAsset)
+        internal override string GetAssetPrefix(Schemas.DimapDocument dimap, IAsset metadataAsset)
         {
             if (dimap != null)
             {
-                return Dimaps.Length == 1 ? String.Empty : String.Format("_{0}", dimap.Dataset_Id.DATASET_NAME.Substring(5, 3));
+                return Dimaps.Length == 1 ? String.Empty : String.Format("{0}-", dimap.Dataset_Id.DATASET_NAME.Substring(5, 3));
             }
             if (metadataAsset != null)
             {
-                return (Dimaps.Length == 1) ? String.Empty : String.Format("_{0}", Path.GetFileName(metadataAsset.Uri.AbsolutePath).Substring(5, 3));
+                return (Dimaps.Length == 1) ? String.Empty : String.Format("{0}-", Path.GetFileName(metadataAsset.Uri.AbsolutePath).Substring(5, 3));
             }
             return String.Empty;
         }

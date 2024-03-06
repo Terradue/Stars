@@ -97,33 +97,41 @@
         "data",
         "dn"
       ],
-      "title": "Ms Ortp Ms4 Scaled Radiance Orthorectified MS4",
+      "title": "MS ORTP MS4 Scaled Radiance Orthorectified",
       "href": "data/VIS1_MS4_20210114224140_ORTP_S105354_1e08/VIS1_MS4_20210114224140_ORTP_S105354_1e08.tif",
       "filename": "VIS1_MS4_20210114224140_ORTP_S105354_1e08.tif",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "blue",
+          "center_wavelength": 0.475,
+          "full_width_half_max": 0.07,
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Green Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "green",
+          "center_wavelength": 0.55,
+          "full_width_half_max": 0.08,
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Red Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "red",
+          "center_wavelength": 0.635,
+          "full_width_half_max": 0.07,
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "nir",
+          "center_wavelength": 0.835,
+          "full_width_half_max": 0.15,
           "solar_illumination": 948.98
         }
       ],

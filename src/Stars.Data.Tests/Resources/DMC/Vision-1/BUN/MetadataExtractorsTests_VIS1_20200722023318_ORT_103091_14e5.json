@@ -83,19 +83,19 @@
   ],
   "assets": {
     "PAN-ORT": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Pan Ort Scaled Radiance Orthorectified PAN",
+      "title": "PAN ORT Scaled Radiance Orthorectified",
       "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5.jp2",
       "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "PAN",
-          "description": "PAN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "PAN Orthorectified Scaled Radiance PAN in W/m2/sr/m-6",
           "common_name": "pan",
           "solar_illumination": 1830.15
         }
@@ -110,38 +110,46 @@
       ]
     },
     "MS-ORT-MS4": {
-      "type": "application/octet-stream",
+      "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Ms Ort Ms4 Scaled Radiance Orthorectified MS4",
+      "title": "MS ORT MS4 Scaled Radiance Orthorectified",
       "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5.jp2",
       "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "blue",
+          "center_wavelength": 0.475,
+          "full_width_half_max": 0.07,
           "solar_illumination": 2002.25
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Green Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "green",
+          "center_wavelength": 0.55,
+          "full_width_half_max": 0.08,
           "solar_illumination": 1822.22
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Red Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "red",
+          "center_wavelength": 0.635,
+          "full_width_half_max": 0.07,
           "solar_illumination": 1613.83
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "nir",
+          "center_wavelength": 0.835,
+          "full_width_half_max": 0.15,
           "solar_illumination": 948.98
         }
       ],
@@ -172,7 +180,7 @@
         }
       ]
     },
-    "metadata_PAN": {
+    "PAN-metadata": {
       "type": "application/xml",
       "roles": [
         "metadata"
@@ -182,7 +190,7 @@
       "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Meta.xml",
       "file:size": 5314
     },
-    "metadata_MS4": {
+    "MS4-metadata": {
       "type": "application/xml",
       "roles": [
         "metadata"
@@ -192,7 +200,7 @@
       "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Meta.xml",
       "file:size": 6735
     },
-    "overview_PAN": {
+    "PAN-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
@@ -201,7 +209,7 @@
       "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Preview.jpg",
       "file:size": 417633
     },
-    "thumbnail_PAN": {
+    "PAN-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
@@ -210,7 +218,7 @@
       "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Icon.jpg",
       "file:size": 3407
     },
-    "overview_MS4": {
+    "MS4-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
@@ -219,7 +227,7 @@
       "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Preview.jpg",
       "file:size": 445472
     },
-    "thumbnail_MS4": {
+    "MS4-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"

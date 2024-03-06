@@ -105,7 +105,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
             // AddEoBandPropertyInItem(stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri);
         }
 
         private void AddEoBandPropertyInItem(StacItem stacItem)
@@ -329,9 +329,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                     if (dimap.Data_Access.DATA_FILE_ORGANISATION == t_DATA_FILE_ORGANISATION.BAND_SEPARATE)
                         dimapProfiler.CompleteAsset(bandStacAsset.Value,
                             new t_Spectral_Band_Info[1] { dimap.Image_Interpretation.FirstOrDefault(sb => sb.BAND_INDEX == dataFile.BAND_INDEX) },
-                            dimap.Raster_Encoding);
+                            dimap.Raster_Encoding, dimap);
                     else
-                        dimapProfiler.CompleteAsset(bandStacAsset.Value, dimap.Image_Interpretation, dimap.Raster_Encoding);
+                        dimapProfiler.CompleteAsset(bandStacAsset.Value, dimap.Image_Interpretation, dimap.Raster_Encoding, dimap);
                     stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
                 }
             }
@@ -339,21 +339,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             IAsset[] metadataAssets = GetMetadataAssets(item);
             foreach (IAsset metadataAsset in metadataAssets)
             {
-                string suffix = dimapProfiler.GetAssetSuffix(null, metadataAsset);
-                string key = String.Format("metadata{0}", suffix);
+                string prefix = dimapProfiler.GetAssetPrefix(null, metadataAsset);
+                string key = String.Format("{0}metadata", prefix);
                 stacItem.Assets.Add(key, StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
                             new ContentType("application/xml"), "Metadata file"));
                 stacItem.Assets[key].Properties.AddRange(metadataAsset.Properties);
             }
             foreach (DimapDocument dimap in dimapProfiler.Dimaps)
             {
-                string suffix = dimapProfiler.GetAssetSuffix(dimap);
+                string prefix = dimapProfiler.GetAssetPrefix(dimap);
                 try
                 {
                     var overviewAsset = FindFirstAssetFromFileNameRegex(item, dimap.Dataset_Id.DATASET_QL_PATH.href);
                     if (overviewAsset != null)
                     {
-                        string key = String.Format("overview{0}", suffix);
+                        string key = String.Format("{0}overview", prefix);
                         if (stacItem.Assets.TryAdd(key, StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri,
                                     new ContentType(MimeTypes.GetMimeType(Path.GetFileName(overviewAsset.Uri.ToString()))))))
                             stacItem.Assets[key].Properties.AddRange(overviewAsset.Properties);
@@ -365,7 +365,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                     var thumbnailAsset = FindFirstAssetFromFileNameRegex(item, dimap.Dataset_Id.DATASET_TN_PATH.href);
                     if (thumbnailAsset != null)
                     {
-                        string key = String.Format("thumbnail{0}", suffix);
+                        string key = String.Format("{0}thumbnail", prefix);
                         stacItem.Assets.Add(key, StacAsset.CreateThumbnailAsset(stacItem, thumbnailAsset.Uri,
                                     new ContentType(MimeTypes.GetMimeType(Path.GetFileName(thumbnailAsset.Uri.ToString())))));
                         stacItem.Assets[key].Properties.AddRange(thumbnailAsset.Properties);
@@ -377,6 +377,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         private KeyValuePair<string, StacAsset> CreateRasterAsset(StacItem stacItem, IAsset bandAsset, DimapProfiler dimapProfiler, t_Data_File dataFile, Schemas.DimapDocument dimap)
         {
+            string mimeType = MimeTypes.GetMimeType(Path.GetFileName(bandAsset.Uri.ToString()));
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new ContentType(MimeTypes.GetMimeType(Path.GetFileName(bandAsset.Uri.ToString()))));
             stacAsset.Properties.AddRange(bandAsset.Properties);
             stacAsset.Title = dimapProfiler.GetAssetTitle(bandAsset, dataFile, dimap);

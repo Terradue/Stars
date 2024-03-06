@@ -101,14 +101,14 @@
         "data",
         "dn"
       ],
-      "title": "Pan Ortp Scaled Radiance Orthorectified PAN",
+      "title": "PAN ORTP Scaled Radiance Orthorectified",
       "href": "data/VIS1_PAN_20210114224140_ORTP_S105354_1e08/VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
       "filename": "VIS1_PAN_20210114224140_ORTP_S105354_1e08.tif",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "PAN",
-          "description": "PAN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "PAN Orthorectified Scaled Radiance PAN in W/m2/sr/m-6",
           "common_name": "pan",
           "solar_illumination": 1830.15
         }
