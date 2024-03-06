@@ -377,8 +377,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         private KeyValuePair<string, StacAsset> CreateRasterAsset(StacItem stacItem, IAsset bandAsset, DimapProfiler dimapProfiler, t_Data_File dataFile, Schemas.DimapDocument dimap)
         {
-            string mimeType = MimeTypes.GetMimeType(Path.GetFileName(bandAsset.Uri.ToString()));
-            StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new ContentType(MimeTypes.GetMimeType(Path.GetFileName(bandAsset.Uri.ToString()))));
+            string mimeType;
+            Console.WriteLine("EXT = {0}", Path.GetExtension(bandAsset.Uri.AbsolutePath));
+            if (Path.GetExtension(bandAsset.Uri.AbsolutePath) == ".jp2") mimeType = "image/jpeg";
+            else mimeType = MimeTypes.GetMimeType(Path.GetFileName(bandAsset.Uri.AbsolutePath));
+            StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new ContentType(mimeType));
             stacAsset.Properties.AddRange(bandAsset.Properties);
             stacAsset.Title = dimapProfiler.GetAssetTitle(bandAsset, dataFile, dimap);
             return new KeyValuePair<string, StacAsset>(dimapProfiler.GetProductKey(bandAsset, dataFile), stacAsset);
