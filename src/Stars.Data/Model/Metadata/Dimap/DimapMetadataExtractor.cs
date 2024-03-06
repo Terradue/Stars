@@ -288,21 +288,85 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(DimapProfiler dimapProfiler)
         {
-            List<GeoJSON.Net.Geometry.Position> positions = new List<Position>();
-            foreach (var vertex in dimapProfiler.Dimap.Dataset_Frame)
+            GeoJSON.Net.Geometry.IGeometryObject geometry;
+
+            if (dimapProfiler.Dimaps.Length == 1)
             {
-                positions.Add(new GeoJSON.Net.Geometry.Position(
-                    vertex.FRAME_LAT.Value, vertex.FRAME_LON.Value
-                )
+                List<GeoJSON.Net.Geometry.Position> positions = new List<Position>();
+                foreach (var vertex in dimapProfiler.Dimap.Dataset_Frame)
+                {
+                    positions.Add(new GeoJSON.Net.Geometry.Position(vertex.FRAME_LAT.Value, vertex.FRAME_LON.Value));
+                }
+                positions.Add(positions.First());
+
+                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
+                    positions.ToArray()
                 );
+
+                geometry = new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
             }
-            positions.Add(positions.First());
+            else
+            {
+                double minLon = 180;
+                double maxLon = -180;
+                GeoJSON.Net.Geometry.Position swPosition = null, sePosition = null, nePosition = null, nwPosition = null;
 
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
-                positions.ToArray()
-            );
+                foreach (Schemas.DimapDocument dimap in dimapProfiler.Dimaps)
+                {
+                    List<GeoJSON.Net.Geometry.Position> positions = new List<Position>();
+                    foreach (var vertex in dimap.Dataset_Frame)
+                    {
+                        positions.Add(new GeoJSON.Net.Geometry.Position(vertex.FRAME_LAT.Value, vertex.FRAME_LON.Value));
+                    }
+                    if (positions.Count != 4) return null;
 
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+                    List<GeoJSON.Net.Geometry.Position> sorted = new List<GeoJSON.Net.Geometry.Position>(positions);
+                    sorted.Sort((pos1, pos2) => {
+                        if (pos1.Longitude < pos2.Longitude) return -1;
+                        if (pos1.Longitude > pos2.Longitude) return 1;
+                        return 0;
+                    });
+                    if (sorted[0].Longitude < minLon)
+                    {
+                        minLon = sorted[0].Longitude;
+                        if (sorted[0].Latitude < sorted[1].Latitude)
+                        {
+                            swPosition = sorted[0];
+                            nwPosition = sorted[1];
+                        }
+                        else
+                        {
+                            nwPosition = sorted[0];
+                            swPosition = sorted[1];
+                        }
+                    }
+                    if (sorted[3].Longitude > maxLon)
+                    {
+                        maxLon = sorted[3].Longitude;
+                        if (sorted[2].Latitude < sorted[3].Latitude)
+                        {
+                            sePosition = sorted[2];
+                            nePosition = sorted[3];
+                        }
+                        else
+                        {
+                            nePosition = sorted[2];
+                            sePosition = sorted[3];
+                        }
+                    }
+                }
+
+                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
+                    new GeoJSON.Net.Geometry.Position[]
+                    {
+                        swPosition, sePosition, nePosition, nwPosition, swPosition
+                    }
+                );
+
+                geometry = new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            }
+
+            return geometry;
         }
 
         protected void AddAssets(StacItem stacItem, IItem item, DimapProfiler dimapProfiler)
@@ -378,7 +442,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         private KeyValuePair<string, StacAsset> CreateRasterAsset(StacItem stacItem, IAsset bandAsset, DimapProfiler dimapProfiler, t_Data_File dataFile, Schemas.DimapDocument dimap)
         {
             string mimeType;
-            Console.WriteLine("EXT = {0}", Path.GetExtension(bandAsset.Uri.AbsolutePath));
             if (Path.GetExtension(bandAsset.Uri.AbsolutePath) == ".jp2") mimeType = "image/jpeg";
             else mimeType = MimeTypes.GetMimeType(Path.GetFileName(bandAsset.Uri.AbsolutePath));
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new ContentType(mimeType));
