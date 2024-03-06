@@ -48,7 +48,7 @@
     "instruments": [
       "s1-4 imager"
     ],
-    "spectral_processing": "PAN,MS4",
+    "spectral_processing": "MS4,PAN",
     "sensor_type": "optical",
     "gsd": 3.48,
     "title": "Vision-1 S1-4 Imager PRJ 2020-07-22 02:33:18",

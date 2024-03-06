@@ -72,19 +72,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
 
         public override string GetSpectralProcessing(Schemas.DimapDocument dimap = null)
         {
-            string spectralProcessing = null;
+            List<string> spectralProcessings = new List<string>();
             Schemas.DimapDocument[] dimaps = dimap == null ? Dimaps : new Schemas.DimapDocument[] {dimap};
             foreach (Schemas.DimapDocument d in dimaps)
             {
                 string[] identifierParts = d.Dataset_Id.DATASET_NAME.Split('_');
-                if (identifierParts.Length >= 2)
-                {
-                    if (spectralProcessing == null) spectralProcessing = String.Empty;
-                    else spectralProcessing += ",";
-                    spectralProcessing += identifierParts[1];
-                }
+                if (identifierParts.Length >= 2) spectralProcessings.Add(identifierParts[1]);
             }
-            return spectralProcessing;
+            spectralProcessings.Sort();
+            return String.Join(",", spectralProcessings);
         }
 
 
