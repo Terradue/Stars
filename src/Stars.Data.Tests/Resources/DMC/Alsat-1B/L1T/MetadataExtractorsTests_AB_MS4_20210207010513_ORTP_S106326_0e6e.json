@@ -94,32 +94,32 @@
         "data",
         "dn"
       ],
-      "title": "Composite Scaled Radiance Orthorectified ",
+      "title": "Composite Scaled Radiance Orthorectified",
       "href": "data/a3_21012879000031/AB_MS4_20210207010513_ORTP_S106326_0e6e.tif",
       "filename": "AB_MS4_20210207010513_ORTP_S106326_0e6e.tif",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "BLUE ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Scaled Radiance in W/m2/sr/m-6",
           "common_name": "blue",
           "solar_illumination": 1982.32
         },
         {
           "name": "GREEN",
-          "description": "GREEN ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Green Orthorectified Scaled Radiance in W/m2/sr/m-6",
           "common_name": "green",
           "solar_illumination": 1822.45
         },
         {
           "name": "RED",
-          "description": "RED ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "Red Orthorectified Scaled Radiance in W/m2/sr/m-6",
           "common_name": "red",
           "solar_illumination": 1538.9
         },
         {
           "name": "NIR",
-          "description": "NIR ORTHORECTIFIED SCALED RADIANCE in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Scaled Radiance in W/m2/sr/m-6",
           "common_name": "nir",
           "solar_illumination": 991.02
         }

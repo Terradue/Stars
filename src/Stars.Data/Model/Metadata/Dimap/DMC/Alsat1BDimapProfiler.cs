@@ -1,15 +1,21 @@
 using System;
+using System.Collections.Generic;
 using Stac.Extensions.Eo;
 using Stac;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
 using Terradue.Stars.Interface;
+
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
 {
     internal class Alsat1BDimapProfiler : DmcDimapProfiler
     {
 
-        public Alsat1BDimapProfiler(t_Dimap_Document dimap) : base(dimap)
+        public Alsat1BDimapProfiler(DimapDocument dimap) : base(dimap)
+        {
+        }
+
+        public Alsat1BDimapProfiler(IEnumerable<DimapDocument> dimaps) : base(dimaps)
         {
         }
 
