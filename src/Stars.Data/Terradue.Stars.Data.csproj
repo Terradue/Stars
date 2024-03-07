@@ -4,7 +4,7 @@
         <ProjectName>Terradue.Stars.Data</ProjectName>
         <Title>Terradue.Stars.Data</Title>
         <Description>Collection of data Plugins for Terradue.Stars</Description>
-        <Version>2.19.6</Version>
+        <Version>2.20.0</Version>
         <!-- <VersionSuffix>beta.8</VersionSuffix> -->
         <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
         <NoWarn>NU1603</NoWarn>
