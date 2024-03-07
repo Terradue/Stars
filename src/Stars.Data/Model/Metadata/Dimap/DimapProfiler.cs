@@ -13,13 +13,39 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {
     public abstract class DimapProfiler
     {
-        public Schemas.t_Dimap_Document Dimap { get; protected set; }
+        private Schemas.DimapDocument[] dimaps;
+
+        public Schemas.DimapDocument Dimap {
+            get { return (dimaps == null || dimaps.Length == 0 ? null : dimaps[0]);}
+            protected set { dimaps = new Schemas.DimapDocument[] { value }; }
+        }
+
+        public Schemas.DimapDocument[] Dimaps {
+            get { return dimaps; }
+            protected set { dimaps = value; }
+        }
 
         internal Schemas.t_Source_Information GetSceneSource()
         {
             return Dimap.Dataset_Sources
                     .Where(ds => ds.Scene_Source != null)
                     .FirstOrDefault(ds => !string.IsNullOrEmpty(ds.Scene_Source.MISSION));
+        }
+
+        internal Schemas.t_Source_Information[] GetSceneSources()
+        {
+            List<Schemas.t_Source_Information> sceneSources = new List<Schemas.t_Source_Information>();
+            foreach (Schemas.DimapDocument dimap in Dimaps)
+            {
+                foreach (Schemas.t_Source_Information ds in dimap.Dataset_Sources)
+                {
+                    if (ds.Scene_Source != null && !String.IsNullOrEmpty(ds.Scene_Source.MISSION))
+                    {
+                        sceneSources.Add(ds);
+                    }
+                }
+            }
+            return sceneSources.ToArray();
         }
 
         internal virtual string GetPlatform()
@@ -29,37 +55,65 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         internal virtual string GetMission()
         {
-            var ss = GetSceneSource();
-            if (ss == null) return null;
-            var mission = ss.Scene_Source.MISSION + (string.IsNullOrEmpty(ss.Scene_Source.MISSION_INDEX) ? "" : "-" + ss.Scene_Source.MISSION_INDEX);
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return null;
+            var mission = String.Format(
+                "{0}{1}",
+                ss[0].Scene_Source.MISSION,
+                String.IsNullOrEmpty(ss[0].Scene_Source.MISSION_INDEX) ? String.Empty : "-" + ss[0].Scene_Source.MISSION_INDEX
+            );
             return mission.Replace(" ", "-");
         }
 
         internal virtual DateTime GetStartTime()
         {
-            var ss = GetSceneSource();
-            if (ss == null) return DateTime.MinValue;
-            return ss.Scene_Source.IMAGING_START_TIME;
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return DateTime.MinValue;
+            DateTime dt = DateTime.MaxValue;
+            foreach (Schemas.t_Source_Information s in ss)
+            {
+                if (s.Scene_Source.IMAGING_START_TIME < dt) dt = s.Scene_Source.IMAGING_START_TIME;
+            }
+            return dt;
         }
 
         internal virtual DateTime GetEndTime()
         {
-            var ss = GetSceneSource();
-            if (ss == null) return DateTime.MinValue;
-            return ss.Scene_Source.IMAGING_STOP_TIME;
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return DateTime.MinValue;
+            DateTime dt = DateTime.MinValue;
+            foreach (Schemas.t_Source_Information s in ss)
+            {
+                if (s.Scene_Source.IMAGING_STOP_TIME > dt) dt = s.Scene_Source.IMAGING_STOP_TIME;
+            }
+            return dt;
         }
 
         internal virtual DateTime GetAcquisitionTime()
         {
-            var ss = GetSceneSource();
-            if (ss == null) return DateTime.MinValue;
-            return ss.Scene_Source.IMAGING_DATE;
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return DateTime.MinValue;
+            DateTime dt = DateTime.MinValue;
+            DateTime st = DateTime.MaxValue;
+            foreach (Schemas.t_Source_Information s in ss)
+            {
+                if (s.Scene_Source.IMAGING_DATE > dt) dt = s.Scene_Source.IMAGING_DATE;
+                if (s.Scene_Source.IMAGING_START_TIME < st) st = s.Scene_Source.IMAGING_START_TIME;
+            }
+            if  (dt == DateTime.MinValue) dt = st;
+            return dt;
         }
 
         internal virtual DateTime GetProcessingTime()
         {
             DateTime createdDate = DateTime.MinValue;
-            DateTime.TryParse(Dimap.Production.DATASET_PRODUCTION_DATE, null, DateTimeStyles.AssumeUniversal, out createdDate);
+            foreach (Schemas.DimapDocument dimap in Dimaps)
+            {
+                if (DateTime.TryParse(dimap.Production.DATASET_PRODUCTION_DATE, null, DateTimeStyles.AssumeUniversal, out DateTime dt))
+                {
+                    if (dt > createdDate) createdDate = dt;
+                }
+            }
             return createdDate.ToUniversalTime();
         }
 
@@ -85,38 +139,45 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         public virtual string[] GetInstruments()
         {
-            var ss = GetSceneSource();
-            if (ss == null) return null;
-            return new string[1] { ss.Scene_Source.INSTRUMENT + (string.IsNullOrEmpty(ss.Scene_Source.INSTRUMENT_INDEX) ? "" : "-" + ss.Scene_Source.INSTRUMENT_INDEX) };
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return null;
+            return new string[] {
+                String.Format("{0}{1}",
+                    ss[0].Scene_Source.INSTRUMENT,
+                    String.IsNullOrEmpty(ss[0].Scene_Source.INSTRUMENT_INDEX) ? String.Empty : "-" + ss[0].Scene_Source.INSTRUMENT_INDEX
+                )
+            };
+        }
+
+        public virtual string GetSpectralProcessing(Schemas.DimapDocument dimap = null)
+        {
+            return Dimap.Data_Processing.SPECTRAL_PROCESSING;
         }
 
         internal int? GetAbsoluteOrbit()
         {
-            try
-            {
-                var ss = GetSceneSource();
-                return int.Parse(ss.Scene_Source.GRID_REFERENCE.Split('/')[0]);
-            }
-            catch
-            {
-                return null;
-            }
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0 || ss[0].Scene_Source.GRID_REFERENCE == null) return null;
+            string[] refs = ss[0].Scene_Source.GRID_REFERENCE.Split('/');
+            if (Int32.TryParse(refs[0], out int orbit)) return orbit;
+            return null;
         }
 
         internal int? GetRelativeOrbit()
         {
-            try
-            {
-                var ss = GetSceneSource();
-                return int.Parse(ss.Scene_Source.GRID_REFERENCE.Split('/')[1]);
-            }
-            catch
-            {
-                return null;
-            }
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0 || ss[0].Scene_Source?.GRID_REFERENCE == null) return null;
+            string[] refs = ss[0].Scene_Source.GRID_REFERENCE.Split('/');
+            if (refs.Length >= 2 && Int32.TryParse(refs[0], out int orbit)) return orbit;
+            return null;
         }
 
         internal abstract string GetOrbitState();
+
+        public virtual string GetPlatformInternationalDesignator()
+        {
+            return null;
+        }
 
         internal void AddProcessingSoftware(IDictionary<string, string> software)
         {
@@ -124,7 +185,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             {
                 var procParam = Dimap.Data_Processing.Processing_Parameter.FirstOrDefault(pp => pp.PROC_PARAMETER_DESC == "SOFTWARE");
                 if (procParam != null)
+                {
                     software.Add(procParam.PROC_PARAMETER_VALUE.Split(' ')[0], procParam.PROC_PARAMETER_VALUE.Split(' ')[1]);
+                }
+                else if (Dimap.Data_Processing.SOFTWARE_VERSION != null)
+                {
+                    software.Add(Dimap.Data_Processing.SOFTWARE_VERSION.Split(' ')[0], Dimap.Data_Processing.SOFTWARE_VERSION.Split(' ')[1]);
+                }
             }
             catch { }
         }
@@ -133,7 +200,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             try
             {
-                return long.Parse(Dimap.Coordinate_Reference_System.Horizontal_CS.Projection.PROJECTION_CODE.Replace("EPSG:", ""));
+                return Int64.Parse(Dimap.Coordinate_Reference_System.Horizontal_CS.Projection.PROJECTION_CODE.Replace("EPSG:", ""));
             }
             catch { }
             return 0;
@@ -141,86 +208,116 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         internal int[] GetShape()
         {
-            try
+            int height = 0, width = 0;
+            foreach (Schemas.DimapDocument dimap in Dimaps)
             {
-                return new int[] { int.Parse(Dimap.Raster_Dimensions.NCOLS), int.Parse(Dimap.Raster_Dimensions.NROWS) };
+                if (Int32.TryParse(dimap.Raster_Dimensions.NCOLS, out int ncols) && Int32.TryParse(dimap.Raster_Dimensions.NROWS, out int nrows))
+                {
+                    if (height == 0 || nrows < height) height = nrows;
+                    if (width == 0 || ncols < width) width = ncols;
+                }
             }
-            catch
+            if (height != 0 && width != 0)
             {
-                return null;
+                return new int[] { width, height };
             }
+
+            return null;
         }
 
         internal double GetViewingAngle()
         {
-            try
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return 0;
+            int count = 0;
+            double sum = 0;
+            foreach (Schemas.t_Source_Information s in ss)
             {
-                var ss = GetSceneSource();
-                return ss.Scene_Source.VIEWING_ANGLE.Value;
+                if (s.Scene_Source?.VIEWING_ANGLE != null)
+                {
+                    count++;
+                    sum += s.Scene_Source.VIEWING_ANGLE.Value;
+                }
             }
-            catch
-            {
-                return 0;
-            }
+            return count == 0 ? 0 : sum / count;
         }
 
         internal double GetIndidenceAngle()
         {
-            try
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return 0;
+            int count = 0;
+            double sum = 0;
+            foreach (Schemas.t_Source_Information s in ss)
             {
-                var ss = GetSceneSource();
-                return ss.Scene_Source.INCIDENCE_ANGLE.Value;
+                if (s.Scene_Source?.INCIDENCE_ANGLE != null)
+                {
+                    count++;
+                    sum += s.Scene_Source.INCIDENCE_ANGLE.Value;
+                }
             }
-            catch
-            {
-                return 0;
-            }
+            return count == 0 ? 0 : sum / count;
         }
 
         internal double GetResolution()
         {
-            try
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return 0;
+
+            double res = 0;
+            foreach (Schemas.t_Source_Information s in ss)
             {
-                var ss = GetSceneSource();
-                return ss.Scene_Source.THEORETICAL_RESOLUTION.Value;
+                if (s.Scene_Source?.THEORETICAL_RESOLUTION != null)
+                {
+                    if (res == 0 || s.Scene_Source?.THEORETICAL_RESOLUTION.Value > res) res = s.Scene_Source.THEORETICAL_RESOLUTION.Value;
+                }
+                else if (s.Scene_Source?.RESOLUTION != null)
+                {
+                    if (res == 0 || s.Scene_Source?.RESOLUTION.Value > res) res = s.Scene_Source.RESOLUTION.Value;
+                }
             }
-            catch
-            {
-                return 0;
-            }
+            return res;
         }
 
         internal double GetSunElevation()
         {
-            try
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return 0;
+            int count = 0;
+            double sum = 0;
+            foreach (Schemas.t_Source_Information s in ss)
             {
-                var ss = GetSceneSource();
-                return ss.Scene_Source.SUN_ELEVATION.Value;
+                if (s.Scene_Source?.SUN_ELEVATION != null)
+                {
+                    count++;
+                    sum += s.Scene_Source.SUN_ELEVATION.Value;
+                }
             }
-            catch
-            {
-                return 0;
-            }
+            return count == 0 ? 0 : sum / count;
         }
 
         internal double GetSunAngle()
         {
-            try
+            var ss = GetSceneSources();
+            if (ss == null || ss.Length == 0) return 0;
+            int count = 0;
+            double sum = 0;
+            foreach (Schemas.t_Source_Information s in ss)
             {
-                var ss = GetSceneSource();
-                return ss.Scene_Source.SUN_AZIMUTH.Value;
+                if (s.Scene_Source?.SUN_AZIMUTH != null)
+                {
+                    count++;
+                    sum += s.Scene_Source.SUN_AZIMUTH.Value;
+                }
             }
-            catch
-            {
-                return 0;
-            }
+            return count == 0 ? 0 : sum / count;
         }
 
         public abstract string GetProductKey(IAsset bandAsset, Schemas.t_Data_File dataFile);
 
-        internal void CompleteAsset(StacAsset stacAsset, Schemas.t_Spectral_Band_Info[] spectralBandInfos, Schemas.t_Raster_Encoding raster_Encoding)
+        internal void CompleteAsset(StacAsset stacAsset, Schemas.t_Spectral_Band_Info[] spectralBandInfos, Schemas.t_Raster_Encoding raster_Encoding, Schemas.DimapDocument dimap = null)
         {
-            List<EoBandObject> eoBandObjects = GetEoBandObjects(spectralBandInfos);
+            List<EoBandObject> eoBandObjects = GetEoBandObjects(spectralBandInfos, dimap);
             if (eoBandObjects.Count > 0)
                 stacAsset.EoExtension().Bands = eoBandObjects.ToArray();
             List<RasterBand> rasterBandObjects = GetRasterBandObjects(spectralBandInfos, raster_Encoding);
@@ -228,21 +325,24 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 stacAsset.RasterExtension().Bands = rasterBandObjects.ToArray();
             if (stacAsset.MediaType.MediaType == "image/tiff")
                 stacAsset.MediaType.Parameters.Add("application", "geotiff");
+            if (stacAsset.MediaType.MediaType == "image/jpeg")
+                stacAsset.MediaType.Parameters.Add("application", "jpeg");
             stacAsset.Roles.Add("dn");
         }
 
-        private List<EoBandObject> GetEoBandObjects(Schemas.t_Spectral_Band_Info[] spectralBandInfos)
+        private List<EoBandObject> GetEoBandObjects(Schemas.t_Spectral_Band_Info[] spectralBandInfos, Schemas.DimapDocument dimap = null)
         {
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             List<string> labels = new List<string>();
             if (!string.IsNullOrEmpty(Dimap.Data_Processing.GEOMETRIC_PROCESSING))
-                labels.Add(Dimap.Data_Processing.GEOMETRIC_PROCESSING);
+                labels.Add(Dimap.Data_Processing.GEOMETRIC_PROCESSING.ToLower().Titleize());
             if (!string.IsNullOrEmpty(Dimap.Data_Processing.RADIOMETRIC_PROCESSING))
-                labels.Add(Dimap.Data_Processing.RADIOMETRIC_PROCESSING);
-            if (!string.IsNullOrEmpty(Dimap.Data_Processing.SPECTRAL_PROCESSING))
-                labels.Add(Dimap.Data_Processing.SPECTRAL_PROCESSING);
+                labels.Add(Dimap.Data_Processing.RADIOMETRIC_PROCESSING.ToLower().Titleize());
+            string spectralProcessing = GetSpectralProcessing(dimap);
+            if (!string.IsNullOrEmpty(spectralProcessing))
+                labels.Add(spectralProcessing);
             if (!string.IsNullOrEmpty(Dimap.Data_Processing.THEMATIC_PROCESSING))
-                labels.Add(Dimap.Data_Processing.THEMATIC_PROCESSING);
+                labels.Add(Dimap.Data_Processing.THEMATIC_PROCESSING.Titleize());
             foreach (var bandInfo in spectralBandInfos)
             {
                 switch (bandInfo.PHYSICAL_UNIT)
@@ -276,14 +376,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             return GetMission();
         }
 
-        internal virtual string GetAssetTitle(IAsset bandAsset, Schemas.t_Data_File dataFile)
+        internal virtual string GetAssetTitle(IAsset bandAsset, Schemas.t_Data_File dataFile, Schemas.DimapDocument dimap = null)
         {
-            string title = string.Format("{0} {1} {2} {3}",
-                GetProductKey(bandAsset, dataFile).ToLower().Titleize(),
+            string productKey = GetProductKey(bandAsset, dataFile).Replace("-", " ");
+            if (productKey == "composite") productKey = "Composite";
+            string title = string.Format("{0} {1} {2}",
+                productKey,
                 Dimap.Data_Processing.RADIOMETRIC_PROCESSING.ToLower().Titleize(),
-                Dimap.Data_Processing.GEOMETRIC_PROCESSING?.ToLower().Titleize(),
-                Dimap.Data_Processing.SPECTRAL_PROCESSING?.ToLower().Titleize());
+                Dimap.Data_Processing.GEOMETRIC_PROCESSING?.ToLower().Titleize()
+            );
             return title;
+        }
+
+        internal virtual string GetAssetPrefix(Schemas.DimapDocument dimap, IAsset metadataAsset = null)
+        {
+            return String.Empty;
         }
 
         internal virtual StacProvider GetStacProvider()

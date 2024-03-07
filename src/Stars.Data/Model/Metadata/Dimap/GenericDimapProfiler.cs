@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using System.Globalization;
 using Stac;
 using Stac.Extensions.Eo;
-using Stac;
 using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
 using Terradue.Stars.Interface;
 using Stac.Extensions.Raster;
+using System.Linq;
+using Humanizer;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {
     internal class GenericDimapProfiler : DimapProfiler
     {
 
-        public GenericDimapProfiler(t_Dimap_Document dimap)
+        public GenericDimapProfiler(DimapDocument dimap)
         {
             Dimap = dimap;
+        }
+
+        public GenericDimapProfiler(IEnumerable<DimapDocument> dimaps)
+        {
+            Dimaps = dimaps.ToList().ToArray();
         }
 
         internal override string GetProcessingLevel()
@@ -53,7 +59,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             EoBandObject eoBandObject = new EoBandObject(bandInfo.BAND_DESCRIPTION ?? bandInfo.BAND_INDEX.Value,
                                                 (EoBandCommonName)Enum.Parse(typeof(EoBandCommonName), bandInfo.BAND_DESCRIPTION.ToLower()));
-            eoBandObject.Description = string.Format("{0} {1} in {2}", bandInfo.BAND_DESCRIPTION, description, bandInfo.PHYSICAL_UNIT);
+            string bandDescription = bandInfo.BAND_DESCRIPTION;
+            switch (bandDescription.ToLower())
+            {
+                case "red":
+                case "green":
+                case "blue":
+                    bandDescription = bandDescription.ToLower().Titleize();
+                    break;
+            }
+            eoBandObject.Description = string.Format("{0} {1} in {2}", bandDescription, description, bandInfo.PHYSICAL_UNIT);
             return eoBandObject;
         }
 
