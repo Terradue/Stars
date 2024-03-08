@@ -17,6 +17,7 @@ using System.Threading;
 
 namespace Terradue.Stars.Console.Operations
 {
+    [HelpOption]
     internal abstract class BaseOperation
     {
         [Option]
