@@ -73,7 +73,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
             GeosquarePublicationState state = new GeosquarePublicationState(geosquareModel, client);
             state.Hash = guid;
-            await routingService.RouteAsync(route, 4, null, state, ct);
+            await routingService.RouteAsync(route, publicationModel.Depth, null, state, ct);
 
             state.OsdUri = new Uri(client.BaseAddress,
                             string.Format("{0}/cat/{1}/description", geosquareModel.Index, guid.Value));
