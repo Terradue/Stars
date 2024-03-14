@@ -86,20 +86,20 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                     ZipArchiveAsset productZipArchiveAsset = new ZipArchiveAsset(productZipAsset, logger, resourceServiceProvider, _fileSystem);
                     var tmpDestination2 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(productZipArchiveAsset.Uri.AbsolutePath)), item, true);
                     IAssetsContainer productZipAssets = await productZipArchiveAsset.ExtractToDestinationAsync(tmpDestination2, _carrierManager, System.Threading.CancellationToken.None);
-
-                    IEnumerable<IAsset> innerZipAssets = GetInnerZipAssets(productZipAssets);
-                    if (innerZipAssets != null)
-                    {
-                        foreach (IAsset innerZipAsset in innerZipAssets)
+                    if (productZipAssets != null) {
+                        IEnumerable<IAsset> innerZipAssets = GetInnerZipAssets(productZipAssets);
+                        if (innerZipAssets != null)
                         {
-                            ZipArchiveAsset innerZipArchiveAsset = new ZipArchiveAsset(innerZipAsset, logger, resourceServiceProvider, _fileSystem);
-                            var tmpDestination3 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(innerZipArchiveAsset.Uri.AbsolutePath)), item, true);
-                            IAssetsContainer innerZipAssetContainer = await innerZipArchiveAsset.ExtractToDestinationAsync(tmpDestination3, _carrierManager, System.Threading.CancellationToken.None);
-                            if (innerZipAssetContainers == null) innerZipAssetContainers = new List<IAssetsContainer>();
-                            innerZipAssetContainers.Add(innerZipAssetContainer);
+                            foreach (IAsset innerZipAsset in innerZipAssets)
+                            {
+                                ZipArchiveAsset innerZipArchiveAsset = new ZipArchiveAsset(innerZipAsset, logger, resourceServiceProvider, _fileSystem);
+                                var tmpDestination3 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(innerZipArchiveAsset.Uri.AbsolutePath)), item, true);
+                                IAssetsContainer innerZipAssetContainer = await innerZipArchiveAsset.ExtractToDestinationAsync(tmpDestination3, _carrierManager, System.Threading.CancellationToken.None);
+                                if (innerZipAssetContainers == null) innerZipAssetContainers = new List<IAssetsContainer>();
+                                innerZipAssetContainers.Add(innerZipAssetContainer);
+                            }
                         }
                     }
-
                 }
 
             }
