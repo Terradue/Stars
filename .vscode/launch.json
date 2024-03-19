@@ -129,7 +129,7 @@
                 "-v",
                 "https://catalog.terradue.com/sentinel2/search?uid=S2A_MSIL1C_20190119T074231_N0207_R092_T39TVH_20190119T091330",
                 "-r",
-                "4"
+                "1"
             ],
             "cwd": "${workspaceFolder}/src",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

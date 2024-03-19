@@ -368,7 +368,7 @@ namespace Terradue.Stars.Services.Resources
                 return servicesSection.GetAWSOptions(key);
             }
 
-            return s3Options.CurrentValue.RootConfiguration.GetAWSOptions();
+            return configuration.GetAWSOptions();
         }
 
         public async Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceURL, JwtSecurityToken jwt, string policy)

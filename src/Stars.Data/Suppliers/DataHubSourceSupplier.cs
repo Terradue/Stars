@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router;
 using Terradue.OpenSearch;
 using Terradue.OpenSearch.DataHub;
 using Terradue.OpenSearch.DataHub.Aws;
@@ -15,10 +14,10 @@ using System.Linq;
 using Terradue.Stars.Services.Translator;
 using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Plugins;
 using System.Threading;
+using Terradue.Stars.Services.Resources;
 
 
 namespace Terradue.Stars.Data.Suppliers
@@ -27,11 +26,17 @@ namespace Terradue.Stars.Data.Suppliers
     {
         private IDataHubSourceWrapper wrapper;
         private ICredentials credentialsManager;
+        private readonly IS3ClientFactory _s3ClientFactory;
 
-        public DataHubSourceSupplier(ILogger<DataHubSourceSupplier> logger, TranslatorManager translatorManager, ICredentials credentialsManager, IPluginOption pluginOption) : base(logger, translatorManager)
+        public DataHubSourceSupplier(ILogger<DataHubSourceSupplier> logger,
+                                     TranslatorManager translatorManager,
+                                     ICredentials credentialsManager,
+                                     IS3ClientFactory s3ClientFactory,
+                                     IPluginOption pluginOption) : base(logger, translatorManager)
         {
             Logger4Net.Setup(logger);
             this.credentialsManager = credentialsManager;
+            _s3ClientFactory = s3ClientFactory;
             SupplierPluginOption supplierPluginOption = pluginOption as SupplierPluginOption;
             ConfigureWrapper(new Uri(supplierPluginOption.ServiceUrl));
         }
@@ -101,7 +106,7 @@ namespace Terradue.Stars.Data.Suppliers
             }
 
             // USGS case
-            if (target_uri.Host  == "earthexplorer.usgs.gov")
+            if (target_uri.Host == "earthexplorer.usgs.gov")
             {
                 // usgsOpenSearchable
                 wrapper = new Terradue.OpenSearch.Usgs.UsgsDataWrapper(new Uri("https://m2m.cr.usgs.gov"), target_creds);
@@ -109,14 +114,18 @@ namespace Terradue.Stars.Data.Suppliers
 
             if (target_uri.Host.EndsWith("amazon.com"))
             {
-                var searchWrapper = new DHuSWrapper(new Uri("https://scihub.copernicus.eu/apihub"), target_creds);
-                wrapper = new AmazonWrapper(null, null, searchWrapper);
+                Amazon.Runtime.AWSCredentials awscreds = _s3ClientFactory.GetConfiguredCredentials(S3Url.Parse("s3://sentinel-s2-l1c/test.tif"));
+                if (awscreds.GetType().ToString().Contains("DefaultInstanceProfileAWSCredentials"))
+                {
+                    awscreds = null;
+                }
+                var amazonWrapper = new AmazonStacWrapper(awscreds?.GetCredentials().AccessKey, awscreds?.GetCredentials().SecretKey, target_creds);
+                wrapper = amazonWrapper;
             }
 
             if (target_uri.Host.EndsWith("googleapis.com") || target_uri.Host.EndsWith("google.com"))
             {
-                var searchWrapper = new DHuSWrapper(new Uri("https://scihub.copernicus.eu/apihub"), target_creds);
-                wrapper = new GoogleWrapper(null, null, searchWrapper);
+                wrapper = new GoogleWrapper(null, null, target_creds, "https://cloud.google.com");
             }
 
             this.openSearchable = wrapper.CreateOpenSearchable(new OpenSearchableFactorySettings(this.opensearchEngine));
