@@ -97,20 +97,6 @@ namespace Stars.Tests
             Assert.Equal(new FileInfo(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")).Length, metadata.ContentLength);
         }
 
-        // Test disabled due to retirement of SciHub
-        /*[Fact]
-        public async Task ImportHttpStreamabletoS3()
-        {
-            await CreateBucketAsync("s3://local-http");
-            S3Resource s3Route = await s3ClientFactory.CreateAsync(S3Url.Parse("s3://local-http/S2B_MSIL2A_20211022T045839_N0301_R119_T44NLN_20211022T071547.jpg"));
-            BlockingStream stream = new BlockingStream(0, 100);
-            S3StreamingCarrier s3StreamingCarrier = serviceProvider.GetRequiredService<S3StreamingCarrier>();
-            var httpRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("https://store.terradue.com/scihub/sentinel2/S2MSI2A/2023/09/17/quicklooks/v1/S2A_MSIL2A_20230917T100031_N0509_R122_T32TQM_20230917T143103.jpg")), CancellationToken.None);
-            var newRoute = await s3StreamingCarrier.StreamToS3Object(httpRoute, s3Route, CancellationToken.None);
-            var metadata = await s3Route.Client.GetObjectMetadataAsync(s3Route.S3Uri.Bucket, s3Route.S3Uri.Key);
-            Assert.Equal(httpRoute.ContentLength, Convert.ToUInt64(metadata.ContentLength));
-        }*/
-
         [Fact]
         public async Task AdaptRegion()
         {

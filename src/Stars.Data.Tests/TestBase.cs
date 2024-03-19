@@ -71,6 +71,7 @@ namespace Terradue.Data.Tests
             Collection.AddSingleton<IVectorService, TestVectorService>();
             Collection.AddSingleton<TranslatorManager, TranslatorManager>();
             Collection.AddSingleton<ICredentials, ConfigurationCredentialsManager>();
+            Collection.AddSingleton<IS3ClientFactory, S3ClientFactory>();
             Collection.AddHttpClient();
             var builder = new ConfigurationBuilder();
             // tell the builder to look for the appsettings.json file
@@ -81,6 +82,7 @@ namespace Terradue.Data.Tests
             configFile.OpenRead();
             builder.AddNewtonsoftJsonFile(configFile.FullName, optional: false, reloadOnChange: false);
             configuration = builder.Build();
+            Collection.AddSingleton<IConfiguration>(configuration);
             LoadPlugins();
         }
 
