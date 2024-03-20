@@ -18,9 +18,9 @@ RUN dotnet publish -c release -o /app -r linux-x64 -f net6.0 --self-contained tr
 # final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-bullseye-slim-amd64
 
-RUN apt-get update \
+RUN apt-get update -qy \
   && apt-get upgrade -y \
-  && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 ca-certificates jq curl \
+  && apt-get install -y hdf5-tools libssl1.1 libgssapi-krb5-2 ca-certificates jq curl vi \
   && rm -rf /var/lib/apt/lists/* /tmp/*
   
 WORKDIR /app
