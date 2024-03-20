@@ -209,16 +209,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (filename.EndsWith("-MSS1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2_thumb.jpg", true, CultureInfo.InvariantCulture)
                ) {
-                stacItem.Assets.Add("MSS-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail"));
+                if (stacItem.Assets.TryAdd("MSS-thumbnail",
+                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
                 stacItem.Assets["MSS-thumbnail"].Properties.AddRange(asset.Properties);
                 return;
             }
 
             if (filename.EndsWith("-PAN1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-PAN2_thumb.jpg", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("PAN-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail"));
+                if (stacItem.Assets.TryAdd("PAN-thumbnail",
+                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
                 stacItem.Assets["PAN-thumbnail"].Properties.AddRange(asset.Properties);
                 return;
             }
@@ -228,16 +228,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (satelliteImagery == null &&
                 filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith("thumb.jpg", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("MSS-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail"));
+                if (stacItem.Assets.TryAdd("MSS-thumbnail",
+                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
                 stacItem.Assets["MSS-thumbnail"].Properties.AddRange(asset.Properties);
                 return;
             }
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith("thumb.jpg", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add($"{type}-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail"));
+                if (stacItem.Assets.TryAdd($"{type}-thumbnail",
+                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
                 stacItem.Assets[$"{type}-thumbnail"].Properties.AddRange(asset.Properties);
                 return;
             }
