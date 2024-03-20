@@ -245,8 +245,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             // overview
             if (filename.EndsWith("-MSS1.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.jpg", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.TryAdd("MSS-overview",
-                    GetGenericAsset(stacItem, asset.Uri, "overview"));
+                if (stacItem.Assets.TryAdd("MSS-overview",
+                    GetGenericAsset(stacItem, asset.Uri, "overview"))) 
                 stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
                 return;
             }
@@ -263,16 +263,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (satelliteImagery == null &&
                 filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.TryAdd("MSS-overview",
-                    GetGenericAsset(stacItem, asset.Uri, "overview"));
+                if (stacItem.Assets.TryAdd("MSS-overview",
+                    GetGenericAsset(stacItem, asset.Uri, "overview")))
                 stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
                 return;
             }
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.TryAdd($"{type}-overview",
-                    GetGenericAsset(stacItem, asset.Uri, "overview"));
+                if(stacItem.Assets.TryAdd($"{type}-overview",
+                    GetGenericAsset(stacItem, asset.Uri, "overview")))
                 stacItem.Assets[$"{type}-overview"].Properties.AddRange(asset.Properties);
                 return;
             }
@@ -305,8 +305,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".xml", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.TryAdd($"{type}-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                if(stacItem.Assets.TryAdd($"{type}-metadata",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
                 stacItem.Assets[$"{type}-metadata"].Properties.AddRange(asset.Properties);
                 return;
             }
@@ -339,8 +339,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".rpb", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.TryAdd($"{type}-rpb",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                if(stacItem.Assets.TryAdd($"{type}-rpb",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
                 stacItem.Assets[$"{type}-rpb"].Properties.AddRange(asset.Properties);
                 return;
             }
