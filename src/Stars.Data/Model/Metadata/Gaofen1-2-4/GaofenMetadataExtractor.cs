@@ -280,8 +280,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             // metadata
             if (filename.EndsWith("-MSS1.xml", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.xml", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("MSS-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                if (stacItem.Assets.TryAdd("MSS-metadata",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
                 stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
                 return;
             }
@@ -297,8 +297,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (satelliteImagery == null &&
                 filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".xml", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("MSS-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                if (stacItem.Assets.TryAdd("MSS-metadata",
+                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
                 stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
                 return;
             }
