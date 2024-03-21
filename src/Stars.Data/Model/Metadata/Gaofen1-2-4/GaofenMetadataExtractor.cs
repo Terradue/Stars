@@ -209,17 +209,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (filename.EndsWith("-MSS1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2_thumb.jpg", true, CultureInfo.InvariantCulture)
                ) {
-                if (stacItem.Assets.TryAdd("MSS-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
-                stacItem.Assets["MSS-thumbnail"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd("MSS-thumbnail", GetGenericAsset(stacItem, asset.Uri, "thumbnail"))) {
+                    stacItem.Assets["MSS-thumbnail"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
             if (filename.EndsWith("-PAN1_thumb.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-PAN2_thumb.jpg", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd("PAN-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
-                stacItem.Assets["PAN-thumbnail"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd("PAN-thumbnail", GetGenericAsset(stacItem, asset.Uri, "thumbnail"))) {
+                    stacItem.Assets["PAN-thumbnail"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
@@ -228,26 +228,26 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (satelliteImagery == null &&
                 filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith("thumb.jpg", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd("MSS-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
-                stacItem.Assets["MSS-thumbnail"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd("MSS-thumbnail", GetGenericAsset(stacItem, asset.Uri, "thumbnail"))) {
+                    stacItem.Assets["MSS-thumbnail"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith("thumb.jpg", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd($"{type}-thumbnail",
-                    GetGenericAsset(stacItem, asset.Uri, "thumbnail")))
-                stacItem.Assets[$"{type}-thumbnail"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd($"{type}-thumbnail", GetGenericAsset(stacItem, asset.Uri, "thumbnail"))) {
+                    stacItem.Assets[$"{type}-thumbnail"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
             // overview
             if (filename.EndsWith("-MSS1.jpg", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.jpg", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd("MSS-overview",
-                    GetGenericAsset(stacItem, asset.Uri, "overview"))) 
-                stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd("MSS-overview", GetGenericAsset(stacItem, asset.Uri, "overview")))  {
+                    stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
@@ -263,33 +263,32 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (satelliteImagery == null &&
                 filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd("MSS-overview",
-                    GetGenericAsset(stacItem, asset.Uri, "overview")))
-                stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd("MSS-overview", GetGenericAsset(stacItem, asset.Uri, "overview"))) {
+                    stacItem.Assets["MSS-overview"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd($"{type}-overview",
-                    GetGenericAsset(stacItem, asset.Uri, "overview")))
-                stacItem.Assets[$"{type}-overview"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd($"{type}-overview", GetGenericAsset(stacItem, asset.Uri, "overview"))) {
+                    stacItem.Assets[$"{type}-overview"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
             // metadata
             if (filename.EndsWith("-MSS1.xml", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.xml", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd("MSS-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
-                stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd("MSS-metadata", GetGenericAsset(stacItem, asset.Uri, "metadata"))) {
+                    stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
-            if (filename.EndsWith("-PAN1.xml", true, CultureInfo.InvariantCulture) ||
-                filename.EndsWith("-PAN2.xml", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("PAN-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+            if (filename.EndsWith("-PAN1.xml", true, CultureInfo.InvariantCulture) 
+                || filename.EndsWith("-PAN2.xml", true, CultureInfo.InvariantCulture)) {
+                stacItem.Assets.Add("PAN-metadata", GetGenericAsset(stacItem, asset.Uri, "metadata"));
                 stacItem.Assets["PAN-metadata"].Properties.AddRange(asset.Properties);
                 return;
             }
@@ -297,33 +296,31 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (satelliteImagery == null &&
                 filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".xml", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd("MSS-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
-                stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd("MSS-metadata", GetGenericAsset(stacItem, asset.Uri, "metadata"))) {
+                    stacItem.Assets["MSS-metadata"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".xml", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd($"{type}-metadata",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
-                stacItem.Assets[$"{type}-metadata"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd($"{type}-metadata", GetGenericAsset(stacItem, asset.Uri, "metadata"))) {
+                    stacItem.Assets[$"{type}-metadata"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
             // rpb metadata
             if (filename.EndsWith("-MSS1.rpb", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-MSS2.rpb", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("MSS-rpb",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                stacItem.Assets.Add("MSS-rpb", GetGenericAsset(stacItem, asset.Uri, "metadata"));
                 stacItem.Assets["MSS-rpb"].Properties.AddRange(asset.Properties);
                 return;
             }
 
             if (filename.EndsWith("-PAN1.rpb", true, CultureInfo.InvariantCulture) ||
                 filename.EndsWith("-PAN2.rpb", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("PAN-rpb",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                stacItem.Assets.Add("PAN-rpb", GetGenericAsset(stacItem, asset.Uri, "metadata"));
                 stacItem.Assets["PAN-rpb"].Properties.AddRange(asset.Properties);
                 return;
             }
@@ -331,17 +328,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
             if (satelliteImagery == null &&
                 filename.StartsWith("GF1", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".rpb", true, CultureInfo.InvariantCulture)) {
-                stacItem.Assets.Add("MSS-rpb",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata"));
+                stacItem.Assets.Add("MSS-rpb", GetGenericAsset(stacItem, asset.Uri, "metadata"));
                 stacItem.Assets["MSS-rpb"].Properties.AddRange(asset.Properties);
                 return;
             }
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".rpb", true, CultureInfo.InvariantCulture)) {
-                if (stacItem.Assets.TryAdd($"{type}-rpb",
-                    GetGenericAsset(stacItem, asset.Uri, "metadata")))
-                stacItem.Assets[$"{type}-rpb"].Properties.AddRange(asset.Properties);
+                if (stacItem.Assets.TryAdd($"{type}-rpb", GetGenericAsset(stacItem, asset.Uri, "metadata"))) {
+                    stacItem.Assets[$"{type}-rpb"].Properties.AddRange(asset.Properties);
+                }
                 return;
             }
 
@@ -800,8 +796,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
         private void AddOtherProperties(ProductMetaData productMetadata, StacItem stacItem) {
             stacItem.Properties.Add("product_type", "PAN_MS_" + productMetadata.ProductLevel.Replace("LEVEL", "L"));
-            if (IncludeProviderProperty)
-            {
+            if (IncludeProviderProperty) {
                 AddSingleProvider(
                     stacItem.Properties,
                     "CNSA", 
