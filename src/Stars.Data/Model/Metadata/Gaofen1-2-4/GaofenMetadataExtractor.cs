@@ -116,7 +116,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
         private void AddProjStacExtension(ProductMetaData productMetaData, StacItem stacItem) {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
-            if(!string.IsNullOrEmpty(productMetaData.MapProjection) && productMetaData.MapProjection == "WGS84"){
+            if (!string.IsNullOrEmpty(productMetaData.MapProjection) && productMetaData.MapProjection == "WGS84") {
                 proj.SetCoordinateSystem(ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84);
             }
             else {
@@ -271,7 +271,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".jpg", true, CultureInfo.InvariantCulture)) {
-                if(stacItem.Assets.TryAdd($"{type}-overview",
+                if (stacItem.Assets.TryAdd($"{type}-overview",
                     GetGenericAsset(stacItem, asset.Uri, "overview")))
                 stacItem.Assets[$"{type}-overview"].Properties.AddRange(asset.Properties);
                 return;
@@ -305,7 +305,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".xml", true, CultureInfo.InvariantCulture)) {
-                if(stacItem.Assets.TryAdd($"{type}-metadata",
+                if (stacItem.Assets.TryAdd($"{type}-metadata",
                     GetGenericAsset(stacItem, asset.Uri, "metadata")))
                 stacItem.Assets[$"{type}-metadata"].Properties.AddRange(asset.Properties);
                 return;
@@ -339,7 +339,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen {
 
             if (filename.StartsWith("GF4", true, CultureInfo.InvariantCulture) &&
                 filename.EndsWith(".rpb", true, CultureInfo.InvariantCulture)) {
-                if(stacItem.Assets.TryAdd($"{type}-rpb",
+                if (stacItem.Assets.TryAdd($"{type}-rpb",
                     GetGenericAsset(stacItem, asset.Uri, "metadata")))
                 stacItem.Assets[$"{type}-rpb"].Properties.AddRange(asset.Properties);
                 return;
