@@ -44,9 +44,9 @@
       "sar"
     ],
     "sensor_type": "radar",
-    "title": "RCM-2 GRD HH/HV",
+    "title": "RCM-2 GRD 16M HH/HV",
     "sat:orbit_state": "descending",
-    "sar:instrument_mode": "",
+    "sar:instrument_mode": "16M",
     "sar:frequency_band": "C",
     "sar:polarizations": [
       "HH",
