@@ -236,9 +236,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
                         eoarr[i] = new EoBandObject("nir", EoBandCommonName.nir);
                         eoarr[i].Properties.Add("description", "nir");
                     }
+
+                }
+                // Swap bands 1 and 3 (red and blue) if the channels are not in RGB order in the metadata
+                if (numberOfChannels >= 3 && eoarr[0].CommonName == EoBandCommonName.blue && eoarr[2].CommonName == EoBandCommonName.red)
+                {
+                    (eoarr[2], eoarr[0]) = (eoarr[0], eoarr[2]);
                 }
                 stacAsset.EoExtension().Bands = eoarr;
-
             }
             else if (name == "PAN")
             {
