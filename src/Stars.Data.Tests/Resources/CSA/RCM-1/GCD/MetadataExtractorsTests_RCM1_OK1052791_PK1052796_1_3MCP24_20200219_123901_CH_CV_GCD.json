@@ -44,9 +44,9 @@
       "sar"
     ],
     "sensor_type": "radar",
-    "title": "RCM-1 GCD HH/VV",
+    "title": "RCM-1 GCD 3M HH/VV",
     "sat:orbit_state": "descending",
-    "sar:instrument_mode": "",
+    "sar:instrument_mode": "3M",
     "sar:frequency_band": "C",
     "sar:polarizations": [
       "HH",

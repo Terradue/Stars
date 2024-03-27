@@ -45,9 +45,9 @@
     ],
     "sensor_type": "radar",
     "gsd": 9.0,
-    "title": "RCM-2 GRD HH/HV/VH/VV",
+    "title": "RCM-2 GRD QP26 HH/HV/VH/VV",
     "sat:orbit_state": "ascending",
-    "sar:instrument_mode": "QP",
+    "sar:instrument_mode": "QP26",
     "sar:frequency_band": "C",
     "sar:polarizations": [
       "HH",

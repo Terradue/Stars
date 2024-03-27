@@ -217,32 +217,44 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         private string GetInstrumentMode(Product auxiliary)
         {
-            switch (auxiliary.SourceAttributes.BeamMode)
-            {
-                case BEAM_MODE.LOW_RESOLUTION_100:
-                    return "SC100";
-                case BEAM_MODE.MEDIUM_RESOLUTION_50:
-                    return "SC50";
-                case BEAM_MODE.MEDIUM_RESOLUTION_30:
-                    return "SC30";
-                case BEAM_MODE.MEDIUM_RESOLUTION_16:
-                    return "16M";
-                case BEAM_MODE.HIGH_RESOLUTION_5:
-                    return "5M";
-                case BEAM_MODE.VERY_HIGH_RESOLUTION_3:
-                    return "3M";
-                case BEAM_MODE.LOW_NOISE:
-                    return "LN";
-                case BEAM_MODE.QUAD_POLARIZATION:
-                    return "QP";
-                case BEAM_MODE.SHIP_DETECTION:
-                    return "SD";
-                case BEAM_MODE.SPOTLIGHT:
-                    return "FSL";
-                default:
-                    return "";
+            // switch (auxiliary.SourceAttributes.BeamMode)
+            // {
+            //     case BEAM_MODE.LOW_RESOLUTION_100:
+            //         return "SC100";
+            //     case BEAM_MODE.MEDIUM_RESOLUTION_50:
+            //         return "SC50";
+            //     case BEAM_MODE.MEDIUM_RESOLUTION_30:
+            //         return "SC30";
+            //     case BEAM_MODE.MEDIUM_RESOLUTION_16:
+            //         return "16M";
+            //     case BEAM_MODE.HIGH_RESOLUTION_5:
+            //         return "5M";
+            //     case BEAM_MODE.VERY_HIGH_RESOLUTION_3:
+            //         return "3M";
+            //     case BEAM_MODE.LOW_NOISE:
+            //         return "LN";
+            //     case BEAM_MODE.QUAD_POLARIZATION:
+            //         return "QP";
+            //     case BEAM_MODE.SHIP_DETECTION:
+            //         return "SD";
+            //     case BEAM_MODE.SPOTLIGHT:
+            //         return "FSL";
+            //     default:
+            //         return "";
+            // }
+            //There are tons of them
+
+            //Take the entire string if no numbers 
+            //That since the beginning to the (eventual) first letter after the number group
+            string inputString = auxiliary.SourceAttributes.BeamModeMnemonic;
+            Match match = Regex.Match(inputString, @"^([^0-9]*\d+[^A-Za-z]*[A-Za-z]?)|([^0-9]+)");
+            if (match.Success) {
+                return match.Groups[1].Value != "" ? match.Groups[1].Value : match.Groups[2].Value;
+            } else {
+                return inputString;
             }
         }
+
         private SarCommonFrequencyBandName GetFrequencyBand(Product auxiliary)
         {
             return SarCommonFrequencyBandName.C; //HARDCODED it is a SAR-C instrument            
@@ -382,10 +394,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
         protected string GetTitle(Product auxiliary, IDictionary<string, object> properties)
         {
-            return string.Format("{0} {1} {2}", 
+            return string.Format("{0} {1} {2} {3}", 
                 //StylePlatform(properties.GetProperty<string>("platform")),
                 properties.GetProperty<string>("platform").ToUpper(),
                 GetProductType(auxiliary),
+                GetInstrumentMode(auxiliary),
                 string.Join("/", GetPolarizations(auxiliary))
             );
         }
