@@ -264,9 +264,9 @@
       "file:size": 0,
       "eo:bands": [
         {
-          "name": "blue",
-          "common_name": "blue",
-          "description": "blue"
+          "name": "red",
+          "common_name": "red",
+          "description": "red"
         },
         {
           "name": "green",
@@ -274,9 +274,9 @@
           "description": "green"
         },
         {
-          "name": "red",
-          "common_name": "red",
-          "description": "red"
+          "name": "blue",
+          "common_name": "blue",
+          "description": "blue"
         },
         {
           "name": "nir",

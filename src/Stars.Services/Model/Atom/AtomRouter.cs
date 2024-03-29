@@ -13,6 +13,9 @@ using Terradue.Stars.Services.Resources;
 using Terradue.Stars.Services.Supplier;
 using System.IO;
 using System.Threading;
+using Terradue.OpenSearch;
+using System.Xml.Serialization;
+using Terradue.OpenSearch.Schema;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -21,6 +24,8 @@ namespace Terradue.Stars.Services.Model.Atom
     {
 
         private static string[] supportedTypes = new string[] { "application/atom+xml", "application/xml", "text/xml" };
+
+        private static string opensearchDescriptionType = "application/opensearchdescription+xml";
 
         private readonly IResourceServiceProvider resourceServiceProvider;
 
@@ -62,6 +67,17 @@ namespace Terradue.Stars.Services.Model.Atom
                 && route is IStreamResource)
             {
                 return route;
+            }
+            if (route.ContentType.MediaType == opensearchDescriptionType && route is IStreamResource streamResource)
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(OpenSearchDescription));
+                var openSearchDescription = (OpenSearchDescription)xmlSerializer.Deserialize(XmlReader.Create(await streamResource.GetStreamAsync(ct)));
+                var url = openSearchDescription.Url.FirstOrDefault(u => supportedTypes.Contains(u.Type));
+                if (url != null)
+                {
+                    OpenSearchUrl searchUri = OpenSearchFactory.BuildRequestUrlFromTemplate(url, new System.Collections.Specialized.NameValueCollection(), new QuerySettings(url.Type, null));
+                    return await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(searchUri), ct);
+                }
             }
             IResource newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())), ct);
             return newRoute;
@@ -105,7 +121,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public async Task<IResource> RouteLinkAsync(IResource resource, IResourceLink childLink, CancellationToken ct)
         {
-            if (!(resource is AtomFeedCatalog) 
+            if (!(resource is AtomFeedCatalog)
                 && !(resource is AtomItemNode))
             {
                 throw new Exception("Cannot route link from non-atom resource");
