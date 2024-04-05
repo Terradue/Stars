@@ -87,7 +87,7 @@ namespace Terradue.Stars.Data.Model.Atom
             {
                 Uri assetUri = GetAssetUri(stacItemUri, asset.Value);
                 var atitle = string.IsNullOrEmpty(asset.Value.Title) ? asset.Key.Split('!')[0] : asset.Value.Title;
-                var type = asset.Value.MediaType.ToString();
+                var type = asset.Value.MediaType?.ToString() ?? MimeTypes.GetMimeType(assetUri.ToString());
                 long length = Convert.ToInt64(asset.Value.FileExtension().Size);
                 starsAtomItem.Links.Add(new SyndicationLink(assetUri, "enclosure", atitle, type, length));
             }

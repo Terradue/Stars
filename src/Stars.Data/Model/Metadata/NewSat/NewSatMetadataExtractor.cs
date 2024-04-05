@@ -222,6 +222,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
                 });
 
             stacItem.Assets["visual"] = new StacAsset(stacItem,l3Tif.Uri);//stacItem.Assets["analytic"];
+            stacItem.Assets["visual"].MediaType = new System.Net.Mime.ContentType("image/tiff");
             stacItem.Assets["visual"].EoExtension().Bands = bands.ToArray();
             stacItem.Assets["visual"].SetProperty("filename", Path.GetFileName(l3Tif.Uri.AbsolutePath));
             stacItem.Assets["visual"].Title = "3-Band Visual";
