@@ -1,0 +1,418 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/view/v1.0.0/schema.json",
+        "https://terradue.github.io/disaster/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "20240320_041309_SN24_L1_SR",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    107.207392934367,
+                    47.7290782914399
+                ],
+                [
+                    107.209317790576,
+                    47.7345391583209
+                ],
+                [
+                    107.209213073546,
+                    47.7345861663319
+                ],
+                [
+                    107.209319302586,
+                    47.7348900604071
+                ],
+                [
+                    107.209199735406,
+                    47.7349013614746
+                ],
+                [
+                    107.211884048915,
+                    47.7425341226032
+                ],
+                [
+                    107.211779318487,
+                    47.7425811331153
+                ],
+                [
+                    107.214571499452,
+                    47.7505356811822
+                ],
+                [
+                    107.21445380584,
+                    47.7505919425082
+                ],
+                [
+                    107.21727697076,
+                    47.7586268037495
+                ],
+                [
+                    107.217171449218,
+                    47.7586558378576
+                ],
+                [
+                    107.220041641789,
+                    47.7668336865215
+                ],
+                [
+                    107.219978026013,
+                    47.7669069031685
+                ],
+                [
+                    107.237928643432,
+                    47.8188064963686
+                ],
+                [
+                    107.314307287835,
+                    47.8173001131203
+                ],
+                [
+                    107.294534428333,
+                    47.7602839016604
+                ],
+                [
+                    107.285298400215,
+                    47.7334464824196
+                ],
+                [
+                    107.285402650371,
+                    47.73339041566
+                ],
+                [
+                    107.283400721642,
+                    47.7275682792338
+                ],
+                [
+                    107.207392934367,
+                    47.7290782914399
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "title": "NEWSAT MS L1 2024-03-20 04:13:09",
+        "description": "Name | Value\n---- | -----\nAgency | **Satellogic**\nSatellite  | **NewSat**\nInstruments  | **MS**\nSensor Type  | **optical**\nAcquisition Date  | **20/03/2024 04:13:09**\nResolution  | **VHR**\nCOS2 Id  | **997-Satellogic-NewSat-snow_and_Ice_in_MONGOLIA_4**\nLicense  | **proprietary**\nCreated  | **21/03/2024 12:05:02**\nUpdated  | **21/03/2024 12:05:02**\n",
+        "datetime": "2024-03-20T04:13:09.1492Z",
+        "processing:level": "l1",
+        "mission": "NewSat",
+        "providers": [
+            {
+                "name": "Satellogic",
+                "description": "High-resolution geospatial imagery and analytics",
+                "roles": [
+                    "producer",
+                    "processor"
+                ],
+                "url": "https://satellogic.com/"
+            },
+            {
+                "name": "Satellogic",
+                "roles": [
+                    "licensor"
+                ]
+            }
+        ],
+        "platform": "NewSat",
+        "instruments": [
+            "MS"
+        ],
+        "constellation": "Aleph1",
+        "gsd": 0.7,
+        "eo:cloud_cover": 0.36,
+        "proj:epsg": 32648,
+        "proj:centroid": {
+            "lat": 0.0,
+            "lon": 0.0
+        },
+        "view:sun_elevation": 55.14556534374917,
+        "view:off_nadir": 24.21800512444,
+        "satl:exposure_sec": 0.0017484199999999999,
+        "satl:type": "stripes",
+        "satl:sat_id": "SN24",
+        "satl:product_level": "L1 TOA Reflectance SR",
+        "disaster:class": "Acquisition",
+        "cpe:status": {
+            "stage": "dataset",
+            "message": "Created",
+            "link": null
+        },
+        "updated": "2024-03-21T12:06:38.2955976Z",
+        "created": "2024-03-21T12:05:02.8577049Z",
+        "cpe:notified": [
+            "2024-03-21T12:04:00.0512522Z"
+        ],
+        "license": "proprietary",
+        "disaster:call_ids": [
+            997
+        ],
+        "disaster:resolution_class": "VHR",
+        "disaster:type": [
+            "snow_hazard",
+            "flood"
+        ],
+        "sensor_type": "optical",
+        "cpe:cos2_xml": null,
+        "cpe:cos2_id": "997-Satellogic-NewSat-snow_and_Ice_in_MONGOLIA_4",
+        "cpe:processing_monitoring_id": "monitor-execution-772a69e2-e77b-11ee-987f-a291edcbd370"
+    },
+    "bbox": [
+        107.207392934367,
+        47.7275682792338,
+        107.314307287835,
+        47.8188064963686
+    ],
+    "assets": {
+        "analytic": {
+            "type": "application/xml",
+            "roles": [
+                "data",
+                "reflectance"
+            ],
+            "title": "4-Band Analytic",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_0.tif",
+            "eo:bands": [
+                {
+                    "name": "band1",
+                    "common_name": "blue",
+                    "center_wavelength": 0.48,
+                    "full_width_half_max": 0.06
+                },
+                {
+                    "name": "band2",
+                    "common_name": "green",
+                    "center_wavelength": 0.545,
+                    "full_width_half_max": 0.07
+                },
+                {
+                    "name": "band3",
+                    "common_name": "red",
+                    "center_wavelength": 0.64,
+                    "full_width_half_max": 0.1
+                },
+                {
+                    "name": "band4",
+                    "common_name": "nir",
+                    "center_wavelength": 0.825,
+                    "full_width_half_max": 0.15
+                }
+            ],
+            "filename": "20240320_041309_SN24_L1_SR_MS_0.tif",
+            "file:size": 818791343
+        },
+        "visual": {
+            "type": "image/tiff",
+            "roles": [
+                "data"
+            ],
+            "title": "3-Band Visual",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L3_SR_MS_0.tif",
+            "eo:bands": [
+                {
+                    "name": "band1",
+                    "common_name": "blue",
+                    "center_wavelength": 0.48,
+                    "full_width_half_max": 0.06
+                },
+                {
+                    "name": "band2",
+                    "common_name": "green",
+                    "center_wavelength": 0.545,
+                    "full_width_half_max": 0.07
+                },
+                {
+                    "name": "band3",
+                    "common_name": "red",
+                    "center_wavelength": 0.64,
+                    "full_width_half_max": 0.1
+                }
+            ],
+            "filename": "20240320_041309_SN24_L3_SR_MS_0.tif",
+            "file:size": 255892420
+        },
+        "thumbnail": {
+            "type": "image/png",
+            "roles": [
+                "thumbnail"
+            ],
+            "title": "Thumbnail",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L3_SR_MS_thumbnail.png",
+            "filename": "20240320_041309_SN24_L3_SR_MS_thumbnail.png",
+            "file:size": 38787
+        },
+        "preview": {
+            "type": "image/png",
+            "roles": [
+                "preview"
+            ],
+            "title": "Preview",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L3_SR_MS_preview.png",
+            "filename": "20240320_041309_SN24_L3_SR_MS_preview.png",
+            "file:size": 7392365
+        },
+        "cloud_mask": {
+            "type": "image/tif",
+            "roles": [
+                "cloud_mask"
+            ],
+            "title": "Cloud Mask",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_cloud_mask_0.tif",
+            "filename": "20240320_041309_SN24_L1_SR_MS_cloud_mask_0.tif",
+            "file:size": 996459
+        },
+        "geojson-metadata": {
+            "type": "application/geojson",
+            "roles": [
+                "metadata"
+            ],
+            "title": "Extended STAC Metadata",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_metadata_stac.geojson",
+            "filename": "20240320_041309_SN24_L1_SR_MS_metadata_stac.geojson",
+            "file:size": 5048
+        },
+        "xml-metadata": {
+            "type": "application/xml",
+            "roles": [
+                "metadata"
+            ],
+            "title": "Extended ISO Metadata",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_metadata_iso.xml",
+            "filename": "20240320_041309_SN24_L1_SR_MS_metadata_iso.xml",
+            "file:size": 35754
+        },
+        "footprint": {
+            "type": "footprint/kml",
+            "roles": [
+                "footprint"
+            ],
+            "title": "Footprint",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_footprint.kml",
+            "filename": "20240320_041309_SN24_L1_SR_MS_footprint.kml",
+            "file:size": 278708
+        },
+        "toa-factors": {
+            "type": "application/geojson",
+            "roles": [
+                "metadata"
+            ],
+            "title": "TOA factors",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_toa_factors.json",
+            "filename": "20240320_041309_SN24_L1_SR_MS_toa_factors.json",
+            "file:size": 21133
+        },
+        "solar-and-viewing-angles": {
+            "type": "application/geojson",
+            "roles": [
+                "metadata"
+            ],
+            "title": "Solar and viewing angles",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_solar_and_viewing_angles.geojson",
+            "filename": "20240320_041309_SN24_L1_SR_MS_solar_and_viewing_angles.geojson",
+            "file:size": 10928
+        },
+        "analytic_0": {
+            "type": "image/tiff",
+            "roles": [],
+            "title": "4-Band Analytic chunk 0",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_0.tif",
+            "eo:bands": [
+                {
+                    "name": "band1",
+                    "common_name": "blue",
+                    "center_wavelength": 480,
+                    "full_width_half_max": 60
+                },
+                {
+                    "name": "band2",
+                    "common_name": "green",
+                    "center_wavelength": 545,
+                    "full_width_half_max": 70
+                },
+                {
+                    "name": "band3",
+                    "common_name": "red",
+                    "center_wavelength": 640,
+                    "full_width_half_max": 100
+                },
+                {
+                    "name": "band4",
+                    "common_name": "nir",
+                    "center_wavelength": 825,
+                    "full_width_half_max": 150
+                }
+            ],
+            "filename": "20240320_041309_SN24_L1_SR_MS_0.tif",
+            "file:size": 818791343
+        },
+        "quicklook_0": {
+            "type": "image/tiff",
+            "roles": [],
+            "title": "3-Band RGB chunk 0",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L3_SR_MS_0.tif",
+            "eo:bands": [
+                {
+                    "name": "band1",
+                    "common_name": "red"
+                },
+                {
+                    "name": "band2",
+                    "common_name": "green"
+                },
+                {
+                    "name": "band3",
+                    "common_name": "blue"
+                }
+            ],
+            "filename": "20240320_041309_SN24_L3_SR_MS_0.tif",
+            "file:size": 255892420
+        },
+        "cloud_mask_0": {
+            "type": "image/tiff",
+            "roles": [
+                "cloud_mask"
+            ],
+            "title": "Cloud Mask chunk 0",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR_MS_cloud_mask_0.tif",
+            "filename": "20240320_041309_SN24_L1_SR_MS_cloud_mask_0.tif",
+            "file:size": 996459
+        },
+        "overview": {
+            "type": "image/png",
+            "roles": [
+                "overview"
+            ],
+            "title": "Acquisition Overview",
+            "href": "s3://cpe-operations-catalog/calls/call-997/acquisitions/997-Satellogic-NewSat-snow_and_Ice_in_MONGOLIA_4/snow_and_Ice_in_MONGOLIA_4-preview.jpg.png"
+        }
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "derived_from",
+            "title": "Acquisition",
+            "href": "s3://cpe-operations-catalog/calls/call-997/acquisitions/997-Satellogic-NewSat-snow_and_Ice_in_MONGOLIA_4/997-Satellogic-NewSat-snow_and_Ice_in_MONGOLIA_4.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "related",
+            "title": "Calibrated Dataset",
+            "href": "s3://cpe-operations-catalog/calls/call-997/calibratedDatasets/20240320_041309_SN24_L1_SR-calibrated/20240320_041309_SN24_L1_SR-calibrated.json"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "href": "s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "href": "s3://cpe-operations-catalog/catalog.json"
+        }
+    ]
+}

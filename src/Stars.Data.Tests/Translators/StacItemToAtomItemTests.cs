@@ -165,6 +165,22 @@ namespace Terradue.Data.Tests.Translators
             Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
         }
 
+        [Fact]
+        public async System.Threading.Tasks.Task NEWSAT20240320041309SN24L1SRTest()
+        {
+            string json = GetJson("Translators");
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
+
+        }
+
+
     }
 
 }
