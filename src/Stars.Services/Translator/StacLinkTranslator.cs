@@ -24,6 +24,8 @@ namespace Terradue.Stars.Services.Translator
 
         public string Label => "STAC alternate link finder";
 
+        public string Description => "This translator is able to find the STAC alternate link in a catalog or item and return the corresponding STAC node.";
+
         public StacLinkTranslator(ILogger<StacLinkTranslator> logger,
                                   IResourceServiceProvider resourceServiceProvider,
                                   ICredentials credentials)
