@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -124,14 +125,18 @@ namespace Terradue.Stars.Data.Suppliers
             }
 
             if (target_uri.Host.EndsWith("googleapis.com") || target_uri.Host.EndsWith("google.com"))
-            {
-                wrapper = new GoogleWrapper(null, null, target_creds, "https://cloud.google.com");
-            }
-
+                {
+                    //AuthType UriPrefix Username Password
+                    string filePath = "gcloud_auth.json"; 
+                    string contentToWrite = (target_creds as NetworkCredential).Password; //.Password;
+                    File.WriteAllText(filePath, contentToWrite);
+                    string absolutePath = Path.GetFullPath(filePath);
+                    wrapper = new GoogleWrapper(absolutePath, null, null, "https://cloud.google.com");
+                }
+            //public GoogleWrapper(string authenticationFile, string projectName, ICredentials credentials, string osUrl = "http://opensearch.sentinel-hub.com/resto/api/collections/describe.xml", string preferredContentType = "application/json")
             this.openSearchable = wrapper.CreateOpenSearchable(new OpenSearchableFactorySettings(this.opensearchEngine));
-
         }
-
+ 
         internal static NetworkCredential GetNetworkCredentials(IConfigurationSection credentials)
         {
             if (credentials == null)
