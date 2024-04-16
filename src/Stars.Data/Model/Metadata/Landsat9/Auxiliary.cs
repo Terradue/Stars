@@ -58,7 +58,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         public int OrbitNumber => int.Parse(GetProperty("WRS_PATH"));
         public int Row => int.Parse(GetProperty("WRS_ROW"));
         public int Path => int.Parse(GetProperty("WRS_PATH"));
-        public readonly string OrbitDirection = "descending";
+        public string OrbitDirection => Row <= 119 ? "descending" : "ascending";
 
         // images attributes
         public double SunAzimuth => double.Parse(GetProperty("SUN_AZIMUTH"));
