@@ -52,5 +52,9 @@ namespace Terradue.Stars.Services.Plugins
     public class SupplierPluginOption : PluginOption
     {
         public string ServiceUrl { get; set; }
+
+        public string AccountFile { get; set; }
+
+        public string ProjectId { get; set; }
     }
 }
