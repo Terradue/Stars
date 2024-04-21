@@ -1,7 +1,17 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+
 namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
-    
-    
+
+
     public partial class Metadata {
+
+        public static Regex keyValueRegex = new Regex(@"(?'key'[^= ]+) *= *(?'value'.*)");
+        public static string[] cornerCoordinateNames = new string[] {
+            "LL_LONG", "LL_LAT", "LR_LONG", "LR_LAT", "UR_LONG", "UR_LAT", "UL_LONG", "UL_LAT"
+        };
 
         public string id { get; set; }
         public string acquisitionDate { get; set; }
@@ -22,21 +32,111 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
         public string targetType { get; set; }
         public double estimatedCE90 { get; set; }
         public int bitsPerPixel { get; set; }
-        
+
         public string imageSpecVersion { get; set; }
         public double fractionSaturated { get; set; }
         public object numberRegistrationPoints { get; set; }
 
         public GeminiType gemini { get; set; }
-        
 
-/*
-  "geometry" : {
-    "type" : "Polygon",
-    "coordinates" : [ [ [ -75.12948188832118, 39.951193872769544 ], [ -75.16335070466222, 39.92967968802465 ], [ -75.20606168353703, 39.96975426955367 ], [ -75.17209285763781, 39.99133716421872 ], [ -75.12948188832118, 39.951193872769544 ] ] ]
-  },
-  "registrationPoints" : [ [ [ 5508.0, 4188.0 ], [ 39.98351643268224, -75.16663105733065, -1.0 ] ], [ [ 1776.0, 4032.0 ], [ 39.96019340602546, -75.14387198643686, -17.06084882726229 ] ], [ [ 4914.0, 4020.0 ], [ 39.97907819634284, -75.16410229391467, -0.5235731407156076 ] ], [ [ 4044.0, 4014.0 ], [ 39.9738061605708, -75.15855054780856, -4.549083655777238 ] ], [ [ 2694.0, 3666.0 ], [ 39.963957448533904, -75.15254451308992, -18.75318527794224 ] ], [ [ 5490.0, 3624.0 ], [ 39.98064516391171, -75.1708520480192, 1.0 ] ], [ [ 3750.0, 3576.0 ], [ 39.96989387474083, -75.16001696626596, -6.3587158131358015 ] ], [ [ 912.0, 3498.0 ], [ 39.95236567371066, -75.14238050356576, -19.000000000000004 ] ], [ [ 4344.0, 3408.0 ], [ 39.972652693072334, -75.16515257737989, 1.3023522081983558 ] ], [ [ 5394.0, 3090.0 ], [ 39.977459509898914, -75.1743340733268, 1.3394185907564067 ] ], [ [ 1848.0, 3030.0 ], [ 39.95575022816337, -75.15196431397912, -19.700821388128723 ] ], [ [ 558.0, 3006.0 ], [ 39.947831853482874, -75.14388120642718, -19.0 ] ], [ [ 4008.0, 2928.0 ], [ 39.96828978257286, -75.16665263003831, -2.2073145997432646 ] ], [ [ 1560.0, 2562.0 ], [ 39.9517024780644, -75.15372309484955, -4.742157936342278 ] ], [ [ 4224.0, 2508.0 ], [ 39.96755324604367, -75.17127612598847, -3.0 ] ], [ [ 2106.0, 2484.0 ], [ 39.9546341333115, -75.15786236273613, -6.157818911836694 ] ], [ [ 5262.0, 2340.0 ], [ 39.97301916955755, -75.17925291733495, -3.400819414936417 ] ], [ [ 6048.0, 1962.0 ], [ 39.975952690448274, -75.18728262488706, -12.212236020356219 ] ], [ [ 5010.0, 1830.0 ], [ 39.96902418155413, -75.1815844482777, -10.342892452019393 ] ], [ [ 1074.0, 1434.0 ], [ 39.94329777524861, -75.15927607671765, -20.000000000000004 ] ], [ [ 378.0, 1404.0 ], [ 39.93893372041534, -75.15504056105945, -21.97643335183485 ] ], [ [ 1704.0, 1362.0 ], [ 39.94672408473831, -75.16390790385613, -6.861748824190286 ] ], [ [ 4464.0, 1188.0 ], [ 39.96260698706702, -75.18297251982936, -29.000000000000004 ] ], [ [ 3546.0, 996.0 ], [ 39.956117697961666, -75.17859998713668, -24.976287338009005 ] ], [ [ 5616.0, 942.0 ], [ 39.968358100137635, -75.19235562476945, -13.128662155413142 ] ], [ [ 2448.0, 858.0 ], [ 39.94879282327211, -75.17255215070531, -4.223021851419695 ] ], [ [ 678.0, 792.0 ], [ 39.93776238370972, -75.16167437091262, -21.973801766485288 ] ], [ [ 1224.0, 780.0 ], [ 39.941009893634124, -75.16526376060361, -23.018387427726267 ] ], [ [ 4920.0, 582.0 ], [ 39.96237852804343, -75.19055914592471, 1.4445721386272687 ] ], [ [ 5598.0, 366.0 ], [ 39.965440763421604, -75.19662131300782, -1.7692539152930302 ] ], [ [ 1056.0, 360.0 ], [ 39.93792543201694, -75.16740997433982, -19.531555260982884 ] ], [ [ 222.0, 282.0 ], [ 39.93249021956635, -75.16265677251094, -23.0153379524278 ] ] ],
-*/
+        // From text file
+        public string processLevel { get; set; }
+
+        public static Metadata FromTextFile(StreamReader reader)
+        {
+            Metadata metadata = new Metadata();
+            Dictionary<string, string> textMetadata = new Dictionary<string, string>();
+
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                Match match = keyValueRegex.Match(line);
+                if (match.Success)
+                {
+                    string key = match.Groups["key"].Value;
+                    string value = match.Groups["value"].Value;
+                    textMetadata[key] = value;
+                }
+            }
+
+            metadata.id = GetStringValue(textMetadata, "VENDOR_SCENE_ID");
+            string acquisitionDate = GetStringValue(textMetadata, "ACQUISITION_DATE");
+            if (!String.IsNullOrEmpty(acquisitionDate))
+            {
+                if (acquisitionDate.Length == 8) acquisitionDate = String.Format("{0}-{1}-{2}", acquisitionDate.Substring(0, 4), acquisitionDate.Substring(4, 2), acquisitionDate.Substring(6, 2));
+                string acquisitionTime = GetStringValue(textMetadata, "ACQUISITION_TIME");
+                if (String.IsNullOrEmpty(acquisitionTime))
+                {
+                    acquisitionTime = "00:00:00";
+                }
+                else
+                {
+                    if (acquisitionTime.Length == 6) acquisitionTime = String.Format("{0}:{1}:{2}", acquisitionTime.Substring(0, 2), acquisitionTime.Substring(2, 2), acquisitionTime.Substring(4, 2));
+                }
+                acquisitionTime = acquisitionTime.Replace("Z", "");
+                metadata.acquisitionDate = String.Format("{0}T{1}Z", acquisitionDate, acquisitionTime);
+            }
+            metadata.sensorName = GetStringValue(textMetadata, "SENSOR");
+            metadata.gsd = 1;   // hardcoded
+
+            List<double> coordinates = new List<double>();
+            foreach (string name in cornerCoordinateNames)
+            {
+                if (Double.TryParse(GetStringValue(textMetadata, name), out double value)) coordinates.Add(value);
+            }
+            if (coordinates.Count == 8)
+            {
+                GeoJSON.Net.Geometry.Position[] lineStringPositions = new GeoJSON.Net.Geometry.Position[]
+                {
+                    new GeoJSON.Net.Geometry.Position(coordinates[1], coordinates[0]),
+                    new GeoJSON.Net.Geometry.Position(coordinates[3], coordinates[2]),
+                    new GeoJSON.Net.Geometry.Position(coordinates[5], coordinates[4]),
+                    new GeoJSON.Net.Geometry.Position(coordinates[7], coordinates[6]),
+                    new GeoJSON.Net.Geometry.Position(coordinates[1], coordinates[0])
+                };
+                GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(lineStringPositions);
+                metadata.geometry = new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString });
+            }
+
+            metadata.cloudCoverPercent = GetDoubleValue(textMetadata, "CLOUD_COVER");
+            metadata.offNadirAngle = GetDoubleValue(textMetadata, "OFF_NADIR");
+            metadata.sunElevation = GetDoubleValue(textMetadata, "SUN_ELEVATION");
+            metadata.sunAzimuth = GetDoubleValue(textMetadata, "SUN_AZIMUTH");
+            metadata.satelliteElevation = GetDoubleValue(textMetadata, "SAT_ELEVATION");
+            metadata.satelliteAzimuth= GetDoubleValue(textMetadata, "SAT_AZIMUTH");
+            //metadata.georeferenced= "";
+            //metadata.orthorectified= "";
+            //metadata.width= "";
+            //metadata.height= "";
+            //metadata.processingVersion= "";
+            //metadata.targetType= "";
+            //metadata.estimatedCE90= "";
+            //metadata.bitsPerPixel= "";
+
+            //metadata.imageSpecVersion= "";
+            //metadata.fractionSaturated= "";
+            //metadata.numberRegistrationPoints= "";
+
+            metadata.processLevel = GetStringValue(textMetadata, "PROCESS_LEVEL");
+
+
+            return metadata;
+        }
+
+        public static string GetStringValue(Dictionary<string, string> dict, string key)
+        {
+            if (dict.ContainsKey(key)) return dict[key];
+            return null;
+        }
+
+        public static double GetDoubleValue(Dictionary<string, string> dict, string key)
+        {
+            if (dict.ContainsKey(key))
+            {
+                if (Double.TryParse(dict[key], out double value)) return value;
+            }
+            return 0;
+        }
 
 
     }
@@ -45,5 +145,24 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
         public string catalogImageId { get; set; }
         public string imageId { get; set; }
     }
-        
+
+
 }
+
+
+
+/*
+metadata.id
+metadata.gsd;
+metadata.sensorName.ToLower();
+metadata.sensorName.ToLower() };
+metadata.gsd;
+metadata.sensorName.ToUpper(),
+metadata.AncillaryDataReference.Tag, "Ellipsoid Designator");
+metadata.offNadirAngle;
+metadata.sunAzimuth;
+metadata.sunElevation;
+metadata.cloudCoverPercent;
+metadata.acquisitionDate, null, DateTimeStyles.AssumeUniversal, out DateTime result))
+metadata.geometry);
+  */

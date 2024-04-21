@@ -21,6 +21,7 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Raster;
 using Newtonsoft.Json;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 {
@@ -82,6 +83,10 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"BSG.*\.json$");
             if (metadataAsset == null)
             {
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"BS.*\.txt$");
+            }
+            if (metadataAsset == null)
+            {
                 throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
             }
             return metadataAsset;
@@ -92,14 +97,24 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         {
             logger.LogDebug("Opening metadata file {0}", metadataAsset.Uri);
 
+            System.Console.WriteLine("METADATA FILE: {0}", metadataAsset.Uri.AbsolutePath);
+
             using (var stream = await resourceServiceProvider.GetAssetStreamAsync(metadataAsset, System.Threading.CancellationToken.None))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
-                    logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
-                    string metadataStr = reader.ReadToEnd();
-                    Schemas.Metadata metadata = JsonConvert.DeserializeObject<Schemas.Metadata>(metadataStr);
-                    return metadata;
+                    if (metadataAsset.Uri.AbsolutePath.EndsWith(".json"))
+                    {
+                        logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
+                        string metadataStr = reader.ReadToEnd();
+                        Schemas.Metadata metadata = JsonConvert.DeserializeObject<Schemas.Metadata>(metadataStr);
+                        return metadata;
+                    }
+                    else   // .txt file
+                    {
+                        Schemas.Metadata metadata = Schemas.Metadata.FromTextFile(reader);
+                        return metadata;
+                    }
                 }
             }
         }
@@ -350,9 +365,17 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)
         {
-            string s = JsonConvert.SerializeObject(metadata.geometry);
-            GeoJSON.Net.Geometry.Polygon polygon = JsonConvert.DeserializeObject<GeoJSON.Net.Geometry.Polygon>(s);
-            return polygon;
+            GeoJSON.Net.Geometry.Polygon polygon;
+            if (metadata.geometry is GeoJSON.Net.Geometry.Polygon)
+            {
+                polygon = metadata.geometry as GeoJSON.Net.Geometry.Polygon;
+            }
+            else
+            {
+                string s = JsonConvert.SerializeObject(metadata.geometry);
+                polygon = JsonConvert.DeserializeObject<GeoJSON.Net.Geometry.Polygon>(s);
+            }
+            return polygon.NormalizePolygon();
         }
 
 
