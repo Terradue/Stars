@@ -16,25 +16,26 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
         public string id { get; set; }
         public string acquisitionDate { get; set; }
         public string sensorName { get; set; }
-        public double gsd { get; set; }
+        public string spectralMode { get; set; }
+        public double? gsd { get; set; }
         public object geometry { get; set; }
-        public double cloudCoverPercent { get; set; }
-        public double offNadirAngle { get; set; }
-        public double sunElevation { get; set; }
-        public double sunAzimuth { get; set; }
-        public double satelliteElevation { get; set; }
-        public double satelliteAzimuth { get; set; }
-        public bool georeferenced { get; set; }
-        public bool orthorectified { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
+        public double? cloudCoverPercent { get; set; }
+        public double? offNadirAngle { get; set; }
+        public double? sunElevation { get; set; }
+        public double? sunAzimuth { get; set; }
+        public double? satelliteElevation { get; set; }
+        public double? satelliteAzimuth { get; set; }
+        public bool? georeferenced { get; set; }
+        public bool? orthorectified { get; set; }
+        public int? width { get; set; }
+        public int? height { get; set; }
         public string processingVersion { get; set; }
         public string targetType { get; set; }
-        public double estimatedCE90 { get; set; }
-        public int bitsPerPixel { get; set; }
+        public double? estimatedCE90 { get; set; }
+        public int? bitsPerPixel { get; set; }
 
         public string imageSpecVersion { get; set; }
-        public double fractionSaturated { get; set; }
+        public double? fractionSaturated { get; set; }
         public object numberRegistrationPoints { get; set; }
 
         public GeminiType gemini { get; set; }
@@ -60,6 +61,14 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
             }
 
             metadata.id = GetStringValue(textMetadata, "VENDOR_SCENE_ID");
+            string platformNumber = GetStringValue(textMetadata, "PLATFORM_NUMBER");
+            if (platformNumber == null)
+            {
+                string fileName = GetStringValue(textMetadata, "ENTITY_ID");
+                if (fileName != null && fileName.StartsWith("BS")) platformNumber = fileName.Substring(2, 2).TrimStart('0');
+            }
+            metadata.sensorName = String.Format("Global-{0}", platformNumber);
+            metadata.spectralMode = GetStringValue(textMetadata, "SENSOR_TYPE");
             string acquisitionDate = GetStringValue(textMetadata, "ACQUISITION_DATE");
             if (!String.IsNullOrEmpty(acquisitionDate))
             {
@@ -76,7 +85,6 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
                 acquisitionTime = acquisitionTime.Replace("Z", "");
                 metadata.acquisitionDate = String.Format("{0}T{1}Z", acquisitionDate, acquisitionTime);
             }
-            metadata.sensorName = GetStringValue(textMetadata, "SENSOR");
             metadata.gsd = 1;   // hardcoded
 
             List<double> coordinates = new List<double>();
@@ -129,13 +137,13 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
             return null;
         }
 
-        public static double GetDoubleValue(Dictionary<string, string> dict, string key)
+        public static double? GetDoubleValue(Dictionary<string, string> dict, string key)
         {
             if (dict.ContainsKey(key))
             {
                 if (Double.TryParse(dict[key], out double value)) return value;
             }
-            return 0;
+            return null;
         }
 
 
@@ -148,21 +156,3 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
 
 
 }
-
-
-
-/*
-metadata.id
-metadata.gsd;
-metadata.sensorName.ToLower();
-metadata.sensorName.ToLower() };
-metadata.gsd;
-metadata.sensorName.ToUpper(),
-metadata.AncillaryDataReference.Tag, "Ellipsoid Designator");
-metadata.offNadirAngle;
-metadata.sunAzimuth;
-metadata.sunElevation;
-metadata.cloudCoverPercent;
-metadata.acquisitionDate, null, DateTimeStyles.AssumeUniversal, out DateTime result))
-metadata.geometry);
-  */

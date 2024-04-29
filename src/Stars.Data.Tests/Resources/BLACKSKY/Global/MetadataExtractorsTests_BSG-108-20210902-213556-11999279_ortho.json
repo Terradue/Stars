@@ -1,70 +1,180 @@
 {
-    "stac_version": "1.0.0",
-    "stac_extensions": [
-      "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
-      "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
-      "https://stac-extensions.github.io/view/v1.0.0/schema.json"
-    ],
-    "type": "Feature",
-    "id": "BSG-108-20210902-213556-11999279_ortho",
-    "geometry": {
-      "type": "Polygon",
-      "coordinates": [
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "BSG-108-20210902-213556-11999279_ortho",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
         [
-          [
-            -75.12948188832118,
-            39.951193872769544
-          ],
-          [
-            -75.16335070466222,
-            39.92967968802465
-          ],
-          [
-            -75.20606168353703,
-            39.96975426955367
-          ],
-          [
-            -75.17209285763781,
-            39.99133716421872
-          ],
-          [
-            -75.12948188832118,
-            39.951193872769544
-          ]
+          -75.12948188832118,
+          39.951193872769544
+        ],
+        [
+          -75.17209285763781,
+          39.99133716421872
+        ],
+        [
+          -75.20606168353703,
+          39.96975426955367
+        ],
+        [
+          -75.16335070466222,
+          39.92967968802465
+        ],
+        [
+          -75.12948188832118,
+          39.951193872769544
         ]
       ]
-    },
-    "properties": {
-      "title": "GLOBAL-8 2021-09-02 21:35:56",
-      "agency": "BlackSky",
-      "platform": "global-8",
-      "mission": "Global",
-      "instruments": [
-        "global-8"
+    ]
+  },
+  "properties": {
+    "datetime": "2021-09-02T21:35:56.707Z",
+    "agency": "BlackSky",
+    "platform": "global-8",
+    "constellation": "blacksky-global",
+    "mission": "blacksky-global",
+    "instruments": [
+      "spaceview-24"
+    ],
+    "sensor_type": "optical",
+    "spectral_mode": "PAN/MS",
+    "gsd": 0.8632106,
+    "title": "BLACKSY GLOBAL-8 ORTHO PAN MS",
+    "view:off_nadir": 13.258979,
+    "view:sun_azimuth": 262.15057,
+    "view:sun_elevation": 20.95552,
+    "processing:level": "ORTHO",
+    "eo:cloud_cover": 0.0,
+    "eo:bands": [
+      {
+        "name": "B1-RED",
+        "common_name": "red",
+        "center_wavelength": 0.645,
+        "full_width_half_max": 0.11
+      },
+      {
+        "name": "B2-GREEN",
+        "common_name": "green",
+        "center_wavelength": 0.545,
+        "full_width_half_max": 0.09
+      },
+      {
+        "name": "B3-BLUE",
+        "common_name": "blue",
+        "center_wavelength": 0.485,
+        "full_width_half_max": 0.07
+      },
+      {
+        "name": "pan",
+        "common_name": "pan",
+        "center_wavelength": 0.575,
+        "full_width_half_max": 0.25
+      }
+    ],
+    "providers": [
+      {
+        "name": "BlackSky",
+        "description": "BlackSky Constellation is a commercially owned and operated constellation of 60 high resolution imaging microsatellites developed by BlackSky Global. The constellation aims to provide higher temporal resolution and lower cost Earth imaging, and currently contains 17 operational microsatellites, each with an expected lifetime of 4 years.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.blacksky.com"
+      }
+    ]
+  },
+  "bbox": [
+    -75.20606168353703,
+    39.92967968802465,
+    -75.12948188832118,
+    39.99133716421872
+  ],
+  "assets": {
+    "metadata": {
+      "type": "application/json",
+      "roles": [
+        "metadata"
       ],
-      "sensor_type": "optical",
+      "title": "Metadata file",
+      "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_metadata.json",
+      "filename": "BSG-108-20210902-213556-11999279_metadata.json",
+      "file:size": 3807
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "title": "Browse image",
+      "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_browse.png",
+      "filename": "BSG-108-20210902-213556-11999279_browse.png",
+      "file:size": 1
+    },
+    "ORTHO_RGB": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "RGB image",
+      "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_ortho.tif",
+      "filename": "BSG-108-20210902-213556-11999279_ortho.tif",
+      "file:size": 1,
       "gsd": 0.8632106,
-      "datetime": "2021-09-02T21:35:56.707Z",
-      "eo:cloud_cover": 0.0,
       "eo:bands": [
         {
-          "name": "red",
+          "name": "B1-RED",
           "common_name": "red",
           "center_wavelength": 0.645,
           "full_width_half_max": 0.11
         },
         {
-          "name": "green",
+          "name": "B2-GREEN",
           "common_name": "green",
           "center_wavelength": 0.545,
           "full_width_half_max": 0.09
         },
         {
-          "name": "blue",
+          "name": "B3-BLUE",
           "common_name": "blue",
           "center_wavelength": 0.485,
           "full_width_half_max": 0.07
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12
         },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12
+        }
+      ]
+    },
+    "ORTHO_PAN": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "PAN image",
+      "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_ortho-pan.tif",
+      "filename": "BSG-108-20210902-213556-11999279_ortho-pan.tif",
+      "file:size": 1,
+      "gsd": 0.8632106,
+      "eo:bands": [
         {
           "name": "pan",
           "common_name": "pan",
@@ -72,100 +182,13 @@
           "full_width_half_max": 0.25
         }
       ],
-      "view:sun_azimuth": 262.15057,
-      "view:sun_elevation": 20.95552,
-      "view:off_nadir": 13.258979,
-      "processing:level": "ORTHO",
-      "providers": [
+      "raster:bands": [
         {
-          "name": "BlackSky",
-          "description": "BlackSky Constellation is a commercially owned and operated constellation of 60 high resolution imaging microsatellites developed by BlackSky Global. The constellation aims to provide higher temporal resolution and lower cost Earth imaging, and currently contains 17 operational microsatellites, each with an expected lifetime of 4 years.",
-          "roles": [
-            "producer",
-            "processor",
-            "licensor"
-          ],
-          "url": "https://www.blacksky.com"
+          "data_type": "uint16",
+          "bits_per_sample": 12
         }
       ]
-    },
-    "bbox": [
-      -75.20606168353703,
-      39.92967968802465,
-      -75.12948188832118,
-      39.99133716421872
-    ],
-    "assets": {
-      "overview": {
-        "title": "Browse image",
-        "type": "image/png",
-        "roles": [
-          "overview"
-        ],
-        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_browse.png",
-        "filename": "BSG-108-20210902-213556-11999279_browse.png",
-        "file:size": 1
-      },
-      "metadata": {
-        "title": "Metadata file",
-        "type": "application/json",
-        "roles": [
-          "metadata"
-        ],
-        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_metadata.json",
-        "filename": "BSG-108-20210902-213556-11999279_metadata.json",
-        "file:size": 3807
-      },
-      "ortho": {
-        "title": "RGB image file",
-        "type": "image/tiff; application=geotiff",
-        "roles": [
-          "data"
-        ],
-        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_ortho.tif",
-        "filename": "BSG-108-20210902-213556-11999279_ortho.tif",
-        "file:size": 1,
-        "gsd": 0.8632106,
-        "eo:bands": [
-          {
-            "name": "red",
-            "common_name": "red",
-            "center_wavelength": 0.645,
-            "full_width_half_max": 0.11
-          },
-          {
-            "name": "green",
-            "common_name": "green",
-            "center_wavelength": 0.545,
-            "full_width_half_max": 0.09
-          },
-          {
-            "name": "blue",
-            "common_name": "blue",
-            "center_wavelength": 0.485,
-            "full_width_half_max": 0.07
-          }
-        ]
-      },
-      "ortho-pan": {
-        "type": "image/tiff; application=geotiff",
-        "roles": [
-          "data"
-        ],
-        "title": "PAN image file",
-        "href": "data/BSG-108-20210902-213556-11999279_ortho/BSG-108-20210902-213556-11999279_ortho-pan.tif",
-        "filename": "BSG-108-20210902-213556-11999279_ortho-pan.tif",
-        "file:size": 1,
-        "gsd": 0.8632106,
-        "eo:bands": [
-          {
-            "name": "pan",
-            "common_name": "pan",
-            "center_wavelength": 0.575,
-            "full_width_half_max": 0.25
-          }
-        ]
-      }
-    },
-    "links": []
-  }
+    }
+  },
+  "links": []
+}
