@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SAOCOM_XMLProduct xmlns:at="saocomTypes">
+
+  <NumberOfChannels>2</NumberOfChannels>
+
+  <VersionNumber>2.1</VersionNumber>
+
+  <Description>Noise Quality Measures</Description>
+
+  <QualityMetrics>
+    <Swath>DS2</Swath>
+    <Polarization>x/H</Polarization>
+    <NoiseSamples>122880</NoiseSamples>
+    <RFIMaskedNoiseSamples>6382</RFIMaskedNoiseSamples>
+    <RFIMaskedRatio unit="%">5.19368489583333</RFIMaskedRatio>
+    <NoiseEstimationMethod>Estimated</NoiseEstimationMethod>
+    <NoiseLevel unit="dB">5.79018485489412</NoiseLevel>
+  </QualityMetrics>
+
+  <QualityMetrics>
+    <Swath>DS2</Swath>
+    <Polarization>x/V</Polarization>
+    <NoiseSamples>122880</NoiseSamples>
+    <RFIMaskedNoiseSamples>8115</RFIMaskedNoiseSamples>
+    <RFIMaskedRatio unit="%">6.60400390625</RFIMaskedRatio>
+    <NoiseEstimationMethod>Estimated</NoiseEstimationMethod>
+    <NoiseLevel unit="dB">6.73897584950137</NoiseLevel>
+  </QualityMetrics>
+
+</SAOCOM_XMLProduct>

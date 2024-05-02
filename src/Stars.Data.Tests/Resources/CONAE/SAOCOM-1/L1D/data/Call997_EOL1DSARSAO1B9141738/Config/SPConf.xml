@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AresysXmlDoc xmlns:tns="aresysConfTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <NumberOfChannels>1</NumberOfChannels>
+  <VersionNumber>2.1</VersionNumber>
+  <Description>Global SP configuration (SP-CTRL-CNF-1)</Description>
+  <Channel Number="1" Total="1">
+    <SAOCOMConf>
+      <CountryID>Argentina</CountryID>
+      <AgencyID>CONAE</AgencyID>
+      <FacilityID>CETT</FacilityID>
+      <ServiceID>USS</ServiceID>
+      <PMPhysicalProcessingUnitID>NA</PMPhysicalProcessingUnitID>
+      <PMLogicalProcessingUnitID>NA</PMLogicalProcessingUnitID>
+      <LoggerConf>
+        <EnableCustomLogFile>1</EnableCustomLogFile>
+        <EnableCompulsoryLogFile>0</EnableCompulsoryLogFile>
+        <EnableStdOutput>1</EnableStdOutput>
+        <ReportLevel>HIGH</ReportLevel>
+      </LoggerConf>
+      <CompulsoryLogConf>
+        <LBS_ID>I_LBKSRV01-S</LBS_ID>
+        <UNIT_ID>SSP</UNIT_ID>
+        <LBS_INT_ID>I-LBS01</LBS_INT_ID>
+        <LBS_INBOX>.</LBS_INBOX>
+        <LBS_LEVEL>L3</LBS_LEVEL>
+      </CompulsoryLogConf>
+      <WaitbarConf>
+        <EnableOutput>0</EnableOutput>
+      </WaitbarConf>
+    </SAOCOMConf>
+  </Channel>
+</AresysXmlDoc>

@@ -8,62 +8,60 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240",
+  "id": "S1A_OPER_SAR_EOSSP__CORE_L1D_OLVF_20230312T050117",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          119.146727,
-          -1.068375
+          43.1992527068778,
+          -22.7031446553536
         ],
         [
-          119.33636,
-          -1.989713
+          43.1850852033387,
+          -23.7548748462209
         ],
         [
-          119.778445,
-          -1.896407
+          43.9330034351116,
+          -23.7618514367155
         ],
         [
-          119.588553,
-          -0.975631
+          43.9413361787041,
+          -22.7097778159655
         ],
         [
-          119.146727,
-          -1.068375
+          43.1992527068778,
+          -22.7031446553536
         ]
       ]
     ]
   },
   "properties": {
     "sat:orbit_state": "ascending",
-    "saocom:path": 149,
-    "saocom:row": 447,
+    "saocom:path": 203,
     "proj:epsg": null,
     "proj:shape": [
-      6419,
-      32596
+      8337,
+      12886
     ],
     "view:off_nadir": 32.0,
-    "view:incidence_angle": 39.75,
     "sar:instrument_mode": "SM",
     "sar:frequency_band": "L",
     "sar:polarizations": [
       "HH",
       "HV"
     ],
-    "sar:product_type": "SLC",
+    "sar:product_type": "GTC",
     "sar:observation_direction": "right",
     "sar:center_frequency": 12.75,
-    "sar:pixel_spacing_range": 4.99654096667666,
-    "sar:pixel_spacing_azimuth": 3.19838775503902,
+    "sar:pixel_spacing_range": 9.03987930490642,
+    "sar:pixel_spacing_azimuth": 9.14447914243438,
     "sar:looks_equivalent_number": 3.0,
-    "sar:resolution_range": 6.05820514079381,
-    "sar:resolution_azimuth": 4.98814376176766,
-    "processing:level": "L1A",
-    "datetime": "2021-11-14T22:17:15.468Z",
-    "created": "2021-11-18T10:29:28Z",
+    "sar:resolution_range": 10.0,
+    "sar:resolution_azimuth": 10.0,
+    "processing:level": "L1D",
+    "datetime": "2023-03-12T03:39:31.647Z",
+    "created": "2023-03-12T06:46:42Z",
     "platform": "saocom-1a",
     "mission": "saocom-1",
     "instruments": [
@@ -71,7 +69,7 @@
     ],
     "sensor_type": "radar",
     "gsd": 10.0,
-    "title": "SAOCOM-1A SAO1A SLC HH/HV 2021-11-14 22:17:15",
+    "title": "SAOCOM-1A SAO1A GTC HH/HV 2023-03-12 03:39:31",
     "providers": [
       {
         "name": "CONAE",
@@ -86,30 +84,20 @@
     ]
   },
   "bbox": [
-    119.146727,
-    -1.989713,
-    119.778445,
-    -0.975631
+    43.1850852033387,
+    -23.7618514367155,
+    43.9413361787041,
+    -22.7031446553536
   ],
   "assets": {
-    "manifest": {
-      "type": "application/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Manifest (XEMT)",
-      "href": "data/286806-EOL1ASARSAO1A3111864/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240.xemt",
-      "filename": "S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240.xemt",
-      "file:size": 39511
-    },
     "metadata-hh": {
       "type": "application/xml",
       "roles": [
         "metadata"
       ],
-      "href": "data/286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
-      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh.xml",
-      "file:size": 45186
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h.xml",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h.xml",
+      "file:size": 17916
     },
     "amplitude-hh": {
       "type": "image/tiff; application=geotiff",
@@ -117,8 +105,8 @@
         "amplitude",
         "data"
       ],
-      "href": "data/286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
-      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hh",
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h",
       "file:size": 0,
       "sar:polarizations": [
         "HH"
@@ -129,9 +117,9 @@
       "roles": [
         "metadata"
       ],
-      "href": "data/286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
-      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv.xml",
-      "file:size": 45188
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h.xml",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h.xml",
+      "file:size": 17917
     },
     "amplitude-hv": {
       "type": "image/tiff; application=geotiff",
@@ -139,12 +127,21 @@
         "amplitude",
         "data"
       ],
-      "href": "data/286806-EOL1ASARSAO1A3111864/Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
-      "filename": "Data/slc-acqId0000588416-a-sm5-2111181029-s5dp-hv",
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h",
       "file:size": 0,
       "sar:polarizations": [
         "HV"
       ]
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Images/gtc-acqId0001535768-a-sm7-2303120651-h.png",
+      "filename": "Images/gtc-acqId0001535768-a-sm7-2303120651-h.png",
+      "file:size": 2271455
     }
   },
   "links": []
