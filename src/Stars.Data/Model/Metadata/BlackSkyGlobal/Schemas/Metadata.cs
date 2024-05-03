@@ -8,10 +8,17 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
 
     public partial class Metadata {
 
+        private bool isFromText = false;
+
         public static Regex keyValueRegex = new Regex(@"(?'key'[^= ]+) *= *(?'value'.*)");
         public static string[] cornerCoordinateNames = new string[] {
             "LL_LONG", "LL_LAT", "LR_LONG", "LR_LAT", "UR_LONG", "UR_LAT", "UL_LONG", "UL_LAT"
         };
+
+        public bool IsFromText {
+            get { return isFromText; }
+            set { isFromText = value; }
+        }
 
         public string id { get; set; }
         public string acquisitionDate { get; set; }
@@ -45,7 +52,11 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
 
         public static Metadata FromTextFile(StreamReader reader)
         {
-            Metadata metadata = new Metadata();
+            Metadata metadata = new Metadata
+            {
+                IsFromText = true
+            };
+
             Dictionary<string, string> textMetadata = new Dictionary<string, string>();
 
             string line;

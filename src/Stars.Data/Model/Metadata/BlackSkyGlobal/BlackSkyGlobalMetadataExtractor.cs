@@ -174,7 +174,8 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // RGB TIFF (ortho)
-            IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id));
+            IAsset imageAsset = metadata.IsFromText && metadata.id.EndsWith("_ortho") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id));
+
             if (imageAsset != null)
             {
                 StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
@@ -194,7 +195,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // PAN TIFF (ortho)
-            IAsset imageAssetPan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id));
+            IAsset imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_ortho-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
                 StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
@@ -210,7 +211,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // RGB TIFF (non-ortho)
-            imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id));
+            imageAsset = metadata.IsFromText && metadata.id.EndsWith("_georeferenced") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id));
             if (imageAsset != null)
             {
                 StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
@@ -230,7 +231,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // PAN TIFF (non-ortho)
-            imageAssetPan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
+            imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_georeferenced-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
                 StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
