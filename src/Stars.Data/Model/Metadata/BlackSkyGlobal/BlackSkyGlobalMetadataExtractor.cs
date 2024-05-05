@@ -21,16 +21,33 @@ using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Stac.Extensions.Raster;
 using Newtonsoft.Json;
+using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 {
     public class BlackSkyGlobalMetadataExtractor : MetadataExtraction
     {
+        public static Dictionary<int, string> platformDesignators = new Dictionary<int, string> {
+            { 1, "2018-096M" },
+            { 2, "2018-099BG" },
+            { 3, "2019-037C" },
+            { 4, "2019-054E" },
+            { 7, "2020-055BP" },
+            { 8, "2020-055BQ" },
+            { 9, "2021-023G" },
+            { 12, "2021-115BA" },
+            { 13, "2021-115BB" },
+            { 14, "2021-106A" },
+            { 15, "2021-106B" },
+            { 16, "2021-120B" },
+        };
+
         // Possible identifiers:
         // CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156
         private Regex identifierRegex = new Regex(@"(?'id'CSKS(?'i'\d)_(?'pt'RAW_B|SCS_B|SCS_U|DGM_B|GEC_B|GTC_B)_(?'mode'HI|PP|WR|HR|S2)_(?'swath'..)_(?'pol'HH|VV|HV|VH|CO|CH|CV)_(?'look'L|R)(?'dir'A|D)_.._\d{14}_\d{14})");
         private Regex coordinateRegex = new Regex(@"(?'lat'[^ ]+) (?'lon'[^ ]+)");
         private static Regex h5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
+        private static Regex satNumberRegex = new Regex(@".+?(?'n'\d+)$");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
  
@@ -69,7 +86,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             AddSatStacExtension(stacItem, metadata);
             AddProjStacExtension(stacItem, metadata);
             AddViewStacExtension(stacItem, metadata);
-            AddProcessingStacExtension(stacItem, metadata);
+            AddProcessingStacExtension(stacItem, metadata, item);
             AddEoStacExtension(stacItem, metadata);
             AddOtherProperties(stacItem, metadata);
 
@@ -80,6 +97,10 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
             IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"BSG.*\.json$");
+            if (metadataAsset == null)
+            {
+                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"BS.*\.txt$");
+            }
             if (metadataAsset == null)
             {
                 throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
@@ -96,10 +117,18 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
-                    logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
-                    string metadataStr = reader.ReadToEnd();
-                    Schemas.Metadata metadata = JsonConvert.DeserializeObject<Schemas.Metadata>(metadataStr);
-                    return metadata;
+                    if (metadataAsset.Uri.AbsolutePath.EndsWith(".json"))
+                    {
+                        logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
+                        string metadataStr = reader.ReadToEnd();
+                        Schemas.Metadata metadata = JsonConvert.DeserializeObject<Schemas.Metadata>(metadataStr);
+                        return metadata;
+                    }
+                    else   // .txt file
+                    {
+                        Schemas.Metadata metadata = Schemas.Metadata.FromTextFile(reader);
+                        return metadata;
+                    }
                 }
             }
         }
@@ -108,15 +137,19 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         internal virtual StacItem CreateStacItem(Schemas.Metadata metadata, IItem item)
         {
             string suffix = String.Empty;
-            if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id)) != null) suffix = "_ortho";
-            else if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null) suffix = "_non-ortho";
+            if (!metadata.id.Contains("ortho"))
+            {
+                suffix = GetProcessingLevel(metadata, item);
+                if (suffix == "ORTHO") suffix = "_ortho";
+                else suffix = "_non-ortho";
+            }
 
             string identifier = String.Format("{0}{1}", metadata.id, suffix);
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
             FillDateTimeProperties(properties, metadata);
-            FillInstrument(properties, metadata);
-            FillBasicsProperties(properties, metadata);
+            FillInstrument(properties, metadata, item);
+            FillBasicsProperties(properties, metadata, item);
 
             StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), properties);
             
@@ -141,58 +174,75 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // RGB TIFF (ortho)
-            IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id));
+            IAsset imageAsset = metadata.IsFromText && metadata.id.EndsWith("_ortho") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id));
+
             if (imageAsset != null)
             {
-                StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image file");
-                stacItem.Assets.Add("ortho", stacAsset);
+                StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
+                stacItem.Assets.Add("ORTHO_RGB", stacAsset);
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.Properties["gsd"] = metadata.gsd;
                 stacAsset.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 0.645, FullWidthHalfMax = 0.11 },
-                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
-                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
+                    new EoBandObject("B1-RED", EoBandCommonName.red) { CenterWavelength = 0.645, FullWidthHalfMax = 0.11 },
+                    new EoBandObject("B2-GREEN", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
+                    new EoBandObject("B3-BLUE", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
+                };
+                stacAsset.RasterExtension().Bands = new RasterBand[] {
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
                 };
             }
 
             // PAN TIFF (ortho)
-            IAsset imageAssetPan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id));
+            IAsset imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_ortho-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
-                StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image file");
-                stacItem.Assets.Add("ortho-pan", stacAssetPan);
+                StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
+                stacItem.Assets.Add("ORTHO_PAN", stacAssetPan);
                 stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
                 stacAssetPan.Properties["gsd"] = metadata.gsd;
                 stacAssetPan.EoExtension().Bands = new EoBandObject[] {
                     new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 0.575, FullWidthHalfMax = 0.25 },
+                };
+                stacAssetPan.RasterExtension().Bands = new RasterBand[] {
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
                 };
             }
 
             // RGB TIFF (non-ortho)
-            imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id));
+            imageAsset = metadata.IsFromText && metadata.id.EndsWith("_georeferenced") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id));
             if (imageAsset != null)
             {
-                StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image file");
-                stacItem.Assets.Add("georeferenced", stacAsset);
+                StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
+                stacItem.Assets.Add("GEO_RGB", stacAsset);
                 stacAsset.Properties.AddRange(imageAsset.Properties);
                 stacAsset.Properties["gsd"] = metadata.gsd;
                 stacAsset.EoExtension().Bands = new EoBandObject[] {
-                    new EoBandObject("red", EoBandCommonName.red) { CenterWavelength = 0.645, FullWidthHalfMax = 0.11 },
-                    new EoBandObject("green", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
-                    new EoBandObject("blue", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
+                    new EoBandObject("B1-RED", EoBandCommonName.red) { CenterWavelength = 0.645, FullWidthHalfMax = 0.11 },
+                    new EoBandObject("B2-GREEN", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
+                    new EoBandObject("B3-BLUE", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
+                };
+                stacAsset.RasterExtension().Bands = new RasterBand[] {
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
                 };
             }
 
             // PAN TIFF (non-ortho)
-            imageAssetPan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
+            imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_georeferenced-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
-                StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image file");
-                stacItem.Assets.Add("georeferenced-pan", stacAssetPan);
+                StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
+                stacItem.Assets.Add("GEO_PAN", stacAssetPan);
                 stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
                 stacAssetPan.Properties["gsd"] = metadata.gsd;
                 stacAssetPan.EoExtension().Bands = new EoBandObject[] {
                     new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 0.575, FullWidthHalfMax = 0.25 },
+                };
+                stacAssetPan.RasterExtension().Bands = new RasterBand[] {
+                    new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
                 };
             }
 
@@ -200,7 +250,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             IAsset imageAssetMask = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_mask\.tif$", metadata.id));
             if (imageAssetMask != null)
             {
-                StacAsset stacAssetMask = StacAsset.CreateDataAsset(stacItem, imageAssetMask.Uri, new ContentType("image/tiff; application=geotiff"), "Pixel mask");
+                StacAsset stacAssetMask = StacAsset.CreateDataAsset(stacItem, imageAssetMask.Uri, new ContentType("image/tiff; application=geotiff"), "Mask file");
                 stacItem.Assets.Add("mask", stacAssetMask);
                 stacAssetMask.Properties.AddRange(imageAssetMask.Properties);
                 stacAssetMask.Properties["gsd"] = metadata.gsd;
@@ -211,7 +261,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             if (rpcAsset != null)
             {
                 StacAsset stacAssetRpc = StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new ContentType("text/plain"), "RPC (RGB)");
-                stacItem.Assets.Add("georefrenced-rpc", stacAssetRpc);
+                stacItem.Assets.Add("georefrenced-rgb-rpc", stacAssetRpc);
                 stacAssetRpc.Properties.AddRange(rpcAsset.Properties);
             }
 
@@ -246,26 +296,53 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         }
 
 
-        private void FillInstrument(Dictionary<string, object> properties, Schemas.Metadata metadata)
+        private void FillInstrument(Dictionary<string, object> properties, Schemas.Metadata metadata, IItem item)
         {
             // platform & constellation
             
             properties["agency"] = "BlackSky";
             properties["platform"] = metadata.sensorName.ToLower();
-            properties["mission"] = "Global";
-            properties["instruments"] = new string[] { metadata.sensorName.ToLower() };
+            properties["constellation"] = "blacksky-global";
+            properties["mission"] = "blacksky-global";
+            properties["instruments"] = new string[] { "spaceview-24" };
             properties["sensor_type"] = "optical";
+            properties["spectral_mode"] = GetSpectralMode(metadata, item);
+
             properties["gsd"] = metadata.gsd;
 
         }
 
-        private void FillBasicsProperties(IDictionary<String, object> properties, Schemas.Metadata metadata)
+        private string GetSpectralMode(Schemas.Metadata metadata, IItem item)
+        {
+            if (metadata.spectralMode != null)
+            {
+                if (metadata.spectralMode == "PN") return "PAN";
+                if (metadata.spectralMode == "MS") return "MS";
+                if (metadata.spectralMode.Contains("MS") && metadata.spectralMode.Contains("MS")) return "PAN/MS";
+            }
+            
+            bool pan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id)) != null || FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id)) != null;
+            bool ms = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id)) != null || FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null;
+
+            return String.Format("{0}{1}{2}", pan ? "PAN" : String.Empty, pan && ms ? "/": String.Empty, ms ? "MS" : String.Empty);
+
+        }
+
+        private void FillBasicsProperties(IDictionary<String, object> properties, Schemas.Metadata metadata, IItem item)
         {
             DateTime? acquisitionDate = GetAcquisitionDateTime(metadata);
             string dateStr = (acquisitionDate != null ? String.Format(" {0:yyyy-MM-dd HH:mm:ss}", acquisitionDate.Value.ToUniversalTime()) : String.Empty);
             CultureInfo culture = new CultureInfo("fr-FR");
-            properties["title"] = String.Format("{0}{1}",
+            string processingLevel = GetProcessingLevel(metadata, item);
+            if (processingLevel == null) processingLevel = String.Empty;
+            else processingLevel = String.Format(" {0}", processingLevel);
+            string spectralMode = GetSpectralMode(metadata, item);
+            if (spectralMode == null) spectralMode = String.Empty;
+            else spectralMode = String.Format(" {0}", spectralMode.Replace("/", " "));
+            properties["title"] = String.Format("BLACKSY {0}{1}{2}",
                 metadata.sensorName.ToUpper(),
+                processingLevel,
+                spectralMode,
                 dateStr
             );
         }
@@ -287,6 +364,16 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 
         private void AddSatStacExtension(StacItem stacItem, Schemas.Metadata metadata)
         {
+            var sat = new SatStacExtension(stacItem);
+            if (!String.IsNullOrEmpty(""))
+            {
+                Match match = satNumberRegex.Match("");
+                if (match != null && Int32.TryParse(match.Groups["n"].Value, out int n) && platformDesignators.ContainsKey(n))
+                {
+                    sat.PlatformInternationalDesignator = platformDesignators[n];
+                }
+            }
+            
         }
 
 
@@ -305,16 +392,16 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         private void AddViewStacExtension(StacItem stacItem, Schemas.Metadata metadata)
         {
             var view = new ViewStacExtension(stacItem);
-            view.OffNadir = metadata.offNadirAngle;
-            view.SunAzimuth = metadata.sunAzimuth;
-            view.SunElevation = metadata.sunElevation;
+            if (metadata.offNadirAngle.HasValue) view.OffNadir = metadata.offNadirAngle.Value;
+            if (metadata.sunAzimuth.HasValue) view.SunAzimuth = metadata.sunAzimuth.Value;
+            if (metadata.sunElevation.HasValue) view.SunElevation = metadata.sunElevation.Value;
         }
 
 
-        private void AddProcessingStacExtension(StacItem stacItem, Schemas.Metadata metadata)
+        private void AddProcessingStacExtension(StacItem stacItem, Schemas.Metadata metadata, IItem item)
         {
             var proc = stacItem.ProcessingExtension();
-            proc.Level = "ORTHO";
+            proc.Level = GetProcessingLevel(metadata, item);
         }
 
 
@@ -350,9 +437,31 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(Schemas.Metadata metadata)
         {
-            string s = JsonConvert.SerializeObject(metadata.geometry);
-            GeoJSON.Net.Geometry.Polygon polygon = JsonConvert.DeserializeObject<GeoJSON.Net.Geometry.Polygon>(s);
-            return polygon;
+            GeoJSON.Net.Geometry.Polygon polygon;
+            if (metadata.geometry is GeoJSON.Net.Geometry.Polygon)
+            {
+                polygon = metadata.geometry as GeoJSON.Net.Geometry.Polygon;
+            }
+            else
+            {
+                string s = JsonConvert.SerializeObject(metadata.geometry);
+                polygon = JsonConvert.DeserializeObject<GeoJSON.Net.Geometry.Polygon>(s);
+            }
+            return polygon.NormalizePolygon();
+        }
+
+        private string GetProcessingLevel(Schemas.Metadata metadata, IItem item)
+        {
+            if (metadata.processLevel != null)
+            {
+                if (metadata.orthorectified.HasValue && metadata.orthorectified.Value) return "ORTHO";
+                if (metadata.georeferenced.HasValue && metadata.georeferenced.Value) return "GEO";
+                if (metadata.processLevel == "O") return "ORTHO";
+                if (metadata.processLevel == "G") return "GEO";
+            }
+            if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id)) != null) return "ORTHO";
+            if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null) return "GEO";
+            return null;
         }
 
 
