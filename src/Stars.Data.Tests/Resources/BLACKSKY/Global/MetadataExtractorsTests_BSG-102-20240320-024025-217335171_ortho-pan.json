@@ -1,7 +1,9 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/processing/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json"
   ],
   "type": "Feature",
   "id": "BSG-102-20240320-024025-217335171_ortho-pan",
@@ -46,6 +48,14 @@
     "gsd": 1.0,
     "title": "BLACKSY GLOBAL-1 GEO MS",
     "processing:level": "GEO",
+    "eo:bands": [
+      {
+        "name": "pan",
+        "common_name": "pan",
+        "center_wavelength": 0.575,
+        "full_width_half_max": 0.25
+      }
+    ],
     "providers": [
       {
         "name": "BlackSky",
@@ -75,6 +85,31 @@
       "href": "data/BSG-102-20240320-024025-217335171_ortho-pan/BS01N47_769636E107_2567602024032000000000MS03_DG000000001.txt",
       "filename": "BS01N47_769636E107_2567602024032000000000MS03_DG000000001.txt",
       "file:size": 1963
+    },
+    "ORTHO_PAN": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data"
+      ],
+      "title": "PAN image",
+      "href": "data/BSG-102-20240320-024025-217335171_ortho-pan/BS01N47_769636E107_2567602024032000000000MS03_GG000000001.tif",
+      "filename": "BS01N47_769636E107_2567602024032000000000MS03_GG000000001.tif",
+      "file:size": 0,
+      "gsd": 1.0,
+      "eo:bands": [
+        {
+          "name": "pan",
+          "common_name": "pan",
+          "center_wavelength": 0.575,
+          "full_width_half_max": 0.25
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12
+        }
+      ]
     }
   },
   "links": []
