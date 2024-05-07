@@ -10,6 +10,7 @@ using Terradue.Stars.Services.Plugins;
 using Stac.Extensions.File;
 using System.Net;
 using System.Threading;
+using System.Reflection;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -22,6 +23,33 @@ namespace Terradue.Stars.Services.Translator
         public string Key { get => "DefaultStacTranslator"; set { } }
 
         public string Label => "Default STAC Translator";
+
+        public string Description
+        {
+            get
+            {
+                var desc = "This is the default STAC Translator that can read any catalog or item implementing the ICatalog or IItem interfaces:";
+                // Get the list of all the ICatalog and IItem implementations in the current assembly
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                foreach (Assembly assembly in assemblies)
+                {
+                    try
+                    {
+                        foreach (Type type in assembly.GetTypes())
+                        {
+                            if ((typeof(ICatalog).IsAssignableFrom(type) || typeof(IItem).IsAssignableFrom(type))
+                                && !type.IsInterface && !type.IsAbstract && !type.IsGenericType && !type.IsNested)
+                            {
+                                // Get the xml documentation for the type if available
+                                desc += $" {type.Name}";
+                            }
+                        }
+                    }
+                    catch { }
+                }
+                return desc;
+            }
+        }
 
         public DefaultStacTranslator(ILogger<DefaultStacTranslator> logger)
         {

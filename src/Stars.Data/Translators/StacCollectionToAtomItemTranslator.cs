@@ -32,6 +32,8 @@ namespace Terradue.Stars.Data.Translators
 
         public string Label => "STAC Collection to ATOM Entry";
 
+        public string Description => "This translator is able to convert a STAC Collection to an ATOM Entry.";
+
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
             if ( typeof(T) != typeof(AtomItemNode) ) return default(T);

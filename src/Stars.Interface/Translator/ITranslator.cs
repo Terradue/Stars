@@ -7,6 +7,8 @@ namespace Terradue.Stars.Interface.Router.Translator
     {
         string Label { get; }
 
+        string Description { get; }
+
         Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource;
     }
 }

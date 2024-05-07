@@ -4,13 +4,10 @@ using Terradue.Stars.Services.Model.Atom;
 using Stac;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
-using System.Net;
 using Terradue.Stars.Data.Model.Atom;
 using System;
-using Terradue.Stars.Services.Store;
 using Terradue.Stars.Services.ThirdParty.Titiler;
 using Microsoft.Extensions.DependencyInjection;
-using Terradue.Stars.Services.ThirdParty.Egms;
 using System.Threading;
 
 namespace Terradue.Stars.Data.Translators
@@ -31,6 +28,8 @@ namespace Terradue.Stars.Data.Translators
         public string Key { get; set; }
 
         public string Label => "STAC Item to ATOM Entry";
+
+        public string Description => "This translator is able to convert a STAC Item to an ATOM Entry.";
 
         public async Task<T> TranslateAsync<T>(IResource node, CancellationToken ct) where T : IResource
         {
