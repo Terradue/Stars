@@ -907,6 +907,44 @@
             "enableStepFiltering": false
         },
         {
+            "name": "Copy S2 from CDS",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/src/Stars.Console/bin/Debug/net6.0/Stars.dll",
+            "args": [
+                "copy",
+                "-v",
+                "-k",
+                "-r",
+                "4",
+                "-nohtml",
+                "-si",
+                "CDS",
+                "--output",
+                "/tmp/stars",
+                "https://catalog.terradue.com/sentinel2/search?uid=S2A_MSIL2A_20231126T082251_N0509_R121_T34HBH_20231126T124654"
+            ],
+            "cwd": "${workspaceFolder}/src",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "logging": {
+                "moduleLoad": false
+            },
+            "justMyCode": false,
+            "requireExactSource": false,
+            // "symbolOptions": {
+            //     // "searchPaths": [
+            //     //     "/data/workspace/Others/aws-sdk-net/sdk/src"
+            //     // ],
+            //     "searchMicrosoftSymbolServer": true,
+            //     "searchNuGetOrgSymbolServer": true
+            // },
+            "enableStepFiltering": false
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
