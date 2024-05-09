@@ -36,7 +36,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
         protected static string metadataAssetRegexPattern => @".*(CBERS_4|Call|CBERS_4A?|cbers_4|call|cbers_4A?|AMAZONIA_1|amazonia_1).*\.(xml|csv)$";
         protected static string compositeAssetRegexPattern => @".*(CBERS_4|Call|CBERS_4A?|cbers_4|call|cbers_4A?|AMAZONIA_1|amazonia_1).*\.(tif|tiff)$";
 
-        private Regex identifierInfoRegex = new Regex(@".*(?'mode'awfi|mux|pan5m|pan10m|wfi|wpm)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(?'rest'.*)$");
+        private Regex identifierInfoRegex = new Regex(@".*(?'mode'awfi|mux|pan|pan5m|pan10m|wfi|wpm)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(?'rest'.*)$");
 
         // Dictionary containing platform international designators
         private Dictionary<string, string> platformInternationalDesignators = new Dictionary<string, string> {
@@ -87,6 +87,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
             }
             catch (Exception e)
             {
+                Console.WriteLine("CAN NOT PROCESS: {0}\n{1}", e.Message, e.StackTrace);
                 return false;
             }
         }
@@ -256,8 +257,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
 
         public virtual async Task<Schemas.Metadata> ReadMetadata(IAsset metadataAsset)
         {
-            Match identifierMatch = identifierRegex.Match(Path.GetFileName(metadataAsset.Uri.OriginalString));
-            Match identifierMatch2 = identifierRegex2.Match(Path.GetFileName(metadataAsset.Uri.OriginalString).ToLower());
+            string originalAssetName = Path.GetFileName(metadataAsset.Uri.OriginalString);
+            Match identifierMatch = identifierRegex.Match(originalAssetName);
+            Match identifierMatch2 = identifierRegex2.Match(originalAssetName.ToLower());
 
             string typeStr;
             string level;
@@ -276,6 +278,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
                 throw new Exception("No metadata file found");
             }
 
+            if (typeStr == "PAN")
+            {
+                if (originalAssetName.ToLower().Contains("_compose")) typeStr = "PAN10M";
+                else typeStr = "PAN5M";
+            }
             switch (typeStr)
             {
                 case "AWFI":
@@ -590,6 +597,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
                 {
                     string mode = match.Groups["mode"].Value.ToUpper();
                     string rest = match.Groups["rest"].Value;
+                    if (mode == "PAN")
+                    {
+                        if (rest.Contains("compose")) mode = "PAN10M";
+                        else mode = "PAN5M";
+                    }
 
                     if (metadata.satellite.name == "CBERS")
                     {
