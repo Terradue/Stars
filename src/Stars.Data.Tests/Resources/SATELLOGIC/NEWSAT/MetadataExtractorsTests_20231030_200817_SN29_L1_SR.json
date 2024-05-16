@@ -371,11 +371,11 @@
       "filename": "20231030_200817_SN29_L1_SR_MS_0.tif"
     },
     "visual": {
+      "type": "image/tiff",
       "roles": [
-        "data"
+        "visual"
       ],
       "title": "3-Band Visual",
-      "type": "image/tiff",
       "href": "data/Landslide_Storm_Hurricane_in_Mexico_6-product/rasters/20231030_200817_SN29_L3_SR_MS_0.tif",
       "eo:bands": [
         {

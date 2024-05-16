@@ -226,7 +226,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat {
             stacItem.Assets["visual"].EoExtension().Bands = bands.ToArray();
             stacItem.Assets["visual"].SetProperty("filename", Path.GetFileName(l3Tif.Uri.AbsolutePath));
             stacItem.Assets["visual"].Title = "3-Band Visual";
-            stacItem.Assets["visual"].Roles.Add("data");
+            stacItem.Assets["visual"].Roles.Add("visual");
         }
 
     }
