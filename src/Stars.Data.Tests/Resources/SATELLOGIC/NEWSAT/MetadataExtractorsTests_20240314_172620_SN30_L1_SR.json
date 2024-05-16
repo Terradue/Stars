@@ -1,0 +1,349 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "20240314_172620_SN30_L1_SR",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -60.8131642449493,
+          11.0821823470094
+        ],
+        [
+          -60.808176484745,
+          11.1080755405819
+        ],
+        [
+          -60.8081932337414,
+          11.1082835313861
+        ],
+        [
+          -60.8070040482764,
+          11.1143482479054
+        ],
+        [
+          -60.8069208819639,
+          11.1144560947551
+        ],
+        [
+          -60.8066830626672,
+          11.1156654210386
+        ],
+        [
+          -60.8066137374266,
+          11.1163698609456
+        ],
+        [
+          -60.8050533614069,
+          11.1243297737309
+        ],
+        [
+          -60.805088950082,
+          11.1244655998777
+        ],
+        [
+          -60.8035094003788,
+          11.1325247605201
+        ],
+        [
+          -60.8035634942306,
+          11.1326336089625
+        ],
+        [
+          -60.8020202861711,
+          11.1407110837179
+        ],
+        [
+          -60.7956375945975,
+          11.1727652157567
+        ],
+        [
+          -60.7467921261127,
+          11.1724029826563
+        ],
+        [
+          -60.7612959703873,
+          11.0985935548477
+        ],
+        [
+          -60.7613150963602,
+          11.0984852468393
+        ],
+        [
+          -60.7612421729504,
+          11.0984485547841
+        ],
+        [
+          -60.7644189469507,
+          11.0818780401883
+        ],
+        [
+          -60.764572134179,
+          11.0817982229287
+        ],
+        [
+          -60.8131642449493,
+          11.0821823470094
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "title": "NEWSAT MS L1 2024-03-14 17:26:20",
+    "description": "scene_set_id: ff914eb4-1157-4509-9bc5-36f055cd8e6c",
+    "datetime": "2024-03-14T17:26:20.006816Z",
+    "processing:level": "l1",
+    "mission": "NewSat",
+    "providers": [
+      {
+        "name": "Satellogic",
+        "description": "High-resolution geospatial imagery and analytics",
+        "roles": [
+          "producer",
+          "processor"
+        ],
+        "url": "https://satellogic.com/"
+      }
+    ],
+    "platform": "NewSat",
+    "instruments": [
+      "MS"
+    ],
+    "constellation": "Aleph1",
+    "gsd": 0.7,
+    "eo:cloud_cover": 3.19,
+    "proj:epsg": 32620,
+    "proj:centroid": {
+      "lat": 11.127288974706005,
+      "lon": -60.78067034092355
+    },
+    "view:sun_elevation": 67.25980349610441,
+    "view:off_nadir": 11.947296338725929,
+    "satl:exposure_sec": 0.0013638399999999998,
+    "satl:type": "stripes",
+    "satl:sat_id": "SN30",
+    "satl:product_level": "L1 TOA Reflectance SR"
+  },
+  "bbox": [
+    -60.8131642449493,
+    11.0817982229287,
+    -60.7467921261127,
+    11.1727652157567
+  ],
+  "assets": {
+    "analytic": {
+      "type": "application/xml",
+      "roles": [
+        "data",
+        "reflectance"
+      ],
+      "title": "4-Band Analytic",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_0.tif",
+      "eo:bands": [
+        {
+          "name": "band1",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "full_width_half_max": 0.06
+        },
+        {
+          "name": "band2",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "band3",
+          "common_name": "red",
+          "center_wavelength": 0.64,
+          "full_width_half_max": 0.1
+        },
+        {
+          "name": "band4",
+          "common_name": "nir",
+          "center_wavelength": 0.825,
+          "full_width_half_max": 0.15
+        }
+      ],
+      "filename": "20240314_172620_SN30_L1_SR_MS_0.tif"
+    },
+    "visual": {
+      "type": "image/tiff",
+      "roles": [
+        "visual"
+      ],
+      "title": "3-Band Visual",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L3_SR_MS_0.tif",
+      "eo:bands": [
+        {
+          "name": "band1",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "full_width_half_max": 0.06
+        },
+        {
+          "name": "band2",
+          "common_name": "green",
+          "center_wavelength": 0.545,
+          "full_width_half_max": 0.07
+        },
+        {
+          "name": "band3",
+          "common_name": "red",
+          "center_wavelength": 0.64,
+          "full_width_half_max": 0.1
+        }
+      ],
+      "filename": "20240314_172620_SN30_L3_SR_MS_0.tif"
+    },
+    "thumbnail": {
+      "type": "image/png",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Thumbnail",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L3_SR_MS_thumbnail.png",
+      "filename": "20240314_172620_SN30_L3_SR_MS_thumbnail.png"
+    },
+    "preview": {
+      "type": "image/png",
+      "roles": [
+        "preview"
+      ],
+      "title": "Preview",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L3_SR_MS_preview.png",
+      "filename": "20240314_172620_SN30_L3_SR_MS_preview.png"
+    },
+    "cloud_mask": {
+      "type": "image/tif",
+      "roles": [
+        "cloud_mask"
+      ],
+      "title": "Cloud Mask",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_cloud_mask_0.tif",
+      "filename": "20240314_172620_SN30_L1_SR_MS_cloud_mask_0.tif"
+    },
+    "geojson-metadata": {
+      "type": "application/geojson",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Extended STAC Metadata",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_metadata_stac.geojson",
+      "filename": "20240314_172620_SN30_L1_SR_MS_metadata_stac.geojson"
+    },
+    "xml-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Extended ISO Metadata",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_metadata_iso.xml",
+      "filename": "20240314_172620_SN30_L1_SR_MS_metadata_iso.xml"
+    },
+    "footprint": {
+      "type": "footprint/kml",
+      "roles": [
+        "footprint"
+      ],
+      "title": "Footprint",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_footprint.kml",
+      "filename": "20240314_172620_SN30_L1_SR_MS_footprint.kml"
+    },
+    "toa-factors": {
+      "type": "application/geojson",
+      "roles": [
+        "metadata"
+      ],
+      "title": "TOA factors",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_toa_factors.json",
+      "filename": "20240314_172620_SN30_L1_SR_MS_toa_factors.json"
+    },
+    "solar-and-viewing-angles": {
+      "type": "application/geojson",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Solar and viewing angles",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_solar_and_viewing_angles.geojson",
+      "filename": "20240314_172620_SN30_L1_SR_MS_solar_and_viewing_angles.geojson"
+    },
+    "analytic_0": {
+      "type": "image/tiff",
+      "roles": [],
+      "title": "4-Band Analytic chunk 0",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_0.tif",
+      "eo:bands": [
+        {
+          "name": "band1",
+          "common_name": "blue",
+          "center_wavelength": 480,
+          "full_width_half_max": 60
+        },
+        {
+          "name": "band2",
+          "common_name": "green",
+          "center_wavelength": 545,
+          "full_width_half_max": 70
+        },
+        {
+          "name": "band3",
+          "common_name": "red",
+          "center_wavelength": 640,
+          "full_width_half_max": 100
+        },
+        {
+          "name": "band4",
+          "common_name": "nir",
+          "center_wavelength": 825,
+          "full_width_half_max": 150
+        }
+      ],
+      "filename": "20240314_172620_SN30_L1_SR_MS_0.tif"
+    },
+    "quicklook_0": {
+      "type": "image/tiff",
+      "roles": [],
+      "title": "3-Band RGB chunk 0",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L3_SR_MS_0.tif",
+      "eo:bands": [
+        {
+          "name": "band1",
+          "common_name": "red"
+        },
+        {
+          "name": "band2",
+          "common_name": "green"
+        },
+        {
+          "name": "band3",
+          "common_name": "blue"
+        }
+      ],
+      "filename": "20240314_172620_SN30_L3_SR_MS_0.tif"
+    },
+    "cloud_mask_0": {
+      "type": "image/tiff",
+      "roles": [
+        "cloud_mask"
+      ],
+      "title": "Cloud Mask chunk 0",
+      "href": "data/20240314_172620_SN30_L1_SR/20240314_172620_SN30_L1_SR_MS_cloud_mask_0.tif",
+      "filename": "20240314_172620_SN30_L1_SR_MS_cloud_mask_0.tif"
+    }
+  },
+  "links": [
+    {
+      "type": "text/html",
+      "rel": "license",
+      "href": "https://satellogic.com/license-agreement/"
+    }
+  ]
+}
