@@ -180,7 +180,77 @@ namespace Terradue.Data.Tests.Translators
 
         }
 
+        [Fact]
+        public async System.Threading.Tasks.Task S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957()
+        {
+            string json = GetJson("Translators");
 
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://cpe-operations-catalog/calls/call-6/calibratedDatasets/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957-calibrated/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
+
+            // Test if the cloud cover is set
+            var eop = atomItemNode.AtomItem.GetEarthObservationProfile();
+            Assert.NotNull(eop);
+            var cloudCover = eop.result.Opt21EarthObservationResult.cloudCoverPercentage;
+            Assert.NotNull(cloudCover);
+            Assert.Equal(99.146658, cloudCover.Value);
+
+            // Test that the sensor type is set
+            var sensorType = eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType;
+            Assert.NotNull(sensorType);
+            Assert.Contains("OPTICAL", sensorType);
+
+            // Test that the platform is set
+            var platform = eop.procedure.Eop21EarthObservationEquipment.platform.Platform.shortName;
+            Assert.NotNull(platform);
+            Assert.Contains("sentinel-2a", platform);
+
+            // Test that the instrument is set
+            var instrument = eop.procedure.Eop21EarthObservationEquipment.instrument.Instrument.shortName;
+            Assert.NotNull(instrument);
+            Assert.Contains("msi", instrument);
+
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A()
+        {
+            string json = GetJson("Translators");
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://cpe-operations-catalog/calls/call-6/calibratedDatasets/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A-calibrated/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
+
+            var eop = atomItemNode.AtomItem.GetEarthObservationProfile();
+            Assert.NotNull(eop);
+
+            // Test that the sensor type is set
+            var sensorType = eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType;
+            Assert.NotNull(sensorType);
+            Assert.Contains("RADAR", sensorType);
+
+            // Test that the platform is set
+            var platform = eop.procedure.Eop21EarthObservationEquipment.platform.Platform.shortName;
+            Assert.NotNull(platform);
+            Assert.Contains("sentinel-1a", platform);
+
+            // Test that the instrument is set
+            var instrument = eop.procedure.Eop21EarthObservationEquipment.instrument.Instrument.shortName;
+            Assert.NotNull(instrument);
+            Assert.Contains("sar", instrument);
+
+        }
+
+        
     }
 
 }
