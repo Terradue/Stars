@@ -579,6 +579,7 @@ namespace Terradue.Stars.Data.Model.Atom
             string[] instruments = stacItem.GetProperty<string[]>("instruments");
             string platform = stacItem.GetProperty<string>("platform");
             string[] instrument_types = stacItem.GetProperty<string[]>("instrument_types");
+            string sensor_type = stacItem.GetProperty<string>("sensor_type")?.ToUpper();
             if (instruments != null ||
                 !string.IsNullOrEmpty(platform) ||
                 instrument_types != null)
@@ -604,6 +605,20 @@ namespace Terradue.Stars.Data.Model.Atom
                     eop.procedure.Eop21EarthObservationEquipment.sensor = new SensorPropertyType();
                     eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor = new SensorType();
                     eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType = string.Join(",", instrument_types);
+                    try
+                    {
+                        eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.resolution = new ServiceModel.Ogc.Gml321.MeasureType()
+                        {
+                            Value = stacItem.Gsd.Value
+                        };
+                    }
+                    catch { }
+                }
+                if (!string.IsNullOrEmpty(sensor_type))
+                {
+                    eop.procedure.Eop21EarthObservationEquipment.sensor = new SensorPropertyType();
+                    eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor = new SensorType();
+                    eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType = sensor_type;
                     try
                     {
                         eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.resolution = new ServiceModel.Ogc.Gml321.MeasureType()
