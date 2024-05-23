@@ -1,0 +1,35 @@
+<?xml-stylesheet href="./LIBRARY/DS_STYLE.XSL" type="text/xsl"?><Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:noNamespaceSchemaLocation="M12_LIST.xsd">
+    <Metadata_Identification>
+        <METADATA_FORMAT version="2.0">DIMAP</METADATA_FORMAT>
+        <METADATA_PROFILE>DATASET</METADATA_PROFILE>
+    </Metadata_Identification>
+    <Dataset_Identification>
+        <DATASET_NAME>Product Description</DATASET_NAME>
+        <DATASET_ID>1</DATASET_ID>
+    </Dataset_Identification>
+    <Product_Information>
+        <Producer_Information>
+            <PRODUCER_NAME>CONIDA (Space Agency of Peru) - CNOIS</PRODUCER_NAME>
+            <PRODUCER_URL href="http://cof.cnois.gob.pe/customer-office"/>
+            <PRODUCER_CONTACT>CustomerOffice@cnois.gob.pe</PRODUCER_CONTACT>
+            <PRODUCER_ADDRESS>Calle Luis Felipe Villaran 1069 San Isidro, Lima 27 - Peru</PRODUCER_ADDRESS>
+        </Producer_Information>
+        <Delivery_Identification>
+            <PRODUCTION_DATE>2017-03-07T15:36:03.5407Z</PRODUCTION_DATE>
+            <DELIVERY_TYPE>NETWORK</DELIVERY_TYPE>
+            <Order_Identification>
+                <CUSTOMER_REFERENCE/>
+                <COMMERCIAL_REFERENCE>Pucusana_070317</COMMERCIAL_REFERENCE>
+                <COMMERCIAL_ITEM>Pucusana_070317</COMMERCIAL_ITEM>
+                <COMMENT>CustomerOffice@cnois.gob.pe</COMMENT>
+            </Order_Identification>
+        </Delivery_Identification>
+    </Product_Information>
+    <Dataset_Components>
+        <Component>
+            <COMPONENT_TITLE>VOL_PER1_ORT_001_000041</COMPONENT_TITLE>
+            <COMPONENT_TYPE version="2.0">DIMAP</COMPONENT_TYPE>
+            <COMPONENT_PATH href="VOL_PER1_ORT_001_000041/PER_VOL.XML"/>
+        </Component>
+    </Dataset_Components>
+</Dimap_Document>

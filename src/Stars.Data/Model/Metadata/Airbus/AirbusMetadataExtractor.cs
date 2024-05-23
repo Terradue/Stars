@@ -60,6 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                     return new VolumeDimapProfiler(dimap, this);
                 case "PHR_ORTHO":
                 case "PHR_SENSOR":
+                case "PER1_ORTHO":
                     return new PleiadesDimapProfiler(dimap);
                 case "PNEO_ORTHO":
                     return new PleiadesNEODimapProfiler(dimap);
@@ -434,12 +435,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             {
                 manifestAsset = FindAllAssetsFromFileNameRegex(item, @"SPOT_VOL.XML$");
             }
+            if (manifestAsset == null || manifestAsset.Count() == 0)
+            {
+                manifestAsset = FindAllAssetsFromFileNameRegex(item, @"^DIM_PER.*\.XML$");
+            }
             if (manifestAsset == null || manifestAsset.Count() == 0 || !volume)
             {
                 manifestAsset = FindAllAssetsFromFileNameRegex(item, @"^DIM.*\.XML$");
-                if (manifestAsset == null)
-                    throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
             }
+            if (manifestAsset == null)
+                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
             return manifestAsset;
         }
 

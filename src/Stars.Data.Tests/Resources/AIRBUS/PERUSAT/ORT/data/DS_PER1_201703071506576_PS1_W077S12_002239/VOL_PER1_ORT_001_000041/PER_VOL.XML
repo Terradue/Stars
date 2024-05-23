@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet href="./LIBRARY/VOL_STYLE.XSL" type="text/xsl"?>
+<Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:noNamespaceSchemaLocation="M12_VOL.xsd">
+    <Metadata_Identification>
+        <METADATA_FORMAT version="2.0">DIMAP</METADATA_FORMAT>
+        <METADATA_PROFILE>DATASET</METADATA_PROFILE>
+    </Metadata_Identification>
+    <Dataset_Identification>
+        <DATASET_NAME>PER1 Volume Description</DATASET_NAME>
+        <DATASET_ID>1</DATASET_ID>
+    </Dataset_Identification>
+    <Product_Information>
+        <Producer_Information>
+            <PRODUCER_NAME>CONIDA (Space Agency of Peru) - CNOIS</PRODUCER_NAME>
+            <PRODUCER_URL href="http://cof.cnois.gob.pe/customer-office"/>
+            <PRODUCER_CONTACT>CustomerOffice@cnois.gob.pe</PRODUCER_CONTACT>
+            <PRODUCER_ADDRESS>Calle Luis Felipe Villaran 1069 San Isidro, Lima 27 - Peru</PRODUCER_ADDRESS>
+        </Producer_Information>
+        <Delivery_Identification>
+            <PRODUCTION_DATE>2017-03-07T15:36:03.5407Z</PRODUCTION_DATE>
+            <JOB_ID>1703071536020579 Pucusana_070317 1703071536020579</JOB_ID>
+            <PRODUCT_TYPE>FULL_ROI</PRODUCT_TYPE>
+            <PRODUCT_INFO/>
+            <Order_Identification>
+                <CUSTOMER_REFERENCE/>
+                <COMMERCIAL_REFERENCE>Pucusana_070317</COMMERCIAL_REFERENCE>
+                <COMMERCIAL_ITEM>Pucusana_070317</COMMERCIAL_ITEM>
+                <COMMENT>CustomerOffice@cnois.gob.pe</COMMENT>
+            </Order_Identification>
+        </Delivery_Identification>
+    </Product_Information>
+    <Dataset_Components>
+        <Component>
+            <COMPONENT_TITLE>ORTHO P ORT_PER1_20170307150657_000</COMPONENT_TITLE>
+            <COMPONENT_TYPE version="2.0">DIMAP</COMPONENT_TYPE>
+            <COMPONENT_PATH href="IMG_PER1_ORT_P_000041/DIM_PER1_20170307150657_ORT_P_000041.XML"/>
+            <COMPONENT_TN_PATH href="IMG_PER1_ORT_P_000041/ICON_PER1_20170307150657_ORT_P_000041.JPG"/>
+            <COMPONENT_TN_FORMAT>image/jpeg</COMPONENT_TN_FORMAT>
+        </Component>
+        <Component>
+            <COMPONENT_TITLE>ORTHO MS ORT_PER1_20170307150657_000</COMPONENT_TITLE>
+            <COMPONENT_TYPE version="2.0">DIMAP</COMPONENT_TYPE>
+            <COMPONENT_PATH href="IMG_PER1_ORT_MS_000041/DIM_PER1_20170307150657_ORT_MS_000041.XML"/>
+            <COMPONENT_TN_PATH href="IMG_PER1_ORT_MS_000041/ICON_PER1_20170307150657_ORT_MS_000041.JPG"/>
+            <COMPONENT_TN_FORMAT>image/jpeg</COMPONENT_TN_FORMAT>
+        </Component>
+    </Dataset_Components>
+</Dimap_Document>
