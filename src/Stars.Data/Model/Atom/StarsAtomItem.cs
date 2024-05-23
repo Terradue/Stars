@@ -211,11 +211,16 @@ namespace Terradue.Stars.Data.Model.Atom
             List<SyndicationLink> links = new List<SyndicationLink>();
 
             var overviews = assets.Where(a => a.Value.Roles.Contains("overview") || a.Value.Roles.Contains("thumbnail") || a.Value.Roles.Contains("legend"));
-            links.AddRange(overviews.Select(o => new SyndicationLink(GetAssetUri(stacObjectUri, o.Value),
+            foreach (var o in overviews)
+            {
+                var link = new SyndicationLink(GetAssetUri(stacObjectUri, o.Value),
                                                                      GetRelationshipFromRoles(o.Value.Roles),
                                                                      GetTitleFromRoles(o),
                                                                      o.Value.MediaType.ToString(),
-                                                                     Convert.ToInt64(o.Value.FileExtension().Size))));
+                                                                     Convert.ToInt64(o.Value.FileExtension().Size));
+                link.AttributeExtensions.Add(new XmlQualifiedName("asset"), o.Key);
+                links.Add(link);
+            }
 
             return links;
         }
