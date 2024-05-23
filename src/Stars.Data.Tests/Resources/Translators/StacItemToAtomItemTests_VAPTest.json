@@ -1,0 +1,112 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+        "https://stac-extensions.github.io/file/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/version/v1.0.0/schema.json",
+        "https://terradue.github.io/disaster/v1.0.0/schema.json"
+    ],
+    "type": "Feature",
+    "id": "act-874-vap-1002-6",
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    36.833,
+                    -1.208
+                ],
+                [
+                    37.003,
+                    -1.208
+                ],
+                [
+                    37.003,
+                    -1.329
+                ],
+                [
+                    36.833,
+                    -1.329
+                ],
+                [
+                    36.833,
+                    -1.208
+                ],
+                [
+                    36.833,
+                    -1.208
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "disaster:class": "ValueAddedProduct",
+        "cpe:status": {
+            "stage": "notificationImported",
+            "message": "2 assets imported",
+            "link": "https://supervisor.disasterscharter.org/hangfire/jobs/details/34839"
+        },
+        "updated": "2024-05-23T09:33:59.0295601Z",
+        "disaster:activation_id": 874,
+        "cpe:cos2_id": "act-874-vap-1002-6",
+        "datetime": "2024-05-06T10:36:29Z",
+        "cpe:cos2_xml": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<valueAddedProduct xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <identifier>1002-6</identifier>\n  <activationId>874</activationId>\n  <recordCreated>2024-05-07T02:38:19Z</recordCreated>\n  <recordUpdated>2024-05-07T02:38:30Z</recordUpdated>\n  <title language=\"en\">Flood impact analysis in Central Nairobi, Kenya as of 1 May 2024</title>\n  <acquisitionDate>2024-05-06T10:36:29Z</acquisitionDate>\n  <copyright language=\"en\">Includes Pleiades material © CNES (2024), Distribution Airbus DS.;Includes Pleiades material © CNES (2024), Distribution Airbus DS.;Includes Pleiades material © CNES (2024), Distribution Airbus DS.</copyright>\n  <productFileUrl>https://disasterscharter.org/cos-api/service/vap/1002/6.pdf</productFileUrl>\n  <quicklookFileUrl>https://disasterscharter.org/documents/10180/24551505/vap-1002-6-quicklook.jpg/96c86441-71dd-4774-9c66-2b66cbe3081a?version=1.0</quicklookFileUrl>\n  <additionalInformation language=\"en\">This map illustrates satellite-detected surface waters in Nairobi, Kenya, as observed from a Pléiades image acquired on 1 May 2024 at 11:06 local time (08:06 UTC). Within the analyzed area, about 2 km² of land appears to be flooded. UNITAR-UNOSAT identified 3,387 affected structures, about 7 km of affected roads, and 9 affected bridges.\nThis is a preliminary analysis and has not yet been validated in the field. Please send ground feedback to the United Nations Satellite Centre (UNOSAT).</additionalInformation>\n  <footprint>\n    <polyPoint>\n      <latitude>-1.208</latitude>\n      <longitude>36.833</longitude>\n    </polyPoint>\n    <polyPoint>\n      <latitude>-1.208</latitude>\n      <longitude>37.003</longitude>\n    </polyPoint>\n    <polyPoint>\n      <latitude>-1.329</latitude>\n      <longitude>37.003</longitude>\n    </polyPoint>\n    <polyPoint>\n      <latitude>-1.329</latitude>\n      <longitude>36.833</longitude>\n    </polyPoint>\n    <polyPoint>\n      <latitude>-1.208</latitude>\n      <longitude>36.833</longitude>\n    </polyPoint>\n  </footprint>\n  <productFileSize>0</productFileSize>\n</valueAddedProduct>",
+        "created": "2024-05-07T02:38:19Z",
+        "title": "Flood impact analysis in Central Nairobi, Kenya as of 1 May 2024 [05/06/2024 10:36:29]",
+        "source": null,
+        "copyright": "Includes Pleiades material © CNES (2024), Distribution Airbus DS.;Includes Pleiades material © CNES (2024), Distribution Airbus DS.;Includes Pleiades material © CNES (2024), Distribution Airbus DS.",
+        "additional_information": "This map illustrates satellite-detected surface waters in Nairobi, Kenya, as observed from a Pléiades image acquired on 1 May 2024 at 11:06 local time (08:06 UTC). Within the analyzed area, about 2 km² of land appears to be flooded. UNITAR-UNOSAT identified 3,387 affected structures, about 7 km of affected roads, and 9 affected bridges.\nThis is a preliminary analysis and has not yet been validated in the field. Please send ground feedback to the United Nations Satellite Centre (UNOSAT).",
+        "description": "Name | Value\n---- | -----\nSource  | ****\nCopyright  | **Includes Pleiades material © CNES (2024), Distribution Airbus DS.;Includes Pleiades material © CNES (2024), Distribution Airbus DS.;Includes Pleiades material © CNES (2024), Distribution Airbus DS.**\nAdditional Information  | **This map illustrates satellite-detected surface waters in Nairobi, Kenya, as observed from a Pléiades image acquired on 1 May 2024 at 11:06 local time (08:06 UTC). Within the analyzed area, about 2 km² of land appears to be flooded. UNITAR-UNOSAT identified 3,387 affected structures, about 7 km of affected roads, and 9 affected bridges. This is a preliminary analysis and has not yet been validated in the field. Please send ground feedback to the United Nations Satellite Centre (UNOSAT).**\nAcquisition Date  | **06/05/2024 10:36:29**\nCreated  | **07/05/2024 02:38:19**\nUpdated  | **07/05/2024 02:38:30**\n",
+        "cpe:notification_source": "cos2",
+        "cpe:notified": [
+            "2024-05-07T02:38:30.5503974Z"
+        ],
+        "version": "1"
+    },
+    "bbox": [
+        36.833,
+        -1.329,
+        37.003,
+        -1.208
+    ],
+    "assets": {
+        "overview": {
+            "type": "image/jpeg",
+            "roles": [
+                "overview"
+            ],
+            "title": "Value Added Product Overview",
+            "href": "https://supervisor.disasterscharter.org/assets/activations/act-874/vaps/act-874-vap-1002-6/act-874-vap-1002-6.json?key=overview",
+            "file:size": 314027
+        },
+        "enclosure": {
+            "type": "application/pdf",
+            "roles": [
+                "data",
+                "visual"
+            ],
+            "title": "Value Added Product Enclosure",
+            "href": "https://supervisor.disasterscharter.org/assets/activations/act-874/vaps/act-874-vap-1002-6/act-874-vap-1002-6.json?key=enclosure",
+            "file:size": 4687256
+        }
+    },
+    "links": [
+        {
+            "type": "application/geo+json",
+            "rel": "self",
+            "title": "Flood impact analysis in Central Nairobi, Kenya as of 1 May 2024 [05/06/2024 10:36:29]",
+            "href": "https://supervisor.disasterscharter.org/api/activations/act-874/vaps/act-874-vap-1002-6/items/act-874-vap-1002-6.json.json"
+        },
+        {
+            "type": "application/json",
+            "rel": "root",
+            "title": "Root Catalog",
+            "href": "https://supervisor.disasterscharter.org/api/catalog.json"
+        },
+        {
+            "rel": "collection",
+            "title": "collection",
+            "href": "https://supervisor.disasterscharter.org/api/activations/act-874/vaps/act-874-vap-1002-6.json"
+        }
+    ],
+    "collection": "act-874-vap-1002-6"
+}

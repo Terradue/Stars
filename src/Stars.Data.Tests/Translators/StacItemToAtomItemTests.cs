@@ -250,6 +250,33 @@ namespace Terradue.Data.Tests.Translators
 
         }
 
+        [Fact]
+        public async System.Threading.Tasks.Task VAPTest()
+        {
+            string json = GetJson("Translators");
+
+            StacItem stacItem = StacConvert.Deserialize<StacItem>(json);
+
+            StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
+
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("https://supervisor.disasterscharter.org/api/activations/act-874/vaps/act-874-vap-1002-6/items/act-874-vap-1002-6.json"));
+
+            AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
+
+            // find browse link
+            var browseLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "icon");
+
+            Assert.NotNull(browseLink);
+            Assert.True(browseLink.Uri.ToString() == "https://supervisor.disasterscharter.org/assets/activations/act-874/vaps/act-874-vap-1002-6/act-874-vap-1002-6.json?key=overview");
+            // Check that the asset reference is set in the link attributes
+            Assert.True(browseLink.AttributeExtensions.ContainsKey(new XmlQualifiedName("asset")));
+            Assert.True(browseLink.AttributeExtensions[new XmlQualifiedName("asset")].ToString() == "overview");
+
+            // Check that description is not in markdown
+            Assert.DoesNotContain("Value----", atomItemNode.AtomItem.Summary.Text);
+
+        }
+
         
     }
 
