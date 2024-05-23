@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SAOCOM_XMLProduct xmlns:at="saocomTypes">
+
+  <NumberOfChannels>1</NumberOfChannels>
+
+  <VersionNumber>2.1</VersionNumber>
+
+  <Description></Description>
+
+  <Channel Number="1" Total="1">
+    <RasterInfo>
+      <FileName>gtc-acqId0000200734-b-sm2-2403200632-hv-h</FileName>
+      <Lines>10986</Lines>
+      <Samples>8149</Samples>
+      <HeaderOffsetBytes>177546</HeaderOffsetBytes>
+      <RowPrefixBytes>0</RowPrefixBytes>
+      <ByteOrder>LITTLEENDIAN</ByteOrder>
+      <CellType>FLOAT32</CellType>
+      <LinesStep unit="m">-9.17422344240508</LinesStep>
+      <SamplesStep unit="m">9.31551766752336</SamplesStep>
+      <LinesStart unit="m">5406860.840244097635149955750</LinesStart>
+      <SamplesStart unit="m">596418.612378029152750968933</SamplesStart>
+      <InvalidSample/>
+      <RasterFormat>DATA_GEOTIFF</RasterFormat>
+    </RasterInfo>
+    <DataSetInfo>
+      <SensorName>SAO1B</SensorName>
+      <Description>Level 1 data</Description>
+      <SenseDate>2024-MAR-19</SenseDate>
+      <AcquisitionMode>STRIPMAP</AcquisitionMode>
+      <ImageType>MULTILOOK</ImageType>
+      <Projection>GEOCODED_TERRAIN</Projection>
+      <ProjectionParameters Format="CUSTOM">+proj=utm +zone=48 +ellps=WGS84 +datum=WGS84 +units=m +no_defs +x_0=632070 +y_0=5.35588e+06 +over</ProjectionParameters>
+      <AcquisitionStation>ETT</AcquisitionStation>
+      <ProcessingCenter>L0FSW TEST SITE</ProcessingCenter>
+      <ProcessingDate>20-MAR-2024 06:19:36.456617000000</ProcessingDate>
+      <ProcessingSoftware>SP</ProcessingSoftware>
+      <fc_hz>1275000000</fc_hz>
+      <SideLooking>RIGHT</SideLooking>
+    </DataSetInfo>
+    <SwathInfo>
+      <Swath>DS2</Swath>
+      <SwathAcquisitionOrder>0</SwathAcquisitionOrder>
+      <Polarization>H/V</Polarization>
+      <Rank>8</Rank>
+      <RangeDelayBias>0</RangeDelayBias>
+      <AcquisitionStartTime>19-MAR-2024 22:27:14.882000000000</AcquisitionStartTime>
+      <AzimuthSteeringRateReferenceTime unit="s">0</AzimuthSteeringRateReferenceTime>
+      <AzimuthSteeringRatePol>
+        <val N="1">0</val>
+        <val N="2">0</val>
+        <val N="3">0</val>
+      </AzimuthSteeringRatePol>
+      <AcquisitionPRF>1797</AcquisitionPRF>
+      <EchoesPerBurst>43128</EchoesPerBurst>
+    </SwathInfo>
+    <DataStatistics>
+      <NumSamples>76057173</NumSamples>
+      <MaxI>0</MaxI>
+      <MinI>0</MinI>
+      <MaxQ>0</MaxQ>
+      <MinQ>0</MinQ>
+      <SumI>4081177.30454043</SumI>
+      <SumQ>0</SumQ>
+      <Sum2I>470237.859758927</Sum2I>
+      <Sum2Q>0</Sum2Q>
+      <StdDevI>0.0574749072709852</StdDevI>
+      <StdDevQ>0</StdDevQ>
+    </DataStatistics>
+    <StateVectorData>
+      <OrbitNumber>NOT_AVAILABLE</OrbitNumber>
+      <Track>NOT_AVAILABLE</Track>
+      <OrbitDirection>ASCENDING</OrbitDirection>
+      <pSV_m>
+        <val N="1">-1125641.28516308</val>
+        <val N="2">4705115.80786595</val>
+        <val N="3">5053482.69270992</val>
+        <val N="4">-1122595.61181966</val>
+        <val N="5">4700339.61895621</val>
+        <val N="6">5058590.10746244</val>
+        <val N="7">-1119549.24651019</val>
+        <val N="8">4695557.1904873</val>
+        <val N="9">5063690.68627646</val>
+        <val N="10">-1116502.72994565</val>
+        <val N="11">4690768.80772917</val>
+        <val N="12">5068785.8939808</val>
+        <val N="13">-1113455.29052418</val>
+        <val N="14">4685974.83483832</val>
+        <val N="15">5073874.26575052</val>
+        <val N="16">-1110407.19178677</val>
+        <val N="17">4681175.14472109</val>
+        <val N="18">5078957.2664055</val>
+        <val N="19">-1107358.47507321</val>
+        <val N="20">4676369.18489071</val>
+        <val N="21">5084033.91939861</val>
+        <val N="22">-1104309.37847811</val>
+        <val N="23">4671557.91987695</val>
+        <val N="24">5089105.20129181</val>
+        <val N="25">-1101259.5423277</val>
+        <val N="26">4666740.44001148</val>
+        <val N="27">5094170.62380364</val>
+        <val N="28">-1098209.17586101</val>
+        <val N="29">4661917.18681997</val>
+        <val N="30">5099230.18692947</val>
+        <val N="31">-1095158.07235832</val>
+        <val N="32">4657087.71834331</val>
+        <val N="33">5104282.91410771</val>
+        <val N="34">-1092106.85695554</val>
+        <val N="35">4652253.3596999</val>
+        <val N="36">5109330.75846632</val>
+        <val N="37">-1089054.5885521</val>
+        <val N="38">4647412.3955676</val>
+        <val N="39">5114371.76687757</val>
+        <val N="40">-1086002.48615741</val>
+        <val N="41">4642565.86843887</val>
+        <val N="42">5119407.4041873</val>
+        <val N="43">-1082949.27863833</val>
+        <val N="44">4637713.30389858</val>
+        <val N="45">5124436.69383306</val>
+        <val N="46">-1079895.43780972</val>
+        <val N="47">4632855.01681084</val>
+        <val N="48">5129460.12409361</val>
+        <val N="49">-1076841.39349125</val>
+        <val N="50">4627991.34493759</val>
+        <val N="51">5134477.69497396</val>
+        <val N="52">-1073786.35792198</val>
+        <val N="53">4623121.0403829</val>
+        <val N="54">5139489.40646551</val>
+        <val N="55">-1070731.21851938</val>
+        <val N="56">4618245.84450686</val>
+        <val N="57">5144495.25857506</val>
+        <val N="58">-1067675.09040122</val>
+        <val N="59">4613364.01549888</val>
+        <val N="60">5149494.76301491</val>
+        <val N="61">-1064618.75009967</val>
+        <val N="62">4608476.80413776</val>
+        <val N="63">5154488.40807902</val>
+        <val N="64">-1061561.79716218</val>
+        <val N="65">4603583.86588834</val>
+        <val N="66">5159476.19376079</val>
+        <val N="67">-1058504.59277935</val>
+        <val N="68">4598685.56777595</val>
+        <val N="69">5164457.63177818</val>
+        <val N="70">-1055447.054251</val>
+        <val N="71">4593780.87007414</val>
+        <val N="72">5169433.21041282</val>
+        <val N="73">-1052388.87972228</val>
+        <val N="74">4588870.99379649</val>
+        <val N="75">5174402.92965245</val>
+        <val N="76">-1049329.93161019</val>
+        <val N="77">4583954.92507173</val>
+        <val N="78">5179366.78950838</val>
+        <val N="79">-1046270.47402095</val>
+        <val N="80">4579033.07971745</val>
+        <val N="81">5184323.81342239</val>
+        <val N="82">-1043210.49473099</val>
+        <val N="83">4574105.46059844</val>
+        <val N="84">5189275.46623081</val>
+        <val N="85">-1040149.96637876</val>
+        <val N="86">4569172.08735068</val>
+        <val N="87">5194221.2596524</val>
+        <val N="88">-1037089.34685947</val>
+        <val N="89">4564233.82104784</val>
+        <val N="90">5199160.70542271</val>
+        <val N="91">-1034028.12580369</val>
+        <val N="92">4559289.28348175</val>
+        <val N="93">5204093.31523961</val>
+        <val N="94">-1030966.13860617</val>
+        <val N="95">4554338.55220901</val>
+        <val N="96">5209021.04223445</val>
+        <val N="97">-1027904.87896976</val>
+        <val N="98">4549387.39863402</val>
+        <val N="99">5213948.76922854</val>
+        <val N="100">-1024844.34690429</val>
+        <val N="101">4544435.82284399</val>
+        <val N="102">5218876.4962219</val>
+      </pSV_m>
+      <vSV_mOs>
+        <val N="1">3045.41147211448</val>
+        <val N="2">-4773.48258867136</val>
+        <val N="3">5109.50283157574</val>
+        <val N="4">3046.01645086468</val>
+        <val N="5">-4779.36798205531</val>
+        <val N="6">5103.61436061922</val>
+        <val N="7">3046.61676007681</val>
+        <val N="8">-4785.24623310147</val>
+        <val N="9">5097.71778344165</val>
+        <val N="10">3047.2090883516</val>
+        <val N="11">-4791.11043850005</val>
+        <val N="12">5091.82120628505</val>
+        <val N="13">3047.80022757751</val>
+        <val N="14">-4796.97486156214</val>
+        <val N="15">5085.90937033901</val>
+        <val N="16">3048.38684814148</val>
+        <val N="17">-4802.83261481452</val>
+        <val N="18">5079.99658072858</val>
+        <val N="19">3048.96515464424</val>
+        <val N="20">-4808.69389537807</val>
+        <val N="21">5074.08474478682</val>
+        <val N="22">3049.54265204093</val>
+        <val N="23">-4814.53778958695</val>
+        <val N="24">5068.15717324512</val>
+        <val N="25">3050.11886385159</val>
+        <val N="26">-4820.38191176391</val>
+        <val N="27">5062.22960170304</val>
+        <val N="28">3050.68356185033</val>
+        <val N="29">-4826.22264470067</val>
+        <val N="30">5056.29344709681</val>
+        <val N="31">3051.25041059442</val>
+        <val N="32">-4832.05249981892</val>
+        <val N="33">5050.35061678691</val>
+        <val N="34">3051.80596175457</val>
+        <val N="35">-4837.87938928981</val>
+        <val N="36">5044.39920341223</val>
+        <val N="37">3052.36025515053</val>
+        <val N="38">-4843.70650144632</val>
+        <val N="39">5038.44779003717</val>
+        <val N="40">3052.90659973962</val>
+        <val N="41">-4849.5195420141</val>
+        <val N="42">5032.48874728858</val>
+        <val N="43">3053.45878317609</val>
+        <val N="44">-4855.32948903493</val>
+        <val N="45">5026.52207515037</val>
+        <val N="46">3053.99946308753</val>
+        <val N="47">-4861.1360469048</val>
+        <val N="48">5020.54777362232</val>
+        <val N="49">3054.53552806018</val>
+        <val N="50">-4866.9354279114</val>
+        <val N="51">5014.57347210496</val>
+        <val N="52">3055.06703765063</val>
+        <val N="53">-4872.72814551869</val>
+        <val N="54">5008.59058752868</val>
+        <val N="55">3055.59391745634</val>
+        <val N="56">-4878.51370268898</val>
+        <val N="57">5002.60055040569</val>
+        <val N="58">3056.11974650616</val>
+        <val N="59">-4884.29990582779</val>
+        <val N="60">4996.61051328168</val>
+        <val N="61">3056.64072159933</val>
+        <val N="62">-4890.07851901799</val>
+        <val N="63">4990.60474054276</val>
+        <val N="64">3057.15745667651</val>
+        <val N="65">-4895.85084938847</val>
+        <val N="66">4984.5989678132</val>
+        <val N="67">3057.66955999843</val>
+        <val N="68">-4901.61601457544</val>
+        <val N="69">4978.58556569978</val>
+        <val N="70">3058.1737143381</val>
+        <val N="71">-4907.36711393914</val>
+        <val N="72">4972.57168677019</val>
+        <val N="73">3058.67307632923</val>
+        <val N="74">-4913.12906793776</val>
+        <val N="75">4966.55065526662</val>
+        <val N="76">3059.17177782212</val>
+        <val N="77">-4918.87409930466</val>
+        <val N="78">4960.5210407198</val>
+        <val N="79">3059.66888909978</val>
+        <val N="80">-4924.618443304</val>
+        <val N="81">4954.48379677943</val>
+        <val N="82">3060.15441041008</val>
+        <val N="83">-4930.35942000119</val>
+        <val N="84">4948.43892344919</val>
+        <val N="85">3060.64282150732</val>
+        <val N="86">-4936.09076156963</val>
+        <val N="87">4942.39405013366</val>
+        <val N="88">3061.1266446463</val>
+        <val N="89">-4941.81492102765</val>
+        <val N="90">4936.34154743428</val>
+        <val N="91">3061.59865754604</val>
+        <val N="92">-4947.53527532641</val>
+        <val N="93">4930.2814153457</val>
+        <val N="94">3062.06644904771</val>
+        <val N="95">-4953.24933225812</val>
+        <val N="96">4924.22080642933</val>
+        <val N="97">3062.53342351274</val>
+        <val N="98">-4958.96348366992</val>
+        <val N="99">4918.16019751279</val>
+        <val N="100">3062.99958089385</val>
+        <val N="101">-4964.67772949531</val>
+        <val N="102">4912.09958859607</val>
+      </vSV_mOs>
+      <t_ref_Utc>19-MAR-2024 22:27:11.010000000000</t_ref_Utc>
+      <dtSV_s>1</dtSV_s>
+      <nSV_n>34</nSV_n>
+    </StateVectorData>
+    <GroundCornerPoints>
+      <EastingGridSize>0</EastingGridSize>
+      <NorthingGridSize>0</NorthingGridSize>
+      <NorthWest>
+        <Point>
+          <val unit="deg">48.8072524924538</val>
+          <val unit="deg">106.313184635296</val>
+          <val unit="m">0</val>
+          <val unit="deg">0</val>
+          <val unit="deg">0</val>
+        </Point>
+      </NorthWest>
+      <NorthEast>
+        <Point>
+          <val unit="deg">48.7908457067088</val>
+          <val unit="deg">107.346372702731</val>
+          <val unit="m">0</val>
+          <val unit="deg">0</val>
+          <val unit="deg">0</val>
+        </Point>
+      </NorthEast>
+      <SouthWest>
+        <Point>
+          <val unit="deg">47.9007341649435</val>
+          <val unit="deg">106.290090595131</val>
+          <val unit="m">0</val>
+          <val unit="deg">0</val>
+          <val unit="deg">0</val>
+        </Point>
+      </SouthWest>
+      <SouthEast>
+        <Point>
+          <val unit="deg">47.884838391943</val>
+          <val unit="deg">107.30513957326</val>
+          <val unit="m">0</val>
+          <val unit="deg">0</val>
+          <val unit="deg">0</val>
+        </Point>
+      </SouthEast>
+      <Center>
+        <Point>
+          <val unit="deg">48.3470767343001</val>
+          <val unit="deg">106.813610749075</val>
+          <val unit="m">0</val>
+          <val unit="deg">0</val>
+          <val unit="deg">0</val>
+        </Point>
+      </Center>
+    </GroundCornerPoints>
+    <IonosphericParameters>
+      <TEC unit="TECU">0</TEC>
+      <FaradayRotation unit="deg">0</FaradayRotation>
+    </IonosphericParameters>
+  </Channel>
+
+</SAOCOM_XMLProduct>

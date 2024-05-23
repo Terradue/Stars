@@ -1,0 +1,414 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://landsat.usgs.gov/stac/landsat-extension/v1.1.0/schema.json",
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "LC08_L1GT_119160_20240208_20240208_02_RT",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -72.49948,
+          -33.50808
+        ],
+        [
+          -72.5904,
+          -35.64666
+        ],
+        [
+          -69.9804,
+          -35.69623
+        ],
+        [
+          -69.95552,
+          -33.55386
+        ],
+        [
+          -72.49948,
+          -33.50808
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "created": "2024-02-08T04:51:23Z",
+    "datetime": "2024-02-08T03:19:59.890649Z",
+    "platform": "landsat-8",
+    "mission": "landsat-8",
+    "instruments": [
+      "oli",
+      "tirs"
+    ],
+    "sensor_type": "optical",
+    "gsd": 15.0,
+    "sat:absolute_orbit": 119,
+    "sat:relative_orbit": 119,
+    "sat:orbit_state": "ascending",
+    "landsat:wrs_type": 2,
+    "landsat:wrs_row": 160,
+    "landsat:wrs_path": 119,
+    "landsat:scene_id": "LC81191602024039LGN00",
+    "landsat:collection_number": "02",
+    "landsat:collection_category": "RT",
+    "landsat:cloud_cover_land": -1.0,
+    "proj:epsg": 32619,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 19N\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM19N\", AUTHORITY[\"EPSG\", \"32619\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", -69], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 0], AUTHORITY[\"EPSG\", \"32619\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 0.0,
+    "view:sun_azimuth": 209.56156775,
+    "view:sun_elevation": -34.92585239,
+    "processing:level": "L1GT",
+    "product_type": null,
+    "title": "LANDSAT-8 OLI TIRS L1GT 2024-02-08 03:19:59",
+    "providers": [
+      {
+        "name": "USGS/NASA",
+        "description": "Landsat 8, a collaboration between NASA and the U.S. Geological Survey, provides moderate-resolution (15 m–100 m, depending on spectral frequency) measurements of the Earth’s terrestrial and polar regions in the visible, near-infrared, short wave infrared, and thermal infrared.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.usgs.gov/landsat-missions/landsat-8"
+      }
+    ]
+  },
+  "bbox": [
+    -72.5904,
+    -35.69623,
+    -69.95552,
+    -33.50808
+  ],
+  "assets": {
+    "B1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B01.TIF",
+      "filename": "LS081191602024020800000000MS00_B01.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B1",
+          "common_name": "coastal",
+          "center_wavelength": 0.44,
+          "full_width_half_max": 0.02
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B2": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B02.TIF",
+      "filename": "LS081191602024020800000000MS00_B02.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B2",
+          "common_name": "blue",
+          "center_wavelength": 0.48,
+          "full_width_half_max": 0.06
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B03.TIF",
+      "filename": "LS081191602024020800000000MS00_B03.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B3",
+          "common_name": "green",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.06
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B04.TIF",
+      "filename": "LS081191602024020800000000MS00_B04.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B4",
+          "common_name": "red",
+          "center_wavelength": 0.65,
+          "full_width_half_max": 0.04
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B5": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B05.TIF",
+      "filename": "LS081191602024020800000000MS00_B05.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B5",
+          "common_name": "nir",
+          "center_wavelength": 0.86,
+          "full_width_half_max": 0.03
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B6": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B06.TIF",
+      "filename": "LS081191602024020800000000MS00_B06.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B6",
+          "common_name": "swir16",
+          "center_wavelength": 1.6,
+          "full_width_half_max": 0.08
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B7": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B07.TIF",
+      "filename": "LS081191602024020800000000MS00_B07.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B7",
+          "common_name": "swir22",
+          "center_wavelength": 2.2,
+          "full_width_half_max": 0.2
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B8": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B08.TIF",
+      "filename": "LS081191602024020800000000MS00_B08.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        15761,
+        15841
+      ],
+      "gsd": 15.0,
+      "eo:bands": [
+        {
+          "name": "B8",
+          "common_name": "pan",
+          "center_wavelength": 0.59,
+          "full_width_half_max": 0.18
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 15.0
+        }
+      ]
+    },
+    "B9": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B09.TIF",
+      "filename": "LS081191602024020800000000MS00_B09.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 30.0,
+      "eo:bands": [
+        {
+          "name": "B9",
+          "common_name": "cirrus",
+          "center_wavelength": 1.37,
+          "full_width_half_max": 0.02
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B10": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B10.TIF",
+      "filename": "LS081191602024020800000000MS00_B10.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 100.0,
+      "eo:bands": [
+        {
+          "name": "B10",
+          "common_name": "lwir11",
+          "center_wavelength": 10.9,
+          "full_width_half_max": 0.8
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "B11": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/LS081191602024020800000000MS00/LS081191602024020800000000MS00_B11.TIF",
+      "filename": "LS081191602024020800000000MS00_B11.TIF",
+      "file:size": 0,
+      "proj:shape": [
+        7881,
+        7921
+      ],
+      "gsd": 100.0,
+      "eo:bands": [
+        {
+          "name": "B11",
+          "common_name": "lwir12",
+          "center_wavelength": 12.0,
+          "full_width_half_max": 1.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "spatial_resolution": 30.0
+        }
+      ]
+    },
+    "angle_coefficient": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/LS081191602024020800000000MS00/vendor_metadata/LC08_L1GT_119160_20240208_20240208_02_RT_ANG.txt",
+      "filename": "vendor_metadata/LC08_L1GT_119160_20240208_20240208_02_RT_ANG.txt",
+      "file:size": 117266
+    },
+    "metadata": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/LS081191602024020800000000MS00/vendor_metadata/LC08_L1GT_119160_20240208_20240208_02_RT_MTL.txt",
+      "filename": "vendor_metadata/LC08_L1GT_119160_20240208_20240208_02_RT_MTL.txt",
+      "file:size": 12126
+    }
+  },
+  "links": [
+    {
+      "rel": "collection",
+      "href": "../landsat8.json"
+    }
+  ],
+  "collection": "landsat-c1l1"
+}

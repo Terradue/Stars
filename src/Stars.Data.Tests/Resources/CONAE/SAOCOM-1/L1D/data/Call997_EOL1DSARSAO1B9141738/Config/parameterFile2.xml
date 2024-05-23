@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<parameters xmlns="http://www.conae.gov.ar/CGSS/XPNet">
+  <inputs>
+    <parameter>
+      <name>SAOCOM SAR L0A Product</name>
+      <type>XPNetStringNotTimeTagged</type>
+      <value>/opt/sao/appsharedfiles/pum/G1219337-2297786//inputDir/S1B_OPER_SAR_EOL0F__CORE_L0A_20240320T005500.xemt</value>
+    </parameter>
+    <parameter>
+      <name>Path</name>
+      <type>XPNetIntegerNotTimeTagged</type>
+      <value>149</value>
+    </parameter>
+    <parameter>
+      <name>Row</name>
+      <type>XPNetIntegerNotTimeTagged</type>
+      <value>531.0</value>
+    </parameter>
+    <parameter>
+      <name>Data To Skip</name>
+      <type>XPNetIntegerNotTimeTagged</type>
+      <value>45.77</value>
+    </parameter>
+    <parameter>
+      <name>Data To Process</name>
+      <type>XPNetIntegerNotTimeTagged</type>
+      <value>54.22</value>
+    </parameter>
+  </inputs>
+  <workDirectory>/opt/sao/appsharedfiles/pum/G1219337-2297786/</workDirectory>
+  <outputs>
+    <output>
+      <name>SAOCOM SAR L1A Product</name>
+      <type>XPNetStringNotTimeTagged</type>
+      <value>outputDir/S1B_OPER_SAR_EOSSP__CORE_L1A_OLVF_20240320T055121.xemt</value>
+    </output>
+    <output>
+      <name>SAOCOM SAR L1A Product Annotated</name>
+      <type>XPNetStringNotTimeTagged</type>
+      <value>outputDir/S1B_OPER_SAR_EOSSP__CORE_L1A_OLVF_AN_20240320T055121.xemt</value>
+    </output>
+    <output>
+      <name>SAOCOM SAR L1D Product</name>
+      <type>XPNetStringNotTimeTagged</type>
+      <value>outputDir/S1B_OPER_SAR_EOSSP__CORE_L1D_OLVF_20240320T055121.xemt</value>
+    </output>
+    <output>
+      <name>SAOCOM SAR L1D Product Annotated</name>
+      <type>XPNetStringNotTimeTagged</type>
+      <value>outputDir/S1B_OPER_SAR_EOSSP__CORE_L1D_OLVF_AN_20240320T055121.xemt</value>
+    </output>
+  </outputs>
+</parameters>

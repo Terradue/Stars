@@ -51,7 +51,7 @@
     "gsd": 15.0,
     "sat:absolute_orbit": 121,
     "sat:relative_orbit": 121,
-    "sat:orbit_state": "descending",
+    "sat:orbit_state": "ascending",
     "landsat:wrs_type": 2,
     "landsat:wrs_row": 157,
     "landsat:wrs_path": 121,

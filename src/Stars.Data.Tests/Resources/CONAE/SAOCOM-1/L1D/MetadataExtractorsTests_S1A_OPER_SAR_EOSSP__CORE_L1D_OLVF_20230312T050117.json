@@ -1,0 +1,148 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sar/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "S1A_OPER_SAR_EOSSP__CORE_L1D_OLVF_20230312T050117",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          43.1992527068778,
+          -22.7031446553536
+        ],
+        [
+          43.1850852033387,
+          -23.7548748462209
+        ],
+        [
+          43.9330034351116,
+          -23.7618514367155
+        ],
+        [
+          43.9413361787041,
+          -22.7097778159655
+        ],
+        [
+          43.1992527068778,
+          -22.7031446553536
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "sat:orbit_state": "ascending",
+    "saocom:path": 203,
+    "proj:epsg": null,
+    "proj:shape": [
+      8337,
+      12886
+    ],
+    "view:off_nadir": 32.0,
+    "sar:instrument_mode": "SM",
+    "sar:frequency_band": "L",
+    "sar:polarizations": [
+      "HH",
+      "HV"
+    ],
+    "sar:product_type": "GTC",
+    "sar:observation_direction": "right",
+    "sar:center_frequency": 12.75,
+    "sar:pixel_spacing_range": 9.03987930490642,
+    "sar:pixel_spacing_azimuth": 9.14447914243438,
+    "sar:looks_equivalent_number": 3.0,
+    "sar:resolution_range": 10.0,
+    "sar:resolution_azimuth": 10.0,
+    "processing:level": "L1D",
+    "datetime": "2023-03-12T03:39:31.647Z",
+    "created": "2023-03-12T06:46:42Z",
+    "platform": "saocom-1a",
+    "mission": "saocom-1",
+    "instruments": [
+      "sao1a"
+    ],
+    "sensor_type": "radar",
+    "gsd": 10.0,
+    "title": "SAOCOM-1A SAO1A GTC HH/HV 2023-03-12 03:39:31",
+    "providers": [
+      {
+        "name": "CONAE",
+        "description": "The SAOCOM satellite series represents Argentina's approved polarimetric L-band SAR (Synthetic Aperture Radar) constellation of two spacecraft. The SAOCOM-1 mission is composed of two satellites (SAOCOM-1A and -1B) launched consecutively. The overall objective of SAOCOM is to provide an effective Earth observation and disaster monitoring capability.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "http://saocom.invap.com.ar"
+      }
+    ]
+  },
+  "bbox": [
+    43.1850852033387,
+    -23.7618514367155,
+    43.9413361787041,
+    -22.7031446553536
+  ],
+  "assets": {
+    "metadata-hh": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h.xml",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h.xml",
+      "file:size": 17916
+    },
+    "amplitude-hh": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hh-h",
+      "file:size": 0,
+      "sar:polarizations": [
+        "HH"
+      ]
+    },
+    "metadata-hv": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h.xml",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h.xml",
+      "file:size": 17917
+    },
+    "amplitude-hv": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "amplitude",
+        "data"
+      ],
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h",
+      "filename": "Data/gtc-acqId0001535768-a-sm7-2303120651-hv-h",
+      "file:size": 0,
+      "sar:polarizations": [
+        "HV"
+      ]
+    },
+    "overview": {
+      "type": "image/png",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/Call932_EOL1DSARSAO1A6612997/Images/gtc-acqId0001535768-a-sm7-2303120651-h.png",
+      "filename": "Images/gtc-acqId0001535768-a-sm7-2303120651-h.png",
+      "file:size": 2271455
+    }
+  },
+  "links": []
+}
