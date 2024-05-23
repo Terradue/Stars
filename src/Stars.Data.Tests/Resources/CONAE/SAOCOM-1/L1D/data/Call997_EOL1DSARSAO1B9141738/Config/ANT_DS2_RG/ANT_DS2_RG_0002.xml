@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AresysXmlDoc xmlns:at="aresysTypes">
+   <NumberOfChannels>1</NumberOfChannels>
+   <VersionNumber>2.1</VersionNumber>
+   <Description>Aresys XML metadata file</Description>
+   <Channel Number="1" Total="1">
+      <RasterInfo>
+         <FileName>ANT_DS2_RG_0002</FileName>
+         <Lines>1</Lines>
+         <Samples>901</Samples>
+         <HeaderOffsetBytes>0</HeaderOffsetBytes>
+         <RowPrefixBytes>0</RowPrefixBytes>
+         <ByteOrder>LITTLEENDIAN</ByteOrder>
+         <CellType>FLOAT_COMPLEX</CellType>
+         <LinesStep unit="deg">0</LinesStep>
+         <SamplesStep unit="deg">0.1</SamplesStep>
+         <LinesStart unit="deg">0</LinesStart>
+         <SamplesStart unit="deg">-44.941</SamplesStart>
+      </RasterInfo>
+      <AntennaInfo>
+         <SensorName>SAOCOM-1B</SensorName>
+         <AcquisitionMode>STRIPMAP</AcquisitionMode>
+         <BeamName>DS2</BeamName>
+         <Polarization>H/V</Polarization>
+      </AntennaInfo>
+   </Channel>
+</AresysXmlDoc>

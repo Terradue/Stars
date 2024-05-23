@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SAOCOM_XMLProduct xmlns:at="saocomTypes">
+
+  <NumberOfChannels>1</NumberOfChannels>
+
+  <VersionNumber>2.1</VersionNumber>
+
+  <Description></Description>
+
+  <Channel Number="1" Total="1">
+    <RasterInfo>
+      <FileName>interference-acqId0001535768-a-sm7-2303120651-s7dp-hh</FileName>
+      <Lines>33057</Lines>
+      <Samples>8000</Samples>
+      <HeaderOffsetBytes>0</HeaderOffsetBytes>
+      <RowPrefixBytes>0</RowPrefixBytes>
+      <ByteOrder>LITTLEENDIAN</ByteOrder>
+      <CellType>INT8</CellType>
+      <LinesStep unit="s">0.000464252553389044</LinesStep>
+      <SamplesStep unit="Hz">3749.9999999925</SamplesStep>
+      <LinesStart unit="Utc">12-MAR-2023 03:39:32.179643000000</LinesStart>
+      <SamplesStart unit="Hz">0.000000000000000000000</SamplesStart>
+      <InvalidSample/>
+      <RasterFormat>INTERNAL_RASTER</RasterFormat>
+    </RasterInfo>
+    <DataSetInfo>
+      <SensorName>SAO1A</SensorName>
+      <Description>Level 0 data</Description>
+      <SenseDate>2023-MAR-12</SenseDate>
+      <AcquisitionMode>STRIPMAP</AcquisitionMode>
+      <ImageType>RFINTERFERENCES MAP</ImageType>
+      <Projection>SLANT RANGE</Projection>
+      <AcquisitionStation>IMT</AcquisitionStation>
+      <ProcessingCenter>L0FSW TEST SITE</ProcessingCenter>
+      <ProcessingDate>12-MAR-2023 05:03:56.878502000000</ProcessingDate>
+      <ProcessingSoftware>SP</ProcessingSoftware>
+      <fc_hz>1275000000</fc_hz>
+      <SideLooking>RIGHT</SideLooking>
+    </DataSetInfo>
+    <SwathInfo>
+      <Swath>DS7</Swath>
+      <SwathAcquisitionOrder>0</SwathAcquisitionOrder>
+      <Polarization>H/H</Polarization>
+      <Rank>12</Rank>
+      <RangeDelayBias>0</RangeDelayBias>
+      <AcquisitionStartTime>12-MAR-2023 03:39:31.647000000000</AcquisitionStartTime>
+      <AzimuthSteeringRateReferenceTime unit="s">0</AzimuthSteeringRateReferenceTime>
+      <AzimuthSteeringRatePol>
+        <val N="1">0</val>
+        <val N="2">0</val>
+        <val N="3">0</val>
+      </AzimuthSteeringRatePol>
+      <AcquisitionPRF>2154</AcquisitionPRF>
+      <EchoesPerBurst>88314</EchoesPerBurst>
+      <RxGain>0</RxGain>
+    </SwathInfo>
+    <QualityMetrics>
+      <interferenceRatio unit="%">0.354365565538313</interferenceRatio>
+    </QualityMetrics>
+  </Channel>
+
+</SAOCOM_XMLProduct>

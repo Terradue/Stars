@@ -132,7 +132,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, XEMT manifest, IItem item, Kml kml)
         {
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            StacItem stacItem = new StacItem(ReadFilename(item), GetGeometry(item, kml, metadata), properties);
+            StacItem stacItem = new StacItem(ReadFilename(item, metadata), GetGeometry(item, kml, metadata), properties);
             AddSatStacExtension(metadata, stacItem);
             AddOrbitInformation(metadata, manifest, stacItem, item);
             AddProjStacExtension(metadata, stacItem);
@@ -541,7 +541,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             return null;
         }
 
-        private string ReadFilename(IItem item)
+        private string ReadFilename(IItem item, SAOCOM_XMLProduct metadata)
         {
             var parameterFile = FindFirstAssetFromFileNameRegex(item, @".*parameter.*\.xml");
             var xDoc = XDocument.Load(resourceServiceProvider.GetAssetStreamAsync(parameterFile, System.Threading.CancellationToken.None).GetAwaiter().GetResult());
@@ -550,19 +550,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             XName nValue = np + "value";
             XName nName = np + "name";
             var outputNodes = xDoc.Descendants(xoutput);
-            char minimumChar = 'A';
             string output = "NA";
+            string processingLevel = GetProcessingLevel(metadata);
             foreach (XElement node in outputNodes)
             {
-                if (!node.Descendants(nValue).FirstOrDefault().Value.Contains("AN"))
+                string value = node.Descendants(nValue).FirstOrDefault().Value;
+                if (!value.Contains("AN"))
                 {
                     var nameField = node.Descendants(nName).FirstOrDefault().Value;
-                    char processingLevelChar = nameField.Substring(nameField.IndexOf("L1"))[2];
-
-                    if (nameField.Contains("L1") && minimumChar.CompareTo(processingLevelChar) <= 0)
+                    if (value.Contains(String.Format("_{0}_", processingLevel)))
                     {
-                        var input = node.Descendants(nValue).FirstOrDefault().Value;
-                        output = input.Substring(input.LastIndexOf('/') + 1, input.IndexOf(".") - input.IndexOf('/') - 1);
+                        output = value.Substring(value.LastIndexOf('/') + 1, value.IndexOf(".") - value.IndexOf('/') - 1);
                         break;
                     }
                 }
