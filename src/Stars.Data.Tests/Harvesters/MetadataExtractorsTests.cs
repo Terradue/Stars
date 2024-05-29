@@ -43,7 +43,7 @@ namespace Terradue.Data.Tests.Harvesters
         {
             StacRouter stacRouter = ServiceProvider.GetService<StacRouter>();
             TestItem testNode = new TestItem(datadir);
-            IResource route = new ContainerNode(testNode, new Dictionary<string, IAsset>(testNode.Assets), "");
+            IResource route = new ItemContainerNode(testNode, new Dictionary<string, IAsset>(testNode.Assets), "");
             IDestination destination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory("out/"), route);
             destination.PrepareDestination();
 

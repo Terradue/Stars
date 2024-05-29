@@ -99,7 +99,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             {
                 var mergedAssets = new Dictionary<string, IAsset>(item.Assets.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
                 mergedAssets.MergeAssets(extractedAssets.Assets, false);
-                innerStacItem = new ContainerNode(item, mergedAssets, "merged");
+                innerStacItem = new ItemContainerNode(item, mergedAssets, "merged");
             }
 
             IAsset metadataAsset = GetMetadataAsset(innerStacItem);

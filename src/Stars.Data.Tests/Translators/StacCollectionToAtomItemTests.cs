@@ -11,6 +11,8 @@ using System.Xml;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 using System;
 using System.IO;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -51,6 +53,52 @@ namespace Terradue.Data.Tests.Translators
 
             Assert.True(egmsIsPresent);   
             Assert.True(wmsIsPresent);           
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task EGMS_2018_2022()
+        {
+            string json = GetJson("Translators");
+
+            ValidateJson(json);
+
+            StacCollection stacCollection = StacConvert.Deserialize<StacCollection>(json);
+
+            StacCollectionToAtomItemTranslator stacCollectionToAtomItemTranslator = new StacCollectionToAtomItemTranslator(ServiceProvider);
+
+            StacCollectionNode stacCollectionNode = new StacCollectionNode(stacCollection, new System.Uri("https://api.terradue.com/timeseries/v1/ns/gep-egms/cs/EGMS-2018-2022"));
+
+            // Filter assets to remove the timeseries assets
+            AssetFilters assetFilters = AssetFilters.CreateAssetFilters(
+                new string[] { "{type}!application/csv" }
+            );
+            // Create a filtered asset container
+            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(stacCollectionNode, assetFilters);
+            // Create a container node with the filtered asset container
+            CollectionContainerNode filteredNode = new CollectionContainerNode(stacCollectionNode, filteredAssetContainer.Assets, "filtered");
+            StacCollection stacCollection1 = new StacCollection(stacCollection);
+            stacCollection1.Assets.Clear();
+            stacCollection1.Assets.AddRange(filteredAssetContainer.Assets.ToDictionary(asset => asset.Key, asset => (asset.Value as StacAssetAsset).StacAsset));
+            StacCollectionNode stacCollectionNode1 = new StacCollectionNode(stacCollection1, new System.Uri("https://api.terradue.com/timeseries/v1/ns/gep-egms/cs/EGMS-2018-2022"));
+
+            AtomItemNode atomItemNode = await stacCollectionToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacCollectionNode1, CancellationToken.None);
+
+            bool egmsIsPresent = false;
+            if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
+			{
+                var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
+
+				foreach (var offering in offerings)
+				{
+                    if(offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
+                }
+            }
+
+            Assert.True(egmsIsPresent);   
+
+            // Check that there is no link with the relationship type "enclosure"
+            Assert.DoesNotContain(atomItemNode.AtomItem.Links,
+                                  l => l.RelationshipType == "enclosure");
         }
 
     }

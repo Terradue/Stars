@@ -25,6 +25,7 @@ using Terradue.Stars.Services.Model;
 using System.Collections.Specialized;
 using System.Web;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -100,7 +101,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 AdditionalLinks = publicationModel.AdditionalLinks,
                 CreateIndex = true,
                 SubjectsList = publicationModel.Subjects?.Select(s => new Subject(s)).ToList(),
-                CatalogId = publicationModel.CatalogId ?? geosquareConfiguration.BaseUri.ToString()
+                CatalogId = publicationModel.CatalogId ?? geosquareConfiguration.BaseUri.ToString(),
+                AssetsFilters = publicationModel.AssetsFilters
             };
         }
 
@@ -148,6 +150,14 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         {
             GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
             AtomItemNode atomItemNode = null;
+
+            // Filter assets
+            // Create the asset filters based on the asset filters string from the catalog publication model
+            AssetFilters assetFilters = AssetFilters.CreateAssetFilters(catalogPublicationState.GeosquarePublicationModel.AssetsFilters);
+            // Create a filtered asset container
+            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(collectionNode, assetFilters);
+            // Create a container node with the filtered asset container
+            CollectionContainerNode filteredNode = new CollectionContainerNode(collectionNode, filteredAssetContainer.Assets, "filtered");
             try
             {
                 atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(collectionNode, ct);
@@ -176,9 +186,18 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         {
             GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
             AtomItemNode atomItemNode = null;
+
+            // Filter assets
+            // Create the asset filters based on the asset filters string from the catalog publication model
+            AssetFilters assetFilters = AssetFilters.CreateAssetFilters(catalogPublicationState.GeosquarePublicationModel.AssetsFilters);
+            // Create a filtered asset container
+            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(itemNode, assetFilters);
+            // Create a container node with the filtered asset container
+            ItemContainerNode filteredNode = new ItemContainerNode(itemNode, filteredAssetContainer.Assets, "filtered");
+            
             try
             {
-                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(itemNode, ct);
+                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(filteredNode, ct);
             }
             catch (Exception e)
             {

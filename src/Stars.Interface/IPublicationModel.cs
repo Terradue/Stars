@@ -16,5 +16,7 @@ namespace Terradue.Stars.Interface
         string Collection { get; }
 
         int Depth { get; }
+        
+        IEnumerable<string> AssetsFilters { get; }
     }
 }

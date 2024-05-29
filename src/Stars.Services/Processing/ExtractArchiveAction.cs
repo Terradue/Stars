@@ -119,7 +119,7 @@ namespace Terradue.Stars.Services.Processing
 
             if (newAssets == null || newAssets.Count == 0) return route;
 
-            return new ContainerNode(route as IItem, newAssets, suffix);
+            return new ItemContainerNode(route as IItem, newAssets, suffix);
 
         }
 
