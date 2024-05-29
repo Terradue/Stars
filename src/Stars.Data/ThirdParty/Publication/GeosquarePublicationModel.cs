@@ -114,7 +114,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         public string CatalogId { get; set; }
 
-        public IEnumerable<string> AssetsFilters { get; set; }
+        public List<string> AssetsFilters { get; set; }
     }
 
 }
