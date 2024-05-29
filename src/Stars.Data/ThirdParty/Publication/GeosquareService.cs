@@ -157,10 +157,19 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             // Create a filtered asset container
             FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(collectionNode, assetFilters);
             // Create a container node with the filtered asset container
-            CollectionContainerNode filteredNode = new CollectionContainerNode(collectionNode, filteredAssetContainer.Assets, "filtered");
+            ICollection filteredNode = new CollectionContainerNode(collectionNode, filteredAssetContainer.Assets, "filtered");
+            // If the item is StacCollection, we recreate the StacCollection with the filtered assets
+            if (collectionNode is StacCollectionNode stacCollectionNode)
+            {
+                StacCollection stacCollection = new StacCollection(stacCollectionNode.StacCollection);
+                stacCollection.Assets.Clear();
+                stacCollection.Assets.AddRange(filteredAssetContainer.Assets.ToDictionary(asset => asset.Key, asset => (asset.Value as StacAssetAsset).StacAsset));
+                filteredNode = new StacCollectionNode(stacCollection, collectionNode.Uri);
+            }
+
             try
             {
-                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(collectionNode, ct);
+                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(filteredNode, ct);
             }
             catch (Exception e)
             {
@@ -193,7 +202,15 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             // Create a filtered asset container
             FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(itemNode, assetFilters);
             // Create a container node with the filtered asset container
-            ItemContainerNode filteredNode = new ItemContainerNode(itemNode, filteredAssetContainer.Assets, "filtered");
+            IItem filteredNode = new ItemContainerNode(itemNode, filteredAssetContainer.Assets, "filtered");
+            // If the item is StacItem, we recreate the StacItem with the filtered assets
+            if (itemNode is StacItemNode stacItemNode)
+            {
+                StacItem stacItem = new StacItem(stacItemNode.StacItem);
+                stacItem.Assets.Clear();
+                stacItem.Assets.AddRange(filteredAssetContainer.Assets.ToDictionary(asset => asset.Key, asset => (asset.Value as StacAssetAsset).StacAsset));
+                filteredNode = new StacItemNode(stacItem, itemNode.Uri);
+            }
             
             try
             {
