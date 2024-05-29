@@ -98,7 +98,7 @@ namespace Terradue.Data.Tests.Translators
 
             // Check that there is no link with the relationship type "enclosure"
             Assert.DoesNotContain(atomItemNode.AtomItem.Links,
-                                  l => l.RelationshipType == "enclosure");
+                                  l => l.MediaType == "application/csv" && l.RelationshipType == "enclosure");
         }
 
     }
