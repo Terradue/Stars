@@ -98,24 +98,32 @@
           "name": "B2",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "red",
+          "center_wavelength": 0.6559999999999999,
+          "full_width_half_max": 0.066,
           "solar_illumination": 1594.0
         },
         {
           "name": "B1",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "green",
+          "center_wavelength": 0.5585,
+          "full_width_half_max": 0.058,
           "solar_illumination": 1830.0
         },
         {
           "name": "B0",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "blue",
+          "center_wavelength": 0.495,
+          "full_width_half_max": 0.065,
           "solar_illumination": 1915.0
         },
         {
           "name": "B3",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "nir",
+          "center_wavelength": 0.8425,
+          "full_width_half_max": 0.102,
           "solar_illumination": 1060.0
         }
       ],
@@ -192,24 +200,32 @@
           "name": "B2",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "red",
+          "center_wavelength": 0.6559999999999999,
+          "full_width_half_max": 0.066,
           "solar_illumination": 1594.0
         },
         {
           "name": "B1",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "green",
+          "center_wavelength": 0.5585,
+          "full_width_half_max": 0.058,
           "solar_illumination": 1830.0
         },
         {
           "name": "B0",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "blue",
+          "center_wavelength": 0.495,
+          "full_width_half_max": 0.065,
           "solar_illumination": 1915.0
         },
         {
           "name": "B3",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "nir",
+          "center_wavelength": 0.8425,
+          "full_width_half_max": 0.102,
           "solar_illumination": 1060.0
         }
       ],
@@ -286,24 +302,32 @@
           "name": "B2",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "red",
+          "center_wavelength": 0.6559999999999999,
+          "full_width_half_max": 0.066,
           "solar_illumination": 1594.0
         },
         {
           "name": "B1",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "green",
+          "center_wavelength": 0.5585,
+          "full_width_half_max": 0.058,
           "solar_illumination": 1830.0
         },
         {
           "name": "B0",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "blue",
+          "center_wavelength": 0.495,
+          "full_width_half_max": 0.065,
           "solar_illumination": 1915.0
         },
         {
           "name": "B3",
           "description": "Raw radiometric count (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "nir",
+          "center_wavelength": 0.8425,
+          "full_width_half_max": 0.102,
           "solar_illumination": 1060.0
         }
       ],

@@ -96,6 +96,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return new string[1] { ss.Strip_Source.INSTRUMENT + (string.IsNullOrEmpty(ss.Strip_Source.INSTRUMENT_INDEX) ? "" : "-" + ss.Strip_Source.INSTRUMENT_INDEX) };
         }
 
+        public virtual string[] GetSpectralMode()
+        {
+            return null;
+        }
+        
         internal int? GetAbsoluteOrbit()
         {
             return null;
@@ -274,9 +279,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             List<EoBandObject> eoBandObjects = new List<EoBandObject>();
             for (int i = 0; i < spectralBandInfos.Band_Radiance.Count(); i++)
             {
-                var bandInfo = spectralBandInfos.Band_Radiance[i];
-                var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[i];
-                eoBandObjects.Add(GetEoBandRadianceObject(bandInfo, bandSolarIrradiance));
+                eoBandObjects.Add(GetEoBandRadianceObject(spectralBandInfos, i));
             }
             return eoBandObjects.OrderBy(eob => BandOrders[eob.CommonName]).ToList();
         }
@@ -302,12 +305,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         protected abstract IDictionary<EoBandCommonName?, int> BandOrders { get; }
 
-        protected virtual EoBandObject GetEoBandRadianceObject(Schemas.Band_Radiance bandInfo, Schemas.Band_Solar_Irradiance bandSolarIrradiance)
+        protected virtual EoBandObject GetEoBandRadianceObject(Schemas.Band_Measurement_List spectralBandInfos, int index)
         {
+            var bandInfo = spectralBandInfos.Band_Radiance[index];
+            var bandSolarIrradiance = spectralBandInfos.Band_Solar_Irradiance[index];
+            var bandSpectralRange = spectralBandInfos.Band_Spectral_Range[index];
+
             EoBandObject eoBandObject = new EoBandObject(bandInfo.BAND_ID,
                                                 GetEoCommonName(bandInfo));
             eoBandObject.Description = bandInfo.MEASURE_DESC;
             eoBandObject.SolarIllumination = double.Parse(bandSolarIrradiance.VALUE);
+            if (Double.TryParse(bandSpectralRange.MIN, out double min) && Double.TryParse(bandSpectralRange.MAX, out double max))
+            {
+                eoBandObject.CenterWavelength = (min + max) / 2;
+                eoBandObject.FullWidthHalfMax = Math.Round((max - min) / 2, 3);
+            }
 
             return eoBandObject;
         }
@@ -402,7 +414,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 }
             }
             
-            key += type + "-R" + dataFile.Tile_R + "C" + dataFile.Tile_C;
+            if (!String.IsNullOrEmpty(dataFile.Tile_R) && !String.IsNullOrEmpty(dataFile.Tile_C)) key += type + "-R" + dataFile.Tile_R + "C" + dataFile.Tile_C;
             return key;
         }
 
