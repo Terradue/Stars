@@ -60,8 +60,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                     return new VolumeDimapProfiler(dimap, this);
                 case "PHR_ORTHO":
                 case "PHR_SENSOR":
-                case "PER1_ORTHO":
                     return new PleiadesDimapProfiler(dimap);
+                case "PER1_ORTHO":
+                case "PER1_SENSOR":
+                    return new PerusatDimapProfiler(dimap);
                 case "PNEO_ORTHO":
                     return new PleiadesNEODimapProfiler(dimap);
                 case "S6_ORTHO":
@@ -76,7 +78,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             var metadataAssets = GetMetadataAssets(item);
             List<StacItemNode> stacItemNodes = new List<StacItemNode>();
             List<AirbusProfiler> dimapProfilers = new List<AirbusProfiler>();
-            
+
             foreach (var metadataAsset in metadataAssets)
             {
                 Dimap_Document metadata = await ReadMetadata(metadataAsset.Value);
@@ -99,21 +101,39 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
 
             // Merge MS (multispectral) assets into P (pan-chromatic) STAC item
-            StacItemNode baseNode = stacItemNodes.FirstOrDefault(n => n.StacItem.Assets.ContainsKey("P-metadata"));
+            StacItemNode baseNode = stacItemNodes.FirstOrDefault(n => n.StacItem.Assets.ContainsKey("P-metadata") || n.StacItem.Assets.ContainsKey("metadata-P"));
             if (baseNode == null) baseNode = stacItemNodes[0];
             //StacItem mergedStacItem = baseNode.StacItem;
+
+            List<string> spectralMode = new List<string>();
+            if (baseNode.StacItem.Properties.ContainsKey("spectral_mode")) spectralMode.AddRange(baseNode.StacItem.Properties["spectral_mode"] as string[]);
 
             foreach (StacItemNode n in stacItemNodes.FindAll(n => n != baseNode))
             {
                 baseNode.StacItem.Assets.AddRange(n.StacItem.Assets);
+                if (n.StacItem.Properties.ContainsKey("spectral_mode")) {
+                    string[] itemSpectralMode = n.StacItem.GetProperty<string[]>("spectral_mode");
+                    foreach (string sm in itemSpectralMode)
+                    {
+                        if (!spectralMode.Contains(sm)) spectralMode.Add(sm);
+                    }
+                }
             }
-            
+            if (spectralMode.Count != 0) baseNode.StacItem.Properties["spectral_mode"] = spectralMode.ToArray();
+
             // Custom title for PNEO with multiple spectral processings
             // the second element of the title must contain all spectral processings
             // eg. PNEO4 MS-FS PAN ORTHO 2021-11-15 13:58:30
-            if( dimapProfilers.Count > 1 && dimapProfilers[0].GetPlatform().Contains("PNEO")) {
-                string title = GetPNEOTitle(dimapProfilers, baseNode);
-                baseNode.StacItem.Title = title;
+            if (dimapProfilers.Count > 1)
+            {
+                if (dimapProfilers[0].GetPlatform().Contains("PNEO"))
+                {
+                    baseNode.StacItem.Title = GetPNEOTitle(dimapProfilers, baseNode);
+                }
+                else if (dimapProfilers[0] is PerusatDimapProfiler)
+                {
+                    baseNode.StacItem.Title = dimapProfilers[0].GetTitle(baseNode.StacItem.Properties);
+                }
             }
 
             return baseNode;
@@ -152,14 +172,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             // from each item, get the spectral processing and put it in a list
              var spectralProcesses = profilers.Select(profiler => profiler.Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING.ToUpper())
                 .ToList();
-             
+
              // check if PAN is present and move it to the first position
              spectralProcesses.Remove("PAN");
              spectralProcesses.Insert(0, "PAN");
 
              // join the list into a string
              string spectralProcessesString = string.Join(" ", spectralProcesses);
-            
+
             CultureInfo culture = new CultureInfo("fr-FR");
             return string.Format("{0} {1} {2} {3}",
                 profilers[0].GetPlatform().ToUpper(),
@@ -167,11 +187,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 profilers[0].GetProcessingLevel(),
                 baseNode.StacItem.Properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
         }
-        
-        internal StacItemNode ExtractMetadata(IItem item,
-                                                      AirbusProfiler dimapProfiler,
-                                                      IAsset metadataAsset,
-                                                      string suffix)
+
+        internal StacItemNode ExtractMetadata(IItem item, AirbusProfiler dimapProfiler, IAsset metadataAsset, string suffix)
         {
             StacItem stacItem = CreateStacItem(dimapProfiler);
 
@@ -189,7 +206,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         }
 
         internal virtual StacItem CreateStacItem(AirbusProfiler dimapProfiler) {
-            
+
             StacItem stacItem = new StacItem(dimapProfiler.GetId(),
                                              GetGeometry(dimapProfiler),
                                              GetCommonMetadata(dimapProfiler));
@@ -276,6 +293,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             properties.Remove("sensor_type");
             properties.Add("sensor_type", "optical");
+
+            string[] spectralMode = dimapProfiler.GetSpectralMode();
+            if (spectralMode != null && spectralMode.Length != 0) properties["spectral_mode"] = spectralMode;
 
             properties.Remove("gsd");
             properties.Add("gsd", dimapProfiler.GetResolution());

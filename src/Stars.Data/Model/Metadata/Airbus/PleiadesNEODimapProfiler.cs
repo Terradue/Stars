@@ -209,7 +209,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
                 // full_width_half_max
                 double fullWidthHalfMax = (fwhm.FWHM_MAX - fwhm.FWHM_MIN)/1000;
 
-                EoBandObject eoBandObject = GetEoBandRadianceObject(bandInfo, bandSolarIrradiance);
+                EoBandObject eoBandObject = GetEoBandRadianceObject(spectralBandInfos, i);
                 eoBandObject.Properties.Add("full_width_half_max", fullWidthHalfMax);
                 eoBandObject.CenterWavelength = centerWavelength;
                 

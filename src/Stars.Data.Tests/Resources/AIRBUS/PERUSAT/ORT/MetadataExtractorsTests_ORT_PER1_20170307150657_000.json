@@ -5,6 +5,7 @@
     "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
     "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
     "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
@@ -39,38 +40,43 @@
   "properties": {
     "datetime": "2017-03-07T15:06:57Z",
     "created": "2017-03-07T15:36:03.54075Z",
-    "platform": "per-1",
-    "constellation": "pleiades",
-    "mission": "per-1",
+    "platform": "perusat-1",
+    "constellation": "perusat",
+    "mission": "perusat-1",
     "instruments": [
       "naomi-1"
     ],
     "sensor_type": "optical",
-    "gsd": 4.5,
-    "title": "PER-1 NAOMI-1 RASTER_ORTHO 2017-03-07 15:06:57",
+    "spectral_mode": [
+      "P",
+      "MS"
+    ],
+    "gsd": 1.0,
+    "title": "PERUSAT-1 ORTHO P MS 2017-03-07 15:06:57",
+    "sat:platform_international_designator": "2016-058A",
     "proj:epsg": 32718,
     "proj:shape": [
-      10498,
-      11192
+      41992,
+      44768
     ],
     "view:azimuth": 105.5,
     "view:sun_azimuth": 81.0,
     "view:sun_elevation": 56.9,
     "view:incidence_angle": 38.7,
-    "processing:level": "ORTHO/BASIC",
+    "processing:level": "ORTHO",
     "processing:software": {
       "M12Processor": "1.2.2"
     },
     "providers": [
       {
-        "name": "Airbus",
-        "description": "The identical Pléiades 1A and Pléiades 1B satellites deliver 50cm imagery products with a 20km swath. The product's location accuracy and excellent image quality make it an ideal source for data for any civil or military project.",
+        "name": "CONIDA, CNOIS, Airbus",
+        "description": "PerúSAT-1 is a very-high-resolution Earth observation satellite system built for the government and Space Agency of Peru. Launched in 2016, this satellite is the first of its kind operated by Peru.",
         "roles": [
           "producer",
           "processor",
           "licensor"
         ],
-        "url": "https://www.intelligence-airbusds.com/imagery/constellation/pleiades/"
+        "url": "https://www.airbus.com/en/space/earth-observation/earth-observation-portfolio/perusat"
       }
     ]
   },
@@ -81,13 +87,89 @@
     -12.34188494
   ],
   "assets": {
-    "MS-RC": {
+    "PAN": {
       "type": "image/tiff",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "Band Composite Basic MS Ortho R C",
+      "title": "ORTHO P",
+      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
+      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "PAN",
+          "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
+          "common_name": "pan",
+          "center_wavelength": 0.6,
+          "full_width_half_max": 0.15,
+          "solar_illumination": 1706.514896
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 12,
+          "statistics": {
+            "minimum": 0.0,
+            "maximum": 4096.0
+          },
+          "scale": 0.09607363399968433,
+          "offset": 0.0
+        }
+      ],
+      "product_type": "P",
+      "proj:shape": [
+        41992,
+        44768
+      ]
+    },
+    "PAN-wf": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "world-file"
+      ],
+      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
+      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
+      "file:size": 0
+    },
+    "metadata-P": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/DIM_PER1_20170307150657_ORT_P_000041.XML",
+      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/DIM_PER1_20170307150657_ORT_P_000041.XML",
+      "file:size": 147381
+    },
+    "overview-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/PREVIEW_PER1_20170307150657_ORT_P_000041.JPG",
+      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/PREVIEW_PER1_20170307150657_ORT_P_000041.JPG",
+      "file:size": 25698
+    },
+    "thumbnail-P": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/ICON_PER1_20170307150657_ORT_P_000041.JPG",
+      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/ICON_PER1_20170307150657_ORT_P_000041.JPG",
+      "file:size": 1321
+    },
+    "MS": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "ORTHO MS",
       "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_MS_000041/IMG_PER1_20170307150657_ORT_MS_000041.TIF",
       "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_MS_000041/IMG_PER1_20170307150657_ORT_MS_000041.TIF",
       "file:size": 0,
@@ -96,24 +178,32 @@
           "name": "B2",
           "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "red",
+          "center_wavelength": 0.665,
+          "full_width_half_max": 0.035,
           "solar_illumination": 1540.494123
         },
         {
           "name": "B1",
           "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "green",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.03,
           "solar_illumination": 1826.087443
         },
         {
           "name": "B0",
           "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "blue",
+          "center_wavelength": 0.485,
+          "full_width_half_max": 0.035,
           "solar_illumination": 1982.671954
         },
         {
           "name": "B3",
           "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
           "common_name": "nir",
+          "center_wavelength": 0.8185,
+          "full_width_half_max": 0.066,
           "solar_illumination": 1094.747446
         }
       ],
@@ -165,7 +255,7 @@
         11192
       ]
     },
-    "MS-RC-wf": {
+    "MS-wf": {
       "type": "image/tiff",
       "roles": [
         "data",
@@ -202,80 +292,6 @@
       "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_MS_000041/ICON_PER1_20170307150657_ORT_MS_000041.JPG",
       "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_MS_000041/ICON_PER1_20170307150657_ORT_MS_000041.JPG",
       "file:size": 1781
-    },
-    "P-RC": {
-      "type": "image/tiff",
-      "roles": [
-        "data",
-        "dn"
-      ],
-      "title": "Band Composite Basic P Ortho R C",
-      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
-      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
-      "file:size": 0,
-      "eo:bands": [
-        {
-          "name": "PAN",
-          "description": "Raw radiometric counts (DN) to TOA Radiance (L). Formulae L=DN/GAIN+BIAS",
-          "common_name": "pan",
-          "solar_illumination": 1706.514896
-        }
-      ],
-      "raster:bands": [
-        {
-          "data_type": "uint16",
-          "bits_per_sample": 12,
-          "statistics": {
-            "minimum": 0.0,
-            "maximum": 4096.0
-          },
-          "scale": 0.09607363399968433,
-          "offset": 0.0
-        }
-      ],
-      "product_type": "P",
-      "proj:shape": [
-        41992,
-        44768
-      ]
-    },
-    "P-RC-wf": {
-      "type": "image/tiff",
-      "roles": [
-        "data",
-        "world-file"
-      ],
-      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
-      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/IMG_PER1_20170307150657_ORT_P_000041.TIF",
-      "file:size": 0
-    },
-    "metadata-P": {
-      "type": "application/xml",
-      "roles": [
-        "metadata"
-      ],
-      "title": "Metadata file",
-      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/DIM_PER1_20170307150657_ORT_P_000041.XML",
-      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/DIM_PER1_20170307150657_ORT_P_000041.XML",
-      "file:size": 147381
-    },
-    "overview-P": {
-      "type": "image/jpeg",
-      "roles": [
-        "overview"
-      ],
-      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/PREVIEW_PER1_20170307150657_ORT_P_000041.JPG",
-      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/PREVIEW_PER1_20170307150657_ORT_P_000041.JPG",
-      "file:size": 25698
-    },
-    "thumbnail-P": {
-      "type": "image/jpeg",
-      "roles": [
-        "thumbnail"
-      ],
-      "href": "data/DS_PER1_201703071506576_PS1_W077S12_002239/VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/ICON_PER1_20170307150657_ORT_P_000041.JPG",
-      "filename": "VOL_PER1_ORT_001_000041/IMG_PER1_ORT_P_000041/ICON_PER1_20170307150657_ORT_P_000041.JPG",
-      "file:size": 1321
     }
   },
   "links": []
