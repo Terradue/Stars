@@ -38,7 +38,7 @@ namespace Terradue.Stars.Data.Suppliers
             this.credentialsManager = credentialsManager;
             _s3ClientFactory = s3ClientFactory;
             SupplierPluginOption supplierPluginOption = pluginOption as SupplierPluginOption;
-            ConfigureWrapper(new Uri(supplierPluginOption.ServiceUrl));
+            ConfigureWrapper(supplierPluginOption);
         }
 
         public override string Id => wrapper.Name;
@@ -47,11 +47,12 @@ namespace Terradue.Stars.Data.Suppliers
 
         public IDataHubSourceWrapper Wrapper => wrapper;
 
-        public void ConfigureWrapper(Uri serviceUrl)
+        public void ConfigureWrapper(SupplierPluginOption pluginOption)
         {
+            if (pluginOption == null)
+                throw new ArgumentNullException("pluginOption");
 
-            if (serviceUrl == null)
-                throw new ArgumentNullException("serviceUrl");
+            Uri serviceUrl = new Uri(pluginOption.ServiceUrl);
 
             var target_uri = serviceUrl;
             var target_creds = credentialsManager;
@@ -125,11 +126,20 @@ namespace Terradue.Stars.Data.Suppliers
 
             if (target_uri.Host.EndsWith("googleapis.com") || target_uri.Host.EndsWith("google.com"))
             {
-                wrapper = new GoogleWrapper(null, null, target_creds, "https://cloud.google.com");
+                wrapper = new GoogleWrapper(pluginOption.AccountFile, pluginOption.ProjectId, target_creds, "https://cloud.google.com");
             }
 
             this.openSearchable = wrapper.CreateOpenSearchable(new OpenSearchableFactorySettings(this.opensearchEngine));
 
+        }
+
+        [Obsolete("Method kept for backward compatibility")]
+        public void ConfigureWrapper(Uri serviceUrl)
+        {
+            if (serviceUrl == null)
+                throw new ArgumentNullException("serviceUrl");
+
+            ConfigureWrapper(new SupplierPluginOption() { ServiceUrl = serviceUrl.AbsoluteUri });
         }
 
         internal static NetworkCredential GetNetworkCredentials(IConfigurationSection credentials)
