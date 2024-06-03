@@ -1,4 +1,4 @@
-
+﻿
 using log4net.Appender;
 using log4net.Core;
 using Microsoft.Extensions.Logging;
@@ -16,7 +16,8 @@ namespace Terradue.Stars.Data
 
         protected override void Append(LoggingEvent loggingEvent)
         {
-            switch(loggingEvent.Level.Name){
+            switch (loggingEvent.Level.Name)
+            {
                 case "DEBUG":
                     logger.LogDebug(loggingEvent.RenderedMessage);
                     break;

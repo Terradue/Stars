@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.IO.Abstractions;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier.Destination
@@ -47,7 +41,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
         public Task<IDestination> Guide(string directory, IResource route)
         {
             var dir = fileSystem.DirectoryInfo.FromDirectoryName(directory.Replace("file:", "").TrimEnd('/'));
-            if (!dir.Exists && !dir.Parent.Exists )
+            if (!dir.Exists && !dir.Parent.Exists)
                 throw new InvalidOperationException(string.Format("{0} directory does not exist", dir.Parent.FullName));
             return Task.FromResult<IDestination>(LocalFileDestination.Create(dir, route));
         }

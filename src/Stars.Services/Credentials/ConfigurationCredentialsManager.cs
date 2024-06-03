@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Credentials
 {
@@ -17,7 +16,7 @@ namespace Terradue.Stars.Services.Credentials
         public ConfigurationCredentialsManager(IOptions<CredentialsOptions> options, ILogger<ConfigurationCredentialsManager> logger)
         {
             if (options != null && options.Value != null)
-                this._credentialsCache.Load(options.Value);
+                _credentialsCache.Load(options.Value);
             this.logger = logger;
         }
 
@@ -26,7 +25,7 @@ namespace Terradue.Stars.Services.Credentials
             // get the matching credentials and pick one randomly
             var creds = _credentialsCache.Values
                         .Where(v => MatchUriAndAuth(v, uri, authType));
-            if ( creds.Count() == 0 ) return null;
+            if (creds.Count() == 0) return null;
             int i = new Random().Next(0, creds.Count() - 1);
             var cred = creds.ElementAt(i);
             if (cred == null) return null;
@@ -35,7 +34,7 @@ namespace Terradue.Stars.Services.Credentials
 
         private bool MatchUriAndAuth(CredentialsOption v, Uri uri, string authType)
         {
-            if ( v.Uri == null ) return false;
+            if (v.Uri == null) return false;
             return v.Uri.IsBaseOf(uri) && v.AuthType.Equals(authType, StringComparison.InvariantCultureIgnoreCase);
         }
 
@@ -46,7 +45,7 @@ namespace Terradue.Stars.Services.Credentials
 
         public void CacheCredential(Uri uriCut, string authType, NetworkCredential cred)
         {
-            this._credentialsCache.Add(new Guid().ToString("N"), new CredentialsOption(uriCut.ToString(), authType, cred.UserName, cred.Password));
+            _credentialsCache.Add(new Guid().ToString("N"), new CredentialsOption(uriCut.ToString(), authType, cred.UserName, cred.Password));
         }
     }
 }

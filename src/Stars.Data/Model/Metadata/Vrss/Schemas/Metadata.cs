@@ -1,4 +1,4 @@
-namespace Terradue.Stars.Data.Model.Metadata.Vrss.Schemas
+﻿namespace Terradue.Stars.Data.Model.Metadata.Vrss.Schemas
 {
 
     /// <remarks/>

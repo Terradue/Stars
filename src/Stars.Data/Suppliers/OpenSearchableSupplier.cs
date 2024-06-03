@@ -1,24 +1,24 @@
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
-using Terradue.Stars.Data.Routers;
+using Itenso.TimePeriod;
+using Microsoft.Extensions.Logging;
+using Stac;
+using Stac.Api.Interfaces;
+using Stac.Api.Models.Cql2;
+using Terradue.GeoJson.Geometry;
 using Terradue.OpenSearch;
 using Terradue.OpenSearch.Engine;
 using Terradue.OpenSearch.Result;
-using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface;
-using System.Text.RegularExpressions;
-using Stac;
-using System.Threading;
-using Stac.Api.Interfaces;
-using Stac.Api.Models.Cql2;
-using Itenso.TimePeriod;
-using Terradue.GeoJson.Geometry;
+using Terradue.Stars.Data.Routers;
 using Terradue.Stars.Geometry.Wkt;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Stars.Data.Suppliers
 {
@@ -34,9 +34,9 @@ namespace Terradue.Stars.Data.Suppliers
 
         internal OpenSearchableSupplier(ILogger logger, TranslatorManager translatorManager)
         {
-            this.opensearchEngine = new OpenSearchEngine();
-            this.opensearchEngine.RegisterExtension(new Terradue.OpenSearch.Engine.Extensions.AtomOpenSearchEngineExtension());
-            this.opensearchEngine.RegisterExtension(new Terradue.OpenSearch.GeoJson.Extensions.FeatureCollectionOpenSearchEngineExtension());
+            opensearchEngine = new OpenSearchEngine();
+            opensearchEngine.RegisterExtension(new OpenSearch.Engine.Extensions.AtomOpenSearchEngineExtension());
+            opensearchEngine.RegisterExtension(new OpenSearch.GeoJson.Extensions.FeatureCollectionOpenSearchEngineExtension());
             this.logger = logger;
             this.translatorManager = translatorManager;
         }
@@ -85,7 +85,7 @@ namespace Terradue.Stars.Data.Suppliers
             NameValueCollection nvc = CreateOpenSearchParametersFromItem(node as IItem, identifierRegex);
             if (nvc == null) return null;
 
-            return await Task.Run<AtomFeed>(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
+            return await Task.Run(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
         }
 
         private NameValueCollection CreateOpenSearchParametersFromItem(IItem item, string identifierRegex = null)
@@ -149,7 +149,7 @@ namespace Terradue.Stars.Data.Suppliers
             if (nvc == null) return null;
             logger.LogDebug("OpenSearch parameters: {0}", string.Join(",", nvc.AllKeys.Select(k => $"{k}={nvc[k]}")));
 
-            AtomFeed atomFeed = await Task.Run<AtomFeed>(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
+            AtomFeed atomFeed = await Task.Run(() => (AtomFeed)opensearchEngine.Query(openSearchable, nvc, typeof(AtomFeed)));
 
             return new OpenSearchResultFeedRoutable(atomFeed, new Uri("os://opensearch"), logger);
         }
@@ -221,7 +221,7 @@ namespace Terradue.Stars.Data.Suppliers
             // We support only the comparison between a property and a literal
             // So we extract the property and the literal
             string propertyName = null;
-            Itenso.TimePeriod.ITimeInterval timeInterval = null;
+            ITimeInterval timeInterval = null;
             foreach (var arg in temporalPredicate.Args)
             {
                 if (arg is PropertyRef propertyRef)
@@ -549,8 +549,7 @@ namespace Terradue.Stars.Data.Suppliers
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}platform", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
                     return;
                 case "datetime":
-                    InstantLiteral instantLiteral = value as InstantLiteral;
-                    if (instantLiteral == null)
+                    if (!(value is InstantLiteral instantLiteral))
                     {
                         throw new NotSupportedException("The OpenSearchableSupplier supplier cannot search for resource from a search expression with comparison predicate on datetime property with other than instant literal");
                     }

@@ -1,7 +1,4 @@
-using System;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
+﻿using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Interface.Supplier
 {

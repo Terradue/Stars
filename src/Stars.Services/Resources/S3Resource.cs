@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,14 +19,14 @@ namespace Terradue.Stars.Services.Resources
 
         public S3Resource(S3Url url, IAmazonS3 client)
         {
-            this.s3Url = url;
+            s3Url = url;
             Client = client;
         }
 
         public S3Resource(IAsset asset, IAmazonS3 client)
         {
-            this.s3Url = S3Url.ParseUri(asset.Uri);
-            this.requester_pays = asset.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+            s3Url = S3Url.ParseUri(asset.Uri);
+            requester_pays = asset.Properties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
                                                   .GetProperty<bool?>(Stac.Extensions.Storage.StorageStacExtension.RequesterPaysField);
             Client = client;
         }
@@ -108,7 +108,7 @@ namespace Terradue.Stars.Services.Resources
             {
                 throw new InvalidOperationException("Cannot copy between different endpoints");
             }
-            if (this.ContentLength > (ulong)5 * 1024 * 1024 * 1024)
+            if (ContentLength > (ulong)5 * 1024 * 1024 * 1024)
             {
                 return await CopyToMultiPartAsync(s3outputStreamResource, ct);
             }
@@ -136,13 +136,13 @@ namespace Terradue.Stars.Services.Resources
                 await Client.InitiateMultipartUploadAsync(initiateRequest);
 
             // Save the upload ID.
-            String uploadId = initResponse.UploadId;
+            string uploadId = initResponse.UploadId;
 
             // Get the size of the object.
             GetObjectMetadataRequest metadataRequest = new GetObjectMetadataRequest
             {
-                BucketName = this.S3Uri.Bucket,
-                Key = this.S3Uri.Key
+                BucketName = S3Uri.Bucket,
+                Key = S3Uri.Key
             };
 
             GetObjectMetadataResponse metadataResponse =
@@ -159,8 +159,8 @@ namespace Terradue.Stars.Services.Resources
                 {
                     DestinationBucket = s3outputStreamResource.S3Uri.Bucket,
                     DestinationKey = s3outputStreamResource.S3Uri.Key,
-                    SourceBucket = this.S3Uri.Bucket,
-                    SourceKey = this.S3Uri.Key,
+                    SourceBucket = S3Uri.Bucket,
+                    SourceKey = S3Uri.Key,
                     UploadId = uploadId,
                     FirstByte = bytePosition,
                     LastByte = bytePosition + partSize - 1 >= objectSize ? objectSize - 1 : bytePosition + partSize - 1,

@@ -1,9 +1,9 @@
-﻿using System.Xml.Serialization;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using System.Globalization;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.Xml.Serialization;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
 {
@@ -720,7 +720,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         {
             get
             {
-                return new XmlKeyTextValueListWrapper<OneImage>(() => this.Images);
+                return new XmlKeyTextValueListWrapper<OneImage>(() => Images);
             }
             set
             {

@@ -1,22 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Configuration;
-using Terradue.Stars.Interface.Processing;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Model.Stac;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Sar;
-using System.Threading;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Processing;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Data.Model.Metadata
 {
@@ -30,7 +26,7 @@ namespace Terradue.Stars.Data.Model.Metadata
         {
             this.logger = logger;
             this.resourceServiceProvider = resourceServiceProvider;
-            this.IncludeProviderProperty = true;
+            IncludeProviderProperty = true;
         }
 
         public int Priority { get; set; }
@@ -51,8 +47,7 @@ namespace Terradue.Stars.Data.Model.Metadata
 
         public async Task<IResource> ProcessAsync(IResource resource, IDestination destination, CancellationToken ct, string suffix = null)
         {
-            IItem item = resource as IItem;
-            if (item == null) return resource;
+            if (!(resource is IItem item)) return resource;
 
             return await ExtractMetadata(item, suffix);
         }
@@ -98,7 +93,7 @@ namespace Terradue.Stars.Data.Model.Metadata
                 return Regex.IsMatch(a.Uri.ToString(), pattern);
             });
         }
-        
+
         protected Dictionary<string, IAsset> FindAllAssetsFromFileNameRegex(IAssetsContainer assetsContainer, string pattern)
         {
             return assetsContainer.Assets.Where(a =>
@@ -123,12 +118,12 @@ namespace Terradue.Stars.Data.Model.Metadata
 
         protected EoBandCommonName GetEoCommonName(string imageColor)
         {
-            EoBandCommonName eoBandCommonName = default(EoBandCommonName);
 
-            if ( Enum.TryParse<EoBandCommonName>(imageColor, true, out eoBandCommonName))
+            if (Enum.TryParse(imageColor, true, out EoBandCommonName eoBandCommonName))
                 return eoBandCommonName;
-                
-            switch ( imageColor.ToLower()){
+
+            switch (imageColor.ToLower())
+            {
                 case "near infrared":
                     return EoBandCommonName.nir;
             }
@@ -139,7 +134,7 @@ namespace Terradue.Stars.Data.Model.Metadata
         protected ObservationDirection? ParseObservationDirection(string lookDirection)
         {
             ObservationDirection observationDirection = ObservationDirection.Left;
-            if ( Enum.TryParse<ObservationDirection>(lookDirection, out observationDirection) )
+            if (Enum.TryParse(lookDirection, out observationDirection))
                 return observationDirection;
 
             if (lookDirection.ToLower().StartsWith("r"))

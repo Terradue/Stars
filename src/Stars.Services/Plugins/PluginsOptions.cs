@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Plugins
@@ -11,8 +10,8 @@ namespace Terradue.Stars.Services.Plugins
             if (pluginsOptions == null) return;
             foreach (var pluginsOption in pluginsOptions)
             {
-                this.Remove(pluginsOption.Key);
-                this.Add(pluginsOption.Key, pluginsOption.Value);
+                Remove(pluginsOption.Key);
+                Add(pluginsOption.Key, pluginsOption.Value);
             }
         }
     }

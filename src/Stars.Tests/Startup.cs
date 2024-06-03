@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.Loader;
-using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

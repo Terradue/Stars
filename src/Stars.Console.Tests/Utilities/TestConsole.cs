@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Xunit.Abstractions;
 using McMaster.Extensions.CommandLineUtils;
+using Xunit.Abstractions;
 using Xunit.Sdk;
 
 namespace Stars.Console.Tests

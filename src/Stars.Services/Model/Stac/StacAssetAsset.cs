@@ -1,17 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using Stac;
 using Stac.Extensions.Alternate;
 using Stac.Extensions.File;
 using Terradue.Stars.Interface;
-
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -26,17 +22,17 @@ namespace Terradue.Stars.Services.Model.Stac
             this.asset = asset;
             this.parent = parent;
             if (asset.Uri.IsAbsoluteUri)
-                this.uri = asset.Uri;
+                uri = asset.Uri;
             else
             {
                 if (parent != null)
                 {
                     if (parent.Uri.IsAbsoluteUri)
-                        this.uri = new Uri(parent.Uri, asset.Uri);
+                        uri = new Uri(parent.Uri, asset.Uri);
                     else
-                        this.uri = new Uri(parent.Uri.ToString() + "/" + asset.Uri.ToString(), UriKind.Relative);
+                        uri = new Uri(parent.Uri.ToString() + "/" + asset.Uri.ToString(), UriKind.Relative);
                 }
-                else this.uri = asset.Uri;
+                else uri = asset.Uri;
             }
         }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
@@ -65,7 +65,7 @@ namespace Terradue.Stars.Services.Processing
             }
         }
 
-        public override System.Uri Uri => asset.Uri;
+        public override Uri Uri => asset.Uri;
 
         // If set to true, detects relative location of parent/generic asset
         // and adjusts included assets' filenames with that directory
@@ -88,7 +88,7 @@ namespace Terradue.Stars.Services.Processing
                     else
                     {
                         string dirName = Path.GetDirectoryName(parentAssetFileName);
-                        ParentAssetBaseDir = String.IsNullOrEmpty(dirName) ? null : dirName;
+                        ParentAssetBaseDir = string.IsNullOrEmpty(dirName) ? null : dirName;
                     }
                 }
                 else
@@ -122,7 +122,7 @@ namespace Terradue.Stars.Services.Processing
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
             zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
-            string subFolder = IsInternalArchive ? String.Empty : AutodetectSubfolder();
+            string subFolder = IsInternalArchive ? string.Empty : AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)
             {

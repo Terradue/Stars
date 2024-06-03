@@ -11,10 +11,10 @@ using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 {
@@ -27,8 +27,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -89,7 +88,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         private string GetProcessingLevel(KanopusVMetadata metadata)
         {
-            return String.Format("L{0}", metadata.GetString("<PASP_ROOT>/cProcLevel"));
+            return string.Format("L{0}", metadata.GetString("<PASP_ROOT>/cProcLevel"));
         }
 
         private IDictionary<string, object> GetCommonMetadata(KanopusVMetadata metadata)
@@ -103,7 +102,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             return properties;
         }
 
-        private void FillBasicsProperties(KanopusVMetadata metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(KanopusVMetadata metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -117,13 +116,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             );
         }
 
-        private void AddOtherProperties(KanopusVMetadata metadata, IDictionary<String, object> properties)
+        private void AddOtherProperties(KanopusVMetadata metadata, IDictionary<string, object> properties)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "Roscosmos", 
+                    "Roscosmos",
                     "Kanopus-V is an Earth observation minisatellite mission of the Russian Space Agency, Roscosmos and ROSHYDROMET/Planeta. The overall objective is to monitor Earth's surface, the atmosphere, ionosphere, and magnetosphere to detect and study the probability of strong earthquake occurrence.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.eoportal.org/satellite-missions/kanopus-v-1")
@@ -141,11 +140,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             if (!DateTime.TryParseExact(metadata.GetString("<PASP_ROOT>/dSessionDateUTC") + " " + metadata.GetString("<PASP_ROOT>/tSessionTimeUTC"),
                 format, null, DateTimeStyles.AssumeUniversal, out dt))
             {
-                int[] date = Array.ConvertAll<string, int>(metadata.GetString("<PASP_ROOT>/dSessionDateUTC").Split('/'),
+                int[] date = Array.ConvertAll(metadata.GetString("<PASP_ROOT>/dSessionDateUTC").Split('/'),
                     s => int.Parse(s));
                 string stime = metadata.GetString("<PASP_ROOT>/tSessionTimeUTC").Split('.')[0];
                 int milli = int.Parse(metadata.GetString("<PASP_ROOT>/tSessionTimeUTC").Split('.')[1]);
-                int[] time = Array.ConvertAll<string, int>(stime.Split(':'),
+                int[] time = Array.ConvertAll(stime.Split(':'),
                     s => int.Parse(s));
                 dt = new DateTime(date[2], date[1], date[0], time[0], time[1], time[2], milli, DateTimeKind.Utc);
             }
@@ -170,21 +169,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         }
 
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(KanopusVMetadata metadata)
+        private IGeometryObject GetGeometry(KanopusVMetadata metadata)
         {
-            List<GeoJSON.Net.Geometry.Position> positions = new List<Position>();
+            List<Position> positions = new List<Position>();
             for (int i = 0; i < metadata.GetString("<Polygon>/bLat").Split(',').Length; i++)
             {
-                positions.Add(new GeoJSON.Net.Geometry.Position(
+                positions.Add(new Position(
                     metadata.GetDouble("<Polygon>/bLat")[i],
                     metadata.GetDouble("<Polygon>/bLon")[i])
                 );
             }
             positions.Add(positions.First());
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
+            LineString lineString = new LineString(
                 positions.ToArray()
             );
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            return new Polygon(new LineString[] { lineString }).NormalizePolygon();
         }
 
 
@@ -210,7 +209,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 for (int i = 0; i < numberOfChannels; i++)
                 {
-                    channelValues = Array.ConvertAll((metadata.GetString("<Ch" + (i + 1) + ">/bSpectralZone").Split(',')), (Double.Parse));
+                    channelValues = Array.ConvertAll((metadata.GetString("<Ch" + (i + 1) + ">/bSpectralZone").Split(',')), (double.Parse));
                     mean = channelValues.Sum() / channelValues.Length;
 
                     if (mean < 0.69 && mean > 0.63)
@@ -290,7 +289,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*MSS.*\.xml");
             if (manifestAsset != null) return manifestAsset;
 
-            throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
+            throw new FileNotFoundException(string.Format("Unable to find the summary file asset"));
         }
 
         public virtual async Task<KanopusVMetadata> ReadMetadata(IAsset manifestAsset)
@@ -314,7 +313,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         public KanopusVMetadata(IAsset summaryAsset)
         {
             this.summaryAsset = summaryAsset;
-            this.properties = new Dictionary<string, Dictionary<string, string>>();
+            properties = new Dictionary<string, Dictionary<string, string>>();
             Assets = new List<string>();
         }
 
@@ -356,7 +355,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 return properties[keys[0]][keys[1]];
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return null;
         }
 
@@ -368,9 +367,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
                 if (long.TryParse(properties[keys[0]][keys[1]], out long value))
                     return value;
                 else
-                    throw new FormatException(String.Format("Invalid value for key '{0}' (not an int)", key));
+                    throw new FormatException(string.Format("Invalid value for key '{0}' (not an int)", key));
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return 0;
         }
 
@@ -382,9 +381,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
                 if (int.TryParse(properties[keys[0]][keys[1]], out int value))
                     return value;
                 else
-                    throw new FormatException(String.Format("Invalid value for key '{0}' (not an int)", key));
+                    throw new FormatException(string.Format("Invalid value for key '{0}' (not an int)", key));
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return 0;
         }
 
@@ -393,10 +392,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             string[] keys = key.Split('/');
             if (properties[keys[0]].ContainsKey(keys[1]))
             {
-                double[] value = Array.ConvertAll(properties[keys[0]][keys[1]].Split(','), (Double.Parse));
+                double[] value = Array.ConvertAll(properties[keys[0]][keys[1]].Split(','), (double.Parse));
                 return value;
             }
-            if (throwIfMissing) throw new Exception(String.Format("No value for key '{0}'", key));
+            if (throwIfMissing) throw new Exception(string.Format("No value for key '{0}'", key));
             return null;
         }
     }

@@ -1,4 +1,4 @@
-namespace Stars.Tests
+﻿namespace Stars.Tests
 {
     public class LocalStackOptions
     {

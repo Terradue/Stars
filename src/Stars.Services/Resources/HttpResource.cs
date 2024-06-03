@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Resources
@@ -22,22 +18,22 @@ namespace Terradue.Stars.Services.Resources
 
         internal HttpResource(Uri url, HttpClient httpClient, HttpCachedHeaders cachedHeaders = null)
         {
-            this._url = url;
-            this._client = httpClient;
-            this._cachedHeaders = cachedHeaders;
+            _url = url;
+            _client = httpClient;
+            _cachedHeaders = cachedHeaders;
         }
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            var res = await this._client.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead, ct);
+            var res = await _client.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead, ct);
             return await res.Content.ReadAsStreamAsync();
         }
 
         public async Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
             var request = new HttpRequestMessage { RequestUri = _url };
-            request.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(0, 1000);
-            return await (await this._client.SendAsync(request, HttpCompletionOption.ResponseContentRead, ct)).Content.ReadAsStreamAsync();
+            request.Headers.Range = new RangeHeaderValue(0, 1000);
+            return await (await _client.SendAsync(request, HttpCompletionOption.ResponseContentRead, ct)).Content.ReadAsStreamAsync();
         }
 
         public ContentType ContentType => new ContentType(CachedHeaders?.ContentType?.ToString() ?? "application/octet-stream");

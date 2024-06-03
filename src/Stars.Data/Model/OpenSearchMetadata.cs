@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
-using Terradue.OpenSearch.Result;
-
-namespace Terradue.Stars.Data.Model
+﻿namespace Terradue.Stars.Data.Model
 {
     public static class OpenSearchMetadata
     {

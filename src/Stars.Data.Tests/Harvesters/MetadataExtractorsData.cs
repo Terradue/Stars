@@ -1,13 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Terradue.Stars.Data.Model.Metadata;
-using System.Reflection;
-using Terradue.Stars.Interface.Processing;
-using Xunit.Abstractions;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Terradue.Stars.Data.Model.Metadata;
+using Terradue.Stars.Interface.Processing;
 
 namespace Terradue.Data.Tests.Harvesters
 {

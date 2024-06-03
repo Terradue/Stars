@@ -1,11 +1,11 @@
-using Amazon.S3;
-using Amazon.S3.Model;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.S3;
+using Amazon.S3.Model;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -45,7 +45,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         }
 
         public S3UploadStream(IAmazonS3 s3, Uri s3uri, long partLength = DEFAULT_PART_LENGTH)
-            : this (s3, s3uri.Host, s3uri.LocalPath.Substring(1), partLength)
+            : this(s3, s3uri.Host, s3uri.LocalPath.Substring(1), partLength)
         {
         }
 
@@ -70,7 +70,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             _metadata = null;
             base.Dispose(disposing);
         }
-    
+
         public override bool CanRead => false;
         public override bool CanSeek => false;
         public override bool CanWrite => true;
@@ -93,11 +93,12 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         private void StartNewPart()
         {
-            if (_metadata.CurrentStream != null) {
+            if (_metadata.CurrentStream != null)
+            {
                 Flush(false);
             }
             _metadata.CurrentStream = new MemoryStream();
-            _metadata.PartLength = Math.Min(MAX_PART_LENGTH, Math.Max(_metadata.PartLength, (_metadata.PartCount / 2 + 1) * MIN_PART_LENGTH)); 
+            _metadata.PartLength = Math.Min(MAX_PART_LENGTH, Math.Max(_metadata.PartLength, (_metadata.PartCount / 2 + 1) * MIN_PART_LENGTH));
         }
 
         public override void Flush()
@@ -111,14 +112,15 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 !disposing)
                 return;
 
-            if (_metadata.UploadId == null) {
+            if (_metadata.UploadId == null)
+            {
                 _metadata.UploadId = _s3.InitiateMultipartUploadAsync(new InitiateMultipartUploadRequest()
                 {
                     BucketName = _metadata.BucketName,
                     Key = _metadata.Key
                 }).GetAwaiter().GetResult().UploadId;
             }
-            
+
             if (_metadata.CurrentStream != null)
             {
                 var i = ++_metadata.PartCount;
@@ -150,7 +152,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
             Task.WaitAll(_metadata.Tasks.ToArray());
 
-            if (Length > 0) {
+            if (Length > 0)
+            {
                 _s3.CompleteMultipartUploadAsync(new CompleteMultipartUploadRequest()
                 {
                     BucketName = _metadata.BucketName,

@@ -1,5 +1,4 @@
-using System;
-using System.IO;
+﻿using System;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Stac;
@@ -17,8 +16,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise
 
         public S1L1AssetNoise(l1NoiseVectorType l1Calibration, IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider) : base(resourceServiceProvider)
         {
-            this.l1Noise = l1Calibration;
-            this.noiseAsset = calibrationAsset;
+            l1Noise = l1Calibration;
+            noiseAsset = calibrationAsset;
         }
 
         public async static Task<S1L1AssetNoise> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
@@ -60,7 +59,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise
 
         public override string GetId()
         {
-            return String.Format("noise-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            return string.Format("noise-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
         }
 
         private object GetStripe()

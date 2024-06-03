@@ -1,9 +1,6 @@
-using System;
-using System.IO;
-using System.Net.Mime;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Stac;
 
 namespace Terradue.Stars.Interface
 {

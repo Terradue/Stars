@@ -1,6 +1,4 @@
-using System;
-using McMaster.Extensions.CommandLineUtils;
-using Terradue.Stars.Console;
+﻿using Terradue.Stars.Console;
 using Xunit;
 using Xunit.Abstractions;
 

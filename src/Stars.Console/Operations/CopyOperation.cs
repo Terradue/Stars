@@ -1,30 +1,27 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Stac;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Processing;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Plugins;
 using Terradue.Stars.Services.Processing;
+using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Store;
+using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Supplier;
-using Terradue.Stars.Interface.Processing;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Services;
-using Terradue.Stars.Services.Store;
-using System.Net;
-using Newtonsoft.Json;
-using System.Text.RegularExpressions;
-using Terradue.Stars.Services.Plugins;
-using Stac;
-using System.Threading;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -340,16 +337,16 @@ namespace Terradue.Stars.Console.Operations
 
         protected override async Task ExecuteAsync(CancellationToken ct)
         {
-            this.routingService = ServiceProvider.GetService<RouterService>();
-            this.carrierManager = ServiceProvider.GetService<CarrierManager>();
-            this.processingManager = ServiceProvider.GetService<ProcessingManager>();
-            this.storeService = ServiceProvider.GetService<StacStoreService>();
-            this.translatorManager = ServiceProvider.GetService<TranslatorManager>();
-            this.supplierManager = ServiceProvider.GetService<SupplierManager>();
-            this.stacLinkTranslator = ServiceProvider.GetService<StacLinkTranslator>();
-            this.resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
+            routingService = ServiceProvider.GetService<RouterService>();
+            carrierManager = ServiceProvider.GetService<CarrierManager>();
+            processingManager = ServiceProvider.GetService<ProcessingManager>();
+            storeService = ServiceProvider.GetService<StacStoreService>();
+            translatorManager = ServiceProvider.GetService<TranslatorManager>();
+            supplierManager = ServiceProvider.GetService<SupplierManager>();
+            stacLinkTranslator = ServiceProvider.GetService<StacLinkTranslator>();
+            resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
             var stacRouter = ServiceProvider.GetService<StacRouter>();
-            await this.storeService.InitAsync(ct, !AppendCatalog);
+            await storeService.InitAsync(ct, !AppendCatalog);
             InitRoutingTask();
             await PrepareNewRouteAsync(null, storeService.RootCatalogNode, null, null, ct);
             routingService.OnRoutingException((res, router, ex, state, ct) => Task.FromResult(OnRoutingException(res, router, ex, state, ct)));
@@ -372,7 +369,7 @@ namespace Terradue.Stars.Console.Operations
                 CopyOperationState copyState = state as CopyOperationState;
                 stacNodes.Add(copyState.CurrentStacObject);
             }
-            storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.SelectMany<StacNode, IResource>(sn =>
+            storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.SelectMany(sn =>
             {
                 if (sn is StacItemNode) return new IResource[] { sn };
                 if (sn is StacCatalogNode) return sn.GetRoutes(stacRouter);

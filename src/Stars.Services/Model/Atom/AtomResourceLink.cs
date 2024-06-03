@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Mime;
 using Terradue.ServiceModel.Syndication;
@@ -12,7 +12,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public AtomResourceLink(SyndicationLink l)
         {
-            this.atomLink = l;
+            atomLink = l;
         }
 
         public Uri Uri => atomLink.Uri;

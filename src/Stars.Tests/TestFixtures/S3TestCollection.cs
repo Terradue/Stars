@@ -1,7 +1,5 @@
+﻿using Stars.Tests.TestFixtures;
 using Xunit;
-using System.Net;
-using System.Net.Http;
-using Stars.Tests.TestFixtures;
 
 namespace Stars.Tests
 {

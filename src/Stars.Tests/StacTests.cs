@@ -1,17 +1,14 @@
-using System;
+﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
-using Stac;
-using Stac.Exceptions;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier.Destination;
-using Xunit;
-using Microsoft.Extensions.Logging;
 using MELT;
+using Microsoft.Extensions.Logging;
+using Stac.Exceptions;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
-using System.Threading;
+using Terradue.Stars.Services.Model.Stac;
+using Xunit;
 
 namespace Stars.Tests
 {
@@ -33,7 +30,7 @@ namespace Stars.Tests
         public async Task FolderRouteAsync()
         {
             var route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("file://" + Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json"))), CancellationToken.None);
-            StacRouter router = new StacRouter(resourceServiceProvider, loggerFactory.CreateLogger<StacRouter>()); 
+            StacRouter router = new StacRouter(resourceServiceProvider, loggerFactory.CreateLogger<StacRouter>());
             Assert.True(router.CanRoute(route));
             route = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(Path.Join(Environment.CurrentDirectory, "../../../In/stacRoute/catalog.json"))), CancellationToken.None);
             Assert.True(router.CanRoute(route));
@@ -46,7 +43,7 @@ namespace Stars.Tests
             StacRouter router = new StacRouter(null, null);
             Assert.False(router.CanRoute(route));
             Assert.Empty(loggerFactory.Sink.LogEntries);
-            router = new StacRouter(resourceServiceProvider, loggerFactory.CreateLogger<StacRouter>());;
+            router = new StacRouter(resourceServiceProvider, loggerFactory.CreateLogger<StacRouter>()); ;
             Assert.False(router.CanRoute(route));
             var log = Assert.Single(loggerFactory.Sink.LogEntries);
             Assert.Contains("Cannot read STAC object from", log.Message);

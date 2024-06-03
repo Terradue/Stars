@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -115,7 +115,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         {
             if (baseCollection == null)
                 throw new ArgumentNullException();
-            this.getCollection = () => baseCollection;
+            getCollection = () => baseCollection;
         }
 
         public CollectionWrapper(Func<ICollection<T>> getCollection)
@@ -129,8 +129,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         {
             if (other == Collection)
                 return true;
-            var otherWrapper = other as CollectionWrapper<T>;
-            return otherWrapper != null && otherWrapper.IsWrapperFor(Collection);
+            return other is CollectionWrapper<T> otherWrapper && otherWrapper.IsWrapperFor(Collection);
         }
 
         ICollection<T> Collection { get { return getCollection(); } }

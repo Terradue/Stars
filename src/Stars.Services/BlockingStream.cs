@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Concurrent;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,7 +33,7 @@ namespace Terradue.Stars.Services
             _doneWritingHandleIndex = 1;
             _lockForRead = new object();
             _lockForAll = new object();
-            this._maxChunk = maxChunk;
+            _maxChunk = maxChunk;
         }
 
         public BlockingStream(ulong? contentRequestLength, int maxChunk = 100) : this(maxChunk)
@@ -235,7 +232,7 @@ namespace Terradue.Stars.Services
             }
         }
 
-        protected String BytesToString(long byteCount)
+        protected string BytesToString(long byteCount)
         {
             string[] suf = { "B", "KB", "MB", "GB", "TB", "PB", "EB" }; //Longs run out around EB
             if (byteCount <= 0)
@@ -246,7 +243,7 @@ namespace Terradue.Stars.Services
             return (Math.Sign(byteCount) * num).ToString() + suf[place];
         }
 
-        public override Task CopyToAsync(Stream destination, Int32 bufferSize, CancellationToken cancellationToken)
+        public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken)
         {
             if (destination == null)
                 throw new ArgumentNullException("destination");
@@ -264,7 +261,7 @@ namespace Terradue.Stars.Services
             return CopyToAsyncInternal(destination, bufferSize, cancellationToken);
         }
 
-        private async Task CopyToAsyncInternal(Stream destination, Int32 bufferSize, CancellationToken cancellationToken)
+        private async Task CopyToAsyncInternal(Stream destination, int bufferSize, CancellationToken cancellationToken)
         {
             byte[] buffer = new byte[bufferSize];
             int bytesRead;

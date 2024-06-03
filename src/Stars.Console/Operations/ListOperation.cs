@@ -1,19 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router;
-
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
 using Terradue.Stars.Interface;
-using System.IO;
-using System.Threading;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -34,7 +30,7 @@ namespace Terradue.Stars.Console.Operations
         private int recursivity = 1;
         private string[] inputs = new string[0];
 
-        public ListOperation(IConsole console): base(console)
+        public ListOperation(IConsole console) : base(console)
         {
 
         }
@@ -52,12 +48,12 @@ namespace Terradue.Stars.Console.Operations
             routingService.OnBranching((parentRoute, route, siblings, state, ct) => PrepareNewRoute(parentRoute, route, siblings, state, ct));
         }
 
-        private Task<object> PrepareNewRoute(IResource parentRoute, IResource route, IEnumerable<IResource> siblings, object state, System.Threading.CancellationToken ct)
+        private Task<object> PrepareNewRoute(IResource parentRoute, IResource route, IEnumerable<IResource> siblings, object state, CancellationToken ct)
         {
             if (state == null) return Task.FromResult<object>(new ListOperationState("", 1));
 
             ListOperationState operationState = state as ListOperationState;
-            if (operationState.Depth == 0) return Task.FromResult<object>(state);
+            if (operationState.Depth == 0) return Task.FromResult(state);
 
             string newPrefix = operationState.Prefix.Replace('─', ' ').Replace('└', ' ');
             int i = siblings.ToList().IndexOf(route);
@@ -70,20 +66,20 @@ namespace Terradue.Stars.Console.Operations
             return Task.FromResult<object>(new ListOperationState(newPrefix, operationState.Depth + 1));
         }
 
-        private async Task<object> PrintItem(IItem node, IRouter router, object state, System.Threading.CancellationToken ct)
+        private async Task<object> PrintItem(IItem node, IRouter router, object state, CancellationToken ct)
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
             _console.ForegroundColor = GetColorFromType(node.ResourceType);
-            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Title).Truncate(99), node.ContentType));
+            await _console.Out.WriteLineAsync(string.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Title).Truncate(99), node.ContentType));
             _console.ForegroundColor = ConsoleColor.White;
             await PrintAssets(node, router, operationState.Prefix);
             return state;
         }
 
-        private async Task<object> PrintBranchingNode(ICatalog node, IRouter router, object state, System.Threading.CancellationToken ct)
+        private async Task<object> PrintBranchingNode(ICatalog node, IRouter router, object state, CancellationToken ct)
         {
             _console.ForegroundColor = GetColorFromType(node.ResourceType);
             // Print the information about the resource
@@ -91,24 +87,24 @@ namespace Terradue.Stars.Console.Operations
             string resourcePrefix1 = operationState.Prefix;
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
-            await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Title).Truncate(99), node.ContentType));
+            await _console.Out.WriteLineAsync(string.Format("{0,-80} {1,40}", (resourcePrefix1 + node.Title).Truncate(99), node.ContentType));
             // await PrintAssets(node, router, operationState.Prefix);
 
             return state;
         }
 
-        private async Task<object> PrintRouteInfo(IResource route, IRouter router, Exception exception, object state, System.Threading.CancellationToken ct)
+        private async Task<object> PrintRouteInfo(IResource route, IRouter router, Exception exception, object state, CancellationToken ct)
         {
             ListOperationState operationState = state as ListOperationState;
             string resourcePrefix1 = operationState.Prefix;
             if (router != null)
                 resourcePrefix1 = string.Format("[{0}] {1}", router.Label, operationState.Prefix);
             _console.ForegroundColor = GetColorFromType(route.ResourceType);
-            await _console.Out.WriteAsync(String.Format("{0,-80} {1,40}", (resourcePrefix1 + route.Uri).Truncate(99), route.ContentType));
+            await _console.Out.WriteAsync(string.Format("{0,-80} {1,40}", (resourcePrefix1 + route.Uri).Truncate(99), route.ContentType));
             if (exception != null)
             {
                 _console.ForegroundColor = ConsoleColor.Red;
-                await _console.Out.WriteLineAsync(String.Format(" -> {0}", exception.Message.Truncate(99)));
+                await _console.Out.WriteLineAsync(string.Format(" -> {0}", exception.Message.Truncate(99)));
             }
             else
                 await _console.Out.WriteLineAsync();
@@ -118,8 +114,8 @@ namespace Terradue.Stars.Console.Operations
 
         protected override async Task ExecuteAsync(CancellationToken ct)
         {
-            this.routingService = ServiceProvider.GetService<RouterService>();
-            this.resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
+            routingService = ServiceProvider.GetService<RouterService>();
+            resourceServiceProvider = ServiceProvider.GetService<IResourceServiceProvider>();
             InitRoutingTask();
             var tasks = Inputs.Select(input => resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(input)), ct));
             List<IResource> routes = (await Task.WhenAll(tasks)).Cast<IResource>().ToList();
@@ -135,9 +131,9 @@ namespace Terradue.Stars.Console.Operations
         private async Task PrintAssets(IItem resource, IRouter router, string prefix)
         {
             // List assets
-            if (!SkippAssets && resource is IAssetsContainer)
+            if (!SkippAssets && resource is IAssetsContainer container)
             {
-                IReadOnlyDictionary<string, IAsset> assets = ((IAssetsContainer)resource).Assets;
+                IReadOnlyDictionary<string, IAsset> assets = container.Assets;
                 for (int i = 0; i < assets.Count(); i++)
                 {
                     string newPrefix = prefix.Replace('─', ' ').Replace('└', ' ');
@@ -154,10 +150,10 @@ namespace Terradue.Stars.Console.Operations
                         assetPrefix = string.Format("[{0}] {1}", router.Label, assetPrefix);
                     var asset = assets.ElementAt(i).Value;
                     string title = asset.Title;
-                    if ( string.IsNullOrEmpty(title) )
+                    if (string.IsNullOrEmpty(title))
                         title = Path.GetFileName(asset.Uri.ToString());
                     title = string.Format("[{0}] {1}", assets.ElementAt(i).Key, title);
-                    await _console.Out.WriteLineAsync(String.Format("{0,-80} {1,40}", (assetPrefix + title).Truncate(99), asset.ContentType));
+                    await _console.Out.WriteLineAsync(string.Format("{0,-80} {1,40}", (assetPrefix + title).Truncate(99), asset.ContentType));
                     _console.ForegroundColor = ConsoleColor.White;
                 }
             }

@@ -1,5 +1,4 @@
-using System;
-using Amazon.S3;
+﻿using Amazon.S3;
 
 namespace Terradue.Stars.Services.Resources
 {
@@ -28,7 +27,7 @@ namespace Terradue.Stars.Services.Resources
             _serviceURL = serviceURL;
             if (!string.IsNullOrEmpty(_serviceURL))
             {
-                this.ServiceURL = _serviceURL;
+                ServiceURL = _serviceURL;
             }
         }
     }

@@ -1,17 +1,15 @@
+﻿using System;
 using System.Linq;
-using Newtonsoft.Json;
-using Xunit;
-using Stac.Extensions.Projection;
-using Terradue.Stars.Data.Translators;
-using Stac;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Model.Atom;
 using System.Threading;
 using System.Xml;
-using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
-using System;
-using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using Stac;
 using Terradue.Metadata.EarthObservation.Ogc.Extensions;
+using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.Stars.Data.Translators;
+using Terradue.Stars.Services.Model.Atom;
+using Terradue.Stars.Services.Model.Stac;
+using Xunit;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -28,7 +26,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-d0534740-b97b-11eb-82cf-0a580a830350/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://eoepca-ades/wf-d0534740-b97b-11eb-82cf-0a580a830350/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808/S2A_MSIL2A_20191216T004701_N0213_R102_T53HPA_20191216T024808.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -52,7 +50,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://dc-development-catalog/calls/call-969/calibratedDatasets/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated/S1A_OPER_SAR_EOSSP__CORE_L1A_OLF_20211117T174240-calibrated.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -80,7 +78,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://eoepca-ades/wf-test/test.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -107,11 +105,11 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://eoepca-ades/wf-test/test.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
-            Terradue.ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
+            ServiceModel.Syndication.SyndicationLink legendLink = atomItemNode.AtomItem.Links.FirstOrDefault(r => r.RelationshipType == "legend");
 
             Assert.NotNull(legendLink);
             Assert.Equal("https://test.com/legend.png", legendLink.Uri.AbsoluteUri);
@@ -128,7 +126,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://eoepca-ades/wf-test/test.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://eoepca-ades/wf-test/test.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -151,7 +149,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://dc-acceptance-catalog/calls/call-969/calibratedDatasets/act-813_Auxiliary_Dataset_HAND-calibrated/act-813_Auxiliary_Dataset_HAND-calibrated.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://dc-acceptance-catalog/calls/call-969/calibratedDatasets/act-813_Auxiliary_Dataset_HAND-calibrated/act-813_Auxiliary_Dataset_HAND-calibrated.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -174,7 +172,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://cpe-operations-catalog/calls/call-997/datasets/20240320_041309_SN24_L1_SR/20240320_041309_SN24_L1_SR.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -189,7 +187,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://cpe-operations-catalog/calls/call-6/calibratedDatasets/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957-calibrated/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://cpe-operations-catalog/calls/call-6/calibratedDatasets/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957-calibrated/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957/S2A_MSIL2A_20221221T100431_N0509_R122_T33TWM_20221221T141957.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -226,7 +224,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("s3://cpe-operations-catalog/calls/call-6/calibratedDatasets/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A-calibrated/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("s3://cpe-operations-catalog/calls/call-6/calibratedDatasets/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A-calibrated/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A/S1A_IW_GRDH_1SDV_20220903T165054_20220903T165119_044843_055B06_B33A.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -259,7 +257,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacItemToAtomItemTranslator stacItemToAtomItemTranslator = new StacItemToAtomItemTranslator(ServiceProvider);
 
-            StacItemNode stacItemNode = new StacItemNode(stacItem, new System.Uri("https://supervisor.disasterscharter.org/api/activations/act-874/vaps/act-874-vap-1002-6/items/act-874-vap-1002-6.json"));
+            StacItemNode stacItemNode = new StacItemNode(stacItem, new Uri("https://supervisor.disasterscharter.org/api/activations/act-874/vaps/act-874-vap-1002-6/items/act-874-vap-1002-6.json"));
 
             AtomItemNode atomItemNode = await stacItemToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -277,7 +275,7 @@ namespace Terradue.Data.Tests.Translators
 
         }
 
-        
+
     }
 
 }

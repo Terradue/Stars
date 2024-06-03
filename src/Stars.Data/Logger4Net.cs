@@ -1,9 +1,7 @@
+﻿using System.Reflection;
 using log4net;
-using log4net.Repository.Hierarchy;
 using log4net.Core;
-using log4net.Appender;
-using log4net.Layout;
-using System.Reflection;
+using log4net.Repository.Hierarchy;
 
 namespace Terradue.Stars.Data
 {
@@ -13,7 +11,7 @@ namespace Terradue.Stars.Data
 
         public static void Setup(Microsoft.Extensions.Logging.ILogger logger)
         {
-            if ( Configured ) return;
+            if (Configured) return;
 
             Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository(Assembly.GetAssembly(typeof(Logger4Net)));
 

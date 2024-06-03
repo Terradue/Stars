@@ -21,12 +21,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
-using System.Linq;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using GeoJSON.Net.Geometry;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 using GeoJSON.Net.Feature;
+using GeoJSON.Net.Geometry;
 using Stac.Collection;
 
 namespace Terradue.Stars.Geometry.Wkt

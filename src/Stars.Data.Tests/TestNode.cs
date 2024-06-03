@@ -1,15 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
 using Itenso.TimePeriod;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
 
 namespace Terradue.Data.Tests
 {
@@ -19,7 +16,7 @@ namespace Terradue.Data.Tests
 
         public TestItem(string folderPath)
         {
-            this.directory = new DirectoryInfo(folderPath);
+            directory = new DirectoryInfo(folderPath);
         }
 
         public string Title => directory.FullName;

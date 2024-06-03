@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Stac;
+﻿using Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels

@@ -1,17 +1,15 @@
-using System;
+﻿using System;
 using System.IO;
+using System.IO.Abstractions;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier.Destination;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
-using System.Security.AccessControl;
-using System.Net;
-using System.IO.Abstractions;
-using System.Threading;
+using Terradue.Stars.Interface.Supplier;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -49,11 +47,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             LocalDelivery localDelivery = delivery as LocalDelivery;
             LocalFileResource localRoute = new LocalFileResource(fileSystem, localDelivery.LocalPath, localDelivery.Resource.ResourceType);
 
-            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(delivery.Resource, ct);
-
-            if (inputStreamResource == null)
-                throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Resource.Uri));
-
+            IStreamResource inputStreamResource = await resourceServiceProvider.GetStreamResourceAsync(delivery.Resource, ct) ?? throw new InvalidDataException(string.Format("There is no streamable content in {0}", delivery.Resource.Uri));
             if (!overwrite && localRoute.File.Exists && inputStreamResource.ContentLength > 0 &&
                Convert.ToUInt64(localRoute.File.Length) == inputStreamResource.ContentLength)
             {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
@@ -7,9 +7,7 @@ using Amazon;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
-using Amazon.Runtime.Internal;
 using Amazon.S3;
-using Amazon.S3.Model;
 using Amazon.SecurityToken;
 using Amazon.SecurityToken.Model;
 using Microsoft.Extensions.Configuration;
@@ -42,11 +40,7 @@ namespace Terradue.Stars.Services.Resources
         {
             var s3Section = configuration.GetSection("S3");
             var servicesSection = s3Section.GetSection("Services");
-            AWSOptions awsOptions = servicesSection.GetAWSOptions(serviceName);
-            if (awsOptions == null)
-            {
-                throw new Exception($"Service {serviceName} not found in S3 configuration");
-            }
+            AWSOptions awsOptions = servicesSection.GetAWSOptions(serviceName) ?? throw new Exception($"Service {serviceName} not found in S3 configuration");
             awsOptions.Credentials = GetConfiguredCredentials(serviceName);
             return awsOptions.CreateServiceClient<IAmazonS3>();
         }
@@ -125,7 +119,7 @@ namespace Terradue.Stars.Services.Resources
 
             if (!string.IsNullOrEmpty(s3Configuration.Value?.AccessKey) && !string.IsNullOrEmpty(s3Configuration.Value?.SecretKey))
             {
-                if ( !string.IsNullOrEmpty(s3Configuration.Value?.SessionToken))
+                if (!string.IsNullOrEmpty(s3Configuration.Value?.SessionToken))
                 {
                     return new SessionAWSCredentials(s3Configuration.Value.AccessKey, s3Configuration.Value.SecretKey, s3Configuration.Value.SessionToken);
                 }
@@ -144,8 +138,7 @@ namespace Terradue.Stars.Services.Resources
                 if (!string.IsNullOrEmpty(options.Profile))
                 {
                     var chain = new CredentialProfileStoreChain(options.ProfilesLocation);
-                    AWSCredentials result;
-                    if (chain.TryGetAWSCredentials(options.Profile, out result))
+                    if (chain.TryGetAWSCredentials(options.Profile, out AWSCredentials result))
                     {
                         logger?.LogInformation($"Found AWS credentials for the profile {options.Profile}");
                         return result;
@@ -183,8 +176,7 @@ namespace Terradue.Stars.Services.Resources
                 if (!string.IsNullOrEmpty(options.Profile))
                 {
                     var chain = new CredentialProfileStoreChain(options.ProfilesLocation);
-                    AWSCredentials result;
-                    if (chain.TryGetAWSCredentials(options.Profile, out result))
+                    if (chain.TryGetAWSCredentials(options.Profile, out AWSCredentials result))
                     {
                         logger?.LogInformation($"Found AWS credentials for the profile {options.Profile}");
                         return result;
@@ -242,12 +234,7 @@ namespace Terradue.Stars.Services.Resources
         public S3Configuration GetAmazonS3Config(S3Url s3Url)
         {
             var s3Configuration = s3Options.CurrentValue.GetS3Configuration(s3Url.ToString());
-            AWSOptions awsOptions = GetNamedAWSOptionsOrDefault(s3Configuration.Key);
-
-            if (awsOptions == null)
-            {
-                throw new Exception($"Service for {s3Url} not found in S3 configuration");
-            }
+            AWSOptions awsOptions = GetNamedAWSOptionsOrDefault(s3Configuration.Key) ?? throw new Exception($"Service for {s3Url} not found in S3 configuration");
 
             // If AWSOptions has no ServiceURL, try to use the derived one from the S3Url
             if (string.IsNullOrEmpty(awsOptions.DefaultClientConfig.ServiceURL) && s3Url.EndpointUrl != null)

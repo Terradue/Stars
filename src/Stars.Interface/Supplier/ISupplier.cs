@@ -1,9 +1,6 @@
-using Stac.Api.Interfaces;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
+using Stac.Api.Interfaces;
 
 namespace Terradue.Stars.Interface.Supplier
 {

@@ -1,8 +1,6 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Mime;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Stac;
 using Terradue.Stars.Interface;
 
@@ -32,12 +30,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Preview
 
             var filename = Path.GetFileName(previewAsset.Uri.ToString());
 
-            if ( filename == "quick-look.png")
-                    stacAsset.Roles.Add("thumbnail");
-            if ( filename == "map-overlay.kml")
-                    stacAsset.Roles.Add("kml");
-            if ( filename == "logo.png")
-                    stacAsset.Roles.Add("logo");
+            if (filename == "quick-look.png")
+                stacAsset.Roles.Add("thumbnail");
+            if (filename == "map-overlay.kml")
+                stacAsset.Roles.Add("kml");
+            if (filename == "logo.png")
+                stacAsset.Roles.Add("logo");
 
             return stacAsset;
         }
@@ -78,7 +76,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Preview
         public override StacAsset CreateMetadataAsset(IStacObject stacObject)
         {
             throw new NotImplementedException();
-            
+
         }
     }
 }

@@ -1,19 +1,18 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.Loader;
+using System.Threading;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Services;
-using Microsoft.Extensions.Configuration.EnvironmentVariables;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -38,7 +37,7 @@ namespace Terradue.Stars.Console.Operations
 
         public BaseOperation(IConsole console)
         {
-            this._console = console;
+            _console = console;
         }
 
         protected IServiceProvider ServiceProvider { get; private set; }
@@ -57,7 +56,7 @@ namespace Terradue.Stars.Console.Operations
         {
 
             using var processModule = Process.GetCurrentProcess().MainModule;
-                return Path.GetDirectoryName(processModule?.FileName);
+            return Path.GetDirectoryName(processModule?.FileName);
         }
 
         public async Task<int> OnExecuteAsync(CancellationToken ct)
@@ -107,7 +106,7 @@ namespace Terradue.Stars.Console.Operations
             // tell the builder to look for the appsettings.json file
             builder.AddNewtonsoftJsonFile("/etc/Stars/appsettings.json", optional: true);
             foreach (var jsonFilename in Directory.EnumerateFiles(GetBasePath(), "stars-*.json", SearchOption.TopDirectoryOnly))
-                    builder.AddNewtonsoftJsonFile(jsonFilename);
+                builder.AddNewtonsoftJsonFile(jsonFilename);
 
             if (Directory.Exists("/etc/Stars/conf.d"))
             {
@@ -120,7 +119,7 @@ namespace Terradue.Stars.Console.Operations
             //only add secrets in development
             if (isDevelopment)
             {
-                var binPath = Path.GetDirectoryName((new System.Uri(Assembly.GetExecutingAssembly().Location)).AbsolutePath);
+                var binPath = Path.GetDirectoryName((new Uri(Assembly.GetExecutingAssembly().Location)).AbsolutePath);
                 foreach (var jsonFilename in Directory.EnumerateFiles(binPath, "stars-*.json", SearchOption.TopDirectoryOnly))
                     builder.AddNewtonsoftJsonFile(jsonFilename);
                 builder.AddNewtonsoftJsonFile("appsettings.Development.json", optional: true);
@@ -143,10 +142,10 @@ namespace Terradue.Stars.Console.Operations
 
 
 
-            collection.AddSingleton<IConfigurationRoot>(Configuration);
+            collection.AddSingleton(Configuration);
 
             // Add the command line services
-            collection.AddSingleton<IConsole>(_console);
+            collection.AddSingleton(_console);
             collection.AddSingleton<ILogger>(logger);
 
             // Add Stars Services
@@ -172,10 +171,10 @@ namespace Terradue.Stars.Console.Operations
         private int GetVerbosityLevel()
         {
             int verbosity = 0;
-            if ( Verbose )
-                verbosity ++;
-            
-            if ( Trace )
+            if (Verbose)
+                verbosity++;
+
+            if (Trace)
                 verbosity = 2;
 
             return verbosity;
@@ -190,9 +189,9 @@ namespace Terradue.Stars.Console.Operations
                 return;
             }
 
-            if (serviceProvider is IDisposable)
+            if (serviceProvider is IDisposable disposable)
             {
-                ((IDisposable)serviceProvider).Dispose();
+                disposable.Dispose();
             }
 
         }

@@ -1,6 +1,6 @@
-using System;
-using System.Xml.Serialization;
+﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {

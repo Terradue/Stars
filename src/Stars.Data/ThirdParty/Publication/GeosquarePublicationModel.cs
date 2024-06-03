@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
-using System.Xml;
 using Stac;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
@@ -100,7 +99,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public List<Subject> SubjectsList { get; set; }
 
         [IgnoreDataMember]
-        public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
+        public List<ISubject> Subjects => SubjectsList.Cast<ISubject>().ToList();
 
         public Action<SyndicationLink, AtomItem, IAssetsContainer> CustomLinkUpdater { get; set; }
 

@@ -1,4 +1,4 @@
-namespace Terradue.Stars.Services
+﻿namespace Terradue.Stars.Services
 {
     public class GlobalOptions
     {

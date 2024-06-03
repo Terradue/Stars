@@ -1,27 +1,24 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
-using ProjNet.CoordinateSystems;
+using Newtonsoft.Json;
 using Stac;
+using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
-using Stac.Extensions.Eo;
+using Stac.Extensions.Raster;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Stac.Extensions.Raster;
-using Newtonsoft.Json;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 {
@@ -50,7 +47,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         private static Regex satNumberRegex = new Regex(@".+?(?'n'\d+)$");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
- 
+
         public override string Label => "COSMO SkyMed (ASI) mission product metadata extractor";
 
         public BlackSkyGlobalMetadataExtractor(ILogger<BlackSkyGlobalMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
@@ -59,10 +56,9 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
-            {   
+            {
                 IAsset metadataAsset = GetMetadataAsset(item);
                 Schemas.Metadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
 
@@ -96,14 +92,10 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"BSG.*\.json$");
+            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"BSG.*\.json$") ?? FindFirstAssetFromFileNameRegex(item, @"BS.*\.txt$");
             if (metadataAsset == null)
             {
-                metadataAsset = FindFirstAssetFromFileNameRegex(item, @"BS.*\.txt$");
-            }
-            if (metadataAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
+                throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             }
             return metadataAsset;
         }
@@ -136,7 +128,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 
         internal virtual StacItem CreateStacItem(Schemas.Metadata metadata, IItem item)
         {
-            string suffix = String.Empty;
+            string suffix = string.Empty;
             if (!metadata.id.Contains("ortho"))
             {
                 suffix = GetProcessingLevel(metadata, item);
@@ -144,7 +136,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 else suffix = "_non-ortho";
             }
 
-            string identifier = String.Format("{0}{1}", metadata.id, suffix);
+            string identifier = string.Format("{0}{1}", metadata.id, suffix);
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
             FillDateTimeProperties(properties, metadata);
@@ -152,7 +144,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             FillBasicsProperties(properties, metadata, item);
 
             StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), properties);
-            
+
             return stacItem;
         }
 
@@ -166,7 +158,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
 
             // Overview/browse
-            IAsset browseAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_browse\.png$", metadata.id));
+            IAsset browseAsset = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_browse\.png$", metadata.id));
             if (browseAsset != null)
             {
                 stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, browseAsset.Uri, new ContentType("image/png"), "Browse image"));
@@ -174,7 +166,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // RGB TIFF (ortho)
-            IAsset imageAsset = metadata.IsFromText && metadata.id.EndsWith("_ortho") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id));
+            IAsset imageAsset = metadata.IsFromText && metadata.id.EndsWith("_ortho") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_ortho\.tif$", metadata.id));
 
             if (imageAsset != null)
             {
@@ -195,7 +187,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // PAN TIFF (ortho)
-            IAsset imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_ortho-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id));
+            IAsset imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_ortho-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_ortho-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
                 StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
@@ -211,7 +203,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // RGB TIFF (non-ortho)
-            imageAsset = metadata.IsFromText && metadata.id.EndsWith("_georeferenced") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id));
+            imageAsset = metadata.IsFromText && metadata.id.EndsWith("_georeferenced") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced\.tif$", metadata.id));
             if (imageAsset != null)
             {
                 StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
@@ -231,7 +223,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // PAN TIFF (non-ortho)
-            imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_georeferenced-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
+            imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_georeferenced-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
                 StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
@@ -247,7 +239,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // Mask TIFF (non-ortho)
-            IAsset imageAssetMask = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_mask\.tif$", metadata.id));
+            IAsset imageAssetMask = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_mask\.tif$", metadata.id));
             if (imageAssetMask != null)
             {
                 StacAsset stacAssetMask = StacAsset.CreateDataAsset(stacItem, imageAssetMask.Uri, new ContentType("image/tiff; application=geotiff"), "Mask file");
@@ -257,7 +249,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // RGB RPC (non-ortho)
-            IAsset rpcAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced_rpc\.txt$", metadata.id));
+            IAsset rpcAsset = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced_rpc\.txt$", metadata.id));
             if (rpcAsset != null)
             {
                 StacAsset stacAssetRpc = StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new ContentType("text/plain"), "RPC (RGB)");
@@ -266,7 +258,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // PAN RPC (non-ortho)
-            rpcAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan_rpc\.txt$", metadata.id));
+            rpcAsset = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced-pan_rpc\.txt$", metadata.id));
             if (rpcAsset != null)
             {
                 StacAsset stacAssetRpc = StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new ContentType("text/plain"), "RPC (PAN)");
@@ -275,7 +267,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             }
 
             // Mask RPC (non-ortho)
-            rpcAsset = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_mask_rpc\.txt$", metadata.id));
+            rpcAsset = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_mask_rpc\.txt$", metadata.id));
             if (rpcAsset != null)
             {
                 StacAsset stacAssetRpc = StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new ContentType("text/plain"), "RPC (mask)");
@@ -299,7 +291,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         private void FillInstrument(Dictionary<string, object> properties, Schemas.Metadata metadata, IItem item)
         {
             // platform & constellation
-            
+
             properties["agency"] = "BlackSky";
             properties["platform"] = metadata.sensorName.ToLower();
             properties["constellation"] = "blacksky-global";
@@ -320,26 +312,26 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 if (metadata.spectralMode == "MS") return "MS";
                 if (metadata.spectralMode.Contains("MS") && metadata.spectralMode.Contains("MS")) return "PAN/MS";
             }
-            
-            bool pan = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho-pan\.tif$", metadata.id)) != null || FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced-pan\.tif$", metadata.id)) != null;
-            bool ms = FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id)) != null || FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null;
 
-            return String.Format("{0}{1}{2}", pan ? "PAN" : String.Empty, pan && ms ? "/": String.Empty, ms ? "MS" : String.Empty);
+            bool pan = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_ortho-pan\.tif$", metadata.id)) != null || FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced-pan\.tif$", metadata.id)) != null;
+            bool ms = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_ortho\.tif$", metadata.id)) != null || FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null;
+
+            return string.Format("{0}{1}{2}", pan ? "PAN" : string.Empty, pan && ms ? "/" : string.Empty, ms ? "MS" : string.Empty);
 
         }
 
-        private void FillBasicsProperties(IDictionary<String, object> properties, Schemas.Metadata metadata, IItem item)
+        private void FillBasicsProperties(IDictionary<string, object> properties, Schemas.Metadata metadata, IItem item)
         {
             DateTime? acquisitionDate = GetAcquisitionDateTime(metadata);
-            string dateStr = (acquisitionDate != null ? String.Format(" {0:yyyy-MM-dd HH:mm:ss}", acquisitionDate.Value.ToUniversalTime()) : String.Empty);
+            string dateStr = (acquisitionDate != null ? string.Format(" {0:yyyy-MM-dd HH:mm:ss}", acquisitionDate.Value.ToUniversalTime()) : string.Empty);
             CultureInfo culture = new CultureInfo("fr-FR");
             string processingLevel = GetProcessingLevel(metadata, item);
-            if (processingLevel == null) processingLevel = String.Empty;
-            else processingLevel = String.Format(" {0}", processingLevel);
+            if (processingLevel == null) processingLevel = string.Empty;
+            else processingLevel = string.Format(" {0}", processingLevel);
             string spectralMode = GetSpectralMode(metadata, item);
-            if (spectralMode == null) spectralMode = String.Empty;
-            else spectralMode = String.Format(" {0}", spectralMode.Replace("/", " "));
-            properties["title"] = String.Format("BLACKSY {0}{1}{2}",
+            if (spectralMode == null) spectralMode = string.Empty;
+            else spectralMode = string.Format(" {0}", spectralMode.Replace("/", " "));
+            properties["title"] = string.Format("BLACKSY {0}{1}{2}",
                 metadata.sensorName.ToUpper(),
                 processingLevel,
                 spectralMode,
@@ -353,7 +345,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "BlackSky", 
+                    "BlackSky",
                     "BlackSky Constellation is a commercially owned and operated constellation of 60 high resolution imaging microsatellites developed by BlackSky Global. The constellation aims to provide higher temporal resolution and lower cost Earth imaging, and currently contains 17 operational microsatellites, each with an expected lifetime of 4 years.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.blacksky.com")
@@ -365,15 +357,15 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
         private void AddSatStacExtension(StacItem stacItem, Schemas.Metadata metadata)
         {
             var sat = new SatStacExtension(stacItem);
-            if (!String.IsNullOrEmpty(""))
+            if (!string.IsNullOrEmpty(""))
             {
                 Match match = satNumberRegex.Match("");
-                if (match != null && Int32.TryParse(match.Groups["n"].Value, out int n) && platformDesignators.ContainsKey(n))
+                if (match != null && int.TryParse(match.Groups["n"].Value, out int n) && platformDesignators.ContainsKey(n))
                 {
                     sat.PlatformInternationalDesignator = platformDesignators[n];
                 }
             }
-            
+
         }
 
 
@@ -459,8 +451,8 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 if (metadata.processLevel == "O") return "ORTHO";
                 if (metadata.processLevel == "G") return "GEO";
             }
-            if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_ortho\.tif$", metadata.id)) != null) return "ORTHO";
-            if (FindFirstAssetFromFileNameRegex(item, String.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null) return "GEO";
+            if (FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_ortho\.tif$", metadata.id)) != null) return "ORTHO";
+            if (FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced\.tif$", metadata.id)) != null) return "GEO";
             return null;
         }
 

@@ -1,4 +1,4 @@
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
 namespace Terradue.Stars.Common
@@ -10,7 +10,7 @@ namespace Terradue.Stars.Common
             return Regex.Replace(template, @"{(?<exp>[^}]+)}", match =>
             {
                 var p = Expression.Parameter(typeof(T), key);
-                var e = System.Linq.Dynamic.Core.DynamicExpressionParser.ParseLambda( new[] { p }, null, match.Groups["exp"].Value);
+                var e = System.Linq.Dynamic.Core.DynamicExpressionParser.ParseLambda(new[] { p }, null, match.Groups["exp"].Value);
                 return (e.Compile().DynamicInvoke(obj) ?? "").ToString();
             });
         }

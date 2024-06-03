@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -9,11 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Terradue.OpenSearch.Result;
-using Terradue.Stars.Data.Translators;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services;
-using Terradue.Stars.Services.Credentials;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
@@ -88,6 +84,6 @@ namespace Stars.Tests
             // File.WriteAllText("../../../Out/call922_S2B_MSIL1C_20230503T073619_N0509_R092_T36JVR_20230503T112437-calibrated.json", StacConvert.Serialize(stacItem));
         }
 
-        
+
     }
 }

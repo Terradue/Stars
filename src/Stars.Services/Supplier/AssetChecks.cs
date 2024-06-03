@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 
@@ -35,7 +34,7 @@ namespace Terradue.Stars.Services.Supplier
         {
             if (reference.ContentType.MediaType == "text/html")
                 return Task.CompletedTask;
-            
+
             if (resource.ContentType.MediaType == "text/html")
                 throw new AssetCheckException("Asset is HTML.");
 

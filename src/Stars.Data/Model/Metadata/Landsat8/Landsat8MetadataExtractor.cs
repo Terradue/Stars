@@ -1,12 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using ProjNet.CoordinateSystems;
@@ -15,14 +12,13 @@ using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
-using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 {
@@ -43,29 +39,27 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             logger.LogDebug("Retrieving the metadata file in the product package");
-            IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_MTL\\.txt)$");
-            if (auxFile == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
-            logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
-            
+            IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_MTL\\.txt)$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
+            logger.LogDebug(string.Format("Metadata file is {0}", auxFile.Uri));
+
             IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None);
             if (auxFileStreamable == null)
             {
                 logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
                 return null;
             }
-            
-            
-            
+
+
+
             logger.LogDebug("Retrieving the metadata file in the product package");
             AuxiliarySpatialResolution auxiliarySpatialResolution = null;
             IAsset auxSpatialResolutionFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_ANG\\.txt)$");
-            if (auxSpatialResolutionFile != null) {
-                logger.LogDebug(String.Format("ANG.txt file is {0}", auxSpatialResolutionFile.Uri));
+            if (auxSpatialResolutionFile != null)
+            {
+                logger.LogDebug(string.Format("ANG.txt file is {0}", auxSpatialResolutionFile.Uri));
                 IStreamResource auxSpatialiResolutionFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxSpatialResolutionFile, System.Threading.CancellationToken.None);
-                if (auxSpatialiResolutionFileStreamable == null) {
+                if (auxSpatialiResolutionFileStreamable == null)
+                {
                     logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
                     return null;
                 }
@@ -73,8 +67,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
                 auxiliarySpatialResolution = await DeserializeAuxiliarySpatialResolution(auxSpatialiResolutionFileStreamable);
                 logger.LogDebug("ANG file deserialized.");
             }
-            
-            
+
+
             logger.LogDebug("Deserializing metadata");
             Auxiliary auxiliary = await DeserializeAuxiliary(auxFileStreamable);
             logger.LogDebug("Metadata file deserialized. Starting metadata generation");
@@ -162,10 +156,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             var eo = stacItem.EoExtension();
 
             stacAsset.ProjectionExtension().Shape = new int[2] { auxiliary.Reflective_Samples, auxiliary.Reflective_Lines };
-            if ( assetKey == "B8" )
+            if (assetKey == "B8")
                 stacAsset.ProjectionExtension().Shape = new int[2] { auxiliary.Panchromatic_Samples, auxiliary.Panchromatic_Lines };
 
-            if ( assetKey == "B10" || assetKey == "B11" )
+            if (assetKey == "B10" || assetKey == "B11")
                 stacAsset.ProjectionExtension().Shape = new int[2] { auxiliary.Thermal_Samples, auxiliary.Thermal_Lines };
 
             EoBandObject eoBandObject = new EoBandObject(assetKey, common_name);
@@ -174,20 +168,25 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 
             stacAsset.SetProperty("gsd", gsd);
             stacAsset.EoExtension().Bands = new EoBandObject[1] { eoBandObject };
-            
+
             // adding raster band
             RasterBand rasterBand = new RasterBand();
-            if (auxiliarySpatialResolution != null) {
+            if (auxiliarySpatialResolution != null)
+            {
                 rasterBand.SpatialResolution = auxiliarySpatialResolution.GetPixelSizeFromBand(assetKey.Remove(0, 1));
-            } else if ( assetKey == "B8" ) {
+            }
+            else if (assetKey == "B8")
+            {
                 rasterBand.SpatialResolution = 30.0;
-            } else {
+            }
+            else
+            {
                 rasterBand.SpatialResolution = 15.0;
             }
 
             if (JObject.FromObject(rasterBand).Children().Any())
                 stacAsset.RasterExtension().Bands = new RasterBand[1] { rasterBand };
-            
+
             stacItem.Assets.Add(assetKey, stacAsset);
         }
 
@@ -208,7 +207,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "USGS/NASA", 
+                    "USGS/NASA",
                     "Landsat 8, a collaboration between NASA and the U.S. Geological Survey, provides moderate-resolution (15 m–100 m, depending on spectral frequency) measurements of the Earth’s terrestrial and polar regions in the visible, near-infrared, short wave infrared, and thermal infrared.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.usgs.gov/landsat-missions/landsat-8")
@@ -384,11 +383,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             }
             return auxiliary;
         }
-        
+
         public override bool CanProcess(IResource route, IDestination destinations)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(MTL\\.txt)$");
             if (auxFile == null)
             {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,12 +8,11 @@ using MaxRev.Gdal.Core;
 using Microsoft.Extensions.Logging;
 using OSGeo.GDAL;
 using Stac;
-using Stac.Extensions.File;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Gdal
 {
@@ -31,12 +30,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gdal
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 var gdalAsset = GetGdalAsset(item);
-                OSGeo.GDAL.Dataset dataset = LoadGdalAsset(gdalAsset).GetAwaiter().GetResult();
+                Dataset dataset = LoadGdalAsset(gdalAsset).GetAwaiter().GetResult();
                 return true;
             }
             catch (Exception e)
@@ -327,14 +325,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Gdal
             var gdalAsset = FindFirstKeyAssetFromFileNameRegex(item, GDALFILE_REGEX);
             if (gdalAsset.Key == null)
             {
-                throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
+                throw new FileNotFoundException(string.Format("Unable to find the summary file asset"));
             }
             return gdalAsset;
         }
 
-        public virtual async Task<OSGeo.GDAL.Dataset> LoadGdalAsset(KeyValuePair<string, IAsset> gdalAsset)
+        public virtual async Task<Dataset> LoadGdalAsset(KeyValuePair<string, IAsset> gdalAsset)
         {
-            OSGeo.GDAL.Dataset dataset = OSGeo.GDAL.Gdal.Open(GetGdalPath(gdalAsset.Value), Access.GA_ReadOnly);
+            Dataset dataset = OSGeo.GDAL.Gdal.Open(GetGdalPath(gdalAsset.Value), Access.GA_ReadOnly);
 
             dataset.GetDriver();
 

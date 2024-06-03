@@ -1,4 +1,4 @@
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace Terradue.Stars.Data.Model.Metadata.Bka
 {
@@ -20,16 +20,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         public BkaProcessing Processing { get; set; }
 
         [XmlElement(ElementName = "Satellite_Data")]
-        public BkaSatelliteData SatelliteData  { get; set; }
+        public BkaSatelliteData SatelliteData { get; set; }
 
         [XmlElement(ElementName = "Radiometry")]
-        public BkaRadiometry Radiometry  { get; set; }
+        public BkaRadiometry Radiometry { get; set; }
 
         [XmlElement(ElementName = "Geo_Reference")]
-        public BkaGeoReference GeoReference  { get; set; }
+        public BkaGeoReference GeoReference { get; set; }
 
         [XmlElement(ElementName = "Image_Info")]
-        public BkaImageInfo ImageInfo  { get; set; }
+        public BkaImageInfo ImageInfo { get; set; }
     }
 
     [XmlRoot(ElementName = "Production")]
@@ -394,6 +394,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
     {
         [XmlElement(ElementName = "Method")]
         public string Method { get; set; }
-   }
+    }
 
 }

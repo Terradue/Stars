@@ -1,17 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Terradue.Stars.Services.Model.Atom;
+using Microsoft.Extensions.Logging;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
-using Microsoft.Extensions.Logging;
-using System.Threading;
+using Terradue.Stars.Services.Model.Atom;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Routers
 
         public OpenSearchResultItemRoutable(IOpenSearchResultItem item, Uri sourceUri, ILogger logger)
         {
-            this.osItem = item;
+            osItem = item;
             this.sourceUri = sourceUri;
             this.logger = logger;
         }

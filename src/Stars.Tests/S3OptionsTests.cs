@@ -1,19 +1,8 @@
-using System;
-using System.IO;
-using System.Net;
+﻿using System;
 using System.Threading.Tasks;
-using Amazon.S3;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services;
-using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Resources;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Services.Supplier.Destination;
 using Xunit;
 
 namespace Stars.Tests
@@ -27,7 +16,7 @@ namespace Stars.Tests
                        IResourceServiceProvider resourceServiceProvider,
                        IS3ClientFactory s3ClientFactory) : base(s3ClientFactory)
         {
-            this.serviceProvider = sp;
+            serviceProvider = sp;
         }
 
         [Fact]

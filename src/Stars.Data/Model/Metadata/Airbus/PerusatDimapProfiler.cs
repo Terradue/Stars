@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -27,13 +27,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public override string[] GetSpectralMode()
         {
-            string[] possibleModes = new string[] {"P", "MS", "PMS"};
+            string[] possibleModes = new string[] { "P", "MS", "PMS" };
             List<string> presentModes = new List<string>();
             foreach (var dataFiles in Dimap.Raster_Data.Data_Access.Data_Files)
             {
                 foreach (var dataFile in dataFiles.Data_File)
                 {
-                    string[] parts = dataFile.DATA_FILE_PATH.Href.Split(new char[]{'_', '.'});
+                    string[] parts = dataFile.DATA_FILE_PATH.Href.Split(new char[] { '_', '.' });
                     if (parts.Length > 4)
                     {
                         foreach (string m in possibleModes)
@@ -50,7 +50,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             return presentModes.ToArray();
         }
-        
+
         protected override IDictionary<EoBandCommonName?, int> BandOrders
         {
             get
@@ -80,7 +80,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
         {
             string pt = GetProcessingLevel();
             string rp = Dimap.Processing_Information.Product_Settings.Radiometric_Settings.RADIOMETRIC_PROCESSING;
-            if (!String.IsNullOrEmpty(rp)) pt += String.Format("/{0}", rp);
+            if (!string.IsNullOrEmpty(rp)) pt += string.Format("/{0}", rp);
             return pt;
         }
 
@@ -91,13 +91,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         public override string GetTitle(IDictionary<string, object> properties)
         {
-            string[] spectralMode = GetSpectralMode();
-            if (spectralMode == null) spectralMode = new string[0];
+            string[] spectralMode = GetSpectralMode() ?? (new string[0]);
             CultureInfo culture = new CultureInfo("fr-FR");
-            return String.Format("{0} {1} {2} {3}",
+            return string.Format("{0} {1} {2} {3}",
                 properties.GetProperty<string>("platform").ToUpper(),
                 GetProcessingLevel(),
-                properties.ContainsKey("spectral_mode") ? String.Join(" ", properties.GetProperty<string[]>("spectral_mode")) : String.Empty,
+                properties.ContainsKey("spectral_mode") ? string.Join(" ", properties.GetProperty<string[]>("spectral_mode")) : string.Empty,
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
@@ -107,7 +106,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             Located_Geometric_Values gv = Dimap.Geometric_Data.Use_Area.Located_Geometric_Values.FirstOrDefault(l => l.LOCATION_TYPE.Equals("center", StringComparison.InvariantCultureIgnoreCase));
             if (gv == null) return 0;
 
-            if (Double.TryParse(gv.Ground_Sample_Distance.GSD_ACROSS_TRACK, out double across) && Double.TryParse(gv.Ground_Sample_Distance.GSD_ALONG_TRACK, out double along))
+            if (double.TryParse(gv.Ground_Sample_Distance.GSD_ACROSS_TRACK, out double across) && double.TryParse(gv.Ground_Sample_Distance.GSD_ALONG_TRACK, out double along))
             {
                 return (across + along) / 2;
             }
@@ -123,7 +122,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             return new[] { provider };
         }
 
-        
+
         internal override string GetAssetKey(IAsset bandAsset, Data_File dataFile)
         {
             string key = base.GetAssetKey(bandAsset, dataFile);
@@ -134,7 +133,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
         internal override string GetAssetTitle(IAsset bandAsset, Data_File dataFile)
         {
-            string title = String.Format("{0} {1}", GetProcessingLevel(), Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING);
+            string title = string.Format("{0} {1}", GetProcessingLevel(), Dimap.Processing_Information.Product_Settings.SPECTRAL_PROCESSING);
             return title;
         }
 

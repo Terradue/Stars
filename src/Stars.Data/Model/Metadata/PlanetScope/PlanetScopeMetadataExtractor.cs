@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -16,34 +16,40 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 
-namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
-    public class PlanetScopeMetadataExtractor : MetadataExtraction {
+namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
+{
+    public class PlanetScopeMetadataExtractor : MetadataExtraction
+    {
         public override string Label => "Planet Imaging constellation product metadata extractor";
 
         public PlanetScopeMetadataExtractor(ILogger<PlanetScopeMetadataExtractor> logger,
-            IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider) {
+            IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
+        {
         }
 
-        public override bool CanProcess(IResource route, IDestination destination) {
-            IItem item = route as IItem;
-            if (item == null) return false;
-            try {
+        public override bool CanProcess(IResource route, IDestination destination)
+        {
+            if (!(route is IItem item)) return false;
+            try
+            {
                 IAsset metadataAsset = GetMetadataAsset(item);
                 PlanetScopeMetadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
                 return true;
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 return false;
             }
         }
 
-        protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix) {
+        protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
+        {
             IAsset metadataAsset = GetMetadataAsset(item);
             PlanetScopeMetadata metadata = await ReadMetadata(metadataAsset);
 
@@ -55,7 +61,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
         }
 
 
-        internal virtual StacItem CreateStacItem(PlanetScopeMetadata metadata, IItem item) {
+        internal virtual StacItem CreateStacItem(PlanetScopeMetadata metadata, IItem item)
+        {
             string identifier = FindFirstAssetFromFileNameRegex(item, @".*\.tif").Uri.ToString();
             string filename = identifier.Substring(identifier.LastIndexOf('/') + 1).Split('.')[0];
 
@@ -70,7 +77,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
             return stacItem;
         }
 
-        private void FillBasicsProperties(PlanetScopeMetadata metadata, IDictionary<string, object> properties) {
+        private void FillBasicsProperties(PlanetScopeMetadata metadata, IDictionary<string, object> properties)
+        {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
             properties.Remove("title");
@@ -83,7 +91,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
             );
         }
 
-        private void AddSatStacExtension(PlanetScopeMetadata metadata, StacItem stacItem) {
+        private void AddSatStacExtension(PlanetScopeMetadata metadata, StacItem stacItem)
+        {
             var sat = new SatStacExtension(stacItem);
             sat.OrbitState = metadata.nav
                 .SelectSingleNode(
@@ -96,28 +105,30 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
         }
 
 
-        private void AddViewStacExtension(PlanetScopeMetadata metadata, StacItem stacItem) {
+        private void AddViewStacExtension(PlanetScopeMetadata metadata, StacItem stacItem)
+        {
             var view = new ViewStacExtension(stacItem);
-            view.SunElevation = Double.Parse(metadata.nav
+            view.SunElevation = double.Parse(metadata.nav
                 .SelectSingleNode(
                     "/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:acquisitionParameters/ps:Acquisition/opt:illuminationElevationAngle",
                     metadata.nsmgr).Value);
-            view.SunAzimuth = Double.Parse(metadata.nav
+            view.SunAzimuth = double.Parse(metadata.nav
                 .SelectSingleNode(
                     "/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:acquisitionParameters/ps:Acquisition/opt:illuminationAzimuthAngle",
                     metadata.nsmgr).Value);
-            view.IncidenceAngle = Double.Parse(metadata.nav
+            view.IncidenceAngle = double.Parse(metadata.nav
                 .SelectSingleNode(
                     "/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:acquisitionParameters/ps:Acquisition/eop:incidenceAngle",
                     metadata.nsmgr).Value);
-            view.OffNadir = Double.Parse(metadata.nav
+            view.OffNadir = double.Parse(metadata.nav
                 .SelectSingleNode(
                     "/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:acquisitionParameters/ps:Acquisition/ps:spaceCraftViewAngle",
                     metadata.nsmgr).Value);
         }
 
 
-        private void AddProjStacExtension(PlanetScopeMetadata metadata, StacItem stacItem) {
+        private void AddProjStacExtension(PlanetScopeMetadata metadata, StacItem stacItem)
+        {
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             proj.Epsg = long.Parse(metadata.nav
                 .SelectSingleNode(
@@ -125,7 +136,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
                     metadata.nsmgr).Value);
         }
 
-        private void AddProcessingStacExtension(PlanetScopeMetadata metadata, StacItem stacItem) {
+        private void AddProcessingStacExtension(PlanetScopeMetadata metadata, StacItem stacItem)
+        {
             var proc = stacItem.ProcessingExtension();
             proc.Level = metadata.nav
                 .SelectSingleNode(
@@ -133,7 +145,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
                     metadata.nsmgr).Value.ToString();
         }
 
-        private IDictionary<string, object> GetCommonMetadata(PlanetScopeMetadata metadata) {
+        private IDictionary<string, object> GetCommonMetadata(PlanetScopeMetadata metadata)
+        {
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
             FillDateTimeProperties(metadata, properties);
@@ -143,7 +156,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
         }
 
 
-        private void FillDateTimeProperties(PlanetScopeMetadata metadata, Dictionary<string, object> properties) {
+        private void FillDateTimeProperties(PlanetScopeMetadata metadata, Dictionary<string, object> properties)
+        {
             properties.Remove("datetime");
             properties.Remove("start_datetime");
             properties.Remove("end_datetime");
@@ -163,7 +177,8 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
                 metadata.nsmgr).Value);
         }
 
-        private void FillPlatformDefinition(PlanetScopeMetadata metadata, Dictionary<string, object> properties) {
+        private void FillPlatformDefinition(PlanetScopeMetadata metadata, Dictionary<string, object> properties)
+        {
             properties.Remove("mission");
             properties.Add("mission",
                 metadata.nav
@@ -192,62 +207,63 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
 
             properties.Remove("gsd");
             properties.Add("gsd",
-                Double.Parse(metadata.nav
+                double.Parse(metadata.nav
                     .SelectSingleNode(
                         "/ps:EarthObservation/gml:using/eop:EarthObservationEquipment/eop:sensor/ps:Sensor/eop:resolution",
                         metadata.nsmgr).Value));
         }
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(PlanetScopeMetadata metadata) {
+        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(PlanetScopeMetadata metadata)
+        {
             GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(
                 new GeoJSON.Net.Geometry.Position[5]
                 {
                     new GeoJSON.Net.Geometry.Position(
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:topLeft/ps:latitude",
                                 metadata.nsmgr).Value),
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:topLeft/ps:longitude",
                                 metadata.nsmgr).Value)),
 
                     new GeoJSON.Net.Geometry.Position(
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:topRight/ps:latitude",
                                 metadata.nsmgr).Value),
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:topRight/ps:longitude",
                                 metadata.nsmgr).Value)),
 
                     new GeoJSON.Net.Geometry.Position(
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:bottomRight/ps:latitude",
                                 metadata.nsmgr).Value),
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:bottomRight/ps:longitude",
                                 metadata.nsmgr).Value)),
 
                     new GeoJSON.Net.Geometry.Position(
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:bottomLeft/ps:latitude",
                                 metadata.nsmgr).Value),
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:bottomLeft/ps:longitude",
                                 metadata.nsmgr).Value)),
 
                     new GeoJSON.Net.Geometry.Position(
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:topLeft/ps:latitude",
                                 metadata.nsmgr).Value),
-                        Double.Parse(metadata.nav
+                        double.Parse(metadata.nav
                             .SelectSingleNode(
                                 "/ps:EarthObservation/gml:target/ps:Footprint/ps:geographicLocation/ps:topLeft/ps:longitude",
                                 metadata.nsmgr).Value))
@@ -259,9 +275,11 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
         }
 
 
-        private void AddBandAsset(StacItem stacItem, PlanetScopeMetadata metadata, IAsset asset) {
+        private void AddBandAsset(StacItem stacItem, PlanetScopeMetadata metadata, IAsset asset)
+        {
             JObject planetScopeBandAux = null;
-            using (StreamReader r = new StreamReader("Model/Metadata/PlanetScope/Planetscope_bands.json")) {
+            using (StreamReader r = new StreamReader("Model/Metadata/PlanetScope/Planetscope_bands.json"))
+            {
                 string json = r.ReadToEnd();
                 planetScopeBandAux = JObject.Parse(json);
             }
@@ -278,17 +296,20 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
 
             EoBandCommonName[] bandCommonNames;
             EoBandObject[] bands;
-            if (numberOfBands == 3) {
+            if (numberOfBands == 3)
+            {
                 bandCommonNames = new[]
                     { EoBandCommonName.red, EoBandCommonName.green, EoBandCommonName.blue };
                 bands = new EoBandObject[numberOfBands];
             }
-            else if (numberOfBands == 4) {
+            else if (numberOfBands == 4)
+            {
                 bandCommonNames = new[]
                     { EoBandCommonName.blue, EoBandCommonName.green, EoBandCommonName.red, EoBandCommonName.nir };
                 bands = new EoBandObject[numberOfBands];
             }
-            else if (numberOfBands == 8) {
+            else if (numberOfBands == 8)
+            {
                 // we are changing the number of bands to 7 because we are not using the green 1 band
                 numberOfBands = 7;
                 bandCommonNames = new[] {
@@ -297,11 +318,13 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
                 };
                 bands = new EoBandObject[numberOfBands];
             }
-            else {
+            else
+            {
                 throw new InvalidDataException("Sensor not found or not recognized");
             }
 
-            for (int i = 0; i < numberOfBands; i++) {
+            for (int i = 0; i < numberOfBands; i++)
+            {
                 bands[i] = new EoBandObject(bandCommonNames[i].ToString(), bandCommonNames[i]);
                 double centerWaveLength =
                     planetScopeBandAux["planetscope"][sensor][i]["center_wavelength"].Value<double>() / 1000;
@@ -317,19 +340,21 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
             stacAsset.Properties.AddRange(asset.Properties);
             stacAsset.Roles.Add("dn");
             List<RasterBand> rasterbands = new List<RasterBand>();
-            while (bandSpecificMetadata.MoveNext()) {
+            while (bandSpecificMetadata.MoveNext())
+            {
                 // band Green I from sensor PSB.SD has to be skipped
                 if (sensor == "PSB.SD" &&
                     numberOfBands == 7 &&
-                    bandSpecificMetadata.Current.SelectSingleNode("ps:bandNumber", metadata.nsmgr).Value == "3") {
+                    bandSpecificMetadata.Current.SelectSingleNode("ps:bandNumber", metadata.nsmgr).Value == "3")
+                {
                     bandSpecificMetadata.MoveNext();
                 }
 
                 RasterBand rasterband = new RasterBand();
-                rasterband.Scale = Double.Parse(bandSpecificMetadata.Current
+                rasterband.Scale = double.Parse(bandSpecificMetadata.Current
                     .SelectSingleNode("ps:reflectanceCoefficient", metadata.nsmgr).Value);
                 rasterband.Properties.Add("radiometric_scale",
-                    Double.Parse(bandSpecificMetadata.Current
+                    double.Parse(bandSpecificMetadata.Current
                         .SelectSingleNode("ps:radiometricScaleFactor", metadata.nsmgr).Value));
                 rasterbands.Add(rasterband);
             }
@@ -348,25 +373,30 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
             stacItem.Assets.Add("data", stacAsset);
         }
 
-        protected void AddAssets(StacItem stacItem, IItem item, PlanetScopeMetadata metadata) {
+        protected void AddAssets(StacItem stacItem, IItem item, PlanetScopeMetadata metadata)
+        {
             IAsset previewAsset = FindFirstAssetFromFileNameRegex(item, @".*PT.*\.jpg");
-            if (previewAsset != null) {
+            if (previewAsset != null)
+            {
                 if (stacItem.Assets.TryAdd("overview",
                         StacAsset.CreateOverviewAsset(stacItem, previewAsset.Uri,
-                            new ContentType(MimeTypes.GetMimeType(previewAsset.Uri.ToString()))))) {
+                            new ContentType(MimeTypes.GetMimeType(previewAsset.Uri.ToString())))))
+                {
                     stacItem.Assets["overview"].Properties.AddRange(previewAsset.Properties);
                 }
             }
 
 
             IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, @".*\.tif");
-            if (dataAsset != null) {
+            if (dataAsset != null)
+            {
                 AddBandAsset(stacItem, metadata, dataAsset);
             }
 
             IAsset metadataAsset = GetMetadataAsset(item);
 
-            if (metadataAsset != null) {
+            if (metadataAsset != null)
+            {
                 stacItem.Assets.Add("metadata", StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri,
                     new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString()))));
                 stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
@@ -375,18 +405,15 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
                 throw new FileNotFoundException(string.Format("PlanetScope metadata file not found "));
         }
 
-        protected virtual IAsset GetMetadataAsset(IItem item) {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*Analytic(MS)?.*metadata.*\.xml");
-
-            if (manifestAsset == null) {
-                throw new FileNotFoundException(String.Format("Unable to find the summary file asset"));
-            }
-
+        protected virtual IAsset GetMetadataAsset(IItem item)
+        {
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*Analytic(MS)?.*metadata.*\.xml") ?? throw new FileNotFoundException(string.Format("Unable to find the summary file asset"));
             return manifestAsset;
         }
 
 
-        public virtual async Task<PlanetScopeMetadata> ReadMetadata(IAsset manifestAsset) {
+        public virtual async Task<PlanetScopeMetadata> ReadMetadata(IAsset manifestAsset)
+        {
             PlanetScopeMetadata metadata = new PlanetScopeMetadata(manifestAsset);
 
             await metadata.ReadMetadata(resourceServiceProvider);
@@ -395,21 +422,26 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope {
         }
 
 
-        public class PlanetScopeMetadata {
+        public class PlanetScopeMetadata
+        {
             private IAsset summaryAsset;
             public XmlNamespaceManager nsmgr { get; set; }
 
             public XPathNavigator nav { get; set; }
 
-            public PlanetScopeMetadata(IAsset summaryAsset) {
+            public PlanetScopeMetadata(IAsset summaryAsset)
+            {
                 this.summaryAsset = summaryAsset;
             }
 
-            public async Task ReadMetadata(IResourceServiceProvider resourceServiceProvider) {
+            public async Task ReadMetadata(IResourceServiceProvider resourceServiceProvider)
+            {
                 using (var stream =
                        await resourceServiceProvider.GetAssetStreamAsync(summaryAsset,
-                           System.Threading.CancellationToken.None)) {
-                    using (XmlReader reader = XmlReader.Create(stream)) {
+                           System.Threading.CancellationToken.None))
+                {
+                    using (XmlReader reader = XmlReader.Create(stream))
+                    {
                         XPathDocument doc = new XPathDocument(reader);
                         nav = doc.CreateNavigator();
                         nsmgr = new XmlNamespaceManager(nav.NameTable);

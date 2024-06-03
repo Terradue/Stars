@@ -1,7 +1,4 @@
-using System;
-using Terradue.Stars.Interface.Router;
-
-namespace Terradue.Stars.Interface.Supplier.Destination
+﻿namespace Terradue.Stars.Interface.Supplier.Destination
 {
     public interface IDestination : ILocatable
     {

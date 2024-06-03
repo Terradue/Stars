@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Humanizer;
-using Kajabity.Tools.Java;
+﻿using Kajabity.Tools.Java;
 
 namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 {
@@ -14,7 +10,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
             if (!string.IsNullOrEmpty(r)) r = r.Trim('"');
             return r;
         }
-        
+
         // Band
         public string PixelSize_Band1 => GetProperty("BAND01_PIXEL_SIZE");
         public string PixelSize_Band2 => GetProperty("BAND02_PIXEL_SIZE");
@@ -28,7 +24,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat8
         public string PixelSize_Band10 => GetProperty("BAND10_PIXEL_SIZE");
         public string PixelSize_Band11 => GetProperty("BAND11_PIXEL_SIZE");
 
-        public double GetPixelSizeFromBand(string band) {
+        public double GetPixelSizeFromBand(string band)
+        {
             return double.Parse(GetProperty($"BAND{$"{band.PadLeft(2, '0')}"}_PIXEL_SIZE"));
         }
 

@@ -1,25 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Stac;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Services.Router;
-using Terradue.ServiceModel.Syndication;
-using Terradue.Stars.Services;
 using GeoJSON.Net.Geometry;
-using Terradue.Stars.Geometry.Atom;
-using System.Net;
-using Terradue.Stars.Interface;
-using Terradue.OpenSearch.Result;
 using Itenso.TimePeriod;
-using System.Threading;
+using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Atom
 {
@@ -102,7 +95,7 @@ namespace Terradue.Stars.Services.Model.Atom
                     string key = link.RelationshipType;
                     if (keysCount[key] > 1)
                         key += "-" + keysIndex[key]++;
-                    assets.Add(key, new AtomLinkAsset(link, this.AtomItem));
+                    assets.Add(key, new AtomLinkAsset(link, AtomItem));
                 }
                 return assets;
             }

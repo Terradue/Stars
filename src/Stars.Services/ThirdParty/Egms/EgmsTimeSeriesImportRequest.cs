@@ -1,4 +1,4 @@
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using Stac;
 
 namespace Terradue.Stars.Services.ThirdParty.Egms

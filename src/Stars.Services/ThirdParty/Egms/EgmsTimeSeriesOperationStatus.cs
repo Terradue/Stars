@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Stac;
 using Terradue.Stars.Interface.Extensions.TimeSeries;

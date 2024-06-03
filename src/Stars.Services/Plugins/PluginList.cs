@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Supplier;
 
 namespace Terradue.Stars.Services.Plugins
 {
@@ -15,8 +13,8 @@ namespace Terradue.Stars.Services.Plugins
             {
                 foreach (var plugin in plugins)
                 {
-                    this.Remove(plugin.Key);
-                    this.Add(plugin.Key, plugin);
+                    Remove(plugin.Key);
+                    Add(plugin.Key, plugin);
                 }
             }
         }
@@ -27,8 +25,8 @@ namespace Terradue.Stars.Services.Plugins
             {
                 foreach (var plugin in plugins)
                 {
-                    this.Remove(plugin.Key);
-                    this.Add(plugin.Key, plugin.Value);
+                    Remove(plugin.Key);
+                    Add(plugin.Key, plugin.Value);
                 }
             }
         }
@@ -43,7 +41,7 @@ namespace Terradue.Stars.Services.Plugins
 
         internal void Add(T plugin)
         {
-            this.Add(plugin.Key, plugin);
+            Add(plugin.Key, plugin);
         }
     }
 }

@@ -1,10 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
-using Stac;
+﻿using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Projection;
-using Stac.Extensions.Sar;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Interface;
 
@@ -34,7 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         protected override void AddProjectionStacExtension(StacItem stacItem)
         {
-            if ( mtdTile?.Geometric_Info == null ) return;
+            if (mtdTile?.Geometric_Info == null) return;
             stacItem.ProjectionExtension().Epsg = int.Parse(mtdTile.Geometric_Info.Tile_Geocoding.HORIZONTAL_CS_CODE.Replace("EPSG:", ""));
         }
     }

@@ -1,6 +1,4 @@
-using System;
-
-namespace Terradue.Stars.Interface
+﻿namespace Terradue.Stars.Interface
 {
     public interface IPluginOption
     {

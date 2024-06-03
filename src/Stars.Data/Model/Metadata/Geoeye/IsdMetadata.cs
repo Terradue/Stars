@@ -1,11 +1,12 @@
-using System;
+﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using System.Collections.Generic;
 
 
-namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
+namespace Terradue.Stars.Data.Model.Metadata.Geoeye
+{
     [XmlRoot(ElementName = "BAND")]
-    public class BAND {
+    public class BAND
+    {
         [XmlElement(ElementName = "ULLON")] public string ULLON { get; set; }
         [XmlElement(ElementName = "ULLAT")] public string ULLAT { get; set; }
         [XmlElement(ElementName = "ULHAE")] public string ULHAE { get; set; }
@@ -33,12 +34,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "TLCLISTList")]
-    public class TLCLISTList {
+    public class TLCLISTList
+    {
         [XmlElement(ElementName = "TLCLIST")] public List<string> TLCLIST { get; set; }
     }
 
     [XmlRoot(ElementName = "IMAGE")]
-    public class IMAGE {
+    public class IMAGE
+    {
         [XmlElement(ElementName = "SATID")] public string SATID { get; set; }
         [XmlElement(ElementName = "MODE")] public string MODE { get; set; }
 
@@ -211,7 +214,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "IMD")]
-    public class IMD {
+    public class IMD
+    {
         [XmlElement(ElementName = "VERSION")] public string VERSION { get; set; }
 
         [XmlElement(ElementName = "GENERATIONTIME")]
@@ -282,13 +286,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "EPHEMLISTList")]
-    public class EPHEMLISTList {
+    public class EPHEMLISTList
+    {
         [XmlElement(ElementName = "EPHEMLIST")]
         public List<string> EPHEMLIST { get; set; }
     }
 
     [XmlRoot(ElementName = "EPH")]
-    public class EPH {
+    public class EPH
+    {
         [XmlElement(ElementName = "SATID")] public string SATID { get; set; }
 
         [XmlElement(ElementName = "REVNUMBER")]
@@ -315,12 +321,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "ATTLISTList")]
-    public class ATTLISTList {
+    public class ATTLISTList
+    {
         [XmlElement(ElementName = "ATTLIST")] public List<string> ATTLIST { get; set; }
     }
 
     [XmlRoot(ElementName = "ATT")]
-    public class ATT {
+    public class ATT
+    {
         [XmlElement(ElementName = "SATID")] public string SATID { get; set; }
 
         [XmlElement(ElementName = "REVNUMBER")]
@@ -347,7 +355,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "TILE")]
-    public class TILE {
+    public class TILE
+    {
         [XmlElement(ElementName = "FILENAME")] public string FILENAME { get; set; }
 
         [XmlElement(ElementName = "ULCOLOFFSET")]
@@ -385,7 +394,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "TIL")]
-    public class TIL {
+    public class TIL
+    {
         [XmlElement(ElementName = "BANDID")] public string BANDID { get; set; }
         [XmlElement(ElementName = "NUMTILES")] public string NUMTILES { get; set; }
 
@@ -405,7 +415,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "PRINCIPAL_DISTANCE")]
-    public class PRINCIPAL_DISTANCE {
+    public class PRINCIPAL_DISTANCE
+    {
         [XmlElement(ElementName = "GENERATIONTIME")]
         public string GENERATIONTIME { get; set; }
 
@@ -413,7 +424,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "OPTICAL_DISTORTION")]
-    public class OPTICAL_DISTORTION {
+    public class OPTICAL_DISTORTION
+    {
         [XmlElement(ElementName = "GENERATIONTIME")]
         public string GENERATIONTIME { get; set; }
 
@@ -428,7 +440,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "PERSPECTIVE_CENTER")]
-    public class PERSPECTIVE_CENTER {
+    public class PERSPECTIVE_CENTER
+    {
         [XmlElement(ElementName = "GENERATIONTIME")]
         public string GENERATIONTIME { get; set; }
 
@@ -438,7 +451,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "CAMERA_ATTITUDE")]
-    public class CAMERA_ATTITUDE {
+    public class CAMERA_ATTITUDE
+    {
         [XmlElement(ElementName = "GENERATIONTIME")]
         public string GENERATIONTIME { get; set; }
 
@@ -449,7 +463,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "DETECTOR_ARRAY")]
-    public class DETECTOR_ARRAY {
+    public class DETECTOR_ARRAY
+    {
         [XmlElement(ElementName = "DETARRID")] public string DETARRID { get; set; }
 
         [XmlElement(ElementName = "DETORIGINX")]
@@ -465,7 +480,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "DETECTOR_MOUNTING")]
-    public class DETECTOR_MOUNTING {
+    public class DETECTOR_MOUNTING
+    {
         [XmlElement(ElementName = "GENERATIONTIME")]
         public string GENERATIONTIME { get; set; }
 
@@ -473,7 +489,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "GEO")]
-    public class GEO {
+    public class GEO
+    {
         [XmlElement(ElementName = "EFFECTIVETIME")]
         public string EFFECTIVETIME { get; set; }
 
@@ -502,31 +519,36 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "LINENUMCOEFList")]
-    public class LINENUMCOEFList {
+    public class LINENUMCOEFList
+    {
         [XmlElement(ElementName = "LINENUMCOEF")]
         public string LINENUMCOEF { get; set; }
     }
 
     [XmlRoot(ElementName = "LINEDENCOEFList")]
-    public class LINEDENCOEFList {
+    public class LINEDENCOEFList
+    {
         [XmlElement(ElementName = "LINEDENCOEF")]
         public string LINEDENCOEF { get; set; }
     }
 
     [XmlRoot(ElementName = "SAMPNUMCOEFList")]
-    public class SAMPNUMCOEFList {
+    public class SAMPNUMCOEFList
+    {
         [XmlElement(ElementName = "SAMPNUMCOEF")]
         public string SAMPNUMCOEF { get; set; }
     }
 
     [XmlRoot(ElementName = "SAMPDENCOEFList")]
-    public class SAMPDENCOEFList {
+    public class SAMPDENCOEFList
+    {
         [XmlElement(ElementName = "SAMPDENCOEF")]
         public string SAMPDENCOEF { get; set; }
     }
 
     [XmlRoot(ElementName = "RPB")]
-    public class RPB {
+    public class RPB
+    {
         [XmlElement(ElementName = "SATID")] public string SATID { get; set; }
         [XmlElement(ElementName = "BANDID")] public string BANDID { get; set; }
         [XmlElement(ElementName = "SPECID")] public string SPECID { get; set; }
@@ -534,7 +556,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye {
     }
 
     [XmlRoot(ElementName = "isd")]
-    public class Isd {
+    public class Isd
+    {
         [XmlElement(ElementName = "IMD")] public IMD IMD { get; set; }
         [XmlElement(ElementName = "EPH")] public EPH EPH { get; set; }
         [XmlElement(ElementName = "ATT")] public ATT ATT { get; set; }

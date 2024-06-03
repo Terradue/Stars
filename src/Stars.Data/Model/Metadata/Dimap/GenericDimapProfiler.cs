@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Stac;
-using Stac.Extensions.Eo;
-using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
-using Terradue.Stars.Interface;
-using Stac.Extensions.Raster;
 using System.Linq;
 using Humanizer;
+using Stac;
+using Stac.Extensions.Eo;
+using Stac.Extensions.Raster;
+using Terradue.Stars.Data.Model.Metadata.Dimap.Schemas;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {
@@ -55,7 +55,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                                                   properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
         }
 
-        protected override EoBandObject GetEoBandObject(Schemas.t_Spectral_Band_Info bandInfo, string description)
+        protected override EoBandObject GetEoBandObject(t_Spectral_Band_Info bandInfo, string description)
         {
             EoBandObject eoBandObject = new EoBandObject(bandInfo.BAND_DESCRIPTION ?? bandInfo.BAND_INDEX.Value,
                                                 (EoBandCommonName)Enum.Parse(typeof(EoBandCommonName), bandInfo.BAND_DESCRIPTION.ToLower()));
@@ -72,7 +72,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             return eoBandObject;
         }
 
-        protected override RasterBand GetRasterBandObject(Schemas.t_Spectral_Band_Info bandInfo, Schemas.t_Raster_Encoding rasterEncoding)
+        protected override RasterBand GetRasterBandObject(t_Spectral_Band_Info bandInfo, t_Raster_Encoding rasterEncoding)
         {
             RasterBand rasterBandObject = new RasterBand();
             if (rasterEncoding.DATA_TYPESpecified)

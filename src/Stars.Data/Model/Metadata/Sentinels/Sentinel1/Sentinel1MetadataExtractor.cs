@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             XFDUType xfdu = await base.ReadManifest(manifestAsset);
             if (!xfdu.informationPackageMap.contentUnit[0].textInfo.StartsWith("Sentinel-1"))
             {
-                throw new FormatException(String.Format("Not a Sentinel-1 manifest SAFE file asset"));
+                throw new FormatException(string.Format("Not a Sentinel-1 manifest SAFE file asset"));
             }
             return xfdu;
         }
@@ -34,9 +34,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, "\\.tiff$"))
             {
                 string filename = Path.GetFileNameWithoutExtension(bandAsset.Value.Uri.ToString());
-                IAsset annotationAsset = FindFirstAssetFromFileNameRegex(item, @"^(.*\/+|)" + filename + @"\.xml$");
-                if (annotationAsset == null)
-                    throw new FileNotFoundException(string.Format("No XML annotation found for S1 tiff asset '{0}'", bandAsset.Key));
+                IAsset annotationAsset = FindFirstAssetFromFileNameRegex(item, @"^(.*\/+|)" + filename + @"\.xml$") ?? throw new FileNotFoundException(string.Format("No XML annotation found for S1 tiff asset '{0}'", bandAsset.Key));
                 var bandStacAsset = await AddBandAsset(stacItem, bandAsset.Value, annotationAsset, stacFactory);
                 var annotationStacAsset = await AddAnnotationAsset(stacItem, annotationAsset, stacFactory);
             }
@@ -74,7 +72,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
             if (contentType == null)
             {
-                contentType = new System.Net.Mime.ContentType(MimeTypes.GetMimeType(asset.Uri.ToString()));
+                contentType = new ContentType(MimeTypes.GetMimeType(asset.Uri.ToString()));
             }
 
             StacAsset stacAsset = StacAsset.CreateOverviewAsset(stacItem, asset.Uri, contentType);
@@ -164,7 +162,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "ESA/EC (Copernicus)", 
+                    "ESA/EC (Copernicus)",
                     "The Sentinel-1 mission comprises a constellation of two polar-orbiting satellites, operating day and night performing C-band synthetic aperture radar imaging, enabling them to acquire imagery regardless of the weather.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://sentinel.esa.int/web/sentinel/missions/sentinel-1")

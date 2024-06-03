@@ -1,8 +1,6 @@
-using System;
-using System.IO;
+﻿using System;
 using System.Reflection;
 using System.Runtime.Loader;
-using McMaster.Extensions.CommandLineUtils;
 
 namespace Terradue.Stars.Console
 {

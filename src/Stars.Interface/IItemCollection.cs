@@ -1,12 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Net;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Stac;
-using Terradue.Stars.Interface.Router;
+﻿using System.Collections.Generic;
 
 namespace Terradue.Stars.Interface
 {

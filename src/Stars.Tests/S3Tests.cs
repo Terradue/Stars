@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -31,7 +31,7 @@ namespace Stars.Tests
                        IS3ClientFactory s3ClientFactory) : base(s3ClientFactory)
         {
             this.assetService = assetService;
-            this.serviceProvider = sp;
+            serviceProvider = sp;
             this.resourceServiceProvider = resourceServiceProvider;
         }
 

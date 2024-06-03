@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-
-using Terradue.Stars.Interface.Supplier.Destination;
+﻿using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Store;
 

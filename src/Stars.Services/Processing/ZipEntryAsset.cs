@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,8 +31,8 @@ namespace Terradue.Stars.Services.Processing
         {
             get
             {
-                var ext = Path.GetExtension(entry.FileName).TrimStart('.'); 
-                if ( (new string[]{ "txt", "xml", "json" }).Contains(ext)) return new string[] { "metadata" };
+                var ext = Path.GetExtension(entry.FileName).TrimStart('.');
+                if ((new string[] { "txt", "xml", "json" }).Contains(ext)) return new string[] { "metadata" };
                 return new string[] { "data" };
             }
         }

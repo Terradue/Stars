@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
@@ -7,9 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Supplier.Carrier;
 
 namespace Terradue.Stars.Services.Processing
@@ -39,11 +37,7 @@ namespace Terradue.Stars.Services.Processing
 
         internal async static Task<Archive> Read(IAsset asset, ILogger logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem, CancellationToken ct)
         {
-            IStreamResource streamableAsset = await resourceServiceProvider.GetStreamResourceAsync(asset, ct);
-
-            if (streamableAsset == null)
-                throw new System.IO.InvalidDataException("Asset must be streamable to be read as an archive");
-
+            IStreamResource streamableAsset = await resourceServiceProvider.GetStreamResourceAsync(asset, ct) ?? throw new InvalidDataException("Asset must be streamable to be read as an archive");
             ArchiveType compression = FindCompression(asset);
 
             switch (compression)
@@ -56,7 +50,7 @@ namespace Terradue.Stars.Services.Processing
                     return new GzipArchive(asset, logger, resourceServiceProvider, fileSystem);
 
                 default:
-                    throw new System.IO.InvalidDataException("Asset is not recognized as an archive");
+                    throw new InvalidDataException("Asset is not recognized as an archive");
             }
         }
 
@@ -67,16 +61,16 @@ namespace Terradue.Stars.Services.Processing
 
         public abstract Uri Uri { get; }
 
-        protected static String Findstem(String[] arr)
+        protected static string Findstem(string[] arr)
         {
             // Determine size of the array  
             int n = arr.Length;
 
             // Take first word from array as reference  
-            String s = arr[0];
+            string s = arr[0];
             int len = s.Length;
 
-            String res = "";
+            string res = "";
 
             for (int i = 0; i < len; i++)
             {
@@ -85,7 +79,7 @@ namespace Terradue.Stars.Services.Processing
 
                     // generating all possible substrings  
                     // of our reference string arr[0] i.e s  
-                    String stem = s.Substring(i, j - i);
+                    string stem = s.Substring(i, j - i);
                     int k = 1;
                     for (k = 1; k < n; k++)
 

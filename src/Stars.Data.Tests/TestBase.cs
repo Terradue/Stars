@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.IO.Abstractions;
+using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
-using System.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -93,7 +92,7 @@ namespace Terradue.Data.Tests
             pluginManager.LoadPlugins(Collection, s => AssemblyLoadContext.Default);
         }
 
-        
+
 
         public static string AssemblyDirectory
         {

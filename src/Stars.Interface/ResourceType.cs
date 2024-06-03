@@ -1,4 +1,4 @@
-namespace Terradue.Stars.Interface
+﻿namespace Terradue.Stars.Interface
 {
     public enum ResourceType
     {

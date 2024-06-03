@@ -1,4 +1,4 @@
-namespace Terradue.Stars.Services.ThirdParty
+﻿namespace Terradue.Stars.Services.ThirdParty
 {
     public interface IThirdPartyService
     {

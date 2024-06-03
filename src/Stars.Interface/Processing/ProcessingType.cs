@@ -1,4 +1,4 @@
-namespace Terradue.Stars.Interface.Processing
+﻿namespace Terradue.Stars.Interface.Processing
 {
     public enum ProcessingType
     {

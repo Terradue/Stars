@@ -1,17 +1,16 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Stac;
-using System.Linq;
-using Terradue.Stars.Interface.Extensions.TimeSeries;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Net.Http;
 using Newtonsoft.Json;
-using Terradue.Stars.Interface;
+using Stac;
 using Stac.Common;
-using System.IO;
-using System.Collections.Generic;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Extensions.TimeSeries;
 
 namespace Terradue.Stars.Services.ThirdParty.Egms
 {
@@ -51,9 +50,12 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
             request.Content = new StringContent(JsonConvert.SerializeObject(collection), System.Text.Encoding.UTF8, collection.MediaType.ToString());
 
             var response = await client.SendAsync(request, cancellationToken);
-            try {
+            try
+            {
                 response.EnsureSuccessStatusCode();
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 logger.LogError(e, "Error while creating time series collection");
                 logger.LogDebug(response.Content.ReadAsStringAsync().Result);
                 throw;

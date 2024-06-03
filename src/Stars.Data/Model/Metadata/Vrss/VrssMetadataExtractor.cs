@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -13,13 +13,13 @@ using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
-using Stac.Extensions.Raster;
 
 namespace Terradue.Stars.Data.Model.Metadata.Vrss
 {
@@ -35,7 +35,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
         private Regex utmZoneRegex = new Regex(@"(?'num'\d+)(?'hem'[NS])");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
- 
+
         public override string Label => "Venezuelan Remote Sensing Satellite (ABAE) mission product metadata extractor";
 
         public VrssMetadataExtractor(ILogger<VrssMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
@@ -44,8 +44,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -76,7 +75,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             FillBasicsProperties(metadata, stacItem.Properties);
             AddOtherProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri); ;
         }
 
         internal virtual StacItem CreateStacItem(Schemas.Metadata metadata)
@@ -85,12 +84,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             Match identifierMatch = identifierRegex.Match(metadata.imageName);
             if (!identifierMatch.Success)
             {
-                throw new InvalidOperationException(String.Format("Identifier not recognised from image name: {0}", metadata.imageName));
+                throw new InvalidOperationException(string.Format("Identifier not recognised from image name: {0}", metadata.imageName));
             }
 
             string identifier = identifierMatch.Groups["id"].Value;
             StacItem stacItem = new StacItem(identifier, GetGeometry(metadata), GetCommonMetadata(metadata));
-            
+
             return stacItem;
         }
 
@@ -116,11 +115,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"VRSS-[12]_.*\d\.xml$");
-            if (metadataAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
+            IAsset metadataAsset = FindFirstAssetFromFileNameRegex(item, @"VRSS-[12]_.*\d\.xml$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             return metadataAsset;
         }
 
@@ -197,16 +192,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             properties["mission"] = metadata.satelliteId.ToLower();
             properties["instruments"] = new string[] { metadata.sensorId.ToLower() };
             properties["sensor_type"] = "optical";
-            if (Double.TryParse(metadata.sensorGSD, out double gsd))
+            if (double.TryParse(metadata.sensorGSD, out double gsd))
             {
                 properties["gsd"] = gsd;
             }
         }
 
-        private void FillBasicsProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(Schemas.Metadata metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
-            properties["title"] = String.Format("{0} {1} {2} {3}",
+            properties["title"] = string.Format("{0} {1} {2} {3}",
                 metadata.satelliteId,
                 metadata.sensorId,
                 GetProcessingLevel(metadata),
@@ -214,13 +209,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             );
         }
 
-        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<string, object> properties)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "ABAE", 
+                    "ABAE",
                     "The Venezuelan VRSS missions provide high-resolution land and vegetation observations to assess Venezuela's soil and water resources, collect images to help urban planners, monitor illegal mining and drug activities, and strengthen national defense, and support of disaster monitoring.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.eoportal.org/satellite-missions/vrss-1")
@@ -257,7 +252,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             //proj.Wkt2 = ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84.WKT;
 
-            int zone = Int32.Parse(utmZoneMatch.Groups["num"].Value);
+            int zone = int.Parse(utmZoneMatch.Groups["num"].Value);
             bool north = utmZoneMatch.Groups["hem"].Value == "N";
             ProjectedCoordinateSystem utm = ProjectedCoordinateSystem.WGS84_UTM(zone, north);
             proj.SetCoordinateSystem(utm);
@@ -267,15 +262,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
         private void AddViewStacExtension(Schemas.Metadata metadata, StacItem stacItem)
         {
             var view = new ViewStacExtension(stacItem);
-            if (Double.TryParse(metadata.satOffNadir, out double offNadir))
+            if (double.TryParse(metadata.satOffNadir, out double offNadir))
             {
                 view.OffNadir = Math.Abs(offNadir);
-            } 
-            if (metadata.sunAzimuth != null && metadata.sunAzimuth.Length != 0 && Double.TryParse(metadata.sunAzimuth[0].Value, out double sunAzimuth))
+            }
+            if (metadata.sunAzimuth != null && metadata.sunAzimuth.Length != 0 && double.TryParse(metadata.sunAzimuth[0].Value, out double sunAzimuth))
             {
                 view.SunAzimuth = sunAzimuth;
             }
-            if (metadata.sunElevation != null && metadata.sunElevation.Length != 0 && Double.TryParse(metadata.sunElevation[0].Value, out double sunElevation))
+            if (metadata.sunElevation != null && metadata.sunElevation.Length != 0 && double.TryParse(metadata.sunElevation[0].Value, out double sunElevation))
             {
                 view.SunElevation = sunElevation;
             }
@@ -294,35 +289,29 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             string[] imageFiles = metadata.imageName.Split(',');
             foreach (string imageFile in imageFiles)
             {
-                IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", imageFile));
-                if (imageAsset == null)
-                    throw new FileNotFoundException(string.Format("Image file declared in metadata, but not present '{0}'", metadata.browseName));
+                IAsset imageAsset = FindFirstAssetFromFileNameRegex(item, string.Format("{0}$", imageFile)) ?? throw new FileNotFoundException(string.Format("Image file declared in metadata, but not present '{0}'", metadata.browseName));
                 Match match = identifierRegex.Match(imageFile);
-                
+
                 string type = match.Groups["type"].Value;
-                string key; 
-                if ((type == "MSS" || type == "WMC") && match.Groups["n"].Success) key = String.Format("band-{0}", match.Groups["n"].Value);
+                string key;
+                if ((type == "MSS" || type == "WMC") && match.Groups["n"].Success) key = string.Format("band-{0}", match.Groups["n"].Value);
                 else if (type == "PAN") key = "pan";
                 else key = "image";
-                int index = (match.Groups["n"].Success ? Int32.Parse(match.Groups["n"].Value) - 1 : 0); 
-                
+                int index = (match.Groups["n"].Success ? int.Parse(match.Groups["n"].Value) - 1 : 0);
+
                 AddBandStacAsset(stacItem, type, key, index, imageAsset, metadata);
             }
-            
+
             if (metadata.browseName != null)
             {
-                IAsset browseAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", metadata.browseName));
-                if (browseAsset == null)
-                    throw new FileNotFoundException(string.Format("Browse image declared in metadata, but not present '{0}'", metadata.browseName));
+                IAsset browseAsset = FindFirstAssetFromFileNameRegex(item, string.Format("{0}$", metadata.browseName)) ?? throw new FileNotFoundException(string.Format("Browse image declared in metadata, but not present '{0}'", metadata.browseName));
                 stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, browseAsset.Uri, new ContentType(MimeTypes.GetMimeType(browseAsset.Uri.OriginalString)), "Browse image"));
                 stacItem.Assets["overview"].Properties.AddRange(browseAsset.Properties);
             }
 
             if (metadata.thumbName != null)
             {
-                IAsset thumbAsset = FindFirstAssetFromFileNameRegex(item, String.Format("{0}$", metadata.thumbName));
-                if (thumbAsset == null)
-                    throw new FileNotFoundException(string.Format("Thumbnail image declared in metadata, but not present '{0}'", metadata.thumbName));
+                IAsset thumbAsset = FindFirstAssetFromFileNameRegex(item, string.Format("{0}$", metadata.thumbName)) ?? throw new FileNotFoundException(string.Format("Thumbnail image declared in metadata, but not present '{0}'", metadata.thumbName));
                 stacItem.Assets.Add("thumbnail", StacAsset.CreateThumbnailAsset(stacItem, thumbAsset.Uri, new ContentType(MimeTypes.GetMimeType(thumbAsset.Uri.OriginalString)), "Thumbnail image"));
                 stacItem.Assets["thumbnail"].Properties.AddRange(thumbAsset.Properties);
             }
@@ -332,7 +321,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
 
             IAsset additionalMetadataAsset = FindFirstAssetFromFileNameRegex(item, @"VRSS-[12]_.*ADDITION\.xml$");
-            if (additionalMetadataAsset != null){
+            if (additionalMetadataAsset != null)
+            {
                 stacItem.Assets.Add("metadata-addition", StacAsset.CreateMetadataAsset(stacItem, additionalMetadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(additionalMetadataAsset.Uri.OriginalString)), "Additional metadata"));
                 stacItem.Assets["metadata-addition"].Properties.AddRange(additionalMetadataAsset.Properties);
             }
@@ -348,7 +338,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             EoBandCommonName commonName = new EoBandCommonName();
             bool notFound = false;
 
-            var dataSize = Array.ConvertAll<string, int>(metadata.dataSize.Split(','), a => Int32.Parse(a));
+            var dataSize = Array.ConvertAll(metadata.dataSize.Split(','), a => int.Parse(a));
             stacAsset.ProjectionExtension().Shape = dataSize;
 
             if (type == "PAN")
@@ -362,7 +352,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             }
             else if (type == "MSS" || type == "WMC")
             {
-                switch (index + 1) {
+                switch (index + 1)
+                {
                     case 1:
                         wavelength = 0.485;
                         commonName = EoBandCommonName.blue;
@@ -391,7 +382,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
 
             if (notFound)
             {
-                throw new InvalidOperationException(String.Format("Band information not found for {0}", assetkey));
+                throw new InvalidOperationException(string.Format("Band information not found for {0}", assetkey));
             }
 
             EoBandObject eoBandObject = new EoBandObject(assetkey, commonName);
@@ -400,15 +391,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             {
                 // Note: for VRSS-2 IRC-2 <C> has to be used instead of <B> for the offset calculation
                 // No such sample data exists at the moment and no corresponding property in the metadata class
-                bool existK = Double.TryParse(metadata.ab_calibra_param[index].K, out double k) && k != 0;
-                bool existB = Double.TryParse(metadata.ab_calibra_param[index].B, out double b);
-                if (Double.TryParse(metadata.SolarIrradiance[index].Value, out double eai))
+                bool existK = double.TryParse(metadata.ab_calibra_param[index].K, out double k) && k != 0;
+                bool existB = double.TryParse(metadata.ab_calibra_param[index].B, out double b);
+                if (double.TryParse(metadata.SolarIrradiance[index].Value, out double eai))
                     eoBandObject.SolarIllumination = eai;
                 if (existK && existB)
                 {
                     RasterBand rasterBand = new RasterBand();
                     rasterBand.Scale = 1 / k;
-                    rasterBand.Offset = - (b / k);
+                    rasterBand.Offset = -(b / k);
                     stacAsset.RasterExtension().Bands = new RasterBand[] { rasterBand };
                 }
             }

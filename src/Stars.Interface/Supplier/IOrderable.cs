@@ -1,7 +1,4 @@
-using System;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
+﻿using System;
 
 namespace Terradue.Stars.Interface.Supplier
 {

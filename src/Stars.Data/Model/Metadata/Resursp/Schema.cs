@@ -1,10 +1,10 @@
-using System;
-using System.Xml.Serialization;
-using System.Collections.Generic;
+﻿using System.Xml.Serialization;
 
-namespace Terradue.Stars.Data.Model.Metadata.Resursp {
+namespace Terradue.Stars.Data.Model.Metadata.Resursp
+{
     [XmlRoot(ElementName = "Passport")]
-    public class Passport {
+    public class Passport
+    {
         [XmlElement(ElementName = "cDeviceName")]
         public string CDeviceName { get; set; }
 
@@ -13,7 +13,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
     }
 
     [XmlRoot(ElementName = "Geographic")]
-    public class Geographic {
+    public class Geographic
+    {
         [XmlElement(ElementName = "aNWLat")] public string ANWLat { get; set; }
         [XmlElement(ElementName = "aNWLong")] public string ANWLong { get; set; }
         [XmlElement(ElementName = "aNELat")] public string ANELat { get; set; }
@@ -27,7 +28,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
     }
 
     [XmlRoot(ElementName = "CoordinateSystem")]
-    public class CoordinateSystem {
+    public class CoordinateSystem
+    {
         [XmlElement(ElementName = "cCoordSystName")]
         public string CCoordSystName { get; set; }
 
@@ -132,7 +134,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
     }
 
     [XmlRoot(ElementName = "Normal")]
-    public class Normal {
+    public class Normal
+    {
         [XmlElement(ElementName = "nBitsPerPixel")]
         public string NBitsPerPixel { get; set; }
 
@@ -225,21 +228,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         [XmlElement(ElementName = "nLDownEast")]
         public string NLDownEast { get; set; }
     }
-    
-    [XmlRoot(ElementName="AbsoluteCalibr")]
-    public class AbsoluteCalibr {
-        [XmlElement(ElementName="cFormula")]
+
+    [XmlRoot(ElementName = "AbsoluteCalibr")]
+    public class AbsoluteCalibr
+    {
+        [XmlElement(ElementName = "cFormula")]
         public string CFormula { get; set; }
-        [XmlElement(ElementName="nDone")]
+        [XmlElement(ElementName = "nDone")]
         public string NDone { get; set; }
-        [XmlElement(ElementName="bMult")]
+        [XmlElement(ElementName = "bMult")]
         public string BMult { get; set; }
-        [XmlElement(ElementName="bAdd")]
+        [XmlElement(ElementName = "bAdd")]
         public string BAdd { get; set; }
     }
 
     [XmlRoot(ElementName = "SPP_ROOT")]
-    public class SPP_ROOT {
+    public class SPP_ROOT
+    {
         [XmlElement(ElementName = "Version")] public string Version { get; set; }
 
         [XmlElement(ElementName = "nNumberKA")]
@@ -274,10 +279,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp {
         [XmlElement(ElementName = "CoordinateSystem")]
         public CoordinateSystem CoordinateSystem { get; set; }
 
-        [XmlElement(ElementName = "Normal")] 
+        [XmlElement(ElementName = "Normal")]
         public Normal Normal { get; set; }
-        
-        [XmlElement(ElementName="AbsoluteCalibr")]
+
+        [XmlElement(ElementName = "AbsoluteCalibr")]
         public AbsoluteCalibr AbsoluteCalibr { get; set; }
     }
 }

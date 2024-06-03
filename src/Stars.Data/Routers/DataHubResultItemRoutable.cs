@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using Terradue.OpenSearch.DataHub;
 using Terradue.OpenSearch.Result;
 using Terradue.Stars.Data.Suppliers;
 using Terradue.Stars.Interface;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services;
+using Terradue.Stars.Services.Supplier;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -29,7 +29,7 @@ namespace Terradue.Stars.Data.Routers
                 if (assets != null && assets.Count > 0)
                     return assets;
                 assets = new Dictionary<string, IAsset>();
-                
+
                 var enclosureAccess = supplier.Wrapper.GetEnclosureAccess(osItem);
                 try
                 {
@@ -53,7 +53,7 @@ namespace Terradue.Stars.Data.Routers
                 }
                 catch (Exception e)
                 {
-                    logger.LogWarning("Exception trying to get assets for {0}: {1}", this.Id, e.Message);
+                    logger.LogWarning("Exception trying to get assets for {0}: {1}", Id, e.Message);
                     logger.LogDebug(e.StackTrace);
                 }
 

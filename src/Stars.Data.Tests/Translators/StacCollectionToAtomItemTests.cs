@@ -1,18 +1,15 @@
-using System.Linq;
-using Newtonsoft.Json;
-using Xunit;
-using Stac.Extensions.Projection;
-using Terradue.Stars.Data.Translators;
-using Stac;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Model.Atom;
-using System.Threading;
-using System.Xml;
-using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
-using System;
+﻿using System;
 using System.IO;
-using Terradue.Stars.Services.Supplier;
+using System.Linq;
+using System.Threading;
+using Stac;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.Stars.Data.Translators;
 using Terradue.Stars.Services;
+using Terradue.Stars.Services.Model.Atom;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Supplier;
+using Xunit;
 
 namespace Terradue.Data.Tests.Translators
 {
@@ -29,7 +26,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacCollectionToAtomItemTranslator stacCollectionToAtomItemTranslator = new StacCollectionToAtomItemTranslator(ServiceProvider);
 
-            StacCollectionNode stacItemNode = new StacCollectionNode(stacCollection, new System.Uri("https://localhost:5001/api/ns/emathot/cs/0000024-220301000006171-oozie-oozi-W"));
+            StacCollectionNode stacItemNode = new StacCollectionNode(stacCollection, new Uri("https://localhost:5001/api/ns/emathot/cs/0000024-220301000006171-oozie-oozi-W"));
 
             AtomItemNode atomItemNode = await stacCollectionToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacItemNode, CancellationToken.None);
 
@@ -40,19 +37,19 @@ namespace Terradue.Data.Tests.Translators
             bool egmsIsPresent = false;
             bool wmsIsPresent = false;
             if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
-			{
+            {
                 var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
 
-				foreach (var offering in offerings)
-				{
-                    if(offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
-                    if(offering != null && offering.Code == "http://www.opengis.net/spec/owc-atom/1.0/req/wms") wmsIsPresent = true;
+                foreach (var offering in offerings)
+                {
+                    if (offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
+                    if (offering != null && offering.Code == "http://www.opengis.net/spec/owc-atom/1.0/req/wms") wmsIsPresent = true;
                 }
-              
+
             }
 
-            Assert.True(egmsIsPresent);   
-            Assert.True(wmsIsPresent);           
+            Assert.True(egmsIsPresent);
+            Assert.True(wmsIsPresent);
         }
 
         [Fact]
@@ -66,7 +63,7 @@ namespace Terradue.Data.Tests.Translators
 
             StacCollectionToAtomItemTranslator stacCollectionToAtomItemTranslator = new StacCollectionToAtomItemTranslator(ServiceProvider);
 
-            StacCollectionNode stacCollectionNode = new StacCollectionNode(stacCollection, new System.Uri("https://api.terradue.com/timeseries/v1/ns/gep-egms/cs/EGMS-2018-2022"));
+            StacCollectionNode stacCollectionNode = new StacCollectionNode(stacCollection, new Uri("https://api.terradue.com/timeseries/v1/ns/gep-egms/cs/EGMS-2018-2022"));
 
             // Filter assets to remove the timeseries assets
             AssetFilters assetFilters = AssetFilters.CreateAssetFilters(
@@ -79,22 +76,22 @@ namespace Terradue.Data.Tests.Translators
             StacCollection stacCollection1 = new StacCollection(stacCollection);
             stacCollection1.Assets.Clear();
             stacCollection1.Assets.AddRange(filteredAssetContainer.Assets.ToDictionary(asset => asset.Key, asset => (asset.Value as StacAssetAsset).StacAsset));
-            StacCollectionNode stacCollectionNode1 = new StacCollectionNode(stacCollection1, new System.Uri("https://api.terradue.com/timeseries/v1/ns/gep-egms/cs/EGMS-2018-2022"));
+            StacCollectionNode stacCollectionNode1 = new StacCollectionNode(stacCollection1, new Uri("https://api.terradue.com/timeseries/v1/ns/gep-egms/cs/EGMS-2018-2022"));
 
             AtomItemNode atomItemNode = await stacCollectionToAtomItemTranslator.TranslateAsync<AtomItemNode>(stacCollectionNode1, CancellationToken.None);
 
             bool egmsIsPresent = false;
             if (atomItemNode.AtomItem.ElementExtensions != null && atomItemNode.AtomItem.ElementExtensions.Count > 0)
-			{
+            {
                 var offerings = atomItemNode.AtomItem.ElementExtensions.ReadElementExtensions<OwcOffering>("offering", OwcNamespaces.Owc, new System.Xml.Serialization.XmlSerializer(typeof(OwcOffering)));
 
-				foreach (var offering in offerings)
-				{
-                    if(offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
+                foreach (var offering in offerings)
+                {
+                    if (offering != null && offering.Code == "http://www.terradue.com/egms") egmsIsPresent = true;
                 }
             }
 
-            Assert.True(egmsIsPresent);   
+            Assert.True(egmsIsPresent);
 
             // Check that there is no link with the relationship type "enclosure"
             Assert.DoesNotContain(atomItemNode.AtomItem.Links,

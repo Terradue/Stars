@@ -1,4 +1,4 @@
-using Stac;
+﻿using Stac;
 
 namespace Terradue.Stars.Interface
 {

@@ -1,20 +1,18 @@
-using System;
+﻿using System;
 using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier.Destination;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using Microsoft.Extensions.Logging;
+using Polly;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface;
-using System.Net;
-using Amazon.S3.Transfer;
-using System.Text.RegularExpressions;
 using Terradue.Stars.Services.Resources;
-using Microsoft.Extensions.Options;
-using System.Threading;
-using Polly;
-using Amazon.S3;
+using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier.Carrier
 {
@@ -160,7 +158,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                         {
                             await tx.UploadAsync(ur);
                         });
-                    
+
                 }
 
                 // refresh metadata

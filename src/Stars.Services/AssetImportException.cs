@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Terradue.Stars.Interface;
@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services
         {
         }
 
-        public AssetImportException(string message, IReadOnlyDictionary<string, IAsset> assets): base(message)
+        public AssetImportException(string message, IReadOnlyDictionary<string, IAsset> assets) : base(message)
         {
             this.assets = assets;
         }

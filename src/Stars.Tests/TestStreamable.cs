@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Services;
 
 namespace Stars.Tests
 {

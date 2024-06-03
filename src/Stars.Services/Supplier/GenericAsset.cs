@@ -1,11 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -22,7 +19,7 @@ namespace Terradue.Stars.Services.Supplier
             this.route = route;
             this.title = title;
             this.roles = roles;
-            this.uri = route.Uri;
+            uri = route.Uri;
             if (route is IAsset)
             {
                 properties = new Dictionary<string, object>((route as IAsset).Properties.ToDictionary(x => x.Key, x => x.Value));

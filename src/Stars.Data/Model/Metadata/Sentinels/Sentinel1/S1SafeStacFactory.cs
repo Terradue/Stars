@@ -1,12 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Stac;
+using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
 using Terradue.Stars.Interface;
-using Stac.Extensions.Projection;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 {
@@ -31,7 +31,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         private void AddSarStacExtension(StacItem stacItem)
         {
-            stacItem.SarExtension().Required (
+            stacItem.SarExtension().Required(
                 GetInstrumentMode(),
                 GetFrequencyBand(),
                 GetPolarizations(),
@@ -81,13 +81,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public string GetInstrumentMode()
         {
-            var platformMetadata = xfdu.metadataSection.FirstOrDefault(m => m.ID == "platform");
-
-            if (platformMetadata == null)
-            {
-                throw new ArgumentException("No platform metadata found in the manifest of " + xfdu.ID);
-            }
-
+            var platformMetadata = xfdu.metadataSection.FirstOrDefault(m => m.ID == "platform") ?? throw new ArgumentException("No platform metadata found in the manifest of " + xfdu.ID);
             try
             {
                 return platformMetadata.metadataWrap.xmlData.platform.instrument.extension.s1SarL0instrumentMode.mode.ToString();
@@ -141,12 +135,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public override string GetProductType()
         {
-            var generalProductInformation = xfdu.metadataSection.FirstOrDefault(m => m.ID == "generalProductInformation");
-            if (generalProductInformation == null)
-            {
-                throw new InvalidDataException("No generalProductInformation metadata found in the manifest of " + xfdu.ID);
-            }
-
+            var generalProductInformation = xfdu.metadataSection.FirstOrDefault(m => m.ID == "generalProductInformation") ?? throw new InvalidDataException("No generalProductInformation metadata found in the manifest of " + xfdu.ID);
             try
             {
                 return generalProductInformation.metadataWrap.xmlData.s1SarL1GeneralProductInformation.productType.ToString();

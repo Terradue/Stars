@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
-using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 using GeoJSON.Net.Geometry;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
+using Stac.Extensions.Sat;
+using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Services.Processing;
 using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services.Supplier.Destination;
-using System.Xml;
-using System.Xml.Serialization;
-using Stac.Extensions.Sat;
-using Stac.Extensions.View;
-using Stac.Extensions.Raster;
 
 
 
@@ -47,8 +46,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset[] metadataAssets = GetMetadataAssets(item);
@@ -86,7 +84,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                     ZipArchiveAsset productZipArchiveAsset = new ZipArchiveAsset(productZipAsset, logger, resourceServiceProvider, _fileSystem);
                     var tmpDestination2 = LocalFileDestination.Create(_fileSystem.Directory.CreateDirectory(Path.GetDirectoryName(productZipArchiveAsset.Uri.AbsolutePath)), item, true);
                     IAssetsContainer productZipAssets = await productZipArchiveAsset.ExtractToDestinationAsync(tmpDestination2, _carrierManager, System.Threading.CancellationToken.None);
-                    if (productZipAssets != null) {
+                    if (productZipAssets != null)
+                    {
                         IEnumerable<IAsset> innerZipAssets = GetInnerZipAssets(productZipAssets);
                         if (innerZipAssets != null)
                         {
@@ -104,13 +103,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
             }
 
-            IAsset[] metadataAssets = GetMetadataAssets(item, innerZipAssetContainers);
-
-            if (metadataAssets == null)
-            {
-                throw new Exception("No metadata assets found");
-            }
-
+            IAsset[] metadataAssets = GetMetadataAssets(item, innerZipAssetContainers) ?? throw new Exception("No metadata assets found");
             BkaMetadata[] metadata = await ReadMetadata(metadataAssets);
 
             StacItem stacItem = CreateStacItem(metadata);
@@ -124,7 +117,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         internal virtual StacItem CreateStacItem(BkaMetadata[] metadata)
         {
             bool multipleProducts = metadata.Length > 1;
-            string identifier = metadata[0].Processing.Scene01FileName.Replace(".tif", String.Empty);
+            string identifier = metadata[0].Processing.Scene01FileName.Replace(".tif", string.Empty);
             if (multipleProducts)
             {
                 identifier = identifier.Replace("-MUL-", "-").Replace("-PAN-", "-");
@@ -219,7 +212,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         {
             if (metadata[0].Processing?.Level != null)
             {
-                return String.Format("L1{0}", metadata[0].Processing.Level);
+                return string.Format("L1{0}", metadata[0].Processing.Level);
             }
             return null;
         }
@@ -236,7 +229,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             {
                 if (m.Processing?.Instrument != null)
                 {
-                    if (spectralMode == null) spectralMode = String.Empty;
+                    if (spectralMode == null) spectralMode = string.Empty;
                     else spectralMode += "/";
                     spectralMode += m.Processing.Instrument;
                 }
@@ -256,7 +249,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             return properties;
         }
 
-        private void FillBasicsProperties(BkaMetadata[] metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(BkaMetadata[] metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -272,7 +265,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         private void AddOtherProperties(BkaMetadata[] metadata, StacItem item)
         {
-            IDictionary<String, object> properties = item.Properties;
+            IDictionary<string, object> properties = item.Properties;
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
@@ -315,14 +308,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                 }
                 if (DateTime.TryParseExact(m.Production?.CreationDate, format, null, DateTimeStyles.AssumeUniversal, out dt))
                 {
-                    if (dt.ToUniversalTime() < created) {
+                    if (dt.ToUniversalTime() < created)
+                    {
                         created = dt.ToUniversalTime();
                         properties["created"] = created.ToString("O");
                     }
                 }
                 else if (DateTime.TryParseExact(m.Production?.CreationDate, format2, null, DateTimeStyles.AssumeUniversal, out dt))
                 {
-                    if (dt.ToUniversalTime() < created) {
+                    if (dt.ToUniversalTime() < created)
+                    {
                         created = dt.ToUniversalTime();
                         properties["created"] = created.ToString("O");
                     }
@@ -346,7 +341,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         }
 
 
-        private GeoJSON.Net.Geometry.IGeometryObject GetGeometry(BkaMetadata[] metadata)
+        private IGeometryObject GetGeometry(BkaMetadata[] metadata)
         {
             BkaGeodeticCoordinates baseCoordinates = metadata[0].GeoReference.SceneGeoposition.GeodeticCoordinates;
             bool falling = baseCoordinates.Corner2NWLat < baseCoordinates.Corner3NELat;   // orbit goes NW -> SE or SE -> NW
@@ -371,16 +366,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             }
 
 
-            List<GeoJSON.Net.Geometry.Position> positions = new List<Position>
+            List<Position> positions = new List<Position>
             {
-                new GeoJSON.Net.Geometry.Position(swLat, swLon),
-                new GeoJSON.Net.Geometry.Position(seLat, seLon),
-                new GeoJSON.Net.Geometry.Position(neLat, neLon),
-                new GeoJSON.Net.Geometry.Position(nwLat, nwLon),
-                new GeoJSON.Net.Geometry.Position(swLat, swLon)
+                new Position(swLat, swLon),
+                new Position(seLat, seLon),
+                new Position(neLat, neLon),
+                new Position(nwLat, nwLon),
+                new Position(swLat, swLon)
             };
-            GeoJSON.Net.Geometry.LineString lineString = new GeoJSON.Net.Geometry.LineString(positions.ToArray());
-            return new GeoJSON.Net.Geometry.Polygon(new GeoJSON.Net.Geometry.LineString[] { lineString }).NormalizePolygon();
+            LineString lineString = new LineString(positions.ToArray());
+            return new Polygon(new LineString[] { lineString }).NormalizePolygon();
         }
 
 
@@ -408,7 +403,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                     StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"));
                     stacAsset.Roles.Add("dn");
 
-                    string key = String.Format("{0}_{1}",
+                    string key = string.Format("{0}_{1}",
                         GetProcessingLevel(metadata),
                         subProductMetadata.Processing?.Instrument
                     );
@@ -425,11 +420,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                     stacItem.Assets.Add(key, stacAsset);
                 }
 
-                string suffix = (assetContainers.Length == 1) ? String.Empty : String.Format("_{0}", subProductMetadata.Processing?.Instrument);
+                string suffix = (assetContainers.Length == 1) ? string.Empty : string.Format("_{0}", subProductMetadata.Processing?.Instrument);
                 if (metadataAsset != null)
                 {
                     StacAsset stacAsset = StacAsset.CreateMetadataAsset(stacItem, metadataAsset.Uri, new ContentType(MimeTypes.GetMimeType(metadataAsset.Uri.ToString())));
-                    stacItem.Assets.Add(String.Format("metadata{0}", suffix), stacAsset);
+                    stacItem.Assets.Add(string.Format("metadata{0}", suffix), stacAsset);
                     stacAsset.Properties.AddRange(metadataAsset.Properties);
                 }
 
@@ -438,7 +433,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                 {
                     StacAsset stacAsset = StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri, new ContentType(MimeTypes.GetMimeType(overviewAsset.Uri.ToString())));
                     stacAsset.Properties.AddRange(overviewAsset.Properties);
-                    stacItem.Assets.Add(String.Format("overview{0}", suffix), stacAsset);
+                    stacItem.Assets.Add(string.Format("overview{0}", suffix), stacAsset);
                 }
             }
         }
@@ -562,7 +557,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         protected virtual IEnumerable<IAsset> GetInnerZipAssets(IAssetsContainer container)
         {
-            IEnumerable<IAsset> zipAssets = this.FindAssetsFromFileNameRegex(container, @".*\.zip");
+            IEnumerable<IAsset> zipAssets = FindAssetsFromFileNameRegex(container, @".*\.zip");
             return zipAssets;
         }
 

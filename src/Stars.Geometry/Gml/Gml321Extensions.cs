@@ -21,12 +21,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Terradue.ServiceModel.Ogc.Gml321;
-using GeoJSON.Net.Geometry;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
+using GeoJSON.Net.Geometry;
+using Terradue.ServiceModel.Ogc.Gml321;
 
 namespace Terradue.Stars.Geometry.Gml321
 {
@@ -35,7 +35,7 @@ namespace Terradue.Stars.Geometry.Gml321
 
         private static string conversionSpecifier = "G";
         private static CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
-            
+
 
         public static MultiSurfaceType ToGmlMultiSurface(this IGeometryObject geometry)
         {
@@ -518,23 +518,22 @@ namespace Terradue.Stars.Geometry.Gml321
 
             List<IPosition> positions = new List<IPosition>();
             string gmlcoord, gmlts, gmlcs, gmldec;
-            char ts = ' ', cs = ',', dec = '.';
 
             /* Retrieve separator between coordinates tuples */
             gmlts = coordinates.ts;
-            if (char.TryParse(gmlts, out ts) != true)
+            if (char.TryParse(gmlts, out char ts) != true)
                 ts = ' ';
 
             /* Retrieve separator between each coordinate */
             gmlcs = coordinates.cs;
-            if (char.TryParse(gmlcs, out cs) != true)
+            if (char.TryParse(gmlcs, out char cs) != true)
             {
                 cs = ',';
             }
 
             /* Retrieve decimal separator */
             gmldec = coordinates.@decimal;
-            if (char.TryParse(gmldec, out dec) != true)
+            if (char.TryParse(gmldec, out char dec) != true)
                 dec = '.';
 
             if (cs == ts || cs == dec || ts == dec)

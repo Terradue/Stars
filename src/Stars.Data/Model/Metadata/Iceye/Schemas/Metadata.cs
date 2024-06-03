@@ -1,11 +1,11 @@
-namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
+﻿namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
 {
 
 
     /// <remarks/>
 
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    [System.Xml.Serialization.XmlType(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRoot(Namespace = "", IsNullable = false)]
     public partial class coefficient
     {
 
@@ -19,11 +19,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.numberField;
+                return numberField;
             }
             set
             {
-                this.numberField = value;
+                numberField = value;
             }
         }
 
@@ -33,19 +33,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.valueField;
+                return valueField;
             }
             set
             {
-                this.valueField = value;
+                valueField = value;
             }
         }
     }
 
     /// <remarks/>
 
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    [System.Xml.Serialization.XmlType(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRoot(Namespace = "", IsNullable = false)]
     public partial class Metadata
     {
 
@@ -203,11 +203,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.spec_versionField;
+                return spec_versionField;
             }
             set
             {
-                this.spec_versionField = value;
+                spec_versionField = value;
             }
         }
 
@@ -217,11 +217,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.product_fileField;
+                return product_fileField;
             }
             set
             {
-                this.product_fileField = value;
+                product_fileField = value;
             }
         }
 
@@ -231,11 +231,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.product_nameField;
+                return product_nameField;
             }
             set
             {
-                this.product_nameField = value;
+                product_nameField = value;
             }
         }
 
@@ -245,11 +245,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.product_typeField;
+                return product_typeField;
             }
             set
             {
-                this.product_typeField = value;
+                product_typeField = value;
             }
         }
 
@@ -259,11 +259,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.product_levelField;
+                return product_levelField;
             }
             set
             {
-                this.product_levelField = value;
+                product_levelField = value;
             }
         }
 
@@ -273,11 +273,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.satellite_nameField;
+                return satellite_nameField;
             }
             set
             {
-                this.satellite_nameField = value;
+                satellite_nameField = value;
             }
         }
 
@@ -287,11 +287,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.acquisition_modeField;
+                return acquisition_modeField;
             }
             set
             {
-                this.acquisition_modeField = value;
+                acquisition_modeField = value;
             }
         }
 
@@ -301,11 +301,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.look_sideField;
+                return look_sideField;
             }
             set
             {
-                this.look_sideField = value;
+                look_sideField = value;
             }
         }
 
@@ -315,11 +315,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.satellite_look_angleField;
+                return satellite_look_angleField;
             }
             set
             {
-                this.satellite_look_angleField = value;
+                satellite_look_angleField = value;
             }
         }
 
@@ -329,11 +329,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.processing_timeField;
+                return processing_timeField;
             }
             set
             {
-                this.processing_timeField = value;
+                processing_timeField = value;
             }
         }
 
@@ -343,11 +343,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.processor_versionField;
+                return processor_versionField;
             }
             set
             {
-                this.processor_versionField = value;
+                processor_versionField = value;
             }
         }
 
@@ -357,11 +357,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.acquisition_start_utcField;
+                return acquisition_start_utcField;
             }
             set
             {
-                this.acquisition_start_utcField = value;
+                acquisition_start_utcField = value;
             }
         }
 
@@ -371,11 +371,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.acquisition_end_utcField;
+                return acquisition_end_utcField;
             }
             set
             {
-                this.acquisition_end_utcField = value;
+                acquisition_end_utcField = value;
             }
         }
 
@@ -385,11 +385,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.zerodoppler_start_utcField;
+                return zerodoppler_start_utcField;
             }
             set
             {
-                this.zerodoppler_start_utcField = value;
+                zerodoppler_start_utcField = value;
             }
         }
 
@@ -399,11 +399,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.zerodoppler_end_utcField;
+                return zerodoppler_end_utcField;
             }
             set
             {
-                this.zerodoppler_end_utcField = value;
+                zerodoppler_end_utcField = value;
             }
         }
 
@@ -413,11 +413,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.number_of_azimuth_samplesField;
+                return number_of_azimuth_samplesField;
             }
             set
             {
-                this.number_of_azimuth_samplesField = value;
+                number_of_azimuth_samplesField = value;
             }
         }
 
@@ -427,11 +427,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.number_of_range_samplesField;
+                return number_of_range_samplesField;
             }
             set
             {
-                this.number_of_range_samplesField = value;
+                number_of_range_samplesField = value;
             }
         }
 
@@ -441,11 +441,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.orbit_repeat_cycleField;
+                return orbit_repeat_cycleField;
             }
             set
             {
-                this.orbit_repeat_cycleField = value;
+                orbit_repeat_cycleField = value;
             }
         }
 
@@ -455,11 +455,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.orbit_relative_numberField;
+                return orbit_relative_numberField;
             }
             set
             {
-                this.orbit_relative_numberField = value;
+                orbit_relative_numberField = value;
             }
         }
 
@@ -469,11 +469,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.orbit_absolute_numberField;
+                return orbit_absolute_numberField;
             }
             set
             {
-                this.orbit_absolute_numberField = value;
+                orbit_absolute_numberField = value;
             }
         }
 
@@ -483,11 +483,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.orbit_directionField;
+                return orbit_directionField;
             }
             set
             {
-                this.orbit_directionField = value;
+                orbit_directionField = value;
             }
         }
 
@@ -497,11 +497,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.sample_precisionField;
+                return sample_precisionField;
             }
             set
             {
-                this.sample_precisionField = value;
+                sample_precisionField = value;
             }
         }
 
@@ -511,11 +511,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.polarizationField;
+                return polarizationField;
             }
             set
             {
-                this.polarizationField = value;
+                polarizationField = value;
             }
         }
 
@@ -525,11 +525,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.azimuth_looksField;
+                return azimuth_looksField;
             }
             set
             {
-                this.azimuth_looksField = value;
+                azimuth_looksField = value;
             }
         }
 
@@ -539,11 +539,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.range_looksField;
+                return range_looksField;
             }
             set
             {
-                this.range_looksField = value;
+                range_looksField = value;
             }
         }
 
@@ -553,11 +553,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.range_look_bandwidthField;
+                return range_look_bandwidthField;
             }
             set
             {
-                this.range_look_bandwidthField = value;
+                range_look_bandwidthField = value;
             }
         }
 
@@ -567,11 +567,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.range_look_overlapField;
+                return range_look_overlapField;
             }
             set
             {
-                this.range_look_overlapField = value;
+                range_look_overlapField = value;
             }
         }
 
@@ -581,11 +581,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.azimuth_look_bandwidthField;
+                return azimuth_look_bandwidthField;
             }
             set
             {
-                this.azimuth_look_bandwidthField = value;
+                azimuth_look_bandwidthField = value;
             }
         }
 
@@ -595,11 +595,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.azimuth_look_overlapField;
+                return azimuth_look_overlapField;
             }
             set
             {
-                this.azimuth_look_overlapField = value;
+                azimuth_look_overlapField = value;
             }
         }
 
@@ -609,11 +609,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.range_spacingField;
+                return range_spacingField;
             }
             set
             {
-                this.range_spacingField = value;
+                range_spacingField = value;
             }
         }
 
@@ -623,11 +623,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.azimuth_spacingField;
+                return azimuth_spacingField;
             }
             set
             {
-                this.azimuth_spacingField = value;
+                azimuth_spacingField = value;
             }
         }
 
@@ -637,11 +637,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.acquisition_prfField;
+                return acquisition_prfField;
             }
             set
             {
-                this.acquisition_prfField = value;
+                acquisition_prfField = value;
             }
         }
 
@@ -651,11 +651,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.processing_prfField;
+                return processing_prfField;
             }
             set
             {
-                this.processing_prfField = value;
+                processing_prfField = value;
             }
         }
 
@@ -665,11 +665,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.carrier_frequencyField;
+                return carrier_frequencyField;
             }
             set
             {
-                this.carrier_frequencyField = value;
+                carrier_frequencyField = value;
             }
         }
 
@@ -679,11 +679,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.first_pixel_timeField;
+                return first_pixel_timeField;
             }
             set
             {
-                this.first_pixel_timeField = value;
+                first_pixel_timeField = value;
             }
         }
 
@@ -693,11 +693,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.slant_range_to_first_pixelField;
+                return slant_range_to_first_pixelField;
             }
             set
             {
-                this.slant_range_to_first_pixelField = value;
+                slant_range_to_first_pixelField = value;
             }
         }
 
@@ -707,11 +707,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.azimuth_time_intervalField;
+                return azimuth_time_intervalField;
             }
             set
             {
-                this.azimuth_time_intervalField = value;
+                azimuth_time_intervalField = value;
             }
         }
 
@@ -721,11 +721,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.range_sampling_rateField;
+                return range_sampling_rateField;
             }
             set
             {
-                this.range_sampling_rateField = value;
+                range_sampling_rateField = value;
             }
         }
 
@@ -735,11 +735,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.chirp_bandwidthField;
+                return chirp_bandwidthField;
             }
             set
             {
-                this.chirp_bandwidthField = value;
+                chirp_bandwidthField = value;
             }
         }
 
@@ -749,11 +749,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.chirp_durationField;
+                return chirp_durationField;
             }
             set
             {
-                this.chirp_durationField = value;
+                chirp_durationField = value;
             }
         }
 
@@ -763,11 +763,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.total_processed_bandwidth_azimuthField;
+                return total_processed_bandwidth_azimuthField;
             }
             set
             {
-                this.total_processed_bandwidth_azimuthField = value;
+                total_processed_bandwidth_azimuthField = value;
             }
         }
 
@@ -777,11 +777,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.window_function_rangeField;
+                return window_function_rangeField;
             }
             set
             {
-                this.window_function_rangeField = value;
+                window_function_rangeField = value;
             }
         }
 
@@ -791,11 +791,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.window_function_azimuthField;
+                return window_function_azimuthField;
             }
             set
             {
-                this.window_function_azimuthField = value;
+                window_function_azimuthField = value;
             }
         }
 
@@ -805,11 +805,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.range_spread_comp_flagField;
+                return range_spread_comp_flagField;
             }
             set
             {
-                this.range_spread_comp_flagField = value;
+                range_spread_comp_flagField = value;
             }
         }
 
@@ -819,11 +819,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.ant_elev_corr_flagField;
+                return ant_elev_corr_flagField;
             }
             set
             {
-                this.ant_elev_corr_flagField = value;
+                ant_elev_corr_flagField = value;
             }
         }
 
@@ -833,11 +833,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.number_of_dc_estimationsField;
+                return number_of_dc_estimationsField;
             }
             set
             {
-                this.number_of_dc_estimationsField = value;
+                number_of_dc_estimationsField = value;
             }
         }
 
@@ -847,11 +847,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.dc_estimate_poly_orderField;
+                return dc_estimate_poly_orderField;
             }
             set
             {
-                this.dc_estimate_poly_orderField = value;
+                dc_estimate_poly_orderField = value;
             }
         }
 
@@ -861,11 +861,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.doppler_rate_poly_orderField;
+                return doppler_rate_poly_orderField;
             }
             set
             {
-                this.doppler_rate_poly_orderField = value;
+                doppler_rate_poly_orderField = value;
             }
         }
 
@@ -875,11 +875,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.grsr_poly_orderField;
+                return grsr_poly_orderField;
             }
             set
             {
-                this.grsr_poly_orderField = value;
+                grsr_poly_orderField = value;
             }
         }
 
@@ -889,11 +889,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.incidence_angle_poly_orderField;
+                return incidence_angle_poly_orderField;
             }
             set
             {
-                this.incidence_angle_poly_orderField = value;
+                incidence_angle_poly_orderField = value;
             }
         }
 
@@ -903,11 +903,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.gcp_terrain_modelField;
+                return gcp_terrain_modelField;
             }
             set
             {
-                this.gcp_terrain_modelField = value;
+                gcp_terrain_modelField = value;
             }
         }
 
@@ -917,11 +917,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.geo_ref_systemField;
+                return geo_ref_systemField;
             }
             set
             {
-                this.geo_ref_systemField = value;
+                geo_ref_systemField = value;
             }
         }
 
@@ -931,11 +931,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.avg_scene_heightField;
+                return avg_scene_heightField;
             }
             set
             {
-                this.avg_scene_heightField = value;
+                avg_scene_heightField = value;
             }
         }
 
@@ -945,11 +945,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.mean_orbit_altitudeField;
+                return mean_orbit_altitudeField;
             }
             set
             {
-                this.mean_orbit_altitudeField = value;
+                mean_orbit_altitudeField = value;
             }
         }
 
@@ -959,11 +959,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.mean_earth_radiusField;
+                return mean_earth_radiusField;
             }
             set
             {
-                this.mean_earth_radiusField = value;
+                mean_earth_radiusField = value;
             }
         }
 
@@ -973,11 +973,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.coord_first_nearField;
+                return coord_first_nearField;
             }
             set
             {
-                this.coord_first_nearField = value;
+                coord_first_nearField = value;
             }
         }
 
@@ -987,11 +987,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.coord_first_farField;
+                return coord_first_farField;
             }
             set
             {
-                this.coord_first_farField = value;
+                coord_first_farField = value;
             }
         }
 
@@ -1001,11 +1001,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.coord_last_nearField;
+                return coord_last_nearField;
             }
             set
             {
-                this.coord_last_nearField = value;
+                coord_last_nearField = value;
             }
         }
 
@@ -1015,11 +1015,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.coord_last_farField;
+                return coord_last_farField;
             }
             set
             {
-                this.coord_last_farField = value;
+                coord_last_farField = value;
             }
         }
 
@@ -1029,11 +1029,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.coord_centerField;
+                return coord_centerField;
             }
             set
             {
-                this.coord_centerField = value;
+                coord_centerField = value;
             }
         }
 
@@ -1043,11 +1043,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.headingField;
+                return headingField;
             }
             set
             {
-                this.headingField = value;
+                headingField = value;
             }
         }
 
@@ -1057,11 +1057,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.incidence_nearField;
+                return incidence_nearField;
             }
             set
             {
-                this.incidence_nearField = value;
+                incidence_nearField = value;
             }
         }
 
@@ -1071,11 +1071,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.incidence_centerField;
+                return incidence_centerField;
             }
             set
             {
-                this.incidence_centerField = value;
+                incidence_centerField = value;
             }
         }
 
@@ -1085,11 +1085,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.incidence_farField;
+                return incidence_farField;
             }
             set
             {
-                this.incidence_farField = value;
+                incidence_farField = value;
             }
         }
 
@@ -1099,11 +1099,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.calibration_factorField;
+                return calibration_factorField;
             }
             set
             {
-                this.calibration_factorField = value;
+                calibration_factorField = value;
             }
         }
 
@@ -1113,11 +1113,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.orbit_processing_levelField;
+                return orbit_processing_levelField;
             }
             set
             {
-                this.orbit_processing_levelField = value;
+                orbit_processing_levelField = value;
             }
         }
 
@@ -1127,11 +1127,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.tropo_range_delayField;
+                return tropo_range_delayField;
             }
             set
             {
-                this.tropo_range_delayField = value;
+                tropo_range_delayField = value;
             }
         }
 
@@ -1141,11 +1141,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye.Schemas
         {
             get
             {
-                return this.data_orientationField;
+                return data_orientationField;
             }
             set
             {
-                this.data_orientationField = value;
+                data_orientationField = value;
             }
         }
     }

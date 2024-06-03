@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.GZip;
@@ -21,6 +21,6 @@ namespace Terradue.Stars.Services.Processing
             var stream = new GZipInputStream(await streamResource.GetStreamAsync(ct));
             return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
-       
+
     }
 }

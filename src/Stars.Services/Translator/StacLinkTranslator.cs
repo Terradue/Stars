@@ -1,14 +1,13 @@
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router.Translator;
-using Terradue.Stars.Services.Model.Stac;
-using Stac;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Services.Router;
+﻿using System.Linq;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Stac;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router.Translator;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Services.Translator
 {
@@ -39,8 +38,7 @@ namespace Terradue.Stars.Services.Translator
         {
             if (typeof(T) == typeof(StacNode) || typeof(T) == typeof(StacCatalogNode))
             {
-                ICatalog catalogNode = route as ICatalog;
-                if (catalogNode != null)
+                if (route is ICatalog catalogNode)
                 {
                     foreach (IResourceLink stacLink in catalogNode.GetLinks().Where(l => l.Relationship == "alternate" && l.ContentType.MediaType == "application/json"))
                     {
@@ -58,11 +56,10 @@ namespace Terradue.Stars.Services.Translator
 
             if (typeof(T) == typeof(StacNode) || typeof(T) == typeof(StacItemNode))
             {
-                IItem itemNode = route as IItem;
-                if (itemNode != null)
+                if (route is IItem itemNode)
                 {
                     var links = itemNode.GetLinks();
-                    foreach (IResourceLink stacLink in links.Where(l => l.Relationship == "alternate" && 
+                    foreach (IResourceLink stacLink in links.Where(l => l.Relationship == "alternate" &&
                                 (l.ContentType?.MediaType == "application/json" || l.ContentType?.MediaType == "application/geo+json")))
                     {
                         try

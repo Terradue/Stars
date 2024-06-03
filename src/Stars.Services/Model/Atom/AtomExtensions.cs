@@ -1,12 +1,12 @@
-using Terradue.ServiceModel.Syndication;
+﻿using System;
 using System.Collections.Generic;
-using System;
-using Terradue.OpenSearch.Result;
-using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
-using GeoJSON.Net.Geometry;
-using Terradue.Stars.Services.Model.EOP;
-using Stac;
 using System.Xml;
+using GeoJSON.Net.Geometry;
+using Stac;
+using Terradue.Metadata.EarthObservation.OpenSearch.Extensions;
+using Terradue.OpenSearch.Result;
+using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Services.Model.EOP;
 
 namespace Terradue.Stars.Services.Model.Atom
 {

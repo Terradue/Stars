@@ -1,7 +1,4 @@
-using System;
-using Microsoft.Extensions.Configuration;
-
-namespace Terradue.Stars.Interface
+﻿namespace Terradue.Stars.Interface
 {
     public interface IPlugin
     {

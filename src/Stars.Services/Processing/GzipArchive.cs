@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
@@ -36,7 +36,7 @@ namespace Terradue.Stars.Services.Processing
         protected async Task<Stream> GetStreamAsync(IAsset asset, CancellationToken ct)
         {
             var streamResource = await resourceServiceProvider.GetStreamResourceAsync(asset, ct);
-            var stream = new ICSharpCode.SharpZipLib.GZip.GZipInputStream(await streamResource.GetStreamAsync(ct));
+            var stream = new GZipInputStream(await streamResource.GetStreamAsync(ct));
             return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
 

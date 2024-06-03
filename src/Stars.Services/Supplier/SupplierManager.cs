@@ -1,15 +1,7 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
+using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Microsoft.Extensions.Options;
 using Terradue.Stars.Services.Plugins;
 
 namespace Terradue.Stars.Services.Supplier

@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Stac;
-using Stac.Extensions.Alternate;
 using Stac.Extensions.File;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Services.Model.Stac;
@@ -89,7 +88,8 @@ namespace Terradue.Stars.Services
 
         public static IResource CreateResource(this StacLink stacLink)
         {
-            if ( stacLink is StacObjectLink stacObjectLink){
+            if (stacLink is StacObjectLink stacObjectLink)
+            {
                 return stacObjectLink.StacObject.CreateResource(stacObjectLink.Uri);
             }
 
@@ -104,7 +104,7 @@ namespace Terradue.Stars.Services
                 return new StacCollectionNode(stacCollection, uri);
             if (stacObject is StacCatalog stacCatalog)
                 return new StacCatalogNode(stacCatalog, uri);
-            
+
             return new GenericResource(uri);
         }
     }

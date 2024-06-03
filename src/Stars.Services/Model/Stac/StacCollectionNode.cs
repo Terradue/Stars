@@ -1,10 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Stac;
 using Stac.Collection;
-using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Model.Stac

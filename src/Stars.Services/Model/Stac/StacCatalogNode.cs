@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Stac;
 using Stars.Services.Model.Stac;
 using Terradue.Stars.Interface;
@@ -30,8 +29,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public override IReadOnlyList<IResource> GetRoutes(IRouter router)
         {
-            StacRouter stacRouter = router as StacRouter;
-            if (stacRouter == null)
+            if (!(router is StacRouter stacRouter))
                 throw new Exception("Router is not a StacRouter");
             return this.GetChildren(stacRouter).Cast<IResource>()
                     .Concat(this.GetItems(stacRouter).Cast<IResource>())

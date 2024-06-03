@@ -1,5 +1,4 @@
-using System;
-using System.IO;
+﻿using System;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Stac;
@@ -15,7 +14,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Calibration
 
         private readonly IAsset calibrationAsset;
 
-        public S1L1AssetCalibration(l1CalibrationType l1Calibration, IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider): base(resourceServiceProvider)
+        public S1L1AssetCalibration(l1CalibrationType l1Calibration, IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider) : base(resourceServiceProvider)
         {
             this.l1Calibration = l1Calibration;
             this.calibrationAsset = calibrationAsset;
@@ -60,7 +59,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Calibration
 
         public override string GetId()
         {
-            return String.Format("calibration-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            return string.Format("calibration-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
         }
 
         private object GetStripe()

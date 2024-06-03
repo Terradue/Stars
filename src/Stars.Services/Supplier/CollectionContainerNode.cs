@@ -1,22 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Net.Mime;
-using System.Threading.Tasks;
-using GeoJSON.Net.Geometry;
-using Itenso.TimePeriod;
 using Stac.Collection;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier
 {
     public class CollectionContainerNode : IAssetsContainer, ICollection
     {
         private readonly ICollection collection;
-        private readonly IReadOnlyDictionary<string, IAsset>  assets;
+        private readonly IReadOnlyDictionary<string, IAsset> assets;
         private readonly string suffix;
 
         public CollectionContainerNode(ICollection collection, IReadOnlyDictionary<string, IAsset> assets, string suffix)

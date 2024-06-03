@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using NetTopologySuite.Geometries;
 
 namespace Stars.Geometry.NTS
@@ -31,52 +29,52 @@ namespace Stars.Geometry.NTS
             }
         }
 
-        public static NetTopologySuite.Geometries.Point ToNTSPoint(this GeoJSON.Net.Geometry.Point geometryPoint)
+        public static Point ToNTSPoint(this GeoJSON.Net.Geometry.Point geometryPoint)
         {
-            return new NetTopologySuite.Geometries.Point(geometryPoint.Coordinates.Longitude, geometryPoint.Coordinates.Latitude, geometryPoint.Coordinates.Altitude ?? 0);
+            return new Point(geometryPoint.Coordinates.Longitude, geometryPoint.Coordinates.Latitude, geometryPoint.Coordinates.Altitude ?? 0);
         }
 
-        public static NetTopologySuite.Geometries.Coordinate ToNTSCoordinate(this GeoJSON.Net.Geometry.IPosition geometryPosition)
+        public static Coordinate ToNTSCoordinate(this GeoJSON.Net.Geometry.IPosition geometryPosition)
         {
-            var coordinate = new NetTopologySuite.Geometries.Coordinate(geometryPosition.Longitude, geometryPosition.Latitude);
+            var coordinate = new Coordinate(geometryPosition.Longitude, geometryPosition.Latitude);
             if (geometryPosition.Altitude.HasValue)
                 coordinate.Z = geometryPosition.Altitude.Value;
             return coordinate;
         }
-    
-        public static NetTopologySuite.Geometries.MultiPoint ToNTSMultiPoint(this GeoJSON.Net.Geometry.MultiPoint geometryMultiPoint)
+
+        public static MultiPoint ToNTSMultiPoint(this GeoJSON.Net.Geometry.MultiPoint geometryMultiPoint)
         {
-            return new NetTopologySuite.Geometries.MultiPoint(geometryMultiPoint.Coordinates.Select(c => c.ToNTSPoint()).ToArray());
+            return new MultiPoint(geometryMultiPoint.Coordinates.Select(c => c.ToNTSPoint()).ToArray());
         }
 
-        public static NetTopologySuite.Geometries.LineString ToNTSLineString(this GeoJSON.Net.Geometry.LineString geometryLineString)
+        public static LineString ToNTSLineString(this GeoJSON.Net.Geometry.LineString geometryLineString)
         {
-            return new NetTopologySuite.Geometries.LineString(geometryLineString.Coordinates.Select(c => c.ToNTSCoordinate()).ToArray());
+            return new LineString(geometryLineString.Coordinates.Select(c => c.ToNTSCoordinate()).ToArray());
         }
 
-        public static NetTopologySuite.Geometries.MultiLineString ToNTSMultiLineString(this GeoJSON.Net.Geometry.MultiLineString geometryMultiLineString)
+        public static MultiLineString ToNTSMultiLineString(this GeoJSON.Net.Geometry.MultiLineString geometryMultiLineString)
         {
-            return new NetTopologySuite.Geometries.MultiLineString(geometryMultiLineString.Coordinates.Select(c => c.ToNTSLineString()).ToArray());
+            return new MultiLineString(geometryMultiLineString.Coordinates.Select(c => c.ToNTSLineString()).ToArray());
         }
 
-        public static NetTopologySuite.Geometries.LinearRing ToNTSLinearRing(this GeoJSON.Net.Geometry.LineString geometryLineString)
+        public static LinearRing ToNTSLinearRing(this GeoJSON.Net.Geometry.LineString geometryLineString)
         {
-            return new NetTopologySuite.Geometries.LinearRing(geometryLineString.Coordinates.Select(c => c.ToNTSCoordinate()).ToArray());
+            return new LinearRing(geometryLineString.Coordinates.Select(c => c.ToNTSCoordinate()).ToArray());
         }
 
-        public static NetTopologySuite.Geometries.Polygon ToNTSPolygon(this GeoJSON.Net.Geometry.Polygon geometryPolygon)
+        public static Polygon ToNTSPolygon(this GeoJSON.Net.Geometry.Polygon geometryPolygon)
         {
-            return new NetTopologySuite.Geometries.Polygon(geometryPolygon.Coordinates.First().ToNTSLinearRing(), geometryPolygon.Coordinates.Skip(1).Select(c => c.ToNTSLinearRing()).ToArray());
+            return new Polygon(geometryPolygon.Coordinates.First().ToNTSLinearRing(), geometryPolygon.Coordinates.Skip(1).Select(c => c.ToNTSLinearRing()).ToArray());
         }
 
-        public static NetTopologySuite.Geometries.MultiPolygon ToNTSMultiPolygon(this GeoJSON.Net.Geometry.MultiPolygon geometryMultiPolygon)
+        public static MultiPolygon ToNTSMultiPolygon(this GeoJSON.Net.Geometry.MultiPolygon geometryMultiPolygon)
         {
-            return new NetTopologySuite.Geometries.MultiPolygon(geometryMultiPolygon.Coordinates.Select(c => c.ToNTSPolygon()).ToArray());
+            return new MultiPolygon(geometryMultiPolygon.Coordinates.Select(c => c.ToNTSPolygon()).ToArray());
         }
 
-        public static NetTopologySuite.Geometries.GeometryCollection ToNTSGeometryCollection(this GeoJSON.Net.Geometry.GeometryCollection geometryCollection)
+        public static GeometryCollection ToNTSGeometryCollection(this GeoJSON.Net.Geometry.GeometryCollection geometryCollection)
         {
-            return new NetTopologySuite.Geometries.GeometryCollection(geometryCollection.Geometries.Select(g => g.ToNTSGeometry()).ToArray());
+            return new GeometryCollection(geometryCollection.Geometries.Select(g => g.ToNTSGeometry()).ToArray());
         }
     }
 }

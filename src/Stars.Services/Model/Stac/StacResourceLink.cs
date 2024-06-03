@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Mime;
 using Stac;
@@ -12,7 +12,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacResourceLink(StacLink l)
         {
-            this.stacLink = l;
+            stacLink = l;
         }
 
         public Uri Uri => stacLink.Uri;

@@ -1,11 +1,10 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Stac;
 using GeoJSON.Net.Geometry;
-using System.Net;
-using Terradue.Stars.Interface;
-using System;
 using Itenso.TimePeriod;
+using Stac;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
@@ -14,7 +13,7 @@ namespace Terradue.Stars.Services.Model.Stac
     {
         public StacItemNode(StacItem stacItem, Uri uri) : base(stacItem, uri)
         {
-            
+
         }
 
         public StacItem StacItem => stacObject as StacItem;

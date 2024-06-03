@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Terradue.Stars.Interface;
@@ -160,10 +160,10 @@ namespace Terradue.Stars.Services.Supplier
 
         public ContentTypeAssetFilter(string mediaType, Dictionary<string, string> parameters)
         {
-            if( mediaType.StartsWith("!") )
+            if (mediaType.StartsWith("!"))
             {
                 this.mediaType = mediaType.Substring(1);
-                this.negated = true;
+                negated = true;
             }
             else
             {
@@ -175,17 +175,17 @@ namespace Terradue.Stars.Services.Supplier
         public bool IsMatch(KeyValuePair<string, IAsset> asset)
         {
             return negated ?
-                ( string.IsNullOrEmpty(mediaType) ||
+                (string.IsNullOrEmpty(mediaType) ||
                   !asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
                 ) &&
-                ( parameters == null ||
+                (parameters == null ||
                   parameters.Any(p => !asset.Value.ContentType.Parameters.ContainsKey(p.Key) ||
                                       asset.Value.ContentType.Parameters[p.Key] != p.Value)
                 ) :
-                ( string.IsNullOrEmpty(mediaType) ||
+                (string.IsNullOrEmpty(mediaType) ||
                   asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
                 ) &&
-                ( parameters == null ||
+                (parameters == null ||
                   parameters.Any(p => asset.Value.ContentType.Parameters.ContainsKey(p.Key) &&
                                       asset.Value.ContentType.Parameters[p.Key] == p.Value)
                 );

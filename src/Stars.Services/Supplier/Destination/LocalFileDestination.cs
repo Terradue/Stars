@@ -1,12 +1,9 @@
-using System;
+﻿using System;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Supplier.Destination
 {
@@ -43,26 +40,27 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public void PrepareDestination()
         {
-            if ( !file.Directory.Exists)
+            if (!file.Directory.Exists)
                 file.Directory.Create();
         }
 
         public IDestination To(IResource subroute, string relPathFix = null)
         {
             // we first integrate the relPath
-            string relPath = relPathFix ?? String.Empty;
+            string relPath = relPathFix ?? string.Empty;
 
             // we identify the filename
             string filename = Path.GetFileName(subroute.Uri.IsAbsoluteUri ? subroute.Uri.LocalPath : subroute.Uri.ToString());
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
                 filename = subroute.ContentDisposition.FileName;
 
-            if (String.IsNullOrEmpty(filename) && subroute.ResourceType == ResourceType.Asset)
+            if (string.IsNullOrEmpty(filename) && subroute.ResourceType == ResourceType.Asset)
                 filename = "asset.zip";
 
             // to avoid wrong filename such as '$value'
-            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset){
-                if ( resource != null && resource.ResourceType == ResourceType.Item)
+            if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset)
+            {
+                if (resource != null && resource.ResourceType == ResourceType.Item)
                     filename = (resource as IItem).Id + ".zip";
                 else
                     filename = "asset.zip";

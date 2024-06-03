@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 
 namespace Terradue.Stars.Interface
 {
@@ -8,6 +6,6 @@ namespace Terradue.Stars.Interface
     {
         IReadOnlyDictionary<string, IAsset> Assets { get; }
 
-        
+
     }
 }

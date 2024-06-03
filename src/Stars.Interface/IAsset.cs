@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Terradue.Stars.Interface
 {
@@ -11,7 +9,7 @@ namespace Terradue.Stars.Interface
         IReadOnlyList<string> Roles { get; }
 
         IReadOnlyDictionary<string, object> Properties { get; }
-        
+
         IEnumerable<IAsset> Alternates { get; }
 
     }

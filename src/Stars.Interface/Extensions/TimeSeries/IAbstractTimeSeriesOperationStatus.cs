@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Stac;
-using Stac.Common;
+﻿using System.Collections.Generic;
 
 namespace Terradue.Stars.Interface.Extensions.TimeSeries
 {

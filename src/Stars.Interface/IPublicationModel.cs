@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Stac;
 
 namespace Terradue.Stars.Interface
@@ -16,7 +16,7 @@ namespace Terradue.Stars.Interface
         string Collection { get; }
 
         int Depth { get; }
-        
+
         List<string> AssetsFilters { get; }
     }
 }

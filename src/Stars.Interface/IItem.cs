@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Mime;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using GeoJSON.Net.Geometry;
-using Stac;
 
 namespace Terradue.Stars.Interface
 {

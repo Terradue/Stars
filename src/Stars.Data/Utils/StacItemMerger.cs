@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Stac;
 using Terradue.Stars.Services;
@@ -35,11 +34,11 @@ namespace Terradue.Stars.Data.Utils
             mergedItem.MergeAssets(item2);
             foreach (var prop in item2.Properties)
             {
-                if ( prop.Key == "product_type")
-                if (!mergedItem.Properties.ContainsKey(prop.Key))
-                {
-                    mergedItem.Properties.Add(prop.Key, prop.Value);
-                }
+                if (prop.Key == "product_type")
+                    if (!mergedItem.Properties.ContainsKey(prop.Key))
+                    {
+                        mergedItem.Properties.Add(prop.Key, prop.Value);
+                    }
             }
 
             return mergedItem;

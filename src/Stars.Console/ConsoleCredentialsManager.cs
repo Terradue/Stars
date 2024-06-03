@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
@@ -66,7 +66,7 @@ namespace Terradue.Stars.Console.Operations
         private void SaveCredentials(ICredentials cred, Uri uri, string authType)
         {
             CredentialsConfigurationSection credConfigSection = cred.ToCredentialsConfigurationSection(uri, authType);
-            consoleUserSettings.AddOrUpdateSetting<CredentialsConfigurationSection>("Credentials:" + Guid.NewGuid().ToString(), credConfigSection);
+            consoleUserSettings.AddOrUpdateSetting("Credentials:" + Guid.NewGuid().ToString(), credConfigSection);
         }
 
         private NetworkCredential PromptCredentials(Uri uri, string authType)

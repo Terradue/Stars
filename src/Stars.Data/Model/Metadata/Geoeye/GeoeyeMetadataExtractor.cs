@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -12,14 +12,14 @@ using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
+using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Model.Stac;
-using Stac.Extensions.Raster;
 using Terradue.Stars.Services;
-using Stac.Extensions.Projection;
-using Terradue.Stars.Geometry.GeoJson;
+using Terradue.Stars.Services.Model.Stac;
 
 namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 {
@@ -31,8 +31,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             IAsset metadata = FindFirstAssetFromFileNameRegex(item, "^(GE)[0-9a-zA-Z_-]*(\\.txt)$");
 
 
@@ -49,13 +48,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             logger.LogDebug("Retrieving the metadata file in the product package");
-            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "^(GE)[0-9a-zA-Z_-]*(\\.txt)$");
-            if (metadataFile == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
-
-            logger.LogDebug(String.Format("Metadata file is {0}", metadataFile.Uri));
+            IAsset metadataFile = FindFirstAssetFromFileNameRegex(item, "^(GE)[0-9a-zA-Z_-]*(\\.txt)$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
+            logger.LogDebug(string.Format("Metadata file is {0}", metadataFile.Uri));
 
 
             //  loading properties in dictionary
@@ -98,7 +92,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
             AddAssets(stacItem, metadata, isdMetadata, item);
 
             // AddEoBandPropertyInItem(stacItem);
-            return StacItemNode.Create(stacItem, item.Uri);;
+            return StacItemNode.Create(stacItem, item.Uri); ;
         }
 
         private void AddProcessingStacExtension(JavaProperties metadata, StacItem stacItem)
@@ -188,7 +182,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
             stacAsset.SetProperty("gsd", double.Parse(metadata["PIXEL_SIZE_X"]));
 
             stacAsset.ProjectionExtension().Shape = new int[] { isdMetadata.TIL.TILESIZEY, isdMetadata.TIL.TILESIZEX };
-            
+
             string key = "";
 
             // GEOEYE-1
@@ -209,7 +203,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
                     rasterBandObjects.Add(
                         CreateRasterBandObject(-1.7,
                                                0.923 * (isdMetadata.IMD.BAND_P.ABSCALFACTOR / isdMetadata.IMD.BAND_P.EFFECTIVEBANDWIDTH)));
-                    
+
                 }
                 if (isdMetadata.IMD.BAND_B != null)
                 {
@@ -366,7 +360,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
             }
         }
 
-        private void FillBasicsProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(JavaProperties metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -381,13 +375,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Geoeye
         }
 
 
-        private void AddOtherProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        private void AddOtherProperties(JavaProperties metadata, IDictionary<string, object> properties)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "DigitalGlobe/Maxar", 
+                    "DigitalGlobe/Maxar",
                     "GeoEye-1 is a high-resolution imaging satellite. GeoEye-1 imagery is used for air and marine transportation, defence, disaster response, oil and gas exploration, mining exploration and production, mapping of remote regions, insurance and risk management, location-based services and agricultural crop management.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://gisgeography.com/digitalglobe-satellite-imagery/")

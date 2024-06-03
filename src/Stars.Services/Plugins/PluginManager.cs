@@ -1,10 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -14,7 +12,6 @@ using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Model.Atom;
 
 namespace Terradue.Stars.Services.Plugins
 {
@@ -69,8 +66,7 @@ namespace Terradue.Stars.Services.Plugins
                     continue;
                 try
                 {
-                    Type type = GetTypeFromAssembly(pluginConfig.Value.Type, assembly);
-                    if (type == null) throw new DllNotFoundException(string.Format("Plugin {0} of type {1} not found.", pluginConfig.Key, pluginConfig.Value.Type));
+                    Type type = GetTypeFromAssembly(pluginConfig.Value.Type, assembly) ?? throw new DllNotFoundException(string.Format("Plugin {0} of type {1} not found.", pluginConfig.Key, pluginConfig.Value.Type));
                     collection.AddTransient(typeof(T), serviceProvider => CreateConfiguredPlugin<T>(serviceProvider, pluginConfig.Key, pluginConfig.Value, type));
                     logger.LogDebug("Plugin [{0}] injected", pluginConfig.Key);
                 }
@@ -84,8 +80,7 @@ namespace Terradue.Stars.Services.Plugins
         public static T CreateConfiguredPlugin<T>(IServiceProvider serviceProvider, string key, IPluginOption pluginOption, Type type) where T : IPlugin
         {
             int prio = 50;
-            PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
-            if (prioAttr != null)
+            if (type.GetCustomAttribute(typeof(PluginPriorityAttribute)) is PluginPriorityAttribute prioAttr)
             {
                 prio = prioAttr.Priority;
             }
@@ -99,8 +94,7 @@ namespace Terradue.Stars.Services.Plugins
         public static T CreateDefaultPlugin<T>(IServiceProvider serviceProvider, Type type) where T : IPlugin
         {
             int prio = 50;
-            PluginPriorityAttribute prioAttr = type.GetCustomAttribute(typeof(PluginPriorityAttribute)) as PluginPriorityAttribute;
-            if (prioAttr != null)
+            if (type.GetCustomAttribute(typeof(PluginPriorityAttribute)) is PluginPriorityAttribute prioAttr)
             {
                 prio = prioAttr.Priority;
             }

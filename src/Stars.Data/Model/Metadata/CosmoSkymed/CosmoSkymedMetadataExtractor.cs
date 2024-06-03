@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -10,16 +10,15 @@ using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Stac;
-using Stac.Extensions.Sar;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
+using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
-using Stac.Extensions.Raster;
 
 namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 {
@@ -32,7 +31,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         private static Regex h5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
- 
+
         public override string Label => "COSMO SkyMed (ASI) mission product metadata extractor";
 
         public CosmoSkymedMetadataExtractor(ILogger<CosmoSkymedMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
@@ -41,10 +40,9 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
-            {   
+            {
                 IAsset dataAsset = GetDataAsset(item);
                 return true;
             }
@@ -65,7 +63,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             Match identifierMatch = identifierRegex.Match(imageFileName);
             if (!identifierMatch.Success)
             {
-                throw new InvalidOperationException(String.Format("Identifier not recognised from image file name: {0}", imageFileName));
+                throw new InvalidOperationException(string.Format("Identifier not recognised from image file name: {0}", imageFileName));
             }
 
             StacItem stacItem = CreateStacItem(hdfAttributes, metadata, identifierMatch);
@@ -88,7 +86,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
             string identifier = identifierMatch.Groups["id"].Value;
             StacItem stacItem = new StacItem(identifier, GetGeometry(hdfAttributes, metadata), GetCommonMetadata(hdfAttributes, metadata));
-            
+
             return stacItem;
         }
 
@@ -136,12 +134,12 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             Match coordinateMatch = coordinateRegex.Match(input);
             if (!coordinateMatch.Success)
             {
-                throw new InvalidOperationException(String.Format("Invalid coordinate input: {0}", input));
+                throw new InvalidOperationException(string.Format("Invalid coordinate input: {0}", input));
             }
 
-            if (!Double.TryParse(coordinateMatch.Groups["lat"].Value, out double lat) || !Double.TryParse(coordinateMatch.Groups["lon"].Value, out double lon))
+            if (!double.TryParse(coordinateMatch.Groups["lat"].Value, out double lat) || !double.TryParse(coordinateMatch.Groups["lon"].Value, out double lon))
             {
-                throw new InvalidOperationException(String.Format("Invalid coordinate value: {0}", input));
+                throw new InvalidOperationException(string.Format("Invalid coordinate value: {0}", input));
             }
 
             return new double[] { lat, lon };
@@ -157,11 +155,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
         protected virtual IAsset GetDataAsset(IItem item)
         {
-            IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, @".*\.h5$");
-            if (dataAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the HDF5 file asset"));
-            }
+            IAsset dataAsset = FindFirstAssetFromFileNameRegex(item, @".*\.h5$") ?? throw new FileNotFoundException(string.Format("Unable to find the HDF5 file asset"));
             return dataAsset;
         }
 
@@ -179,7 +173,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             {
                 XmlReaderSettings settings = new XmlReaderSettings() { DtdProcessing = DtdProcessing.Ignore };
                 var reader = XmlReader.Create(stream, settings);
-                
+
                 logger.LogDebug("Deserializing metadata file {0}", metadataAsset.Uri);
 
                 return (Schemas.Metadata)metadataSerializer.Deserialize(reader);
@@ -232,7 +226,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             {
                 string value = GetHdf5Value(hdf5File, attributeName);
                 if (value == null) continue;
-                
+
                 attributes.Add(attributeName, value);
             }
 
@@ -257,7 +251,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         private void FillDateTimeProperties(Dictionary<string, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             CultureInfo provider = CultureInfo.InvariantCulture;
-            
+
             bool complete = true;
             DateTime startDate = DateTime.MinValue;
             DateTime endDate = startDate;
@@ -314,14 +308,14 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             if (!complete && metadata != null)
             {
                 platform = metadata.ProductDefinitionData.SatelliteId;
-                mission = (metadata.ProductInfo.MissionId == null ? "csk" : metadata.ProductInfo.MissionId);
+                mission = (metadata.ProductInfo.MissionId ?? "csk");
             }
 
             if (platform != null) properties["platform"] = platform.ToLower().Replace("csks", "csk");
             if (mission != null) properties["mission"] = mission.ToLower();
         }
 
-        private void FillBasicsProperties(IDictionary<String, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
+        private void FillBasicsProperties(IDictionary<string, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             bool complete = true;
@@ -334,20 +328,20 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                 platform = metadata.ProductDefinitionData.SatelliteId;
                 processingLevel = metadata.ProcessingInfo.ProcessingLevel;
             }
-            properties["title"] = String.Format("{0} {1} {2}",
+            properties["title"] = string.Format("{0} {1} {2}",
                 platform,
                 processingLevel,
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
             );
         }
 
-        private void AddOtherProperties(IDictionary<String, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
+        private void AddOtherProperties(IDictionary<string, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "ASI", 
+                    "ASI",
                     "COSMO-SkyMed (Constellation of Small Satellites for Mediterranean basin Observation) is a 4 spacecraft constellation. Each of the 4 satellites is equipped with the SAR-2000 Synthetic Aperture Radar, which observes in the X-band to provide global observation under all weather and visibility conditions.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.asi.it/en/earth-science/cosmo-skymed/")
@@ -355,7 +349,8 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             }
         }
 
-        private void FillAdditionalSarProperties(IDictionary<String, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch) {
+        private void FillAdditionalSarProperties(IDictionary<string, object> properties, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
+        {
             int? multiLookSpacingRange = null;
 
             switch (identifierMatch.Groups["mode"].Value)
@@ -392,10 +387,10 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             else if (metadata != null) orbitDirection = (identifierMatch.Groups["dir"].Value == "A" ? "ascending" : "descending");
             sat.OrbitState = orbitDirection;
 
-            if (hdfAttributes.TryGetValue("Orbit Number", out string orbitNumberStr) && Int32.TryParse(orbitNumberStr, out int orbitNumber))
+            if (hdfAttributes.TryGetValue("Orbit Number", out string orbitNumberStr) && int.TryParse(orbitNumberStr, out int orbitNumber))
             {
                 sat.AbsoluteOrbit = orbitNumber;
-                sat.RelativeOrbit = Int32.Parse(identifierMatch.Groups["i"].Value) * 1000 + orbitNumber % 237;
+                sat.RelativeOrbit = int.Parse(identifierMatch.Groups["i"].Value) * 1000 + orbitNumber % 237;
             }
         }
 
@@ -431,7 +426,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
             if (nearAngleStr != null && farAngleStr != null)
             {
-                if (Double.TryParse(nearAngleStr, out double nearAngle) && Double.TryParse(farAngleStr, out double farAngle))
+                if (double.TryParse(nearAngleStr, out double nearAngle) && double.TryParse(farAngleStr, out double farAngle))
                 {
                     view.IncidenceAngle = Math.Abs((nearAngle + farAngle) / 2);
                 }
@@ -466,10 +461,10 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                 instrumentMode = metadata.ProductDefinitionData.AcquisitionMode;
             }
             sar.InstrumentMode = instrumentMode;
-            
+
             sar.FrequencyBand = SarCommonFrequencyBandName.X;
-            
-            if (hdfAttributes.TryGetValue("Radar Frequency", out string radarFrequencyStr) && Double.TryParse(radarFrequencyStr, out double radarFrequency))
+
+            if (hdfAttributes.TryGetValue("Radar Frequency", out string radarFrequencyStr) && double.TryParse(radarFrequencyStr, out double radarFrequency))
             {
                 sar.CenterFrequency = radarFrequency / 1000000000;
             }
@@ -501,7 +496,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                 resolutionAzimuthStr = metadata.ProductCharacteristics.AzimuthGeometricResolution;
             }
 
-            if (Double.TryParse(resolutionRangeStr, out double resolutionRange) && Double.TryParse(resolutionAzimuthStr, out double resolutionAzimuth))
+            if (double.TryParse(resolutionRangeStr, out double resolutionRange) && double.TryParse(resolutionAzimuthStr, out double resolutionAzimuth))
             {
                 sar.ResolutionRange = resolutionRange;
                 sar.ResolutionAzimuth = resolutionAzimuth;
@@ -522,15 +517,15 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
                 looksEquivalentNumberStr = GetTagValue(metadata.Algorithms.Tag, "Equivalent Number of Looks");
             }
 
-            if (Double.TryParse(looksRangeStr, out double looksRange))
+            if (double.TryParse(looksRangeStr, out double looksRange))
             {
                 sar.LooksRange = looksRange;
             }
-            if (Double.TryParse(looksAzimuthStr, out double looksAzimuth))
+            if (double.TryParse(looksAzimuthStr, out double looksAzimuth))
             {
                 sar.LooksAzimuth = looksAzimuth;
             }
-            if (Double.TryParse(looksEquivalentNumberStr, out double looksEquivalentNumber))
+            if (double.TryParse(looksEquivalentNumberStr, out double looksEquivalentNumber))
             {
                 sar.LooksEquivalentNumber = looksEquivalentNumber;
             }
@@ -545,7 +540,8 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             {
                 processingLevel = metadata.ProcessingInfo.ProcessingLevel;
             }
-            if (processingLevel != null) {
+            if (processingLevel != null)
+            {
                 proc.Level = processingLevel.Replace("Level-", "L");
             }
             if (!hdfAttributes.TryGetValue("Processing Centre", out string processingCentre) && metadata != null)
@@ -558,11 +554,11 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
 
         private string GetProcessingLevel(Dictionary<string, string> hdfAttributes)
         {
-            string[] possibleLevels = new string[] {"L0", "L1A", "L1B", "L1C", "L1D"};
+            string[] possibleLevels = new string[] { "L0", "L1A", "L1B", "L1C", "L1D" };
             string processingLevel = null;
             foreach (string level in possibleLevels)
             {
-                if (hdfAttributes.TryGetValue(String.Format("{0} Software Version", level), out string version) && version != null)
+                if (hdfAttributes.TryGetValue(string.Format("{0} Software Version", level), out string version) && version != null)
                 {
                     processingLevel = level;
                 }
@@ -585,13 +581,13 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         protected void AddAssets(StacItem stacItem, IItem item, Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)
         {
             IAsset imageAsset = GetDataAsset(item);
-            
+
             stacItem.Assets.Add("image", StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("application/x-hdf5"), "Image file"));
             stacItem.Assets["image"].Properties.AddRange(imageAsset.Properties);
             stacItem.Assets["image"].Properties["sar:polarizations"] = new string[] {
                 identifierMatch.Groups["pol"].Value
             };
-            
+
             IAsset metadataAsset = GetMetadataAsset(item);
             if (metadataAsset != null)
             {
@@ -608,7 +604,8 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
         }
 
 
-        private string GetHdf5Value(string hdf5File, string attribute) {
+        private string GetHdf5Value(string hdf5File, string attribute)
+        {
 
             Process h5dumpProcess = new Process();
             ProcessStartInfo h5dumpStartInfo = new ProcessStartInfo();
@@ -619,15 +616,16 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             h5dumpStartInfo.RedirectStandardOutput = true;
             h5dumpStartInfo.UseShellExecute = false;
             // ncDumpStartInfo.Arguments = @"-c 'ncdump -v lat_01,lon_01 " + ncFile + "'";
-            h5dumpStartInfo.Arguments = String.Format("-N \"{1}\" \"{0}\"", hdf5File, attribute);
+            h5dumpStartInfo.Arguments = string.Format("-N \"{1}\" \"{0}\"", hdf5File, attribute);
             h5dumpProcess.EnableRaisingEvents = true;
             h5dumpProcess.StartInfo = h5dumpStartInfo;
 
-            string errorMessage = String.Empty;
+            string errorMessage = string.Empty;
             string value = null;
 
             h5dumpProcess.ErrorDataReceived += new DataReceivedEventHandler(
-                delegate (object sender, DataReceivedEventArgs e) {
+                delegate (object sender, DataReceivedEventArgs e)
+                {
                     if (e.Data == null) return;
 
                     errorMessage += e.Data;
@@ -635,7 +633,8 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             );
 
             h5dumpProcess.OutputDataReceived += new DataReceivedEventHandler(
-                delegate (object sender, DataReceivedEventArgs e) {
+                delegate (object sender, DataReceivedEventArgs e)
+                {
                     if (e.Data == null) return;
 
                     string line = e.Data.Trim();
@@ -655,7 +654,8 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             int exitCode = h5dumpProcess.ExitCode;
 
             //Now we need to see if the process was successful
-            if (exitCode > 0 & !h5dumpProcess.HasExited) {
+            if (exitCode > 0 & !h5dumpProcess.HasExited)
+            {
                 h5dumpProcess.Kill();
             }
 

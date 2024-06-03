@@ -1,6 +1,4 @@
-using Terradue.Stars.Interface.Supplier;
-
-namespace Terradue.Stars.Services.Supplier
+﻿namespace Terradue.Stars.Services.Supplier
 {
     public class SupplyParameters
     {
@@ -10,10 +8,10 @@ namespace Terradue.Stars.Services.Supplier
         {
         }
 
-        
+
 
         public AssetFilters AssetFilters { get; set; }
-        
+
         public bool ContinueOnDeliveryError { get; set; }
     }
 }

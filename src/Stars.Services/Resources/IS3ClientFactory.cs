@@ -1,5 +1,4 @@
-using System;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;
@@ -17,6 +16,6 @@ namespace Terradue.Stars.Services.Resources
         IAmazonS3 CreateS3Client(string name);
         Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceUrl, JwtSecurityToken jwt, string policy);
 
-        
+
     }
 }

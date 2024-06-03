@@ -21,15 +21,13 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
-using System.Linq;
-using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using GeoJSON.Net.Geometry;
-using GeoJSON.Net.Feature;
-using SharpKml.Dom;
-using SharpKml.Base;
+using System.Globalization;
+using System.Linq;
 using System.Text;
+using GeoJSON.Net.Geometry;
+using SharpKml.Base;
+using SharpKml.Dom;
 using SharpKml.Engine;
 
 namespace Terradue.Stars.Geometry.Kml

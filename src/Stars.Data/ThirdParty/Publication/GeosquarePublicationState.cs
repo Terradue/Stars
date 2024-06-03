@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Stac;
 using Terradue.Stars.Interface;
@@ -11,8 +11,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         public GeosquarePublicationState(GeosquarePublicationModel model, System.Net.Http.HttpClient client)
         {
-            this.Client = client;
-            this.GeosquarePublicationModel = model;
+            Client = client;
+            GeosquarePublicationModel = model;
         }
         public KeyValuePair<string, string> Hash { get; internal set; }
         public GeosquarePublicationModel GeosquarePublicationModel { get; internal set; }

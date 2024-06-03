@@ -1,7 +1,5 @@
-using System;
+﻿using System;
 using System.IO;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Stac;
 using Terradue.Stars.Interface;
 

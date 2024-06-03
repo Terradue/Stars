@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-
-namespace Terradue.Stars.Interface.Transaction
+﻿namespace Terradue.Stars.Interface.Transaction
 {
     public interface ITranslator : IPlugin
     {

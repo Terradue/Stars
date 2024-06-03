@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -10,14 +12,12 @@ using Terradue.OpenSearch.DataHub.DHuS;
 using Terradue.OpenSearch.DataHub.Dias;
 using Terradue.OpenSearch.DataHub.GoogleCloud;
 using Terradue.Stars.Data.Routers;
-using System.Linq;
-using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Supplier;
-using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Plugins;
-using System.Threading;
 using Terradue.Stars.Services.Resources;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services.Translator;
 
 
 namespace Terradue.Stars.Data.Suppliers
@@ -98,19 +98,19 @@ namespace Terradue.Stars.Data.Suppliers
 
             if (target_uri.Host == "api.daac.asf.alaska.edu")
             {
-                wrapper = new Terradue.OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
+                wrapper = new OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
             }
 
             if (target_uri.Host == "api.daac.asf.alaska.edu")
             {
-                wrapper = new Terradue.OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
+                wrapper = new OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
             }
 
             // USGS case
             if (target_uri.Host == "earthexplorer.usgs.gov")
             {
                 // usgsOpenSearchable
-                wrapper = new Terradue.OpenSearch.Usgs.UsgsDataWrapper(new Uri("https://m2m.cr.usgs.gov"), target_creds);
+                wrapper = new OpenSearch.Usgs.UsgsDataWrapper(new Uri("https://m2m.cr.usgs.gov"), target_creds);
             }
 
             if (target_uri.Host.EndsWith("amazon.com"))
@@ -129,7 +129,7 @@ namespace Terradue.Stars.Data.Suppliers
                 wrapper = new GoogleWrapper(pluginOption.AccountFile, pluginOption.ProjectId, target_creds, "https://cloud.google.com");
             }
 
-            this.openSearchable = wrapper.CreateOpenSearchable(new OpenSearchableFactorySettings(this.opensearchEngine));
+            openSearchable = wrapper.CreateOpenSearchable(new OpenSearchableFactorySettings(opensearchEngine));
 
         }
 
