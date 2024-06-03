@@ -24,7 +24,7 @@ namespace Terradue.Stars.Services.Supplier
             return Count == 0 ? "No filter" : string.Join(", ", this.Select(af => af.ToString()));
         }
 
-        public static AssetFilters CreateAssetFilters(string[] assetFiltersStr)
+        public static AssetFilters CreateAssetFilters(IEnumerable<string> assetFiltersStr)
         {
             AssetFilters assetFilters = new AssetFilters();
             if (assetFiltersStr == null)
@@ -153,17 +153,35 @@ namespace Terradue.Stars.Services.Supplier
     public class ContentTypeAssetFilter : IAssetFilter
     {
         private readonly string mediaType;
+
+        private readonly bool negated = false;
+
         private readonly Dictionary<string, string> parameters;
 
         public ContentTypeAssetFilter(string mediaType, Dictionary<string, string> parameters)
         {
-            this.mediaType = mediaType;
+            if( mediaType.StartsWith("!") )
+            {
+                this.mediaType = mediaType.Substring(1);
+                this.negated = true;
+            }
+            else
+            {
+                this.mediaType = mediaType;
+            }
             this.parameters = parameters;
         }
 
         public bool IsMatch(KeyValuePair<string, IAsset> asset)
         {
-            return 
+            return negated ?
+                ( string.IsNullOrEmpty(mediaType) ||
+                  !asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
+                ) &&
+                ( parameters == null ||
+                  parameters.Any(p => !asset.Value.ContentType.Parameters.ContainsKey(p.Key) ||
+                                      asset.Value.ContentType.Parameters[p.Key] != p.Value)
+                ) :
                 ( string.IsNullOrEmpty(mediaType) ||
                   asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
                 ) &&

@@ -43,8 +43,10 @@ namespace Terradue.Stars.Data.Translators
 
         private StarsAtomItem CreateAtomItem(StacItemNode stacItemNode)
         {
+            StacItem item = stacItemNode.StacItem;
+
             // First, let's create our atomItem
-            StarsAtomItem atomItem = StarsAtomItem.Create(stacItemNode.StacItem, stacItemNode.Uri);
+            StarsAtomItem atomItem = StarsAtomItem.Create(item, stacItemNode.Uri);
 
             // Add EO Profile if possible
             atomItem.TryAddEarthObservationProfile(stacItemNode.StacItem);

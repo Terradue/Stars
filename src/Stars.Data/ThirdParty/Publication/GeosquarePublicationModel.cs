@@ -38,6 +38,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             Collection = pubModel.Collection;
             CatalogId = pubModel.CatalogId;
             Depth = pubModel.Depth;
+            AssetsFilters = pubModel.AssetsFilters;
         }
 
         public GeosquarePublicationModel(GeosquarePublicationModel publishCatalogModel)
@@ -51,6 +52,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             CustomLinkUpdater = publishCatalogModel.CustomLinkUpdater;
             CatalogId = publishCatalogModel.CatalogId;
             Depth = publishCatalogModel.Depth;
+            AssetsFilters = publishCatalogModel.AssetsFilters;
         }
 
         /// <summary>
@@ -111,6 +113,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public bool ThrowPublicationException { get; set; } = true;
 
         public string CatalogId { get; set; }
+
+        public List<string> AssetsFilters { get; set; }
     }
 
 }
