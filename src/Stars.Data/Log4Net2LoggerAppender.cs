@@ -1,4 +1,7 @@
-﻿
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Log4Net2LoggerAppender.cs
+
 using log4net.Appender;
 using log4net.Core;
 using Microsoft.Extensions.Logging;

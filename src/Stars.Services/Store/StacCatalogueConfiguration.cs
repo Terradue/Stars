@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacCatalogueConfiguration.cs
+
+using System;
 using Newtonsoft.Json;
 
 namespace Terradue.Stars.Services.Store

@@ -1,4 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Subject.cs
+
+using System.Runtime.Serialization;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
 

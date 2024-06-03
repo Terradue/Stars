@@ -1,4 +1,8 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IS3ClientFactory.cs
+
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Amazon.Runtime;
 using Amazon.S3;

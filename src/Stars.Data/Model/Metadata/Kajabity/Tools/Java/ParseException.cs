@@ -1,4 +1,8 @@
-﻿/*
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ParseException.cs
+
+/*
  * Copyright 2009-14 Simon J. Williams.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

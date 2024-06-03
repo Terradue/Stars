@@ -1,4 +1,8 @@
-﻿using Terradue.Stars.Interface.Supplier.Destination;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: CopyOperationState.cs
+
+using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Store;
 

@@ -1,4 +1,8 @@
-﻿using Kajabity.Tools.Java;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AuxiliarySpatialResolution.cs
+
+using Kajabity.Tools.Java;
 
 namespace Terradue.Stars.Data.Model.Metadata.Landsat8
 {

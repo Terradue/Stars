@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3DestinationGuide.cs
+
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;

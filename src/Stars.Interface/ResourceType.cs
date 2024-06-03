@@ -1,4 +1,8 @@
-﻿namespace Terradue.Stars.Interface
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ResourceType.cs
+
+namespace Terradue.Stars.Interface
 {
     public enum ResourceType
     {

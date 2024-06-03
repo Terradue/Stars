@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DefaultResourceServiceProvider.cs
+
+using System;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;

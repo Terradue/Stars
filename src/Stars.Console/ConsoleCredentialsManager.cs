@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ConsoleCredentialsManager.cs
+
+using System;
 using System.Net;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;

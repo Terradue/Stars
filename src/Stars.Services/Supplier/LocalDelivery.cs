@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: LocalDelivery.cs
+
+using System;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier;

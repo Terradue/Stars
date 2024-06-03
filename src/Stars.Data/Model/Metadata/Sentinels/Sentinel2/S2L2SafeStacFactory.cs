@@ -1,4 +1,8 @@
-﻿using Stac;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S2L2SafeStacFactory.cs
+
+using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Projection;
 using Terradue.OpenSearch.Sentinel.Data.Safe;

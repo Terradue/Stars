@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StarsConsoleReporter.cs
+
+using System;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 

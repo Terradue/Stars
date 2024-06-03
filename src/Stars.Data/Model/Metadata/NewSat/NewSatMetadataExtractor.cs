@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: NewSatMetadataExtractor.cs
+
+using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;

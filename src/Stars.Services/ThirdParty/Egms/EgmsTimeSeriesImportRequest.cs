@@ -1,4 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: EgmsTimeSeriesImportRequest.cs
+
+using System.Runtime.Serialization;
 using Stac;
 
 namespace Terradue.Stars.Services.ThirdParty.Egms

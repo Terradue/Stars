@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: LocalstackContainerHealthCheck.cs
+
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json.Nodes;

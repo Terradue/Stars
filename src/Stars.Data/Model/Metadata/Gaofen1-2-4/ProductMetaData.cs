@@ -1,4 +1,8 @@
-﻿/* 
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ProductMetaData.cs
+
+/* 
  Licensed under the Apache License, Version 2.0
 
  http://www.apache.org/licenses/LICENSE-2.0

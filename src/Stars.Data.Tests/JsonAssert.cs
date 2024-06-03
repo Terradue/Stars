@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: JsonAssert.cs
+
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using Xunit;
 

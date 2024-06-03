@@ -1,4 +1,8 @@
-﻿using Stac;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: SentinelAssetFactory.cs
+
+using Stac;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels

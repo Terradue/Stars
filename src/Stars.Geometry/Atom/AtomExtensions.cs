@@ -1,4 +1,8 @@
-﻿using System.Xml;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AtomExtensions.cs
+
+using System.Xml;
 using GeoJSON.Net.Geometry;
 using Terradue.ServiceModel.Ogc.GeoRss.GeoRss;
 using Terradue.ServiceModel.Syndication;

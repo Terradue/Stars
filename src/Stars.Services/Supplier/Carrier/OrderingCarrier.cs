@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: OrderingCarrier.cs
+
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;

@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: SuppliersTestsData.cs
+
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Configuration;

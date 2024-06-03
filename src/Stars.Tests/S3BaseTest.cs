@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3BaseTest.cs
+
+using System.IO;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
 using Terradue.Stars.Services.Resources;

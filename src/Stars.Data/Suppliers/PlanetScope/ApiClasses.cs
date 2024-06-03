@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ApiClasses.cs
+
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Terradue.Stars.Data.Suppliers.PlanetScope

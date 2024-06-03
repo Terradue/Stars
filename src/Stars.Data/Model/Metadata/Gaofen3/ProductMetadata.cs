@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ProductMetadata.cs
+
+using System.Collections.Generic;
 using System.Xml.Serialization;
 namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
 {

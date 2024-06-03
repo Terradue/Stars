@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TarGzipArchive.cs
+
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.GZip;

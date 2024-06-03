@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GenericResource.cs
+
+using System;
 using System.Net.Mime;
 using Terradue.Stars.Interface;
 

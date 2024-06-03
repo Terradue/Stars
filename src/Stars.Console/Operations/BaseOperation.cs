@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: BaseOperation.cs
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;

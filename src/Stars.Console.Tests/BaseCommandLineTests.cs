@@ -1,4 +1,8 @@
-﻿using Terradue.Stars.Console;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: BaseCommandLineTests.cs
+
+using Terradue.Stars.Console;
 using Xunit;
 using Xunit.Abstractions;
 

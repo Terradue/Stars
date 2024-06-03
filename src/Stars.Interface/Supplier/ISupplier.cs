@@ -1,4 +1,8 @@
-﻿using System.Threading;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ISupplier.cs
+
+using System.Threading;
 using System.Threading.Tasks;
 using Stac.Api.Interfaces;
 

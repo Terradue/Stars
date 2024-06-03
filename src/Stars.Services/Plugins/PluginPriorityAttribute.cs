@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: PluginPriorityAttribute.cs
+
+using System;
 
 namespace Terradue.Stars.Services.Plugins
 {

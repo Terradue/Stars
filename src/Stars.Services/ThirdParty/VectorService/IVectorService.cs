@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IVectorService.cs
+
+using System;
 using System.Collections.Generic;
 using Stac;
 using Terradue.Stars.Services.Model.Stac;

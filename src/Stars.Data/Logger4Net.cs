@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Logger4Net.cs
+
+using System.Reflection;
 using log4net;
 using log4net.Core;
 using log4net.Repository.Hierarchy;

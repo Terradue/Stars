@@ -1,5 +1,6 @@
-﻿// Copyright (c) Nate McMaster.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ConventionTestBase.cs
 
 using McMaster.Extensions.CommandLineUtils;
 using McMaster.Extensions.CommandLineUtils.Conventions;

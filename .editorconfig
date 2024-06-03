@@ -378,6 +378,7 @@ dotnet_diagnostic.IDE0005.severity = warning      # Using directive is unnecessa
 dotnet_diagnostic.IDE0030.severity = warning      # Use coalesce expression (nullable)            int? y = x.HasValue ? x.Value : 0                   int? y = x ?? 0;
 dotnet_diagnostic.IDE0030WithoutSuggestion.severity = error
 dotnet_diagnostic.IDE0038.severity = warning      # Use pattern matching                           if (x is string)                                   if (x is string s)
+dotnet_diagnostic.IDE0073.severity = warning      # Enforce file header
 dotnet_diagnostic.IDE0079.severity = warning      # Unused suppresion
 dotnet_diagnostic.IDE0083.severity = warning      # Use pattern matching
 dotnet_diagnostic.IDE0084.severity = warning      # Use IsNot
@@ -444,7 +445,6 @@ dotnet_diagnostic.SA1519.severity = warning      # Braces should not be omitted 
 dotnet_diagnostic.SA1520.severity = warning      # Use braces consistently
 dotnet_diagnostic.SA1623.severity = warning      # Property summary documentation must match accessors
 dotnet_diagnostic.SA1626.severity = warning      # Single-line comments must not use documentation style slashes
-dotnet_diagnostic.SA1636.severity = none         # Disable file header matching
 dotnet_diagnostic.SA1642.severity = warning      # Constructor summary documentation must begin with standard text
 dotnet_diagnostic.SA1649.severity = warning      # File name must match first type name
 dotnet_diagnostic.SA1651.severity = warning      # Do not use placeholders in summaries
