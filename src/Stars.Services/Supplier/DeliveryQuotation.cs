@@ -1,13 +1,11 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DeliveryQuotation.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier
 {
@@ -18,7 +16,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public DeliveryQuotation(IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes, Dictionary<string, Exception> assetsExceptions)
         {
-            this.assetsDeliveryQuotes = assetsQuotes;
+            assetsDeliveryQuotes = assetsQuotes;
             this.assetsExceptions = assetsExceptions;
         }
 

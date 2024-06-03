@@ -1,5 +1,7 @@
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: HttpCachedHeaders.cs
+
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;

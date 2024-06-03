@@ -1,24 +1,23 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ItemContainerNode.cs
+
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
 using Itenso.TimePeriod;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Supplier
 {
-    public class ContainerNode : IAssetsContainer, IItem
+    public class ItemContainerNode : IAssetsContainer, IItem
     {
         private readonly IItem item;
-        private readonly IDictionary<string, IAsset>  assets;
+        private readonly IReadOnlyDictionary<string, IAsset> assets;
         private readonly string suffix;
 
-        public ContainerNode(IItem item, IDictionary<string, IAsset> assets, string suffix)
+        public ItemContainerNode(IItem item, IReadOnlyDictionary<string, IAsset> assets, string suffix)
         {
             this.item = item;
             this.assets = assets;
@@ -45,10 +44,9 @@ namespace Terradue.Stars.Services.Supplier
 
         public IDictionary<string, object> Properties => item.Properties;
 
-        public IReadOnlyDictionary<string, IAsset> Assets => new ReadOnlyDictionary<string, IAsset>(assets);
+        public IReadOnlyDictionary<string, IAsset> Assets => assets;
 
         public ITimePeriod DateTime => item.DateTime;
-
 
         public IReadOnlyList<IResourceLink> GetLinks()
         {

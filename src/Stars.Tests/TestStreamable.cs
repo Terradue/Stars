@@ -1,10 +1,13 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TestStreamable.cs
+
 using System;
 using System.IO;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Services;
 
 namespace Stars.Tests
 {

@@ -1,15 +1,18 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ConsoleUserSettings.cs
+
 using System;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Terradue.Stars.Console
 {
     internal class ConsoleUserSettings
     {
-        private readonly string userSettingsFilePath = Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars" , "usersettings.json");
+        private readonly string userSettingsFilePath = Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json");
         private readonly ILogger logger;
         private readonly IConfigurationRoot configuration;
 

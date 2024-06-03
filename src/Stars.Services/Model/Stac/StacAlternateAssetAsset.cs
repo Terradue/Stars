@@ -1,10 +1,12 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacAlternateAssetAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Net.Mime;
-using System.Threading.Tasks;
 using Stac;
 using Stac.Extensions.Alternate;
 using Terradue.Stars.Interface;
@@ -22,17 +24,17 @@ namespace Terradue.Stars.Services.Model.Stac
             this.alternateAsset = alternateAsset;
             this.parentAsset = parentAsset;
             if (alternateAsset.Uri.IsAbsoluteUri)
-                this.uri = alternateAsset.Uri;
+                uri = alternateAsset.Uri;
             else
             {
                 if (parentAsset?.Parent != null)
                 {
                     if (parentAsset.Parent.Uri.IsAbsoluteUri)
-                        this.uri = new Uri(parentAsset.Parent.Uri, alternateAsset.Uri);
+                        uri = new Uri(parentAsset.Parent.Uri, alternateAsset.Uri);
                     else
-                        this.uri = new Uri(parentAsset.Parent.Uri.ToString() + "/" + alternateAsset.Uri.ToString(), UriKind.Relative);
+                        uri = new Uri(parentAsset.Parent.Uri.ToString() + "/" + alternateAsset.Uri.ToString(), UriKind.Relative);
                 }
-                else this.uri = alternateAsset.Uri;
+                else uri = alternateAsset.Uri;
             }
         }
 

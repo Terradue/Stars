@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IceyeMetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,10 +17,10 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Iceye
 {
@@ -32,8 +36,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -202,7 +205,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
             properties.Add("updated", DateTime.UtcNow);
         }
 
-        private void FillBasicsProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(Schemas.Metadata metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -217,13 +220,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
             );
         }
 
-        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<String, object> properties)
+        private void AddOtherProperties(Schemas.Metadata metadata, IDictionary<string, object> properties)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "ICEYE", 
+                    "ICEYE",
                     "The ICEYE constellation is a constellation of X-band Synthetic Aperture Radar (SAR) Satellites. The ICEYE constellation is designed to provide persistent monitoring capabilities and a high resolution view of the Earth’s surface, with an overall mission objective to enable better decision making by providing timely and reliable Earth observation data.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.iceye.com/sar-data")
@@ -274,7 +277,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
 
         private void AddBandAsset(StacItem stacItem, IAsset bandAsset, Schemas.Metadata metadata)
         {
-            StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new System.Net.Mime.ContentType("image/x.geotiff"));
+            StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new ContentType("image/x.geotiff"));
             stacAsset.Properties.AddRange(bandAsset.Properties);
             stacAsset.SetProperty("gsd", GetGroundSampleDistance(metadata));
             stacAsset.SarExtension().Polarizations = GetPolarizations(metadata);
@@ -322,11 +325,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Iceye
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"ICEYE.*\.xml$");
-            if (manifestAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"ICEYE.*\.xml$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             return manifestAsset;
         }
 

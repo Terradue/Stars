@@ -1,12 +1,13 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IsroMetadataExtractor.cs
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
 using Kajabity.Tools.Java;
 using Microsoft.Extensions.Logging;
 using ProjNet.CoordinateSystems;
@@ -17,12 +18,12 @@ using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Isro
 {
@@ -44,8 +45,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
 
         public override bool CanProcess(IResource route, IDestination destinations)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -60,12 +60,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
 
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
-            IAsset metadataAsset = GetMetadataAsset(item);
-            if (metadataAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
-            logger.LogDebug(String.Format("Metadata file is {0}", metadataAsset.Uri));
+            IAsset metadataAsset = GetMetadataAsset(item) ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
+            logger.LogDebug(string.Format("Metadata file is {0}", metadataAsset.Uri));
             logger.LogDebug("Reading metadata");
             JavaProperties metadata = await ReadMetadata(await resourceServiceProvider.GetStreamResourceAsync(metadataAsset, System.Threading.CancellationToken.None));
             logger.LogDebug("Metadata deserialized. Starting metadata generation");
@@ -242,25 +238,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         private void AddViewStacExtension(JavaProperties metadata, StacItem stacItem)
         {
             var view = new ViewStacExtension(stacItem);
-            double azimuth = 0;
-            double.TryParse(metadata["SatelliteHeading"], out azimuth);
+            double.TryParse(metadata["SatelliteHeading"], out double azimuth);
             if (azimuth != 0)
                 view.Azimuth = azimuth;
 
-            double incidenceAngle = 0;
-            double.TryParse(metadata["AngleIncidence"], out incidenceAngle);
+            double.TryParse(metadata["AngleIncidence"], out double incidenceAngle);
             if (incidenceAngle != 0)
                 view.IncidenceAngle = incidenceAngle;
 
-            double sunazimuth = 0;
-            double.TryParse(metadata["SunAziumthAtCenter"], out sunazimuth);
+            double.TryParse(metadata["SunAziumthAtCenter"], out double sunazimuth);
             if (sunazimuth == 0)
                 double.TryParse(metadata["SunAzimuthAtCenter"], out sunazimuth);
             if (sunazimuth != 0)
                 view.SunAzimuth = sunazimuth;
 
-            double elevation = 0;
-            double.TryParse(metadata["SunElevationAtCenter"], out elevation);
+            double.TryParse(metadata["SunElevationAtCenter"], out double elevation);
             if (elevation != 0)
                 view.SunElevation = elevation;
 
@@ -269,8 +261,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         private void AddSatStacExtension(JavaProperties metadata, StacItem stacItem)
         {
             var sat = new SatStacExtension(stacItem);
-            int orbitno = 0;
-            int.TryParse(metadata["ImagingOrbitNo"], out orbitno);
+            int.TryParse(metadata["ImagingOrbitNo"], out int orbitno);
             if (orbitno != 0)
                 sat.AbsoluteOrbit = orbitno;
 
@@ -352,8 +343,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             }
             properties["sensor_type"] = "optical";
 
-            double gsd = 0;
-            double.TryParse(metadata["PlannedGSD"], out gsd);
+            double.TryParse(metadata["PlannedGSD"], out double gsd);
             if (gsd != 0)
             {
                 properties.Remove("gsd");
@@ -416,7 +406,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             properties.Add("updated", DateTime.UtcNow);
         }
 
-        private void FillBasicsProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(JavaProperties metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -430,7 +420,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             );
         }
 
-        private void AddOtherProperties(JavaProperties metadata, IDictionary<String, object> properties)
+        private void AddOtherProperties(JavaProperties metadata, IDictionary<string, object> properties)
         {
             string description = null;
             string url = null;
@@ -453,7 +443,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             {
                 AddSingleProvider(
                     properties,
-                    "ISRO", 
+                    "ISRO",
                     description,
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri(url)
@@ -489,11 +479,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"[0-9a-zA-Z_-]*(META*\.(txt|TXT))$");
-            if (manifestAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"[0-9a-zA-Z_-]*(META*\.(txt|TXT))$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             return manifestAsset;
         }
 

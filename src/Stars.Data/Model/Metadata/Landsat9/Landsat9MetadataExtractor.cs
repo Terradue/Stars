@@ -1,12 +1,13 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Landsat9MetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using ProjNet.CoordinateSystems;
@@ -15,14 +16,13 @@ using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
-using Stac.Extensions.Sar;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Landsat9
 {
@@ -43,13 +43,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             logger.LogDebug("Retrieving the metadata file in the product package");
-            IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_MTL\\.txt)$");
-            if (auxFile == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
-            logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
-            
+            IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_MTL\\.txt)$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
+            logger.LogDebug(string.Format("Metadata file is {0}", auxFile.Uri));
+
             IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None);
             if (auxFileStreamable == null)
             {
@@ -60,10 +56,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             logger.LogDebug("Retrieving the metadata file in the product package");
             AuxiliarySpatialResolution auxiliarySpatialResolution = null;
             IAsset auxSpatialResolutionFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_ANG\\.txt)$");
-            if (auxSpatialResolutionFile != null && auxSpatialResolutionFile.ContentLength != 0) {
-                logger.LogDebug(String.Format("ANG.txt file is {0}", auxSpatialResolutionFile.Uri));
+            if (auxSpatialResolutionFile != null && auxSpatialResolutionFile.ContentLength != 0)
+            {
+                logger.LogDebug(string.Format("ANG.txt file is {0}", auxSpatialResolutionFile.Uri));
                 IStreamResource auxSpatialiResolutionFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxSpatialResolutionFile, System.Threading.CancellationToken.None);
-                if (auxSpatialiResolutionFileStreamable == null) {
+                if (auxSpatialiResolutionFileStreamable == null)
+                {
                     logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
                     return null;
                 }
@@ -71,13 +69,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
                 auxiliarySpatialResolution = await DeserializeAuxiliarySpatialResolution(auxSpatialiResolutionFileStreamable);
                 logger.LogDebug("ANG file deserialized.");
             }
-            else {
+            else
+            {
                 // L1T products have an empty ANG.txt file, we will retrieve the spatial resolution from the MTL.txt file 
                 auxSpatialResolutionFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(_MTL\\.txt)$");
-                if (auxSpatialResolutionFile != null) {
-                    logger.LogDebug(String.Format(".txt file is {0}", auxSpatialResolutionFile.Uri));
+                if (auxSpatialResolutionFile != null)
+                {
+                    logger.LogDebug(string.Format(".txt file is {0}", auxSpatialResolutionFile.Uri));
                     IStreamResource auxSpatialiResolutionFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxSpatialResolutionFile, System.Threading.CancellationToken.None);
-                    if (auxSpatialiResolutionFileStreamable == null) {
+                    if (auxSpatialiResolutionFileStreamable == null)
+                    {
                         logger.LogError("metadata file asset is not streamable, skipping metadata extraction");
                         return null;
                     }
@@ -86,8 +87,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
                     logger.LogDebug("file deserialized.");
                 }
             }
-            
-            
+
+
             logger.LogDebug("Deserializing metadata");
             Auxiliary auxiliary = await DeserializeAuxiliary(auxFileStreamable);
 
@@ -176,10 +177,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             var eo = stacItem.EoExtension();
 
             stacAsset.ProjectionExtension().Shape = new int[2] { auxiliary.Reflective_Samples, auxiliary.Reflective_Lines };
-            if ( assetKey == "B8" )
+            if (assetKey == "B8")
                 stacAsset.ProjectionExtension().Shape = new int[2] { auxiliary.Panchromatic_Samples, auxiliary.Panchromatic_Lines };
 
-            if ( assetKey == "B10" || assetKey == "B11" )
+            if (assetKey == "B10" || assetKey == "B11")
                 stacAsset.ProjectionExtension().Shape = new int[2] { auxiliary.Thermal_Samples, auxiliary.Thermal_Lines };
 
             EoBandObject eoBandObject = new EoBandObject(assetKey, common_name);
@@ -188,20 +189,25 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
 
             stacAsset.SetProperty("gsd", gsd);
             stacAsset.EoExtension().Bands = new EoBandObject[1] { eoBandObject };
-            
+
             // adding raster band
             RasterBand rasterBand = new RasterBand();
-            if (auxiliarySpatialResolution != null) {
+            if (auxiliarySpatialResolution != null)
+            {
                 rasterBand.SpatialResolution = auxiliarySpatialResolution.GetPixelSizeFromBand(assetKey.Remove(0, 1));
-            } else if ( assetKey == "B8" ) {
+            }
+            else if (assetKey == "B8")
+            {
                 rasterBand.SpatialResolution = 15.0;
-            } else {
+            }
+            else
+            {
                 rasterBand.SpatialResolution = 30.0;
             }
 
             if (JObject.FromObject(rasterBand).Children().Any())
                 stacAsset.RasterExtension().Bands = new RasterBand[1] { rasterBand };
-            
+
             stacItem.Assets.Add(assetKey, stacAsset);
         }
 
@@ -222,7 +228,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "USGS/NASA", 
+                    "USGS/NASA",
                     "Landsat 9 continues Landsat’s record of Earth’s land surface and largely replicates its predecessor Landsat 8.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.usgs.gov/landsat-missions/landsat-9")
@@ -385,8 +391,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             }
             return auxiliary;
         }
-        
-        
+
+
         /// <summary>Deserialize Auxiliary from xml to class</summary>
         /// <param name="auxiliaryFile">The <see cref="StreamWrapper"/> instance linked to the metadata file.</param>
         /// <returns>The deserialized metadata object.</returns>
@@ -399,12 +405,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
             }
             return auxiliary;
         }
-        
+
 
         public override bool CanProcess(IResource route, IDestination destinations)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(MTL\\.txt)$");
             if (auxFile == null)
             {

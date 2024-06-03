@@ -1,9 +1,10 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3BaseTest.cs
+
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Amazon.S3.Model;
-using Microsoft.Extensions.Options;
 using Terradue.Stars.Services.Resources;
 
 namespace Stars.Tests
@@ -27,26 +28,26 @@ namespace Stars.Tests
         {
             var client = s3ClientFactory.CreateS3Client(serviceName);
             var response = await client.PutBucketAsync(new PutBucketRequest()
-                {
-                    BucketName = bucketName,
-                    UseClientRegion = true,
-                }
+            {
+                BucketName = bucketName,
+                UseClientRegion = true,
+            }
             );
         }
 
-    protected async Task CopyLocalDataToBucketAsync(string filename, string s3destination)
-    {
-        var s3uri = S3Url.Parse(s3destination);
-        var client = s3ClientFactory.CreateS3Client(s3uri);
+        protected async Task CopyLocalDataToBucketAsync(string filename, string s3destination)
+        {
+            var s3uri = S3Url.Parse(s3destination);
+            var client = s3ClientFactory.CreateS3Client(s3uri);
 
-        PutObjectRequest request = new PutObjectRequest();
-        request.BucketName = s3uri.Bucket;
-        request.Key = s3uri.Key;
-        request.InputStream = File.Open(filename, FileMode.Open, FileAccess.Read);
+            PutObjectRequest request = new PutObjectRequest();
+            request.BucketName = s3uri.Bucket;
+            request.Key = s3uri.Key;
+            request.InputStream = File.Open(filename, FileMode.Open, FileAccess.Read);
 
-        var response = await client.PutObjectAsync(request);
-        
+            var response = await client.PutObjectAsync(request);
+
+        }
+
     }
-
-}
 }

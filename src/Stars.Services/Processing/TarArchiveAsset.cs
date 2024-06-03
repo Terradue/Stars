@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TarArchiveAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,8 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ICSharpCode.SharpZipLib.Tar;
-using Ionic.Zip;
 using Microsoft.Extensions.Logging;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
@@ -30,7 +32,7 @@ namespace Terradue.Stars.Services.Processing
             this.logger = logger;
         }
 
-        public override System.Uri Uri => asset.Uri;
+        public override Uri Uri => asset.Uri;
 
         protected virtual async Task<Stream> GetTarStreamAsync(IAsset asset, CancellationToken ct)
         {
@@ -82,7 +84,7 @@ namespace Terradue.Stars.Services.Processing
                 var name = Encoding.ASCII.GetString(buffer);
                 if (name.IndexOf('\0') >= 0)
                     name = name.Substring(0, name.IndexOf('\0'));
-                if (String.IsNullOrWhiteSpace(name))
+                if (string.IsNullOrWhiteSpace(name))
                     break;
                 buffer = new byte[24];
                 tarStream.Read(buffer, 0, 24);

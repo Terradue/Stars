@@ -1,22 +1,16 @@
-using System;
-using System.Collections.Generic;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: PluginsOperation.cs
+
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Interface.Router;
-
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
-using Terradue.Stars.Interface;
-using System.IO;
-using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Processing;
+using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Translator;
-using System.Threading;
 
 namespace Terradue.Stars.Console.Operations
 {
@@ -25,7 +19,7 @@ namespace Terradue.Stars.Console.Operations
     {
         private readonly CommandLineApplication app;
 
-        public PluginsOperation(IConsole console, CommandLineApplication app): base(console)
+        public PluginsOperation(IConsole console, CommandLineApplication app) : base(console)
         {
             this.app = app;
         }
@@ -39,25 +33,25 @@ namespace Terradue.Stars.Console.Operations
             _console.Out.WriteLine($"* Routers:");
             routersManager.GetPlugins().ToList().ForEach(p =>
             {
-               _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
+                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });
             var suppliersManager = ServiceProvider.GetService<SupplierManager>();
             _console.Out.WriteLine($"* Suppliers:");
             suppliersManager.GetPlugins().ToList().ForEach(p =>
             {
-               _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
+                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });
             var translatorManager = ServiceProvider.GetService<TranslatorManager>();
             _console.Out.WriteLine($"* Translators:");
             translatorManager.GetPlugins().ToList().ForEach(p =>
             {
-               _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
+                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });
             var processingManager = ServiceProvider.GetService<ProcessingManager>();
             _console.Out.WriteLine($"* Processings:");
             processingManager.GetPlugins().ToList().ForEach(p =>
             {
-               _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
+                _console.Out.WriteLine($"  * [{p.Key}] {p.Value.Label}");
             });
         }
 

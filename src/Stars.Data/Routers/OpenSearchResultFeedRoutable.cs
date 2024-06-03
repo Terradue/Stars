@@ -1,18 +1,22 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: OpenSearchResultFeedRoutable.cs
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Terradue.Stars.Services.Model.Atom;
+using Microsoft.Extensions.Logging;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Collections;
+using Terradue.Stars.Services.Model.Atom;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -25,7 +29,7 @@ namespace Terradue.Stars.Data.Routers
 
         public OpenSearchResultFeedRoutable(IOpenSearchResultCollection collection, Uri sourceUri, ILogger logger)
         {
-            this.osCollection = collection;
+            osCollection = collection;
             this.sourceUri = sourceUri;
             this.logger = logger;
         }

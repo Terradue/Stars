@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacResourceLink.cs
+
 using System;
 using System.IO;
 using System.Net.Mime;
@@ -12,7 +16,7 @@ namespace Terradue.Stars.Services.Model.Stac
 
         public StacResourceLink(StacLink l)
         {
-            this.stacLink = l;
+            stacLink = l;
         }
 
         public Uri Uri => stacLink.Uri;

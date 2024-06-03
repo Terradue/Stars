@@ -1,16 +1,15 @@
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: SuppliersTestsData.cs
+
 using System.Collections;
 using System.Collections.Generic;
-using Terradue.Stars.Data.Model.Metadata;
-using System.Reflection;
-using Terradue.Stars.Interface.Processing;
-using Xunit.Abstractions;
 using System.IO;
 using Microsoft.Extensions.Configuration;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.Stars.Data.Suppliers;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Terradue.Stars.Data.Suppliers;
+using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Translator;
 
 namespace Terradue.Data.Tests.Suppliers

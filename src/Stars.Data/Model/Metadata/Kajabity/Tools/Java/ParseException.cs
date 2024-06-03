@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ParseException.cs
+
 /*
  * Copyright 2009-14 Simon J. Williams.
  *
@@ -20,18 +24,18 @@ using System;
 
 namespace Kajabity.Tools.Java
 {
-	/// <summary>
-	/// An exception thrown by <see cref="JavaPropertyReader"/> when parsing
-	/// a properties stream.
-	/// </summary>
-	public class ParseException : System.Exception
-	{
-		/// <summary>
-		/// Construct an exception with an error message.
-		/// </summary>
-		/// <param name="message">A descriptive message for the exception</param>
-		public ParseException( string message ) : base( message )
-		{
-		}
-	}
+    /// <summary>
+    /// An exception thrown by <see cref="JavaPropertyReader"/> when parsing
+    /// a properties stream.
+    /// </summary>
+    public class ParseException : Exception
+    {
+        /// <summary>
+        /// Construct an exception with an error message.
+        /// </summary>
+        /// <param name="message">A descriptive message for the exception</param>
+        public ParseException(string message) : base(message)
+        {
+        }
+    }
 }

@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Auxiliary.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,12 +70,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
         public readonly double OffNadirAngle = 0;
         internal string ProductId => GetProperty("LANDSAT_PRODUCT_ID") ?? GetProperty("METADATA_FILE_NAME").Replace("_MTL.txt", "");
 
-        public int Panchromatic_Lines => int.Parse(GetProperty("PANCHROMATIC_LINES")); 
-        public int Panchromatic_Samples => int.Parse(GetProperty("PANCHROMATIC_SAMPLES")); 
-        public int Reflective_Lines => int.Parse(GetProperty("REFLECTIVE_LINES")); 
-        public int Reflective_Samples => int.Parse(GetProperty("REFLECTIVE_SAMPLES")); 
-        public int Thermal_Lines => int.Parse(GetProperty("THERMAL_LINES")); 
-        public int Thermal_Samples => int.Parse(GetProperty("THERMAL_SAMPLES")); 
+        public int Panchromatic_Lines => int.Parse(GetProperty("PANCHROMATIC_LINES"));
+        public int Panchromatic_Samples => int.Parse(GetProperty("PANCHROMATIC_SAMPLES"));
+        public int Reflective_Lines => int.Parse(GetProperty("REFLECTIVE_LINES"));
+        public int Reflective_Samples => int.Parse(GetProperty("REFLECTIVE_SAMPLES"));
+        public int Thermal_Lines => int.Parse(GetProperty("THERMAL_LINES"));
+        public int Thermal_Samples => int.Parse(GetProperty("THERMAL_SAMPLES"));
 
         public string CollectionCategory => GetProperty("COLLECTION_CATEGORY");
 

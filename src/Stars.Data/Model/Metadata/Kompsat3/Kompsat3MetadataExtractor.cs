@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Kompsat3MetadataExtractor.cs
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -7,23 +11,23 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using Humanizer;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using ProjNet.CoordinateSystems;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
+using Stac.Extensions.Raster;
 using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
-using Stac.Extensions.Raster;
-using Humanizer;
-using Newtonsoft.Json.Linq;
-using Terradue.Stars.Services;
-using Terradue.Stars.Geometry.GeoJson;
 
 namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
 {
@@ -44,12 +48,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         protected override async Task<StacNode> ExtractMetadata(IItem item, string suffix)
         {
             logger.LogDebug("Retrieving the metadata file in the product package");
-            IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(Aux\\.xml)$");
-            if (auxFile == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
-            logger.LogDebug(String.Format("Metadata file is {0}", auxFile.Uri));
+            IAsset auxFile = FindFirstAssetFromFileNameRegex(item, "[0-9a-zA-Z_-]*(Aux\\.xml)$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
+            logger.LogDebug(string.Format("Metadata file is {0}", auxFile.Uri));
 
             IStreamResource auxFileStreamable = await resourceServiceProvider.GetStreamResourceAsync(auxFile, System.Threading.CancellationToken.None);
             if (auxFileStreamable == null)
@@ -78,7 +78,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             FillBasicsProperties(auxiliary, stacItem.Properties);
             AddOtherProperties(auxiliary, stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri);; ;
+            return StacItemNode.Create(stacItem, item.Uri); ; ;
 
         }
 
@@ -160,7 +160,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
                 bandName = "PAN";
             EoBandObject eoBandObject = new EoBandObject(bandKey,
                                             GetEoCommonName(bandName));
-            var bandRanges = Array.ConvertAll<string, double>(image.Bandwidth.Split('-'), s => double.Parse(s, CultureInfo.CreateSpecificCulture("en-US")));
+            var bandRanges = Array.ConvertAll(image.Bandwidth.Split('-'), s => double.Parse(s, CultureInfo.CreateSpecificCulture("en-US")));
             double? bandwidth = (bandRanges.Length > 1 ? (bandRanges[0] + ((bandRanges[1] - bandRanges[0]) / 2)) : bandRanges[0]) / 100;
             stacAsset.EoExtension().CloudCover = image.CloudCover?.Average;
             RasterBand rasterBand = new RasterBand();
@@ -205,7 +205,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "KARI", 
+                    "KARI",
                     "KOMPSAT-3 is an optical high-resolution Korean observation mission. The objective is to provide observation continuity from the KOMPSAT-1 and KOMPSAT-2 missions to meet the nation's needs for high-resolution optical imagery required for GIS and other environmental, agricultural and oceanographic monitoring applications.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.eoportal.org/satellite-missions/kompsat-3")
@@ -355,7 +355,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             properties.Add("updated", DateTime.UtcNow);
         }
 
-        private void FillBasicsProperties(Auxiliary auxiliary, IDictionary<String, object> properties)
+        private void FillBasicsProperties(Auxiliary auxiliary, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -406,18 +406,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"[0-9a-zA-Z_-]*(Aux\.xml)$");
-            if (manifestAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"[0-9a-zA-Z_-]*(Aux\.xml)$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             return manifestAsset;
         }
 
         public override bool CanProcess(IResource route, IDestination destinations)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);

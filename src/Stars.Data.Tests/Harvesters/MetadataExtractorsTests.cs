@@ -1,23 +1,26 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: MetadataExtractorsTests.cs
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Xunit;
-using Xunit.Abstractions;
-using Terradue.Stars.Services;
-using Terradue.Stars.Services.Supplier;
-using Terradue.Stars.Services.Model.Stac;
 using Stac;
 using Terradue.Stars.Data.Model.Metadata;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Supplier.Destination;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Store;
-using System.Threading;
-using System.Text.RegularExpressions;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services.Supplier.Destination;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Terradue.Data.Tests.Harvesters
 {
@@ -27,7 +30,7 @@ namespace Terradue.Data.Tests.Harvesters
 
         public MetadataExtractorsTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
-            this.fileSystem = ServiceProvider.GetService<IFileSystem>();
+            fileSystem = ServiceProvider.GetService<IFileSystem>();
         }
 
         public static IEnumerable<object[]> TestData
@@ -43,7 +46,7 @@ namespace Terradue.Data.Tests.Harvesters
         {
             StacRouter stacRouter = ServiceProvider.GetService<StacRouter>();
             TestItem testNode = new TestItem(datadir);
-            IResource route = new ContainerNode(testNode, new Dictionary<string, IAsset>(testNode.Assets), "");
+            IResource route = new ItemContainerNode(testNode, new Dictionary<string, IAsset>(testNode.Assets), "");
             IDestination destination = LocalFileDestination.Create(fileSystem.Directory.CreateDirectory("out/"), route);
             destination.PrepareDestination();
 
@@ -69,7 +72,7 @@ namespace Terradue.Data.Tests.Harvesters
                 stacItemNode.MakeAssetUriRelative();
                 RemoveAssetUriTmp(stacItemNode);
                 CheckAssetLocalPath(stacItem, key);
-                var actualJson = StacConvert.Serialize(stacItem, new Newtonsoft.Json.JsonSerializerSettings()
+                var actualJson = StacConvert.Serialize(stacItem, new JsonSerializerSettings()
                 {
                     Formatting = Formatting.Indented
                 });
@@ -77,7 +80,7 @@ namespace Terradue.Data.Tests.Harvesters
                 {
                     stacValidator.ValidateJson(actualJson);
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
                     System.Console.WriteLine(actualJson);
                     throw;
@@ -89,7 +92,7 @@ namespace Terradue.Data.Tests.Harvesters
                 {
                     expectedJson = GetJson(Path.Join(datadir, "../.."), stacItem.Id);
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
                     System.Console.WriteLine(actualJson);
                     throw;
@@ -100,7 +103,7 @@ namespace Terradue.Data.Tests.Harvesters
                 {
                     JsonAssert.AreEqual(expectedJson, actualJson);
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
                     System.Console.WriteLine(actualJson);
                     throw;

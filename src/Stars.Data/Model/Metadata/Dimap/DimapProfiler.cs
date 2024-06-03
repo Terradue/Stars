@@ -1,13 +1,16 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DimapProfiler.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Humanizer;
 using Stac;
 using Stac.Extensions.Eo;
-using Stac;
-using Terradue.Stars.Interface;
 using Stac.Extensions.Raster;
-using Humanizer;
+using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Dimap
 {
@@ -15,12 +18,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
     {
         private Schemas.DimapDocument[] dimaps;
 
-        public Schemas.DimapDocument Dimap {
-            get { return (dimaps == null || dimaps.Length == 0 ? null : dimaps[0]);}
+        public Schemas.DimapDocument Dimap
+        {
+            get { return (dimaps == null || dimaps.Length == 0 ? null : dimaps[0]); }
             protected set { dimaps = new Schemas.DimapDocument[] { value }; }
         }
 
-        public Schemas.DimapDocument[] Dimaps {
+        public Schemas.DimapDocument[] Dimaps
+        {
             get { return dimaps; }
             protected set { dimaps = value; }
         }
@@ -39,7 +44,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             {
                 foreach (Schemas.t_Source_Information ds in dimap.Dataset_Sources)
                 {
-                    if (ds.Scene_Source != null && !String.IsNullOrEmpty(ds.Scene_Source.MISSION))
+                    if (ds.Scene_Source != null && !string.IsNullOrEmpty(ds.Scene_Source.MISSION))
                     {
                         sceneSources.Add(ds);
                     }
@@ -57,10 +62,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             var ss = GetSceneSources();
             if (ss == null || ss.Length == 0) return null;
-            var mission = String.Format(
+            var mission = string.Format(
                 "{0}{1}",
                 ss[0].Scene_Source.MISSION,
-                String.IsNullOrEmpty(ss[0].Scene_Source.MISSION_INDEX) ? String.Empty : "-" + ss[0].Scene_Source.MISSION_INDEX
+                string.IsNullOrEmpty(ss[0].Scene_Source.MISSION_INDEX) ? string.Empty : "-" + ss[0].Scene_Source.MISSION_INDEX
             );
             return mission.Replace(" ", "-");
         }
@@ -100,7 +105,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 if (s.Scene_Source.IMAGING_DATE > dt) dt = s.Scene_Source.IMAGING_DATE;
                 if (s.Scene_Source.IMAGING_START_TIME < st) st = s.Scene_Source.IMAGING_START_TIME;
             }
-            if  (dt == DateTime.MinValue) dt = st;
+            if (dt == DateTime.MinValue) dt = st;
             return dt;
         }
 
@@ -142,9 +147,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             var ss = GetSceneSources();
             if (ss == null || ss.Length == 0) return null;
             return new string[] {
-                String.Format("{0}{1}",
+                string.Format("{0}{1}",
                     ss[0].Scene_Source.INSTRUMENT,
-                    String.IsNullOrEmpty(ss[0].Scene_Source.INSTRUMENT_INDEX) ? String.Empty : "-" + ss[0].Scene_Source.INSTRUMENT_INDEX
+                    string.IsNullOrEmpty(ss[0].Scene_Source.INSTRUMENT_INDEX) ? string.Empty : "-" + ss[0].Scene_Source.INSTRUMENT_INDEX
                 )
             };
         }
@@ -159,7 +164,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             var ss = GetSceneSources();
             if (ss == null || ss.Length == 0 || ss[0].Scene_Source.GRID_REFERENCE == null) return null;
             string[] refs = ss[0].Scene_Source.GRID_REFERENCE.Split('/');
-            if (Int32.TryParse(refs[0], out int orbit)) return orbit;
+            if (int.TryParse(refs[0], out int orbit)) return orbit;
             return null;
         }
 
@@ -168,7 +173,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             var ss = GetSceneSources();
             if (ss == null || ss.Length == 0 || ss[0].Scene_Source?.GRID_REFERENCE == null) return null;
             string[] refs = ss[0].Scene_Source.GRID_REFERENCE.Split('/');
-            if (refs.Length >= 2 && Int32.TryParse(refs[0], out int orbit)) return orbit;
+            if (refs.Length >= 2 && int.TryParse(refs[0], out int orbit)) return orbit;
             return null;
         }
 
@@ -200,7 +205,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         {
             try
             {
-                return Int64.Parse(Dimap.Coordinate_Reference_System.Horizontal_CS.Projection.PROJECTION_CODE.Replace("EPSG:", ""));
+                return long.Parse(Dimap.Coordinate_Reference_System.Horizontal_CS.Projection.PROJECTION_CODE.Replace("EPSG:", ""));
             }
             catch { }
             return 0;
@@ -211,7 +216,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             int height = 0, width = 0;
             foreach (Schemas.DimapDocument dimap in Dimaps)
             {
-                if (Int32.TryParse(dimap.Raster_Dimensions.NCOLS, out int ncols) && Int32.TryParse(dimap.Raster_Dimensions.NROWS, out int nrows))
+                if (int.TryParse(dimap.Raster_Dimensions.NCOLS, out int ncols) && int.TryParse(dimap.Raster_Dimensions.NROWS, out int nrows))
                 {
                     if (height == 0 || nrows < height) height = nrows;
                     if (width == 0 || ncols < width) width = ncols;
@@ -390,7 +395,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         internal virtual string GetAssetPrefix(Schemas.DimapDocument dimap, IAsset metadataAsset = null)
         {
-            return String.Empty;
+            return string.Empty;
         }
 
         internal virtual StacProvider GetStacProvider()

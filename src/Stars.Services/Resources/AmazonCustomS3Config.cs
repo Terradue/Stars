@@ -1,4 +1,7 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AmazonCustomS3Config.cs
+
 using Amazon.S3;
 
 namespace Terradue.Stars.Services.Resources
@@ -28,7 +31,7 @@ namespace Terradue.Stars.Services.Resources
             _serviceURL = serviceURL;
             if (!string.IsNullOrEmpty(_serviceURL))
             {
-                this.ServiceURL = _serviceURL;
+                ServiceURL = _serviceURL;
             }
         }
     }

@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ZipEntryAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,8 +35,8 @@ namespace Terradue.Stars.Services.Processing
         {
             get
             {
-                var ext = Path.GetExtension(entry.FileName).TrimStart('.'); 
-                if ( (new string[]{ "txt", "xml", "json" }).Contains(ext)) return new string[] { "metadata" };
+                var ext = Path.GetExtension(entry.FileName).TrimStart('.');
+                if ((new string[] { "txt", "xml", "json" }).Contains(ext)) return new string[] { "metadata" };
                 return new string[] { "data" };
             }
         }

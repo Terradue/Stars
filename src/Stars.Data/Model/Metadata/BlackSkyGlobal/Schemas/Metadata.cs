@@ -1,12 +1,17 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Metadata.cs
+
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
+namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas
+{
 
 
-    public partial class Metadata {
+    public partial class Metadata
+    {
 
         private bool isFromText = false;
 
@@ -15,7 +20,8 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
             "LL_LONG", "LL_LAT", "LR_LONG", "LR_LAT", "UR_LONG", "UR_LAT", "UL_LONG", "UL_LAT"
         };
 
-        public bool IsFromText {
+        public bool IsFromText
+        {
             get { return isFromText; }
             set { isFromText = value; }
         }
@@ -78,30 +84,30 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
                 string fileName = GetStringValue(textMetadata, "ENTITY_ID");
                 if (fileName != null && fileName.StartsWith("BS")) platformNumber = fileName.Substring(2, 2).TrimStart('0');
             }
-            metadata.sensorName = String.Format("Global-{0}", platformNumber);
+            metadata.sensorName = string.Format("Global-{0}", platformNumber);
             metadata.spectralMode = GetStringValue(textMetadata, "SENSOR_TYPE");
             string acquisitionDate = GetStringValue(textMetadata, "ACQUISITION_DATE");
-            if (!String.IsNullOrEmpty(acquisitionDate))
+            if (!string.IsNullOrEmpty(acquisitionDate))
             {
-                if (acquisitionDate.Length == 8) acquisitionDate = String.Format("{0}-{1}-{2}", acquisitionDate.Substring(0, 4), acquisitionDate.Substring(4, 2), acquisitionDate.Substring(6, 2));
+                if (acquisitionDate.Length == 8) acquisitionDate = string.Format("{0}-{1}-{2}", acquisitionDate.Substring(0, 4), acquisitionDate.Substring(4, 2), acquisitionDate.Substring(6, 2));
                 string acquisitionTime = GetStringValue(textMetadata, "ACQUISITION_TIME");
-                if (String.IsNullOrEmpty(acquisitionTime))
+                if (string.IsNullOrEmpty(acquisitionTime))
                 {
                     acquisitionTime = "00:00:00";
                 }
                 else
                 {
-                    if (acquisitionTime.Length == 6) acquisitionTime = String.Format("{0}:{1}:{2}", acquisitionTime.Substring(0, 2), acquisitionTime.Substring(2, 2), acquisitionTime.Substring(4, 2));
+                    if (acquisitionTime.Length == 6) acquisitionTime = string.Format("{0}:{1}:{2}", acquisitionTime.Substring(0, 2), acquisitionTime.Substring(2, 2), acquisitionTime.Substring(4, 2));
                 }
                 acquisitionTime = acquisitionTime.Replace("Z", "");
-                metadata.acquisitionDate = String.Format("{0}T{1}Z", acquisitionDate, acquisitionTime);
+                metadata.acquisitionDate = string.Format("{0}T{1}Z", acquisitionDate, acquisitionTime);
             }
             metadata.gsd = 1;   // hardcoded
 
             List<double> coordinates = new List<double>();
             foreach (string name in cornerCoordinateNames)
             {
-                if (Double.TryParse(GetStringValue(textMetadata, name), out double value)) coordinates.Add(value);
+                if (double.TryParse(GetStringValue(textMetadata, name), out double value)) coordinates.Add(value);
             }
             if (coordinates.Count == 8)
             {
@@ -122,7 +128,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
             metadata.sunElevation = GetDoubleValue(textMetadata, "SUN_ELEVATION");
             metadata.sunAzimuth = GetDoubleValue(textMetadata, "SUN_AZIMUTH");
             metadata.satelliteElevation = GetDoubleValue(textMetadata, "SAT_ELEVATION");
-            metadata.satelliteAzimuth= GetDoubleValue(textMetadata, "SAT_AZIMUTH");
+            metadata.satelliteAzimuth = GetDoubleValue(textMetadata, "SAT_AZIMUTH");
             //metadata.georeferenced= "";
             //metadata.orthorectified= "";
             //metadata.width= "";
@@ -152,7 +158,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
         {
             if (dict.ContainsKey(key))
             {
-                if (Double.TryParse(dict[key], out double value)) return value;
+                if (double.TryParse(dict[key], out double value)) return value;
             }
             return null;
         }
@@ -160,7 +166,8 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal.Schemas {
 
     }
 
-    public partial class GeminiType {
+    public partial class GeminiType
+    {
         public string catalogImageId { get; set; }
         public string imageId { get; set; }
     }

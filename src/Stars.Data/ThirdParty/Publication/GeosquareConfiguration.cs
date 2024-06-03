@@ -1,10 +1,11 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GeosquareConfiguration.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {

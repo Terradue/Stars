@@ -1,5 +1,8 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S1L2AssetProduct.cs
+
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Stac;
@@ -11,7 +14,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
     public class S1L2AssetProduct : SentinelAssetFactory
     {
 
-        public static XmlSerializer s1L2ProductSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S1.Level2.Product.level2ProductType));
+        public static XmlSerializer s1L2ProductSerializer = new XmlSerializer(typeof(level2ProductType));
         private readonly level2ProductType l2ProductType;
         private readonly string type;
 

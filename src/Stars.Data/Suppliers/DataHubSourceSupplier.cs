@@ -1,5 +1,11 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: DataHubSourceSupplier.cs
+
+using System;
+using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -10,14 +16,12 @@ using Terradue.OpenSearch.DataHub.DHuS;
 using Terradue.OpenSearch.DataHub.Dias;
 using Terradue.OpenSearch.DataHub.GoogleCloud;
 using Terradue.Stars.Data.Routers;
-using System.Linq;
-using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services.Supplier;
-using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Plugins;
-using System.Threading;
 using Terradue.Stars.Services.Resources;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services.Translator;
 
 
 namespace Terradue.Stars.Data.Suppliers
@@ -38,7 +42,7 @@ namespace Terradue.Stars.Data.Suppliers
             this.credentialsManager = credentialsManager;
             _s3ClientFactory = s3ClientFactory;
             SupplierPluginOption supplierPluginOption = pluginOption as SupplierPluginOption;
-            ConfigureWrapper(new Uri(supplierPluginOption.ServiceUrl));
+            ConfigureWrapper(supplierPluginOption);
         }
 
         public override string Id => wrapper.Name;
@@ -47,11 +51,12 @@ namespace Terradue.Stars.Data.Suppliers
 
         public IDataHubSourceWrapper Wrapper => wrapper;
 
-        public void ConfigureWrapper(Uri serviceUrl)
+        public void ConfigureWrapper(SupplierPluginOption pluginOption)
         {
+            if (pluginOption == null)
+                throw new ArgumentNullException("pluginOption");
 
-            if (serviceUrl == null)
-                throw new ArgumentNullException("serviceUrl");
+            Uri serviceUrl = new Uri(pluginOption.ServiceUrl);
 
             var target_uri = serviceUrl;
             var target_creds = credentialsManager;
@@ -97,19 +102,19 @@ namespace Terradue.Stars.Data.Suppliers
 
             if (target_uri.Host == "api.daac.asf.alaska.edu")
             {
-                wrapper = new Terradue.OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
+                wrapper = new OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
             }
 
             if (target_uri.Host == "api.daac.asf.alaska.edu")
             {
-                wrapper = new Terradue.OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
+                wrapper = new OpenSearch.Asf.AsfApiWrapper(target_uri, target_creds);
             }
 
             // USGS case
             if (target_uri.Host == "earthexplorer.usgs.gov")
             {
                 // usgsOpenSearchable
-                wrapper = new Terradue.OpenSearch.Usgs.UsgsDataWrapper(new Uri("https://m2m.cr.usgs.gov"), target_creds);
+                wrapper = new OpenSearch.Usgs.UsgsDataWrapper(new Uri("https://m2m.cr.usgs.gov"), target_creds);
             }
 
             if (target_uri.Host.EndsWith("amazon.com"))
@@ -125,11 +130,20 @@ namespace Terradue.Stars.Data.Suppliers
 
             if (target_uri.Host.EndsWith("googleapis.com") || target_uri.Host.EndsWith("google.com"))
             {
-                wrapper = new GoogleWrapper(null, null, target_creds, "https://cloud.google.com");
+                wrapper = new GoogleWrapper(pluginOption.AccountFile, pluginOption.ProjectId, target_creds, "https://cloud.google.com");
             }
 
-            this.openSearchable = wrapper.CreateOpenSearchable(new OpenSearchableFactorySettings(this.opensearchEngine));
+            openSearchable = wrapper.CreateOpenSearchable(new OpenSearchableFactorySettings(opensearchEngine));
 
+        }
+
+        [Obsolete("Method kept for backward compatibility")]
+        public void ConfigureWrapper(Uri serviceUrl)
+        {
+            if (serviceUrl == null)
+                throw new ArgumentNullException("serviceUrl");
+
+            ConfigureWrapper(new SupplierPluginOption() { ServiceUrl = serviceUrl.AbsoluteUri });
         }
 
         internal static NetworkCredential GetNetworkCredentials(IConfigurationSection credentials)

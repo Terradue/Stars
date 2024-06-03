@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AssetFilters.cs
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -24,7 +28,7 @@ namespace Terradue.Stars.Services.Supplier
             return Count == 0 ? "No filter" : string.Join(", ", this.Select(af => af.ToString()));
         }
 
-        public static AssetFilters CreateAssetFilters(string[] assetFiltersStr)
+        public static AssetFilters CreateAssetFilters(IEnumerable<string> assetFiltersStr)
         {
             AssetFilters assetFilters = new AssetFilters();
             if (assetFiltersStr == null)
@@ -153,21 +157,39 @@ namespace Terradue.Stars.Services.Supplier
     public class ContentTypeAssetFilter : IAssetFilter
     {
         private readonly string mediaType;
+
+        private readonly bool negated = false;
+
         private readonly Dictionary<string, string> parameters;
 
         public ContentTypeAssetFilter(string mediaType, Dictionary<string, string> parameters)
         {
-            this.mediaType = mediaType;
+            if (mediaType.StartsWith("!"))
+            {
+                this.mediaType = mediaType.Substring(1);
+                negated = true;
+            }
+            else
+            {
+                this.mediaType = mediaType;
+            }
             this.parameters = parameters;
         }
 
         public bool IsMatch(KeyValuePair<string, IAsset> asset)
         {
-            return 
-                ( string.IsNullOrEmpty(mediaType) ||
+            return negated ?
+                (string.IsNullOrEmpty(mediaType) ||
+                  !asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
+                ) &&
+                (parameters == null ||
+                  parameters.Any(p => !asset.Value.ContentType.Parameters.ContainsKey(p.Key) ||
+                                      asset.Value.ContentType.Parameters[p.Key] != p.Value)
+                ) :
+                (string.IsNullOrEmpty(mediaType) ||
                   asset.Value.ContentType.MediaType.Equals(mediaType, System.StringComparison.InvariantCultureIgnoreCase)
                 ) &&
-                ( parameters == null ||
+                (parameters == null ||
                   parameters.Any(p => asset.Value.ContentType.Parameters.ContainsKey(p.Key) &&
                                       asset.Value.ContentType.Parameters[p.Key] == p.Value)
                 );

@@ -1,24 +1,23 @@
-using Microsoft.Extensions.Logging;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: PlanetScopeSupplier.cs
+
 using System;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using Stac;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.IO;
-using System.Linq;
-using System.Runtime.ExceptionServices;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Stac;
+using Stac.Api.Interfaces;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Translator;
-using Stac.Extensions.File;
-using Stac.Api.Interfaces;
 
 namespace Terradue.Stars.Data.Suppliers.PlanetScope
 {
@@ -45,7 +44,7 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
             this.translatorManager = translatorManager;
             this.credentials = credentials;
             SupplierPluginOption supplierPluginOption = pluginOption as SupplierPluginOption;
-            this.baseUrl = supplierPluginOption.ServiceUrl;
+            baseUrl = supplierPluginOption.ServiceUrl;
         }
 
         public int Priority { get; set; }
@@ -81,13 +80,13 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
 
             try
             {
-                string content = String.Empty;
+                string content = string.Empty;
                 using (HttpClient httpClient = new HttpClient(handler))
                 {
                     // The API Base URL is https://api.planet.com/data/v1
                     var request = new HttpRequestMessage() { RequestUri = new Uri($"{baseUrl}/item-types/{itemType}/items/{itemNode.Id}/assets") };
 
-                    HttpResponseMessage response =  await httpClient.SendAsync(request);
+                    HttpResponseMessage response = await httpClient.SendAsync(request);
                     content = await response.Content.ReadAsStringAsync();
 
                     if (content.StartsWith(@"{""general"":"))
@@ -152,7 +151,7 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
                         );
                     }
 
-                }            
+                }
             }
             catch (WebException e)
             {
@@ -195,12 +194,12 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
         public string Title { get; set; }
         public string Role { get; set; }
         public string ContentType { get; set; }
-        
+
         public AssetTypeInformation(string title, string role, string contentType)
         {
-            this.Title = title;
-            this.Role = role;
-            this.ContentType = contentType;
+            Title = title;
+            Role = role;
+            ContentType = contentType;
         }
     }
 

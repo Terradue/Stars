@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Saocom1MetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,21 +17,19 @@ using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
-using Stac.Extensions.Sat;
 using Stac.Extensions.Sar;
+using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Data.Model.Shared;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
-using Terradue.Stars.Data.Model.Shared;
-using Terradue.Stars.Services.Processing;
-
-using Microsoft.Extensions.DependencyInjection;
-using Terradue.Stars.Services.Supplier.Destination;
-using Terradue.Stars.Services.Supplier.Carrier;
 using Terradue.Stars.Services;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.Processing;
 using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 {
@@ -50,8 +52,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -60,7 +61,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                     IAsset zipAsset = GetZipAsset(item);
                     return (zipAsset != null);
                 }
-                else 
+                else
                 {
                     SAOCOM_XMLProduct metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
                 }
@@ -99,12 +100,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             {
                 var mergedAssets = new Dictionary<string, IAsset>(item.Assets.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
                 mergedAssets.MergeAssets(extractedAssets.Assets, false);
-                innerStacItem = new ContainerNode(item, mergedAssets, "merged");
+                innerStacItem = new ItemContainerNode(item, mergedAssets, "merged");
             }
 
-            IAsset metadataAsset = GetMetadataAsset(innerStacItem);
-            if (metadataAsset == null) throw new Exception("No metadata asset found");
-
+            IAsset metadataAsset = GetMetadataAsset(innerStacItem) ?? throw new Exception("No metadata asset found");
             SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
 
             IAsset kmlAsset = FindFirstAssetFromFileNameRegex(innerStacItem, @"(slc|di|gec|gtc)-.*\.kml");
@@ -244,8 +243,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         private void AddSatStacExtension(SAOCOM_XMLProduct metadata, StacItem stacItem)
         {
             var sat = new SatStacExtension(stacItem);
-            int orbit = 0;
-            int.TryParse(metadata.Channel[0].StateVectorData.OrbitNumber, out orbit);
+            int.TryParse(metadata.Channel[0].StateVectorData.OrbitNumber, out int orbit);
             if (orbit > 0)
                 sat.AbsoluteOrbit = orbit;
             orbit = 0;
@@ -254,8 +252,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 sat.RelativeOrbit = orbit;
             sat.OrbitState = metadata.Channel[0].StateVectorData.OrbitDirection.ToLower();
 
-            int absOrbit;
-            if (int.TryParse(metadata.Channel[0].StateVectorData.OrbitNumber, out absOrbit))
+            if (int.TryParse(metadata.Channel[0].StateVectorData.OrbitNumber, out int absOrbit))
                 sat.AbsoluteOrbit = absOrbit;
         }
 
@@ -282,8 +279,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                     {
                         foreach (Parameter p in parameters.Inputs.Parameters)
                         {
-                            if (p.Name == "Path" && Int32.TryParse(p.Value, out int path))stacItem.Properties["saocom:path"] = path;
-                            if (p.Name == "Row" && Int32.TryParse(p.Value, out int row)) stacItem.Properties["saocom:row"] = row;
+                            if (p.Name == "Path" && int.TryParse(p.Value, out int path)) stacItem.Properties["saocom:path"] = path;
+                            if (p.Name == "Row" && int.TryParse(p.Value, out int row)) stacItem.Properties["saocom:row"] = row;
                         }
                     }
                 }
@@ -342,32 +339,37 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             string acquisitionMode = fileName.Split('-')[3].ToUpper().Substring(0, 2);
             double resolutionRange;
             double resolutionAzimuth;
-            
-            switch (acquisitionMode) {
+
+            switch (acquisitionMode)
+            {
                 case "SM":
                     resolutionRange = 10;
                     resolutionAzimuth = 10;
                     break;
                 case "TW":
                     // full polarization
-                    if (polarizations.Length == 4) {
+                    if (polarizations.Length == 4)
+                    {
                         resolutionRange = 100;
                         resolutionAzimuth = 100;
                     }
                     // single or dual polarization
-                    else {
+                    else
+                    {
                         resolutionRange = 50;
                         resolutionAzimuth = 50;
                     }
                     break;
                 case "TN":
                     // full polarization
-                    if (polarizations.Length == 4) {
+                    if (polarizations.Length == 4)
+                    {
                         resolutionRange = 50;
                         resolutionAzimuth = 50;
                     }
                     // single or dual polarization
-                    else {
+                    else
+                    {
                         resolutionRange = 30;
                         resolutionAzimuth = 30;
                     }
@@ -393,7 +395,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
 
             sar.ResolutionRange = resolutionRange;
             sar.ResolutionAzimuth = resolutionAzimuth;
-            
+
         }
 
         private IDictionary<string, object> GetCommonMetadata(SAOCOM_XMLProduct metadata, XEMT manifest, Dictionary<string, object> properties, IItem item)
@@ -406,7 +408,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             return properties;
         }
 
-        private void FillBasicsProperties(SAOCOM_XMLProduct metadata, IDictionary<String, object> properties, IItem item)
+        private void FillBasicsProperties(SAOCOM_XMLProduct metadata, IDictionary<string, object> properties, IItem item)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             // title
@@ -424,8 +426,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         {
             properties.Remove("platform");
             string sensorName = metadata.Channel[0].DataSetInfo.SensorName;
-            string serialNumber = (sensorName.Substring(0, 3) == "SAO" ? sensorName.Substring(3) : String.Empty);
-            properties.Add("platform", String.Format("saocom-{0}", serialNumber).ToLower());
+            string serialNumber = (sensorName.Substring(0, 3) == "SAO" ? sensorName.Substring(3) : string.Empty);
+            properties.Add("platform", string.Format("saocom-{0}", serialNumber).ToLower());
 
             properties.Remove("mission");
             properties.Add("mission", "saocom-1");
@@ -465,13 +467,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             }
         }
 
-        private void AddOtherProperties(SAOCOM_XMLProduct metadata, IDictionary<String, object> properties, IItem item)
+        private void AddOtherProperties(SAOCOM_XMLProduct metadata, IDictionary<string, object> properties, IItem item)
         {
             if (IncludeProviderProperty)
             {
                 AddSingleProvider(
                     properties,
-                    "CONAE", 
+                    "CONAE",
                     "The SAOCOM satellite series represents Argentina's approved polarimetric L-band SAR (Synthetic Aperture Radar) constellation of two spacecraft. The SAOCOM-1 mission is composed of two satellites (SAOCOM-1A and -1B) launched consecutively. The overall objective of SAOCOM is to provide an effective Earth observation and disaster monitoring capability.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("http://saocom.invap.com.ar")
@@ -509,8 +511,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 };
                 for (int i = 0; i < coordinates.Length; i++)
                 {
-                    double lat = Double.Parse(coordinates[i].Point.Val[0].Text);
-                    double lon = Double.Parse(coordinates[i].Point.Val[1].Text);
+                    double lat = double.Parse(coordinates[i].Point.Val[0].Text);
+                    double lon = double.Parse(coordinates[i].Point.Val[1].Text);
                     lineStringPositions[i] = new GeoJSON.Net.Geometry.Position(lat, lon);
                 }
                 lineStringPositions[coordinates.Length] = lineStringPositions[0];
@@ -525,8 +527,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 for (int i = 0; i < coordStrArray.Length; i++)
                 {
                     string[] parts = coordStrArray[i].Split(',');
-                    double lon = Double.Parse(parts[0]);
-                    double lat = Double.Parse(parts[1]);
+                    double lon = double.Parse(parts[0]);
+                    double lat = double.Parse(parts[1]);
                     lineStringPositions[i] = new GeoJSON.Net.Geometry.Position(lat, lon);
                 }
                 lineStringPositions[coordStrArray.Length] = lineStringPositions[0];
@@ -558,7 +560,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 if (!value.Contains("AN"))
                 {
                     var nameField = node.Descendants(nName).FirstOrDefault().Value;
-                    if (value.Contains(String.Format("_{0}_", processingLevel)))
+                    if (value.Contains(string.Format("_{0}_", processingLevel)))
                     {
                         output = value.Substring(value.LastIndexOf('/') + 1, value.IndexOf(".") - value.IndexOf('/') - 1);
                         break;
@@ -577,7 +579,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             IAsset dataAsset, metadataAsset;
             KeyValuePair<string, StacAsset> bandStacAsset;
             StacAsset stacAsset;
-            
+
             if (manifestAsset != null)
             {
                 stacItem.Assets.Add("manifest", StacAsset.CreateMetadataAsset(stacItem, manifestAsset.Uri, new ContentType("application/xml"), "Manifest (XEMT)"));
@@ -604,7 +606,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             }
 
             var overview = FindFirstAssetFromFileNameRegex(item, @".*(gtc)-acqId.*\.png");
-            if (overview != null){
+            if (overview != null)
+            {
                 stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, overview.Uri,
                             new ContentType(MimeTypes.GetMimeType(overview.Uri.ToString()))));
                 stacItem.Assets["overview"].Properties.AddRange(overview.Properties);
@@ -635,7 +638,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         {
             AcquisitionParameters parameters = null;
 
-            if (manifest != null && manifest.Product != null && manifest.Product.Features != null && 
+            if (manifest != null && manifest.Product != null && manifest.Product.Features != null &&
                 manifest.Product.Features.Acquisition != null && manifest.Product.Features.Acquisition.Parameters != null)
             {
                 parameters = manifest.Product.Features.Acquisition.Parameters;
@@ -660,7 +663,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             {
                 string fileName = GetInstrumentMode(metadata);
                 string acquisitionMode = fileName.Split('-')[3].ToUpper().Substring(0, 2);
-                if (acquisitionMode == "SM") {
+                if (acquisitionMode == "SM")
+                {
                     return 10;
                 }
                 return 0;

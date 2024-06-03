@@ -1,5 +1,8 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: PluginsOptions.cs
+
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Services.Plugins
@@ -11,8 +14,8 @@ namespace Terradue.Stars.Services.Plugins
             if (pluginsOptions == null) return;
             foreach (var pluginsOption in pluginsOptions)
             {
-                this.Remove(pluginsOption.Key);
-                this.Add(pluginsOption.Key, pluginsOption.Value);
+                Remove(pluginsOption.Key);
+                Add(pluginsOption.Key, pluginsOption.Value);
             }
         }
     }
@@ -52,5 +55,9 @@ namespace Terradue.Stars.Services.Plugins
     public class SupplierPluginOption : PluginOption
     {
         public string ServiceUrl { get; set; }
+
+        public string AccountFile { get; set; }
+
+        public string ProjectId { get; set; }
     }
 }

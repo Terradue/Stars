@@ -1,13 +1,14 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacNode.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Mime;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
@@ -26,7 +27,7 @@ namespace Terradue.Stars.Services.Model.Stac
             if (!uri.IsAbsoluteUri)
                 throw new ArgumentException("STAC uri must be an absolute uri");
             this.stacObject = stacObject;
-            this.uri = uri == null ? new Uri(Id + ".json", UriKind.Relative) : uri;
+            this.uri = uri ?? new Uri(Id + ".json", UriKind.Relative);
         }
 
         public string Title => stacObject.Title;
@@ -113,6 +114,6 @@ namespace Terradue.Stars.Services.Model.Stac
         {
             throw new NotImplementedException();
         }
-        
+
     }
 }

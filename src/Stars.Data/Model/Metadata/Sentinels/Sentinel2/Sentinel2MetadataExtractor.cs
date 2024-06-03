@@ -1,13 +1,14 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Sentinel2MetadataExtractor.cs
+
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Eo;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
-using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
@@ -20,7 +21,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         public Sentinel2MetadataExtractor(ILogger<Sentinel2MetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
-            this.loggerS2 = logger;
+            loggerS2 = logger;
         }
 
         public override async Task<XFDUType> ReadManifest(IAsset manifestAsset)
@@ -28,7 +29,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             XFDUType xfdu = await base.ReadManifest(manifestAsset);
             if (!xfdu.informationPackageMap.contentUnit[0].textInfo.StartsWith("Sentinel-2", true, CultureInfo.InvariantCulture))
             {
-                throw new FormatException(String.Format("Not a Sentinel-2 manifest SAFE file asset"));
+                throw new FormatException(string.Format("Not a Sentinel-2 manifest SAFE file asset"));
             }
             return xfdu;
         }
@@ -49,7 +50,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             }
             else
             {
-                throw new FormatException(String.Format("Not a Sentinel-2 manifest SAFE file asset"));
+                throw new FormatException(string.Format("Not a Sentinel-2 manifest SAFE file asset"));
             }
 
             return stacFactory;
@@ -71,8 +72,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         // This method is not normally used, subclass method is called directly with the proper instance
         protected override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
-            Sentinel2MetadataExtractor metadataExtractor = GetMatchingExtractorInstance(stacFactory) as Sentinel2MetadataExtractor;
-            if (metadataExtractor == null) return Task.CompletedTask;
+            if (!(GetMatchingExtractorInstance(stacFactory) is Sentinel2MetadataExtractor metadataExtractor)) return Task.CompletedTask;
 
             return metadataExtractor.AddAssets(stacItem, item, stacFactory);
         }
@@ -80,8 +80,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         // This method is not normally used, subclass method is called directly with the proper instance
         protected override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
-            Sentinel2MetadataExtractor metadataExtractor = GetMatchingExtractorInstance(stacFactory) as Sentinel2MetadataExtractor;
-            if (metadataExtractor == null) return Task.CompletedTask;
+            if (!(GetMatchingExtractorInstance(stacFactory) is Sentinel2MetadataExtractor metadataExtractor)) return Task.CompletedTask;
 
             Task task = metadataExtractor.AddAdditionalProperties(stacItem, item, stacFactory);
 
@@ -209,7 +208,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
                     break;
             }
             if (resolution == originalResolution) return commonName;
-            return String.Format("{0}-{1}{2}", useCommonName ? commonName : bandName, resolution, useCommonName ? "m" : String.Empty);
+            return string.Format("{0}-{1}{2}", useCommonName ? commonName : bandName, resolution, useCommonName ? "m" : string.Empty);
         }
     }
 }

@@ -1,16 +1,14 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacNavigationHelpers.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Stac;
-using Stars.Services.Exceptions;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Services;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Router;
 
 namespace Stars.Services.Model.Stac
 {

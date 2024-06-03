@@ -1,4 +1,7 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IS3ClientFactory.cs
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Amazon.Runtime;
@@ -17,6 +20,6 @@ namespace Terradue.Stars.Services.Resources
         IAmazonS3 CreateS3Client(string name);
         Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceUrl, JwtSecurityToken jwt, string policy);
 
-        
+
     }
 }

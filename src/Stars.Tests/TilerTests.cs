@@ -1,20 +1,20 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TilerTests.cs
+
 using System;
 using System.IO;
-using System.Threading.Tasks;
-using Stac;
-using Stac.Exceptions;
-using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Services.Router;
-using Terradue.Stars.Services.Supplier.Destination;
-using Xunit;
-using Microsoft.Extensions.Logging;
-using MELT;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Services;
-using Terradue.Stars.Services.ThirdParty.Titiler;
-using Terradue.Stars.Data.Model.Atom;
 using System.Linq;
+using System.Threading.Tasks;
+using MELT;
+using Microsoft.Extensions.Logging;
+using Stac;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.Stars.Data.Model.Atom;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Services.Model.Stac;
+using Terradue.Stars.Services.ThirdParty.Titiler;
+using Xunit;
 
 namespace Stars.Tests
 {

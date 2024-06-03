@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: LocalFileResource.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,9 +11,6 @@ using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Router
 {
@@ -21,10 +22,10 @@ namespace Terradue.Stars.Services.Router
 
         public LocalFileResource(IFileSystem fileSystem, string filePath, ResourceType ResourceType, List<string> roles = null)
         {
-            this.fileInfo = fileSystem.FileInfo.FromFileName(filePath);            
+            fileInfo = fileSystem.FileInfo.FromFileName(filePath);
             resourceType = ResourceType;
             this.roles = new List<string>();
-            if ( roles != null )
+            if (roles != null)
                 this.roles.AddRange(roles);
         }
 

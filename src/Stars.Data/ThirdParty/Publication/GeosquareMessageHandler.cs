@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GeosquareMessageHandler.cs
+
 using System;
 using System.Net;
 using System.Net.Http;

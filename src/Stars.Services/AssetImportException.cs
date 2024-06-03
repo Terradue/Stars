@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AssetImportException.cs
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -18,7 +22,7 @@ namespace Terradue.Stars.Services
         {
         }
 
-        public AssetImportException(string message, IReadOnlyDictionary<string, IAsset> assets): base(message)
+        public AssetImportException(string message, IReadOnlyDictionary<string, IAsset> assets) : base(message)
         {
             this.assets = assets;
         }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet href="" type="text/xsl"?>
+<Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="M12_PROCESSING_METADATA.xsd">
+    <Metadata_Identification>
+        <METADATA_FORMAT version="2.0">DIMAP</METADATA_FORMAT>
+        <METADATA_PROFILE>PER1_ORTHO</METADATA_PROFILE>
+    </Metadata_Identification>
+    <Coordinate_Reference_System>
+        <Temporal_CRS>
+            <CRS_TABLES version="0.0">ITU</CRS_TABLES>
+            <TEMPORAL_CRS_NAME>UTC</TEMPORAL_CRS_NAME>
+        </Temporal_CRS>
+    </Coordinate_Reference_System>
+    <Processing_Step_List>
+        <Processing_Step>
+            <PROCESSING_NAME>EQUALIZATION</PROCESSING_NAME>
+            <TIME>2017-03-07T15:36:03.5407Z</TIME>
+        </Processing_Step>
+        <Processing_Step>
+            <PROCESSING_NAME>RESTORATION</PROCESSING_NAME>
+            <TIME>2017-03-07T15:36:03.5407Z</TIME>
+        </Processing_Step>
+        <Processing_Step>
+            <PROCESSING_NAME>DEFECTIVE_DETECTORS_CORRECTION</PROCESSING_NAME>
+            <TIME>2017-03-07T15:36:03.5407Z</TIME>
+        </Processing_Step>
+        <Processing_Step>
+            <PROCESSING_NAME>REFINING</PROCESSING_NAME>
+            <TIME>2017-03-07T15:36:03.5407Z</TIME>
+        </Processing_Step>
+        <Processing_Step>
+            <PROCESSING_NAME>ADAPTIVE_EQUALIZATION</PROCESSING_NAME>
+            <TIME>2017-03-07T15:36:03.5407Z</TIME>
+        </Processing_Step>
+    </Processing_Step_List>
+    <Processing_Parameter_List>
+        <PROCESSING_LEVEL>ORTHO</PROCESSING_LEVEL>
+        <Processing_Parameter>
+            <PARAMETER_TYPE>DECOMPRESSION</PARAMETER_TYPE>
+            <PARAMETER_ID>R_PS1_PS1_M12_GIPP_DECOMPRESSION_20161006143424_PER1_01_2016-12-08T12-00-00.xml</PARAMETER_ID>
+        </Processing_Parameter>
+        <Processing_Parameter>
+            <PARAMETER_TYPE>RADIOMETRY</PARAMETER_TYPE>
+            <PARAMETER_ID>R_PS1_PS1_M12_GIPP_RADIOMETRY_20161006143424_PER1_01_2016-12-08T12-00-00.xml</PARAMETER_ID>
+        </Processing_Parameter>
+        <Processing_Parameter>
+            <PARAMETER_TYPE>GEOMETRY</PARAMETER_TYPE>
+            <PARAMETER_ID>R_PS1_PS1_M12_GIPP_GEOMETRY_20161006143424_PER1_01_2016-12-08T12-00-00.xml</PARAMETER_ID>
+        </Processing_Parameter>
+        <Processing_Parameter>
+            <PARAMETER_TYPE>PRODUCTION</PARAMETER_TYPE>
+            <PARAMETER_ID>R_PS1_PS1_M12_GIPP_PRODUCTION_20161006143424_PER1_01_2016-12-08T12-00-00.xml</PARAMETER_ID>
+        </Processing_Parameter>
+    </Processing_Parameter_List>
+</Dimap_Document>

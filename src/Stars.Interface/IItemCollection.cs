@@ -1,12 +1,8 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IItemCollection.cs
+
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Net;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using Stac;
-using Terradue.Stars.Interface.Router;
 
 namespace Terradue.Stars.Interface
 {

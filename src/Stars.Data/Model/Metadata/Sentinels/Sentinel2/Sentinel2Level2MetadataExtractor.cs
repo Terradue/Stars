@@ -1,5 +1,8 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Sentinel2Level2MetadataExtractor.cs
+
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,7 +15,6 @@ using Stac.Extensions.Eo;
 using Stac.Extensions.Projection;
 using Stac.Extensions.Raster;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
-using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules;
 using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level2;
 using Terradue.Stars.Interface;
 
@@ -20,7 +22,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 {
     public class Sentinel2Level2MetadataExtractor : Sentinel2MetadataExtractor
     {
-        public static XmlSerializer s2L2AProductSerializer = new XmlSerializer(typeof(Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level2.Level2A_User_Product));
+        public static XmlSerializer s2L2AProductSerializer = new XmlSerializer(typeof(Level2A_User_Product));
         public static XmlSerializer s2L2AProductTileSerializer = new XmlSerializer(typeof(Level2A_Tile));
 
         private IAsset mtdAsset;
@@ -38,7 +40,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             {
                 return xfdu;
             }
-            throw new FormatException(String.Format("Not a Sentinel-2 Level 2A manifest SAFE file asset"));
+            throw new FormatException(string.Format("Not a Sentinel-2 Level 2A manifest SAFE file asset"));
 
         }
 
@@ -86,11 +88,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             string msk = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_')[0];
             if (msk == "MSK")
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri,
-                new System.Net.Mime.ContentType("image/jp2")
+                new ContentType("image/jp2")
             );
             stacAsset.Properties.AddRange(bandAsset.Properties);
 
@@ -104,7 +106,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             }
 
             string res = Path.GetFileNameWithoutExtension(bandAsset.Uri.ToString()).Split('_')[3];
-            double gsd = Double.Parse(res.TrimEnd('m'));
+            double gsd = double.Parse(res.TrimEnd('m'));
             string assetName = bandId;
             var spectralInfo = level2AUserProduct.General_Info.Product_Image_Characteristics.Spectral_Information_List.FirstOrDefault(si => si.physicalBand.ToString() == bandId.Replace("B0", "B"));
             if (spectralInfo != null)

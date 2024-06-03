@@ -1,10 +1,13 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GeosquarePublicationModel.cs
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization;
-using System.Xml;
 using Stac;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
@@ -38,6 +41,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             Collection = pubModel.Collection;
             CatalogId = pubModel.CatalogId;
             Depth = pubModel.Depth;
+            AssetsFilters = pubModel.AssetsFilters;
         }
 
         public GeosquarePublicationModel(GeosquarePublicationModel publishCatalogModel)
@@ -51,6 +55,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             CustomLinkUpdater = publishCatalogModel.CustomLinkUpdater;
             CatalogId = publishCatalogModel.CatalogId;
             Depth = publishCatalogModel.Depth;
+            AssetsFilters = publishCatalogModel.AssetsFilters;
         }
 
         /// <summary>
@@ -98,7 +103,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public List<Subject> SubjectsList { get; set; }
 
         [IgnoreDataMember]
-        public List<ISubject> Subjects => this.SubjectsList.Cast<ISubject>().ToList();
+        public List<ISubject> Subjects => SubjectsList.Cast<ISubject>().ToList();
 
         public Action<SyndicationLink, AtomItem, IAssetsContainer> CustomLinkUpdater { get; set; }
 
@@ -111,6 +116,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public bool ThrowPublicationException { get; set; } = true;
 
         public string CatalogId { get; set; }
+
+        public List<string> AssetsFilters { get; set; }
     }
 
 }

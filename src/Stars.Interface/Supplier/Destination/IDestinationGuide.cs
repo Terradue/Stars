@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: IDestinationGuide.cs
+
 using System.Threading.Tasks;
 
 namespace Terradue.Stars.Interface.Supplier.Destination

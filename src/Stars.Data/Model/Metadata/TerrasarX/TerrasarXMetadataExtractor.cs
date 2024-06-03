@@ -1,7 +1,12 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TerrasarXMetadataExtractor.cs
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System.Xml;
@@ -10,14 +15,13 @@ using Microsoft.Extensions.Logging;
 using Stac;
 using Stac.Extensions.Processing;
 using Stac.Extensions.Projection;
-using Stac.Extensions.Sat;
 using Stac.Extensions.Sar;
+using Stac.Extensions.Sat;
 using Stac.Extensions.View;
+using Terradue.Stars.Geometry.GeoJson;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Geometry.GeoJson;
-using System.Linq;
 
 namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 {
@@ -33,8 +37,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
@@ -234,7 +237,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             properties.Add("updated", DateTime.UtcNow.ToString(format));
         }
 
-        private void FillBasicsProperties(level1Product metadata, IDictionary<String, object> properties)
+        private void FillBasicsProperties(level1Product metadata, IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
             properties.Remove("title");
@@ -256,7 +259,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
             {
                 AddSingleProvider(
                     stacItem.Properties,
-                    "DLR", 
+                    "DLR",
                     "TerraSAR-X is a German Earth-observation satellite. Its primary payload is an X-band radar sensor with a range of different modes of operation, allowing it to record images with different swath widths, resolutions and polarisations.",
                     new StacProviderRole[] { StacProviderRole.producer, StacProviderRole.processor, StacProviderRole.licensor },
                     new Uri("https://www.dlr.de/content/en/articles/missions-projects/terrasar-x/terrasar-x-earth-observation-satellite.html")
@@ -270,10 +273,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
         private XmlDocument ReadGeometryFile(IItem item)
         {
             var coordinatesDocument = new XmlDocument();
-            var fileAsset = FindFirstAssetFromFileNameRegex(item, @".*_iif.*\.xml");
-            if (fileAsset == null)
-                throw new FileNotFoundException(string.Format("Coordinates file not found "));
-
+            var fileAsset = FindFirstAssetFromFileNameRegex(item, @".*_iif.*\.xml") ?? throw new FileNotFoundException(string.Format("Coordinates file not found "));
             coordinatesDocument.Load(resourceServiceProvider.GetAssetStreamAsync(fileAsset, System.Threading.CancellationToken.None).GetAwaiter().GetResult());
 
 
@@ -324,10 +324,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
         protected void AddAssets(StacItem stacItem, IItem item, level1Product metadata)
         {
             string tifFileName = metadata.productComponents.imageData[0].file.location.filename;
-            IAsset amplitudeAsset = FindFirstAssetFromFileNameRegex(item, tifFileName + "$");
-
-            if (amplitudeAsset == null)
-                throw new FileNotFoundException(string.Format("No product found '{0}'", tifFileName));
+            IAsset amplitudeAsset = FindFirstAssetFromFileNameRegex(item, tifFileName + "$") ?? throw new FileNotFoundException(string.Format("No product found '{0}'", tifFileName));
             var bandStacAsset = AddBandAsset(stacItem, amplitudeAsset, metadata, item); //amplitude-hh
 
             var metadataAsset = FindFirstAssetFromFileNameRegex(item, @".*L1B.*\.xml"); //metadata
@@ -352,9 +349,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
                 throw new FileNotFoundException(string.Format("TSX-1 product-metadata file not found "));
 
 
-            IAsset overviewAsset = FindFirstAssetFromFileNameRegex(item, @".*COMPOSITE.*\.tif"); //overwiew
-            if (overviewAsset == null)
-                throw new FileNotFoundException(string.Format("No product found '{0}'", ""));
+            IAsset overviewAsset = FindFirstAssetFromFileNameRegex(item, @".*COMPOSITE.*\.tif") ?? throw new FileNotFoundException(string.Format("No product found '{0}'", "")); //overwiew
 
             stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, overviewAsset.Uri, new ContentType(MimeTypes.GetMimeType(overviewAsset.Uri.ToString()))));
             stacItem.Assets["overview"].Properties.AddRange(overviewAsset.Properties);
@@ -364,7 +359,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
         private string AddBandAsset(StacItem stacItem, IAsset bandAsset, level1Product metadata, IItem item)
         {
-            StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new System.Net.Mime.ContentType("image/x.geotiff"));
+            StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, bandAsset.Uri, new ContentType("image/x.geotiff"));
             stacAsset.Properties.AddRange(bandAsset.Properties);
             stacAsset.SetProperty("gsd", GetGroundSampleDistance(metadata, item));
             stacAsset.Properties.Add("sar:polarizations", GetPolarizations(metadata));
@@ -416,11 +411,7 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"T(S|D)X1_SAR.*\.xml$");
-            if (manifestAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the metadata file asset"));
-            }
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"T(S|D)X1_SAR.*\.xml$") ?? throw new FileNotFoundException(string.Format("Unable to find the metadata file asset"));
             return manifestAsset;
         }
 

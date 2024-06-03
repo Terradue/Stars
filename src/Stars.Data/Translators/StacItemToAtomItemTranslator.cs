@@ -1,14 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacItemToAtomItemTranslator.cs
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Stac;
+using Terradue.Stars.Data.Model.Atom;
+using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router.Translator;
 using Terradue.Stars.Services.Model.Atom;
-using Stac;
 using Terradue.Stars.Services.Model.Stac;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Data.Model.Atom;
-using System;
 using Terradue.Stars.Services.ThirdParty.Titiler;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading;
 
 namespace Terradue.Stars.Data.Translators
 {
@@ -19,7 +23,7 @@ namespace Terradue.Stars.Data.Translators
 
         public StacItemToAtomItemTranslator(IServiceProvider serviceProvider)
         {
-            this.atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
+            atomRouter = new AtomRouter(serviceProvider.GetRequiredService<IResourceServiceProvider>());
             this.serviceProvider = serviceProvider;
             Key = "stac-to-atom";
         }
@@ -43,8 +47,10 @@ namespace Terradue.Stars.Data.Translators
 
         private StarsAtomItem CreateAtomItem(StacItemNode stacItemNode)
         {
+            StacItem item = stacItemNode.StacItem;
+
             // First, let's create our atomItem
-            StarsAtomItem atomItem = StarsAtomItem.Create(stacItemNode.StacItem, stacItemNode.Uri);
+            StarsAtomItem atomItem = StarsAtomItem.Create(item, stacItemNode.Uri);
 
             // Add EO Profile if possible
             atomItem.TryAddEarthObservationProfile(stacItemNode.StacItem);

@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S3Tests.cs
+
 using System;
 using System.IO;
 using System.Linq;
@@ -31,7 +35,7 @@ namespace Stars.Tests
                        IS3ClientFactory s3ClientFactory) : base(s3ClientFactory)
         {
             this.assetService = assetService;
-            this.serviceProvider = sp;
+            serviceProvider = sp;
             this.resourceServiceProvider = resourceServiceProvider;
         }
 

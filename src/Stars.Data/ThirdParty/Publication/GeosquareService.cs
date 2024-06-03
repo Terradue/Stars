@@ -1,30 +1,35 @@
-﻿using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: GeosquareService.cs
+
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Stac;
-using Terradue.Stars.Data.Model.Atom;
 using Terradue.OpenSearch.Result;
+using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Common;
+using Terradue.Stars.Data.Model.Atom;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services;
+using Terradue.Stars.Services.Model;
 using Terradue.Stars.Services.Model.Atom;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.Router;
+using Terradue.Stars.Services.Supplier;
 using Terradue.Stars.Services.Translator;
-using Terradue.Stars.Services;
-using System.Threading;
-using Terradue.Stars.Services.Model;
-using System.Collections.Specialized;
-using System.Web;
-using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
 
 namespace Terradue.Stars.Data.ThirdParty.Geosquare
 {
@@ -48,7 +53,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                                   IResourceServiceProvider resourceServiceProvider,
                                   ILogger<GeosquareService> logger)
         {
-            this.routingService = routerService;
+            routingService = routerService;
             this.translatorManager = translatorManager;
             this.geosquareConfiguration = geosquareConfiguration.Value;
             this.httpClientFactory = httpClientFactory;
@@ -61,8 +66,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         {
             // Get the client to use with the catalog Id
             HttpClient client = CreateClient(publicationModel.CatalogId);
-            GeosquarePublicationModel geosquareModel = publicationModel as GeosquarePublicationModel;
-            if (geosquareModel == null)
+            if (!(publicationModel is GeosquarePublicationModel geosquareModel))
             {
                 geosquareModel = CreateModelFromPublication(publicationModel);
             }
@@ -100,7 +104,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 AdditionalLinks = publicationModel.AdditionalLinks,
                 CreateIndex = true,
                 SubjectsList = publicationModel.Subjects?.Select(s => new Subject(s)).ToList(),
-                CatalogId = publicationModel.CatalogId ?? geosquareConfiguration.BaseUri.ToString()
+                CatalogId = publicationModel.CatalogId ?? geosquareConfiguration.BaseUri.ToString(),
+                AssetsFilters = publicationModel.AssetsFilters
             };
         }
 
@@ -129,8 +134,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
         private async Task<object> OnBeforeBranching(ICatalog node, IRouter router, object state, ICollection<IResource> subroutes, CancellationToken ct)
         {
-            var collection = (node as StacCatalogNode).StacCatalog as StacCollection;
-            if (collection == null)
+            if (!((node as StacCatalogNode).StacCatalog is StacCollection collection))
             {
                 return state;
             }
@@ -144,13 +148,30 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             return state;
         }
 
-        public async Task<object> PostCollectionToCatalog(Terradue.Stars.Interface.ICollection collectionNode, IRouter router, object state, CancellationToken ct)
+        public async Task<object> PostCollectionToCatalog(ICollection collectionNode, IRouter router, object state, CancellationToken ct)
         {
             GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
             AtomItemNode atomItemNode = null;
+
+            // Filter assets
+            // Create the asset filters based on the asset filters string from the catalog publication model
+            AssetFilters assetFilters = AssetFilters.CreateAssetFilters(catalogPublicationState.GeosquarePublicationModel.AssetsFilters);
+            // Create a filtered asset container
+            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(collectionNode, assetFilters);
+            // Create a container node with the filtered asset container
+            ICollection filteredNode = new CollectionContainerNode(collectionNode, filteredAssetContainer.Assets, "filtered");
+            // If the item is StacCollection, we recreate the StacCollection with the filtered assets
+            if (collectionNode is StacCollectionNode stacCollectionNode)
+            {
+                StacCollection stacCollection = new StacCollection(stacCollectionNode.StacCollection);
+                stacCollection.Assets.Clear();
+                stacCollection.Assets.AddRange(filteredAssetContainer.Assets.ToDictionary(asset => asset.Key, asset => (asset.Value as StacAssetAsset).StacAsset));
+                filteredNode = new StacCollectionNode(stacCollection, collectionNode.Uri);
+            }
+
             try
             {
-                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(collectionNode, ct);
+                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(filteredNode, ct);
             }
             catch (Exception e)
             {
@@ -176,9 +197,26 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         {
             GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
             AtomItemNode atomItemNode = null;
+
+            // Filter assets
+            // Create the asset filters based on the asset filters string from the catalog publication model
+            AssetFilters assetFilters = AssetFilters.CreateAssetFilters(catalogPublicationState.GeosquarePublicationModel.AssetsFilters);
+            // Create a filtered asset container
+            FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(itemNode, assetFilters);
+            // Create a container node with the filtered asset container
+            IItem filteredNode = new ItemContainerNode(itemNode, filteredAssetContainer.Assets, "filtered");
+            // If the item is StacItem, we recreate the StacItem with the filtered assets
+            if (itemNode is StacItemNode stacItemNode)
+            {
+                StacItem stacItem = new StacItem(stacItemNode.StacItem);
+                stacItem.Assets.Clear();
+                stacItem.Assets.AddRange(filteredAssetContainer.Assets.ToDictionary(asset => asset.Key, asset => (asset.Value as StacAssetAsset).StacAsset));
+                filteredNode = new StacItemNode(stacItem, itemNode.Uri);
+            }
+
             try
             {
-                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(itemNode, ct);
+                atomItemNode = await translatorManager.TranslateAsync<AtomItemNode>(filteredNode, ct);
             }
             catch (Exception e)
             {
@@ -213,8 +251,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 if (extension.OuterName == "offering" && extension.OuterNamespace == OwcNamespaces.Owc)
                 {
                     var xml = extension.GetReader().ReadOuterXml();
-                    var offering = OwcContextHelper.OwcOfferingSerializer.Deserialize(new System.IO.StringReader(xml)) as OwcOffering;
-                    if (offering == null || offering.Contents == null) continue;
+                    if (!(OwcContextHelper.OwcOfferingSerializer.Deserialize(new System.IO.StringReader(xml)) is OwcOffering offering) || offering.Contents == null) continue;
                     atomItem.ElementExtensions.Remove(extension);
                     foreach (var content in offering.Contents)
                     {
@@ -232,7 +269,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             // create eventual opensearch link
             if (atomItem is StarsAtomItem)
             {
-                await (atomItem as StarsAtomItem).CreateOpenSearchLinks(this.CreateOpenSearchLinkAsync, geosquarePublicationState);
+                await (atomItem as StarsAtomItem).CreateOpenSearchLinks(CreateOpenSearchLinkAsync, geosquarePublicationState);
             }
 
             //add links
@@ -302,8 +339,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
                 if (string.IsNullOrEmpty(template)) return null;
                 var webRoute = await resourceServiceProvider.GetStreamResourceAsync(new AtomResourceLink(link), System.Threading.CancellationToken.None);
                 IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync(System.Threading.CancellationToken.None));
-                var osUrl = template.ReplaceMacro<IStacObject>("stacObject", linkedStacObject);
-                osUrl = osUrl.ReplaceMacro<string>("index", catalogPublicationState.GeosquarePublicationModel.Index);
+                var osUrl = template.ReplaceMacro("stacObject", linkedStacObject);
+                osUrl = osUrl.ReplaceMacro("index", catalogPublicationState.GeosquarePublicationModel.Index);
                 var osUri = new Uri(osUrl);
 
                 var relatedLink = new SyndicationLink(

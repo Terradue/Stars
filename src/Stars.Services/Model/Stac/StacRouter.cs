@@ -1,16 +1,16 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: StacRouter.cs
+
 using System;
 using System.IO;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Stac;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Router;
 using Terradue.Stars.Services.Plugins;
-using Terradue.Stars.Services.Router;
 
 namespace Terradue.Stars.Services.Model.Stac
 {
@@ -66,7 +66,7 @@ namespace Terradue.Stars.Services.Model.Stac
         private async Task<IResource> AffineRouteAsync(IResource route, CancellationToken ct)
         {
             IResource newRoute = route;
-            if ( !(route is IStreamResource) )
+            if (!(route is IStreamResource))
                 newRoute = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri(route.Uri.ToString())), ct);
             if ((newRoute.ContentType.MediaType.Contains("application/json")
                     || newRoute.ContentType.MediaType.Contains("application/geo+json"))
@@ -108,7 +108,8 @@ namespace Terradue.Stars.Services.Model.Stac
             {
                 var json = await (routeFound as IStreamResource).ReadAsStringAsync(ct);
                 IStacObject stacObject = StacConvert.Deserialize<IStacObject>(json);
-                if (stacObject is IStacCatalog){
+                if (stacObject is IStacCatalog)
+                {
                     if (stacObject is StacCollection)
                         return new StacCollectionNode(stacObject as StacCollection, routeFound.Uri);
                     return new StacCatalogNode(stacObject as IStacCatalog, routeFound.Uri);

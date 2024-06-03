@@ -1,13 +1,16 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: TransferRequestAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
 using Terradue.OpenSearch.DataHub;
 using Terradue.Stars.Interface;
-using System.Linq;
-using System.Threading;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -21,7 +24,7 @@ namespace Terradue.Stars.Data.Routers
         {
             this.tr = tr;
             this.label = label;
-            this.properties = new Dictionary<string, object>();
+            properties = new Dictionary<string, object>();
         }
 
         public string Title => label ?? tr.RequestUri.ToString();

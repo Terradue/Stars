@@ -1,19 +1,22 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: ExtractArchiveAction.cs
+
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Supplier.Carrier;
-using Terradue.Stars.Services.Supplier.Destination;
-using Microsoft.Extensions.Logging;
-using Terradue.Stars.Services.Supplier;
-using Terradue.Stars.Interface.Processing;
-using Terradue.Stars.Interface;
-using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.IO.Abstractions;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Processing;
+using Terradue.Stars.Interface.Supplier.Destination;
+using Terradue.Stars.Services.Supplier;
+using Terradue.Stars.Services.Supplier.Carrier;
+using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Processing
 {
@@ -53,8 +56,7 @@ namespace Terradue.Stars.Services.Processing
 
         public bool CanProcess(IResource route, IDestination destination)
         {
-            IAssetsContainer assetsContainer = route as IAssetsContainer;
-            return assetsContainer != null && assetsContainer.Assets != null && assetsContainer.Assets.Any(asset =>
+            return route is IAssetsContainer assetsContainer && assetsContainer.Assets != null && assetsContainer.Assets.Any(asset =>
             {
                 try
                 {
@@ -84,8 +86,7 @@ namespace Terradue.Stars.Services.Processing
 
         public async Task<IResource> ProcessAsync(IResource route, IDestination destination, CancellationToken ct, string suffix = null)
         {
-            IItem item = route as IItem;
-            if (item == null) return route;
+            if (!(route is IItem item)) return route;
             IAssetsContainer assetsContainer = route as IAssetsContainer;
             Dictionary<string, IAsset> newAssets = new Dictionary<string, IAsset>();
             foreach (var asset in assetsContainer.Assets)
@@ -119,7 +120,7 @@ namespace Terradue.Stars.Services.Processing
 
             if (newAssets == null || newAssets.Count == 0) return route;
 
-            return new ContainerNode(route as IItem, newAssets, suffix);
+            return new ItemContainerNode(route as IItem, newAssets, suffix);
 
         }
 

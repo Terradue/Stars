@@ -1,3 +1,7 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: Vision1DimapProfiler.cs
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +32,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
             return null;
         }
 
-        protected override EoBandObject GetEoBandObject(Schemas.t_Spectral_Band_Info bandInfo, string description)
+        protected override EoBandObject GetEoBandObject(t_Spectral_Band_Info bandInfo, string description)
         {
             var eoBandObject = base.GetEoBandObject(bandInfo, description);
             ////
@@ -70,17 +74,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
             return "Vision-1";
         }
 
-        public override string GetSpectralProcessing(Schemas.DimapDocument dimap = null)
+        public override string GetSpectralProcessing(DimapDocument dimap = null)
         {
             List<string> spectralProcessings = new List<string>();
-            Schemas.DimapDocument[] dimaps = dimap == null ? Dimaps : new Schemas.DimapDocument[] {dimap};
-            foreach (Schemas.DimapDocument d in dimaps)
+            DimapDocument[] dimaps = dimap == null ? Dimaps : new DimapDocument[] { dimap };
+            foreach (DimapDocument d in dimaps)
             {
                 string[] identifierParts = d.Dataset_Id.DATASET_NAME.Split('_');
                 if (identifierParts.Length >= 2) spectralProcessings.Add(identifierParts[1]);
             }
             spectralProcessings.Sort();
-            return String.Join(",", spectralProcessings);
+            return string.Join(",", spectralProcessings);
         }
 
 
@@ -102,13 +106,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
                 return "composite";
             }
 
-            string key = String.Format(
+            string key = string.Format(
                 "{0}-{1}",
                 nameParts[1] == "PAN" ? "PAN" : "MS",
                 nameParts[3]
             );
-            if (nameParts[1] != "PAN") key += String.Format("-{0}", nameParts[1]);
-            if (nameParts.Length >= 7) key += String.Format("-{0}", nameParts[6]);
+            if (nameParts[1] != "PAN") key += string.Format("-{0}", nameParts[1]);
+            if (nameParts.Length >= 7) key += string.Format("-{0}", nameParts[6]);
 
             return key;
         }
@@ -127,17 +131,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
             return "optical";
         }
 
-        internal override string GetAssetPrefix(Schemas.DimapDocument dimap, IAsset metadataAsset)
+        internal override string GetAssetPrefix(DimapDocument dimap, IAsset metadataAsset)
         {
             if (dimap != null)
             {
-                return Dimaps.Length == 1 ? String.Empty : String.Format("{0}-", dimap.Dataset_Id.DATASET_NAME.Substring(5, 3));
+                return Dimaps.Length == 1 ? string.Empty : string.Format("{0}-", dimap.Dataset_Id.DATASET_NAME.Substring(5, 3));
             }
             if (metadataAsset != null)
             {
-                return (Dimaps.Length == 1) ? String.Empty : String.Format("{0}-", Path.GetFileName(metadataAsset.Uri.AbsolutePath).Substring(5, 3));
+                return (Dimaps.Length == 1) ? string.Empty : string.Format("{0}-", Path.GetFileName(metadataAsset.Uri.AbsolutePath).Substring(5, 3));
             }
-            return String.Empty;
+            return string.Empty;
         }
 
         internal override StacProvider GetStacProvider()

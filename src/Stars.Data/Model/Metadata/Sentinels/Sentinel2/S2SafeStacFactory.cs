@@ -1,6 +1,9 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: S2SafeStacFactory.cs
+
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Projection;
@@ -78,7 +81,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         protected override string GetTitle(IDictionary<string, object> properties)
         {
-            return string .Format("{0} {1} {2} {3}",
+            return string.Format("{0} {1} {2} {3}",
                 //StylePlatform(properties.GetProperty<string>("platform")),
                 properties.GetProperty<string>("platform").ToUpper(),
                 properties.GetProperty<string[]>("instruments").First().ToUpper(),
@@ -94,7 +97,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         protected override void AddProjectionStacExtension(StacItem stacItem)
         {
-            if ( mtdTile?.Geometric_Info?.Tile_Geocoding == null ) return;
+            if (mtdTile?.Geometric_Info?.Tile_Geocoding == null) return;
             stacItem.ProjectionExtension().Epsg = int.Parse(mtdTile.Geometric_Info.Tile_Geocoding.HORIZONTAL_CS_CODE.Replace("EPSG:", ""));
             // stacItem.ProjectionExtension().Epsg = null;
         }

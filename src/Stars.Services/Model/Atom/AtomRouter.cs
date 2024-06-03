@@ -1,21 +1,21 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: AtomRouter.cs
+
 using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
-using Terradue.Stars.Interface.Router;
-using Terradue.ServiceModel.Syndication;
-using System.Net;
-using Terradue.Stars.Interface;
-using Terradue.Stars.Services.Plugins;
-using Terradue.OpenSearch.Result;
-using Terradue.Stars.Services.Router;
-using System.Linq;
-using Terradue.Stars.Services.Resources;
-using Terradue.Stars.Services.Supplier;
-using System.IO;
-using System.Threading;
-using Terradue.OpenSearch;
 using System.Xml.Serialization;
+using Terradue.OpenSearch;
+using Terradue.OpenSearch.Result;
 using Terradue.OpenSearch.Schema;
+using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Router;
+using Terradue.Stars.Services.Plugins;
+using Terradue.Stars.Services.Resources;
 
 namespace Terradue.Stars.Services.Model.Atom
 {

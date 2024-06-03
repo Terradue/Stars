@@ -1,4 +1,7 @@
-using System;
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: SentinelMetadataExtractor.cs
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,8 +30,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 
         public override bool CanProcess(IResource route, IDestination destination)
         {
-            IItem item = route as IItem;
-            if (item == null) return false;
+            if (!(route is IItem item)) return false;
             try
             {
                 IAsset manifestAsset = GetManifestAsset(item);
@@ -63,7 +65,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 
             SentinelSafeStacFactory stacFactory = await CreateSafeStacFactoryAsync(manifest, item, identifier);
             StacItem stacItem = stacFactory.CreateStacItem();
-            
+
             // Get the proper instance for assets and additional properties
             // (can be this instance or a subclass instance, e.g. for Sentinel-2)
             SentinelMetadataExtractor metadataExtractor = GetMatchingExtractorInstance(stacFactory);
@@ -89,7 +91,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
         {
             return this;
         }
-        
+
         protected abstract Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory);
 
         protected virtual Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
@@ -99,11 +101,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
 
         protected virtual IAsset GetManifestAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, "manifest.safe$");
-            if (manifestAsset == null)
-            {
-                throw new FileNotFoundException(String.Format("Unable to find the manifest SAFE file asset"));
-            }
+            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, "manifest.safe$") ?? throw new FileNotFoundException(string.Format("Unable to find the manifest SAFE file asset"));
             return manifestAsset;
         }
         protected abstract Task<SentinelSafeStacFactory> CreateSafeStacFactoryAsync(XFDUType manifest, IItem item, string identifier);

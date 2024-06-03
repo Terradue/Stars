@@ -1,14 +1,12 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: LocalDirectoryResource.cs
+
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
 using Terradue.Stars.Interface;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier.Destination;
-using Terradue.Stars.Services.Supplier.Destination;
 
 namespace Terradue.Stars.Services.Router
 {
@@ -19,7 +17,7 @@ namespace Terradue.Stars.Services.Router
 
         public LocalDirectoryResource(IFileSystem fileSystem, string dirPath)
         {
-            this.dirInfo = fileSystem.DirectoryInfo.FromDirectoryName(dirPath);
+            dirInfo = fileSystem.DirectoryInfo.FromDirectoryName(dirPath);
             this.fileSystem = fileSystem;
         }
 

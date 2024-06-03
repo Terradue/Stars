@@ -1,14 +1,16 @@
+﻿// Copyright (c) by Terradue Srl. All Rights Reserved.
+// License under the AGPL, Version 3.0.
+// File Name: OrderableAsset.cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Terradue.Stars.Interface.Router;
-using Terradue.Stars.Interface.Supplier;
-using Terradue.OpenSearch.DataHub;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Syndication;
 using Terradue.Stars.Interface;
+using Terradue.Stars.Interface.Supplier;
 
 namespace Terradue.Stars.Data.Routers
 {
@@ -22,7 +24,7 @@ namespace Terradue.Stars.Data.Routers
         {
             this.osItem = osItem;
             this.supplier = supplier;
-            this.properties = new Dictionary<string, object>();
+            properties = new Dictionary<string, object>();
         }
 
         public string Title => osItem.Title != null ? osItem.Title.Text : osItem.Id;
