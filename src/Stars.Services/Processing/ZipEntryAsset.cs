@@ -16,7 +16,7 @@ namespace Terradue.Stars.Services.Processing
 {
     internal class ZipEntryAsset : IAsset, IStreamResource
     {
-        private ZipEntry entry;
+        private readonly ZipEntry entry;
         private readonly ZipFile zipFile;
         private readonly IAsset parentAsset;
         private readonly string parentAssetBaseDir;

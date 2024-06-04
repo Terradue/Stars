@@ -53,7 +53,7 @@ namespace Terradue.Stars.Services.Router
 
             ICatalog catalogNode = route as ICatalog;
             IRouter router = null;
-            // If route is not a catalog (there is no more routes fom that node)
+            // If route is not a catalog (there is no more routes from that node)
             if (catalogNode == null)
             {
                 // If route is an Item
@@ -61,6 +61,12 @@ namespace Terradue.Stars.Services.Router
                 {
                     // Execute the function for the item and return;
                     return await onItemFunction.Invoke(itemNode, prevRouter, state, ct);
+                }
+                // If route is a Collection
+                if (route is ICollection collectionNode)
+                {
+                    // Execute the function for the collection and return;
+                    return await onCollectionFunction.Invoke(collectionNode, prevRouter, state, ct);
                 }
                 // Ask the router manager if there is another router available for this route
                 router = await routersManager.GetRouterAsync(route);
@@ -74,9 +80,16 @@ namespace Terradue.Stars.Services.Router
                 {
                     // New route from new router!
                     var newRoute = await router.RouteAsync(route, ct);
+                    // If route is an Item
                     if (newRoute is IItem)
                     {
                         return await onItemFunction.Invoke(newRoute as IItem, prevRouter, state, ct);
+                    }
+                    // If route is a Collection
+                    if (newRoute is ICollection)
+                    {
+                        // Execute the function for the collection and return;
+                        return await onCollectionFunction.Invoke(newRoute as ICollection, prevRouter, state, ct);
                     }
 
                     catalogNode = newRoute as ICatalog;
@@ -128,6 +141,12 @@ namespace Terradue.Stars.Services.Router
         public void OnItem(Func<IItem, IRouter, object, CancellationToken, Task<object>> onItemFunction)
         {
             this.onItemFunction = onItemFunction;
+        }
+
+        private Func<ICollection, IRouter, object, CancellationToken, Task<object>> onCollectionFunction = (node, router, state, ct) => { return Task.FromResult(state); };
+        public void OnCollection(Func<ICollection, IRouter, object, CancellationToken, Task<object>> onCollectionFunction)
+        {
+            this.onCollectionFunction = onCollectionFunction;
         }
 
         private Func<IResource, IRouter, Exception, object, CancellationToken, Task<object>> onRoutingExceptionFunction = (route, router, e, state, ct) => { return Task.FromResult(state); };

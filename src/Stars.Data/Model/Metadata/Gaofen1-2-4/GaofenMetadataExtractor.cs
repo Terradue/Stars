@@ -104,7 +104,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
             FillBasicsProperties(productMetadataList[0], stacItem.Properties);
             AddOtherProperties(productMetadataList[0], stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
         }
 
 

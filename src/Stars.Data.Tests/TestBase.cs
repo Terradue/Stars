@@ -37,7 +37,7 @@ namespace Terradue.Data.Tests
 
         protected IConfigurationRoot configuration;
 
-        protected static StacValidator stacValidator = new StacValidator(new JSchemaUrlResolver());
+        protected static StacValidator stacValidator = new(new JSchemaUrlResolver());
 
         private static readonly Assembly ThisAssembly = typeof(TestBase)
 #if NETCOREAPP1_1

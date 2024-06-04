@@ -122,10 +122,10 @@ namespace Terradue.Stars.Services.Processing
             return Path.GetFileNameWithoutExtension(asset.Uri.ToString());
         }
 
-        public async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
+        public override async Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            zipFile = Ionic.Zip.ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
+            zipFile = ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
             string subFolder = IsInternalArchive ? string.Empty : AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)

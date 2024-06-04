@@ -25,8 +25,8 @@ namespace Terradue.Stars.Data.Suppliers.PlanetScope
     {
         protected ILogger logger;
         private readonly TranslatorManager translatorManager;
-        private ICredentials credentials;
-        private string baseUrl;
+        private readonly ICredentials credentials;
+        private readonly string baseUrl;
 
         // These are the asset types to be supported initially
         public static Dictionary<string, AssetTypeInformation> assetTypes = new Dictionary<string, AssetTypeInformation>()

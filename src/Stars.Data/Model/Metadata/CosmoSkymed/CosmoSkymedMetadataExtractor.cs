@@ -30,9 +30,9 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
     {
         // Possible identifiers:
         // CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156
-        private Regex identifierRegex = new Regex(@"(?'id'CSKS(?'i'\d)_(?'pt'RAW_B|SCS_B|SCS_U|DGM_B|GEC_B|GTC_B)_(?'mode'HI|PP|WR|HR|S2)_(?'swath'..)_(?'pol'HH|VV|HV|VH|CO|CH|CV)_(?'look'L|R)(?'dir'A|D)_.._\d{14}_\d{14})");
-        private Regex coordinateRegex = new Regex(@"(?'lat'[^ ,]+),? (?'lon'[^ ,]+)");
-        private static Regex h5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
+        private readonly Regex identifierRegex = new Regex(@"(?'id'CSKS(?'i'\d)_(?'pt'RAW_B|SCS_B|SCS_U|DGM_B|GEC_B|GTC_B)_(?'mode'HI|PP|WR|HR|S2)_(?'swath'..)_(?'pol'HH|VV|HV|VH|CO|CH|CV)_(?'look'L|R)(?'dir'A|D)_.._\d{14}_\d{14})");
+        private readonly Regex coordinateRegex = new Regex(@"(?'lat'[^ ,]+),? (?'lon'[^ ,]+)");
+        private static readonly Regex h5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
 
@@ -82,7 +82,7 @@ namespace Terradue.Stars.Data.Model.Metadata.CosmoSkymed
             // FillAdditionalSarProperties(stacItem.Properties, metadata, identifierMatch);
             //FillBasicsProperties(stacItem.Properties, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
         }
 
         internal virtual StacItem CreateStacItem(Dictionary<string, string> hdfAttributes, Schemas.Metadata metadata, Match identifierMatch)

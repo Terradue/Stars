@@ -64,7 +64,7 @@ namespace Stars.Tests
             var builder = new ConfigurationBuilder()
                 .AddNewtonsoftJsonFile("testsettings.json", optional: true)
                 .AddNewtonsoftJsonFile(configFile.FullName, optional: false, reloadOnChange: false)
-                .AddNewtonsoftJsonFile(Path.Join(System.Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true)
+                .AddNewtonsoftJsonFile(Path.Join(Environment.GetEnvironmentVariable("HOME"), ".config", "Stars", "usersettings.json"), optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 

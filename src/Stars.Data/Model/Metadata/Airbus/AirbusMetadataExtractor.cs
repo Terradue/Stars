@@ -198,7 +198,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
 
             // AddEoBandPropertyInItem(stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri) as StacItemNode;
+            return StacNode.Create(stacItem, item.Uri) as StacItemNode;
         }
 
         private void AddEoBandPropertyInItem(StacItem stacItem)

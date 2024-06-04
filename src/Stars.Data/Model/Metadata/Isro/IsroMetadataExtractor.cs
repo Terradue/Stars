@@ -35,7 +35,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
         private const string ASCENDING = "Ascending Orbit";
         private const string DESCENDING = "Descending Orbit";
 
-        private static string[] satelliteIds = new string[] { "CARTOSAT-2", "IRS-R2", "IRS-R2A" };
+        private static readonly string[] satelliteIds = new string[] { "CARTOSAT-2", "IRS-R2", "IRS-R2A" };
 
         public override string Label => "ResourceSat/CartoSat (ISRO) constellation product metadata extractor";
 
@@ -86,7 +86,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Isro
             FillBasicsProperties(metadata, stacItem.Properties);
             AddOtherProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
 
         }
 

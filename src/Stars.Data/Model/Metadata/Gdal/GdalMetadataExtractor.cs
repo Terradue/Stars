@@ -56,7 +56,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gdal
 
             AddAssets(stacItem, gdalAsset, dataset);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
         internal virtual StacItem CreateStacItem(KeyValuePair<string, IAsset> gdalAsset, Dataset dataset, IItem item)

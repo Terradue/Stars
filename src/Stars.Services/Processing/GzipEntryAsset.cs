@@ -15,8 +15,8 @@ namespace Terradue.Stars.Services.Processing
 {
     public class GzipEntryAsset : IAsset, IStreamResource
     {
-        private string name;
-        private Stream inputStream;
+        private readonly string name;
+        private readonly Stream inputStream;
 
         public GzipEntryAsset(string name, Stream inputStream)
         {
@@ -80,7 +80,7 @@ namespace Terradue.Stars.Services.Processing
 
         public Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return Task<Stream>.FromResult((Stream)inputStream);
+            return Task.FromResult((Stream)inputStream);
         }
 
         public Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)

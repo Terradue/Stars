@@ -30,6 +30,21 @@ namespace Terradue.Stars.Services
             }
         }
 
+        public static void MergeAssets(this StacCollection stacCollection, IAssetsContainer assetContainer, bool removeIfNotInContainer = false)
+        {
+            if (removeIfNotInContainer)
+                stacCollection.Assets.Clear();
+            foreach (var asset in assetContainer.Assets)
+            {
+                if (stacCollection.Assets.ContainsKey(asset.Key))
+                {
+                    stacCollection.Assets.Remove(asset.Key);
+                }
+                // we must pass the previous parent url to make the asset uri absolute
+                stacCollection.Assets.Add(asset.Key, asset.Value.CreateAbsoluteStacAsset(stacCollection, assetContainer.Uri));
+            }
+        }
+
         public static void MergeAssets(this IDictionary<string, IAsset> assets, IReadOnlyDictionary<string, IAsset> assets2, bool removeIfNotInContainer = false)
         {
             if (removeIfNotInContainer)
@@ -45,14 +60,14 @@ namespace Terradue.Stars.Services
             }
         }
 
-        public static StacAsset CreateAbsoluteStacAsset(this IAsset asset, StacItem stacItem, Uri parentUrl)
+        public static StacAsset CreateAbsoluteStacAsset(this IAsset asset, IStacObject stacObject, Uri parentUrl)
         {
             StacAsset newAsset = null;
             if (asset is StacAssetAsset)
-                newAsset = new StacAsset((asset as StacAssetAsset).StacAsset, stacItem);
+                newAsset = new StacAsset((asset as StacAssetAsset).StacAsset, stacObject);
             else
             {
-                newAsset = new StacAsset(stacItem, asset.Uri, asset.Roles, asset.Title, asset.ContentType);
+                newAsset = new StacAsset(stacObject, asset.Uri, asset.Roles, asset.Title, asset.ContentType);
                 newAsset.Properties.AddRange(asset.Properties);
                 newAsset.FileExtension().Size = asset.ContentLength;
             }

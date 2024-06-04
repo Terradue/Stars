@@ -57,7 +57,7 @@ namespace Terradue.Stars.Services.Resources
                                                   .GetProperty<string>(Stac.Extensions.Storage.StorageStacExtension.RegionField);
             if (!string.IsNullOrEmpty(region))
             {
-                s3Config.AmazonS3Config.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(region);
+                s3Config.AmazonS3Config.RegionEndpoint = RegionEndpoint.GetBySystemName(region);
             }
             s3Config.AWSCredentials = GetConfiguredCredentials(s3Url);
 

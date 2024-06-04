@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
         private readonly IOptions<TitilerConfiguration> options;
         private readonly ILogger<TitilerService> logger;
 
-        private static string[] TITILER_VALID_TYPE = new string[7] {
+        private static readonly string[] TITILER_VALID_TYPE = new string[7] {
             "image/vnd.stac.geotiff; cloud-optimized=true",
             "image/tiff; application=geotiff",
             "image/tiff",
@@ -28,7 +28,7 @@ namespace Terradue.Stars.Services.ThirdParty.Titiler
             "application/x-hdf",
         };
 
-        private static string[] OVERVIEW_NAMES = new string[] { "red", "green", "blue", "nir", "pan" };
+        private static readonly string[] OVERVIEW_NAMES = new string[] { "red", "green", "blue", "nir", "pan" };
 
         public TitilerService(IOptions<TitilerConfiguration> options,
                                    ILogger<TitilerService> logger)

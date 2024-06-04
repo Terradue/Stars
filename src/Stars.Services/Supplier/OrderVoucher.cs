@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Supplier
     [JsonObject]
     public class OrderVoucher : IResource, IOrder, IAsset
     {
-        private IOrderable orderableRoute;
+        private readonly IOrderable orderableRoute;
         private readonly string orderId;
 
         public OrderVoucher(IOrderable route, string orderId)
@@ -76,7 +76,7 @@ namespace Terradue.Stars.Services.Supplier
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 MemoryStream ms = new MemoryStream();
                 StreamWriter sw = new StreamWriter(ms);

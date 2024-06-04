@@ -84,7 +84,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
             // add L3 visual tif asset
             AddL3Assets(item, stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
         }
 
         private void FixAssetPaths(StacItem stacItem, IItem item)

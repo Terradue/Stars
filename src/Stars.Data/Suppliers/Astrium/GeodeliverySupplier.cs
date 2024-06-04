@@ -26,7 +26,7 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
     {
         protected ILogger logger;
         private readonly TranslatorManager translatorManager;
-        private ICredentials credentials;
+        private readonly ICredentials credentials;
 
         public GeodeliverySupplier(ILogger<GeodeliverySupplier> logger, TranslatorManager translatorManager, ICredentials credentials)
         {
@@ -96,11 +96,11 @@ namespace Terradue.Stars.Data.Suppliers.Astrium
                 try
                 {
                     FtpWebRequest reqFTP;
-                    reqFTP = (FtpWebRequest)FtpWebRequest.Create(ftpUri);
+                    reqFTP = (FtpWebRequest)WebRequest.Create(ftpUri);
                     reqFTP.UseBinary = true;
                     reqFTP.Credentials = credentials;
                     reqFTP.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
-                    reqFTP.Timeout = System.Threading.Timeout.Infinite;
+                    reqFTP.Timeout = Timeout.Infinite;
                     reqFTP.Proxy = null;
                     reqFTP.KeepAlive = true;
                     reqFTP.UsePassive = true;

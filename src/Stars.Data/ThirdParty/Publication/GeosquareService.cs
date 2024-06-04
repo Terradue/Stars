@@ -337,8 +337,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             {
                 var template = geosquareConfiguration.GetOpenSearchForUri(link.Uri);
                 if (string.IsNullOrEmpty(template)) return null;
-                var webRoute = await resourceServiceProvider.GetStreamResourceAsync(new AtomResourceLink(link), System.Threading.CancellationToken.None);
-                IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync(System.Threading.CancellationToken.None));
+                var webRoute = await resourceServiceProvider.GetStreamResourceAsync(new AtomResourceLink(link), CancellationToken.None);
+                IStacObject linkedStacObject = StacConvert.Deserialize<IStacObject>(await webRoute.GetStreamAsync(CancellationToken.None));
                 var osUrl = template.ReplaceMacro("stacObject", linkedStacObject);
                 osUrl = osUrl.ReplaceMacro("index", catalogPublicationState.GeosquarePublicationModel.Index);
                 var osUri = new Uri(osUrl);

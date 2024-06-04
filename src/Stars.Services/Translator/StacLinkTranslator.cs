@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Translator
     [PluginPriority(1)]
     public class StacLinkTranslator : ITranslator
     {
-        private ILogger logger;
+        private readonly ILogger logger;
         private readonly IResourceServiceProvider resourceServiceProvider;
         private readonly ICredentials credentials;
 
@@ -51,7 +51,11 @@ namespace Terradue.Stars.Services.Translator
                             var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink, ct);
                             var stacCatalog = StacConvert.Deserialize<IStacCatalog>(await stacRoute.ReadAsStringAsync(ct));
                             if (stacCatalog != null)
+                            {
+                                logger.LogInformation(string.Format("alternate STAC object found at {0}", stacLink.Uri));
                                 return (T)(new StacCatalogNode(stacCatalog, stacRoute.Uri) as IResource);
+
+                            }
                         }
                         catch { }
                     }
@@ -71,7 +75,10 @@ namespace Terradue.Stars.Services.Translator
                             var stacRoute = await resourceServiceProvider.CreateStreamResourceAsync(stacLink, ct);
                             var stacItem = StacConvert.Deserialize<StacItem>(await stacRoute.ReadAsStringAsync(ct));
                             if (stacItem != null)
+                            {
+                                logger.LogInformation(string.Format("alternate STAC item found at {0}", stacLink.Uri));
                                 return (T)(new StacItemNode(stacItem, stacRoute.Uri) as IResource);
+                            }
                         }
                         catch { }
                     }

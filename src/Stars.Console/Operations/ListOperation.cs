@@ -32,7 +32,7 @@ namespace Terradue.Stars.Console.Operations
         private RouterService routingService;
         private IResourceServiceProvider resourceServiceProvider;
         private int recursivity = 1;
-        private string[] inputs = new string[0];
+        private string[] inputs = Array.Empty<string>();
 
         public ListOperation(IConsole console) : base(console)
         {

@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Routers
             this.supplier = supplier;
         }
 
-        Dictionary<string, IAsset> assets = null;
+        private Dictionary<string, IAsset> assets = null;
 
         public override IReadOnlyDictionary<string, IAsset> Assets
         {

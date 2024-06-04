@@ -670,7 +670,7 @@ namespace Terradue.Stars.Geometry.Gml311
             if (coord.X == default(decimal) || coord.Y == default(decimal))
                 throw new FormatException("invalid GML representation: gml:coord missing X or Y");
 
-            Position geopos = new Position(System.Convert.ToDouble(coord.X), System.Convert.ToDouble(coord.Y), System.Convert.ToDouble(coord.Z));
+            Position geopos = new Position(Convert.ToDouble(coord.X), Convert.ToDouble(coord.Y), Convert.ToDouble(coord.Z));
             return geopos;
         }
 

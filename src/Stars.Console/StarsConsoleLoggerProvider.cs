@@ -10,7 +10,7 @@ namespace Terradue.Stars.Console
 {
     public class StarsConsoleLoggerProvider : ILoggerProvider
     {
-        private readonly ConcurrentDictionary<string, StarsConsoleReporter> _loggers = new ConcurrentDictionary<string, StarsConsoleReporter>();
+        private readonly ConcurrentDictionary<string, StarsConsoleReporter> _loggers = new();
         private readonly IConsole console;
         private readonly int verbose;
 

@@ -189,7 +189,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
             IGeometryObject savegeom = null;
 
-            savegeom = Terradue.Stars.Geometry.Atom.AtomExtensions.FindGeometry(item);
+            savegeom = Geometry.Atom.AtomExtensions.FindGeometry(item);
 
             if (savegeom == null)
             {

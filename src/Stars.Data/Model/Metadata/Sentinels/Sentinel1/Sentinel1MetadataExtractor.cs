@@ -33,7 +33,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             return xfdu;
         }
 
-        protected async override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override async Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, "\\.tiff$"))
             {

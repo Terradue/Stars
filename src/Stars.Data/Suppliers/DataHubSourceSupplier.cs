@@ -29,7 +29,7 @@ namespace Terradue.Stars.Data.Suppliers
     public class DataHubSourceSupplier : OpenSearchableSupplier, ISupplier
     {
         private IDataHubSourceWrapper wrapper;
-        private ICredentials credentialsManager;
+        private readonly ICredentials credentialsManager;
         private readonly IS3ClientFactory _s3ClientFactory;
 
         public DataHubSourceSupplier(ILogger<DataHubSourceSupplier> logger,
@@ -175,7 +175,7 @@ namespace Terradue.Stars.Data.Suppliers
         public override async Task<IOrder> Order(IOrderable orderableRoute)
         {
             OrderableAsset orderableAsset = orderableRoute as OrderableAsset;
-            IAssetAccess assetAccess = await Task<IAssetAccess>.Run(() => wrapper.OrderProduct(orderableAsset.OpenSearchResultItem));
+            IAssetAccess assetAccess = await Task.Run(() => wrapper.OrderProduct(orderableAsset.OpenSearchResultItem));
             OrderVoucher orderVoucher = new OrderVoucher(orderableRoute, assetAccess.Id);
             return orderVoucher;
         }

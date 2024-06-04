@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise
             noiseAsset = calibrationAsset;
         }
 
-        public async static Task<S1L1AssetNoise> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
+        public static async Task<S1L1AssetNoise> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
         {
             return new S1L1AssetNoise((l1NoiseVectorType)s1L1NoiseSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(calibrationAsset, System.Threading.CancellationToken.None)), calibrationAsset, resourceServiceProvider);
         }

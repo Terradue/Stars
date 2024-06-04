@@ -18,7 +18,7 @@ namespace Terradue.Stars.Data.Routers
     {
         private readonly IOpenSearchResultItem osItem;
         private readonly ISupplier supplier;
-        private Dictionary<string, object> properties;
+        private readonly Dictionary<string, object> properties;
 
         public OrderableAsset(IOpenSearchResultItem osItem, ISupplier supplier)
         {

@@ -12,7 +12,7 @@ namespace Terradue.Stars.Services
     [Serializable]
     internal class AssetImportException : AggregateException
     {
-        private IReadOnlyDictionary<string, IAsset> assets;
+        private readonly IReadOnlyDictionary<string, IAsset> assets;
 
         public AssetImportException()
         {

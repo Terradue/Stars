@@ -43,7 +43,7 @@ namespace Stars.Tests
         public void Test1()
         {
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-production-catalog/test.json");
-            StacCatalogNode node = (StacCatalogNode)StacCatalogNode.Create(new StacCatalog("test", "test"), s3ObjectDestination.Uri);
+            StacCatalogNode node = (StacCatalogNode)StacNode.Create(new StacCatalog("test", "test"), s3ObjectDestination.Uri);
             Assert.Equal("s3://local-production-catalog/test.json", node.Uri.ToString());
         }
 
@@ -55,7 +55,7 @@ namespace Stars.Tests
             var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog/users/evova11/uploads/0HMD4AJ2DCT0E/500x477.tif")), CancellationToken.None);
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/test502.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog/calls/857/notifications/test502.json");
-            StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
+            StacItemNode itemNode = (StacItemNode)StacNode.Create(item, s3ObjectDestination.Uri);
             var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative, AssetChecks.None, CancellationToken.None);
             foreach (var ex in importReport.AssetsExceptions)
             {
@@ -73,7 +73,7 @@ namespace Stars.Tests
             var s3Resource = await resourceServiceProvider.CreateStreamResourceAsync(new GenericResource(new Uri("s3://local-acceptance-catalog2/indices_cog/cci_fss/CFD/GDA-AID-DR_UC7-ADBMON_Product_FSS-CFD-V01_IronDzud-Khuvsgul-1993.tif")), CancellationToken.None);
             StacItem item = StacConvert.Deserialize<StacItem>(File.ReadAllText(Path.Join(Environment.CurrentDirectory, "../../../In/items/cci_fss_CFD_1993.json")));
             S3ObjectDestination s3ObjectDestination = S3ObjectDestination.Create("s3://local-acceptance-catalog2/indices_cog/copy/cci_fss_CFD_1993.json");
-            StacItemNode itemNode = (StacItemNode)StacItemNode.Create(item, s3ObjectDestination.Uri);
+            StacItemNode itemNode = (StacItemNode)StacNode.Create(item, s3ObjectDestination.Uri);
             var importReport = await assetService.ImportAssetsAsync(itemNode, s3ObjectDestination, AssetFilters.SkipRelative, AssetChecks.None, CancellationToken.None);
             foreach (var ex in importReport.AssetsExceptions)
             {

@@ -96,7 +96,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Rcm
 
             AddAssets(stacItem, auxiliary, item);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
 
         }
 

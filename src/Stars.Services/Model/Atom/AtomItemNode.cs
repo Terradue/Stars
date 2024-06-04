@@ -22,7 +22,7 @@ namespace Terradue.Stars.Services.Model.Atom
 {
     public class AtomItemNode : IItem, IAssetsContainer, IStreamResource
     {
-        private AtomItem item;
+        private readonly AtomItem item;
         private readonly Uri sourceUri;
 
         public AtomItemNode(AtomItem item, Uri sourceUri)
@@ -58,7 +58,7 @@ namespace Terradue.Stars.Services.Model.Atom
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 MemoryStream ms = new MemoryStream();
                 var sw = XmlWriter.Create(ms);

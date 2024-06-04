@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Calibration
             this.calibrationAsset = calibrationAsset;
         }
 
-        public async static Task<S1L1AssetCalibration> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
+        public static async Task<S1L1AssetCalibration> Create(IAsset calibrationAsset, IResourceServiceProvider resourceServiceProvider)
         {
             return new S1L1AssetCalibration((l1CalibrationType)s1L1CalibrationSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(calibrationAsset, System.Threading.CancellationToken.None)), calibrationAsset, resourceServiceProvider);
         }

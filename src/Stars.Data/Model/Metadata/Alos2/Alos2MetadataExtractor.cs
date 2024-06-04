@@ -57,7 +57,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
 
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
         internal virtual StacItem CreateStacItem(Alos2Metadata metadata)
@@ -324,13 +324,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Alos2
     {
 
         // Regular expressions should normally be static but creates problem with async methods
-        private Regex lineRegex = new Regex("^ *([^= ]+) *= *(.*)$");
-        private Regex quotedValueRegex = new Regex("^\"(.*)\"$");
-        private Regex fileNameKeyRegex = new Regex("Pdi_L\\d{2}ProductFileName\\d{2}");   // e.g. Pdi_L15ProductFileName01
-        private Regex fileNameValueRegex = new Regex("(?'type'IMG|LUT)-(?'pol'HH|HV|VH|VV)-(?'id'.{32})\\.(tif|txt)");   // e.g. IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif
-        private Regex identifierRegex = new Regex("ALOS2(?'orbit'\\d{5})(?'frame'\\d{4})-(?'date'\\d{6})-(?'mode'(SBS|UBS|UBD|HBS|HBD|HBQ|FBS|FBD|FBQ|WBS|WBD|WWS|WWD|VBS|VBD))(?'obsdir'[LR])(?'level'.{3})(?'proc'[GR_])(?'proj'[UPML_])(?'orbitdir'[AD])");  // e.g. ALOS2146686640-170209-FBDR1.5GUA
-        private Regex siteRegex = new Regex(".* (?'dt'\\d{8} \\d{6})$");
-        private IAsset summaryAsset;
+        private readonly Regex lineRegex = new Regex("^ *([^= ]+) *= *(.*)$");
+        private readonly Regex quotedValueRegex = new Regex("^\"(.*)\"$");
+        private readonly Regex fileNameKeyRegex = new Regex("Pdi_L\\d{2}ProductFileName\\d{2}");   // e.g. Pdi_L15ProductFileName01
+        private readonly Regex fileNameValueRegex = new Regex("(?'type'IMG|LUT)-(?'pol'HH|HV|VH|VV)-(?'id'.{32})\\.(tif|txt)");   // e.g. IMG-HH-ALOS2146686640-170209-FBDR1.5GUA.tif
+        private readonly Regex identifierRegex = new Regex("ALOS2(?'orbit'\\d{5})(?'frame'\\d{4})-(?'date'\\d{6})-(?'mode'(SBS|UBS|UBD|HBS|HBD|HBQ|FBS|FBD|FBQ|WBS|WBD|WWS|WWD|VBS|VBD))(?'obsdir'[LR])(?'level'.{3})(?'proc'[GR_])(?'proj'[UPML_])(?'orbitdir'[AD])");  // e.g. ALOS2146686640-170209-FBDR1.5GUA
+        private readonly Regex siteRegex = new Regex(".* (?'dt'\\d{8} \\d{6})$");
+        private readonly IAsset summaryAsset;
 
         private Dictionary<string, string> properties { get; set; }
 

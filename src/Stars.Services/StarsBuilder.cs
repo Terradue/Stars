@@ -8,7 +8,7 @@ namespace Terradue.Stars.Services
 {
     internal class StarsBuilder : IStarsBuilder
     {
-        private IServiceCollection services;
+        private readonly IServiceCollection services;
 
         public StarsBuilder(IServiceCollection services)
         {

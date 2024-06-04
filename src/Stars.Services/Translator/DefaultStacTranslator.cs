@@ -20,7 +20,7 @@ namespace Terradue.Stars.Services.Translator
     [PluginPriority(10)]
     public class DefaultStacTranslator : ITranslator
     {
-        private ILogger logger;
+        private readonly ILogger logger;
 
         public int Priority { get; set; }
         public string Key { get => "DefaultStacTranslator"; set { } }

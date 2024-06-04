@@ -41,7 +41,7 @@ namespace Terradue.Data.Tests.Harvesters
             }
         }
 
-        [Theory, MemberData("TestData", DisableDiscoveryEnumeration = true)]
+        [Theory, MemberData(nameof(TestData), DisableDiscoveryEnumeration = true)]
         public async void TestExtractors(string key, string datadir, MetadataExtraction extractor)
         {
             StacRouter stacRouter = ServiceProvider.GetService<StacRouter>();
@@ -82,7 +82,7 @@ namespace Terradue.Data.Tests.Harvesters
                 }
                 catch (Exception)
                 {
-                    System.Console.WriteLine(actualJson);
+                    Console.WriteLine(actualJson);
                     throw;
                 }
                 // Dot NOT uncomment unless you are changing the expected JSON
@@ -94,7 +94,7 @@ namespace Terradue.Data.Tests.Harvesters
                 }
                 catch (Exception)
                 {
-                    System.Console.WriteLine(actualJson);
+                    Console.WriteLine(actualJson);
                     throw;
                 }
                 // stacValidator.ValidateJson(expectedJson);
@@ -105,7 +105,7 @@ namespace Terradue.Data.Tests.Harvesters
                 }
                 catch (Exception)
                 {
-                    System.Console.WriteLine(actualJson);
+                    Console.WriteLine(actualJson);
                     throw;
                 }
             }

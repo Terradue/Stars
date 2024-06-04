@@ -367,7 +367,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                     posList[0].Text += " " + posList[0].Text.Split(' ')[0] + " " + posList[0].Text.Split(' ')[1];
                 }
                 linearRing.Items = posList.ToArray();
-                linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
+                linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
                 polygon.exterior.Item = linearRing;
 
                 return polygon.ToGeometry().NormalizePolygon();
@@ -389,7 +389,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                     posList[0].Text += " " + posList[0].Text.Split(' ')[0] + " " + posList[0].Text.Split(' ')[1];
                 }
                 linearRing.Items = posList.ToArray();
-                linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { Terradue.ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
+                linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
                 polygon.exterior.Item = linearRing;
 
                 return polygon.ToGeometry().NormalizePolygon();

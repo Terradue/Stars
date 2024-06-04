@@ -19,7 +19,7 @@ namespace Terradue.Stars.Data.Translators
     public class StacItemToAtomItemTranslator : ITranslator
     {
         private readonly IServiceProvider serviceProvider;
-        private AtomRouter atomRouter;
+        private readonly AtomRouter atomRouter;
 
         public StacItemToAtomItemTranslator(IServiceProvider serviceProvider)
         {

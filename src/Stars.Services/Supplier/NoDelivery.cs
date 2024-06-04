@@ -12,7 +12,7 @@ namespace Terradue.Stars.Services.Supplier
 {
     internal class NoDelivery : IDelivery
     {
-        private IResource route;
+        private readonly IResource route;
         private readonly ICarrier carrier;
 
         public NoDelivery(IResource route, ICarrier carrier)

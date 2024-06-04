@@ -44,7 +44,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         }
 
-        protected async override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override async Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
             var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
             Level2A_Tile mtdTile = null;
@@ -75,7 +75,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         }
 
-        protected async override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override async Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
             await GetUserProduct(item);
             stacItem.Properties.Add("processing_baseline", level2A_User_Product.General_Info.L2A_Product_Info.PROCESSING_BASELINE);

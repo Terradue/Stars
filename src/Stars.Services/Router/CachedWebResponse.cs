@@ -8,8 +8,7 @@ namespace Terradue.Stars.Services.Router
 {
     internal class CachedWebResponse : WebResponse
     {
-
-        WebHeaderCollection headers = new WebHeaderCollection();
+        private readonly WebHeaderCollection headers = new WebHeaderCollection();
 
         public CachedWebResponse(WebResponse response)
         {

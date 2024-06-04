@@ -14,8 +14,8 @@ namespace Terradue.Stars.Services.Model.Atom
 {
     public class AtomLinkAsset : IAsset
     {
-        private SyndicationLink link;
-        private SyndicationItem item;
+        private readonly SyndicationLink link;
+        private readonly SyndicationItem item;
 
         public AtomLinkAsset(SyndicationLink link, SyndicationItem item)
         {

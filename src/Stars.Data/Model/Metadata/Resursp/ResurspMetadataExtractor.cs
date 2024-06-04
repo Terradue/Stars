@@ -98,7 +98,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Resursp
             FillBasicsProperties(stacItem.Properties);
             AddOtherProperties(stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
         }
 
         private GeoJSON.Net.Geometry.IGeometryObject GetGeometryFromShpFileAsset(IAsset shapeFileAsset)

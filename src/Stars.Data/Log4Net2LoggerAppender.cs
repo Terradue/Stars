@@ -10,7 +10,7 @@ namespace Terradue.Stars.Data
 {
     internal class Log4Net2LoggerAppender : AppenderSkeleton
     {
-        private Microsoft.Extensions.Logging.ILogger logger;
+        private readonly Microsoft.Extensions.Logging.ILogger logger;
 
         public Log4Net2LoggerAppender(Microsoft.Extensions.Logging.ILogger logger)
         {

@@ -44,7 +44,7 @@ namespace Terradue.Stars.Services.Processing
             return BlockingStream.StartBufferedStreamAsync(stream, null, ct);
         }
 
-        public async override Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
+        public override async Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             var inputStream = await GetStreamAsync(asset, ct);
             string name = asset.ContentDisposition.FileName.Replace(".gz", "");
@@ -53,7 +53,7 @@ namespace Terradue.Stars.Services.Processing
 
             try
             {
-                var newArchive = await Archive.Read(gzipEntryAsset, logger, resourceServiceProvider, fileSystem, ct);
+                var newArchive = await Read(gzipEntryAsset, logger, resourceServiceProvider, fileSystem, ct);
                 return await newArchive.ExtractToDestinationAsync(destination, carrierManager, ct);
             }
             catch { }

@@ -31,26 +31,26 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
 {
     public class InpeMetadataExtractor : MetadataExtraction
     {
-        private static Regex identifierRegex = new Regex(@"(?'id1'(CBERS_4A?|AMAZONIA-1)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_L(?'level'[^_]+))(_LEFT|RIGHT)?(?'id2'_BAND(?'band'\d+))");
+        private static readonly Regex identifierRegex = new Regex(@"(?'id1'(CBERS_4A?|AMAZONIA-1)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_L(?'level'[^_]+))(_LEFT|RIGHT)?(?'id2'_BAND(?'band'\d+))");
 
         // alternative identifier regex for for filename of
         // this type 956-INPE-CBERS-4-urn_ogc_def_EOP_INPE_CBERS_4_AWFI_20220731_111_063_L4_B_compose
-        private static Regex identifierRegex2 = new Regex(@".*_inpe_(call[0-9]*|cbers_4a?|amazonia_1)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(band|b)?(\d+)?(.+)?\.csv$");
+        private static readonly Regex identifierRegex2 = new Regex(@".*_inpe_(call[0-9]*|cbers_4a?|amazonia_1)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(band|b)?(\d+)?(.+)?\.csv$");
 
         protected static string metadataAssetRegexPattern => @".*(CBERS_4|Call|CBERS_4A?|cbers_4|call|cbers_4A?|AMAZONIA_1|amazonia_1).*\.(xml|csv)$";
         protected static string compositeAssetRegexPattern => @".*(CBERS_4|Call|CBERS_4A?|cbers_4|call|cbers_4A?|AMAZONIA_1|amazonia_1).*\.(tif|tiff)$";
 
-        private Regex identifierInfoRegex = new Regex(@".*(?'mode'awfi|mux|pan|pan5m|pan10m|wfi|wpm)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(?'rest'.*)$");
+        private readonly Regex identifierInfoRegex = new Regex(@".*(?'mode'awfi|mux|pan|pan5m|pan10m|wfi|wpm)_\d{8}_\d{3}_\d{3}_l(?'level'[^_]+)_(?'rest'.*)$");
 
         // Dictionary containing platform international designators
-        private Dictionary<string, string> platformInternationalDesignators = new Dictionary<string, string> {
+        private readonly Dictionary<string, string> platformInternationalDesignators = new Dictionary<string, string> {
             {"CBERS-4", "2014-079A"},
             {"CBERS-4A", "2019-093E"},
             {"AMAZONIA-1", "2021-015A"},
         };
 
         // Dictionary containing the bands offered by each spectral mode
-        private Dictionary<string, int[]> spectralModeBandsCbers = new Dictionary<string, int[]> {
+        private readonly Dictionary<string, int[]> spectralModeBandsCbers = new Dictionary<string, int[]> {
             {"AWFI", new int[] {13, 14, 15, 16}},
             {"MUX", new int[] {5, 6, 7, 8}},
             {"PAN5M", new int[] {1}},
@@ -60,12 +60,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
             {"WPM-pansharpening", new int[] {1, 2, 3, 4}},
         };
 
-        private Dictionary<string, int[]> spectralModeBandsAmazonia = new Dictionary<string, int[]> {
+        private readonly Dictionary<string, int[]> spectralModeBandsAmazonia = new Dictionary<string, int[]> {
             {"WFI", new int[] {1, 2, 3, 4}},
         };
 
-        private Regex bandKeyRegex = new Regex(@"band-\d+");
-        private Regex utmZoneRegex = new Regex(@"(?'num'\d+)(?'hem'[NS])");
+        private readonly Regex bandKeyRegex = new Regex(@"band-\d+");
+        private readonly Regex utmZoneRegex = new Regex(@"(?'num'\d+)(?'hem'[NS])");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
 
@@ -122,7 +122,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
             FillBasicsProperties(metadata, stacItem.Properties);
             AddOtherProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
             ;
         }
 

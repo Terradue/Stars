@@ -93,7 +93,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen3
             FillBasicsProperties(metadata, stacItem.Properties);
             AddOtherProperties(metadata, stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
         private void AddProjStacExtension(ProductMetadata metadata, StacItem stacItem)

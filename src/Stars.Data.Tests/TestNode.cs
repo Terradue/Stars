@@ -16,7 +16,7 @@ namespace Terradue.Data.Tests
 {
     internal class TestItem : IItem
     {
-        private DirectoryInfo directory;
+        private readonly DirectoryInfo directory;
 
         public TestItem(string folderPath)
         {
@@ -29,9 +29,9 @@ namespace Terradue.Data.Tests
 
         public bool IsCatalog => false;
 
-        public Uri Uri => new Uri(Path.Combine(directory.FullName, "../.."));
+        public Uri Uri => new(Path.Combine(directory.FullName, "../.."));
 
-        public ContentType ContentType => new ContentType("application/x-directory");
+        public ContentType ContentType => new("application/x-directory");
 
         public ResourceType ResourceType => ResourceType.Item;
 
@@ -41,7 +41,7 @@ namespace Terradue.Data.Tests
 
         public IGeometryObject Geometry => null;
 
-        public ContentDisposition ContentDisposition => new ContentDisposition() { FileName = Path.GetFileNameWithoutExtension(directory.FullName) };
+        public ContentDisposition ContentDisposition => new() { FileName = Path.GetFileNameWithoutExtension(directory.FullName) };
 
         public IDictionary<string, object> Properties => new Dictionary<string, object>();
 
