@@ -114,7 +114,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
             AddAssets(stacItem, item, innerZipAssetContainers?.ToArray());
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
 

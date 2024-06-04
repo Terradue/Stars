@@ -18,10 +18,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         /* Note the that maximum size (as of now) of a file in S3 is 5TB so it isn't
          * safe to assume all uploads will work here.  MAX_PART_SIZE times MAX_PART_COUNT
          * is ~50TB, which is too big for S3. */
-        const long MIN_PART_LENGTH = 5L * 1024 * 1024; // all parts but the last this size or greater
-        const long MAX_PART_LENGTH = 5L * 1024 * 1024 * 1024; // 5GB max per PUT
-        const long MAX_PART_COUNT = 10000; // no more than 10,000 parts total
-        const long DEFAULT_PART_LENGTH = MIN_PART_LENGTH;
+        private const long MIN_PART_LENGTH = 5L * 1024 * 1024; // all parts but the last this size or greater
+        private const long MAX_PART_LENGTH = 5L * 1024 * 1024 * 1024; // 5GB max per PUT
+        private const long MAX_PART_COUNT = 10000; // no more than 10,000 parts total
+        private const long DEFAULT_PART_LENGTH = MIN_PART_LENGTH;
 
         internal class Metadata
         {
@@ -40,8 +40,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             public ConcurrentDictionary<int, string> PartETags = new ConcurrentDictionary<int, string>();
         }
 
-        Metadata _metadata = new Metadata();
-        IAmazonS3 _s3 = null;
+        private Metadata _metadata = new Metadata();
+        private readonly IAmazonS3 _s3 = null;
 
         public S3UploadStream(IAmazonS3 s3, string s3uri, long partLength = DEFAULT_PART_LENGTH)
             : this(s3, new Uri(s3uri), partLength)

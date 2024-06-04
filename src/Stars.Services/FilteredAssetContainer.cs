@@ -12,8 +12,8 @@ namespace Terradue.Stars.Services
 {
     public class FilteredAssetContainer : IAssetsContainer
     {
-        private IAssetsContainer assetsContainer;
-        private AssetFilters assetFilters;
+        private readonly IAssetsContainer assetsContainer;
+        private readonly AssetFilters assetFilters;
 
         public FilteredAssetContainer(IAssetsContainer assetsContainer, AssetFilters assetFilters)
         {

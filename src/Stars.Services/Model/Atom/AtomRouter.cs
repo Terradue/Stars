@@ -23,9 +23,9 @@ namespace Terradue.Stars.Services.Model.Atom
     public class AtomRouter : IRouter
     {
 
-        private static string[] supportedTypes = new string[] { "application/atom+xml", "application/xml", "text/xml" };
+        private static readonly string[] supportedTypes = new string[] { "application/atom+xml", "application/xml", "text/xml" };
 
-        private static string opensearchDescriptionType = "application/opensearchdescription+xml";
+        private static readonly string opensearchDescriptionType = "application/opensearchdescription+xml";
 
         private readonly IResourceServiceProvider resourceServiceProvider;
 

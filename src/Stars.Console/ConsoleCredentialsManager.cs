@@ -14,13 +14,13 @@ namespace Terradue.Stars.Console.Operations
 {
     internal class ConsoleCredentialsManager : ConfigurationCredentialsManager
     {
-        private readonly IConsole console;
-        private readonly ConsoleUserSettings consoleUserSettings;
+        private readonly IConsole _console;
+        private readonly ConsoleUserSettings _consoleUserSettings;
 
         public ConsoleCredentialsManager(IOptions<CredentialsOptions> options, IConsole console, ConsoleUserSettings consoleUserSettings, ILogger<ConsoleCredentialsManager> logger) : base(options, logger)
         {
-            this.console = console;
-            this.consoleUserSettings = consoleUserSettings;
+            _console = console;
+            _consoleUserSettings = consoleUserSettings;
         }
 
         public override NetworkCredential GetCredential(Uri uri, string authType)
@@ -39,14 +39,14 @@ namespace Terradue.Stars.Console.Operations
             catch { }
             if (cred == null && authority.Length > 2 && uri.UserInfo != "preauth")
             {
-                if (!console.IsInputRedirected)
+                if (!_console.IsInputRedirected)
                 {
-                    console.WriteLine("No credentials found for {0}. Please provide one.", uriCut);
+                    _console.WriteLine("No credentials found for {0}. Please provide one.", uriCut);
                     cred = PromptCredentials(uriCut, authType);
                 }
                 if (cred != null)
                 {
-                    base.CacheCredential(uriCut, authType, cred);
+                    CacheCredential(uriCut, authType, cred);
                     PromptSaveCredentials(cred, uriCut, authType);
                 }
             }
@@ -59,8 +59,8 @@ namespace Terradue.Stars.Console.Operations
             int i = 3;
             while ((string.IsNullOrEmpty(answer) || !"yn".Contains(answer[0])) && i > 0)
             {
-                console.Write("Save credentials in user settings? [y/N]:");
-                answer = console.In.ReadLine().ToLower();
+                _console.Write("Save credentials in user settings? [y/N]:");
+                answer = _console.In.ReadLine().ToLower();
                 i--;
             }
             if (answer == "y")
@@ -70,12 +70,12 @@ namespace Terradue.Stars.Console.Operations
         private void SaveCredentials(ICredentials cred, Uri uri, string authType)
         {
             CredentialsConfigurationSection credConfigSection = cred.ToCredentialsConfigurationSection(uri, authType);
-            consoleUserSettings.AddOrUpdateSetting("Credentials:" + Guid.NewGuid().ToString(), credConfigSection);
+            _consoleUserSettings.AddOrUpdateSetting("Credentials:" + Guid.NewGuid().ToString(), credConfigSection);
         }
 
         private NetworkCredential PromptCredentials(Uri uri, string authType)
         {
-            if (console.IsInputRedirected) return null;
+            if (_console.IsInputRedirected) return null;
 
             string usernameLabel = "username";
             string passwordLabel = "password";
@@ -90,16 +90,16 @@ namespace Terradue.Stars.Console.Operations
             int rtry = 3;
             while (string.IsNullOrEmpty(username) && rtry > 0)
             {
-                console.Write(usernameLabel + ": ");
-                username = console.In.ReadLine();
+                _console.Write(usernameLabel + ": ");
+                username = _console.In.ReadLine();
                 rtry--;
             }
             if (string.IsNullOrEmpty(username))
             {
-                console.WriteLine("No input. Skipping");
+                _console.WriteLine("No input. Skipping");
                 return null;
             }
-            console.Write(passwordLabel + ": ");
+            _console.Write(passwordLabel + ": ");
             var pass = string.Empty;
             ConsoleKey key;
             do
@@ -118,7 +118,7 @@ namespace Terradue.Stars.Console.Operations
                     pass += keyInfo.KeyChar;
                 }
             } while (key != ConsoleKey.Enter);
-            console.WriteLine();
+            _console.WriteLine();
 
             return new NetworkCredential(username, pass);
         }

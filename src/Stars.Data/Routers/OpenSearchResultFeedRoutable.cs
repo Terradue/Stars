@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Routers
     {
         protected IOpenSearchResultCollection osCollection;
 
-        private Uri sourceUri;
+        private readonly Uri sourceUri;
         protected readonly ILogger logger;
 
         public OpenSearchResultFeedRoutable(IOpenSearchResultCollection collection, Uri sourceUri, ILogger logger)
@@ -54,7 +54,7 @@ namespace Terradue.Stars.Data.Routers
 
         public string Filename => Id + ".atom.xml";
 
-        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsStringAsync(System.Threading.CancellationToken.None)).Length);
+        public ulong ContentLength => Convert.ToUInt64(Encoding.Default.GetBytes(ReadAsStringAsync(CancellationToken.None)).Length);
 
         public bool IsCatalog => false;
 
@@ -74,7 +74,7 @@ namespace Terradue.Stars.Data.Routers
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 AtomFeed atomFeed = AtomFeed.CreateFromOpenSearchResultCollection(osCollection) as AtomFeed;
                 MemoryStream ms = new MemoryStream();

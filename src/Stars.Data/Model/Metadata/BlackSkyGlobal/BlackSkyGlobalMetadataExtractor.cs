@@ -28,7 +28,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 {
     public class BlackSkyGlobalMetadataExtractor : MetadataExtraction
     {
-        public static Dictionary<int, string> platformDesignators = new Dictionary<int, string> {
+        public static Dictionary<int, string> PlatformDesignators = new Dictionary<int, string> {
             { 1, "2018-096M" },
             { 2, "2018-099BG" },
             { 3, "2019-037C" },
@@ -45,12 +45,12 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
 
         // Possible identifiers:
         // CSKS4_SCS_B_HI_16_HH_RA_FF_20211016045150_20211016045156
-        private Regex identifierRegex = new Regex(@"(?'id'CSKS(?'i'\d)_(?'pt'RAW_B|SCS_B|SCS_U|DGM_B|GEC_B|GTC_B)_(?'mode'HI|PP|WR|HR|S2)_(?'swath'..)_(?'pol'HH|VV|HV|VH|CO|CH|CV)_(?'look'L|R)(?'dir'A|D)_.._\d{14}_\d{14})");
-        private Regex coordinateRegex = new Regex(@"(?'lat'[^ ]+) (?'lon'[^ ]+)");
-        private static Regex h5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
-        private static Regex satNumberRegex = new Regex(@".+?(?'n'\d+)$");
+        private readonly Regex _identifierRegex = new Regex(@"(?'id'CSKS(?'i'\d)_(?'pt'RAW_B|SCS_B|SCS_U|DGM_B|GEC_B|GTC_B)_(?'mode'HI|PP|WR|HR|S2)_(?'swath'..)_(?'pol'HH|VV|HV|VH|CO|CH|CV)_(?'look'L|R)(?'dir'A|D)_.._\d{14}_\d{14})");
+        private readonly Regex _coordinateRegex = new Regex(@"(?'lat'[^ ]+) (?'lon'[^ ]+)");
+        private static readonly Regex H5dumpValueRegex = new Regex(@".*\(0\): *(?'value'.*)");
+        private static readonly Regex SatNumberRegex = new Regex(@".+?(?'n'\d+)$");
 
-        public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
+        public static XmlSerializer MetadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
 
         public override string Label => "COSMO SkyMed (ASI) mission product metadata extractor";
 
@@ -90,7 +90,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             AddEoStacExtension(stacItem, metadata);
             AddOtherProperties(stacItem, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
         }
 
 
@@ -363,10 +363,10 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             var sat = new SatStacExtension(stacItem);
             if (!string.IsNullOrEmpty(""))
             {
-                Match match = satNumberRegex.Match("");
-                if (match != null && int.TryParse(match.Groups["n"].Value, out int n) && platformDesignators.ContainsKey(n))
+                Match match = SatNumberRegex.Match("");
+                if (match != null && int.TryParse(match.Groups["n"].Value, out int n) && PlatformDesignators.ContainsKey(n))
                 {
-                    sat.PlatformInternationalDesignator = platformDesignators[n];
+                    sat.PlatformInternationalDesignator = PlatformDesignators[n];
                 }
             }
 

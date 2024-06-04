@@ -36,10 +36,10 @@ namespace Terradue.Stars.Services.Resources
         private const string versionID = "versionId";
 
         // Pattern used to parse multiple path and host style S3 endpoint URLs.
-        private static Regex s3URLPattern = new Regex(@"^(.+\.)?s3[.-](?:(accelerated|dualstack|website)[.-])?([a-z0-9-]+)\.(?:[a-z0-9-\.]+)");
+        private static readonly Regex s3URLPattern = new Regex(@"^(.+\.)?s3[.-](?:(accelerated|dualstack|website)[.-])?([a-z0-9-]+)\.(?:[a-z0-9-\.]+)");
 
         // Pattern to extract S3 bucket
-        private static Regex s3BucketRegex = new Regex(@"^s3://(?'bucket'[^/]+).*");
+        private static readonly Regex s3BucketRegex = new Regex(@"^s3://(?'bucket'[^/]+).*");
 
         public S3Url(string bucketName, string key)
         {
@@ -229,7 +229,7 @@ namespace Terradue.Stars.Services.Resources
 
         public object Clone()
         {
-            return S3Url.ParseUri(Uri);
+            return ParseUri(Uri);
         }
 
         public void NormalizeKey()

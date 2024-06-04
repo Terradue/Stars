@@ -44,7 +44,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
             throw new FormatException(string.Format("Not a Sentinel-2 Level 1C manifest SAFE file asset"));
         }
 
-        protected async override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override async Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
             var mtdAsset = FindFirstAssetFromFileNameRegex(item, "MTD_MSIL1C.xml$") ?? throw new FileNotFoundException("Product metadata file 'MTD_MSIL1C.xml' not found");
             var mtdtlAsset = FindFirstAssetFromFileNameRegex(item, "MTD_TL.xml$");
@@ -67,7 +67,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         }
 
-        protected async override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override async Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
         {
             await GetUserProduct(item);
             stacItem.Properties.Add("processing_baseline", level1C_User_Product.General_Info.Product_Info.PROCESSING_BASELINE);

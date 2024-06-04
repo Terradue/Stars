@@ -64,7 +64,7 @@ namespace Terradue.Stars.Services.Model.Atom
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             MemoryStream ms = new MemoryStream();
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 var sw = XmlWriter.Create(ms);
                 Atom10FeedFormatter atomFormatter = new Atom10FeedFormatter(feed);

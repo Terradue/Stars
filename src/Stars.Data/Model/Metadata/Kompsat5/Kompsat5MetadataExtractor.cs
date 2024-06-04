@@ -94,7 +94,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
 
             AddAssets(stacItem, auxiliary, item);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
 
         }
 
@@ -378,19 +378,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat5
         private void FillInstrument(Auxiliary auxiliary, Dictionary<string, object> properties)
         {
             // platform
-            if (!string.IsNullOrEmpty(Kompsat5MetadataExtraction.PLATFORM))
+            if (!string.IsNullOrEmpty(PLATFORM))
             {
                 properties.Remove("platform");
                 properties.Remove("constellation");
                 properties.Remove("mission");
 
-                properties.Add("platform", Kompsat5MetadataExtraction.PLATFORM);
-                properties.Add("mission", Kompsat5MetadataExtraction.PLATFORM);
+                properties.Add("platform", PLATFORM);
+                properties.Add("mission", PLATFORM);
             }
 
             // instruments
             properties.Remove("instruments");
-            properties.Add("instruments", new string[] { Kompsat5MetadataExtraction.INSTRUMENT });
+            properties.Add("instruments", new string[] { INSTRUMENT });
 
             properties.Remove("sensor_type");
             properties.Add("sensor_type", "radar");

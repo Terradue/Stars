@@ -34,9 +34,9 @@ namespace Kajabity.Tools.Java
     /// </summary>
     public class JavaPropertyWriter
     {
-        private static char[] HEX = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+        private static readonly char[] HEX = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-        private NameValueCollection hashtable;
+        private readonly NameValueCollection hashtable;
 
         /// <summary>
         /// Construct an instance of this class.
@@ -56,7 +56,7 @@ namespace Kajabity.Tools.Java
         public void Write(Stream stream, string comments)
         {
             //  Create a writer to output to an ISO-8859-1 encoding (code page 28592).
-            StreamWriter writer = new StreamWriter(stream, System.Text.Encoding.GetEncoding(28592));
+            StreamWriter writer = new StreamWriter(stream, Encoding.GetEncoding(28592));
 
             //TODO: Confirm correct codepage:
             //  28592              iso-8859-2                   Central European (ISO)

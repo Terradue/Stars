@@ -65,7 +65,7 @@ namespace Terradue.Data.Tests.Translators
             var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
 
             Assert.NotNull(twmOfferings);
-            Assert.Equal(1, twmOfferings.Count());
+            Assert.Single(twmOfferings);
             Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
             Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
 
@@ -139,7 +139,7 @@ namespace Terradue.Data.Tests.Translators
             var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
 
             Assert.NotNull(twmOfferings);
-            Assert.Equal(1, twmOfferings.Count());
+            Assert.Single(twmOfferings);
             Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
             Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
         }
@@ -162,7 +162,7 @@ namespace Terradue.Data.Tests.Translators
             var twmOfferings = offerings.Where(r => r.Code == "http://www.terradue.com/twm");
 
             Assert.NotNull(twmOfferings);
-            Assert.Equal(1, twmOfferings.Count());
+            Assert.Single(twmOfferings);
             Assert.Equal("GetMap", twmOfferings.ElementAt(0).Operations.First().Code);
             Assert.Equal("image/png", twmOfferings.ElementAt(0).Operations.First().Type);
         }

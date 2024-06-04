@@ -23,7 +23,7 @@ namespace Terradue.Stars.Services.Resources
         internal void ForceCustomRegion(string region)
         {
             _region = region;
-            base.RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(_region);
+            RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(_region);
         }
 
         internal void SetServiceURL(string serviceURL)

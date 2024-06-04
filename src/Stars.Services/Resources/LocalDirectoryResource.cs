@@ -13,7 +13,7 @@ namespace Terradue.Stars.Services.Router
     public class LocalDirectoryResource : IAssetsContainer
     {
         private readonly IFileSystem fileSystem;
-        private IDirectoryInfo dirInfo;
+        private readonly IDirectoryInfo dirInfo;
 
         public LocalDirectoryResource(IFileSystem fileSystem, string dirPath)
         {

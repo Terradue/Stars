@@ -11,7 +11,7 @@ namespace Stars.Console.Tests
     public class XunitTextWriter : TextWriter
     {
         private readonly ITestOutputHelper _output;
-        private readonly StringBuilder _sb = new StringBuilder();
+        private readonly StringBuilder _sb = new();
 
         public XunitTextWriter(ITestOutputHelper output)
         {

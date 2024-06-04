@@ -11,7 +11,7 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class DeliveryQuotation : IDeliveryQuotation
     {
-        private IDictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
+        private readonly IDictionary<string, IOrderedEnumerable<IDelivery>> assetsDeliveryQuotes;
         private readonly Dictionary<string, Exception> assetsExceptions;
 
         public DeliveryQuotation(IDictionary<string, IOrderedEnumerable<IDelivery>> assetsQuotes, Dictionary<string, Exception> assetsExceptions)

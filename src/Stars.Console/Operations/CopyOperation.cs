@@ -103,7 +103,7 @@ namespace Terradue.Stars.Console.Operations
         private StacStoreService storeService;
         private StacLinkTranslator stacLinkTranslator;
         private IResourceServiceProvider resourceServiceProvider;
-        private string[] inputs = new string[0];
+        private string[] inputs = Array.Empty<string>();
         private int recursivity = 1;
         private string output = "file://" + Directory.GetCurrentDirectory();
 
@@ -120,7 +120,8 @@ namespace Terradue.Stars.Console.Operations
             };
             // routingTask.OnRoutingToNodeException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
             routingService.OnBeforeBranching((node, router, state, subroutes, ct) => CreateCatalog(node, router, state, ct));
-            routingService.OnItem((node, router, state, ct) => CopyNodeAsync(node, router, state, ct));
+            routingService.OnItem((node, router, state, ct) => CopyItemAsync(node, router, state, ct));
+            routingService.OnCollection((node, router, state, ct) => CopyCollectionAsync(node, router, state, ct));
             routingService.OnBranching(async (parentRoute, route, siblings, state, ct) => await PrepareNewRouteAsync(parentRoute, route, siblings, state, ct));
             routingService.OnAfterBranching(async (parentRoute, router, parentState, subStates, ct) => await UpdateCatalog(parentRoute, router, parentState, subStates, ct));
         }
@@ -178,149 +179,181 @@ namespace Terradue.Stars.Console.Operations
             return new CopyOperationState(operationState.Depth + 1, operationState.StoreService, newDestination);
         }
 
-        private async Task<object> CopyNodeAsync(IResource node, IRouter router, object state, CancellationToken ct)
+        private async Task<object> CopyItemAsync(IItem item, IRouter router, object state, CancellationToken ct)
         {
             CopyOperationState operationState = state as CopyOperationState;
 
-            StacNode stacNode = node as StacNode;
-            if (stacNode == null)
+            StacItemNode stacItemNode = item as StacItemNode;
+            if (stacItemNode == null)
             {
                 // No? Let's try to translate it to Stac
-                stacNode = await translatorManager.TranslateAsync<StacNode>(node, ct);
-                if (stacNode == null)
-                    throw new InvalidDataException(string.Format("Impossible to translate node {0} into STAC.", node.Uri));
+                stacItemNode = await translatorManager.TranslateAsync<StacItemNode>(item, ct);
+                if (stacItemNode == null)
+                    throw new InvalidDataException(string.Format("Impossible to translate item {0} into STAC.", item.Uri));
             }
 
-            logger.Output(string.Format("Copy node {0} from {1}", stacNode.Id, node.Uri));
+            logger.Output(string.Format("Copy item {0} from {1}", stacItemNode.Id, item.Uri));
 
             // We update the destination in case a new router updated the route
-            IDestination destination = operationState.CurrentDestination.To(stacNode);
+            IDestination destination = operationState.CurrentDestination.To(stacItemNode);
 
-            // In case of a Item
-            if (node is IItem)
+            // Copy Assets
+            AssetService assetService = ServiceProvider.GetService<AssetService>();
+
+            // For items, Stars copy allows to copy assets from configured suppliers
+            // 1. Select Suppliers
+            SupplierFilters supplierFilters = new SupplierFilters();
+
+            if (SuppliersIncluded != null && SuppliersIncluded.Count() > 0)
             {
-                StacItemNode stacItemNode = stacNode as StacItemNode;
+                supplierFilters = new SupplierFilters();
+                supplierFilters.IncludeIds = SuppliersIncluded;
+            }
 
-                // 1. Select Suppliers
-                AssetService assetService = ServiceProvider.GetService<AssetService>();
+            if (SuppliersExcluded != null && SuppliersExcluded.Count() > 0)
+            {
+                supplierFilters = new SupplierFilters();
+                supplierFilters.ExcludeIds = SuppliersExcluded;
+            }
 
-                SupplierFilters supplierFilters = new SupplierFilters();
+            PluginList<ISupplier> suppliers = InitSuppliersEnumerator(stacItemNode, supplierFilters);
 
-                if (SuppliersIncluded != null && SuppliersIncluded.Count() > 0)
+            // 2. Try each of them until one provide the resource
+            foreach (var supplier in suppliers)
+            {
+                IResource supplierNode = null;
+                try
                 {
-                    supplierFilters = new SupplierFilters();
-                    supplierFilters.IncludeIds = SuppliersIncluded;
+                    logger.Output(string.Format("[{0}] Searching for {1}", supplier.Value.Id, stacItemNode.Uri.ToString()));
+                    supplierNode = await supplier.Value.SearchForAsync(stacItemNode, ct);
+                    if (supplierNode == null && supplierNode is not IAssetsContainer)
+                    {
+                        logger.Output(string.Format("[{0}] --> no supply possible", supplier.Value.Id));
+                        continue;
+                    }
+                    logger.Output(string.Format("[{0}] resource found at {1} [{2}]", supplier.Value.Id, supplierNode.Uri, supplierNode.ContentType));
+                }
+                catch (Exception e)
+                {
+                    logger.Warn(string.Format("[{0}] Exception searching for {1}: {2}", supplier.Value.Id, stacItemNode.Uri.ToString(), e.Message));
+                    logger.Verbose(e.StackTrace);
+                    continue;
                 }
 
-                if (SuppliersExcluded != null && SuppliersExcluded.Count() > 0)
+                if (!SkipAssets)
                 {
-                    supplierFilters = new SupplierFilters();
-                    supplierFilters.ExcludeIds = SuppliersExcluded;
-                }
+                    // Copy assets from supplier
+                    AssetImportReport deliveryReport = await CopyAssetsFromContainer(destination, assetService, supplierNode as IAssetsContainer, ct);
 
-                IItem sourceItemNode = await stacLinkTranslator.TranslateAsync<StacItemNode>(node, ct);
-                if (sourceItemNode == null)
-                {
-                    sourceItemNode = node as IItem;
+                    if (deliveryReport.ImportedAssets.Count() > 0)
+                        stacItemNode.StacItem.MergeAssets(deliveryReport, !KeepOriginalAssets);
+                    else continue;
                 }
                 else
                 {
-                    logger.Output(string.Format("alternate STAC source found at {0}", sourceItemNode.Uri));
-                    stacItemNode = sourceItemNode as StacItemNode;
+                    // Merge assets from supplier
+                    stacItemNode.StacItem.MergeAssets(supplierNode as IAssetsContainer, false);
                 }
-
-                PluginList<ISupplier> suppliers = InitSuppliersEnumerator(sourceItemNode, supplierFilters);
-
-                // 2. Try each of them until one provide the resource
-                foreach (var supplier in suppliers)
-                {
-                    IResource supplierNode = null;
-                    try
-                    {
-                        logger.Output(string.Format("[{0}] Searching for {1}", supplier.Value.Id, sourceItemNode.Uri.ToString()));
-                        supplierNode = await supplier.Value.SearchForAsync(sourceItemNode, ct);
-                        if (supplierNode == null && !(supplierNode is IAssetsContainer))
-                        {
-                            logger.Output(string.Format("[{0}] --> no supply possible", supplier.Value.Id));
-                            continue;
-                        }
-                        logger.Output(string.Format("[{0}] resource found at {1} [{2}]", supplier.Value.Id, supplierNode.Uri, supplierNode.ContentType));
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Warn(string.Format("[{0}] Exception searching for {1}: {2}", supplier.Value.Id, sourceItemNode.Uri.ToString(), e.Message));
-                        logger.Verbose(e.StackTrace);
-                        continue;
-                    }
-
-                    if (!SkipAssets)
-                    {
-                        AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFilters);
-                        if (NoCopyCog)
-                        {
-                            Dictionary<string, string> cogParameters = new Dictionary<string, string>();
-                            cogParameters.Add("cloud-optimized", "true");
-                            cogParameters.Add("profile", "cloud-optimized");
-                            assetFilters.Add(new NotAssetFilter(new ContentTypeAssetFilter(null, cogParameters)));
-                            KeepOriginalAssets = true;
-                        }
-                        AssetChecks assetChecks = GetAssetChecks();
-                        AssetImportReport deliveryReport = await assetService.ImportAssetsAsync(supplierNode as IAssetsContainer, destination, assetFilters, assetChecks, ct);
-
-                        // Process cases that must raise an exception
-                        if (StopOnError)
-                        {
-                            // exception in delivery report
-                            if (deliveryReport.AssetsExceptions.Count > 0)
-                                throw new AggregateException(deliveryReport.AssetsExceptions.Values);
-                            // no delivery but exception in quotation
-                            if (deliveryReport.AssetsExceptions.Count == 0 && deliveryReport.Quotation.AssetsExceptions != null)
-                                throw new AggregateException(deliveryReport.Quotation.AssetsExceptions.Values);
-                        }
-
-                        if (deliveryReport.ImportedAssets.Count() > 0)
-                            stacItemNode.StacItem.MergeAssets(deliveryReport, !KeepOriginalAssets);
-                        else continue;
-                    }
-                    else
-                    {
-                        stacItemNode.StacItem.MergeAssets(supplierNode as IAssetsContainer, false);
-                    }
-                    break;
-                }
-
-                stacNode = await storeService.StoreItemNodeAtDestinationAsync(stacItemNode, destination, ct);
-            }
-            else
-            {
-                stacNode = await storeService.StoreCatalogNodeAtDestinationAsync(stacNode as StacCatalogNode, destination, ct);
+                break;
             }
 
-            operationState.CurrentStacObject = stacNode;
+            // Store the item
+            stacItemNode = await storeService.StoreItemNodeAtDestinationAsync(stacItemNode, destination, ct);
 
-            // 2. Apply processing services if node was not stac originally
-            if (node is IItem)
-            {
-                ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
-                processingService.Parameters.KeepOriginalAssets = KeepAll;
-                if (ExtractArchives)
-                    stacNode = await processingService.ExtractArchiveAsync(stacNode as StacItemNode, destination, storeService, ct);
-                if (Harvest)
-                    stacNode = await processingService.ExtractMetadataAsync(stacNode as StacItemNode, destination, storeService, ct);
+            operationState.CurrentStacObject = stacItemNode;
 
-                if (AssetsFiltersOut != null && AssetsFiltersOut.Count() > 0)
-                {
-                    AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFiltersOut);
-                    FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(stacNode as IItem, assetFilters);
-                    var assets = filteredAssetContainer.Assets.ToDictionary(a => a.Key, a => (a.Value as StacAssetAsset).StacAsset);
-                    (stacNode as StacItemNode).StacItem.Assets.Clear();
-                    (stacNode as StacItemNode).StacItem.Assets.AddRange(assets);
-                    logger.Verbose(string.Format("{0} assets kept: {1}", assets.Count, string.Join(", ", assets.Keys)));
-                    stacNode = await storeService.StoreItemNodeAtDestinationAsync(stacNode as StacItemNode, destination, ct);
-                }
-            }
+            // Apply processing services if node was not stac originally
+            await ApplyProcessing(stacItemNode, destination, ct);
 
             return operationState;
+        }
+
+        private async Task<object> CopyCollectionAsync(ICollection collection, IRouter router, object state, CancellationToken ct)
+        {
+            CopyOperationState operationState = state as CopyOperationState;
+
+            StacCollectionNode stacCollectionNode = collection as StacCollectionNode;
+            if (stacCollectionNode == null)
+            {
+                // No? Let's try to translate it to Stac
+                stacCollectionNode = await translatorManager.TranslateAsync<StacCollectionNode>(collection, ct);
+                if (stacCollectionNode == null)
+                    throw new InvalidDataException(string.Format("Impossible to translate item {0} into STAC.", collection.Uri));
+            }
+
+            logger.Output(string.Format("Copy collection {0} from {1}", stacCollectionNode.Id, collection.Uri));
+
+            // We update the destination in case a new router updated the route
+            IDestination destination = operationState.CurrentDestination.To(stacCollectionNode);
+
+            // Copy Assets
+            AssetService assetService = ServiceProvider.GetService<AssetService>();
+
+            if (!SkipAssets)
+            {
+                // Copy assets from supplier
+                AssetImportReport deliveryReport = await CopyAssetsFromContainer(destination, assetService, stacCollectionNode as IAssetsContainer, ct);
+
+                if (deliveryReport.ImportedAssets.Count() > 0)
+                    stacCollectionNode.StacCollection.MergeAssets(deliveryReport, !KeepOriginalAssets);
+            }
+
+            // Store the item
+            stacCollectionNode = await storeService.StoreCollectionNodeAtDestinationAsync(stacCollectionNode, destination, ct);
+
+            operationState.CurrentStacObject = stacCollectionNode;
+
+            return operationState;
+        }
+
+        private async Task ApplyProcessing(StacItemNode stacItemNode, IDestination destination, CancellationToken ct)
+        {
+            ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
+            processingService.Parameters.KeepOriginalAssets = KeepAll;
+            StacNode stacNode = stacItemNode;
+            if (ExtractArchives)
+                stacNode = await processingService.ExtractArchiveAsync(stacItemNode, destination, storeService, ct);
+            if (Harvest)
+                stacNode = await processingService.ExtractMetadataAsync(stacItemNode as StacItemNode, destination, storeService, ct);
+
+            if (AssetsFiltersOut != null && AssetsFiltersOut.Count() > 0)
+            {
+                AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFiltersOut);
+                FilteredAssetContainer filteredAssetContainer = new FilteredAssetContainer(stacNode as IItem, assetFilters);
+                var assets = filteredAssetContainer.Assets.ToDictionary(a => a.Key, a => (a.Value as StacAssetAsset).StacAsset);
+                (stacNode as StacItemNode).StacItem.Assets.Clear();
+                (stacNode as StacItemNode).StacItem.Assets.AddRange(assets);
+                logger.Verbose(string.Format("{0} assets kept: {1}", assets.Count, string.Join(", ", assets.Keys)));
+                stacNode = await storeService.StoreItemNodeAtDestinationAsync(stacNode as StacItemNode, destination, ct);
+            }
+        }
+
+        private async Task<AssetImportReport> CopyAssetsFromContainer(IDestination destination, AssetService assetService, IAssetsContainer assetsContainer, CancellationToken ct)
+        {
+            AssetFilters assetFilters = AssetFilters.CreateAssetFilters(AssetsFilters);
+            if (NoCopyCog)
+            {
+                Dictionary<string, string> cogParameters = new Dictionary<string, string>();
+                cogParameters.Add("cloud-optimized", "true");
+                cogParameters.Add("profile", "cloud-optimized");
+                assetFilters.Add(new NotAssetFilter(new ContentTypeAssetFilter(null, cogParameters)));
+                KeepOriginalAssets = true;
+            }
+            AssetChecks assetChecks = GetAssetChecks();
+            AssetImportReport deliveryReport = await assetService.ImportAssetsAsync(assetsContainer, destination, assetFilters, assetChecks, ct);
+
+            // Process cases that must raise an exception
+            if (StopOnError)
+            {
+                // exception in delivery report
+                if (deliveryReport.AssetsExceptions.Count > 0)
+                    throw new AggregateException(deliveryReport.AssetsExceptions.Values);
+                // no delivery but exception in quotation
+                if (deliveryReport.AssetsExceptions.Count == 0 && deliveryReport.Quotation.AssetsExceptions != null)
+                    throw new AggregateException(deliveryReport.Quotation.AssetsExceptions.Values);
+            }
+
+            return deliveryReport;
         }
 
         private AssetChecks GetAssetChecks()
@@ -376,8 +409,9 @@ namespace Terradue.Stars.Console.Operations
             storeService.RootCatalogNode.StacCatalog.UpdateLinks(stacNodes.SelectMany(sn =>
             {
                 if (sn is StacItemNode) return new IResource[] { sn };
+                if (sn is StacCollectionNode) return new IResource[] { sn };
                 if (sn is StacCatalogNode) return sn.GetRoutes(stacRouter);
-                return new IResource[0];
+                return Array.Empty<IResource>();
             }));
             var rootCat = await storeService.StoreCatalogNodeAtDestinationAsync(storeService.RootCatalogNode, storeService.RootCatalogDestination, ct);
             if (!string.IsNullOrEmpty(ResultFile))

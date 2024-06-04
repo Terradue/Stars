@@ -78,7 +78,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             FillBasicsProperties(auxiliary, stacItem.Properties);
             AddOtherProperties(auxiliary, stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri); ; ;
+            return StacNode.Create(stacItem, item.Uri); ; ;
 
         }
 

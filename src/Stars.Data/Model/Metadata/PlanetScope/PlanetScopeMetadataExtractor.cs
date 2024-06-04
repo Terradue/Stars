@@ -60,7 +60,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
             StacItem stacItem = CreateStacItem(metadata, item);
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri);
+            return StacNode.Create(stacItem, item.Uri);
             ;
         }
 
@@ -428,7 +428,7 @@ namespace Terradue.Stars.Data.Model.Metadata.PlanetScope
 
         public class PlanetScopeMetadata
         {
-            private IAsset summaryAsset;
+            private readonly IAsset summaryAsset;
             public XmlNamespaceManager nsmgr { get; set; }
 
             public XPathNavigator nav { get; set; }

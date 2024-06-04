@@ -12,7 +12,7 @@ namespace Terradue.Stars.Services.Model.Atom
 {
     public class AtomResourceLink : IResourceLink
     {
-        private SyndicationLink atomLink;
+        private readonly SyndicationLink atomLink;
 
         public AtomResourceLink(SyndicationLink l)
         {

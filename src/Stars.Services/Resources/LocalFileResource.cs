@@ -17,8 +17,8 @@ namespace Terradue.Stars.Services.Router
     public class LocalFileResource : IStreamResource, IDeletableResource
     {
         private readonly ResourceType resourceType;
-        private IFileInfo fileInfo;
-        private List<string> roles;
+        private readonly IFileInfo fileInfo;
+        private readonly List<string> roles;
 
         public LocalFileResource(IFileSystem fileSystem, string filePath, ResourceType ResourceType, List<string> roles = null)
         {

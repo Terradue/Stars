@@ -18,7 +18,7 @@ namespace Terradue.Stars.Services.Resources
 {
     public class S3Resource : IStreamResource, IDeletableResource
     {
-        private S3Url s3Url;
+        private readonly S3Url s3Url;
         private bool? requester_pays;
 
         public S3Resource(S3Url url, IAmazonS3 client)

@@ -16,9 +16,9 @@ namespace Terradue.Stars.Data.Routers
 {
     internal class TransferRequestAsset : IAsset, IStreamResource
     {
-        private ITransferRequest tr;
+        private readonly ITransferRequest tr;
         private readonly string label;
-        private Dictionary<string, object> properties;
+        private readonly Dictionary<string, object> properties;
 
         public TransferRequestAsset(ITransferRequest tr, string label = null)
         {

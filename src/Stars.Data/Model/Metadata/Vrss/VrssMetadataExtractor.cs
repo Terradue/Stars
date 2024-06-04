@@ -34,9 +34,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
         // VRSS-1_MSS-2_0698_0239_20200814_L2B_81713505511_1
         // VRSS-2_PAN_0996_0379_20210127_L2B_128183941985
         // VRSS-2_MSS_0996_0379_20210127_L2B_12818393908
-        private Regex identifierRegex = new Regex(@"(?'id'VRSS-[12]_(?'type'[A-Z]{3})(-\d)?_\d{4}_\d{4}_\d{8}_.{3}_\d+)(_(?'n'\d+))?");
+        private readonly Regex identifierRegex = new Regex(@"(?'id'VRSS-[12]_(?'type'[A-Z]{3})(-\d)?_\d{4}_\d{4}_\d{8}_.{3}_\d+)(_(?'n'\d+))?");
 
-        private Regex utmZoneRegex = new Regex(@"(?'num'\d+)(?'hem'[NS])");
+        private readonly Regex utmZoneRegex = new Regex(@"(?'num'\d+)(?'hem'[NS])");
 
         public static XmlSerializer metadataSerializer = new XmlSerializer(typeof(Schemas.Metadata));
 
@@ -79,7 +79,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
             FillBasicsProperties(metadata, stacItem.Properties);
             AddOtherProperties(metadata, stacItem.Properties);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
         internal virtual StacItem CreateStacItem(Schemas.Metadata metadata)

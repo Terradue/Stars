@@ -31,7 +31,7 @@ namespace Terradue.Stars.Geometry.Atom
                     {
                         // 1) search for georss
                         case "http://www.georss.org/georss":
-                            var georss = ServiceModel.Ogc.GeoRss.GeoRss.GeoRssHelper.Deserialize(xr);
+                            var georss = GeoRssHelper.Deserialize(xr);
                             savegeom = georss.ToGeometry();
                             if (!(georss is GeoRssBox || georss is GeoRssPoint))
                             {

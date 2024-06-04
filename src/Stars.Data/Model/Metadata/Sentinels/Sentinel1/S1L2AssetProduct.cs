@@ -24,7 +24,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             this.type = type;
         }
 
-        public async static Task<S1L2AssetProduct> CreateData(IAsset annotationAsset, IResourceServiceProvider resourceServiceProvider)
+        public static async Task<S1L2AssetProduct> CreateData(IAsset annotationAsset, IResourceServiceProvider resourceServiceProvider)
         {
             return new S1L2AssetProduct((level2ProductType)s1L2ProductSerializer.Deserialize(await resourceServiceProvider.GetAssetStreamAsync(annotationAsset, System.Threading.CancellationToken.None)), "data", resourceServiceProvider);
         }

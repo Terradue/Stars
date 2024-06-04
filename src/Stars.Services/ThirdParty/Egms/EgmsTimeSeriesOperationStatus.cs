@@ -11,8 +11,8 @@ namespace Terradue.Stars.Services.ThirdParty.Egms
 {
     internal class EgmsTimeSeriesOperationStatus : IAbstractTimeSeriesOperationStatus<StacCollection>
     {
-        private StacCollection _collection;
-        private List<EgmsTimeSeriesImportTask> _statuses;
+        private readonly StacCollection _collection;
+        private readonly List<EgmsTimeSeriesImportTask> _statuses;
 
         public EgmsTimeSeriesOperationStatus(StacCollection collection, List<EgmsTimeSeriesImportTask> statuses)
         {

@@ -110,7 +110,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Landsat9
 
             // AddEoBandPropertyInItem(stacItem);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
 
         }
 

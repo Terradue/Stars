@@ -11,7 +11,7 @@ namespace Terradue.Stars.Console
     internal class PluginLoadContext : AssemblyLoadContext
     {
         private readonly AssemblyLoadContext mainAppAssemblyLoadContext;
-        private AssemblyDependencyResolver _resolver;
+        private readonly AssemblyDependencyResolver _resolver;
 
         public PluginLoadContext(string pluginPath, AssemblyLoadContext mainAppAssemblyLoadContext)
         {

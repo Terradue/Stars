@@ -8,7 +8,7 @@ namespace Terradue.Stars.Services.Plugins
 {
     public class PluginPriorityAttribute : Attribute
     {
-        private int v;
+        private readonly int v;
 
         public PluginPriorityAttribute(int v)
         {

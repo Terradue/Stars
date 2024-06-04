@@ -53,12 +53,12 @@ namespace Kajabity.Tools.Java
         private const int STATE_value_ws = 9;
         private const int STATE_finish = 10;
 
-        private static string[] stateNames = new string[]
+        private static readonly string[] stateNames = new string[]
         { "STATE_start", "STATE_comment", "STATE_key", "STATE_key_escape", "STATE_key_ws",
             "STATE_before_separator", "STATE_after_separator", "STATE_value", "STATE_value_escape",
             "STATE_value_ws", "STATE_finish" };
 
-        private static int[][] states = new int[][] {
+        private static readonly int[][] states = new int[][] {
             new int[]{//STATE_start
 				MATCH_end_of_input, STATE_finish,           ACTION_ignore,
                 MATCH_terminator,   STATE_start,            ACTION_ignore,
@@ -132,13 +132,13 @@ namespace Kajabity.Tools.Java
             }
         };
 
-        private System.Collections.Specialized.NameValueCollection hashtable;
+        private readonly System.Collections.Specialized.NameValueCollection hashtable;
 
         private const int bufferSize = 1000;
 
         private bool escaped = false;
-        private StringBuilder keyBuilder = new StringBuilder();
-        private StringBuilder valueBuilder = new StringBuilder();
+        private readonly StringBuilder keyBuilder = new StringBuilder();
+        private readonly StringBuilder valueBuilder = new StringBuilder();
 
         /// <summary>
         /// Construct a reader passing a reference to a Hashtable (or JavaProperties) instance

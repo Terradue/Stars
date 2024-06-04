@@ -12,11 +12,11 @@ namespace Terradue.Stars.Services.Supplier
 {
     public class GenericAsset : IAsset
     {
-        private IResource route;
+        private readonly IResource route;
         private readonly string title;
         private readonly IReadOnlyList<string> roles;
         private Uri uri;
-        private Dictionary<string, object> properties = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> properties = new Dictionary<string, object>();
 
         public GenericAsset(IResource route, string title, IReadOnlyList<string> roles)
         {

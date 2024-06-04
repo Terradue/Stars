@@ -54,7 +54,7 @@ namespace Stars.Tests
 
             // Add TMS offering via titiler if possible
             var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
-            Assert.True(starsAtomItem.ElementExtensions.Any(i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0"));
+            Assert.Contains(starsAtomItem.ElementExtensions, i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0");
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace Stars.Tests
 
             // Add TMS offering via titiler if possible
             var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
-            Assert.True(starsAtomItem.ElementExtensions.Any(i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0"));
+            Assert.Contains(starsAtomItem.ElementExtensions, i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0");
         }
 
         [Fact]
@@ -88,7 +88,7 @@ namespace Stars.Tests
 
             // Add TMS offering via titiler if possible
             var imageOfferingSet = starsAtomItem.TryAddTitilerOffering(stacItemNode, _titilerService);
-            Assert.True(starsAtomItem.ElementExtensions.Any(i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0"));
+            Assert.Contains(starsAtomItem.ElementExtensions, i => i.OuterName == "offering" && i.OuterNamespace == "http://www.opengis.net/owc/1.0");
         }
 
         [Fact]

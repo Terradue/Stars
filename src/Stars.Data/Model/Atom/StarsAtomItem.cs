@@ -280,7 +280,7 @@ namespace Terradue.Stars.Data.Model.Atom
             EarthObservationType eop = CreateEOProfileFromStacItem(stacItem);
             if (eop != null)
             {
-                EarthObservationExtension = new SyndicationElementExtension(Terradue.ServiceModel.Ogc.OgcHelpers.CreateReader(eop));
+                EarthObservationExtension = new SyndicationElementExtension(ServiceModel.Ogc.OgcHelpers.CreateReader(eop));
                 return true;
             }
             return false;
@@ -559,7 +559,7 @@ namespace Terradue.Stars.Data.Model.Atom
             return new Dictionary<string, StacAsset>();
         }
 
-        SyndicationElementExtension earthObservationExtension = null;
+        private SyndicationElementExtension earthObservationExtension = null;
 
         public SyndicationElementExtension EarthObservationExtension
         {

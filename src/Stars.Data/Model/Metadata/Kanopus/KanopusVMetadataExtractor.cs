@@ -53,7 +53,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
             AddAssets(stacItem, item, metadata);
 
-            return StacItemNode.Create(stacItem, item.Uri); ;
+            return StacNode.Create(stacItem, item.Uri); ;
         }
 
 
@@ -310,7 +310,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
     public class KanopusVMetadata
     {
-        private IAsset summaryAsset;
+        private readonly IAsset summaryAsset;
         public Dictionary<string, Dictionary<string, string>> properties { get; set; }
         public List<string> Assets { get; set; }
 

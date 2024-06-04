@@ -702,7 +702,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
         [XmlElement(ElementName = "Metadata")]
         public Metadata Metadata { get; set; }
 
-        Dictionary<string, OneImage> images;
+        private Dictionary<string, OneImage> images;
 
         [XmlIgnore]
         public Dictionary<string, OneImage> Images

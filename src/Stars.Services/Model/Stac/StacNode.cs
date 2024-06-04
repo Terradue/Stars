@@ -99,7 +99,7 @@ namespace Terradue.Stars.Services.Model.Stac
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
             MemoryStream ms = new MemoryStream();
-            return await Task<Stream>.Run(() =>
+            return await Task.Run(() =>
             {
                 var sw = new StreamWriter(ms);
                 sw.Write(StacConvert.Serialize(stacObject));

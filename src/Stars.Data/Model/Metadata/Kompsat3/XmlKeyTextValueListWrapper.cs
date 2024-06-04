@@ -113,7 +113,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
 
     public class CollectionWrapper<T> : ICollection<T>
     {
-        readonly Func<ICollection<T>> getCollection;
+        private readonly Func<ICollection<T>> getCollection;
 
         public CollectionWrapper(ICollection<T> baseCollection)
         {
@@ -136,7 +136,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kompsat3
             return other is CollectionWrapper<T> otherWrapper && otherWrapper.IsWrapperFor(Collection);
         }
 
-        ICollection<T> Collection { get { return getCollection(); } }
+        private ICollection<T> Collection { get { return getCollection(); } }
 
         #region ICollection<T> Members
 

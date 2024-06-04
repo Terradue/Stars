@@ -12,15 +12,15 @@ namespace Terradue.Stars.Services
 {
     public class BlockingStream : Stream
     {
-        private object _lockForRead;
-        private object _lockForAll;
-        private Queue<byte[]> _chunks;
+        private readonly object _lockForRead;
+        private readonly object _lockForAll;
+        private readonly Queue<byte[]> _chunks;
         private byte[] _currentChunk;
         private int _currentChunkPosition;
         private ManualResetEvent _doneWriting;
         private ManualResetEvent _dataAvailable;
-        private WaitHandle[] _events;
-        private int _doneWritingHandleIndex;
+        private readonly WaitHandle[] _events;
+        private readonly int _doneWritingHandleIndex;
         private volatile bool _illegalToWrite;
         private volatile bool _writeClosed;
         private ulong? contentRequestLength;

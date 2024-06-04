@@ -15,8 +15,8 @@ namespace Terradue.Stars.Geometry.Gml321
     public static class Gml321Extensions
     {
 
-        private static string conversionSpecifier = "G";
-        private static CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+        private static readonly string conversionSpecifier = "G";
+        private static readonly CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
 
 
         public static MultiSurfaceType ToGmlMultiSurface(this IGeometryObject geometry)
@@ -143,7 +143,7 @@ namespace Terradue.Stars.Geometry.Gml321
                 DirectPositionListType gmlPosList = new DirectPositionListType();
                 gmlPosList.count = positions.Length.ToString();
                 gmlPosList.Text = string.Join(" ", positions.Cast<Position>()
-                                              .SelectMany<Position, string>(p => p.Altitude == null ? new string[2] {
+                                              .SelectMany(p => p.Altitude == null ? new string[2] {
                     p.Latitude.ToString(),
                     p.Longitude.ToString()
                 } : new string[3] {
@@ -237,7 +237,7 @@ namespace Terradue.Stars.Geometry.Gml321
         {
             MultiSurfaceType gmlMultiSurface = new MultiSurfaceType();
             gmlMultiSurface.surfaceMembers = new SurfaceArrayPropertyType();
-            gmlMultiSurface.surfaceMembers.Items = multiPolygon.Coordinates.Select<Polygon, PolygonType>(p => p.ToGmlPolygon()).ToArray();
+            gmlMultiSurface.surfaceMembers.Items = multiPolygon.Coordinates.Select(p => p.ToGmlPolygon()).ToArray();
 
             return gmlMultiSurface;
         }
@@ -420,7 +420,7 @@ namespace Terradue.Stars.Geometry.Gml321
 
             Type posType = linearRing.ItemsElementName.First().GetType();
 
-            positions = FromGMLData(linearRing.Items, Array.ConvertAll<ItemsChoiceType6, string>(linearRing.ItemsElementName, i => i.ToString()));
+            positions = FromGMLData(linearRing.Items, Array.ConvertAll(linearRing.ItemsElementName, i => i.ToString()));
 
             LineString linestring = new LineString(positions);
 
@@ -435,7 +435,7 @@ namespace Terradue.Stars.Geometry.Gml321
             if (lineString.Items == null)
                 return null;
 
-            List<IPosition> points = FromGMLData(lineString.Items, Array.ConvertAll<ItemsChoiceType, string>(lineString.ItemsElementName, i => i.ToString()));
+            List<IPosition> points = FromGMLData(lineString.Items, Array.ConvertAll(lineString.ItemsElementName, i => i.ToString()));
 
             if (points.Count < 2)
                 throw new FormatException("invalid GML representation: LineString type must have at least 2 positions");

@@ -12,7 +12,7 @@ namespace Terradue.Stars.Services.Model.Stac
 {
     internal class StacResourceLink : IResourceLink
     {
-        private StacLink stacLink;
+        private readonly StacLink stacLink;
 
         public StacResourceLink(StacLink l)
         {

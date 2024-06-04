@@ -22,7 +22,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
     [DataContract]
     public class GeosquarePublicationModel : IPublicationModel
     {
-        private AuthenticationHeaderValue authorizationHeaderValue;
+        private readonly AuthenticationHeaderValue authorizationHeaderValue;
 
         public GeosquarePublicationModel()
         {

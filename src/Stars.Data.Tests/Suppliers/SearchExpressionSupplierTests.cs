@@ -37,8 +37,8 @@ namespace Terradue.Data.Tests.Suppliers
             }
         }
 
-        [Theory, MemberData("AllSuppliersTestsData", DisableDiscoveryEnumeration = true)]
-        public async Task AllSuppliersSearchExpression(string key, ISupplier supplier, string file)
+        [Theory, MemberData(nameof(AllSuppliersTestsData), DisableDiscoveryEnumeration = true)]
+        public async Task AllSuppliersSearchExpression(ISupplier supplier, string file)
         {
             string json = File.ReadAllText(file);
             JObject jObject = JObject.Parse(json);

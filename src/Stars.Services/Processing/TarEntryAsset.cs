@@ -15,9 +15,9 @@ namespace Terradue.Stars.Services.Processing
 {
     public class TarEntryAsset : IAsset, IStreamResource
     {
-        private string name;
-        private ulong size;
-        private BlockingStream blockingStream;
+        private readonly string name;
+        private readonly ulong size;
+        private readonly BlockingStream blockingStream;
 
         public TarEntryAsset(string name, ulong size, BlockingStream blockingStream)
         {

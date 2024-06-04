@@ -57,8 +57,8 @@ namespace Terradue.Stars.Services.Resources
             }
             set
             {
-                base.Remove("Content-Type");
-                base.Add("Content-Type", value.ToString());
+                Remove("Content-Type");
+                Add("Content-Type", value.ToString());
             }
         }
 
@@ -74,8 +74,8 @@ namespace Terradue.Stars.Services.Resources
             }
             set
             {
-                base.Remove("Content-Length");
-                base.Add("Content-Length", value.ToString());
+                Remove("Content-Length");
+                Add("Content-Length", value.ToString());
             }
         }
 
@@ -91,8 +91,8 @@ namespace Terradue.Stars.Services.Resources
             }
             set
             {
-                base.Remove("Content-Disposition");
-                base.Add("Content-Disposition", value.ToString());
+                Remove("Content-Disposition");
+                Add("Content-Disposition", value.ToString());
             }
         }
     }

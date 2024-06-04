@@ -39,7 +39,7 @@ namespace Terradue.Stars.Services.Processing
             "application/zip"
         };
 
-        internal async static Task<Archive> Read(IAsset asset, ILogger logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem, CancellationToken ct)
+        internal static async Task<Archive> Read(IAsset asset, ILogger logger, IResourceServiceProvider resourceServiceProvider, IFileSystem fileSystem, CancellationToken ct)
         {
             IStreamResource streamableAsset = await resourceServiceProvider.GetStreamResourceAsync(asset, ct) ?? throw new InvalidDataException("Asset must be streamable to be read as an archive");
             ArchiveType compression = FindCompression(asset);

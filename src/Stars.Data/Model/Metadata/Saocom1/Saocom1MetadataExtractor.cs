@@ -123,7 +123,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             StacItem stacItem = CreateStacItem(metadata, manifest, innerStacItem, kml);
             await AddAssets(stacItem, innerStacItem, manifestAsset);
 
-            var stacNode = StacItemNode.Create(stacItem, innerStacItem.Uri);
+            var stacNode = StacNode.Create(stacItem, innerStacItem.Uri);
 
             return stacNode;
         }
