@@ -152,7 +152,7 @@ namespace Terradue.Stars.Services.Store
 
         public async Task<StacCollectionNode> StoreCollectionNodeAtDestinationAsync(StacCollectionNode stacCollectionNode, IDestination destination, CancellationToken ct)
         {
-            PrepareStacCatalogueForDestination(stacCollectionNode, destination);
+            PrepareStacCollectionForDestination(stacCollectionNode, destination);
             return await _stacRouter.RouteAsync(await StoreResourceAtDestinationAsync(stacCollectionNode, destination, ct), ct) as StacCollectionNode;
         }
 
@@ -305,6 +305,16 @@ namespace Terradue.Stars.Services.Store
             PrepareStacNodeForDestination(stacCatalogNode, destination);
         }
 
+        private void PrepareStacCollectionForDestination(StacCollectionNode stacCollectionNode, IDestination destination)
+        {
+            PrepareStacNodeForDestination(stacCollectionNode, destination);
+            if (storeOptions.AbsoluteAssetsUrl)
+                MakeAssetUriAbsolute(stacCollectionNode, destination);
+            else
+                MakeAssetUriRelative(stacCollectionNode, destination);
+        }
+        
+
         public void PrepareStacItemForDestination(StacItemNode stacItemNode, IDestination destination)
         {
             PrepareStacNodeForDestination(stacItemNode, destination);
@@ -321,6 +331,16 @@ namespace Terradue.Stars.Services.Store
         {
             MakeAssetUriRelative(stacItemNode, destination);
             foreach (var asset in stacItemNode.StacItem.Assets)
+            {
+                if (asset.Value.Uri.IsAbsoluteUri) continue;
+                asset.Value.Uri = new Uri(MapToFrontUri(destination.Uri), asset.Value.Uri);
+            }
+        }
+
+        private void MakeAssetUriAbsolute(StacCollectionNode stacCollectionNode, IDestination destination)
+        {
+            MakeAssetUriRelative(stacCollectionNode, destination);
+            foreach (var asset in stacCollectionNode.StacCollection.Assets)
             {
                 if (asset.Value.Uri.IsAbsoluteUri) continue;
                 asset.Value.Uri = new Uri(MapToFrontUri(destination.Uri), asset.Value.Uri);
@@ -348,6 +368,35 @@ namespace Terradue.Stars.Services.Store
                 if (relativeUri.IsAbsoluteUri) continue;
                 Uri absoluteUri = new Uri(RootCatalogNode.Uri, relativeUri);
                 relativeUri = stacItemNode.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (!relativeUri.IsAbsoluteUri)
+                {
+                    asset.Value.Uri = relativeUri;
+                    continue;
+                }
+            }
+        }
+
+        private void MakeAssetUriRelative(StacCollectionNode stacCollectionNode, IDestination destination)
+        {
+            foreach (var asset in stacCollectionNode.StacCollection.Assets)
+            {
+                if (!asset.Value.Uri.IsAbsoluteUri) continue;
+                // 0. make sure the uri is not outside of the root catalog
+                var relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (relativeUri.IsAbsoluteUri || relativeUri.ToString().StartsWith("../"))
+                    continue;
+                // 1. Check the asset uri can be relative to destination itself
+                relativeUri = destination.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (!relativeUri.IsAbsoluteUri)
+                {
+                    asset.Value.Uri = relativeUri;
+                    continue;
+                }
+                // 1. Check the asset uri can be relative to root catalog
+                relativeUri = RootCatalogDestination.Uri.MakeRelativeUri(asset.Value.Uri);
+                if (relativeUri.IsAbsoluteUri) continue;
+                Uri absoluteUri = new Uri(RootCatalogNode.Uri, relativeUri);
+                relativeUri = stacCollectionNode.Uri.MakeRelativeUri(asset.Value.Uri);
                 if (!relativeUri.IsAbsoluteUri)
                 {
                     asset.Value.Uri = relativeUri;
