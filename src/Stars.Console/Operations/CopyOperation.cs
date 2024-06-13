@@ -349,7 +349,7 @@ namespace Terradue.Stars.Console.Operations
                 if (deliveryReport.AssetsExceptions.Count > 0)
                     throw new AggregateException(deliveryReport.AssetsExceptions.Values);
                 // no delivery but exception in quotation
-                if (deliveryReport.AssetsExceptions.Count == 0 && deliveryReport.Quotation.AssetsExceptions != null)
+                if (deliveryReport.AssetsExceptions.Count == 0 && ( deliveryReport.Quotation.AssetsExceptions != null && deliveryReport.Quotation.AssetsExceptions.Count > 0))
                     throw new AggregateException(deliveryReport.Quotation.AssetsExceptions.Values);
             }
 
