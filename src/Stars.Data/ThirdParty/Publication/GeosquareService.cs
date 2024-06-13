@@ -129,6 +129,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             // routingService.OnRoutingException((route, router, exception, state) => PrintRouteInfo(route, router, exception, state));
             routingService.OnBeforeBranching((node, router, state, subroutes, ct) => OnBeforeBranching(node, router, state, subroutes, ct));
             routingService.OnItem((node, router, state, ct) => PostItemToCatalog(node, router, state, ct));
+            if (geosquareModel.PublishCollections)
+                routingService.OnCollection((node, router, state, ct) => PostCollectionToCatalog(node, router, state, ct));
             // routingService.OnBranching((parentRoute, route, siblings, state) => PrepareNewRoute(parentRoute, route, siblings, state));
         }
 
@@ -137,12 +139,6 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             if (!((node as StacCatalogNode).StacCatalog is StacCollection collection))
             {
                 return state;
-            }
-
-            // If Collection has assets, we consider it as a single item
-            if (collection.Assets.Count > 0)
-            {
-                await PostCollectionToCatalog(new StacCollectionNode(collection, node.Uri), router, state, ct);
             }
 
             return state;
