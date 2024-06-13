@@ -118,6 +118,8 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
         public string CatalogId { get; set; }
 
         public List<string> AssetsFilters { get; set; }
+
+        public bool PublishCollections { get; set; } = false;
     }
 
 }
