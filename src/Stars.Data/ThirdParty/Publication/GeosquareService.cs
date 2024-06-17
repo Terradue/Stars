@@ -149,6 +149,14 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
             GeosquarePublicationState catalogPublicationState = state as GeosquarePublicationState;
             AtomItemNode atomItemNode = null;
 
+            // Get Item from the collection
+            var items = collectionNode.GetLinks().Where(l => l.Relationship == "item");
+            if ( items.Any() && catalogPublicationState.GeosquarePublicationModel.SkipCollectionsWithItems == true)
+            {
+                logger.LogWarning("Skipping collection {0} because it has items", collectionNode);
+                return state;
+            }
+
             // Filter assets
             // Create the asset filters based on the asset filters string from the catalog publication model
             AssetFilters assetFilters = AssetFilters.CreateAssetFilters(catalogPublicationState.GeosquarePublicationModel.AssetsFilters);
