@@ -62,12 +62,6 @@ namespace Terradue.Stars.Services.Router
                     // Execute the function for the item and return;
                     return await onItemFunction.Invoke(itemNode, prevRouter, state, ct);
                 }
-                // If route is a Collection
-                if (route is ICollection collectionNode)
-                {
-                    // Execute the function for the collection and return;
-                    return await onCollectionFunction.Invoke(collectionNode, prevRouter, state, ct);
-                }
                 // Ask the router manager if there is another router available for this route
                 router = await routersManager.GetRouterAsync(route);
                 // Definitively impossible to Route
@@ -88,8 +82,8 @@ namespace Terradue.Stars.Services.Router
                     // If route is a Collection
                     if (newRoute is ICollection)
                     {
-                        // Execute the function for the collection and return;
-                        return await onCollectionFunction.Invoke(newRoute as ICollection, prevRouter, state, ct);
+                        // Execute the function for the collection
+                        await onCollectionFunction.Invoke(newRoute as ICollection, prevRouter, state, ct);
                     }
 
                     catalogNode = newRoute as ICatalog;
@@ -103,6 +97,12 @@ namespace Terradue.Stars.Services.Router
             }
             else
             {
+                // If route is a Collection
+                if (catalogNode is ICollection)
+                {
+                    // Execute the function for the collection
+                    await onCollectionFunction.Invoke(catalogNode as ICollection, router, state, ct);
+                }
                 // If the resource is a catalog, we keep the previous router
                 router = prevRouter;
             }
