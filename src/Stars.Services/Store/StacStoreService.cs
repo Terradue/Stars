@@ -260,7 +260,7 @@ namespace Terradue.Stars.Services.Store
             IStacObject stacObject = stacNode.StacObject;
             if (stacObject == null) return;
 
-            var links = stacObject.Links.GroupBy(link => link.Uri).Select(grp => grp.First()).ToList();
+            var links = stacObject.Links.GroupBy(link => (link.Uri, link.RelationshipType)).Select(grp => grp.First()).ToList();
             stacObject.Links.Clear();
             foreach (var link in links)
                 stacObject.Links.Add(link);
