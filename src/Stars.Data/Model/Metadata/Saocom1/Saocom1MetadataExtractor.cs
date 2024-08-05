@@ -64,6 +64,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 else
                 {
                     SAOCOM_XMLProduct metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
+                    return metadata != null;
                 }
                 return true;
             }
@@ -696,7 +697,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
         protected virtual IAsset GetZipAsset(IItem item)
         {
             IAsset zipAsset = null;
-            zipAsset = FindFirstAssetFromFileNameRegex(item, @"S.*\.zip");
+            zipAsset = FindFirstAssetFromFileNameRegex(item, @"^(?!.*(S2A_|S2B_))S.*\.zip$");
             return zipAsset;
         }
 

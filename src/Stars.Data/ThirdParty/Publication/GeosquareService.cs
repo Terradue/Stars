@@ -151,7 +151,7 @@ namespace Terradue.Stars.Data.ThirdParty.Geosquare
 
             // Get Item from the collection
             var items = collectionNode.GetLinks().Where(l => l.Relationship == "item");
-            if ( items.Any() && catalogPublicationState.GeosquarePublicationModel.SkipCollectionsWithItems == true)
+            if (items.Any() && catalogPublicationState.GeosquarePublicationModel.SkipCollectionsWithItems == true)
             {
                 logger.LogWarning("Skipping collection {0} because it has items", collectionNode);
                 return state;

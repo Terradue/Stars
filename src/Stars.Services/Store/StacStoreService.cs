@@ -313,7 +313,7 @@ namespace Terradue.Stars.Services.Store
             else
                 MakeAssetUriRelative(stacCollectionNode, destination);
         }
-        
+
 
         public void PrepareStacItemForDestination(StacItemNode stacItemNode, IDestination destination)
         {
