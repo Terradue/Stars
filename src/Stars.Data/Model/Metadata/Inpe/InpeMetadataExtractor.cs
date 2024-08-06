@@ -87,9 +87,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
                 return metadata != null;
 
             }
-            catch (Exception e)
+            catch
             {
-                //Console.WriteLine("CAN NOT PROCESS: {0}\n{1}", e.Message, e.StackTrace);
                 return false;
             }
         }
