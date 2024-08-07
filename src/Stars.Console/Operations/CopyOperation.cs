@@ -314,7 +314,7 @@ namespace Terradue.Stars.Console.Operations
             if (ExtractArchives)
                 stacNode = await processingService.ExtractArchiveAsync(stacItemNode, destination, storeService, ct);
             if (Harvest)
-                stacNode = await processingService.ExtractMetadataAsync(stacItemNode as StacItemNode, destination, storeService, ct);
+                stacNode = await processingService.ExtractMetadataAsync(stacNode as StacItemNode, destination, storeService, ct);
 
             if (AssetsFiltersOut != null && AssetsFiltersOut.Count() > 0)
             {
@@ -349,7 +349,7 @@ namespace Terradue.Stars.Console.Operations
                 if (deliveryReport.AssetsExceptions.Count > 0)
                     throw new AggregateException(deliveryReport.AssetsExceptions.Values);
                 // no delivery but exception in quotation
-                if (deliveryReport.AssetsExceptions.Count == 0 && ( deliveryReport.Quotation.AssetsExceptions != null && deliveryReport.Quotation.AssetsExceptions.Count > 0))
+                if (deliveryReport.AssetsExceptions.Count == 0 && (deliveryReport.Quotation.AssetsExceptions != null && deliveryReport.Quotation.AssetsExceptions.Count > 0))
                     throw new AggregateException(deliveryReport.Quotation.AssetsExceptions.Values);
             }
 

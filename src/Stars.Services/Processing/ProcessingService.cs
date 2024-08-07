@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -31,9 +32,9 @@ namespace Terradue.Stars.Services.Processing
             Parameters = new ProcessingServiceParameters();
         }
 
-        public async Task<StacNode> ExtractArchiveAsync(StacItemNode stacItemNode, IDestination destination, StacStoreService storeService, CancellationToken ct)
+        public async Task<StacItemNode> ExtractArchiveAsync(StacItemNode stacItemNode, IDestination destination, StacStoreService storeService, CancellationToken ct)
         {
-            StacNode newItemNode = stacItemNode;
+            StacItemNode newItemNode = stacItemNode;
             foreach (var processing in processingManager.GetProcessings(ProcessingType.ArchiveExtractor))
             {
                 if (!processing.CanProcess(newItemNode, destination)) continue;

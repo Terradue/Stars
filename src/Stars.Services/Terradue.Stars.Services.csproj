@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>Terradue.Stars</Title>
     <Description>Stars is a set of services for working with Spatio Temporal Catalog such as STAC but not only</Description>
-    <Version>2.24.6</Version>
+    <Version>2.25.0</Version>
     <!-- <VersionSuffix>beta.8</VersionSuffix> -->
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
     <AssemblyName>Terradue.Stars.Services</AssemblyName>
@@ -29,7 +29,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.*" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.*" />
     <PackageReference Include="Polly" Version="7.2.3" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.0.*" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.*" />
     <PackageReference Include="System.IO.Abstractions" Version="16.1.25" />
     <PackageReference Include="Terradue.ServiceModel.Syndication" Version="1.1.1" />
     <PackageReference Include="Terradue.ServiceModel.Ogc" Version="2.2.0" />
