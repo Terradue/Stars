@@ -6,6 +6,7 @@ using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.Projection;
 using Terradue.OpenSearch.Sentinel.Data.Safe;
+using Terradue.OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level2.Granules;
 using Terradue.Stars.Interface;
 
 namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
@@ -13,14 +14,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
     public class S2L2SafeStacFactory : S2SafeStacFactory
     {
 
-        private readonly Level2A_Tile mtdTile;
+        private readonly ILevel2A_Tile mtdTile;
 
-        public S2L2SafeStacFactory(XFDUType xfdu, IItem route, string identifier, Level2A_Tile mtdTile) : base(xfdu, route, identifier, null)
+        public S2L2SafeStacFactory(XFDUType xfdu, IItem route, string identifier, ILevel2A_Tile mtdTile) : base(xfdu, route, identifier, null)
         {
             this.mtdTile = mtdTile;
         }
 
-        public static S2L2SafeStacFactory Create(XFDUType xfdu, IItem route, string identifier, Level2A_Tile mtdTile)
+        public static S2L2SafeStacFactory Create(XFDUType xfdu, IItem route, string identifier, ILevel2A_Tile mtdTile)
         {
             return new S2L2SafeStacFactory(xfdu, route, identifier, mtdTile);
         }
