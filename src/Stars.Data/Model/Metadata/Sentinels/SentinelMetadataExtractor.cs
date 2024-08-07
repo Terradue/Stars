@@ -70,8 +70,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             // (can be this instance or a subclass instance, e.g. for Sentinel-2)
             SentinelMetadataExtractor metadataExtractor = GetMatchingExtractorInstance(stacFactory);
 
-            await metadataExtractor.AddAssets(stacItem, item, stacFactory);
-            await metadataExtractor.AddAdditionalProperties(stacItem, item, stacFactory);
+            await metadataExtractor.AddAssets(stacItem, item, identifier, stacFactory);
+            await metadataExtractor.AddAdditionalProperties(stacItem, item, identifier, stacFactory);
 
             // AddEoBandPropertyInItem(stacItem);
 
@@ -92,9 +92,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             return this;
         }
 
-        protected abstract Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory);
+        protected abstract Task AddAssets(StacItem stacItem, IItem item, string identifier, SentinelSafeStacFactory stacFactory);
 
-        protected virtual Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected virtual Task AddAdditionalProperties(StacItem stacItem, IItem item, string identifier, SentinelSafeStacFactory stacFactory)
         {
             return Task.CompletedTask;
         }

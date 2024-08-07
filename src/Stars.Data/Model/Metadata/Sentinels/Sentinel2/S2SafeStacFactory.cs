@@ -16,14 +16,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
     public class S2SafeStacFactory : SentinelSafeStacFactory
     {
 
-        private readonly OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile mtdTile;
+        private readonly OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.ILevel1C_Tile mtdTile;
 
-        public S2SafeStacFactory(XFDUType xfdu, IItem route, string identifier, OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile mtdTile) : base(xfdu, route, identifier)
+        public S2SafeStacFactory(XFDUType xfdu, IItem route, string identifier, OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.ILevel1C_Tile mtdTile) : base(xfdu, route, identifier)
         {
             this.mtdTile = mtdTile;
         }
 
-        public static S2SafeStacFactory Create(XFDUType xfdu, IItem route, string identifier, OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.Level1C_Tile mtdTile)
+        public static S2SafeStacFactory Create(XFDUType xfdu, IItem route, string identifier, OpenSearch.Sentinel.Data.Safe.Sentinel.S2.Level1.Granules.ILevel1C_Tile mtdTile)
         {
             return new S2SafeStacFactory(xfdu, route, identifier, mtdTile);
         }

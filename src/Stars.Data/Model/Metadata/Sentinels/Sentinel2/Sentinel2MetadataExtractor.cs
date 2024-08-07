@@ -70,19 +70,19 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         }
 
         // This method is not normally used, subclass method is called directly with the proper instance
-        protected override Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override Task AddAssets(StacItem stacItem, IItem item, string identifier, SentinelSafeStacFactory stacFactory)
         {
             if (!(GetMatchingExtractorInstance(stacFactory) is Sentinel2MetadataExtractor metadataExtractor)) return Task.CompletedTask;
 
-            return metadataExtractor.AddAssets(stacItem, item, stacFactory);
+            return metadataExtractor.AddAssets(stacItem, item, identifier, stacFactory);
         }
 
         // This method is not normally used, subclass method is called directly with the proper instance
-        protected override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override Task AddAdditionalProperties(StacItem stacItem, IItem item, string identifier, SentinelSafeStacFactory stacFactory)
         {
             if (!(GetMatchingExtractorInstance(stacFactory) is Sentinel2MetadataExtractor metadataExtractor)) return Task.CompletedTask;
 
-            Task task = metadataExtractor.AddAdditionalProperties(stacItem, item, stacFactory);
+            Task task = metadataExtractor.AddAdditionalProperties(stacItem, item, identifier, stacFactory);
 
             if (IncludeProviderProperty)
             {

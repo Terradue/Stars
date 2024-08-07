@@ -33,7 +33,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
             return xfdu;
         }
 
-        protected override async Task AddAssets(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override async Task AddAssets(StacItem stacItem, IItem item, string identifier, SentinelSafeStacFactory stacFactory)
         {
             foreach (var bandAsset in FindAllAssetsFromFileNameRegex(item, "\\.tiff$"))
             {
@@ -160,7 +160,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
         }
 
         // This method is not normally used, subclass method is called directly with the proper instance
-        protected override Task AddAdditionalProperties(StacItem stacItem, IItem item, SentinelSafeStacFactory stacFactory)
+        protected override Task AddAdditionalProperties(StacItem stacItem, IItem item, string identifier, SentinelSafeStacFactory stacFactory)
         {
             if (IncludeProviderProperty)
             {
