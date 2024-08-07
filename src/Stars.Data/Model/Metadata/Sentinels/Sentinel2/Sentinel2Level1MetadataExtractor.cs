@@ -156,14 +156,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
         private XmlSerializer GetTileSerializer(string identifier)
         {
             string baseline = identifier.Substring(28, 4);
-            if (String.Compare(baseline, "0511") >= 0) return s2L1CProductTileSerializer0511;
+            if (string.Compare(baseline, "0511") >= 0) return s2L1CProductTileSerializer0511;
             return s2L1CProductTileSerializer0510;
         }
 
         private XmlSerializer GetUserProductSerializer(string identifier)
         {
             string baseline = identifier.Substring(28, 4);
-            if (String.Compare(baseline, "0511") >= 0) return s2L1CUserProductSerializer0511;
+            if (string.Compare(baseline, "0511") >= 0) return s2L1CUserProductSerializer0511;
             return s2L1CUserProductSerializer0510;
         }
     }
