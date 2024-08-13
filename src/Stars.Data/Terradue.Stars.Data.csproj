@@ -51,12 +51,12 @@
             <PrivateAssets>all</PrivateAssets>
         </ProjectReference>
     </ItemGroup>
+    <!--<ItemGroup>
+        <ProjectReference Include="../../../terradue.opensearch.scihub/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub.csproj" />
+    </ItemGroup>-->
     <!-- <ItemGroup>
-    <ProjectReference Include="../../../../sugar/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub.csproj" />
-  </ItemGroup> -->
-    <!-- <ItemGroup>
-    <ProjectReference Include="../../../../sugar/Terradue.OpenSearch.Usgs/Terradue.OpenSearch.Usgs/Terradue.OpenSearch.Usgs.csproj" />
-  </ItemGroup> -->
+        <ProjectReference Include="../../../terradue.opensearch.usgs/Terradue.OpenSearch.Usgs/Terradue.OpenSearch.Usgs.csproj" />
+    </ItemGroup> -->
     <ItemGroup>
         <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
         <None Include="..\..\docs\logo\Stars_logo.png" Pack="true" PackagePath="" />

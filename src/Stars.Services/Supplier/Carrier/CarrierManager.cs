@@ -91,7 +91,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                         }
                         catch (Exception e)
                         {
-                            logger.LogWarning("Cannot quote delivery for asset {0} with url {2} : {1}", asset.Key, e.Message, possibleAsset.Uri);
+                            logger.LogWarning("Cannot quote delivery for asset {0} with url {1} : {2}", asset.Key, possibleAsset.Uri, e.Message);
                             logger.LogDebug(e.StackTrace);
                             assetsExceptions.Add(asset.Key, e);
                         }

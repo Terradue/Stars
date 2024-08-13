@@ -88,9 +88,22 @@ namespace Terradue.Stars.Services.Resources
                 try
                 {
                     // First try head request
-                    using (var headResponse = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct))
+                    using (var hr = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct))
                     {
+                        HttpResponseMessage headResponse = hr;
                         contentHeaders = new HttpCachedHeaders(headResponse);
+                        // Handle response error, but retry with a one-byte range in case of "Method not allowed" status code
+                        /*if (headResponse.StatusCode == System.Net.HttpStatusCode.MethodNotAllowed)
+                        {
+                            //"Range: bytes=0-0
+                            HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, resource.Uri);
+                            message.Headers.Range = new System.Net.Http.Headers.RangeHeaderValue(0, 0);
+                            using (var hr2 = await client.SendAsync(message, ct))
+                            {
+                                contentHeaders = new HttpCachedHeaders(headResponse);
+                                headResponse = hr2;
+                            }
+                        }*/
                         headResponse.EnsureSuccessStatusCode();
                     }
                 }
