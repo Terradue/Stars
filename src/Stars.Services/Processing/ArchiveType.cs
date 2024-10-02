@@ -8,6 +8,7 @@ namespace Terradue.Stars.Services.Processing
     {
         None,
         Compress,
+        Tar,
         TarGzip,
         TarBzip2,
         Zip,
