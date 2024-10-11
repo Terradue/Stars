@@ -19,6 +19,7 @@ namespace Terradue.Stars.Services.Processing
     public abstract class Archive : ILocatable
     {
         public static readonly Dictionary<string, ArchiveType> ArchiveFileExtensions = new Dictionary<string, ArchiveType>() {
+            { ".tar", ArchiveType.Tar },
             { ".tar.gz", ArchiveType.TarGzip },
             { ".tgz",  ArchiveType.TarGzip },
             { ".tar.Z",   ArchiveType.TarGzip },
@@ -48,6 +49,8 @@ namespace Terradue.Stars.Services.Processing
             {
                 case ArchiveType.Zip:
                     return new ZipArchiveAsset(asset, logger, resourceServiceProvider, fileSystem);
+                case ArchiveType.Tar:
+                    return new TarArchiveAsset(asset, resourceServiceProvider, logger);
                 case ArchiveType.TarGzip:
                     return new TarGzipArchive(asset, resourceServiceProvider, logger);
                 case ArchiveType.Gzip:

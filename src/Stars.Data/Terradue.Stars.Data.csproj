@@ -4,7 +4,7 @@
         <ProjectName>Terradue.Stars.Data</ProjectName>
         <Title>Terradue.Stars.Data</Title>
         <Description>Collection of data Plugins for Terradue.Stars</Description>
-        <Version>2.25.1</Version>
+        <Version>2.25.3</Version>
         <!-- <VersionSuffix>beta.8</VersionSuffix> -->
         <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
         <NoWarn>NU1603</NoWarn>
@@ -33,7 +33,7 @@
         <PackageReference Include="MimeTypes" Version="2.0.2" />
         <PackageReference Include="Terradue.OpenSearch.SciHub" Version="1.48.*"/>
         <PackageReference Include="Terradue.OpenSearch.Asf" Version="1.4.*" />
-        <PackageReference Include="Terradue.OpenSearch.Usgs" Version="1.7.*" />
+        <PackageReference Include="Terradue.OpenSearch.Usgs" Version="1.8.0" />
         <PackageReference Include="Terradue.OpenSearch.GeoJson" Version="1.4.5" />
         <PackageReference Include="Terradue.GeoJson" Version="1.12.1" />
         <PackageReference Include="MaxRev.Gdal.Core" Version="3.3.3.110" />
@@ -54,9 +54,12 @@
     <!--<ItemGroup>
         <ProjectReference Include="../../../terradue.opensearch.scihub/Terradue.OpenSearch.SciHub/Terradue.OpenSearch.SciHub.csproj" />
     </ItemGroup>-->
-    <!-- <ItemGroup>
+    <!--<ItemGroup>
+        <ProjectReference Include="../../../terradue.opensearch.asf/Terradue.OpenSearch.Asf/Terradue.OpenSearch.Asf.csproj" />
+    </ItemGroup>-->
+    <!--<ItemGroup>
         <ProjectReference Include="../../../terradue.opensearch.usgs/Terradue.OpenSearch.Usgs/Terradue.OpenSearch.Usgs.csproj" />
-    </ItemGroup> -->
+    </ItemGroup>-->
     <ItemGroup>
         <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
         <None Include="..\..\docs\logo\Stars_logo.png" Pack="true" PackagePath="" />
