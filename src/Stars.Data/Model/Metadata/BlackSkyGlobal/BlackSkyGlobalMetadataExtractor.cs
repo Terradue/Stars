@@ -162,18 +162,26 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             stacItem.Assets["metadata"].Properties.AddRange(metadataAsset.Properties);
 
             // Overview/browse
+            string contentType = "image/png";
             IAsset browseAsset = FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_browse\.png$", metadata.id));
+            if (browseAsset == null)
+            {
+                browseAsset = FindFirstAssetFromFileNameRegex(item, string.Format(@".*\.jpg$", metadata.id));
+                contentType = "image/jpg";
+            }
             if (browseAsset != null)
             {
-                stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, browseAsset.Uri, new ContentType("image/png"), "Browse image"));
+                stacItem.Assets.Add("overview", StacAsset.CreateOverviewAsset(stacItem, browseAsset.Uri, new ContentType(contentType), "Browse image"));
                 stacItem.Assets["overview"].Properties.AddRange(browseAsset.Properties);
             }
 
             // RGB TIFF (ortho)
             IAsset imageAsset = metadata.IsFromText && metadata.id.EndsWith("_ortho") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_ortho\.tif$", metadata.id));
+            bool imageFound = false;
 
             if (imageAsset != null)
             {
+                imageFound = true;
                 StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
                 stacItem.Assets.Add("ORTHO_RGB", stacAsset);
                 stacAsset.Properties.AddRange(imageAsset.Properties);
@@ -194,6 +202,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             IAsset imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_ortho-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_ortho-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
+                imageFound = true;
                 StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
                 stacItem.Assets.Add("ORTHO_PAN", stacAssetPan);
                 stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
@@ -210,6 +219,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             imageAsset = metadata.IsFromText && metadata.id.EndsWith("_georeferenced") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced\.tif$", metadata.id));
             if (imageAsset != null)
             {
+                imageFound = true;
                 StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, imageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
                 stacItem.Assets.Add("GEO_RGB", stacAsset);
                 stacAsset.Properties.AddRange(imageAsset.Properties);
@@ -230,6 +240,7 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
             imageAssetPan = metadata.IsFromText && metadata.id.EndsWith("_georeferenced-pan") ? FindFirstAssetFromFileNameRegex(item, @".*\.tif") : FindFirstAssetFromFileNameRegex(item, string.Format(@"{0}_georeferenced-pan\.tif$", metadata.id));
             if (imageAssetPan != null)
             {
+                imageFound = true;
                 StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, imageAssetPan.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
                 stacItem.Assets.Add("GEO_PAN", stacAssetPan);
                 stacAssetPan.Properties.AddRange(imageAssetPan.Properties);
@@ -240,6 +251,41 @@ namespace Terradue.Stars.Data.Model.Metadata.BlackSkyGlobal
                 stacAssetPan.RasterExtension().Bands = new RasterBand[] {
                     new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
                 };
+            }
+
+            if (!imageFound)
+            {
+                IAsset unclearImageAsset = FindFirstAssetFromFileNameRegex(item, @".*\.tif");
+                if (unclearImageAsset != null && Path.GetFileName(unclearImageAsset.Uri.AbsolutePath).Contains("MS"))
+                {
+                    StacAsset stacAsset = StacAsset.CreateDataAsset(stacItem, unclearImageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "RGB image");
+                    stacItem.Assets.Add("GEO_RGB", stacAsset);
+                    stacAsset.Properties.AddRange(unclearImageAsset.Properties);
+                    stacAsset.Properties["gsd"] = metadata.gsd;
+                    stacAsset.EoExtension().Bands = new EoBandObject[] {
+                        new EoBandObject("B1-RED", EoBandCommonName.red) { CenterWavelength = 0.645, FullWidthHalfMax = 0.11 },
+                        new EoBandObject("B2-GREEN", EoBandCommonName.green) { CenterWavelength = 0.545, FullWidthHalfMax = 0.09 },
+                        new EoBandObject("B3-BLUE", EoBandCommonName.blue) { CenterWavelength = 0.485, FullWidthHalfMax = 0.07 },
+                    };
+                    stacAsset.RasterExtension().Bands = new RasterBand[] {
+                        new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                        new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                        new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                    };
+                }
+                else if (unclearImageAsset != null && Path.GetFileName(unclearImageAsset.Uri.AbsolutePath).Contains("PN"))
+                {
+                    StacAsset stacAssetPan = StacAsset.CreateDataAsset(stacItem, unclearImageAsset.Uri, new ContentType("image/tiff; application=geotiff"), "PAN image");
+                    stacItem.Assets.Add("GEO_PAN", stacAssetPan);
+                    stacAssetPan.Properties.AddRange(unclearImageAsset.Properties);
+                    stacAssetPan.Properties["gsd"] = metadata.gsd;
+                    stacAssetPan.EoExtension().Bands = new EoBandObject[] {
+                        new EoBandObject("pan", EoBandCommonName.pan) { CenterWavelength = 0.575, FullWidthHalfMax = 0.25 },
+                    };
+                    stacAssetPan.RasterExtension().Bands = new RasterBand[] {
+                        new RasterBand() { DataType = Stac.Common.DataType.uint16, BitsPerSample = 12 },
+                    };
+                }
             }
 
             // Mask TIFF (non-ortho)
