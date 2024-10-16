@@ -211,40 +211,60 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
             if (name == "MSS")
             {
-                for (int i = 0; i < numberOfChannels; i++)
+                string deviceName = metadata.GetString("<Device>/cDeviceName");
+
+                // This is the normal case, but the MSS metadata file could be missing
+                // and in that case, we add the default bands (see below after else)
+                if (deviceName == null || deviceName.Contains("MSS"))
                 {
-                    channelValues = Array.ConvertAll((metadata.GetString("<Ch" + (i + 1) + ">/bSpectralZone").Split(',')), (double.Parse));
-                    mean = channelValues.Sum() / channelValues.Length;
-
-                    if (mean < 0.69 && mean > 0.63)
+                    for (int i = 0; i < numberOfChannels; i++)
                     {
-                        eoarr[i] = new EoBandObject("red", EoBandCommonName.red);
-                        eoarr[i].Properties.Add("description", "red");
-                    }
+                        channelValues = Array.ConvertAll((metadata.GetString("<Ch" + (i + 1) + ">/bSpectralZone").Split(',')), (double.Parse));
+                        mean = channelValues.Sum() / channelValues.Length;
 
-                    else if (mean < 0.60 && mean > 0.52)
+                        if (mean < 0.69 && mean > 0.63)
+                        {
+                            eoarr[i] = new EoBandObject("red", EoBandCommonName.red);
+                            eoarr[i].Properties.Add("description", "red");
+                        }
+
+                        else if (mean < 0.60 && mean > 0.52)
+                        {
+                            eoarr[i] = new EoBandObject("green", EoBandCommonName.green);
+                            eoarr[i].Properties.Add("description", "green");
+                        }
+
+                        else if (mean < 0.52 && mean > 0.44)
+                        {
+                            eoarr[i] = new EoBandObject("blue", EoBandCommonName.blue);
+                            eoarr[i].Properties.Add("description", "blue");
+                        }
+
+                        else if (mean < 0.84 && mean > 0.75)
+                        {
+                            eoarr[i] = new EoBandObject("nir", EoBandCommonName.nir);
+                            eoarr[i].Properties.Add("description", "nir");
+                        }
+
+                    }
+                    // Swap bands 1 and 3 (red and blue) if the channels are not in RGB order in the metadata
+                    if (numberOfChannels >= 3 && eoarr[0].CommonName == EoBandCommonName.blue && eoarr[2].CommonName == EoBandCommonName.red)
                     {
-                        eoarr[i] = new EoBandObject("green", EoBandCommonName.green);
-                        eoarr[i].Properties.Add("description", "green");
+                        (eoarr[2], eoarr[0]) = (eoarr[0], eoarr[2]);
                     }
-
-                    else if (mean < 0.52 && mean > 0.44)
-                    {
-                        eoarr[i] = new EoBandObject("blue", EoBandCommonName.blue);
-                        eoarr[i].Properties.Add("description", "blue");
-                    }
-
-                    else if (mean < 0.84 && mean > 0.75)
-                    {
-                        eoarr[i] = new EoBandObject("nir", EoBandCommonName.nir);
-                        eoarr[i].Properties.Add("description", "nir");
-                    }
-
                 }
-                // Swap bands 1 and 3 (red and blue) if the channels are not in RGB order in the metadata
-                if (numberOfChannels >= 3 && eoarr[0].CommonName == EoBandCommonName.blue && eoarr[2].CommonName == EoBandCommonName.red)
+                else
+                // default bands
                 {
-                    (eoarr[2], eoarr[0]) = (eoarr[0], eoarr[2]);
+                    eoarr = new EoBandObject[4];
+                    eoarr[0] = new EoBandObject("red", EoBandCommonName.red);
+                    eoarr[0].Properties.Add("description", "red");
+                    eoarr[1] = new EoBandObject("green", EoBandCommonName.green);
+                    eoarr[1].Properties.Add("description", "green");
+                    eoarr[2] = new EoBandObject("blue", EoBandCommonName.blue);
+                    eoarr[2].Properties.Add("description", "blue");
+                    eoarr[3] = new EoBandObject("nir", EoBandCommonName.nir);
+                    eoarr[3].Properties.Add("description", "nir");
                 }
                 stacAsset.EoExtension().Bands = eoarr;
             }
