@@ -112,7 +112,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.DMC
                 nameParts[3]
             );
             if (nameParts[1] != "PAN") key += string.Format("-{0}", nameParts[1]);
-            if (nameParts.Length >= 7) key += string.Format("-{0}", nameParts[6]);
+            if (nameParts.Length >= 7) key += string.Format("-{0}", nameParts[nameParts.Length - 1]);
 
             return key;
         }
