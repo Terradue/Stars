@@ -380,7 +380,7 @@
       "roles": [
         "visual"
       ],
-      "title": "3-Band Visual",
+      "title": "3-Band Visual (L3)",
       "href": "data/Flood_Mozambique-product/rasters/20220320_112827_SN20_L3_SR_MS_0.tif",
       "eo:bands": [
         {

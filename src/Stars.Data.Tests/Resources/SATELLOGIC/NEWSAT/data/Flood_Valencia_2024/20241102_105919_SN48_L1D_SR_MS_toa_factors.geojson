@@ -1,0 +1,1045 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.34963268609783743,
+                            39.4674188857051
+                        ],
+                        [
+                            -0.35099928532881114,
+                            39.43138786955539
+                        ],
+                        [
+                            -0.30453816389312577,
+                            39.43031976779189
+                        ],
+                        [
+                            -0.30314766593831144,
+                            39.46634942295626
+                        ],
+                        [
+                            -0.34963268609783743,
+                            39.4674188857051
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.6022947149564516e-05,
+                    "green": 3.390601639606123e-05,
+                    "nir": 2.0677829531264885e-05,
+                    "red": 2.9936422551574025e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.0004135845425830368,
+                    "green": 0.00040009126566989807,
+                    "nir": 0.0012741297825429297,
+                    "red": 0.00044415939647328076
+                },
+                "toa_to_dn": {
+                    "blue": 0.24178853342886394,
+                    "green": 0.24994297196806756,
+                    "nir": 0.0784849403648805,
+                    "red": 0.22514439814629858
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.9921892827951186
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.39608532137350033,
+                            39.46846900946733
+                        ],
+                        [
+                            -0.3974280349386193,
+                            39.43243665690264
+                        ],
+                        [
+                            -0.35096446467957315,
+                            39.431387076019185
+                        ],
+                        [
+                            -0.34959784753616074,
+                            39.46741809115775
+                        ],
+                        [
+                            -0.39608532137350033,
+                            39.46846900946733
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.6039726893105974e-05,
+                    "green": 3.392181005828648e-05,
+                    "nir": 2.0687461410496976e-05,
+                    "red": 2.9950367148913004e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.0004133919816744084,
+                    "green": 0.00039990498709872494,
+                    "nir": 0.0012735365602065615,
+                    "red": 0.0004439526002124086
+                },
+                "toa_to_dn": {
+                    "blue": 0.2419011602376966,
+                    "green": 0.250059397172041,
+                    "nir": 0.07852149920515865,
+                    "red": 0.22524927199920694
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.9921892820407291
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.39742702956036696,
+                            39.43246366101222
+                        ],
+                        [
+                            -0.3987673370121671,
+                            39.39643104652248
+                        ],
+                        [
+                            -0.3523276097029507,
+                            39.3953828007069
+                        ],
+                        [
+                            -0.3509634414030952,
+                            39.431414079126945
+                        ],
+                        [
+                            -0.39742702956036696,
+                            39.43246366101222
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.607031265272159e-05,
+                    "green": 3.3950598409853264e-05,
+                    "nir": 2.070501819508737e-05,
+                    "red": 2.9975785064335423e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.00041304144665409273,
+                    "green": 0.00039956588835227797,
+                    "nir": 0.0012724566670693103,
+                    "red": 0.00044357615136813157
+                },
+                "toa_to_dn": {
+                    "blue": 0.2421064539892201,
+                    "green": 0.25027161455743396,
+                    "nir": 0.07858813788159674,
+                    "red": 0.2254404338275803
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.9921892801543974
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.398766333435365,
+                            39.3964580508283
+                        ],
+                        [
+                            -0.40010423952649715,
+                            39.36042517455473
+                        ],
+                        [
+                            -0.35368831255286126,
+                            39.35937826245479
+                        ],
+                        [
+                            -0.35232658825991503,
+                            39.39540980401191
+                        ],
+                        [
+                            -0.398766333435365,
+                            39.3964580508283
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.6100985195466396e-05,
+                    "green": 3.3979468444636815e-05,
+                    "nir": 2.0722624794778783e-05,
+                    "red": 3.000127509979885e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.0004126905135324819,
+                    "green": 0.00039922640449266883,
+                    "nir": 0.0012713755475015126,
+                    "red": 0.0004431992749923278
+                },
+                "toa_to_dn": {
+                    "blue": 0.24231233023515875,
+                    "green": 0.25048443408215587,
+                    "nir": 0.07865496563664327,
+                    "red": 0.2256321380528682
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.992189278645259
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.44254036572174404,
+                            39.469500599802174
+                        ],
+                        [
+                            -0.44385918885440523,
+                            39.43346693436989
+                        ],
+                        [
+                            -0.3973932124701402,
+                            39.43243587724778
+                        ],
+                        [
+                            -0.3960504809889742,
+                            39.46846822881896
+                        ],
+                        [
+                            -0.44254036572174404,
+                            39.469500599802174
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.6039726893105974e-05,
+                    "green": 3.392181005828648e-05,
+                    "nir": 2.0687461410496976e-05,
+                    "red": 2.9950367148913004e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.0004133919816744084,
+                    "green": 0.00039990498709872494,
+                    "nir": 0.0012735365602065615,
+                    "red": 0.0004439526002124086
+                },
+                "toa_to_dn": {
+                    "blue": 0.2419011602376966,
+                    "green": 0.250059397172041,
+                    "nir": 0.07852149920515865,
+                    "red": 0.22524927199920694
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.9921892820407291
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.44385820136453347,
+                            39.43349393946289
+                        ],
+                        [
+                            -0.44517466109605586,
+                            39.3974600134372
+                        ],
+                        [
+                            -0.3987325324142893,
+                            39.396430267859344
+                        ],
+                        [
+                            -0.3973922070784719,
+                            39.432462881356614
+                        ],
+                        [
+                            -0.44385820136453347,
+                            39.43349393946289
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.607031265272159e-05,
+                    "green": 3.3950598409853264e-05,
+                    "nir": 2.070501819508737e-05,
+                    "red": 2.9975785064335423e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.00041304144665409273,
+                    "green": 0.00039956588835227797,
+                    "nir": 0.0012724566670693103,
+                    "red": 0.00044357615136813157
+                },
+                "toa_to_dn": {
+                    "blue": 0.2421064539892201,
+                    "green": 0.25027161455743396,
+                    "nir": 0.07858813788159674,
+                    "red": 0.2254404338275803
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.9921892801543974
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.4451736753756551,
+                            39.39748701872543
+                        ],
+                        [
+                            -0.44648777637470943,
+                            39.36145283224449
+                        ],
+                        [
+                            -0.4000694527672791,
+                            39.36042439688234
+                        ],
+                        [
+                            -0.3987315288240959,
+                            39.39645727216442
+                        ],
+                        [
+                            -0.4451736753756551,
+                            39.39748701872543
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.6100985195466396e-05,
+                    "green": 3.3979468444636815e-05,
+                    "nir": 2.0722624794778783e-05,
+                    "red": 3.000127509979885e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.0004126905135324819,
+                    "green": 0.00039922640449266883,
+                    "nir": 0.0012713755475015126,
+                    "red": 0.0004431992749923278
+                },
+                "toa_to_dn": {
+                    "blue": 0.24231233023515875,
+                    "green": 0.25048443408215587,
+                    "nir": 0.07865496563664327,
+                    "red": 0.2256321380528682
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.992189278645259
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.48899777637824693,
+                            39.47051365387538
+                        ],
+                        [
+                            -0.49029270439607026,
+                            39.43447869912853
+                        ],
+                        [
+                            -0.443824364598687,
+                            39.4334661685985
+                        ],
+                        [
+                            -0.44250552354643646,
+                            39.469499833054954
+                        ],
+                        [
+                            -0.48899777637824693,
+                            39.47051365387538
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.606001235484604e-05,
+                    "green": 3.394090342106728e-05,
+                    "nir": 2.0699105635998083e-05,
+                    "red": 2.9967225129793442e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.0004131594291409988,
+                    "green": 0.00039968002163738174,
+                    "nir": 0.001272820135683119,
+                    "red": 0.00044370285588627275
+                },
+                "toa_to_dn": {
+                    "blue": 0.24203731767155925,
+                    "green": 0.25020014658307627,
+                    "nir": 0.07856569612353774,
+                    "red": 0.22537605668607957
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.9921892809085467
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.49029173479808286,
+                            39.43450570518729
+                        ],
+                        [
+                            -0.49158434214066293,
+                            39.398470491154946
+                        ],
+                        [
+                            -0.44513985471446976,
+                            39.39745924863991
+                        ],
+                        [
+                            -0.44382337709539726,
+                            39.43349317369076
+                        ],
+                        [
+                            -0.49029173479808286,
+                            39.43450570518729
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.6073698007065354e-05,
+                    "green": 3.395378481987712e-05,
+                    "nir": 2.0706961450305568e-05,
+                    "red": 2.997859842099115e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.000413002684571666,
+                    "green": 0.0003995283908904017,
+                    "nir": 0.0012723372527330182,
+                    "red": 0.0004435345237409743
+                },
+                "toa_to_dn": {
+                    "blue": 0.24212917672366263,
+                    "green": 0.2502951036273963,
+                    "nir": 0.07859551371713516,
+                    "red": 0.22546159238418237
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.9921892801543974
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.4915833742801581,
+                            39.39849749740797
+                        ],
+                        [
+                            -0.49287366553213957,
+                            39.36246202422525
+                        ],
+                        [
+                            -0.4464529878353039,
+                            39.36145206842031
+                        ],
+                        [
+                            -0.44513886898067523,
+                            39.397486253927404
+                        ],
+                        [
+                            -0.4915833742801581,
+                            39.39849749740797
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "toa_to_radiance_units": "W / (m^2 . nm . sr)",
+                "vicarious_factors": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "vicarious_correction": {
+                    "blue": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "green": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "nir": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    },
+                    "red": {
+                        "bias_factor": 0,
+                        "scale_factor": 1
+                    }
+                },
+                "toa_to_reflectance": 0.0001,
+                "toa_to_radiance": {
+                    "blue": 3.6100985195466396e-05,
+                    "green": 3.3979468444636815e-05,
+                    "nir": 2.0722624794778783e-05,
+                    "red": 3.000127509979885e-05
+                },
+                "dn_to_toa": {
+                    "blue": 0.0004126905135324819,
+                    "green": 0.00039922640449266883,
+                    "nir": 0.0012713755475015126,
+                    "red": 0.0004431992749923278
+                },
+                "toa_to_dn": {
+                    "blue": 0.24231233023515875,
+                    "green": 0.25048443408215587,
+                    "nir": 0.07865496563664327,
+                    "red": 0.2256321380528682
+                },
+                "dn_to_radiance": {
+                    "blue": 6.731157715120319e-07,
+                    "green": 6.128893358000708e-07,
+                    "nir": 1.190323052905807e-06,
+                    "red": 6.007378295955842e-07
+                },
+                "sun_irradiance": {
+                    "blue": 1.9650274585392862,
+                    "green": 1.8495503144514098,
+                    "nir": 1.1279616474250982,
+                    "red": 1.6330116489369146
+                },
+                "earth_sun_distance": {
+                    "units": "AU",
+                    "values": 0.992189278645259
+                }
+            }
+        }
+    ]
+}

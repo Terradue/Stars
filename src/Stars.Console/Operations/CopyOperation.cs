@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Stac;
 using Terradue.Stars.Interface;
@@ -192,7 +193,7 @@ namespace Terradue.Stars.Console.Operations
                     throw new InvalidDataException(string.Format("Impossible to translate item {0} into STAC.", item.Uri));
             }
 
-            logger.Output(string.Format("Copy item {0} from {1}", stacItemNode.Id, item.Uri));
+            logger.LogInformation(string.Format("Copy item {0} from {1}", stacItemNode.Id, item.Uri));
 
             // We update the destination in case a new router updated the route
             IDestination destination = operationState.CurrentDestination.To(stacItemNode);
@@ -224,14 +225,14 @@ namespace Terradue.Stars.Console.Operations
                 IResource supplierNode = null;
                 try
                 {
-                    logger.Output(string.Format("[{0}] Searching for {1}", supplier.Value.Id, stacItemNode.Uri.ToString()));
+                    logger.LogInformation(string.Format("[{0}] Searching for {1}", supplier.Value.Id, stacItemNode.Uri.ToString()));
                     supplierNode = await supplier.Value.SearchForAsync(stacItemNode, ct);
                     if (supplierNode == null && supplierNode is not IAssetsContainer)
                     {
-                        logger.Output(string.Format("[{0}] --> no supply possible", supplier.Value.Id));
+                        logger.LogInformation(string.Format("[{0}] --> no supply possible", supplier.Value.Id));
                         continue;
                     }
-                    logger.Output(string.Format("[{0}] resource found at {1} [{2}]", supplier.Value.Id, supplierNode.Uri, supplierNode.ContentType));
+                    logger.LogInformation(string.Format("[{0}] resource found at {1} [{2}]", supplier.Value.Id, supplierNode.Uri, supplierNode.ContentType));
                 }
                 catch (Exception e)
                 {
@@ -281,7 +282,7 @@ namespace Terradue.Stars.Console.Operations
                     throw new InvalidDataException(string.Format("Impossible to translate item {0} into STAC.", collection.Uri));
             }
 
-            logger.Output(string.Format("Copy collection {0} from {1}", stacCollectionNode.Id, collection.Uri));
+            logger.LogInformation(string.Format("Copy collection {0} from {1}", stacCollectionNode.Id, collection.Uri));
 
             // We update the destination in case a new router updated the route
             IDestination destination = operationState.CurrentDestination.To(stacCollectionNode);

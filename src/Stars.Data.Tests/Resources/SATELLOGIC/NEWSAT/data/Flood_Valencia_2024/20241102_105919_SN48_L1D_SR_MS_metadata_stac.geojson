@@ -1,0 +1,368 @@
+{
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "id": "20241102_105919_SN48_L1D_SR_MS_251827",
+    "properties": {
+        "satl:sat_id": "newsat48",
+        "satl:product_name": "L1D_SR",
+        "satl:product_version": "1.0.1",
+        "satl:outcome_id": "223aa4c8-f3ab-4828-81e1-2665de541ed4",
+        "satl:exposure_sec": 0.005,
+        "eo:cloud_cover": 22.41,
+        "proj:epsg": 32630,
+        "view:off_nadir": 16.633,
+        "view:sun_azimuth": 166.531,
+        "view:sun_elevation": 34.587,
+        "view:azimuth": 142.765,
+        "view:incidence_angle": 18.154,
+        "gsd": 0.5,
+        "platform": "NewSat",
+        "instruments": [
+            "multispectral"
+        ],
+        "constellation": "Aleph1",
+        "license": "proprietary",
+        "created": "2024-11-02T23:22:16.564050Z",
+        "providers": [
+            {
+                "name": "Satellogic",
+                "description": "High-resolution geospatial imagery and analytics",
+                "roles": [
+                    "producer",
+                    "processor"
+                ],
+                "url": "https://satellogic.com/"
+            }
+        ],
+        "datetime": "2024-11-02T10:59:19.208450Z"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    -0.438017004781536,
+                    39.458954313573834
+                ],
+                [
+                    -0.350170413059452,
+                    39.45698462990694
+                ],
+                [
+                    -0.351254531597869,
+                    39.45045324356527
+                ],
+                [
+                    -0.352196652986685,
+                    39.45011448506221
+                ],
+                [
+                    -0.353509739198884,
+                    39.44243556127722
+                ],
+                [
+                    -0.35435617794134,
+                    39.44216665011432
+                ],
+                [
+                    -0.355671552934645,
+                    39.434415696154076
+                ],
+                [
+                    -0.356517885325509,
+                    39.43414676535356
+                ],
+                [
+                    -0.35783282102728,
+                    39.42639576418127
+                ],
+                [
+                    -0.35857263366318,
+                    39.426484622758366
+                ],
+                [
+                    -0.359990826540944,
+                    39.418447749178334
+                ],
+                [
+                    -0.360730559124382,
+                    39.418536591382704
+                ],
+                [
+                    -0.362047354180056,
+                    39.41071351429066
+                ],
+                [
+                    -0.362904226419653,
+                    39.41015658936627
+                ],
+                [
+                    -0.364217858072714,
+                    39.402405448275054
+                ],
+                [
+                    -0.364960139556163,
+                    39.40242227398837
+                ],
+                [
+                    -0.366276059989723,
+                    39.394599103422166
+                ],
+                [
+                    -0.367129988165507,
+                    39.39411412265999
+                ],
+                [
+                    -0.368440048251077,
+                    39.38643487343445
+                ],
+                [
+                    -0.369179458317353,
+                    39.38652365126932
+                ],
+                [
+                    -0.370497214085104,
+                    39.37862840296212
+                ],
+                [
+                    -0.371244651112929,
+                    39.37850121034069
+                ],
+                [
+                    -0.373891762365924,
+                    39.36732183140665
+                ],
+                [
+                    -0.462647769414181,
+                    39.36929221965695
+                ],
+                [
+                    -0.462513304637204,
+                    39.37044203963285
+                ],
+                [
+                    -0.461773912756528,
+                    39.37035385707992
+                ],
+                [
+                    -0.460458772534179,
+                    39.378466461871476
+                ],
+                [
+                    -0.459719299744469,
+                    39.37837826368906
+                ],
+                [
+                    -0.458411560825561,
+                    39.386274853104815
+                ],
+                [
+                    -0.457563555448437,
+                    39.386616549545195
+                ],
+                [
+                    -0.456255370441236,
+                    39.394513091680665
+                ],
+                [
+                    -0.455409870270343,
+                    39.3947827788439
+                ],
+                [
+                    -0.454106478918945,
+                    39.40253529514771
+                ],
+                [
+                    -0.453366763562783,
+                    39.40244704886094
+                ],
+                [
+                    -0.452062958232746,
+                    39.41019952100406
+                ],
+                [
+                    -0.451219873296743,
+                    39.41039718122065
+                ],
+                [
+                    -0.449913010587701,
+                    39.418221596050465
+                ],
+                [
+                    -0.448963881159694,
+                    39.41877714482416
+                ],
+                [
+                    -0.447767777171697,
+                    39.42609962785567
+                ],
+                [
+                    -0.446829035996889,
+                    39.426367199813484
+                ],
+                [
+                    -0.445513396687938,
+                    39.43440748553308
+                ],
+                [
+                    -0.444677894965712,
+                    39.434389122094544
+                ],
+                [
+                    -0.44336707575687,
+                    39.44228538394787
+                ],
+                [
+                    -0.44242282935668,
+                    39.44269688843235
+                ],
+                [
+                    -0.441222861263958,
+                    39.450091229260245
+                ],
+                [
+                    -0.440281132787758,
+                    39.45043072398772
+                ],
+                [
+                    -0.438969419560987,
+                    39.45832689053674
+                ],
+                [
+                    -0.438136276831606,
+                    39.458236483064674
+                ],
+                [
+                    -0.438017004781536,
+                    39.458954313573834
+                ]
+            ]
+        ]
+    },
+    "links": [
+        {
+            "rel": "license",
+            "href": "https://satellogic.com/documents/satellogic-3447.pdf",
+            "type": "application/pdf"
+        }
+    ],
+    "assets": {
+        "analytic": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_TOA.vrt",
+            "type": "application/xml",
+            "title": "4-Band analytic",
+            "eo:bands": [
+                {
+                    "name": "band1",
+                    "common_name": "blue",
+                    "center_wavelength": 480,
+                    "full_width_half_max": 60
+                },
+                {
+                    "name": "band2",
+                    "common_name": "green",
+                    "center_wavelength": 545,
+                    "full_width_half_max": 70
+                },
+                {
+                    "name": "band3",
+                    "common_name": "red",
+                    "center_wavelength": 640,
+                    "full_width_half_max": 100
+                },
+                {
+                    "name": "band4",
+                    "common_name": "nir",
+                    "center_wavelength": 825,
+                    "full_width_half_max": 150
+                }
+            ],
+            "roles": [
+                "data"
+            ]
+        },
+        "cloud": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_CLOUD.vrt",
+            "type": "application/xml",
+            "title": "Cloud Mask",
+            "roles": [
+                "cloud"
+            ]
+        },
+        "thumbnail": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_thumbnail.png",
+            "type": "image/png",
+            "title": "Thumbnail",
+            "roles": [
+                "thumbnail"
+            ]
+        },
+        "preview": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_preview.png",
+            "type": "image/png",
+            "title": "Preview",
+            "roles": [
+                "overview"
+            ]
+        },
+        "geojson-metadata": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_metadata_stac.geojson",
+            "type": "application/geo+json",
+            "title": "Extended STAC Metadata",
+            "roles": [
+                "metadata"
+            ]
+        },
+        "xml-metadata": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_metadata_iso.xml",
+            "type": "application/xml",
+            "title": "Extended ISO Metadata",
+            "roles": [
+                "metadata"
+            ]
+        },
+        "footprint": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_footprint.kml",
+            "type": "application/vnd.google-earth.kml+xml",
+            "title": "Footprint",
+            "roles": [
+                "footprint"
+            ]
+        },
+        "toa-factors": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_toa_factors.geojson",
+            "type": "application/geo+json",
+            "title": "TOA factors",
+            "roles": [
+                "metadata"
+            ]
+        },
+        "solar-and-viewing-angles": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_solar_and_viewing_angles.geojson",
+            "type": "application/geo+json",
+            "title": "Solar and viewing angles",
+            "roles": [
+                "metadata"
+            ]
+        },
+        "visual": {
+            "href": "20241102_105919_SN48_L1D_SR_MS_VISUAL.vrt",
+            "type": "application/xml",
+            "title": "3-Band RGB visual",
+            "roles": [
+                "data"
+            ]
+        }
+    },
+    "bbox": [
+        -0.462647769414181,
+        39.36732183140665,
+        -0.350170413059452,
+        39.458954313573834
+    ],
+    "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+    ]
+}

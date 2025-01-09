@@ -375,7 +375,7 @@
       "roles": [
         "visual"
       ],
-      "title": "3-Band Visual",
+      "title": "3-Band Visual (L3)",
       "href": "data/Landslide_Storm_Hurricane_in_Mexico_6-product/rasters/20231030_200817_SN29_L3_SR_MS_0.tif",
       "eo:bands": [
         {

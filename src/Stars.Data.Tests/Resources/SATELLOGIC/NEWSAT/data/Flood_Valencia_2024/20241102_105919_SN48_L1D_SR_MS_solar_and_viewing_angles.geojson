@@ -1,0 +1,485 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.34963268609783743,
+                            39.4674188857051
+                        ],
+                        [
+                            -0.35099928532881114,
+                            39.43138786955539
+                        ],
+                        [
+                            -0.30453816389312577,
+                            39.43031976779189
+                        ],
+                        [
+                            -0.30314766593831144,
+                            39.46634942295626
+                        ],
+                        [
+                            -0.34963268609783743,
+                            39.4674188857051
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.77,
+                    "off_nadir": 16.63,
+                    "incidence_angle": 18.15,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.55,
+                    "elevation": 34.54,
+                    "zenith": 55.46,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.23,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.39608532137350033,
+                            39.46846900946733
+                        ],
+                        [
+                            -0.3974280349386193,
+                            39.43243665690264
+                        ],
+                        [
+                            -0.35096446467957315,
+                            39.431387076019185
+                        ],
+                        [
+                            -0.34959784753616074,
+                            39.46741809115775
+                        ],
+                        [
+                            -0.39608532137350033,
+                            39.46846900946733
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.76,
+                    "off_nadir": 16.63,
+                    "incidence_angle": 18.15,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.54,
+                    "elevation": 34.56,
+                    "zenith": 55.44,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.2,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.39742702956036696,
+                            39.43246366101222
+                        ],
+                        [
+                            -0.3987673370121671,
+                            39.39643104652248
+                        ],
+                        [
+                            -0.3523276097029507,
+                            39.3953828007069
+                        ],
+                        [
+                            -0.3509634414030952,
+                            39.431414079126945
+                        ],
+                        [
+                            -0.39742702956036696,
+                            39.43246366101222
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.76,
+                    "off_nadir": 16.64,
+                    "incidence_angle": 18.16,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.53,
+                    "elevation": 34.59,
+                    "zenith": 55.41,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.2,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.398766333435365,
+                            39.3964580508283
+                        ],
+                        [
+                            -0.40010423952649715,
+                            39.36042517455473
+                        ],
+                        [
+                            -0.35368831255286126,
+                            39.35937826245479
+                        ],
+                        [
+                            -0.35232658825991503,
+                            39.39540980401191
+                        ],
+                        [
+                            -0.398766333435365,
+                            39.3964580508283
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.77,
+                    "off_nadir": 16.63,
+                    "incidence_angle": 18.15,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.52,
+                    "elevation": 34.62,
+                    "zenith": 55.38,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.21,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.44254036572174404,
+                            39.469500599802174
+                        ],
+                        [
+                            -0.44385918885440523,
+                            39.43346693436989
+                        ],
+                        [
+                            -0.3973932124701402,
+                            39.43243587724778
+                        ],
+                        [
+                            -0.3960504809889742,
+                            39.46846822881896
+                        ],
+                        [
+                            -0.44254036572174404,
+                            39.469500599802174
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.76,
+                    "off_nadir": 16.63,
+                    "incidence_angle": 18.15,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.54,
+                    "elevation": 34.56,
+                    "zenith": 55.44,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.2,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.44385820136453347,
+                            39.43349393946289
+                        ],
+                        [
+                            -0.44517466109605586,
+                            39.3974600134372
+                        ],
+                        [
+                            -0.3987325324142893,
+                            39.396430267859344
+                        ],
+                        [
+                            -0.3973922070784719,
+                            39.432462881356614
+                        ],
+                        [
+                            -0.44385820136453347,
+                            39.43349393946289
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.76,
+                    "off_nadir": 16.64,
+                    "incidence_angle": 18.16,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.53,
+                    "elevation": 34.59,
+                    "zenith": 55.41,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.2,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.4451736753756551,
+                            39.39748701872543
+                        ],
+                        [
+                            -0.44648777637470943,
+                            39.36145283224449
+                        ],
+                        [
+                            -0.4000694527672791,
+                            39.36042439688234
+                        ],
+                        [
+                            -0.3987315288240959,
+                            39.39645727216442
+                        ],
+                        [
+                            -0.4451736753756551,
+                            39.39748701872543
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.77,
+                    "off_nadir": 16.63,
+                    "incidence_angle": 18.15,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.52,
+                    "elevation": 34.62,
+                    "zenith": 55.38,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.21,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.48899777637824693,
+                            39.47051365387538
+                        ],
+                        [
+                            -0.49029270439607026,
+                            39.43447869912853
+                        ],
+                        [
+                            -0.443824364598687,
+                            39.4334661685985
+                        ],
+                        [
+                            -0.44250552354643646,
+                            39.469499833054954
+                        ],
+                        [
+                            -0.48899777637824693,
+                            39.47051365387538
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.77,
+                    "off_nadir": 16.63,
+                    "incidence_angle": 18.16,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.53,
+                    "elevation": 34.58,
+                    "zenith": 55.42,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.19,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.49029173479808286,
+                            39.43450570518729
+                        ],
+                        [
+                            -0.49158434214066293,
+                            39.398470491154946
+                        ],
+                        [
+                            -0.44513985471446976,
+                            39.39745924863991
+                        ],
+                        [
+                            -0.44382337709539726,
+                            39.43349317369076
+                        ],
+                        [
+                            -0.49029173479808286,
+                            39.43450570518729
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.76,
+                    "off_nadir": 16.64,
+                    "incidence_angle": 18.16,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.53,
+                    "elevation": 34.59,
+                    "zenith": 55.41,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.2,
+                    "units": "km"
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            -0.4915833742801581,
+                            39.39849749740797
+                        ],
+                        [
+                            -0.49287366553213957,
+                            39.36246202422525
+                        ],
+                        [
+                            -0.4464529878353039,
+                            39.36145206842031
+                        ],
+                        [
+                            -0.44513886898067523,
+                            39.397486253927404
+                        ],
+                        [
+                            -0.4915833742801581,
+                            39.39849749740797
+                        ]
+                    ]
+                ]
+            },
+            "properties": {
+                "satellite": {
+                    "azimuth": 142.77,
+                    "off_nadir": 16.63,
+                    "incidence_angle": 18.15,
+                    "units": "degrees"
+                },
+                "solar": {
+                    "azimuth": 166.52,
+                    "elevation": 34.62,
+                    "zenith": 55.38,
+                    "units": "degrees"
+                },
+                "satellite_altitude": {
+                    "values": 508.21,
+                    "units": "km"
+                }
+            }
+        }
+    ]
+}

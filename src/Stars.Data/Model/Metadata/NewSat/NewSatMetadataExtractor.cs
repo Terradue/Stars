@@ -46,7 +46,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
             {
                 DeserializeProductMetadata(geoJsonFileStreamable, item).GetAwaiter().GetResult();
             }
-            catch
+            catch (Exception)
             {
                 return false;
             }
@@ -82,7 +82,7 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
             UpdateBandsValues(stacItem);
 
             // add L3 visual tif asset
-            AddL3Assets(item, stacItem);
+            bool x = AddL3Assets(item, stacItem) || AddL1Assets(item, stacItem);
 
             return StacNode.Create(stacItem, item.Uri);
         }
@@ -133,18 +133,29 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
 
                 // before deserializing we modify the instruments type from string to array of strings
                 dynamic featureCollection = JsonConvert.DeserializeObject(json);
+                dynamic feature;
+                if (featureCollection.type == "Feature")
+                {
+                    feature = featureCollection;
+                }
+                else
+                {
+                    feature = featureCollection.features[0];
+                }
 
                 // Transform instrument into array if it is a string
-                if (featureCollection.features[0].properties.instruments is JValue)
-                {
-                    string instruments = featureCollection.features[0].properties.instruments;
 
-                    featureCollection.features[0].properties.instruments = new JArray() as dynamic;
-                    featureCollection.features[0].properties.instruments.Add(instruments.ToLower());
+
+                if (feature.properties.instruments is JValue)
+                {
+                    string instruments = feature.properties.instruments;
+
+                    feature.properties.instruments = new JArray() as dynamic;
+                    feature.properties.instruments.Add(instruments.ToLower());
                 }
 
                 // retrieving first statItem of the collection
-                string featureJson = featureCollection.features[0].ToString();
+                string featureJson = feature.ToString();
 
                 // deserializing stacItem
                 stacItem = StacConvert.Deserialize<StacItem>(featureJson);
@@ -241,9 +252,36 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
             }
         }
 
-        private void AddL3Assets(IItem item, StacItem stacItem)
+        private bool AddL1Assets(IItem item, StacItem stacItem)
+        {
+            IAsset l1Tif = FindFirstAssetFromFileNameRegex(item, @".*L1.*VISUAL.*\.tif");
+            if (l1Tif == null) l1Tif = FindFirstAssetFromFileNameRegex(item, @".*L1.*\.tif");
+            if (l1Tif == null) return false;
+
+            var bands = new Collection<EoBandObject>();
+            stacItem.Assets["analytic"].EoExtension().Bands.ToList().ForEach(
+                band =>
+                {
+                    if (!band.Name.Equals("band4"))
+                    {
+                        bands.Add(band);
+                    }
+                });
+
+            stacItem.Assets["visual"] = new StacAsset(stacItem, l1Tif.Uri);//stacItem.Assets["analytic"];
+            stacItem.Assets["visual"].MediaType = new System.Net.Mime.ContentType("image/tiff");
+            stacItem.Assets["visual"].EoExtension().Bands = bands.ToArray();
+            stacItem.Assets["visual"].SetProperty("filename", Path.GetFileName(l1Tif.Uri.AbsolutePath));
+            stacItem.Assets["visual"].Title = "3-Band Visual (L1)";
+            stacItem.Assets["visual"].Roles.Add("visual");
+
+            return true;
+        }
+
+        private bool AddL3Assets(IItem item, StacItem stacItem)
         {
             IAsset l3Tif = FindFirstAssetFromFileNameRegex(item, @".*L3.*\.tif");
+            if (l3Tif == null) return false;
 
             var bands = new Collection<EoBandObject>();
             stacItem.Assets["analytic"].EoExtension().Bands.ToList().ForEach(
@@ -259,8 +297,10 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
             stacItem.Assets["visual"].MediaType = new System.Net.Mime.ContentType("image/tiff");
             stacItem.Assets["visual"].EoExtension().Bands = bands.ToArray();
             stacItem.Assets["visual"].SetProperty("filename", Path.GetFileName(l3Tif.Uri.AbsolutePath));
-            stacItem.Assets["visual"].Title = "3-Band Visual";
+            stacItem.Assets["visual"].Title = "3-Band Visual (L3)";
             stacItem.Assets["visual"].Roles.Add("visual");
+
+            return true;
         }
 
     }

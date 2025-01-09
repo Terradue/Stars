@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -110,9 +111,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
                                 Isd isdMetadata,
                                 IAssetsContainer assetsContainer)
         {
+            var tifCount = assetsContainer.Assets.Values.Count(a => Path.GetFileName(a.Uri.AbsolutePath).ToLower().EndsWith(".tif"));
             foreach (var asset in assetsContainer.Assets.Values.OrderBy(a => a.Uri.ToString()))
             {
-                AddAsset(stacItem, metadata, isdMetadata, asset);
+                AddAsset(stacItem, metadata, isdMetadata, asset, tifCount);
             }
 
         }
@@ -134,7 +136,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
         private void AddAsset(StacItem stacItem,
                                 JavaProperties metadata,
                                 Isd isdMetadata,
-                                IAsset asset)
+                                IAsset asset,
+                                int tifCount)
         {
             string filename = Path.GetFileName(asset.Uri.ToString());
 
@@ -164,12 +167,23 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
             if (filename.EndsWith(".tif", true, CultureInfo.InvariantCulture))
             {
                 string bandName = metadata["SENSOR_TYPE"].ToLower();
-                AddRasterAsset(stacItem, asset, metadata, isdMetadata);
+                string assetKeySuffix = String.Empty;
+                if (tifCount > 1)
+                {
+                    assetKeySuffix = "-";
+                    using (MD5 md5 = MD5.Create())
+                    {
+                        byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(filename);
+                        byte[] hashBytes = md5.ComputeHash(inputBytes);
+                        for (int i = 0; i < 4; i++) assetKeySuffix += hashBytes[i].ToString("X2");
+                    }
+                }
+                AddRasterAsset(stacItem, asset, metadata, isdMetadata, assetKeySuffix);
             }
         }
 
 
-        private void AddRasterAsset(StacItem stacItem, IAsset asset, JavaProperties metadata, Isd isdMetadata)
+        private void AddRasterAsset(StacItem stacItem, IAsset asset, JavaProperties metadata, Isd isdMetadata, string assetKeySuffix)
         {
             string bandName = metadata["SENSOR_TYPE"].ToLower();
             string platformNumber = metadata["PLATFORM_NUMBER"];
@@ -203,7 +217,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
                 }
                 stacAsset.EoExtension().Bands = eoBandObjects.ToArray();
                 stacAsset.RasterExtension().Bands = rasterBandObjects.ToArray();
-                stacItem.Assets.Add("pan", stacAsset);
+                stacItem.Assets.Add(String.Format("pan{0}", assetKeySuffix), stacAsset);
             }
 
             // WORLDVIEW-2
@@ -330,7 +344,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
                 }
                 stacAsset.EoExtension().Bands = eoBandObjects.ToArray();
                 stacAsset.RasterExtension().Bands = rasterBandObjects.ToArray();
-                stacItem.Assets.Add("pms", stacAsset);
+                stacItem.Assets.Add(String.Format("pms{0}", assetKeySuffix), stacAsset);
             }
 
             // WORLDVIEW-3
@@ -457,7 +471,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Worldview
                 }
                 stacAsset.EoExtension().Bands = eoBandObjects.ToArray();
                 stacAsset.RasterExtension().Bands = rasterBandObjects.ToArray();
-                stacItem.Assets.Add("pms", stacAsset);
+                stacItem.Assets.Add(String.Format("pms{0}", assetKeySuffix), stacAsset);
             }
         }
 
