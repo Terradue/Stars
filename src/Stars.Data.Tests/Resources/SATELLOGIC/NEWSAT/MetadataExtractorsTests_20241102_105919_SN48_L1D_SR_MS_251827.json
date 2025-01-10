@@ -289,7 +289,7 @@
       ],
       "filename": "20241102_105919_SN48_L1D_SR_MS_TOA_0.tif"
     },
-    "cloud": {
+    "cloud_mask": {
       "type": "application/xml",
       "roles": [
         "cloud"
