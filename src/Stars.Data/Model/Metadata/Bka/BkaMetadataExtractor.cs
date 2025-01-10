@@ -197,7 +197,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
                     }
                 }
             }
-            if (viewingAngleCount != 0) view.IncidenceAngle = viewingAngleSum / viewingAngleCount;
+            //if (viewingAngleCount != 0) view.IncidenceAngle = viewingAngleSum / viewingAngleCount;
             if (sunAzimuthCount != 0) view.SunAzimuth = sunAzimuthSum / sunAzimuthCount;
             if (sunElevationCount != 0) view.SunElevation = sunElevationSum / sunElevationCount;
         }
