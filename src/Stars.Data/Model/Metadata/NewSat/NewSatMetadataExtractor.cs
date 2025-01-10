@@ -84,6 +84,12 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
             // add L3 visual tif asset
             bool x = AddL3Assets(item, stacItem) || AddL1Assets(item, stacItem);
 
+            if (!stacItem.Assets.ContainsKey("cloud_mask") && stacItem.Assets.ContainsKey("cloud"))
+            {
+                stacItem.Assets["cloud_mask"] = stacItem.Assets["cloud"];
+                stacItem.Assets.Remove("cloud");
+            }
+
             return StacNode.Create(stacItem, item.Uri);
         }
 
