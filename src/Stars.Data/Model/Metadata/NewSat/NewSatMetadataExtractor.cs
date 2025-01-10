@@ -185,11 +185,15 @@ namespace Terradue.Stars.Data.Model.Metadata.NewSat
             var properties = stacItem.Properties;
             // title
             properties.Remove("title");
+            string instruments = properties.GetProperty<string[]>("instruments").First();
+            if (instruments == "multispectral") instruments = "MS";
+            string processingLevel = properties.GetProperty<string>("processing:level").ToUpper();
+            if (stacItem.Id.Contains("_SR_") || stacItem.Id.EndsWith("_SR")) processingLevel += "_SR";
             properties.Add("title", string.Format("{0} {1} {2} {3}",
                 //StylePlatform(properties.GetProperty<string>("platform")),
                 properties.GetProperty<string>("platform").ToUpper(),
-                properties.GetProperty<string[]>("instruments").First().ToUpper(),
-                properties.GetProperty<string>("processing:level").ToUpper(),
+                instruments.ToUpper(),
+                processingLevel,
                 properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)));
         }
 
