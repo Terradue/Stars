@@ -189,6 +189,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise {
         S1B,
         
         /// <remarks/>
+        S1C,
+        
+        /// <remarks/>
         ASA,
     }
     

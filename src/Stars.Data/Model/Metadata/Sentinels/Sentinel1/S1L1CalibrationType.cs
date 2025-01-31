@@ -200,7 +200,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Calibration {
         
         /// <remarks/>
         S1B,
-        
+
+        /// <remarks/>
+        S1C,
+
         /// <remarks/>
         ASA,
     }

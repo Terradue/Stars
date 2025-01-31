@@ -544,7 +544,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         protected virtual IAsset GetTopZipAsset(IItem item)
         {
-            IAsset zipAsset = FindFirstAssetFromFileNameRegex(item, @"^(?!.*(S2A_|S2B_)).*\.zip$");
+            IAsset zipAsset = FindFirstAssetFromFileNameRegex(item, @"^(?!.*S2[ABC]_).*\.zip$");
             return zipAsset;
         }
 
