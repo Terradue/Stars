@@ -147,7 +147,10 @@ namespace Terradue.Stars.Services.Processing
                         blockingStream.Close();
                     }, null, TaskCreationOptions.AttachedToParent);
 
-                    extractedAssets.Add(name, tarEntryAction(tarEntryAsset, destination, carrierManager, ct).GetAwaiter().GetResult());
+                    if (!name.Contains("/@") && !extractedAssets.ContainsKey(name))
+                    {
+                        extractedAssets.Add(name, tarEntryAction(tarEntryAsset, destination, carrierManager, ct).GetAwaiter().GetResult());
+                    }
 
                     if (!extractTask.IsCompleted)
                     {
