@@ -100,7 +100,7 @@ namespace Terradue.Stars.Services.Translator
             {
                 if (!link.Uri.IsAbsoluteUri)
                     continue;
-                stacItem.Links.Add(new StacLink(link.Uri, link.Relationship, link.Title, link.ContentType.ToString()));
+                stacItem.Links.Add(new StacLink(link.Uri, link.Relationship, link.Title, link.ContentType?.ToString()));
             }
             return new StacItemNode(stacItem, node.Uri);
         }
