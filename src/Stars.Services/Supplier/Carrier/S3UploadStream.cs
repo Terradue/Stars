@@ -63,6 +63,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         protected override void Dispose(bool disposing)
         {
+            Console.WriteLine("SIGNATURE: {0} - {1}", _s3.Config.SignatureMethod, _s3.Config.SignatureVersion);
             if (disposing)
             {
                 if (_metadata != null)
