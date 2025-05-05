@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Terradue.Stars.Interface;
 using Terradue.Stars.Interface.Supplier.Destination;
 using Terradue.Stars.Services.Resources;
