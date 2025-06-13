@@ -544,7 +544,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         protected virtual IAsset GetTopZipAsset(IItem item)
         {
-            IAsset zipAsset = FindFirstAssetFromFileNameRegex(item, @"^(?!.*S2[ABC]_).*\.zip$");
+            IAsset zipAsset = FindFirstAssetFromFileNameRegex(item, @"^(?!.*S\d[A-Z]_).*\.zip$");
             return zipAsset;
         }
 
@@ -561,7 +561,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
 
         protected virtual IEnumerable<IAsset> GetInnerZipAssets(IAssetsContainer container)
         {
-            IEnumerable<IAsset> zipAssets = FindAssetsFromFileNameRegex(container, @"^(?!.*(S2A_|S2B_)).*\.zip$");
+            IEnumerable<IAsset> zipAssets = FindAssetsFromFileNameRegex(container, @"^(?!.*S\d[A-Z]).*\.zip$");
             return zipAssets;
         }
 
