@@ -138,7 +138,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                             .WaitAndRetryAsync(4, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, retryAttempt) * 500), (exception, timeSpan, retryCount, context) =>
                             {
                                 logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
-                                if (retryCount == )
+                                if (retryCount == 4)
                                     logger.LogError("Upload failed after 3 retries.");
                             }).ExecuteAsync(async () =>
                             {
