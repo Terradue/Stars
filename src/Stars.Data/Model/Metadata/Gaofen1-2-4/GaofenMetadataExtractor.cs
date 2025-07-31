@@ -74,7 +74,6 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
         {
             logger.LogDebug("Retrieving the metadata files in the product package");
 
-
             List<IAsset> metadatafiles = FindAssetsFromFileNameRegex(item, "^(?!order)[\\w_\\-\\.]+(?<!\\.rpb\\.aux)\\.xml$").ToList();
 
 
@@ -831,10 +830,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
         private void GetGF4BandAssets(StacAsset stacAsset, ProductMetaData metadata,
             string sensorName)
         {
-            var acquisitionYear = metadata.StartTime.Split('-')[0];
+            int acquisitionYear = Int32.Parse(metadata.StartTime.Split('-')[0]);
             var msList = metadata.IntegrationTime.Split(',').ToList();
             JObject gf4Aux = null;
-            using (StreamReader r = new StreamReader("Model/Metadata/Gaofen1-2-4/GF4_bands.json"))
+            string binDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            using (StreamReader r = new StreamReader(string.Format("{0}/Model/Metadata/Gaofen1-2-4/GF4_bands.json", binDir)))
             {
                 string json = r.ReadToEnd();
                 gf4Aux = JObject.Parse(json);
@@ -854,8 +854,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Gaofen
                         band["ESUN"].Value<double>());
                 stacAsset.EoExtension().Bands[i] = eoBandObject;
 
-                RasterBand rasterBandObject =
-                    CreateRasterBandObject(0, band["gain"][acquisitionYear].Value<double>());
+                int closestYear = 0;
+                double gain = 0;
+                foreach (KeyValuePair<string, double> kvp in band["gain"].ToObject<Dictionary<string, double>>())
+                {
+                    int year = Int32.Parse(kvp.Key);
+                    if (closestYear == 0 || Math.Abs(year - acquisitionYear) < Math.Abs(closestYear - acquisitionYear))
+                    {
+                        closestYear = year;
+                        gain = kvp.Value;
+                    }
+                }
+                RasterBand rasterBandObject = CreateRasterBandObject(0, gain);
                 stacAsset.RasterExtension().Bands[i] = rasterBandObject;
             }
         }
