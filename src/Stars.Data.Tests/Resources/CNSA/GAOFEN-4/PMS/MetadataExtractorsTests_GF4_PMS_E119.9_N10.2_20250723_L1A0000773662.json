@@ -1,0 +1,262 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "GF4_PMS_E119.9_N10.2_20250723_L1A0000773662",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          117.622,
+          8.86828
+        ],
+        [
+          121.595,
+          8.8547
+        ],
+        [
+          121.871,
+          12.6998
+        ],
+        [
+          117.831,
+          12.6996
+        ],
+        [
+          117.622,
+          8.86828
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2025-07-23T12:13:49Z",
+    "created": "2025-07-23T13:27:45Z",
+    "platform": "gaofen-4",
+    "constellation": "gaofen-4",
+    "mission": "gaofen-4",
+    "instruments": [
+      "pmi"
+    ],
+    "sensor_type": "optical",
+    "gsd": 50.0,
+    "eo:cloud_cover": 0.75,
+    "sat:absolute_orbit": 59512,
+    "sat:relative_orbit": 59512,
+    "sat:orbit_state": "descending",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 0.0,
+    "view:sun_azimuth": 351.081,
+    "view:sun_elevation": 80.6199,
+    "proj:epsg": null,
+    "proj:shape": [
+      1024,
+      1024
+    ],
+    "processing:level": "L1A",
+    "title": "GAOFEN-4 PMI L1A 2025-07-23 12:13:49",
+    "product_type": "PAN_MS_L1A",
+    "providers": [
+      {
+        "name": "CNSA",
+        "description": "The main goal of the CHEOS (China High-Resolution Earth Observation System) series is to provide NRT (Near-Real-Time) observations for disaster prevention and relief, climate change monitoring, geographical mapping, environment and resource surveying, and precision agricultural support.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "http://www.cnsa.gov.cn/english/n6465715/n6465716/c6840350/content.html"
+      }
+    ]
+  },
+  "bbox": [
+    117.622,
+    8.8547,
+    121.871,
+    12.6998
+  ],
+  "assets": {
+    "IRS-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_IRS_E119.9_N10.2_20250723_L1A0000773662_thumb.jpg",
+      "filename": "GF4_IRS_E119.9_N10.2_20250723_L1A0000773662_thumb.jpg",
+      "file:size": 2000
+    },
+    "IRS-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.jpg",
+      "filename": "GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.jpg",
+      "file:size": 2005
+    },
+    "IRS-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.rpb",
+      "filename": "GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.rpb",
+      "file:size": 2709
+    },
+    "IRS": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.tiff",
+      "filename": "GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.tiff",
+      "file:size": 0,
+      "proj:shape": [
+        1024,
+        1024
+      ],
+      "eo:bands": [
+        {
+          "name": "mwir38",
+          "center_wavelength": 3.8,
+          "solar_illumination": 1734.53,
+          "full_width_half_max": 6.0
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 280.59,
+          "offset": 0.0
+        }
+      ],
+      "gsd": 400
+    },
+    "IRS-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.xml",
+      "filename": "GF4_IRS_E119.9_N10.2_20250723_L1A0000773662.xml",
+      "file:size": 2479
+    },
+    "PMS-thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662_thumb.jpg",
+      "filename": "GF4_PMS_E119.9_N10.2_20250723_L1A0000773662_thumb.jpg",
+      "file:size": 12858
+    },
+    "PMS-overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.jpg",
+      "filename": "GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.jpg",
+      "file:size": 128803
+    },
+    "PMS-rpb": {
+      "type": "application/octet-stream",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.rpb",
+      "filename": "GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.rpb",
+      "file:size": 2714
+    },
+    "PMS": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.tiff",
+      "filename": "GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.tiff",
+      "file:size": 0,
+      "proj:shape": [
+        10240,
+        10240
+      ],
+      "eo:bands": [
+        {
+          "name": "pan",
+          "common_name": "pan",
+          "center_wavelength": 0.675,
+          "solar_illumination": 1258.38,
+          "full_width_half_max": 4.5
+        },
+        {
+          "name": "blue",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1907.88,
+          "full_width_half_max": 0.7
+        },
+        {
+          "name": "green",
+          "common_name": "green",
+          "center_wavelength": 0.56,
+          "solar_illumination": 1815.42,
+          "full_width_half_max": 0.8
+        },
+        {
+          "name": "red",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1580.18,
+          "full_width_half_max": 0.6
+        },
+        {
+          "name": "nir",
+          "common_name": "nir",
+          "center_wavelength": 0.78,
+          "solar_illumination": 1098.79,
+          "full_width_half_max": 0.3
+        }
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.1753,
+          "offset": 0.0
+        },
+        {
+          "scale": 0.1843,
+          "offset": 0.0
+        },
+        {
+          "scale": 0.2041,
+          "offset": 0.0
+        },
+        {
+          "scale": 0.1625,
+          "offset": 0.0
+        },
+        {
+          "scale": 0.1144,
+          "offset": 0.0
+        }
+      ],
+      "gsd": 50
+    },
+    "PMS-metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662/GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.xml",
+      "filename": "GF4_PMS_E119.9_N10.2_20250723_L1A0000773662.xml",
+      "file:size": 2567
+    }
+  },
+  "links": []
+}
