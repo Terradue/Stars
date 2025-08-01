@@ -19,9 +19,9 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         /* Note the that maximum size (as of now) of a file in S3 is 5TB so it isn't
          * safe to assume all uploads will work here.  MAX_PART_SIZE times MAX_PART_COUNT
          * is ~50TB, which is too big for S3. */
-        private const long MIN_PART_LENGTH = 5L * 1024 * 1024;// all parts but the last this size or greater
-        private const long MAX_PART_LENGTH = 5L * 1024 * 1024 * 1024;// 5GB max per PUT
-        private const long MAX_PART_COUNT = 10000;// no more than 10,000 parts total
+        private const long MIN_PART_LENGTH = 5L * 1024 * 1024; // all parts but the last this size or greater
+        private const long MAX_PART_LENGTH = 5L * 1024 * 1024 * 1024; // 5GB max per PUT
+        private const long MAX_PART_COUNT = 10000; // no more than 10,000 parts total
         private const long DEFAULT_PART_LENGTH = MIN_PART_LENGTH;
 
         internal class Metadata
@@ -34,8 +34,8 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             public string UploadId;
             public MemoryStream CurrentStream;
 
-            public long Position = 0;
-            public long Length = 0;
+            public long Position = 0; // based on bytes written
+            public long Length = 0; // based on bytes written or SetLength, whichever is larger (no truncation)
 
             public List<Task> Tasks = new List<Task>();
             public ConcurrentDictionary<int, string> PartETags = new ConcurrentDictionary<int, string>();
@@ -164,8 +164,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         {
             if (count == 0) return;
 
+            // write as much of the buffer as will fit to the current part, and if needed
+            // allocate a new part and continue writing to it (and so on).
             var o = offset;
-            var c = Math.Min(count, buffer.Length - offset);
+            var c = Math.Min(count, buffer.Length - offset); // don't over-read the buffer, even if asked to
             do
             {
                 if (_metadata.CurrentStream == null || _metadata.CurrentStream.Length >= _metadata.PartLength)

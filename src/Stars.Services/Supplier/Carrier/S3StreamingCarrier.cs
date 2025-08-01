@@ -97,7 +97,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             try
             {
                 bool uploadStream = false;
-               // in case source is also S3, try to make a copy
+                // in case source is also S3, try to make a copy
                 if (inputStreamResource is S3Resource)
                 {
                     uploadStream = true;
@@ -173,6 +173,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     }
                 }
 
+                // refresh metadata
                 await s3outputStreamResource.LoadMetadata(ct);
                 return s3outputStreamResource;
             }
