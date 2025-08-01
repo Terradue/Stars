@@ -15,6 +15,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 {
     public class S3UploadStream : Stream
     {
+
         /* Note the that maximum size (as of now) of a file in S3 is 5TB so it isn't
          * safe to assume all uploads will work here.  MAX_PART_SIZE times MAX_PART_COUNT
          * is ~50TB, which is too big for S3. */
@@ -44,14 +45,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
         private readonly IAmazonS3 _s3 = null;
 
         public S3UploadStream(IAmazonS3 s3, string s3uri, long partLength = DEFAULT_PART_LENGTH)
-            : this(s3, new Uri(s3uri), partLength)
-        {
-        }
+            : this(s3, new Uri(s3uri), partLength) { }
 
         public S3UploadStream(IAmazonS3 s3, Uri s3uri, long partLength = DEFAULT_PART_LENGTH)
-            : this(s3, s3uri.Host, s3uri.LocalPath.Substring(1), partLength)
-        {
-        }
+            : this(s3, s3uri.Host, s3uri.LocalPath.Substring(1), partLength) { }
 
         public S3UploadStream(IAmazonS3 s3, string bucket, string key, long partLength = DEFAULT_PART_LENGTH)
         {
@@ -63,13 +60,10 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && _metadata != null)
             {
-                if (_metadata != null)
-                {
-                    Flush(true);
-                    CompleteUpload();
-                }
+                Flush(true);
+                CompleteUpload();
             }
             _metadata = null;
             base.Dispose(disposing);
@@ -112,8 +106,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
 
         private void Flush(bool disposing)
         {
-            if ((_metadata.CurrentStream == null || _metadata.CurrentStream.Length < MIN_PART_LENGTH) &&
-                !disposing)
+            if ((_metadata.CurrentStream == null || _metadata.CurrentStream.Length < MIN_PART_LENGTH) && !disposing)
                 return;
 
             if (_metadata.UploadId == null)
@@ -144,8 +137,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 var upload = Task.Run(async () =>
                 {
                     var response = await _s3.UploadPartAsync(request);
-                    _metadata.PartETags.AddOrUpdate(i, response.ETag,
-                        (n, s) => response.ETag);
+                    _metadata.PartETags.AddOrUpdate(i, response.ETag, (n, s) => response.ETag);
                     request.InputStream.Dispose();
                 });
                 _metadata.Tasks.Add(upload);
@@ -182,7 +174,7 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     StartNewPart();
 
                 var remaining = _metadata.PartLength - _metadata.CurrentStream.Length;
-                var w = Math.Min(c, (int)remaining);
+                var w = (int)Math.Min((long)c, remaining);
                 _metadata.CurrentStream.Write(buffer, o, w);
 
                 _metadata.Position += w;
