@@ -36,7 +36,7 @@ jobs:
         flags: unittests
         name: .NET Test Coverage
     - name: Upload test results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: dotnet-results
         path: TestResults
