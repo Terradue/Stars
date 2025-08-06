@@ -389,7 +389,14 @@ namespace Terradue.Stars.Services.Resources
 
         public S3Configuration GetS3Configuration(S3Url s3Url)
         {
-            return s3Options.CurrentValue?.GetS3Configuration(s3Url.ToString()).Value;
+            return GetS3Configuration(s3Url.ToString(), false);
+        }
+
+        public S3Configuration GetS3Configuration(string s3Url, bool throwIfMissing = false)
+        {
+            S3Configuration result = s3Options.CurrentValue?.GetS3Configuration(s3Url).Value;
+            if (throwIfMissing && result == null) throw new Exception(String.Format("No S3 configuration found for {0}", s3Url));
+            return result;
         }
     }
 }

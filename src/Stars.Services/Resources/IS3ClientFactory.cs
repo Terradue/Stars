@@ -19,7 +19,7 @@ namespace Terradue.Stars.Services.Resources
         AWSCredentials GetConfiguredCredentials(S3Url s3Url, IIdentityProvider identityProvider = null);
         IAmazonS3 CreateS3Client(string name);
         Task<AWSCredentials> GetWebIdentityCredentialsAsync(string serviceUrl, JwtSecurityToken jwt, string policy);
-
-
+        S3Configuration GetS3Configuration(string s3Url, bool throwIfMissing = false);
+        
     }
 }

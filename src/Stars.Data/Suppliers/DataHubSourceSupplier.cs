@@ -51,7 +51,7 @@ namespace Terradue.Stars.Data.Suppliers
 
         public IDataHubSourceWrapper Wrapper => wrapper;
 
-        public void ConfigureWrapper(SupplierPluginOption pluginOption)
+        public virtual void ConfigureWrapper(SupplierPluginOption pluginOption)
         {
             if (pluginOption == null)
                 throw new ArgumentNullException("pluginOption");
@@ -166,7 +166,7 @@ namespace Terradue.Stars.Data.Suppliers
             return CreateDataHubResultItem(result, sourceUri);
         }
 
-        private IResource CreateDataHubResultItem(OpenSearch.Result.IOpenSearchResultCollection result, Uri sourceUri)
+        protected IResource CreateDataHubResultItem(OpenSearch.Result.IOpenSearchResultCollection result, Uri sourceUri)
         {
             var firstItem = result.Items.FirstOrDefault();
             return new DataHubResultItemRoutable(firstItem, this, sourceUri, logger);
