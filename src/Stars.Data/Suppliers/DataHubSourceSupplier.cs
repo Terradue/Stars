@@ -28,9 +28,9 @@ namespace Terradue.Stars.Data.Suppliers
 {
     public class DataHubSourceSupplier : OpenSearchableSupplier, ISupplier
     {
-        private IDataHubSourceWrapper wrapper;
-        private readonly ICredentials credentialsManager;
-        private readonly IS3ClientFactory _s3ClientFactory;
+        protected IDataHubSourceWrapper wrapper;
+        protected readonly ICredentials credentialsManager;
+        protected readonly IS3ClientFactory _s3ClientFactory;
 
         public DataHubSourceSupplier(ILogger<DataHubSourceSupplier> logger,
                                      TranslatorManager translatorManager,
