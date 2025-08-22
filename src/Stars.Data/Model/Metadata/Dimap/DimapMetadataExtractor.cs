@@ -204,6 +204,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         private void FillInstrument(DimapProfiler dimapProfiler, Dictionary<string, object> properties)
         {
             // platform & constellation
+            string agency = dimapProfiler.Dimap.Production.DATASET_PRODUCER_NAME?.Trim(new char[] { ' ', '.' });
+            if (!String.IsNullOrEmpty(agency))
+            {
+                properties.Remove("agency");
+                properties.Add("agency", agency);
+            }
+
             properties.Remove("platform");
             properties.Add("platform", dimapProfiler.GetPlatform().ToLower());
 
@@ -282,6 +289,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         private void AddOtherProperties(DimapProfiler dimapProfiler, IDictionary<string, object> properties)
         {
+            
+
             if (IncludeProviderProperty)
             {
                 StacProvider provider = dimapProfiler.GetStacProvider();
