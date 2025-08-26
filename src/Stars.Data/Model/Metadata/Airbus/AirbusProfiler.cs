@@ -168,7 +168,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             }
         }
 
-        internal double GetIndidenceAngle()
+        internal double GetIncidenceAngle()
         {
             try
             {

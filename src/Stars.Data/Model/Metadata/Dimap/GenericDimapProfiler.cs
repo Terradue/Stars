@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Humanizer;
 using Stac;
 using Stac.Extensions.Eo;
@@ -52,11 +53,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         public override string GetTitle(IDictionary<string, object> properties)
         {
             CultureInfo culture = new CultureInfo("fr-FR");
-            return string.Format("{0} {1} {2} {3}",
-                                                  GetPlatform(),
-                                                  string.Join("/", GetInstruments()),
-                                                  GetProcessingLevel(),
-                                                  properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture));
+            string title = String.Format("{0} {1} {2} {3} {4}",
+                GetPlatform(),
+                string.Join("/", GetInstruments()),
+                GetProcessingLevel(),
+                GetSpectralProcessing(),
+                properties.GetProperty<DateTime>("datetime").ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", culture)
+            );
+            title = Regex.Replace(title, "  +", " ");
+            return title;
         }
 
         protected override EoBandObject GetEoBandObject(t_Spectral_Band_Info bandInfo, string description)
@@ -124,7 +129,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         internal override string GetSensorMode()
         {
-            return null;
+            return "optical";
         }
+
     }
 }
