@@ -2972,11 +2972,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
         }
 
         /// <remarks/>
-        public t_Projection_CT_Method Projection_CT_Method {
-            get {
+        public t_Projection_CT_Method Projection_CT_Method
+        {
+            get
+            {
                 return this.projection_CT_MethodField;
             }
-            set {
+            set
+            {
                 this.projection_CT_MethodField = value;
             }
         }
@@ -3408,8 +3411,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlRootAttribute("Coordinate_Reference_System", Namespace="", IsNullable=false)]
-    public partial class t_Coordinate_Reference_System {
+    [System.Xml.Serialization.XmlRootAttribute("Coordinate_Reference_System", Namespace = "", IsNullable = false)]
+    public partial class t_Coordinate_Reference_System
+    {
 
         private t_GEO_TABLES gEO_TABLESField;
 
@@ -3417,33 +3421,57 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
 
         private t_Vertical_CS vertical_CSField;
 
+        private string projection_OGCWKTField;
+
+
         /// <remarks/>
-        public t_GEO_TABLES GEO_TABLES {
-            get {
+        public t_GEO_TABLES GEO_TABLES
+        {
+            get
+            {
                 return this.gEO_TABLESField;
             }
-            set {
+            set
+            {
                 this.gEO_TABLESField = value;
             }
         }
 
         /// <remarks/>
-        public t_Horizontal_CS Horizontal_CS {
-            get {
+        public t_Horizontal_CS Horizontal_CS
+        {
+            get
+            {
                 return this.horizontal_CSField;
             }
-            set {
+            set
+            {
                 this.horizontal_CSField = value;
             }
         }
 
         /// <remarks/>
-        public t_Vertical_CS Vertical_CS {
-            get {
+        public t_Vertical_CS Vertical_CS
+        {
+            get
+            {
                 return this.vertical_CSField;
             }
-            set {
+            set
+            {
                 this.vertical_CSField = value;
+            }
+        }
+
+        public string Projection_OGCWKT
+        {
+            get
+            {
+                return this.projection_OGCWKTField;
+            }
+            set
+            {
+                this.projection_OGCWKTField = value;
             }
         }
     }
@@ -6152,8 +6180,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlRootAttribute("Spectral_Band_Info", Namespace="", IsNullable=false)]
-    public partial class t_Spectral_Band_Info {
+    [System.Xml.Serialization.XmlRootAttribute("Spectral_Band_Info", Namespace = "", IsNullable = false)]
+    public partial class t_Spectral_Band_Info
+    {
 
         private t_BAND_INDEX bAND_INDEXField;
 
@@ -6170,76 +6199,99 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
         private string pHYSICAL_UNITField;
 
         /// <remarks/>
-        public t_BAND_INDEX BAND_INDEX {
-            get {
+        public t_BAND_INDEX BAND_INDEX
+        {
+            get
+            {
                 return this.bAND_INDEXField;
             }
-            set {
+            set
+            {
                 this.bAND_INDEXField = value;
             }
         }
 
         /// <remarks/>
-        public string BAND_DESCRIPTION {
-            get {
+        public string BAND_DESCRIPTION
+        {
+            get
+            {
                 return this.bAND_DESCRIPTIONField;
             }
-            set {
+            set
+            {
                 this.bAND_DESCRIPTIONField = value;
             }
         }
 
         /// <remarks/>
-        public double PHYSICAL_GAIN {
-            get {
+        public double PHYSICAL_GAIN
+        {
+            get
+            {
                 return this.pHYSICAL_GAINField;
             }
-            set {
+            set
+            {
                 this.pHYSICAL_GAINField = value;
             }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool PHYSICAL_GAINSpecified {
-            get {
+        public bool PHYSICAL_GAINSpecified
+        {
+            get
+            {
                 return this.pHYSICAL_GAINFieldSpecified;
             }
-            set {
+            set
+            {
                 this.pHYSICAL_GAINFieldSpecified = value;
             }
         }
 
         /// <remarks/>
-        public double PHYSICAL_BIAS {
-            get {
+        public double PHYSICAL_BIAS
+        {
+            get
+            {
                 return this.pHYSICAL_BIASField;
             }
-            set {
+            set
+            {
                 this.pHYSICAL_BIASField = value;
             }
         }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool PHYSICAL_BIASSpecified {
-            get {
+        public bool PHYSICAL_BIASSpecified
+        {
+            get
+            {
                 return this.pHYSICAL_BIASFieldSpecified;
             }
-            set {
+            set
+            {
                 this.pHYSICAL_BIASFieldSpecified = value;
             }
         }
 
         /// <remarks/>
-        public string PHYSICAL_UNIT {
-            get {
+        public string PHYSICAL_UNIT
+        {
+            get
+            {
                 return this.pHYSICAL_UNITField;
             }
-            set {
+            set
+            {
                 this.pHYSICAL_UNITField = value;
             }
         }
+
+        public double? ESUN { get; set; }
     }
 
     /// <remarks/>
@@ -6324,6 +6376,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
 
         private t_THEORETICAL_RESOLUTION rESOLUTIONField;
 
+        private t_THEORETICAL_RESOLUTION pIXEL_RESOLUTION_XField;
+
+        private t_THEORETICAL_RESOLUTION pIXEL_RESOLUTION_YField;
+
         private t_SUN_AZIMUTH sUN_AZIMUTHField;
 
         private t_SUN_ELEVATION sUN_ELEVATIONField;
@@ -6367,6 +6423,22 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
             get ;
             set ;
         }
+
+        /// <remarks/>
+        // [System.Xml.Serialization.XmlElementAttribute(DataType="time")]
+        public System.DateTime START_TIME {
+            get ;
+            set ;
+        }
+
+
+        /// <remarks/>
+        // [System.Xml.Serialization.XmlElementAttribute(DataType="time")]
+        public System.DateTime STOP_TIME {
+            get ;
+            set ;
+        }
+
 
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6499,6 +6571,24 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap.Schemas {
             }
             set {
                 this.rESOLUTIONField = value;
+            }
+        }
+
+        public t_THEORETICAL_RESOLUTION PIXEL_RESOLUTION_X {
+            get {
+                return this.pIXEL_RESOLUTION_XField;
+            }
+            set {
+                this.pIXEL_RESOLUTION_XField = value;
+            }
+        }
+
+        public t_THEORETICAL_RESOLUTION PIXEL_RESOLUTION_Y {
+            get {
+                return this.pIXEL_RESOLUTION_YField;
+            }
+            set {
+                this.pIXEL_RESOLUTION_YField = value;
             }
         }
 

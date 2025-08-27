@@ -1,0 +1,174 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "DE2_MS4_L1D_000000_20230523T092838_20230523T092841_DE2_48370_57E5",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          4.782536,
+          43.619627
+        ],
+        [
+          4.825464,
+          43.496749
+        ],
+        [
+          4.979608,
+          43.524851
+        ],
+        [
+          4.93668,
+          43.647729
+        ],
+        [
+          4.782536,
+          43.619627
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2023-05-23T09:28:38Z",
+    "start_datetime": "2023-05-23T09:28:38Z",
+    "end_datetime": "2023-05-23T09:28:41Z",
+    "created": "2023-08-09T11:55:57Z",
+    "agency": "GeoSAT Satelites SLU",
+    "platform": "geosat-2",
+    "constellation": "geosat",
+    "mission": "geosat-2",
+    "instruments": [
+      "hirais"
+    ],
+    "spectral_processing": "",
+    "sensor_type": "optical",
+    "gsd": 1.6430725562,
+    "title": "GEOSAT-2 HiRAIS L1D 2023-05-23 07:28:38",
+    "sat:orbit_state": "ascending",
+    "sat:platform_international_designator": "2014-033D",
+    "proj:epsg": 32631,
+    "proj:shape": [
+      9852,
+      10452
+    ],
+    "view:azimuth": 9.2,
+    "view:sun_azimuth": 120.377242948,
+    "view:sun_elevation": 54.7151,
+    "view:incidence_angle": 10.212716525960118,
+    "processing:level": "L1D",
+    "metadata_format": "DIMAP",
+    "data_file_format": "GEOTIFF",
+    "data_file_bands": 4,
+    "providers": [
+      {
+        "name": "GeoSAT Satelites SLU",
+        "description": "GEOSAT 2 is a very-high resolution (up to 40cm) multispectral optical satellite with 5 spectral channels, designed for fast off-nadir imaging",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://geosat.space/"
+      }
+    ]
+  },
+  "bbox": [
+    4.782536,
+    43.496749,
+    4.979608,
+    43.647729
+  ],
+  "assets": {
+    "MS-L1D-MS4": {
+      "type": "image/tiff; application=geotiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "MS L1D MS4 Orthorectified Enhanced",
+      "href": "data/DE2_MS4_L1D_000000_20230523T092838_20230523T092841_DE2_48370_57E5/DE2_MS4_L1D_000000_20230523T092838_20230523T092841_DE2_48370_57E5.tif",
+      "filename": "DE2_MS4_L1D_000000_20230523T092838_20230523T092841_DE2_48370_57E5.tif",
+      "file:size": 0,
+      "eo:bands": [
+        {
+          "name": "BAND-1 NIR in W*m^-2*µm^-1*str^-1",
+          "description": "NIR Orthorectified Enhanced MS4 in W*m^-2*µm^-1*str^-1",
+          "common_name": "nir",
+          "center_wavelength": 0.831,
+          "full_width_half_max": 0.12,
+          "solar_illumination": 1076.885158
+        },
+        {
+          "name": "BAND-2 RED in W*m^-2*µm^-1*str^-1",
+          "description": "Red Orthorectified Enhanced MS4 in W*m^-2*µm^-1*str^-1",
+          "common_name": "red",
+          "center_wavelength": 0.669,
+          "full_width_half_max": 0.06,
+          "solar_illumination": 1517.427492
+        },
+        {
+          "name": "BAND-3 GREEN in W*m^-2*µm^-1*str^-1",
+          "description": "Green Orthorectified Enhanced MS4 in W*m^-2*µm^-1*str^-1",
+          "common_name": "green",
+          "center_wavelength": 0.566,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1794.381858
+        },
+        {
+          "name": "BAND-4 BLUE in W*m^-2*µm^-1*str^-1",
+          "description": "Blue Orthorectified Enhanced MS4 in W*m^-2*µm^-1*str^-1",
+          "common_name": "blue",
+          "center_wavelength": 0.496,
+          "full_width_half_max": 0.06,
+          "solar_illumination": 1811.593874
+        }
+      ],
+      "raster:bands": [
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.006800104616,
+          "offset": -0.00680010461
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.011123248049,
+          "offset": -0.01112324804
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.013184818227,
+          "offset": -0.01318481822
+        },
+        {
+          "data_type": "uint16",
+          "bits_per_sample": 16,
+          "scale": 0.014307912429,
+          "offset": -0.01430791242
+        }
+      ]
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/DE2_MS4_L1D_000000_20230523T092838_20230523T092841_DE2_48370_57E5/DE2_MS4_L1D_000000_20230523T092838_20230523T092841_DE2_48370_57E5.dim",
+      "filename": "DE2_MS4_L1D_000000_20230523T092838_20230523T092841_DE2_48370_57E5.dim",
+      "file:size": 9919
+    }
+  },
+  "links": []
+}

@@ -58,6 +58,9 @@
                 "KOMPSAT-5": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Kompsat5.Kompsat5MetadataExtraction"
                 },
+                "CAS500-1": {
+                    "Type": "Terradue.Stars.Data.Model.Metadata.Cas5001.Cas5001MetadataExtractor"
+                },
                 "SENTINEL-1": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Sentinel1MetadataExtractor"
                 },

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><Dimap_Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Metadata_Id>
+		<METADATA_FORMAT version="1.1">DIMAP</METADATA_FORMAT>
+		<METADATA_PROFILE>GEOSAT</METADATA_PROFILE>
+	</Metadata_Id>
+	<Dataset_Id>
+		<DATASET_NAME>DE2_PSH_L1C_000000_20231025T021856_20231025T021859_DE2_50668_5E8E</DATASET_NAME>
+		<COPYRIGHT>(C) COPYRIGHT, Geosat 2023. All rights reserved.</COPYRIGHT>
+	</Dataset_Id>
+	<Production>
+		<DATASET_PRODUCER_NAME>GeoSAT Satelites SLU. </DATASET_PRODUCER_NAME>
+		<DATASET_PRODUCER_URL href="https://geosat.space/"/>
+		<DATASET_PRODUCTION_DATE>2023-10-26T14:19:59</DATASET_PRODUCTION_DATE>
+		<PRODUCT_TYPE>L1C</PRODUCT_TYPE>
+		<JOB_ID>commercialRawImage DE2_PSH_L1C_000000_20231025T021856_20231025T021859_DE2_50668_5E8E</JOB_ID>
+	</Production>
+	<Data_Processing>
+		<GEOMETRIC_PROCESSING>ORTHO</GEOMETRIC_PROCESSING>
+	</Data_Processing>
+	<Raster_CS>
+		<RASTER_CS_TYPE>POINT</RASTER_CS_TYPE>
+	</Raster_CS>
+	<Dataset_Frame>
+		<Vertex>
+			<FRAME_X unit="M">808211.539462</FRAME_X>
+			<FRAME_Y unit="M">9982752.627503</FRAME_Y>
+			<FRAME_LON unit="DEG">119.768744</FRAME_LON>
+			<FRAME_LAT unit="DEG">-0.155859</FRAME_LAT>
+		</Vertex>
+		<Vertex>
+			<FRAME_X unit="M">820784.799972</FRAME_X>
+			<FRAME_Y unit="M">9985257.414952</FRAME_Y>
+			<FRAME_LON unit="DEG">119.881596</FRAME_LON>
+			<FRAME_LAT unit="DEG">-0.133211</FRAME_LAT>
+		</Vertex>
+		<Vertex>
+			<FRAME_X unit="M">823583.455578</FRAME_X>
+			<FRAME_Y unit="M">9971480.570501</FRAME_Y>
+			<FRAME_LON unit="DEG">119.906736</FRAME_LON>
+			<FRAME_LAT unit="DEG">-0.257690</FRAME_LAT>
+		</Vertex>
+		<Vertex>
+			<FRAME_X unit="M">811009.744274</FRAME_X>
+			<FRAME_Y unit="M">9968977.101882</FRAME_Y>
+			<FRAME_LON unit="DEG">119.793884</FRAME_LON>
+			<FRAME_LAT unit="DEG">-0.280338</FRAME_LAT>
+		</Vertex>
+	</Dataset_Frame>
+	<Raster_Encoding>
+		<NBITS>16</NBITS>
+		<DATA_TYPE>SHORT</DATA_TYPE>
+		<BYTEORDER>I</BYTEORDER>
+	</Raster_Encoding>
+	<Data_Access>
+		<DATA_FILE_FORMAT>GEOTIFF</DATA_FILE_FORMAT>
+		<Data_File>
+			<DATA_FILE_PATH href="DE2_PSH_L1C_000000_20231025T021856_20231025T021859_DE2_50668_5E8E.tif"/>
+		</Data_File>
+	</Data_Access>
+	<Raster_Dimensions>
+		<NCOLS>20544</NCOLS>
+		<NROWS>21792</NROWS>
+		<NBANDS>4</NBANDS>
+	</Raster_Dimensions>
+	<Image_Interpretation>
+		<Spectral_Band_Info>
+			<BAND_INDEX>1</BAND_INDEX>
+			<BAND_DESCRIPTION>NIR</BAND_DESCRIPTION>
+			<PHYSICAL_GAIN>0.006800104616</PHYSICAL_GAIN>
+			<PHYSICAL_BIAS>-0.00680010461</PHYSICAL_BIAS>
+			<PHYSICAL_UNIT>W m&lt;sup&gt;-2&lt;/sup&gt; &amp;micro;m&lt;sup&gt;-1&lt;/sup&gt; str&lt;sup&gt;-1&lt;/sup&gt;</PHYSICAL_UNIT>
+			<ESUN>1076.885158</ESUN>
+		</Spectral_Band_Info>
+		<Spectral_Band_Info>
+			<BAND_INDEX>2</BAND_INDEX>
+			<BAND_DESCRIPTION>RED</BAND_DESCRIPTION>
+			<PHYSICAL_GAIN>0.011123248049</PHYSICAL_GAIN>
+			<PHYSICAL_BIAS>-0.01112324804</PHYSICAL_BIAS>
+			<PHYSICAL_UNIT>W m&lt;sup&gt;-2&lt;/sup&gt; &amp;micro;m&lt;sup&gt;-1&lt;/sup&gt; str&lt;sup&gt;-1&lt;/sup&gt;</PHYSICAL_UNIT>
+			<ESUN>1517.427492</ESUN>
+		</Spectral_Band_Info>
+		<Spectral_Band_Info>
+			<BAND_INDEX>3</BAND_INDEX>
+			<BAND_DESCRIPTION>GREEN</BAND_DESCRIPTION>
+			<PHYSICAL_GAIN>0.013184818227</PHYSICAL_GAIN>
+			<PHYSICAL_BIAS>-0.01318481822</PHYSICAL_BIAS>
+			<PHYSICAL_UNIT>W m&lt;sup&gt;-2&lt;/sup&gt; &amp;micro;m&lt;sup&gt;-1&lt;/sup&gt; str&lt;sup&gt;-1&lt;/sup&gt;</PHYSICAL_UNIT>
+			<ESUN>1794.381858</ESUN>
+		</Spectral_Band_Info>
+		<Spectral_Band_Info>
+			<BAND_INDEX>4</BAND_INDEX>
+			<BAND_DESCRIPTION>BLUE</BAND_DESCRIPTION>
+			<PHYSICAL_GAIN>0.014307912429</PHYSICAL_GAIN>
+			<PHYSICAL_BIAS>-0.01430791242</PHYSICAL_BIAS>
+			<PHYSICAL_UNIT>W m&lt;sup&gt;-2&lt;/sup&gt; &amp;micro;m&lt;sup&gt;-1&lt;/sup&gt; str&lt;sup&gt;-1&lt;/sup&gt;</PHYSICAL_UNIT>
+			<ESUN>1811.593874</ESUN>
+		</Spectral_Band_Info>
+	</Image_Interpretation>
+	<Image_Display>
+		<Band_Display_Order>
+			<RED_CHANNEL>2</RED_CHANNEL>
+			<GREEN_CHANNEL>3</GREEN_CHANNEL>
+			<BLUE_CHANNEL>4</BLUE_CHANNEL>
+		</Band_Display_Order>
+		<Special_Value>
+			<SPECIAL_VALUE_INDEX>0</SPECIAL_VALUE_INDEX>
+			<SPECIAL_VALUE_TEXT>nodata</SPECIAL_VALUE_TEXT>
+		</Special_Value>
+		<Band_Statistics>
+			<BAND_INDEX>1</BAND_INDEX>
+			<STX_STDV>4833.7</STX_STDV>
+			<STX_MEAN>10384.8</STX_MEAN>
+			<STX_MIN>1071.0</STX_MIN>
+			<STX_MAX>65535.0</STX_MAX>
+		</Band_Statistics>
+		<Band_Statistics>
+			<BAND_INDEX>2</BAND_INDEX>
+			<STX_STDV>2703.79</STX_STDV>
+			<STX_MEAN>3035.01</STX_MEAN>
+			<STX_MIN>1.0</STX_MIN>
+			<STX_MAX>43883.0</STX_MAX>
+		</Band_Statistics>
+		<Band_Statistics>
+			<BAND_INDEX>3</BAND_INDEX>
+			<STX_STDV>2315.09</STX_STDV>
+			<STX_MEAN>3686.51</STX_MEAN>
+			<STX_MIN>964.0</STX_MIN>
+			<STX_MAX>37987.0</STX_MAX>
+		</Band_Statistics>
+		<Band_Statistics>
+			<BAND_INDEX>4</BAND_INDEX>
+			<STX_STDV>2000.2</STX_STDV>
+			<STX_MEAN>3875.73</STX_MEAN>
+			<STX_MIN>1519.0</STX_MIN>
+			<STX_MAX>33789.0</STX_MAX>
+		</Band_Statistics>
+	</Image_Display>
+	<Dataset_Sources>
+		<Source_Information>
+			<SOURCE_ID>DE2_20231025T021856_00107277_5E8E</SOURCE_ID>
+			<Coordinate_Reference_System>
+				<GEO_TABLES>EPSG</GEO_TABLES>
+				<Projection_OGCWKT>PROJCS[&quot;WGS 84 / UTM zone 50S&quot;,GEOGCS[&quot;WGS 84&quot;,DATUM[&quot;WGS_1984&quot;,SPHEROID[&quot;WGS 84&quot;,6378137,298.257223563,AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4326&quot;]],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,117],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,10000000],AUTHORITY[&quot;EPSG&quot;,&quot;32750&quot;],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]</Projection_OGCWKT>
+			</Coordinate_Reference_System>
+			<Source_Frame>
+				<Vertex>
+					<FRAME_LON unit="DEG">119.768744</FRAME_LON>
+					<FRAME_LAT unit="DEG">-0.155859</FRAME_LAT>
+				</Vertex>
+				<Vertex>
+					<FRAME_LON unit="DEG">119.881596</FRAME_LON>
+					<FRAME_LAT unit="DEG">-0.133211</FRAME_LAT>
+				</Vertex>
+				<Vertex>
+					<FRAME_LON unit="DEG">119.906736</FRAME_LON>
+					<FRAME_LAT unit="DEG">-0.257690</FRAME_LAT>
+				</Vertex>
+				<Vertex>
+					<FRAME_LON unit="DEG">119.793884</FRAME_LON>
+					<FRAME_LAT unit="DEG">-0.280338</FRAME_LAT>
+				</Vertex>
+			</Source_Frame>
+			<Scene_Source>
+				<MISSION>Deimos 2</MISSION>
+				<MISSION_INDEX>0001</MISSION_INDEX>
+				<INSTRUMENT>HiRAIS</INSTRUMENT>
+				<IMAGING_DATE>2023-10-25</IMAGING_DATE>
+				<START_TIME>2023-10-25T02:18:56</START_TIME>
+				<STOP_TIME>2023-10-25T02:18:59</STOP_TIME>
+				<VIEWING_ANGLE unit="DEG">-10.9</VIEWING_ANGLE>
+				<INCIDENCE_ANGLE unit="DEG">-12.10482230377031</INCIDENCE_ANGLE>
+				<SUN_ELEVATION unit="DEG">65.6452</SUN_ELEVATION>
+				<PIXEL_RESOLUTION_X unit="M">0.75</PIXEL_RESOLUTION_X>
+				<PIXEL_RESOLUTION_Y unit="M">0.75</PIXEL_RESOLUTION_Y>
+				<SUN_AZIMUTH unit="DEG">119.68521363</SUN_AZIMUTH>
+				<EARTH_SUN_DISTANCE unit="AU">0.994574</EARTH_SUN_DISTANCE>
+			</Scene_Source>
+			<Quality_Assessment>
+				<QUALITY_TABLES/>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>DYNAMIC_RANGE</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:DRA</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE unit="bits">10</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>ADJUSTMENT</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:ADJ</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE>BUNDLE</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>IMAGE_QUALITY_DEGRADATION</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:IQD</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE>0</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>ABSOLUTE_ORBIT</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:AOR</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE>50668</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>ORBIT_DIRECTION</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:ORD</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE>ASCENDING</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>FOOTPRINT_CENTER_OF</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:FCO</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE unit="DEG">POINT(119.83774;-0.20677449999999997)</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>CLOUD_COVER_PERCENTAGE</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:CCP</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE/>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>UNIQUE_SCENARIO_ID</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:USI</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE>00107277</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+				<Quality_Parameter>
+					<QUALITY_PARAMETER_DESC>SATELLITE_AZIMUTH</QUALITY_PARAMETER_DESC>
+					<QUALITY_PARAMETER_CODE>GEOSAT:SAA</QUALITY_PARAMETER_CODE>
+					<QUALITY_PARAMETER_VALUE>262.39653457</QUALITY_PARAMETER_VALUE>
+				</Quality_Parameter>
+			</Quality_Assessment>
+		</Source_Information>
+	</Dataset_Sources>
+</Dimap_Document>

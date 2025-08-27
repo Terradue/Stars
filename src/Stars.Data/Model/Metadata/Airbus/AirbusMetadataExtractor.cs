@@ -251,7 +251,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Airbus
             view.Azimuth = dimapProfiler.GetViewingAngle();
             view.SunAzimuth = dimapProfiler.GetSunAngle();
             view.SunElevation = dimapProfiler.GetSunElevation();
-            view.IncidenceAngle = dimapProfiler.GetIndidenceAngle();
+            view.IncidenceAngle = dimapProfiler.GetIncidenceAngle();
         }
 
         private void AddSatStacExtension(AirbusProfiler dimapProfiler, StacItem stacItem)

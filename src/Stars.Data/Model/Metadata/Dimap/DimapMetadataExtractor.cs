@@ -73,9 +73,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 {
                     current = 3;
                 }
-                else
+                else if (dimap.Dataset_Id != null && dimap.Dataset_Id.DATASET_NAME.StartsWith("DE2", true, CultureInfo.InvariantCulture))
                 {
                     current = 4;
+                }
+                else
+                {
+                    current = 5;
                 }
 
                 if (profiler == 0) profiler = current;
@@ -90,6 +94,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                     return new DMC.Vision1DimapProfiler(dimapDocuments);
                 case 3:
                     return new DMC.Alsat1BDimapProfiler(dimapDocuments);
+                case 4:
+                    return new Geosat2DimapProfiler(dimapDocuments);
+                    // return new DMC.Geosat2DimapProfiler(dimapDocuments);
                 default:
                     return new GenericDimapProfiler(dimapDocuments);
             }
@@ -165,7 +172,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             double viewingAngle = dimapProfiler.GetViewingAngle();
             double sunAzimuth = dimapProfiler.GetSunAngle();
             double sunElevation = dimapProfiler.GetSunElevation();
-            double incidenceAngle = dimapProfiler.GetIndidenceAngle();
+            double incidenceAngle = dimapProfiler.GetIncidenceAngle();
             if (viewingAngle != 0) view.Azimuth = viewingAngle;
             if (sunAzimuth != 0) view.SunAzimuth = sunAzimuth;
             if (sunElevation != 0) view.SunElevation = sunElevation;
@@ -204,6 +211,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
         private void FillInstrument(DimapProfiler dimapProfiler, Dictionary<string, object> properties)
         {
             // platform & constellation
+            string agency = dimapProfiler.Dimap.Production.DATASET_PRODUCER_NAME?.Trim(new char[] { ' ', '.' });
+            if (!String.IsNullOrEmpty(agency))
+            {
+                properties.Remove("agency");
+                properties.Add("agency", agency);
+            }
+
             properties.Remove("platform");
             properties.Add("platform", dimapProfiler.GetPlatform().ToLower());
 
@@ -282,6 +296,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         private void AddOtherProperties(DimapProfiler dimapProfiler, IDictionary<string, object> properties)
         {
+
+            dimapProfiler.AddAdditionalProperties(properties);
             if (IncludeProviderProperty)
             {
                 StacProvider provider = dimapProfiler.GetStacProvider();
