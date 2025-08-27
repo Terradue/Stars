@@ -34,7 +34,8 @@
                 "NASA/LANDSAT9"
             ],
             "DIMAP": [
-                "DMC"
+                "DMC",
+                "GEOSAT/GEOSAT-2"
             ],
             "ALOS2": [
                 "JAXA/ALOS2"
