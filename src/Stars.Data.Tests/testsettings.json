@@ -7,6 +7,9 @@
             "KOMPSAT-5": [
                 "KARI/KOMPSAT-5"
             ],
+            "CAS500-1": [
+                "KARI/CAS500-1"
+            ],
             "SENTINEL-1": [
                 "ESA/SENTINEL-1"
             ],

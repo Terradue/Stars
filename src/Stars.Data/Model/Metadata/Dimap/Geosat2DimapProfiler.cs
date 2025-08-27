@@ -97,6 +97,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                     centerWavelength = 0.496;
                     fullWidthHalfMax = 0.06;
                     break;
+                case "pan":
+                    centerWavelength = 0.730;
+                    fullWidthHalfMax = 0.34;
+                    break;
             }
 
             if (centerWavelength != 0)

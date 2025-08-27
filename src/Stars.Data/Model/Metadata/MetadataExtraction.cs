@@ -152,10 +152,16 @@ namespace Terradue.Stars.Data.Model.Metadata
 
         protected void AddSingleProvider(IDictionary<string, object> properties, string name, string description, IEnumerable<StacProviderRole> roles, Uri uri)
         {
+            StacProvider provider = CreateSingleProvider(name, description, roles, uri);
+            properties.Add("providers", new StacProvider[] { provider });
+        }
+
+        protected StacProvider CreateSingleProvider(string name, string description, IEnumerable<StacProviderRole> roles, Uri uri)
+        {
             StacProvider provider = new StacProvider(name, roles);
             provider.Description = description;
             provider.Uri = uri;
-            properties.Add("providers", new StacProvider[] { provider });
+            return provider;
         }
     }
 }

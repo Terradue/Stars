@@ -1,0 +1,288 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "C1_20230610025814_12315_00049489_L1G",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          119.797879855,
+          -1.020718328
+        ],
+        [
+          119.871761308,
+          -1.020652729
+        ],
+        [
+          119.945637948,
+          -1.020585427
+        ],
+        [
+          119.945526603,
+          -0.889935647
+        ],
+        [
+          119.871652746,
+          -0.889994332
+        ],
+        [
+          119.797774077,
+          -0.890051532
+        ],
+        [
+          119.797879855,
+          -1.020718328
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "datetime": "2023-06-10T02:58:19.5969638Z",
+    "start_datetime": "2023-06-10T02:58:18.7535968Z",
+    "end_datetime": "2023-06-10T02:58:20.4403308Z",
+    "platform": "cas500-1",
+    "constellation": "cas500",
+    "mission": "cas500",
+    "instruments": [
+      "aeiss-c"
+    ],
+    "sensor_type": "optical",
+    "gsd": 0.5,
+    "eo:cloud_cover": 0.0,
+    "sat:absolute_orbit": 12315,
+    "sat:relative_orbit": 12315,
+    "sat:platform_international_designator": "2021-022A",
+    "proj:epsg": 32750,
+    "proj:wkt2": "PROJCS[\"WGS 84 / UTM zone 50S\", GEOGCS[\"WGS 84\", DATUM[\"World Geodetic System 1984\", SPHEROID[\"WGS 84\", 6378137, 298.257223563, AUTHORITY[\"EPSG\", \"7030\"]], AUTHORITY[\"EPSG\", \"6326\"]], PRIMEM[\"Greenwich\", 0, AUTHORITY[\"EPSG\", \"8901\"]], UNIT[\"degree\", 0.017453292519943295, AUTHORITY[\"EPSG\", \"9102\"]], AUTHORITY[\"EPSG\", \"4326\"]], UNIT[\"metre\", 1, AUTHORITY[\"EPSG\", \"9001\"]], PROJECTION[\"UTM50S\", AUTHORITY[\"EPSG\", \"32750\"]], PARAMETER[\"latitude_of_origin\", 0], PARAMETER[\"central_meridian\", 117], PARAMETER[\"scale_factor\", 0.9996], PARAMETER[\"false_easting\", 500000], PARAMETER[\"false_northing\", 10000000], AUTHORITY[\"EPSG\", \"32750\"], AXIS[\"East\", EAST], AXIS[\"North\", NORTH]]",
+    "view:off_nadir": 0.0,
+    "view:incidence_angle": 21.179062418,
+    "view:azimuth": 262.570041023,
+    "view:sun_azimuth": 33.83890502633928,
+    "view:sun_elevation": 60.99933742720838,
+    "processing:level": "L1G",
+    "processing:software": {
+      "PMS": "C1LevelProcessor_v1.1.0_2022-03-22"
+    },
+    "title": "CAS500-1 AEISS-C L1G 2023-06-10 02:58:19",
+    "metadata_format": "XML",
+    "data_file_format": "GEOTIFF",
+    "providers": [
+      {
+        "name": "NGII",
+        "description": "The National Land Satellite (CAS500-1: Compact Advanced Satellite 500) was exclusively developed in Korea through a collaboration between MOLIT and the Ministry of Science and ICT. It serves as a high-precision Earth observation satellite, designed for efficient land management and disaster response. The satellite is currently operated by the NGII.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ]
+      },
+      {
+        "name": "KARI",
+        "description": "The Compact Advanced Satellite 500 1 (CAS500-1) is a Korean satellite under a research and development program of the Korean Aerospace Research Institute (KARI).",
+        "roles": [
+          "licensor"
+        ]
+      }
+    ]
+  },
+  "bbox": [
+    119.797774077,
+    -1.020718328,
+    119.945637948,
+    -0.889935647
+  ],
+  "assets": {
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_th.jpg",
+      "filename": "C1_20230610025814_12315_00049489_L1G_th.jpg",
+      "file:size": 4579
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_br.jpg",
+      "filename": "C1_20230610025814_12315_00049489_L1G_br.jpg",
+      "file:size": 161617
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_Aux.xml",
+      "filename": "C1_20230610025814_12315_00049489_L1G_Aux.xml",
+      "file:size": 111347
+    },
+    "L1G-P": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "L1G Panchromatic",
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_P.tif",
+      "filename": "C1_20230610025814_12315_00049489_L1G_P.tif",
+      "file:size": 0,
+      "gsd": 0.5,
+      "proj:shape": [
+        28920,
+        32920
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.071,
+          "offset": -33.653
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "Panchromatic",
+          "common_name": "pan",
+          "center_wavelength": 0.675,
+          "full_width_half_max": 0.45,
+          "solar_illumination": 1258.38
+        }
+      ]
+    },
+    "L1G-B": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "L1G Blue",
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_B.tif",
+      "filename": "C1_20230610025814_12315_00049489_L1G_B.tif",
+      "file:size": 0,
+      "gsd": 2.0,
+      "proj:shape": [
+        7230,
+        8230
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.096,
+          "offset": -39.468
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "Blue",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "full_width_half_max": 0.07,
+          "solar_illumination": 1984.65
+        }
+      ]
+    },
+    "L1G-G": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "L1G Green",
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_G.tif",
+      "filename": "C1_20230610025814_12315_00049489_L1G_G.tif",
+      "file:size": 0,
+      "gsd": 2.0,
+      "proj:shape": [
+        7230,
+        8230
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.084,
+          "offset": -38.798
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "Green",
+          "common_name": "green",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.08,
+          "solar_illumination": 1815.54
+        }
+      ]
+    },
+    "L1G-R": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "L1G Red",
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_R.tif",
+      "filename": "C1_20230610025814_12315_00049489_L1G_R.tif",
+      "file:size": 0,
+      "gsd": 2.0,
+      "proj:shape": [
+        7230,
+        8230
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.107,
+          "offset": -25.667
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "Red",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "full_width_half_max": 0.06,
+          "solar_illumination": 1536.38
+        }
+      ]
+    },
+    "L1G-N": {
+      "type": "image/tiff",
+      "roles": [
+        "data",
+        "dn"
+      ],
+      "title": "L1G Near Infrared",
+      "href": "data/C1_20230610025814_12315_00049489_L1G/C1_20230610025814_12315_00049489_L1G_N.tif",
+      "filename": "C1_20230610025814_12315_00049489_L1G_N.tif",
+      "file:size": 0,
+      "gsd": 2.0,
+      "proj:shape": [
+        7230,
+        8230
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.094,
+          "offset": -42.437
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "Near Infrared",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "full_width_half_max": 0.14,
+          "solar_illumination": 967.99
+        }
+      ]
+    }
+  },
+  "links": []
+}
