@@ -103,6 +103,8 @@
           "name": "BAND-1 PAN in W*m^-2*µm^-1*str^-1",
           "description": "PAN Orthorectified Enhanced PAN in W*m^-2*µm^-1*str^-1",
           "common_name": "pan",
+          "center_wavelength": 0.73,
+          "full_width_half_max": 0.34,
           "solar_illumination": 1402.59005
         }
       ],
