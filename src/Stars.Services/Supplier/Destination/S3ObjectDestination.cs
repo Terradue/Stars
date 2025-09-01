@@ -94,7 +94,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
             newFilePath = Regex.Replace(newFilePath, @"\([^/]*\)", String.Empty);
 
             S3Url newS3Url = (S3Url)s3Url.Clone();
-            newS3Url.Key = Path.Combine(Path.Combine(Path.GetDirectoryName(s3Url.Key)) ?? String.Empty, newFilePath);
+            newS3Url.Key = Path.Combine(Path.GetDirectoryName(s3Url.Key) ?? String.Empty, newFilePath);
             return new S3ObjectDestination(newS3Url.Uri);
         }
 
