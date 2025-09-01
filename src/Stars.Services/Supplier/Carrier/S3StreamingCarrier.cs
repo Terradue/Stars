@@ -129,47 +129,18 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                     }
                     if (inputStreamResource.ContentLength == 0 || uploadStream)
                     {
-                        await Policy.Handle<AmazonS3Exception>(
-                            ex => ex.StatusCode == HttpStatusCode.Conflict ||
-                                  ex.StatusCode == HttpStatusCode.ServiceUnavailable ||
-                                  ex.StatusCode == HttpStatusCode.RequestTimeout ||
-                                  ex.StatusCode == HttpStatusCode.GatewayTimeout
-                        )
-                            .WaitAndRetryAsync(4, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, retryAttempt) * 500), (exception, timeSpan, retryCount, context) =>
-                            {
-                                logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
-                                if (retryCount == 4)
-                                    logger.LogError("Upload failed after 3 retries.");
-                            }).ExecuteAsync(async () =>
-                            {
-                                await StreamUpload(s3outputStreamResource, sourceStream, partSize);
-                            });
+                        await UploadViaStream(sourceStream, partSize, s3outputStreamResource, ct);
                     }
                     else
                     {
-                        var tx = new TransferUtility(s3outputStreamResource.Client);
-                        TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
-                        ur.PartSize = (int)partSize;
-                        ur.AutoResetStreamPosition = false;
-                        SetRequestParametersWithUri(s3outputStreamResource.S3Uri, ur);
-
-                        ur.InputStream = sourceStream;
-                        ur.ContentType = inputStreamResource.ContentType.MediaType;
-                        await Policy.Handle<AmazonS3Exception>(
-                            ex => ex.StatusCode == HttpStatusCode.Conflict ||
-                                  ex.StatusCode == HttpStatusCode.ServiceUnavailable ||
-                                  ex.StatusCode == HttpStatusCode.RequestTimeout ||
-                                  ex.StatusCode == HttpStatusCode.GatewayTimeout
-                        )
-                            .WaitAndRetryAsync(4, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, retryAttempt) * 500), (exception, timeSpan, retryCount, context) =>
-                            {
-                                logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
-                                if (retryCount == 4)
-                                    logger.LogError("Upload failed after 3 retries.");
-                            }).ExecuteAsync(async () =>
-                            {
-                                await tx.UploadAsync(ur);
-                            });
+                        try
+                        {
+                            await UploadViaRequestObject(sourceStream, partSize, s3outputStreamResource, inputStreamResource.ContentType.MediaType, ct);
+                        }
+                        catch
+                        {
+                            await UploadViaStream(sourceStream, partSize, s3outputStreamResource, ct);
+                        }
                     }
                 }
 
@@ -193,6 +164,53 @@ namespace Terradue.Stars.Services.Supplier.Carrier
             }
         }
 
+        private async Task UploadViaStream(Stream sourceStream, long partSize, S3Resource s3outputStreamResource, CancellationToken ct)
+        {
+            await Policy.Handle<AmazonS3Exception>(
+                ex => ex.StatusCode == HttpStatusCode.Conflict ||
+                        ex.StatusCode == HttpStatusCode.ServiceUnavailable ||
+                        ex.StatusCode == HttpStatusCode.RequestTimeout ||
+                        ex.StatusCode == HttpStatusCode.GatewayTimeout
+            )
+                .WaitAndRetryAsync(4, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, retryAttempt) * 500), (exception, timeSpan, retryCount, context) =>
+                {
+                    logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
+                    if (retryCount == 4)
+                        logger.LogError("Upload failed after 3 retries.");
+                }).ExecuteAsync(async () =>
+                {
+                    await StreamUpload(s3outputStreamResource, sourceStream, partSize);
+                });
+        }
+
+        private async Task UploadViaRequestObject(Stream sourceStream, long partSize, S3Resource s3outputStreamResource, string mediaType, CancellationToken ct)
+        {
+            var tx = new TransferUtility(s3outputStreamResource.Client);
+            TransferUtilityUploadRequest ur = new TransferUtilityUploadRequest();
+            ur.PartSize = (int)partSize;
+            ur.AutoResetStreamPosition = false;
+            ur.BucketName = s3outputStreamResource.S3Uri.Bucket;
+            ur.Key = s3outputStreamResource.S3Uri.Key;
+
+            ur.InputStream = sourceStream;
+            ur.ContentType = mediaType;
+            await Policy.Handle<AmazonS3Exception>(
+                ex => ex.StatusCode == HttpStatusCode.Conflict ||
+                        ex.StatusCode == HttpStatusCode.ServiceUnavailable ||
+                        ex.StatusCode == HttpStatusCode.RequestTimeout ||
+                        ex.StatusCode == HttpStatusCode.GatewayTimeout
+            )
+                .WaitAndRetryAsync(4, retryAttempt => TimeSpan.FromMilliseconds(Math.Pow(2, retryAttempt) * 500), (exception, timeSpan, retryCount, context) =>
+                {
+                    logger.LogWarning("Error uploading stream to S3. Retrying in {0} seconds. Retry count {1}. Error: {2}", timeSpan.TotalSeconds, retryCount, exception.Message);
+                    if (retryCount == 4)
+                        logger.LogError("Upload failed after 3 retries.");
+                }).ExecuteAsync(async () =>
+                {
+                    await tx.UploadAsync(ur);
+                });
+        }
+
         private async Task StreamUpload(S3Resource s3outputStreamResource, Stream sourceStream, long partSize)
         {
             S3UploadStream s3UploadStream = new S3UploadStream(s3outputStreamResource.Client, s3outputStreamResource.S3Uri.Bucket, s3outputStreamResource.S3Uri.Key, partSize);
@@ -211,12 +229,6 @@ namespace Terradue.Stars.Services.Supplier.Carrier
                 totalRead += Convert.ToUInt32(read);
             } while (read > 0);
             destStream.Close();
-        }
-
-        private void SetRequestParametersWithUri(S3Url uri, TransferUtilityUploadRequest ur)
-        {
-            ur.BucketName = uri.Bucket;
-            ur.Key = uri.Key;
         }
     }
 }

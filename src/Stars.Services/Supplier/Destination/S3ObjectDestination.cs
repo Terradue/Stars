@@ -85,15 +85,16 @@ namespace Terradue.Stars.Services.Supplier.Destination
                 if (relPath == null || relPath.StartsWith(".."))
                     relPath = relPathFix ?? "";
             }
-            string newFilePath = filename;
+
+            string newFilePath = filename.TrimStart('/');
             if (!string.IsNullOrEmpty(relPath))
-                newFilePath = Path.Combine(relPath, filename);
+                newFilePath = Path.Combine(relPath, filename.TrimStart('/'));
 
             // Remove parentheses and their content (e.g. in Copernicus OData URLs like ".../v1/Assets(abc...)/...")
             newFilePath = Regex.Replace(newFilePath, @"\([^/]*\)", String.Empty);
 
             S3Url newS3Url = (S3Url)s3Url.Clone();
-            newS3Url.Key = Path.Combine(Path.GetDirectoryName(s3Url.Key) ?? "", newFilePath);
+            newS3Url.Key = Path.Combine(Path.Combine(Path.GetDirectoryName(s3Url.Key)) ?? String.Empty, newFilePath);
             return new S3ObjectDestination(newS3Url.Uri);
         }
 
