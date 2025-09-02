@@ -49,7 +49,20 @@ namespace Terradue.Stars.Services.Supplier.Destination
             // we identify the filename
             string filename = Path.GetFileName(subroute.Uri.IsAbsoluteUri ? subroute.Uri.LocalPath : subroute.Uri.ToString());
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
+            {
                 filename = subroute.ContentDisposition.FileName;
+
+                string fullUrl = subroute.Uri.AbsoluteUri;
+
+                // Include enclosing directory if content disposition starts with slash
+                // (relevant for Sentinel, so <product-id>.<ext> folder will be included 
+                // in destination path)
+                if (fullUrl.EndsWith(filename) && filename.StartsWith("/"))
+                {
+                    string baseName = fullUrl.Substring(0, fullUrl.Length - filename.Length);
+                    filename = Path.Combine(Path.GetFileName(baseName), filename.TrimStart('/'));
+                }
+            }
 
             // to avoid wrong filename such as '$value'
             if (WRONG_FILENAME_STARTING_CHAR.Contains(filename[0]) && subroute.ResourceType == ResourceType.Asset)
@@ -86,7 +99,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
                     relPath = relPathFix ?? "";
             }
 
-            string newFilePath = filename.TrimStart('/');
+            string newFilePath = filename;
             if (!string.IsNullOrEmpty(relPath))
                 newFilePath = Path.Combine(relPath, filename.TrimStart('/'));
 
