@@ -386,18 +386,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Cas5001
         private void FillInstrument(Auxiliary auxiliary, Dictionary<string, object> properties)
         {
             // platform & constellation
-            var platformname = auxiliary.General.Satellite.ToLower();
-            if (!string.IsNullOrEmpty(platformname))
+            var platformName = auxiliary.General.Satellite.ToLower();
+            if (!string.IsNullOrEmpty(platformName))
             {
                 properties.Remove("platform");
-                properties.Add("platform", platformname);
+                properties.Add("platform", platformName);
 
-                var constellationName = Regex.Replace(platformname, "-?\\d$", String.Empty);
+                var constellationName = Regex.Replace(platformName, "-?\\d$", String.Empty);
                 properties.Remove("constellation");
                 properties.Add("constellation", constellationName);
 
                 properties.Remove("mission");
-                properties.Add("mission", constellationName);
+                properties.Add("mission", platformName);
             }
 
             // instruments
