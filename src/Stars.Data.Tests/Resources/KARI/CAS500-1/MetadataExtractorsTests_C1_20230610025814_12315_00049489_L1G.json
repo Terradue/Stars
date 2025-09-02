@@ -51,7 +51,7 @@
     "end_datetime": "2023-06-10T02:58:20.4403308Z",
     "platform": "cas500-1",
     "constellation": "cas500",
-    "mission": "cas500",
+    "mission": "cas500-1",
     "instruments": [
       "aeiss-c"
     ],
