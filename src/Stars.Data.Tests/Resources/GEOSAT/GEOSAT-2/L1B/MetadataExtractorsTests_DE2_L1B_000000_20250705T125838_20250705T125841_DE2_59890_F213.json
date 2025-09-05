@@ -159,6 +159,15 @@
         }
       ]
     },
+    "MS-L1B-MS4-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/DE2_PM4_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213-product/DE2_MS4_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213_RPC.txt",
+      "filename": "DE2_MS4_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213_RPC.txt",
+      "file:size": 2966
+    },
     "MS-L1B-PAN": {
       "type": "image/tiff; application=geotiff",
       "roles": [
@@ -187,6 +196,15 @@
           "offset": -0.011354021
         }
       ]
+    },
+    "MS-L1B-PAN-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/DE2_PM4_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213-product/DE2_PAN_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213_RPC.txt",
+      "filename": "DE2_PAN_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213_RPC.txt",
+      "file:size": 2964
     },
     "MS4-metadata": {
       "type": "application/xml",
