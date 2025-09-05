@@ -415,6 +415,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                     else
                         dimapProfiler.CompleteAsset(bandStacAsset.Value, dimap.Image_Interpretation, dimap.Raster_Encoding, dimap);
                     stacItem.Assets.Add(bandStacAsset.Key, bandStacAsset.Value);
+
+                    // Check if corresponding RPC asset exists (for projection)
+                    string rpcFileName = dataFile.DATA_FILE_PATH.href.Replace(".tif", "_RPC.txt");
+                    IAsset rpcAsset = FindFirstAssetFromFileNameRegex(item, rpcFileName);
+                    if (rpcAsset != null)
+                    {
+                        string rpcAssetKey = String.Format("{0}-{1}", bandStacAsset.Key, "RPC");
+                        stacItem.Assets.Add(rpcAssetKey, StacAsset.CreateMetadataAsset(stacItem, rpcAsset.Uri, new System.Net.Mime.ContentType("text/plain")));
+                        stacItem.Assets[rpcAssetKey].Properties.AddRange(rpcAsset.Properties);
+                    }
                 }
             }
 
