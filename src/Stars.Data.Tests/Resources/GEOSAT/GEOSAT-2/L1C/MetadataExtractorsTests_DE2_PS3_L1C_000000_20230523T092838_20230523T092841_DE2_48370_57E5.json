@@ -48,10 +48,10 @@
     "instruments": [
       "hirais"
     ],
-    "spectral_processing": "",
+    "spectral_processing": "PS3",
     "sensor_type": "optical",
     "gsd": 0.75,
-    "title": "GEOSAT-2 HiRAIS L1C 2023-05-23 07:28:38",
+    "title": "GEOSAT-2 HiRAIS L1C PS3 2023-05-23 07:28:38",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2014-033D",
     "proj:epsg": 32631,

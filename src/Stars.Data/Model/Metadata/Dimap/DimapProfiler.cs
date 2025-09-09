@@ -167,6 +167,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         public virtual string GetSpectralProcessing(Schemas.DimapDocument dimap = null)
         {
+            List<string> sps = new List<string>();
             string spectralProcessing = null;
             if (dimap == null)
             {
@@ -174,9 +175,10 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
                 {
                     string s = dimap2.Data_Processing.SPECTRAL_PROCESSING;
                     if (s == null) s = dimap2.Dataset_Id.DATASET_NAME.Split('_')[1];
-                    if (spectralProcessing == null) spectralProcessing = String.Empty;
-                    else spectralProcessing += String.Format(",{0}", s);
+                    sps.Add(s);
                 }
+                if (sps.Contains("MS4") && sps.Contains("PAN")) spectralProcessing = "PM4";
+                else spectralProcessing = String.Join(",", sps);
             }
             else
             {
@@ -230,7 +232,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
 
         internal long GetProjection()
         {
-            if (long.TryParse(Dimap.Coordinate_Reference_System?.Horizontal_CS.Projection?.PROJECTION_CODE?.Replace("EPSG:", ""), out long proj))
+            if (long.TryParse(Dimap.Coordinate_Reference_System?.Horizontal_CS?.Projection?.PROJECTION_CODE?.Replace("EPSG:", ""), out long proj))
             {
                 return proj;
             }

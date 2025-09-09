@@ -46,15 +46,17 @@
     "start_datetime": "2021-02-07T01:05:13Z",
     "end_datetime": "2021-02-07T01:05:59Z",
     "created": "2021-02-11T00:00:00Z",
+    "agency": "Airbus Defence and Space Limited",
     "platform": "alsat-1b",
     "constellation": "dmc",
     "mission": "alsat-1b",
     "instruments": [
       "alite"
     ],
+    "spectral_processing": "MS4",
     "sensor_type": "optical",
     "gsd": 24.0,
-    "title": "Alsat-1B ALITE  2021-02-07 01:05:13",
+    "title": "Alsat-1B ALITE MS4 2021-02-07 01:05:13",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16150,
     "proj:shape": [
@@ -101,25 +103,25 @@
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "Blue Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "blue",
           "solar_illumination": 1982.32
         },
         {
           "name": "GREEN",
-          "description": "Green Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Green Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "green",
           "solar_illumination": 1822.45
         },
         {
           "name": "RED",
-          "description": "Red Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Red Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "red",
           "solar_illumination": 1538.9
         },
         {
           "name": "NIR",
-          "description": "NIR Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "nir",
           "solar_illumination": 991.02
         }

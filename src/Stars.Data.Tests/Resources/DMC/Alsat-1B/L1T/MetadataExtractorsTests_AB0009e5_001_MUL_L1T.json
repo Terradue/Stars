@@ -42,15 +42,17 @@
     "start_datetime": "2020-03-14T01:26:57Z",
     "end_datetime": "2020-03-14T01:27:20Z",
     "created": "2020-03-19T00:00:00Z",
+    "agency": "Airbus Defence and Space Ltd. trading as DMCii (DMCii)",
     "platform": "alsat-1b",
     "constellation": "dmc",
     "mission": "alsat-1b",
     "instruments": [
       "alite"
     ],
+    "spectral_processing": "001",
     "sensor_type": "optical",
     "gsd": 24.0,
-    "title": "ALSAT-1B ALITE L1T 2020-03-14 01:26:57",
+    "title": "ALSAT-1B ALITE L1T 001 2020-03-14 01:26:57",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16050,
     "proj:shape": [
@@ -98,25 +100,25 @@
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "Blue Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Scaled Radiance 001 in W/m2/sr/m-6",
           "common_name": "blue",
           "solar_illumination": 1982.32
         },
         {
           "name": "GREEN",
-          "description": "Green Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Green Orthorectified Scaled Radiance 001 in W/m2/sr/m-6",
           "common_name": "green",
           "solar_illumination": 1822.45
         },
         {
           "name": "RED",
-          "description": "Red Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Red Orthorectified Scaled Radiance 001 in W/m2/sr/m-6",
           "common_name": "red",
           "solar_illumination": 1538.9
         },
         {
           "name": "NIR",
-          "description": "NIR Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Scaled Radiance 001 in W/m2/sr/m-6",
           "common_name": "nir",
           "solar_illumination": 991.02
         }

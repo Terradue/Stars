@@ -49,10 +49,10 @@
     "instruments": [
       "hirais"
     ],
-    "spectral_processing": "",
+    "spectral_processing": "MS4",
     "sensor_type": "optical",
     "gsd": 1.6430725562,
-    "title": "GEOSAT-2 HiRAIS L1D 2023-05-23 07:28:38",
+    "title": "GEOSAT-2 HiRAIS L1D MS4 2023-05-23 07:28:38",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2014-033D",
     "proj:epsg": 32631,

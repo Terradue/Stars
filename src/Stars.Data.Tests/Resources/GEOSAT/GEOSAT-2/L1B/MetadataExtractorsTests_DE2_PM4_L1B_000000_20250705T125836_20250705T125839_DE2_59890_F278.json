@@ -9,39 +9,39 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "DE2_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5",
+  "id": "DE2_PM4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          4.825464,
-          43.496749
+          -51.321487,
+          -30.168143
         ],
         [
-          4.979608,
-          43.524851
+          -51.111094,
+          -30.140756
         ],
         [
-          4.93668,
-          43.647729
+          -51.141611,
+          -29.985826
         ],
         [
-          4.782536,
-          43.619627
+          -51.352004,
+          -30.013213
         ],
         [
-          4.825464,
-          43.496749
+          -51.321487,
+          -30.168143
         ]
       ]
     ]
   },
   "properties": {
-    "datetime": "2023-05-23T09:28:38Z",
-    "start_datetime": "2023-05-23T09:28:38Z",
-    "end_datetime": "2023-05-23T09:28:41Z",
-    "created": "2023-07-24T08:01:36Z",
+    "datetime": "2025-07-05T12:58:36Z",
+    "start_datetime": "2025-07-05T12:58:36Z",
+    "end_datetime": "2025-07-05T12:58:39Z",
+    "created": "2025-07-07T09:29:30Z",
     "agency": "GeoSAT Satelites SLU",
     "platform": "geosat-2",
     "constellation": "geosat",
@@ -49,22 +49,22 @@
     "instruments": [
       "hirais"
     ],
-    "spectral_processing": ",PAN",
+    "spectral_processing": "PM4",
     "sensor_type": "optical",
-    "gsd": 3.0,
-    "title": "GEOSAT-2 HiRAIS L1C ,PAN 2023-05-23 07:28:38",
+    "gsd": 4.0,
+    "title": "GEOSAT-2 HiRAIS L1B PM4 2025-07-05 10:58:36",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2014-033D",
-    "proj:epsg": 32631,
+    "proj:epsg": 4326,
     "proj:shape": [
-      5400,
-      5676
+      2928,
+      3249
     ],
-    "view:azimuth": 9.2,
-    "view:sun_azimuth": 120.377242948,
-    "view:sun_elevation": 54.7151,
-    "view:incidence_angle": 10.212716525960118,
-    "processing:level": "L1C",
+    "view:azimuth": 36.5,
+    "view:sun_azimuth": 38.94119,
+    "view:sun_elevation": 25.904399999999995,
+    "view:incidence_angle": 41.27239484331138,
+    "processing:level": "L1B",
     "metadata_format": "DIMAP",
     "data_file_format": "GEOTIFF",
     "data_file_bands": 4,
@@ -82,26 +82,26 @@
     ]
   },
   "bbox": [
-    4.782536,
-    43.496749,
-    4.979608,
-    43.647729
+    -51.352004,
+    -30.168143,
+    -51.111094,
+    -29.985826
   ],
   "assets": {
-    "MS-L1C-MS4": {
+    "MS-L1B-MS4": {
       "type": "image/tiff; application=geotiff",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "MS L1C MS4 Ortho",
-      "href": "data/DE2_PM4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5/DE2_MS4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.tif",
-      "filename": "DE2_MS4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.tif",
+      "title": "MS L1B MS4 Geolocated",
+      "href": "data/DE2_PM4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278-product/DE2_MS4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.tif",
+      "filename": "DE2_MS4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.tif",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BAND-1 NIR in W*m^-2*µm^-1*str^-1",
-          "description": "NIR Ortho MS4 in W*m^-2*µm^-1*str^-1",
+          "description": "NIR Geolocated MS4 in W*m^-2*µm^-1*str^-1",
           "common_name": "nir",
           "center_wavelength": 0.831,
           "full_width_half_max": 0.12,
@@ -109,7 +109,7 @@
         },
         {
           "name": "BAND-2 RED in W*m^-2*µm^-1*str^-1",
-          "description": "Red Ortho MS4 in W*m^-2*µm^-1*str^-1",
+          "description": "Red Geolocated MS4 in W*m^-2*µm^-1*str^-1",
           "common_name": "red",
           "center_wavelength": 0.669,
           "full_width_half_max": 0.06,
@@ -117,7 +117,7 @@
         },
         {
           "name": "BAND-3 GREEN in W*m^-2*µm^-1*str^-1",
-          "description": "Green Ortho MS4 in W*m^-2*µm^-1*str^-1",
+          "description": "Green Geolocated MS4 in W*m^-2*µm^-1*str^-1",
           "common_name": "green",
           "center_wavelength": 0.566,
           "full_width_half_max": 0.07,
@@ -125,7 +125,7 @@
         },
         {
           "name": "BAND-4 BLUE in W*m^-2*µm^-1*str^-1",
-          "description": "Blue Ortho MS4 in W*m^-2*µm^-1*str^-1",
+          "description": "Blue Geolocated MS4 in W*m^-2*µm^-1*str^-1",
           "common_name": "blue",
           "center_wavelength": 0.496,
           "full_width_half_max": 0.06,
@@ -136,43 +136,52 @@
         {
           "data_type": "uint16",
           "bits_per_sample": 16,
-          "scale": 0.006800104616,
-          "offset": -0.00680010461
+          "scale": 0.006800104999,
+          "offset": -0.00680010499
         },
         {
           "data_type": "uint16",
           "bits_per_sample": 16,
-          "scale": 0.011123248049,
-          "offset": -0.01112324804
+          "scale": 0.011123248,
+          "offset": -0.011123248
         },
         {
           "data_type": "uint16",
           "bits_per_sample": 16,
-          "scale": 0.013184818227,
-          "offset": -0.01318481822
+          "scale": 0.013580362999,
+          "offset": -0.01318481799
         },
         {
           "data_type": "uint16",
           "bits_per_sample": 16,
-          "scale": 0.014307912429,
-          "offset": -0.01430791242
+          "scale": 0.015595625,
+          "offset": -0.014307912
         }
       ]
     },
-    "MS-L1C-PAN": {
+    "MS-L1B-MS4-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/DE2_PM4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278-product/DE2_MS4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278_RPC.txt",
+      "filename": "DE2_MS4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278_RPC.txt",
+      "file:size": 2976
+    },
+    "MS-L1B-PAN": {
       "type": "image/tiff; application=geotiff",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "MS L1C PAN Ortho",
-      "href": "data/DE2_PM4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5/DE2_PAN_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.tif",
-      "filename": "DE2_PAN_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.tif",
+      "title": "MS L1B PAN Geolocated",
+      "href": "data/DE2_PM4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278-product/DE2_PAN_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.tif",
+      "filename": "DE2_PAN_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.tif",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BAND-1 PAN in W*m^-2*µm^-1*str^-1",
-          "description": "PAN Ortho MS4 in W*m^-2*µm^-1*str^-1",
+          "description": "PAN Geolocated MS4 in W*m^-2*µm^-1*str^-1",
           "common_name": "pan",
           "center_wavelength": 0.73,
           "full_width_half_max": 0.34,
@@ -183,10 +192,19 @@
         {
           "data_type": "uint16",
           "bits_per_sample": 16,
-          "scale": 0.011354020831,
-          "offset": -0.01135402083
+          "scale": 0.012830044,
+          "offset": -0.011354021
         }
       ]
+    },
+    "MS-L1B-PAN-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/DE2_PM4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278-product/DE2_PAN_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278_RPC.txt",
+      "filename": "DE2_PAN_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278_RPC.txt",
+      "file:size": 2974
     },
     "MS4-metadata": {
       "type": "application/xml",
@@ -194,9 +212,9 @@
         "metadata"
       ],
       "title": "Metadata file",
-      "href": "data/DE2_PM4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5/DE2_MS4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.dim",
-      "filename": "DE2_MS4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.dim",
-      "file:size": 9890
+      "href": "data/DE2_PM4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278-product/DE2_MS4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.dim",
+      "filename": "DE2_MS4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.dim",
+      "file:size": 9424
     },
     "PAN-metadata": {
       "type": "application/xml",
@@ -204,9 +222,9 @@
         "metadata"
       ],
       "title": "Metadata file",
-      "href": "data/DE2_PM4_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5/DE2_PAN_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.dim",
-      "filename": "DE2_PAN_L1C_000000_20230523T092838_20230523T092841_DE2_48370_57E5.dim",
-      "file:size": 8133
+      "href": "data/DE2_PM4_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278-product/DE2_PAN_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.dim",
+      "filename": "DE2_PAN_L1B_000000_20250705T125836_20250705T125839_DE2_59890_F278.dim",
+      "file:size": 7672
     }
   },
   "links": []
