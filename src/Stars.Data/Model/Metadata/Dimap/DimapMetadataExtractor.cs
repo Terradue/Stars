@@ -130,7 +130,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Dimap
             string identifier = dimapProfiler.Dimaps[0].Dataset_Id.DATASET_NAME;
             if (multipleProducts)
             {
-                identifier = identifier.Replace("_MS4_", "_").Replace("_PAN_", "_");
+                identifier = identifier.Replace("_MS4_", "_PM4_").Replace("_PAN_", "_PM4_");
             }
 
             StacItem stacItem = new StacItem(identifier, GetGeometry(dimapProfiler), GetCommonMetadata(dimapProfiler));

@@ -42,6 +42,7 @@
     "start_datetime": "2020-07-22T02:33:23Z",
     "end_datetime": "2020-07-22T02:33:27Z",
     "created": "2023-07-03T00:00:00Z",
+    "agency": "Airbus Defence and Space Limited",
     "platform": "vision-1",
     "constellation": "dmc-3",
     "mission": "vision-1",
@@ -51,7 +52,7 @@
     "spectral_processing": "PMS4",
     "sensor_type": "optical",
     "gsd": 0.87,
-    "title": "Vision-1 S1-4 Imager ORT 2020-07-22 02:33:23",
+    "title": "Vision-1 S1-4 Imager ORT PMS4 2020-07-22 02:33:23",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2018-071A",
     "proj:epsg": null,
@@ -153,6 +154,15 @@
         }
       ]
     },
+    "MS-ORT-PMS4-R1C1-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C1.jp2",
+      "file:size": 0
+    },
     "MS-ORT-PMS4-R1C2": {
       "type": "image/jpeg; application=jpeg",
       "roles": [
@@ -223,6 +233,15 @@
           "offset": 0.0
         }
       ]
+    },
+    "MS-ORT-PMS4-R1C2-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R1C2.jp2",
+      "file:size": 0
     },
     "MS-ORT-PMS4-R2C1": {
       "type": "image/jpeg; application=jpeg",
@@ -295,6 +314,15 @@
         }
       ]
     },
+    "MS-ORT-PMS4-R2C1-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C1.jp2",
+      "file:size": 0
+    },
     "MS-ORT-PMS4-R2C2": {
       "type": "image/jpeg; application=jpeg",
       "roles": [
@@ -365,6 +393,15 @@
           "offset": 0.0
         }
       ]
+    },
+    "MS-ORT-PMS4-R2C2-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/VIS1_PMS4_20200722023318_ORT_103280_14e5/VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
+      "filename": "VIS1_PMS4_23-00017-004_ORD-23-0001/VIS1_PMS4_20200722023318_ORT_103280_14e5_R2C2.jp2",
+      "file:size": 0
     },
     "metadata": {
       "type": "application/xml",

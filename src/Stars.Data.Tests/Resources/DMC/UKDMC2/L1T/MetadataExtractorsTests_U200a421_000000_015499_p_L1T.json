@@ -42,15 +42,17 @@
     "start_datetime": "2019-12-17T23:12:48Z",
     "end_datetime": "2019-12-17T23:13:38Z",
     "created": "2019-12-19T00:00:00Z",
+    "agency": "Airbus Defence and Space Ltd. trading as DMCii (DMCii)",
     "platform": "uk-dmc-2",
     "constellation": "dmc",
     "mission": "uk-dmc-2",
     "instruments": [
       "slim-6-22"
     ],
+    "spectral_processing": "000000",
     "sensor_type": "optical",
     "gsd": 22.0,
-    "title": "UK-DMC-2 SLIM-6-22 L1T 2019-12-17 23:12:48",
+    "title": "UK-DMC-2 SLIM-6-22 L1T 000000 2019-12-17 23:12:48",
     "sat:orbit_state": "ascending",
     "proj:epsg": 16051,
     "proj:shape": [
@@ -98,19 +100,19 @@
       "eo:bands": [
         {
           "name": "NIR",
-          "description": "NIR Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Scaled Radiance 000000 in W/m2/sr/m-6",
           "common_name": "nir",
           "solar_illumination": 1032.0
         },
         {
           "name": "Red",
-          "description": "Red Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Red Orthorectified Scaled Radiance 000000 in W/m2/sr/m-6",
           "common_name": "red",
           "solar_illumination": 1537.0
         },
         {
           "name": "Green",
-          "description": "Green Orthorectified Scaled Radiance in W/m2/sr/m-6",
+          "description": "Green Orthorectified Scaled Radiance 000000 in W/m2/sr/m-6",
           "common_name": "green",
           "solar_illumination": 1808.0
         }

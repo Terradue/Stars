@@ -9,7 +9,7 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "DE2_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213",
+  "id": "DE2_PM4_L1B_000000_20250705T125838_20250705T125841_DE2_59890_F213",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
@@ -49,10 +49,10 @@
     "instruments": [
       "hirais"
     ],
-    "spectral_processing": ",PAN",
+    "spectral_processing": "PM4",
     "sensor_type": "optical",
     "gsd": 4.0,
-    "title": "GEOSAT-2 HiRAIS L1B ,PAN 2025-07-05 10:58:38",
+    "title": "GEOSAT-2 HiRAIS L1B PM4 2025-07-05 10:58:38",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2014-033D",
     "proj:epsg": 4326,

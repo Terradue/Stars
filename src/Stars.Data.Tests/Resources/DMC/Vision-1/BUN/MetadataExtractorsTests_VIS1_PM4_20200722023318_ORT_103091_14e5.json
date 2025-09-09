@@ -9,39 +9,40 @@
     "https://stac-extensions.github.io/view/v1.0.0/schema.json"
   ],
   "type": "Feature",
-  "id": "VIS1_20200722023318_PRJ_103935_14e5",
+  "id": "VIS1_PM4_20200722023318_ORT_103091_14e5",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
         [
-          119.77075,
-          -1.13719
+          119.73346,
+          -0.95942
         ],
         [
-          120.01001,
-          -1.1372
+          119.9743,
+          -0.95943
         ],
         [
-          120.01001,
-          -0.90282
+          119.9743,
+          -0.71703
         ],
         [
-          119.77075,
-          -0.9028
+          119.73346,
+          -0.71701
         ],
         [
-          119.77075,
-          -1.13719
+          119.73346,
+          -0.95942
         ]
       ]
     ]
   },
   "properties": {
-    "datetime": "2020-07-22T02:33:18Z",
-    "start_datetime": "2020-07-22T02:33:18Z",
-    "end_datetime": "2020-07-22T02:33:21Z",
-    "created": "2023-07-10T00:00:00Z",
+    "datetime": "2020-07-22T02:33:20Z",
+    "start_datetime": "2020-07-22T02:33:20Z",
+    "end_datetime": "2020-07-22T02:33:24Z",
+    "created": "2023-07-07T00:00:00Z",
+    "agency": "Airbus Defence and Space Limited",
     "platform": "vision-1",
     "constellation": "dmc-3",
     "mission": "vision-1",
@@ -51,17 +52,17 @@
     "spectral_processing": "MS4,PAN",
     "sensor_type": "optical",
     "gsd": 3.48,
-    "title": "Vision-1 S1-4 Imager PRJ 2020-07-22 02:33:18",
+    "title": "Vision-1 S1-4 Imager ORT MS4,PAN 2020-07-22 02:33:20",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2018-071A",
     "proj:epsg": null,
     "proj:shape": [
-      7424,
-      7274
+      7474,
+      7523
     ],
-    "view:sun_azimuth": 46.0436,
-    "view:sun_elevation": 58.70302,
-    "processing:level": "PRJ",
+    "view:sun_azimuth": 46.302505,
+    "view:sun_elevation": 58.80227,
+    "processing:level": "ORT",
     "providers": [
       {
         "name": "Airbus DS",
@@ -76,26 +77,26 @@
     ]
   },
   "bbox": [
-    119.77075,
-    -1.1372,
-    120.01001,
-    -0.9028
+    119.73346,
+    -0.95943,
+    119.9743,
+    -0.71701
   ],
   "assets": {
-    "PAN-PRJ": {
+    "PAN-ORT": {
       "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "PAN PRJ Scaled Radiance Projected",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5.jp2",
-      "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5.jp2",
+      "title": "PAN ORT Scaled Radiance Orthorectified",
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5.jp2",
+      "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "PAN",
-          "description": "PAN Projected Scaled Radiance PAN in W/m2/sr/m-6",
+          "description": "PAN Orthorectified Scaled Radiance PAN in W/m2/sr/m-6",
           "common_name": "pan",
           "solar_illumination": 1830.15
         }
@@ -109,20 +110,29 @@
         }
       ]
     },
-    "MS-PRJ-MS4": {
+    "PAN-ORT-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5.jp2",
+      "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5.jp2",
+      "file:size": 0
+    },
+    "MS-ORT-MS4": {
       "type": "image/jpeg; application=jpeg",
       "roles": [
         "data",
         "dn"
       ],
-      "title": "MS PRJ MS4 Scaled Radiance Projected",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5.jp2",
-      "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5.jp2",
+      "title": "MS ORT MS4 Scaled Radiance Orthorectified",
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5.jp2",
+      "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5.jp2",
       "file:size": 0,
       "eo:bands": [
         {
           "name": "BLUE",
-          "description": "Blue Projected Scaled Radiance MS4 in W/m2/sr/m-6",
+          "description": "Blue Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "blue",
           "center_wavelength": 0.475,
           "full_width_half_max": 0.07,
@@ -130,7 +140,7 @@
         },
         {
           "name": "GREEN",
-          "description": "Green Projected Scaled Radiance MS4 in W/m2/sr/m-6",
+          "description": "Green Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "green",
           "center_wavelength": 0.55,
           "full_width_half_max": 0.08,
@@ -138,7 +148,7 @@
         },
         {
           "name": "RED",
-          "description": "Red Projected Scaled Radiance MS4 in W/m2/sr/m-6",
+          "description": "Red Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "red",
           "center_wavelength": 0.635,
           "full_width_half_max": 0.07,
@@ -146,7 +156,7 @@
         },
         {
           "name": "NIR",
-          "description": "NIR Projected Scaled Radiance MS4 in W/m2/sr/m-6",
+          "description": "NIR Orthorectified Scaled Radiance MS4 in W/m2/sr/m-6",
           "common_name": "nir",
           "center_wavelength": 0.835,
           "full_width_half_max": 0.15,
@@ -180,15 +190,24 @@
         }
       ]
     },
+    "MS-ORT-MS4-RPC": {
+      "type": "text/plain",
+      "roles": [
+        "metadata"
+      ],
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5.jp2",
+      "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5.jp2",
+      "file:size": 0
+    },
     "PAN-metadata": {
       "type": "application/xml",
       "roles": [
         "metadata"
       ],
       "title": "Metadata file",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Meta.xml",
-      "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Meta.xml",
-      "file:size": 5064
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Meta.xml",
+      "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Meta.xml",
+      "file:size": 5314
     },
     "MS4-metadata": {
       "type": "application/xml",
@@ -196,45 +215,45 @@
         "metadata"
       ],
       "title": "Metadata file",
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Meta.xml",
-      "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Meta.xml",
-      "file:size": 6486
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Meta.xml",
+      "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Meta.xml",
+      "file:size": 6735
     },
     "PAN-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
       ],
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Preview.jpg",
-      "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Preview.jpg",
-      "file:size": 511115
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Preview.jpg",
+      "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Preview.jpg",
+      "file:size": 417633
     },
     "PAN-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
       ],
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Icon.jpg",
-      "filename": "VIS1_PAN_23-00017-006_ORD-23-0001/VIS1_PAN_20200722023318_PRJ_103935_14e5_Icon.jpg",
-      "file:size": 3843
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Icon.jpg",
+      "filename": "VIS1_PAN_23-00017-002_ORD-23-0001/VIS1_PAN_20200722023318_ORT_103091_14e5_Icon.jpg",
+      "file:size": 3407
     },
     "MS4-overview": {
       "type": "image/jpeg",
       "roles": [
         "overview"
       ],
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Preview.jpg",
-      "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Preview.jpg",
-      "file:size": 512773
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Preview.jpg",
+      "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Preview.jpg",
+      "file:size": 445472
     },
     "MS4-thumbnail": {
       "type": "image/jpeg",
       "roles": [
         "thumbnail"
       ],
-      "href": "data/VIS1_BUN_20200722023318_PRJ_103935_14e5/VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Icon.jpg",
-      "filename": "VIS1_MS4_23-00017-006_ORD-23-0001/VIS1_MS4_20200722023318_PRJ_103935_14e5_Icon.jpg",
-      "file:size": 4525
+      "href": "data/VIS1_BUN_20200722023318_ORT_103091_14e5/VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Icon.jpg",
+      "filename": "VIS1_MS4_23-00017-002_ORD-23-0001/VIS1_MS4_20200722023318_ORT_103091_14e5_Icon.jpg",
+      "file:size": 4196
     }
   },
   "links": []

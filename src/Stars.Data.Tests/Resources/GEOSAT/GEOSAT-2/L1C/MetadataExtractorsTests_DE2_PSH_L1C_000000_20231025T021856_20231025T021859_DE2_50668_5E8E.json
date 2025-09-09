@@ -49,10 +49,10 @@
     "instruments": [
       "hirais"
     ],
-    "spectral_processing": "",
+    "spectral_processing": "PSH",
     "sensor_type": "optical",
     "gsd": 0.75,
-    "title": "GEOSAT-2 HiRAIS L1C 2023-10-25 00:18:56",
+    "title": "GEOSAT-2 HiRAIS L1C PSH 2023-10-25 00:18:56",
     "sat:orbit_state": "ascending",
     "sat:platform_international_designator": "2014-033D",
     "proj:epsg": 32750,
