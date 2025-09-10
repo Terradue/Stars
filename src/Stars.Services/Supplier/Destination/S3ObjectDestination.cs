@@ -43,6 +43,7 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public IDestination To(IResource subroute, string relPathFix = null)
         {
+            Console.WriteLine("000 {0}", subroute.Uri);
             // we first integrate the relPath
             string relPath = relPathFix ?? "";
 
@@ -51,17 +52,6 @@ namespace Terradue.Stars.Services.Supplier.Destination
             if (subroute.ContentDisposition != null && !string.IsNullOrEmpty(subroute.ContentDisposition.FileName))
             {
                 filename = subroute.ContentDisposition.FileName;
-
-                string fullUrl = subroute.Uri.AbsoluteUri;
-
-                // Include enclosing directory if content disposition starts with slash
-                // (relevant for Sentinel, so <product-id>.<ext> folder will be included 
-                // in destination path)
-                if (fullUrl.EndsWith(filename) && filename.StartsWith("/"))
-                {
-                    string baseName = fullUrl.Substring(0, fullUrl.Length - filename.Length);
-                    filename = Path.Combine(Path.GetFileName(baseName), filename.TrimStart('/'));
-                }
             }
 
             // to avoid wrong filename such as '$value'
