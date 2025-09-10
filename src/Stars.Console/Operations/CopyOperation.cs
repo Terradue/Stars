@@ -314,7 +314,7 @@ namespace Terradue.Stars.Console.Operations
             StacNode stacNode = stacItemNode;
 
             if (ExtractArchives)
-                    stacNode = await processingService.ExtractArchiveAsync(stacItemNode, destination, storeService, ct);
+                stacNode = await processingService.ExtractArchiveAsync(stacItemNode, destination, storeService, ct);
             if (Harvest)
                 stacNode = await processingService.ExtractMetadataAsync(stacNode as StacItemNode, destination, storeService, ct);
 

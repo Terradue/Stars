@@ -43,7 +43,6 @@ namespace Terradue.Stars.Services.Supplier.Destination
 
         public IDestination To(IResource subroute, string relPathFix = null)
         {
-            Console.WriteLine("000 {0}", subroute.Uri);
             // we first integrate the relPath
             string relPath = relPathFix ?? "";
 
