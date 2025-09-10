@@ -14,10 +14,13 @@ using Stac;
 using Stac.Extensions.Eo;
 using Stac.Extensions.File;
 using Stac.Extensions.Projection;
+using Terradue.MetadataExtractor;
 using Terradue.OpenSearch.Result;
 using Terradue.ServiceModel.Ogc.Eop21;
 using Terradue.ServiceModel.Ogc.Owc.AtomEncoding;
+using Terradue.ServiceModel.Ogc.Sar21;
 using Terradue.ServiceModel.Syndication;
+using Terradue.Stars.Data.Model.Metadata.Rcm;
 using Terradue.Stars.Geometry.Wkt;
 using Terradue.Stars.Services.Model.Stac;
 using Terradue.Stars.Services.ThirdParty.Egms;
@@ -578,14 +581,26 @@ namespace Terradue.Stars.Data.Model.Atom
         private static EarthObservationType CreateEOProfileFromStacItem(StacItem stacItem)
         {
             if (string.IsNullOrEmpty(stacItem.GetProperty<string>("platform"))) return null;
-            EarthObservationType eop = new EarthObservationType();
-            eop.EopMetaDataProperty = new EarthObservationMetaDataPropertyType();
-            eop.EopMetaDataProperty.EarthObservationMetaData = new EarthObservationMetaDataType();
-            eop.EopMetaDataProperty.EarthObservationMetaData.identifier = stacItem.Id;
+            EarthObservationType eop;
+
             string[] instruments = stacItem.GetProperty<string[]>("instruments");
             string platform = stacItem.GetProperty<string>("platform");
             string[] instrument_types = stacItem.GetProperty<string[]>("instrument_types");
-            string sensor_type = stacItem.GetProperty<string>("sensor_type")?.ToUpper();
+            string sensorType = stacItem.GetProperty<string>("sensor_type")?.ToUpper();
+            int orbitNumber = stacItem.GetProperty<int>("sat:absolute_orbit");
+            int relativeOrbitNumber = stacItem.GetProperty<int>("sat:relative_orbit");
+            string orbitDirection = stacItem.GetProperty<string>("sat:orbit_state")?.ToUpper();
+            string instrumentMode = stacItem.GetProperty<string>("sar:instrument_mode");
+            string[] polarizations = stacItem.GetProperty<string[]>("sar:polarizations");
+            string processingLevel = stacItem.GetProperty<string>("processing:level");
+            string productType = stacItem.GetProperty<string>("sar:product_type");
+
+            bool isRadar = sensorType == "RADAR";
+            eop = isRadar ? new SarEarthObservationType() : new EarthObservationType();
+            eop.EopMetaDataProperty = new EarthObservationMetaDataPropertyType();
+            eop.EopMetaDataProperty.EarthObservationMetaData = new EarthObservationMetaDataType();
+            eop.EopMetaDataProperty.EarthObservationMetaData.identifier = stacItem.Id;
+
             if (instruments != null ||
                 !string.IsNullOrEmpty(platform) ||
                 instrument_types != null)
@@ -620,11 +635,11 @@ namespace Terradue.Stars.Data.Model.Atom
                     }
                     catch { }
                 }
-                if (!string.IsNullOrEmpty(sensor_type))
+                if (!string.IsNullOrEmpty(sensorType))
                 {
                     eop.procedure.Eop21EarthObservationEquipment.sensor = new SensorPropertyType();
                     eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor = new SensorType();
-                    eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType = sensor_type;
+                    eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.sensorType = sensorType;
                     try
                     {
                         eop.procedure.Eop21EarthObservationEquipment.sensor.Sensor.resolution = new ServiceModel.Ogc.Gml321.MeasureType()
@@ -634,16 +649,44 @@ namespace Terradue.Stars.Data.Model.Atom
                     }
                     catch { }
                 }
-                // Cloud cover
-                if (stacItem.EoExtension().CloudCover != null)
+                if (orbitNumber != 0 || relativeOrbitNumber != 0 || orbitDirection != null)
                 {
-                    eop.result = new ServiceModel.Ogc.Om20.OM_ResultPropertyType();
-                    eop.result.Opt21EarthObservationResult = new ServiceModel.Ogc.Opt21.OptEarthObservationResultType();
-                    eop.result.Opt21EarthObservationResult.cloudCoverPercentage = new ServiceModel.Ogc.Gml321.MeasureType()
+                    eop.procedure.Eop21EarthObservationEquipment.acquisitionParameters = new AcquisitionPropertyType();
+                    AcquisitionType acquisition = isRadar ? new SarAcquisitionType() : new AcquisitionType();
+                    if (orbitNumber != 0) acquisition.orbitNumber = orbitNumber.ToString();
+                    if (relativeOrbitNumber != 0) acquisition.wrsLongitudeGrid = new ServiceModel.Ogc.Gml321.CodeWithAuthorityType() { Value = relativeOrbitNumber.ToString() };
+                    if (orbitDirection != null) acquisition.orbitDirection = orbitDirection == "ASCENDING" ? OrbitDirectionValueType.ASCENDING : OrbitDirectionValueType.DESCENDING;
+                    if (isRadar)
                     {
-                        Value = stacItem.EoExtension().CloudCover.Value
-                    };
+                        if (polarizations != null) (acquisition as SarAcquisitionType).polarisationChannels = String.Join(" ", polarizations);
+                        if (instrumentMode != null) (acquisition as SarAcquisitionType).polarisationMode = instrumentMode;
+                    }
+                    eop.procedure.Eop21EarthObservationEquipment.acquisitionParameters.Acquisition = acquisition;
                 }
+
+                if (processingLevel != null || productType != null)
+                {
+                    if (productType != null) eop.EopMetaDataProperty.EarthObservationMetaData.productType = productType;
+                    if (processingLevel != null)
+                    {
+                        eop.EopMetaDataProperty.EarthObservationMetaData.processing = new ProcessingInformationPropertyType[] { new ProcessingInformationPropertyType() };
+                        ProcessingInformationType processing = new ProcessingInformationType();
+                        processing.processingLevel = processingLevel;
+                        eop.EopMetaDataProperty.EarthObservationMetaData.processing[0].ProcessingInformation = processing;
+                    }
+
+                }
+
+                // Cloud cover
+                    if (stacItem.EoExtension().CloudCover != null)
+                    {
+                        eop.result = new ServiceModel.Ogc.Om20.OM_ResultPropertyType();
+                        eop.result.Opt21EarthObservationResult = new ServiceModel.Ogc.Opt21.OptEarthObservationResultType();
+                        eop.result.Opt21EarthObservationResult.cloudCoverPercentage = new ServiceModel.Ogc.Gml321.MeasureType()
+                        {
+                            Value = stacItem.EoExtension().CloudCover.Value
+                        };
+                    }
             }
 
             return eop;

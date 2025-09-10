@@ -143,6 +143,7 @@ namespace Terradue.Stars.Services
                 return new StacAssetAsset(clonedAsset, null);
             }
             var genericAsset = new GenericAsset(route, assetOrigin.Title, assetOrigin.Roles);
+            genericAsset.MergeProperties(assetOrigin.Properties);
             return genericAsset;
         }
 

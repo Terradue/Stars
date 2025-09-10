@@ -25,6 +25,10 @@ namespace Terradue.Stars.Data.Routers
             this.tr = tr;
             this.label = label;
             properties = new Dictionary<string, object>();
+            if (tr.ContentDisposition != null && !String.IsNullOrEmpty(tr.ContentDisposition.FileName))
+            {
+                properties["filename"] = tr.ContentDisposition.FileName;
+            }
         }
 
         public string Title => label ?? tr.RequestUri.ToString();

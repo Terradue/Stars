@@ -312,6 +312,7 @@ namespace Terradue.Stars.Console.Operations
             ProcessingService processingService = ServiceProvider.GetService<ProcessingService>();
             processingService.Parameters.KeepOriginalAssets = KeepAll;
             StacNode stacNode = stacItemNode;
+
             if (ExtractArchives)
                 stacNode = await processingService.ExtractArchiveAsync(stacItemNode, destination, storeService, ct);
             if (Harvest)
