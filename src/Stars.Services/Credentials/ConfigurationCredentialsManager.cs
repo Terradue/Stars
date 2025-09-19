@@ -30,7 +30,7 @@ namespace Terradue.Stars.Services.Credentials
             var creds = _credentialsCache.Values
                         .Where(v => MatchUriAndAuth(v, uri, authType));
             if (creds.Count() == 0) return null;
-            int i = new Random().Next(0, creds.Count() - 1);
+            int i = new Random().Next(0, creds.Count());
             var cred = creds.ElementAt(i);
             if (cred == null) return null;
             return cred.ToNetWorkCredential();
