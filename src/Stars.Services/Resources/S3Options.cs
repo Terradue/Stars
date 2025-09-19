@@ -2,6 +2,7 @@
 // License under the AGPL, Version 3.0.
 // File Name: S3Options.cs
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -35,12 +36,15 @@ namespace Terradue.Stars.Services.Resources
 
         public KeyValuePair<string, S3Configuration> GetS3Configuration(string url, ClaimsPrincipal claimsPrincipal = null)
         {
-            var kv = Services
+            var s3Services = Services
                         .Where(c => claimsPrincipal == null || (c.Value.ScopeRoles?.Any(r => claimsPrincipal.IsInRole(r)) ?? true))
-                        .Where(c => Regex.Match(url, c.Value.UrlPattern, RegexOptions.Singleline).Success)
-                        .FirstOrDefault();
-            if (kv.Key != null)
+                        .Where(c => Regex.Match(url, c.Value.UrlPattern, RegexOptions.Singleline).Success);
+            if (s3Services.Count() != 0)
+            {
+                int i = new Random().Next(0, s3Services.Count());
+                var kv = s3Services.ElementAt(i);
                 return kv;
+            }
             return default(KeyValuePair<string, S3Configuration>);
         }
 
