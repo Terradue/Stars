@@ -27,7 +27,14 @@ namespace Terradue.Stars.Data.Routers
             properties = new Dictionary<string, object>();
             if (tr.ContentDisposition != null && !String.IsNullOrEmpty(tr.ContentDisposition.FileName))
             {
-                properties["filename"] = tr.ContentDisposition.FileName;
+                // TODO Improve 
+                // Add the filename property only if it resembles an actual filename (containing a dot)
+                // Avoid '$value' (as in CDSE OData), this results in unrecognized file types,
+                // e.g. compressed archives.
+                if (tr.ContentDisposition.FileName.Contains("."))
+                {
+                    properties["filename"] = tr.ContentDisposition.FileName;
+                }
             }
         }
 
