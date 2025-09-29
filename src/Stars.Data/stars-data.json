@@ -67,6 +67,9 @@
                 "SENTINEL-2": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2.Sentinel2MetadataExtractor"
                 },
+                "SENTINEL-3": {
+                    "Type": "Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel3.Sentinel3MetadataExtractor"
+                },
                 "ICEYE": {
                     "Type": "Terradue.Stars.Data.Model.Metadata.Iceye.IceyeMetadataExtractor"
                 },
