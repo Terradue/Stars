@@ -16,6 +16,9 @@
             "SENTINEL-2": [
                 "ESA/SENTINEL-2"
             ],
+            "SENTINEL-3": [
+                "ESA/SENTINEL-3"
+            ],
             "ICEYE": [
                 "ICEYE"
             ],

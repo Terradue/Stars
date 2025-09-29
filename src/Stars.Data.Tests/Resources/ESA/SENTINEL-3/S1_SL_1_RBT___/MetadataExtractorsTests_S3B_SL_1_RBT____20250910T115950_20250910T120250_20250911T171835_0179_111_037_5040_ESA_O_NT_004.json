@@ -1,0 +1,1028 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004",
+  "geometry": null,
+  "properties": {
+    "datetime": "2025-09-10T11:59:49.873285Z",
+    "start_datetime": "2025-09-10T11:59:49.873285Z",
+    "end_datetime": "2025-09-10T12:02:49.873285Z",
+    "created": "2025-09-11T17:38:36.919255Z",
+    "platform": "sentinel-3b",
+    "constellation": "sentinel-3",
+    "mission": "sentinel-3",
+    "instruments": [
+      "slstr"
+    ],
+    "sensor_type": "optical",
+    "gsd": 1000.0,
+    "sat:orbit_state": "ascending",
+    "sat:absolute_orbit": 38424,
+    "sat:relative_orbit": 37,
+    "sat:platform_international_designator": "2018-039A",
+    "processing:level": "L1",
+    "processing:lineage": "DataProcessing",
+    "proj:epsg": null,
+    "title": "SENTINEL-3B SL_1_RBT___ L1 2025-09-10 11:59:49",
+    "providers": [
+      {
+        "name": "ESA/EC (Copernicus)",
+        "description": "The Sentinel-3 mission comprises a constellation of two polar-orbiting satellites, equipped with instruments to monitor Earth's oceans, land, and atmosphere, enabling detailed observations of features like sea level, ocean currents, sea ice, and vegetation.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://sentinels.copernicus.eu/copernicus/sentinel-3"
+      }
+    ]
+  },
+  "assets": {
+    "cartesian_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the A stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_an.nc",
+      "filename": "cartesian_an.nc",
+      "file:size": 0
+    },
+    "cartesian_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the A stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_ao.nc",
+      "filename": "cartesian_ao.nc",
+      "file:size": 0
+    },
+    "cartesian_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the B stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_bn.nc",
+      "filename": "cartesian_bn.nc",
+      "file:size": 0
+    },
+    "cartesian_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the B stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_bo.nc",
+      "filename": "cartesian_bo.nc",
+      "file:size": 0
+    },
+    "cartesian_fn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the 1km F1 grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_fn.nc",
+      "filename": "cartesian_fn.nc",
+      "file:size": 0
+    },
+    "cartesian_fo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the 1km F1 grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_fo.nc",
+      "filename": "cartesian_fo.nc",
+      "file:size": 0
+    },
+    "cartesian_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the 1km TIR grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_in.nc",
+      "filename": "cartesian_in.nc",
+      "file:size": 0
+    },
+    "cartesian_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution cartesian coordinates for the 1km TIR grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_io.nc",
+      "filename": "cartesian_io.nc",
+      "file:size": 0
+    },
+    "cartesian_tx": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "16km cartesian coordinates",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/cartesian_tx.nc",
+      "filename": "cartesian_tx.nc",
+      "file:size": 0
+    },
+    "F1_BT_fn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel F1 (1km F1 grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F1_BT_fn.nc",
+      "filename": "F1_BT_fn.nc",
+      "file:size": 0
+    },
+    "F1_BT_fo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel F1 (1km F1 grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F1_BT_fo.nc",
+      "filename": "F1_BT_fo.nc",
+      "file:size": 0
+    },
+    "F1_quality_fn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel F1 (1km F1 grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F1_quality_fn.nc",
+      "filename": "F1_quality_fn.nc",
+      "file:size": 0
+    },
+    "F1_quality_fo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel F1 (1km F1 grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F1_quality_fo.nc",
+      "filename": "F1_quality_fo.nc",
+      "file:size": 0
+    },
+    "F2_BT_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel F2 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F2_BT_in.nc",
+      "filename": "F2_BT_in.nc",
+      "file:size": 0
+    },
+    "F2_BT_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel F1 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F2_BT_io.nc",
+      "filename": "F2_BT_io.nc",
+      "file:size": 0
+    },
+    "F2_quality_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel F2 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F2_quality_in.nc",
+      "filename": "F2_quality_in.nc",
+      "file:size": 0
+    },
+    "F2_quality_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel F2 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/F2_quality_io.nc",
+      "filename": "F2_quality_io.nc",
+      "file:size": 0
+    },
+    "flags_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the A stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_an.nc",
+      "filename": "flags_an.nc",
+      "file:size": 0
+    },
+    "flags_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the A stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_ao.nc",
+      "filename": "flags_ao.nc",
+      "file:size": 0
+    },
+    "flags_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the B stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_bn.nc",
+      "filename": "flags_bn.nc",
+      "file:size": 0
+    },
+    "flags_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the B stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_bo.nc",
+      "filename": "flags_bo.nc",
+      "file:size": 0
+    },
+    "flags_fn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the 1km F1 grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_fn.nc",
+      "filename": "flags_fn.nc",
+      "file:size": 0
+    },
+    "flags_fo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the 1km F1 grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_fo.nc",
+      "filename": "flags_fo.nc",
+      "file:size": 0
+    },
+    "flags_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the 1km TIR grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_in.nc",
+      "filename": "flags_in.nc",
+      "file:size": 0
+    },
+    "flags_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Global flags for the 1km TIR grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/flags_io.nc",
+      "filename": "flags_io.nc",
+      "file:size": 0
+    },
+    "geodetic_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the A stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_an.nc",
+      "filename": "geodetic_an.nc",
+      "file:size": 0
+    },
+    "geodetic_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the A stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_ao.nc",
+      "filename": "geodetic_ao.nc",
+      "file:size": 0
+    },
+    "geodetic_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the B stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_bn.nc",
+      "filename": "geodetic_bn.nc",
+      "file:size": 0
+    },
+    "geodetic_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the B stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_bo.nc",
+      "filename": "geodetic_bo.nc",
+      "file:size": 0
+    },
+    "geodetic_fn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the 1km F1 grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_fn.nc",
+      "filename": "geodetic_fn.nc",
+      "file:size": 0
+    },
+    "geodetic_fo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the 1km F1 grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_fo.nc",
+      "filename": "geodetic_fo.nc",
+      "file:size": 0
+    },
+    "geodetic_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the 1km TIR grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_in.nc",
+      "filename": "geodetic_in.nc",
+      "file:size": 0
+    },
+    "geodetic_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Full resolution geodetic coordinates for the 1km TIR grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_io.nc",
+      "filename": "geodetic_io.nc",
+      "file:size": 0
+    },
+    "geodetic_tx": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "16km geodetic coordinates",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geodetic_tx.nc",
+      "filename": "geodetic_tx.nc",
+      "file:size": 0
+    },
+    "geometry_tn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "16km solar and satellite geometry annotations, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geometry_tn.nc",
+      "filename": "geometry_tn.nc",
+      "file:size": 0
+    },
+    "geometry_to": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "16km solar and satellite geometry annotations, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/geometry_to.nc",
+      "filename": "geometry_to.nc",
+      "file:size": 0
+    },
+    "indices_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the A stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_an.nc",
+      "filename": "indices_an.nc",
+      "file:size": 0
+    },
+    "indices_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the A stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_ao.nc",
+      "filename": "indices_ao.nc",
+      "file:size": 0
+    },
+    "indices_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the B stripe grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_bn.nc",
+      "filename": "indices_bn.nc",
+      "file:size": 0
+    },
+    "indices_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the B stripe grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_bo.nc",
+      "filename": "indices_bo.nc",
+      "file:size": 0
+    },
+    "indices_fn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the 1km F1 grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_fn.nc",
+      "filename": "indices_fn.nc",
+      "file:size": 0
+    },
+    "indices_fo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the 1km F1 grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_fo.nc",
+      "filename": "indices_fo.nc",
+      "file:size": 0
+    },
+    "indices_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the 1km TIR grid, nadir view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_in.nc",
+      "filename": "indices_in.nc",
+      "file:size": 0
+    },
+    "indices_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Scan, pixel and detector annotations for the 1km TIR grid, oblique view",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/indices_io.nc",
+      "filename": "indices_io.nc",
+      "file:size": 0
+    },
+    "met_tx": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Meteorological parameters regridded onto the 16km tie points",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/met_tx.nc",
+      "filename": "met_tx.nc",
+      "file:size": 0
+    },
+    "S1_quality_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S1 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S1_quality_an.nc",
+      "filename": "S1_quality_an.nc",
+      "file:size": 0
+    },
+    "S1_quality_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S1 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S1_quality_ao.nc",
+      "filename": "S1_quality_ao.nc",
+      "file:size": 0
+    },
+    "S1_radiance_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S1 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S1_radiance_an.nc",
+      "filename": "S1_radiance_an.nc",
+      "file:size": 0
+    },
+    "S1_radiance_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S1 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S1_radiance_ao.nc",
+      "filename": "S1_radiance_ao.nc",
+      "file:size": 0
+    },
+    "S2_quality_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S2 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S2_quality_an.nc",
+      "filename": "S2_quality_an.nc",
+      "file:size": 0
+    },
+    "S2_quality_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S2 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S2_quality_ao.nc",
+      "filename": "S2_quality_ao.nc",
+      "file:size": 0
+    },
+    "S2_radiance_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S2 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S2_radiance_an.nc",
+      "filename": "S2_radiance_an.nc",
+      "file:size": 0
+    },
+    "S2_radiance_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S2 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S2_radiance_ao.nc",
+      "filename": "S2_radiance_ao.nc",
+      "file:size": 0
+    },
+    "S3_quality_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S3 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S3_quality_an.nc",
+      "filename": "S3_quality_an.nc",
+      "file:size": 0
+    },
+    "S3_quality_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S3 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S3_quality_ao.nc",
+      "filename": "S3_quality_ao.nc",
+      "file:size": 0
+    },
+    "S3_radiance_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S3 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S3_radiance_an.nc",
+      "filename": "S3_radiance_an.nc",
+      "file:size": 0
+    },
+    "S3_radiance_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S3 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S3_radiance_ao.nc",
+      "filename": "S3_radiance_ao.nc",
+      "file:size": 0
+    },
+    "S4_quality_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S4 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_quality_an.nc",
+      "filename": "S4_quality_an.nc",
+      "file:size": 0
+    },
+    "S4_quality_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S4 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_quality_ao.nc",
+      "filename": "S4_quality_ao.nc",
+      "file:size": 0
+    },
+    "S4_quality_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S4 (B stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_quality_bn.nc",
+      "filename": "S4_quality_bn.nc",
+      "file:size": 0
+    },
+    "S4_quality_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S4 (B stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_quality_bo.nc",
+      "filename": "S4_quality_bo.nc",
+      "file:size": 0
+    },
+    "S4_radiance_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S4 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_radiance_an.nc",
+      "filename": "S4_radiance_an.nc",
+      "file:size": 0
+    },
+    "S4_radiance_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S4 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_radiance_ao.nc",
+      "filename": "S4_radiance_ao.nc",
+      "file:size": 0
+    },
+    "S4_radiance_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S4 (B stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_radiance_bn.nc",
+      "filename": "S4_radiance_bn.nc",
+      "file:size": 0
+    },
+    "S4_radiance_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S4 (B stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S4_radiance_bo.nc",
+      "filename": "S4_radiance_bo.nc",
+      "file:size": 0
+    },
+    "S5_quality_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S5 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_quality_an.nc",
+      "filename": "S5_quality_an.nc",
+      "file:size": 0
+    },
+    "S5_quality_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S5 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_quality_ao.nc",
+      "filename": "S5_quality_ao.nc",
+      "file:size": 0
+    },
+    "S5_quality_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S5 (B stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_quality_bn.nc",
+      "filename": "S5_quality_bn.nc",
+      "file:size": 0
+    },
+    "S5_quality_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S5 (B stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_quality_bo.nc",
+      "filename": "S5_quality_bo.nc",
+      "file:size": 0
+    },
+    "S5_radiance_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S5 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_radiance_an.nc",
+      "filename": "S5_radiance_an.nc",
+      "file:size": 0
+    },
+    "S5_radiance_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S5 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_radiance_ao.nc",
+      "filename": "S5_radiance_ao.nc",
+      "file:size": 0
+    },
+    "S5_radiance_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S5 (B stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_radiance_bn.nc",
+      "filename": "S5_radiance_bn.nc",
+      "file:size": 0
+    },
+    "S5_radiance_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S5 (B stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S5_radiance_bo.nc",
+      "filename": "S5_radiance_bo.nc",
+      "file:size": 0
+    },
+    "S6_quality_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S6 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_quality_an.nc",
+      "filename": "S6_quality_an.nc",
+      "file:size": 0
+    },
+    "S6_quality_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S6 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_quality_ao.nc",
+      "filename": "S6_quality_ao.nc",
+      "file:size": 0
+    },
+    "S6_quality_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S6 (B stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_quality_bn.nc",
+      "filename": "S6_quality_bn.nc",
+      "file:size": 0
+    },
+    "S6_quality_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Visible and Shortwave IR quality annotations for channel S6 (B stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_quality_bo.nc",
+      "filename": "S6_quality_bo.nc",
+      "file:size": 0
+    },
+    "S6_radiance_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S6 (A stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_radiance_an.nc",
+      "filename": "S6_radiance_an.nc",
+      "file:size": 0
+    },
+    "S6_radiance_ao": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S6 (A stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_radiance_ao.nc",
+      "filename": "S6_radiance_ao.nc",
+      "file:size": 0
+    },
+    "S6_radiance_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S6 (B stripe grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_radiance_bn.nc",
+      "filename": "S6_radiance_bn.nc",
+      "file:size": 0
+    },
+    "S6_radiance_bo": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "TOA radiance for channel S6 (B stripe grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S6_radiance_bo.nc",
+      "filename": "S6_radiance_bo.nc",
+      "file:size": 0
+    },
+    "S7_BT_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel S7 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S7_BT_in.nc",
+      "filename": "S7_BT_in.nc",
+      "file:size": 0
+    },
+    "S7_BT_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel S7 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S7_BT_io.nc",
+      "filename": "S7_BT_io.nc",
+      "file:size": 0
+    },
+    "S7_quality_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel S7 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S7_quality_in.nc",
+      "filename": "S7_quality_in.nc",
+      "file:size": 0
+    },
+    "S7_quality_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel S7 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S7_quality_io.nc",
+      "filename": "S7_quality_io.nc",
+      "file:size": 0
+    },
+    "S8_BT_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel S8 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S8_BT_in.nc",
+      "filename": "S8_BT_in.nc",
+      "file:size": 0
+    },
+    "S8_BT_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel S8 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S8_BT_io.nc",
+      "filename": "S8_BT_io.nc",
+      "file:size": 0
+    },
+    "S8_quality_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel S8 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S8_quality_in.nc",
+      "filename": "S8_quality_in.nc",
+      "file:size": 0
+    },
+    "S8_quality_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel S8 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S8_quality_io.nc",
+      "filename": "S8_quality_io.nc",
+      "file:size": 0
+    },
+    "S9_BT_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel S9 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S9_BT_in.nc",
+      "filename": "S9_BT_in.nc",
+      "file:size": 0
+    },
+    "S9_BT_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Gridded pixel brightness temperature for channel S9 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S9_BT_io.nc",
+      "filename": "S9_BT_io.nc",
+      "file:size": 0
+    },
+    "S9_quality_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel S9 (1km TIR grid, nadir view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S9_quality_in.nc",
+      "filename": "S9_quality_in.nc",
+      "file:size": 0
+    },
+    "S9_quality_io": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Thermal Infrared quality annotations for channel S9 (1km TIR grid, oblique view)",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/S9_quality_io.nc",
+      "filename": "S9_quality_io.nc",
+      "file:size": 0
+    },
+    "time_an": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Time annotations for the A stripe grid",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/time_an.nc",
+      "filename": "time_an.nc",
+      "file:size": 0
+    },
+    "time_bn": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Time annotations for the B stripe grid",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/time_bn.nc",
+      "filename": "time_bn.nc",
+      "file:size": 0
+    },
+    "time_in": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "Time annotations for the 1 KM grid",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/time_in.nc",
+      "filename": "time_in.nc",
+      "file:size": 0
+    },
+    "viscal": {
+      "type": "application/x-netcdf",
+      "roles": [
+        "data"
+      ],
+      "title": "VISCAL data obtained from input VISCAL ADF",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/viscal.nc",
+      "filename": "viscal.nc",
+      "file:size": 0
+    },
+    "manifest": {
+      "type": "text/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "SAFE Manifest",
+      "href": "data/S3B_SL_1_RBT____20250910T115950_20250910T120250_20250911T171835_0179_111_037_5040_ESA_O_NT_004.SEN3/xfdumanifest.xml",
+      "filename": "xfdumanifest.xml",
+      "file:size": 200087
+    }
+  },
+  "links": []
+}
