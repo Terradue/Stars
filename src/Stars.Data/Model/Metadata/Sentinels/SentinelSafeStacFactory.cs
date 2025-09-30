@@ -373,26 +373,38 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
                 return polygon.ToGeometry().NormalizePolygon();
             }
 
-            if (measurementFrameSet.metadataWrap.xmlData.frameSet11 != null && measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint != null &&
-                    measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType)
+            if (measurementFrameSet.metadataWrap.xmlData.frameSet11 != null && measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint != null)
             {
-                ServiceModel.Ogc.Gml311.CoordinatesType coordinates = (ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0];
-
-                var polygon = new ServiceModel.Ogc.Gml321.PolygonType();
-                polygon.exterior = new ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
-                var linearRing = new ServiceModel.Ogc.Gml321.LinearRingType();
-                var posList = new List<ServiceModel.Ogc.Gml321.DirectPositionListType>();
-
-                posList.Add(new ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinates.Value.Replace(",", " ") });
-                if (posList[0].Text.Split(' ')[1] != posList[0].Text.Split(' ').Last())
+                string coordinatesText = null;
+                if (measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0] is ServiceModel.Ogc.Gml311.CoordinatesType)
                 {
-                    posList[0].Text += " " + posList[0].Text.Split(' ')[0] + " " + posList[0].Text.Split(' ')[1];
+                    var coordinates = (ServiceModel.Ogc.Gml311.CoordinatesType)measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0];
+                    coordinatesText = coordinates.Value;
                 }
-                linearRing.Items = posList.ToArray();
-                linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
-                polygon.exterior.Item = linearRing;
+                else if (measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0] is Terradue.ServiceModel.Ogc.Gml311.DirectPositionListType)
+                {
+                    var coordinates = (Terradue.ServiceModel.Ogc.Gml311.DirectPositionListType)measurementFrameSet.metadataWrap.xmlData.frameSet11.footPrint.Items1[0];
+                    coordinatesText = coordinates.Text;
+                }
 
-                return polygon.ToGeometry().NormalizePolygon();
+                if (coordinatesText != null)
+                {
+                    var polygon = new ServiceModel.Ogc.Gml321.PolygonType();
+                    polygon.exterior = new ServiceModel.Ogc.Gml321.AbstractRingPropertyType();
+                    var linearRing = new ServiceModel.Ogc.Gml321.LinearRingType();
+                    var posList = new List<ServiceModel.Ogc.Gml321.DirectPositionListType>();
+
+                    posList.Add(new ServiceModel.Ogc.Gml321.DirectPositionListType() { Text = coordinatesText.Replace(",", " ") });
+                    if (posList[0].Text.Split(' ')[1] != posList[0].Text.Split(' ').Last())
+                    {
+                        posList[0].Text += " " + posList[0].Text.Split(' ')[0] + " " + posList[0].Text.Split(' ')[1];
+                    }
+                    linearRing.Items = posList.ToArray();
+                    linearRing.ItemsElementName = new ServiceModel.Ogc.Gml321.ItemsChoiceType6[1] { ServiceModel.Ogc.Gml321.ItemsChoiceType6.posList };
+                    polygon.exterior.Item = linearRing;
+
+                    return polygon.ToGeometry().NormalizePolygon();
+                }
             }
 
             return null;
