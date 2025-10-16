@@ -1,0 +1,233 @@
+{
+  "stac_version": "1.0.0",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/eo/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/processing/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/projection/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/raster/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/view/v1.0.0/schema.json"
+  ],
+  "type": "Feature",
+  "id": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -70.351201,
+          9.10381
+        ],
+        [
+          -70.067155,
+          9.046051
+        ],
+        [
+          -70.009914,
+          9.322502
+        ],
+        [
+          -70.294166,
+          9.380271
+        ],
+        [
+          -70.351201,
+          9.10381
+        ]
+      ]
+    ]
+  },
+  "properties": {
+    "start_datetime": "2023-01-29T14:40:32.210541Z",
+    "end_datetime": "2023-01-29T14:40:36.879535Z",
+    "datetime": "2023-01-29T14:40:32.210541Z",
+    "created": "2023-04-26T12:50:06.168251Z",
+    "platform": "vrss-2",
+    "mission": "vrss-2",
+    "instruments": [
+      "mss"
+    ],
+    "sensor_type": "optical",
+    "gsd": 3.0,
+    "title": "VRSS-2 MSS L2A 2023-01-29 14:40:32",
+    "sat:absolute_orbit": 28595,
+    "proj:epsg": 4326,
+    "view:off_nadir": 4.414747,
+    "view:sun_azimuth": 227.73,
+    "view:sun_elevation": 49.896,
+    "processing:level": "L2A",
+    "providers": [
+      {
+        "name": "ABAE",
+        "description": "The Venezuelan VRSS missions provide high-resolution land and vegetation observations to assess Venezuela's soil and water resources, collect images to help urban planners, monitor illegal mining and drug activities, and strengthen national defense, and support of disaster monitoring.",
+        "roles": [
+          "producer",
+          "processor",
+          "licensor"
+        ],
+        "url": "https://www.eoportal.org/satellite-missions/vrss-1"
+      }
+    ]
+  },
+  "bbox": [
+    -70.351201,
+    9.046051,
+    -70.009914,
+    9.380271
+  ],
+  "assets": {
+    "band-1": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_1.tif",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_1.tif",
+      "file:size": 0,
+      "proj:shape": [
+        11288,
+        11480
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.43653825166430205,
+          "offset": -21.76252319109462
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-1",
+          "common_name": "blue",
+          "center_wavelength": 0.485,
+          "solar_illumination": 1933.640015
+        }
+      ]
+    },
+    "band-2": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_2.tif",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_2.tif",
+      "file:size": 0,
+      "proj:shape": [
+        11288,
+        11480
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.3030119386703836,
+          "offset": -20.124083388885524
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-2",
+          "common_name": "green",
+          "center_wavelength": 0.555,
+          "solar_illumination": 1847.51001
+        }
+      ]
+    },
+    "band-3": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_3.tif",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_3.tif",
+      "file:size": 0,
+      "proj:shape": [
+        11288,
+        11480
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.33321115590949985,
+          "offset": -19.607810469494517
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-3",
+          "common_name": "red",
+          "center_wavelength": 0.66,
+          "solar_illumination": 1536.420044
+        }
+      ]
+    },
+    "band-4": {
+      "type": "image/tiff",
+      "roles": [
+        "data"
+      ],
+      "title": "Image file",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_4.tif",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_4.tif",
+      "file:size": 0,
+      "proj:shape": [
+        11288,
+        11480
+      ],
+      "raster:bands": [
+        {
+          "scale": 0.2583245072460024,
+          "offset": -11.948154271395726
+        }
+      ],
+      "eo:bands": [
+        {
+          "name": "band-4",
+          "common_name": "nir",
+          "center_wavelength": 0.83,
+          "solar_illumination": 1064.97998
+        }
+      ]
+    },
+    "overview": {
+      "type": "image/jpeg",
+      "roles": [
+        "overview"
+      ],
+      "title": "Browse image",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547.jpg",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547.jpg",
+      "file:size": 230208
+    },
+    "thumbnail": {
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "title": "Thumbnail image",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_THUMB.jpg",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_THUMB.jpg",
+      "file:size": 20891
+    },
+    "metadata": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Metadata file",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547.xml",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547.xml",
+      "file:size": 5960
+    },
+    "metadata-addition": {
+      "type": "application/xml",
+      "roles": [
+        "metadata"
+      ],
+      "title": "Additional metadata",
+      "href": "data/a3_23042650000021/VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_ADDITION.xml",
+      "filename": "VRSS-2_MSS_0299_0332_20230129_L2A_426121327547_ADDITION.xml",
+      "file:size": 2491913
+    }
+  },
+  "links": []
+}
