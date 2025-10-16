@@ -141,9 +141,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
         {
             switch (metadata.productLevel)
             {
+                case "LEVEL2A":
+                    return "L2A";
                 case "LEVEL2B":
                     return "L2B";
             }
+            if (metadata.productLevel != null) return metadata.productLevel.Replace("LEVEL", "L");
             return null;
         }
 
@@ -249,12 +252,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Vrss
 
         private void AddProjStacExtension(Schemas.Metadata metadata, StacItem stacItem)
         {
-            if (metadata.mapProjection != "UTM" || metadata.Zone_Number == null) return;
-            Match utmZoneMatch = utmZoneRegex.Match(metadata.Zone_Number);
-            if (!utmZoneMatch.Success) return;
-
+            Match utmZoneMatch = null;
+            if (metadata.mapProjection == "UTM" && metadata.Zone_Number != null)
+            {
+                utmZoneMatch = utmZoneRegex.Match(metadata.Zone_Number);
+            }
             ProjectionStacExtension proj = stacItem.ProjectionExtension();
             //proj.Wkt2 = ProjNet.CoordinateSystems.GeocentricCoordinateSystem.WGS84.WKT;
+            if (utmZoneMatch == null || !utmZoneMatch.Success)
+            {
+                proj.Epsg = 4326;
+                return;
+            }
 
             int zone = int.Parse(utmZoneMatch.Groups["num"].Value);
             bool north = utmZoneMatch.Groups["hem"].Value == "N";
