@@ -61,6 +61,7 @@
     },
     "proj:epsg": null,
     "title": "SENTINEL-1A GRD VV/VH 45 2016-08-22 18:28:23",
+    "product_type": "GRD",
     "sar:instrument_mode": "IW",
     "sar:frequency_band": "C",
     "sar:polarizations": [
@@ -208,27 +209,16 @@
         "VV"
       ]
     },
-    "support-s1-product-preview": {
+    "support-s1-level-1-calibration": {
       "type": "text/xml",
       "roles": [
         "metadata",
         "support"
       ],
-      "title": "Support file support-s1-product-preview",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-product-preview.xsd",
-      "filename": "support/s1-product-preview.xsd",
-      "file:size": 440
-    },
-    "support-s1-level-1-product": {
-      "type": "text/xml",
-      "roles": [
-        "metadata",
-        "support"
-      ],
-      "title": "Support file support-s1-level-1-product",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-product.xsd",
-      "filename": "support/s1-level-1-product.xsd",
-      "file:size": 147374
+      "title": "Support file support-s1-level-1-calibration",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-calibration.xsd",
+      "filename": "support/s1-level-1-calibration.xsd",
+      "file:size": 6427
     },
     "support-s1-level-1-noise": {
       "type": "text/xml",
@@ -241,28 +231,6 @@
       "filename": "support/s1-level-1-noise.xsd",
       "file:size": 3956
     },
-    "support-s1-level-1-calibration": {
-      "type": "text/xml",
-      "roles": [
-        "metadata",
-        "support"
-      ],
-      "title": "Support file support-s1-level-1-calibration",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-calibration.xsd",
-      "filename": "support/s1-level-1-calibration.xsd",
-      "file:size": 6427
-    },
-    "support-s1-level-1-quicklook": {
-      "type": "text/xml",
-      "roles": [
-        "metadata",
-        "support"
-      ],
-      "title": "Support file support-s1-level-1-quicklook",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-quicklook.xsd",
-      "filename": "support/s1-level-1-quicklook.xsd",
-      "file:size": 469
-    },
     "support-s1-level-1-measurement": {
       "type": "text/xml",
       "roles": [
@@ -273,17 +241,6 @@
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-measurement.xsd",
       "filename": "support/s1-level-1-measurement.xsd",
       "file:size": 471
-    },
-    "support-s1-object-types": {
-      "type": "text/xml",
-      "roles": [
-        "metadata",
-        "support"
-      ],
-      "title": "Support file support-s1-object-types",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-object-types.xsd",
-      "filename": "support/s1-object-types.xsd",
-      "file:size": 62654
     },
     "support-s1-map-overlay": {
       "type": "text/xml",
@@ -296,15 +253,49 @@
       "filename": "support/s1-map-overlay.xsd",
       "file:size": 450
     },
-    "preview-product-preview": {
-      "type": "application/octet-stream",
+    "support-s1-level-1-quicklook": {
+      "type": "text/xml",
       "roles": [
-        "data"
+        "metadata",
+        "support"
       ],
-      "title": "Preview file preview-product-preview",
-      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/preview/product-preview.html",
-      "filename": "preview/product-preview.html",
-      "file:size": 3196
+      "title": "Support file support-s1-level-1-quicklook",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-quicklook.xsd",
+      "filename": "support/s1-level-1-quicklook.xsd",
+      "file:size": 469
+    },
+    "support-s1-level-1-product": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-level-1-product",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-level-1-product.xsd",
+      "filename": "support/s1-level-1-product.xsd",
+      "file:size": 147374
+    },
+    "support-s1-object-types": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-object-types",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-object-types.xsd",
+      "filename": "support/s1-object-types.xsd",
+      "file:size": 62654
+    },
+    "support-s1-product-preview": {
+      "type": "text/xml",
+      "roles": [
+        "metadata",
+        "support"
+      ],
+      "title": "Support file support-s1-product-preview",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/support/s1-product-preview.xsd",
+      "filename": "support/s1-product-preview.xsd",
+      "file:size": 440
     },
     "preview-map-overlay": {
       "type": "application/vnd.google-earth.kml+xml",
@@ -316,6 +307,16 @@
       "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/preview/map-overlay.kml",
       "filename": "preview/map-overlay.kml",
       "file:size": 1018
+    },
+    "preview-product-preview": {
+      "type": "application/octet-stream",
+      "roles": [
+        "data"
+      ],
+      "title": "Preview file preview-product-preview",
+      "href": "data/S1A_IW_GRDH_1SDV_20160822T182823_20160822T182848_012717_013FFE_90AF.SAFE/preview/product-preview.html",
+      "filename": "preview/product-preview.html",
+      "file:size": 3196
     },
     "preview-quick-look": {
       "type": "image/png",

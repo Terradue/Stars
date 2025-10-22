@@ -79,6 +79,7 @@
     "processing:lineage": "Generation of Level-2A User Product",
     "proj:epsg": 32649,
     "title": "SENTINEL-2B MSI L2A 33 2021-02-08 04:39:39",
+    "product_type": "MSIL2A",
     "eo:cloud_cover": 88.091139,
     "processing_baseline": "02.14",
     "providers": [

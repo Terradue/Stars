@@ -42,6 +42,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
             AddProcessingStacExtension(stacItem);
             AddProjectionStacExtension(stacItem);
             FillBasicsProperties(stacItem.Properties);
+            // Add non-standard product_type property
+            stacItem.Properties["product_type"] = GetProductType();
             return stacItem;
         }
 
@@ -412,5 +414,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels
         }
 
         public abstract string GetProductType();
+
+        public abstract string GetDerivedProductType();
+
     }
 }
