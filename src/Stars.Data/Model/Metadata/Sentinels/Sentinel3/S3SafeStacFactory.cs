@@ -31,7 +31,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel3
             return string.Format("{0} {1} {2}",
                 //StylePlatform(properties.GetProperty<string>("platform")),
                 properties.GetProperty<string>("platform").ToUpper(),
-                GetProductType(),
+                GetDerivedProductType(),
                 GetProcessingLevel(),
                 properties.GetProperty<int>("sat:relative_orbit")
             );
@@ -59,6 +59,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel3
             catch { }
 
             return "RAW";
+        }
+
+        public override string GetDerivedProductType()
+        {
+            return GetProductType();
         }
 
         protected override string GetProcessingLevel()

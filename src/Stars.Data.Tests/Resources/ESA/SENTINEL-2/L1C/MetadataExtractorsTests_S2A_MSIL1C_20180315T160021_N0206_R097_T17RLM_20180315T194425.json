@@ -59,6 +59,7 @@
     "processing:lineage": "Generation of Level-1C User Product",
     "proj:epsg": 32617,
     "title": "SENTINEL-2A MSI L1C 97 2018-03-15 16:00:21",
+    "product_type": "MSIL1C",
     "eo:cloud_cover": 0.0,
     "processing_baseline": "02.06",
     "providers": [

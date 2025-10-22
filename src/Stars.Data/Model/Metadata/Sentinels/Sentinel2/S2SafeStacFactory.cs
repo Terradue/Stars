@@ -55,7 +55,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel2
 
         public override string GetProductType()
         {
-            switch (Identifier.Substring(4, 6))
+            return Identifier.Substring(4, 6);
+        }
+
+        public override string GetDerivedProductType()
+        {
+            switch (GetProductType())
             {
                 case "MSIL1C":
                     return "Level-1C";

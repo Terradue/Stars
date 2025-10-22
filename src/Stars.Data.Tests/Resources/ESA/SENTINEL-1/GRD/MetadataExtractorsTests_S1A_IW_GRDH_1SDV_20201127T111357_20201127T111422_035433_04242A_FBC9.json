@@ -61,6 +61,7 @@
     },
     "proj:epsg": null,
     "title": "SENTINEL-1A GRD VV/VH 11 2020-11-27 11:13:57",
+    "product_type": "GRD",
     "sar:instrument_mode": "IW",
     "sar:frequency_band": "C",
     "sar:polarizations": [

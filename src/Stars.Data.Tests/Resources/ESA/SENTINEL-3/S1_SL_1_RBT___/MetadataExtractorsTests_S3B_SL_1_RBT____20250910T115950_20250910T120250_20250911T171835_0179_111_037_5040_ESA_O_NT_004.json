@@ -345,6 +345,7 @@
     "processing:lineage": "DataProcessing",
     "proj:epsg": null,
     "title": "SENTINEL-3B SL_1_RBT___ L1 2025-09-10 11:59:49",
+    "product_type": "SL_1_RBT___",
     "providers": [
       {
         "name": "ESA/EC (Copernicus)",
