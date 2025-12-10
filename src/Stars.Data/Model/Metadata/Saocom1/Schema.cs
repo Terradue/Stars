@@ -475,9 +475,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
     public class PathRow
     {
         [XmlElement(ElementName = "Path")]
-        public int Path { get; set; }
+        public string Path { get; set; }
         [XmlElement(ElementName = "Row")]
-        public int Row { get; set; }
+        public string Row { get; set; }
     }
 
     // =========================================================================
