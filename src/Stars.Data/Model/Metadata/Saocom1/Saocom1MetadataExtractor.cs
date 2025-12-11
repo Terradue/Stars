@@ -257,12 +257,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 sat.AbsoluteOrbit = absOrbit;
         }
 
+        private static int RoundParse(string s) =>
+            double.TryParse(s, out var d) ? (int)Math.Round(d) : 0;
+
+
         private void AddOrbitInformation(SAOCOM_XMLProduct metadata, XEMT manifest, StacItem stacItem, IItem item)
         {
             if (manifest != null && manifest.Product != null && manifest.Product.Features != null && manifest.Product.Features.GeographicAttributes != null && manifest.Product.Features.GeographicAttributes.PathRow != null)
             {
-                stacItem.Properties["saocom:path"] = manifest.Product.Features.GeographicAttributes.PathRow.Path;
-                stacItem.Properties["saocom:row"] = manifest.Product.Features.GeographicAttributes.PathRow.Row;
+                stacItem.Properties["saocom:path"] = RoundParse(manifest.Product.Features.GeographicAttributes.PathRow.Path);
+                stacItem.Properties["saocom:row"] = RoundParse(manifest.Product.Features.GeographicAttributes.PathRow.Row);
             }
             else
             {
@@ -280,8 +284,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                     {
                         foreach (Parameter p in parameters.Inputs.Parameters)
                         {
-                            if (p.Name == "Path" && int.TryParse(p.Value, out int path)) stacItem.Properties["saocom:path"] = path;
-                            if (p.Name == "Row" && int.TryParse(p.Value, out int row)) stacItem.Properties["saocom:row"] = row;
+                            if (p.Name == "Path") { stacItem.Properties["saocom:path"] = RoundParse(p.Value); } 
+                            if (p.Name == "Row")  { stacItem.Properties["saocom:row"] = RoundParse(p.Value); } 
                         }
                     }
                 }
