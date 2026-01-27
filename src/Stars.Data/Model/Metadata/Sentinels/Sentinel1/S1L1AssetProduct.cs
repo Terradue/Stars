@@ -81,7 +81,18 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public override string GetId()
         {
-            return string.Format("{0}-{1}-{2}-{3}", GetPixelValueLabel(), GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            // Return only two-latter code of polarisation as asset key for GRD and OCN (e.g. "vv")
+            // or swath and polarisation for SLC (e.g. "iw1-vh")
+            switch (l1Product.adsHeader.productType)
+            {
+                case productType.GRD:
+                case productType.OCN:
+                    return GetPolarization().ToLower();
+                case productType.SLC:
+                    return string.Format("{0}-{1}", GetSwath(), GetPolarization()).ToLower();
+                default:
+                    return string.Format("{0}-{1}-{2}-{3}", GetPixelValueLabel(), GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            }
         }
 
         private object GetStripe()
@@ -96,7 +107,11 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1
 
         public override string GetAnnotationId()
         {
-            return string.Format("annotation-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
+            if (l1Product.adsHeader.productType == productType.GRD)
+            {
+                return string.Format("schema-product-{0}", GetPolarization()).ToLower();
+            }
+            return string.Format("schema-product-{0}-{1}", GetSwath(), GetPolarization()).ToLower();
         }
 
         public string GetAnnotationTitle()
