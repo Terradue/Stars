@@ -89,7 +89,7 @@
     38.629936
   ],
   "assets": {
-    "magnitude-vh-iw1-001": {
+    "iw1-vh": {
       "type": "image/x.geotiff",
       "roles": [
         "data",
@@ -108,7 +108,7 @@
         13563
       ]
     },
-    "annotation-vh-iw1-001": {
+    "schema-product-iw1-vh": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -121,7 +121,7 @@
         "VH"
       ]
     },
-    "magnitude-vv-iw1-004": {
+    "iw1-vv": {
       "type": "image/x.geotiff",
       "roles": [
         "data",
@@ -140,7 +140,7 @@
         13563
       ]
     },
-    "annotation-vv-iw1-004": {
+    "schema-product-iw1-vv": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -153,7 +153,7 @@
         "VV"
       ]
     },
-    "magnitude-vh-iw2-002": {
+    "iw2-vh": {
       "type": "image/x.geotiff",
       "roles": [
         "data",
@@ -172,7 +172,7 @@
         13671
       ]
     },
-    "annotation-vh-iw2-002": {
+    "schema-product-iw2-vh": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -185,7 +185,7 @@
         "VH"
       ]
     },
-    "magnitude-vv-iw2-005": {
+    "iw2-vv": {
       "type": "image/x.geotiff",
       "roles": [
         "data",
@@ -204,7 +204,7 @@
         13671
       ]
     },
-    "annotation-vv-iw2-005": {
+    "schema-product-iw2-vv": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -217,7 +217,7 @@
         "VV"
       ]
     },
-    "magnitude-vh-iw3-003": {
+    "iw3-vh": {
       "type": "image/x.geotiff",
       "roles": [
         "data",
@@ -236,7 +236,7 @@
         13716
       ]
     },
-    "annotation-vh-iw3-003": {
+    "schema-product-iw3-vh": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -249,7 +249,7 @@
         "VH"
       ]
     },
-    "magnitude-vv-iw3-006": {
+    "iw3-vv": {
       "type": "image/x.geotiff",
       "roles": [
         "data",
@@ -268,7 +268,7 @@
         13716
       ]
     },
-    "annotation-vv-iw3-006": {
+    "schema-product-iw3-vv": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -281,7 +281,7 @@
         "VV"
       ]
     },
-    "calibration-vh-iw1-001": {
+    "schema-calibration-iw1-vh": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -295,7 +295,7 @@
         "VH"
       ]
     },
-    "calibration-vv-iw1-004": {
+    "schema-calibration-iw1-vv": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -309,7 +309,7 @@
         "VV"
       ]
     },
-    "calibration-vh-iw2-002": {
+    "schema-calibration-iw2-vh": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -323,7 +323,7 @@
         "VH"
       ]
     },
-    "calibration-vv-iw2-005": {
+    "schema-calibration-iw2-vv": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -337,7 +337,7 @@
         "VV"
       ]
     },
-    "calibration-vh-iw3-003": {
+    "schema-calibration-iw3-vh": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -351,7 +351,7 @@
         "VH"
       ]
     },
-    "calibration-vv-iw3-006": {
+    "schema-calibration-iw3-vv": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -365,7 +365,7 @@
         "VV"
       ]
     },
-    "noise-vh-iw1-001": {
+    "schema-noise-iw1-vh": {
       "type": "text/xml",
       "roles": [
         "data",
@@ -379,7 +379,7 @@
         "VH"
       ]
     },
-    "noise-vv-iw1-004": {
+    "schema-noise-iw1-vv": {
       "type": "text/xml",
       "roles": [
         "data",
@@ -393,7 +393,7 @@
         "VV"
       ]
     },
-    "noise-vh-iw2-002": {
+    "schema-noise-iw2-vh": {
       "type": "text/xml",
       "roles": [
         "data",
@@ -407,7 +407,7 @@
         "VH"
       ]
     },
-    "noise-vv-iw2-005": {
+    "schema-noise-iw2-vv": {
       "type": "text/xml",
       "roles": [
         "data",
@@ -421,7 +421,7 @@
         "VV"
       ]
     },
-    "noise-vh-iw3-003": {
+    "schema-noise-iw3-vh": {
       "type": "text/xml",
       "roles": [
         "data",
@@ -435,7 +435,7 @@
         "VH"
       ]
     },
-    "noise-vv-iw3-006": {
+    "schema-noise-iw3-vv": {
       "type": "text/xml",
       "roles": [
         "data",
