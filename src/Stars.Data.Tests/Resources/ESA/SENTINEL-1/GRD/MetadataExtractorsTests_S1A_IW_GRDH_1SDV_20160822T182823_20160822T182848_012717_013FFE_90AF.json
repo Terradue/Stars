@@ -89,7 +89,7 @@
     15.388663
   ],
   "assets": {
-    "vh": {
+    "amplitude-vh-iw-002": {
       "type": "image/x.geotiff",
       "roles": [
         "amplitude",
@@ -108,7 +108,7 @@
         16805
       ]
     },
-    "schema-product-vh": {
+    "annotation-vh-iw-002": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -121,7 +121,7 @@
         "VH"
       ]
     },
-    "vv": {
+    "amplitude-vv-iw-001": {
       "type": "image/x.geotiff",
       "roles": [
         "amplitude",
@@ -140,7 +140,7 @@
         16805
       ]
     },
-    "schema-product-vv": {
+    "annotation-vv-iw-001": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -153,7 +153,7 @@
         "VV"
       ]
     },
-    "schema-calibration-vh": {
+    "calibration-vh-iw-002": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -167,7 +167,7 @@
         "VH"
       ]
     },
-    "schema-calibration-vv": {
+    "calibration-vv-iw-001": {
       "type": "text/xml",
       "roles": [
         "calibration",
@@ -181,7 +181,7 @@
         "VV"
       ]
     },
-    "schema-noise-vh": {
+    "noise-vh-iw-002": {
       "type": "text/xml",
       "roles": [
         "data",
@@ -195,7 +195,7 @@
         "VH"
       ]
     },
-    "schema-noise-vv": {
+    "noise-vv-iw-001": {
       "type": "text/xml",
       "roles": [
         "data",
