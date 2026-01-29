@@ -80,15 +80,43 @@ namespace Terradue.Stars.Services.Resources
             // HTTP
             if (resource.Uri.Scheme.StartsWith("http"))
             {
-                var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>() ?? throw new SystemException("HttpClient Factory not provided");
+                var clientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>()
+                    ?? throw new SystemException("HttpClient Factory not provided");
                 var client = clientFactory.CreateClient("stars");
+
+                // --- NEW: handle credentials in URL (https://user:pass@host/...) ---
+                System.Net.Http.Headers.AuthenticationHeaderValue authHeader = null;
+                Uri effectiveUri = resource.Uri;
+
+                if (!string.IsNullOrWhiteSpace(resource.Uri.UserInfo))
+                {
+                    // UserInfo is "username:password" (may be percent-encoded)
+                    var parts = resource.Uri.UserInfo.Split(new[] { ':' }, 2);
+                    var username = Uri.UnescapeDataString(parts[0]);
+                    var password = parts.Length > 1 ? Uri.UnescapeDataString(parts[1]) : "";
+
+                    var token = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{username}:{password}"));
+                    authHeader = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", token);
+
+                    // sanitize URI: remove user:pass@ from the Uri we pass around
+                    var ub = new UriBuilder(resource.Uri)
+                    {
+                        UserName = string.Empty,
+                        Password = string.Empty
+                    };
+                    effectiveUri = ub.Uri;
+                }
+                // --- END NEW ---
 
                 HttpCachedHeaders contentHeaders = null;
 
                 try
                 {
                     // First try head request
-                    using (var hr = await client.SendAsync(new HttpRequestMessage(HttpMethod.Head, resource.Uri), ct))
+                    var headReq = new HttpRequestMessage(HttpMethod.Head, effectiveUri);
+                    if (authHeader != null) headReq.Headers.Authorization = authHeader;
+
+                    using (var hr = await client.SendAsync(headReq, ct))
                     {
                         HttpResponseMessage headResponse = hr;
                         contentHeaders = new HttpCachedHeaders(headResponse);
@@ -104,6 +132,7 @@ namespace Terradue.Stars.Services.Resources
                                 headResponse = hr2;
                             }
                         }*/
+
                         headResponse.EnsureSuccessStatusCode();
                     }
                 }
@@ -112,11 +141,15 @@ namespace Terradue.Stars.Services.Resources
                     contentHeaders = null;
                     finalException = e;
                 }
+
                 if (contentHeaders == null)
                 {
                     try
                     {
-                        using (var response = await client.GetAsync(resource.Uri, HttpCompletionOption.ResponseHeadersRead, ct))
+                        var getReq = new HttpRequestMessage(HttpMethod.Get, effectiveUri);
+                        if (authHeader != null) getReq.Headers.Authorization = authHeader;
+
+                        using (var response = await client.SendAsync(getReq, HttpCompletionOption.ResponseHeadersRead, ct))
                         {
                             contentHeaders = new HttpCachedHeaders(response);
                             contentHeaders.AddRange(response.Content.Headers);
@@ -137,6 +170,14 @@ namespace Terradue.Stars.Services.Resources
                     }
                 }
 
+                if (!badStatusCode)
+                {
+                    // pass sanitized URI to HttpResource
+                    // If HttpResource later does GET requests, it should also reuse the auth header.
+                    // (vedi nota sotto)
+                    return new HttpResource(effectiveUri, client, contentHeaders);
+                }
+            }
                 // S3 resource case
                 if (s3Url != null
                     && !triedS3
