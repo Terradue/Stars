@@ -86,7 +86,7 @@ namespace Terradue.Stars.Services.Resources
                 HttpClient client = clientFactory.CreateClient("stars");
                 HttpCachedHeaders contentHeaders = null;
 
-                bool badStatusCode = false;
+                badStatusCode = false;
 
                 // --- credentials in URL ---
                 System.Net.Http.Headers.AuthenticationHeaderValue authHeader = null;
