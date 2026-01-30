@@ -25,6 +25,31 @@ namespace Terradue.Stars.Console.Operations
 
         public override NetworkCredential GetCredential(Uri uri, string authType)
         {
+            // 1) If credentials are embedded in the URI, use them.
+            //    uri.UserInfo is "username:password" (may be percent-encoded)
+            if (!string.IsNullOrWhiteSpace(uri?.UserInfo) && uri.UserInfo != "preauth")
+            {
+                var parts = uri.UserInfo.Split(new[] { ':' }, 2);
+
+                var username = Uri.UnescapeDataString(parts[0]);
+                var password = parts.Length > 1 ? Uri.UnescapeDataString(parts[1]) : "";
+
+                if (!string.IsNullOrEmpty(username))
+                {
+                    var embedded = new NetworkCredential(username, password);
+
+                    // Optional: cache against authority WITHOUT userinfo (so next time no prompt)
+                    try
+                    {
+                        var authorityUri = new Uri(uri.GetLeftPart(UriPartial.Authority));
+                        var ub = new UriBuilder(authorityUri) { UserName = null, Password = null };
+                        CacheCredential(ub.Uri, authType, embedded);
+                    }
+                    catch { /* ignore */ }
+
+                    return embedded;
+                }
+            }
             var authority = uri.GetLeftPart(UriPartial.Authority);
             if (string.IsNullOrEmpty(authority)) { authority = "/"; }
             NetworkCredential cred = null;
