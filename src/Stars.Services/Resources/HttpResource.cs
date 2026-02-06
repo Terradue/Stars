@@ -38,7 +38,7 @@ namespace Terradue.Stars.Services.Resources
             res.EnsureSuccessStatusCode();
 
             // NOTE: do NOT dispose response here, because the caller will consume the stream.
-            return await res.Content.ReadAsStreamAsync(ct).ConfigureAwait(false);
+            return await res.Content.ReadAsStreamAsync().ConfigureAwait(false);
         }
 
         public async Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
@@ -46,7 +46,6 @@ namespace Terradue.Stars.Services.Resources
             using var req = new HttpRequestMessage(HttpMethod.Get, _url);
             if (_auth != null) req.Headers.Authorization = _auth;
 
-            // Proper range support: bytes=start-end (or start-)
             req.Headers.Range = end >= 0
                 ? new RangeHeaderValue(start, end)
                 : new RangeHeaderValue(start, null);
@@ -54,7 +53,7 @@ namespace Terradue.Stars.Services.Resources
             var res = await _client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
             res.EnsureSuccessStatusCode();
 
-            return await res.Content.ReadAsStreamAsync(ct).ConfigureAwait(false);
+            return await res.Content.ReadAsStreamAsync().ConfigureAwait(false);
         }
 
         public ContentType ContentType => new ContentType(CachedHeaders?.ContentType?.ToString() ?? "application/octet-stream");
