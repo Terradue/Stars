@@ -18,35 +18,53 @@ namespace Terradue.Stars.Services.Resources
     {
         private readonly Uri _url;
         private readonly HttpClient _client;
+        private readonly AuthenticationHeaderValue _auth;
         private HttpCachedHeaders _cachedHeaders;
 
-        internal HttpResource(Uri url, HttpClient httpClient, HttpCachedHeaders cachedHeaders = null)
+        internal HttpResource(Uri url, HttpClient httpClient, HttpCachedHeaders cachedHeaders = null, AuthenticationHeaderValue auth = null)
         {
-            _url = url;
-            _client = httpClient;
+            _url = url ?? throw new ArgumentNullException(nameof(url));
+            _client = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _cachedHeaders = cachedHeaders;
+            _auth = auth; // optional
         }
 
         public async Task<Stream> GetStreamAsync(CancellationToken ct)
         {
-            var res = await _client.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead, ct);
-            return await res.Content.ReadAsStreamAsync();
+            using var req = new HttpRequestMessage(HttpMethod.Get, _url);
+            if (_auth != null) req.Headers.Authorization = _auth;
+
+            var res = await _client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
+            res.EnsureSuccessStatusCode();
+
+            // NOTE: do NOT dispose response here, because the caller will consume the stream.
+            return await res.Content.ReadAsStreamAsync(ct).ConfigureAwait(false);
         }
 
         public async Task<Stream> GetStreamAsync(long start, CancellationToken ct, long end = -1)
         {
-            var request = new HttpRequestMessage { RequestUri = _url };
-            request.Headers.Range = new RangeHeaderValue(0, 1000);
-            return await (await _client.SendAsync(request, HttpCompletionOption.ResponseContentRead, ct)).Content.ReadAsStreamAsync();
+            using var req = new HttpRequestMessage(HttpMethod.Get, _url);
+            if (_auth != null) req.Headers.Authorization = _auth;
+
+            // Proper range support: bytes=start-end (or start-)
+            req.Headers.Range = end >= 0
+                ? new RangeHeaderValue(start, end)
+                : new RangeHeaderValue(start, null);
+
+            var res = await _client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, ct).ConfigureAwait(false);
+            res.EnsureSuccessStatusCode();
+
+            return await res.Content.ReadAsStreamAsync(ct).ConfigureAwait(false);
         }
 
         public ContentType ContentType => new ContentType(CachedHeaders?.ContentType?.ToString() ?? "application/octet-stream");
 
         public ResourceType ResourceType => ResourceType.Unknown;
 
-        public ulong ContentLength => Convert.ToUInt64(CachedHeaders.ContentLength);
+        public ulong ContentLength => Convert.ToUInt64(CachedHeaders?.ContentLength ?? 0);
 
-        public ContentDisposition ContentDisposition => CachedHeaders.ContentDisposition == null ? null : new ContentDisposition(CachedHeaders.ContentDisposition.ToString());
+        public ContentDisposition ContentDisposition =>
+            CachedHeaders?.ContentDisposition == null ? null : new ContentDisposition(CachedHeaders.ContentDisposition.ToString());
 
         public Uri Uri => _url;
 
@@ -54,8 +72,8 @@ namespace Terradue.Stars.Services.Resources
         {
             get
             {
-                if (CachedHeaders.Contains("Accept-Ranges"))
-                    return (CachedHeaders.GetValues("Accept-Ranges").Contains("bytes"));
+                if (CachedHeaders != null && CachedHeaders.Contains("Accept-Ranges"))
+                    return CachedHeaders.GetValues("Accept-Ranges").Contains("bytes");
                 return false;
             }
         }
@@ -66,9 +84,28 @@ namespace Terradue.Stars.Services.Resources
             {
                 if (_cachedHeaders == null)
                 {
-                    using (var res = _client.GetAsync(_url, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult())
+                    // Prefer HEAD for headers; if server rejects HEAD, fall back to GET headers-only.
+                    try
                     {
-                        _cachedHeaders = new HttpCachedHeaders(_client.GetAsync(_url).GetAwaiter().GetResult());
+                        using var headReq = new HttpRequestMessage(HttpMethod.Head, _url);
+                        if (_auth != null) headReq.Headers.Authorization = _auth;
+
+                        using var headRes = _client.SendAsync(headReq, HttpCompletionOption.ResponseHeadersRead)
+                                                  .GetAwaiter().GetResult();
+                        headRes.EnsureSuccessStatusCode();
+                        _cachedHeaders = new HttpCachedHeaders(headRes);
+                    }
+                    catch
+                    {
+                        using var getReq = new HttpRequestMessage(HttpMethod.Get, _url);
+                        if (_auth != null) getReq.Headers.Authorization = _auth;
+
+                        using var getRes = _client.SendAsync(getReq, HttpCompletionOption.ResponseHeadersRead)
+                                                 .GetAwaiter().GetResult();
+                        getRes.EnsureSuccessStatusCode();
+
+                        _cachedHeaders = new HttpCachedHeaders(getRes);
+                        _cachedHeaders.AddRange(getRes.Content.Headers);
                     }
                 }
                 return _cachedHeaders;
