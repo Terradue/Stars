@@ -89,7 +89,7 @@
     13.40823
   ],
   "assets": {
-    "vh": {
+    "amplitude-vh-iw-002": {
       "type": "image/x.geotiff",
       "roles": [
         "amplitude",
@@ -108,7 +108,7 @@
         16785
       ]
     },
-    "schema-product-vh": {
+    "annotation-vh-iw-002": {
       "type": "text/xml",
       "roles": [
         "metadata"
@@ -121,7 +121,7 @@
         "VH"
       ]
     },
-    "vv": {
+    "amplitude-vv-iw-001": {
       "type": "image/x.geotiff",
       "roles": [
         "amplitude",
@@ -140,7 +140,7 @@
         16785
       ]
     },
-    "schema-product-vv": {
+    "annotation-vv-iw-001": {
       "type": "text/xml",
       "roles": [
         "metadata"

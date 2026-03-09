@@ -91,7 +91,7 @@
       "filename": "MTD_MSIL2A.xml",
       "file:size": 54869
     },
-    "AOT_10m": {
+    "AOT": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -102,7 +102,7 @@
       "file:size": 0,
       "gsd": 10.0
     },
-    "AOT_20m": {
+    "AOT-20": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -113,7 +113,7 @@
       "file:size": 0,
       "gsd": 20.0
     },
-    "AOT_60m": {
+    "AOT-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -124,7 +124,7 @@
       "file:size": 0,
       "gsd": 60.0
     },
-    "B01_20m": {
+    "B01-20": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -159,7 +159,7 @@
       ],
       "gsd": 20.0
     },
-    "B01_60m": {
+    "coastal": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -194,7 +194,7 @@
       ],
       "gsd": 60.0
     },
-    "B02_10m": {
+    "blue": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -229,7 +229,7 @@
       ],
       "gsd": 10.0
     },
-    "B02_20m": {
+    "B02-20": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -264,7 +264,7 @@
       ],
       "gsd": 20.0
     },
-    "B02_60m": {
+    "B02-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -299,7 +299,7 @@
       ],
       "gsd": 60.0
     },
-    "B03_10m": {
+    "green": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -334,7 +334,7 @@
       ],
       "gsd": 10.0
     },
-    "B03_20m": {
+    "B03-20": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -369,7 +369,7 @@
       ],
       "gsd": 20.0
     },
-    "B03_60m": {
+    "B03-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -404,7 +404,7 @@
       ],
       "gsd": 60.0
     },
-    "B04_10m": {
+    "red": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -439,7 +439,7 @@
       ],
       "gsd": 10.0
     },
-    "B04_20m": {
+    "B04-20": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -474,7 +474,7 @@
       ],
       "gsd": 20.0
     },
-    "B04_60m": {
+    "B04-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -509,7 +509,7 @@
       ],
       "gsd": 60.0
     },
-    "B05_20m": {
+    "rededge70": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -544,7 +544,7 @@
       ],
       "gsd": 20.0
     },
-    "B05_60m": {
+    "B05-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -579,7 +579,7 @@
       ],
       "gsd": 60.0
     },
-    "B06_20m": {
+    "rededge74": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -614,7 +614,7 @@
       ],
       "gsd": 20.0
     },
-    "B06_60m": {
+    "B06-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -649,7 +649,7 @@
       ],
       "gsd": 60.0
     },
-    "B07_20m": {
+    "rededge78": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -684,7 +684,7 @@
       ],
       "gsd": 20.0
     },
-    "B07_60m": {
+    "B07-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -719,7 +719,7 @@
       ],
       "gsd": 60.0
     },
-    "B08_10m": {
+    "nir": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -754,7 +754,7 @@
       ],
       "gsd": 10.0
     },
-    "B09_60m": {
+    "nir09": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -789,7 +789,7 @@
       ],
       "gsd": 60.0
     },
-    "B11_20m": {
+    "swir16": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -824,7 +824,7 @@
       ],
       "gsd": 20.0
     },
-    "B11_60m": {
+    "B11-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -859,7 +859,7 @@
       ],
       "gsd": 60.0
     },
-    "B12_20m": {
+    "swir22": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -894,7 +894,7 @@
       ],
       "gsd": 20.0
     },
-    "B12_60m": {
+    "B12-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -929,7 +929,7 @@
       ],
       "gsd": 60.0
     },
-    "B8A_20m": {
+    "nir08": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -964,7 +964,7 @@
       ],
       "gsd": 20.0
     },
-    "B8A_60m": {
+    "B8A-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1008,7 +1008,7 @@
       "filename": "GRANULE/L2A_T38KQA_A034723_20220214T070332/QI_DATA/T38KQA_20220214T070051_PVI.jp2",
       "file:size": 0
     },
-    "SCL_20m": {
+    "SCL": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1019,7 +1019,7 @@
       "file:size": 0,
       "gsd": 20.0
     },
-    "SCL_60m": {
+    "SCL-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1030,7 +1030,7 @@
       "file:size": 0,
       "gsd": 60.0
     },
-    "TCI_10m": {
+    "TCI": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1041,7 +1041,7 @@
       "file:size": 0,
       "gsd": 10.0
     },
-    "TCI_20m": {
+    "TCI-20": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1052,7 +1052,7 @@
       "file:size": 0,
       "gsd": 20.0
     },
-    "TCI_60m": {
+    "TCI-60": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1063,7 +1063,7 @@
       "file:size": 0,
       "gsd": 60.0
     },
-    "WVP_10m": {
+    "WVP": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1074,7 +1074,7 @@
       "file:size": 0,
       "gsd": 10.0
     },
-    "WVP_20m": {
+    "WVP-20": {
       "type": "image/jp2",
       "roles": [
         "data",
@@ -1085,7 +1085,7 @@
       "file:size": 0,
       "gsd": 20.0
     },
-    "WVP_60m": {
+    "WVP-60": {
       "type": "image/jp2",
       "roles": [
         "data",

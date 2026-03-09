@@ -63,11 +63,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Noise
 
         public override string GetId()
         {
-            if (noiseAsset.Uri.AbsolutePath.Contains("_GRD"))
-            {
-                return string.Format("schema-noise-{0}", GetPolarization()).ToLower();
-            }
-            return string.Format("schema-noise-{0}-{1}", GetSwath(), GetPolarization()).ToLower();
+            return string.Format("noise-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
         }
 
         private object GetStripe()
