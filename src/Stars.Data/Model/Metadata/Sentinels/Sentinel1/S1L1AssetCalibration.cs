@@ -63,11 +63,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Sentinels.Sentinel1.Calibration
 
         public override string GetId()
         {
-            if (calibrationAsset.Uri.AbsolutePath.Contains("_GRD"))
-            {
-                return string.Format("schema-calibration-{0}", GetPolarization()).ToLower();
-            }
-            return string.Format("schema-calibration-{0}-{1}", GetSwath(), GetPolarization()).ToLower();
+            return string.Format("calibration-{0}-{1}-{2}", GetPolarization(), GetSwath(), GetStripe()).ToLower();
         }
 
         private object GetStripe()
