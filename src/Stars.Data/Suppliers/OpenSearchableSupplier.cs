@@ -179,6 +179,9 @@ namespace Terradue.Stars.Data.Suppliers
             // Let's iterate over the search expression
             FillParametersFromBooleanExpression(cql2Expression.Expression, parameters, level);
 
+            // Set count to 50 (fixed)
+            parameters["{http://a9.com/-/spec/opensearch/1.1/}count"] = "50";
+
             return parameters;
 
         }
@@ -469,13 +472,13 @@ namespace Terradue.Stars.Data.Suppliers
             switch (propertyName)
             {
                 case "collection":
-                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", "{" + string.Join(",", values) + "}");
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}parentIdentifier", string.Join(",", values));
                     return;
                 case "t2:product_type":
-                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}productType", "{" + string.Join(",", values) + "}");
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}productType", string.Join(",", values));
                     return;
                 case "keywords":
-                    parameters.Set("{http://purl.org/dc/terms/}subject", "{" + string.Join(",", values) + "}");
+                    parameters.Set("{http://purl.org/dc/terms/}subject", string.Join(",", values));
                     return;
                 default:
                     throw new NotSupportedException($"The OpenSearchableSupplier supplier cannot search for resource from a search expression with is in list predicate on '{propertyName}' property");
@@ -564,6 +567,15 @@ namespace Terradue.Stars.Data.Suppliers
                     return;
                 case "t2:product_type":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}productType", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
+                    return;
+                case "t2:timeliness":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}timeliness", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
+                    return;
+                case "sat:orbit_state":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}orbitDirection", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
+                    return;
+                case "sat:relative_orbit":
+                    parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}track", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
                     return;
                 case "eo:cloud_cover":
                     parameters.Set("{http://a9.com/-/opensearch/extensions/eo/1.0/}cloudCover", ValueToNumberSetOrInterval(value.ToString(), binaryComparisonPredicate.Op));
