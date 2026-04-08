@@ -31,6 +31,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
 {
     public class InpeMetadataExtractor : MetadataExtraction
     {
+        private static readonly string[] ComposeAliases = { "compose", "bgrnir" };
+        private static readonly string[] PansharpenAliases = { "pansharpening", "psharp" };
+
         private static readonly Regex identifierRegex = new Regex(@"(?'id1'(CBERS_4A?|AMAZONIA-1)_(?'type'[^_]+)_\d{8}_\d{3}_\d{3}_L(?'level'[^_]+))(_LEFT|RIGHT)?(?'id2'_BAND(?'band'\d+))");
 
         // alternative identifier regex for for filename of
@@ -75,6 +78,16 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
         public InpeMetadataExtractor(ILogger<InpeMetadataExtractor> logger,
             IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
+        }
+
+        private static bool ContainsAnyToken(string source, IEnumerable<string> tokens)
+        {
+            if (string.IsNullOrEmpty(source)) return false;
+            foreach (var token in tokens)
+            {
+                if (source.Contains(token)) return true;
+            }
+            return false;
         }
 
         public override bool CanProcess(IResource route, IDestination destination)
@@ -276,7 +289,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
 
             if (typeStr == "PAN")
             {
-                if (originalAssetName.ToLower().Contains("_compose")) typeStr = "PAN10M";
+                var lowerName = originalAssetName.ToLowerInvariant();
+                if (ContainsAnyToken(lowerName, ComposeAliases) || ContainsAnyToken(lowerName, PansharpenAliases)) typeStr = "PAN10M";
                 else typeStr = "PAN5M";
             }
             switch (typeStr)
@@ -588,15 +602,17 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
                 {
                     string mode = match.Groups["mode"].Value.ToUpper();
                     string rest = match.Groups["rest"].Value;
+                    bool isCompose = ContainsAnyToken(rest, ComposeAliases);
+                    bool isPansharpen = ContainsAnyToken(rest, PansharpenAliases);
                     if (mode == "PAN")
                     {
-                        if (rest.Contains("compose")) mode = "PAN10M";
+                        if (isCompose || isPansharpen) mode = "PAN10M";
                         else mode = "PAN5M";
                     }
 
                     if (metadata.satellite.name == "CBERS")
                     {
-                        if (mode == "WPM" && rest.Contains("pansharpening"))
+                        if (mode == "WPM" && isPansharpen)
                         {
                             defaultCompositeBands = spectralModeBandsCbers["WPM-pansharpening"];
                         }
@@ -610,7 +626,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
                         defaultCompositeBands = spectralModeBandsAmazonia[mode];
                     }
 
-                    if (rest.Contains("compose"))
+                    if (isCompose || isPansharpen)
                     {
                         compositeBands = defaultCompositeBands;
                     }
