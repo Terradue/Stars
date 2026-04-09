@@ -104,7 +104,21 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
                 innerStacItem = new ItemContainerNode(item, mergedAssets, "merged");
             }
 
-            IAsset metadataAsset = GetMetadataAsset(innerStacItem) ?? throw new Exception("No metadata asset found");
+            IAsset metadataAsset = GetMetadataAsset(innerStacItem);
+            if (metadataAsset == null)
+            {
+                // Some deliveries contain a product zip that itself contains the SAOCOM package zip.
+                // Keep the default behavior first, then attempt one nested extraction pass only if metadata is still missing.
+                IItem nestedInnerItem = await TryExtractNestedSaocomProductAsync(innerStacItem, item);
+                if (nestedInnerItem != null)
+                {
+                    innerStacItem = nestedInnerItem;
+                    metadataAsset = GetMetadataAsset(innerStacItem);
+                    manifestAsset ??= GetManifestAsset(innerStacItem);
+                    manifest ??= await ReadManifest(manifestAsset);
+                }
+            }
+            if (metadataAsset == null) throw new Exception("No metadata asset found");
             SAOCOM_XMLProduct metadata = await ReadMetadata(metadataAsset);
 
             IAsset kmlAsset = FindFirstAssetFromFileNameRegex(innerStacItem, @"(slc|di|gec|gtc)-.*\.kml");
@@ -127,6 +141,37 @@ namespace Terradue.Stars.Data.Model.Metadata.Saocom1
             var stacNode = StacNode.Create(stacItem, innerStacItem.Uri);
 
             return stacNode;
+        }
+
+        private async Task<IItem> TryExtractNestedSaocomProductAsync(IItem innerStacItem, IItem sourceItem)
+        {
+            if (!(innerStacItem is IAssetsContainer assetsContainer))
+            {
+                return null;
+            }
+
+            IAsset nestedZipAsset = GetZipAsset(innerStacItem);
+            if (nestedZipAsset == null)
+            {
+                return null;
+            }
+
+            ZipArchiveAsset nestedZipArchiveAsset = new ZipArchiveAsset(nestedZipAsset, logger, resourceServiceProvider, _fileSystem);
+            nestedZipArchiveAsset.IsInternalArchive = true;
+            nestedZipArchiveAsset.UseParentAssetBaseDir = true;
+
+            string dirName = Path.GetDirectoryName(nestedZipArchiveAsset.Uri.AbsolutePath) ?? Path.GetTempPath();
+            IDestination destination = LocalFileDestination.Create(_fileSystem.DirectoryInfo.FromDirectoryName(dirName), sourceItem, true);
+            IAssetsContainer nestedExtractedAssets = await nestedZipArchiveAsset.ExtractToDestinationAsync(destination, _carrierManager, System.Threading.CancellationToken.None);
+
+            if (nestedExtractedAssets == null)
+            {
+                return null;
+            }
+
+            var mergedAssets = new Dictionary<string, IAsset>(assetsContainer.Assets.ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+            mergedAssets.MergeAssets(nestedExtractedAssets.Assets, false);
+            return new ItemContainerNode(innerStacItem, mergedAssets, "merged2");
         }
 
         internal virtual StacItem CreateStacItem(SAOCOM_XMLProduct metadata, XEMT manifest, IItem item, Kml kml)
