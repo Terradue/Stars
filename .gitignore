@@ -377,3 +377,4 @@ src/Stars.Data.Tests/Resources/CONAE/SAOCOM-1/L1A/data/286806-EOL1ASARSAO1A31118
 src/Stars.Data.Tests/Resources/CONAE/SAOCOM-1/L1A/data/286806-EOL1ASARSAO1A3111864/Quality
 
 usersettings.json
+stars_out/
