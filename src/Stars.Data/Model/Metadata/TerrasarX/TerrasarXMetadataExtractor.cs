@@ -88,8 +88,29 @@ namespace Terradue.Stars.Data.Model.Metadata.TerrasarX
 
         private string GetProcessingLevel(level1Product metadata)
         {
-            var product_type = metadata.setup.orderInfo.orderType;
-            return product_type.Substring(0, product_type.IndexOf("-"));
+            var orderType = metadata?.setup?.orderInfo?.orderType;
+            if (!string.IsNullOrWhiteSpace(orderType))
+            {
+                int separatorIndex = orderType.IndexOf("-", StringComparison.Ordinal);
+                if (separatorIndex > 0)
+                    return orderType.Substring(0, separatorIndex);
+
+                // Newer DLR deliveries may provide orderType values like "NRT".
+                // In those cases, derive processing level from product variant.
+                if (orderType.StartsWith("L", StringComparison.OrdinalIgnoreCase))
+                    return orderType;
+            }
+
+            string productVariant = metadata?.productInfo?.productVariantInfo?.productVariant.ToString();
+            if (!string.IsNullOrWhiteSpace(productVariant))
+            {
+                logger?.LogWarning("Unexpected TerraSAR-X orderType '{OrderType}', using productVariant '{ProductVariant}' as processing level",
+                                   orderType, productVariant);
+                return productVariant;
+            }
+
+            logger?.LogWarning("Unable to determine TerraSAR-X processing level from orderType '{OrderType}', defaulting to 'L1B'", orderType);
+            return "L1B";
         }
 
 
