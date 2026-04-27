@@ -45,7 +45,7 @@
     "platform": "cbers-4",
     "mission": "cbers-4",
     "instruments": [
-      "wfi"
+      "awfi"
     ],
     "sensor_type": "optical",
     "gsd": 64.0,
