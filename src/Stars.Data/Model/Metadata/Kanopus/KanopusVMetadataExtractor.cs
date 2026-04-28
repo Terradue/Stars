@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GeoJSON.Net.Geometry;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 {
     public class KanopusVMetadataExtractor : MetadataExtraction
     {
+        private static readonly Regex KanopusMetadataFileRegex = new Regex(@"^(?i)(KV|fr\d+_KV).*\.(xml)$", RegexOptions.Compiled);
+        private static readonly Regex FragmentPrefixRegex = new Regex(@"^(?i)fr\d+_", RegexOptions.Compiled);
+
         public override string Label => "Kanopus-V(-IK) (Roscosmos) missions product metadata extractor";
         public KanopusVMetadataExtractor(ILogger<KanopusVMetadataExtractor> logger, IResourceServiceProvider resourceServiceProvider) : base(logger, resourceServiceProvider)
         {
@@ -36,7 +40,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             {
                 IAsset metadataAsset = GetMetadataAsset(item);
                 KanopusVMetadata metadata = ReadMetadata(metadataAsset).GetAwaiter().GetResult();
-                return metadata.GetString("<PASP_ROOT>/cDataFileName").StartsWith("KV") || metadata.GetString("<PASP_ROOT>/cDataFileName").StartsWith("fr_KV");
+                string dataFileName = NormalizeDataFileNamePrefix(metadata.GetString("<PASP_ROOT>/cDataFileName", false));
+                return !string.IsNullOrEmpty(dataFileName) &&
+                       dataFileName.StartsWith("KV", StringComparison.InvariantCultureIgnoreCase);
             }
             catch (Exception e)
             {
@@ -159,7 +165,9 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
         private void FillPlatformDefinition(KanopusVMetadata metadata, Dictionary<string, object> properties)
         {
             string platform = "kanopus-v";
-            if (metadata.GetString("<PASP_ROOT>/cDataFileName").StartsWith("KVIK", true, CultureInfo.InvariantCulture))
+            string dataFileName = NormalizeDataFileNamePrefix(metadata.GetString("<PASP_ROOT>/cDataFileName", false));
+            if (!string.IsNullOrEmpty(dataFileName) &&
+                dataFileName.StartsWith("KVIK", true, CultureInfo.InvariantCulture))
                 platform = "kanopus-v-ik";
             properties.Remove("mission");
             properties.Add("mission", platform);
@@ -282,8 +290,8 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         protected void AddAssets(StacItem stacItem, IItem item, KanopusVMetadata metadata)
         {
-            IAsset mssAsset = FindFirstAssetFromFileNameRegex(item, @".*MSS.*\.tiff");
-            IAsset sAsset = FindFirstAssetFromFileNameRegex(item, @".*_S_.*\.tiff");
+            IAsset mssAsset = FindFirstAssetFromFileNameRegex(item, @"(?i).*MSS.*\.tif(f)?$");
+            IAsset sAsset = FindFirstAssetFromFileNameRegex(item, @"(?i).*_S_.*\.tif(f)?$");
             if (mssAsset != null)
             {
                 var bandAsset = GetBandAsset(stacItem, "MSS", mssAsset, metadata);
@@ -296,7 +304,7 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             }
 
 
-            IAsset pssAsset = FindFirstAssetFromFileNameRegex(item, @".*PSS.*\.tiff");
+            IAsset pssAsset = FindFirstAssetFromFileNameRegex(item, @"(?i).*PSS.*\.tif(f)?$");
             if (pssAsset != null)
             {
                 var bandAsset = GetBandAsset(stacItem, "PAN", pssAsset, metadata);
@@ -307,10 +315,13 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
 
         protected virtual IAsset GetMetadataAsset(IItem item)
         {
-            IAsset manifestAsset = FindFirstAssetFromFileNameRegex(item, @"^(KV|fr_KV).*\.xml");
+            IAsset manifestAsset = item.Assets
+                .OrderBy(kvp => kvp.Key, StringComparer.InvariantCultureIgnoreCase)
+                .Select(kvp => kvp.Value)
+                .FirstOrDefault(a => KanopusMetadataFileRegex.IsMatch(Path.GetFileName(a.Uri.ToString())));
             if (manifestAsset != null)
                 return manifestAsset;
-            manifestAsset = FindFirstAssetFromFileNameRegex(item, @".*MSS.*\.xml");
+            manifestAsset = FindFirstAssetFromFileNameRegex(item, @"(?i).*MSS.*\.xml$");
             if (manifestAsset != null) return manifestAsset;
 
             throw new FileNotFoundException(string.Format("Unable to find the summary file asset"));
@@ -323,6 +334,12 @@ namespace Terradue.Stars.Data.Model.Metadata.Kanopus
             await metadata.ReadMetadata(resourceServiceProvider);
 
             return metadata;
+        }
+
+        private static string NormalizeDataFileNamePrefix(string dataFileName)
+        {
+            if (string.IsNullOrEmpty(dataFileName)) return dataFileName;
+            return FragmentPrefixRegex.Replace(dataFileName, string.Empty);
         }
 
     }
