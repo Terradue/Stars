@@ -408,7 +408,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Inpe
             properties["constellation"] = string.Format("{0}-{1}", metadata.satellite.name, metadata.satellite.number).ToLower();
             properties["platform"] = string.Format("{0}-{1}", metadata.satellite.name, metadata.satellite.number).ToLower();
             properties["mission"] = properties["platform"];
-            properties["instruments"] = new string[] { metadata.satellite.instrument.Value.ToLower() };
+            // INPE CSV metadata may report WFI even when identifier/mode is AWFI.
+            // Keep AWFI explicit so downstream title/summary generation does not lose the "A".
+            var instrumentName = metadata.satellite.instrument.Value;
+            if (string.Equals(metadata.spectralMode, "AWFI", StringComparison.OrdinalIgnoreCase))
+            {
+                instrumentName = "AWFI";
+            }
+            properties["instruments"] = new string[] { instrumentName.ToLower() };
             properties["sensor_type"] = "optical";
             if (double.TryParse(metadata.image.verticalPixelSize, out double gsd))
             {
