@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Ionic.Zip;
@@ -125,7 +126,9 @@ namespace Terradue.Stars.Services.Processing
         public override async Task<IAssetsContainer> ExtractToDestinationAsync(IDestination destination, CarrierManager carrierManager, CancellationToken ct)
         {
             Dictionary<string, IAsset> assetsExtracted = new Dictionary<string, IAsset>();
-            zipFile = ZipFile.Read(await GetZipStreamAsync(asset, carrierManager, ct));
+            var zipStream = await GetZipStreamAsync(asset, carrierManager, ct);
+            EnsureZipStream(zipStream);
+            zipFile = ZipFile.Read(zipStream);
             string subFolder = IsInternalArchive ? string.Empty : AutodetectSubfolder();
 
             foreach (var archiveAsset in Assets)
@@ -158,6 +161,40 @@ namespace Terradue.Stars.Services.Processing
             if (localStreamable != null)
                 File.Delete(localStreamable.Uri.LocalPath);
             localStreamable = null;
+        }
+
+        private static void EnsureZipStream(Stream stream)
+        {
+            if (stream == null) throw new InvalidDataException("Archive stream is null");
+            if (!stream.CanSeek) return;
+
+            var origin = stream.Position;
+            try
+            {
+                stream.Position = 0;
+                var header = new byte[4];
+                var read = stream.Read(header, 0, header.Length);
+
+                var isZipSignature = read >= 4 &&
+                                     header[0] == 0x50 &&
+                                     header[1] == 0x4B &&
+                                     (header[2] == 0x03 || header[2] == 0x05 || header[2] == 0x07) &&
+                                     (header[3] == 0x04 || header[3] == 0x06 || header[3] == 0x08);
+
+                if (isZipSignature) return;
+
+                stream.Position = 0;
+                var previewLength = (int)Math.Min(stream.Length, 200);
+                var previewBuffer = new byte[previewLength];
+                var previewRead = stream.Read(previewBuffer, 0, previewLength);
+                var preview = Encoding.UTF8.GetString(previewBuffer, 0, previewRead).Replace('\r', ' ').Replace('\n', ' ').Trim();
+
+                throw new InvalidDataException($"Asset content is not a valid ZIP archive. Header=0x{BitConverter.ToUInt32(header, 0):X8}. Preview='{preview}'.");
+            }
+            finally
+            {
+                stream.Position = origin;
+            }
         }
     }
 }
