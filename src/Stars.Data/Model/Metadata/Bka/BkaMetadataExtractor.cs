@@ -332,9 +332,15 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
         private void FillPlatformDefinition(BkaMetadata[] metadata, Dictionary<string, object> properties)
         {
             string platform = "bka";
-            if (metadata[0].Processing?.Satellite != null) platform = metadata[0].Processing.Satellite.ToLower();
+            if (metadata[0].Processing?.Satellite != null)
+            {
+                platform = NormalizeMissionOrPlatform(metadata[0].Processing.Satellite);
+            }
             string mission = "bka";
-            if (metadata[0].Processing?.Mission != null) mission = metadata[0].Processing.Mission.ToLower();
+            if (metadata[0].Processing?.Mission != null)
+            {
+                mission = NormalizeMissionOrPlatform(metadata[0].Processing.Mission);
+            }
             properties["platform"] = platform;
             properties["constellation"] = platform;
             properties["mission"] = mission;
@@ -342,6 +348,14 @@ namespace Terradue.Stars.Data.Model.Metadata.Bka
             properties["sensor_type"] = "optical";
             string spectralMode = GetSpectralMode(metadata);
             if (spectralMode != null) properties["spectral_mode"] = spectralMode;
+        }
+
+        private static string NormalizeMissionOrPlatform(string value)
+        {
+            string normalized = value.ToLowerInvariant();
+            normalized = normalized.Replace("kanopus_v_ik", "kanopus-v-ik");
+            normalized = normalized.Replace("kanopus_v", "kanopus-v");
+            return normalized;
         }
 
 
